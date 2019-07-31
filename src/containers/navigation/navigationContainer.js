@@ -60,6 +60,11 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         title: "Associates",
         url: "/associates"
     },{
+        id: "full-staff",
+        icon: "user-tie",
+        title: "Staff",
+        url: "/staff"
+    },{
         id: "full-help",
         icon: "question-circle",
         title: "Help",

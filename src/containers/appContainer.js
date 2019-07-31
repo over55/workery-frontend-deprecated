@@ -89,6 +89,16 @@ import AssignWatchAreaCoordinatorTaskStep1Container from "./tasks/assignWatchAre
 import AssignWatchAreaCoordinatorTaskStep2Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep2Container";
 import AssignWatchAreaCoordinatorTaskStep3Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep3Container";
 
+// Staff
+import StaffListContainer from "./staff/list/staffListContainer";
+import StaffSearchContainer from "./staff/staffSearchContainer";
+import StaffSearchResultContainer from "./staff/staffSearchResultContainer";
+import StaffUpdateContainer from "./staff/update/staffUpdateContainer";
+import StaffCreateStep1Container from "./staff/create/staffCreateStep1Container";
+import StaffCreateStep2Container from "./staff/create/staffCreateStep2Container";
+import StaffFullRetrieveContainer from "./staff/retrieve/staffFullRetrieveContainer";
+import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContainer";
+
 
 class AppContainer extends React.Component {
     render() {
@@ -181,6 +191,16 @@ class AppContainer extends React.Component {
                                 <Route path="/task/2/:slug/step-1" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep1Container)} />
                                 <Route path="/task/2/:slug/step-2" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep2Container)} />
                                 <Route path="/task/2/:slug/step-3" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep3Container)} />
+
+                                { /* STAFF */ }
+                                <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />
+                                <Route path="/staff/add/step-2" exact component={requiresAuth(StaffCreateStep2Container)} />
+                                <Route path="/staff" exact component={requiresAuth(StaffListContainer)} />
+                                <Route path="/staff/search" exact component={requiresAuth(StaffSearchContainer)} />
+                                <Route path="/staff/search-results" exact component={requiresAuth(StaffSearchResultContainer)} />
+                                <Route path="/staff/:slug" exact component={requiresAuth(StaffLiteRetrieveContainer)} />
+                                <Route path="/staff/:slug/full" exact component={requiresAuth(StaffFullRetrieveContainer)} />
+                                <Route path="/staff/:slug/update" exact component={requiresAuth(StaffUpdateContainer)} />
 
                                 <Route component={NotFound404Container} />
                             </Switch>
