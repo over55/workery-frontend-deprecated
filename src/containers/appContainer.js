@@ -78,6 +78,17 @@ import OrderPromoteStep1Container from "./orders/promote/orderPromoteStep1Contai
 import OrderPromoteStep2Container from "./orders/promote/orderPromoteStep2Container";
 import OrderPromoteStep3Container from "./orders/promote/orderPromoteStep3Container";
 
+// Tasks
+import TaskListContainer from "./tasks/list/taskListContainer";
+import TaskSearchContainer from "./tasks/search/taskSearchContainer";
+import TaskSearchResultContainer from "./tasks/search/taskSearchResultContainer";
+import AssignWatchAssociateTaskStep1Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep1Container";
+import AssignWatchAssociateTaskStep2Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep2Container";
+import AssignWatchAssociateTaskStep3Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep3Container";
+import AssignWatchAreaCoordinatorTaskStep1Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep1Container";
+import AssignWatchAreaCoordinatorTaskStep2Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep2Container";
+import AssignWatchAreaCoordinatorTaskStep3Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep3Container";
+
 
 class AppContainer extends React.Component {
     render() {
@@ -155,6 +166,17 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:slug/promote/step-1" exact component={requiresAuth(OrderPromoteStep1Container)} />
                                 <Route path="/order/:slug/promote/step-2" exact component={requiresAuth(OrderPromoteStep2Container)} />
                                 <Route path="/order/:slug/promote/step-3" exact component={requiresAuth(OrderPromoteStep3Container)} />
+
+                                { /* TASKS */ }
+                                <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />
+                                <Route path="/tasks/search" exact component={requiresAuth(TaskSearchContainer)} />
+                                <Route path="/tasks/search-results" exact component={requiresAuth(TaskSearchResultContainer)} />
+                                <Route path="/task/1/:slug/step-1" exact component={requiresAuth(AssignWatchAssociateTaskStep1Container)} />
+                                <Route path="/task/1/:slug/step-2" exact component={requiresAuth(AssignWatchAssociateTaskStep2Container)} />
+                                <Route path="/task/1/:slug/step-3" exact component={requiresAuth(AssignWatchAssociateTaskStep3Container)} />
+                                <Route path="/task/2/:slug/step-1" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep1Container)} />
+                                <Route path="/task/2/:slug/step-2" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep2Container)} />
+                                <Route path="/task/2/:slug/step-3" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep3Container)} />
 
                                 <Route component={NotFound404Container} />
                             </Switch>
