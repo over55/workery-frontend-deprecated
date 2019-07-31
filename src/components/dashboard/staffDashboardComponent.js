@@ -38,12 +38,12 @@ export default class StaffDashboardComponent extends Component {
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dblue">
-                                    <Link to="/clients" className="d-block link-ndecor" title="Members">
+                                    <Link to="/associates" className="d-block link-ndecor" title="Associates">
                                         <h1 className="circle-title">{memberCount}</h1>
                                     </Link>
                                 </div>
-                                <h4><i className="fas fa-crown"></i>&nbsp;Members</h4>
-                                <span className="text-muted">View Member Data</span>
+                                <h4><i className="fas fa-crown"></i>&nbsp;Associates</h4>
+                                <span className="text-muted">View associate data</span>
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-orange">

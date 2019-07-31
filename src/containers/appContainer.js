@@ -38,6 +38,17 @@ import ClientCreateStep2Container from "./clients/create/clientCreateStep2Contai
 import ClientCreateStep3Container from "./clients/create/clientCreateStep3Container";
 import ClientDemoteContainer from "./clients/demote/clientDemoteContainer";
 
+// Associate
+import AssociateListContainer from "./associates/list/associateListContainer";
+import AssociateSearchContainer from "./associates/search/associateSearchContainer";
+import AssociateSearchResultContainer from "./associates/search/associateSearchResultContainer";
+import AssociateLiteRetrieveContainer from "./associates/retrieve/associateLiteRetrieveContainer";
+import AssociateFullRetrieveContainer from "./associates/retrieve/associateFullRetrieveContainer";
+import AssociateUpdateContainer from "./associates/update/associateUpdateContainer";
+import AssociateCreateStep1Container from "./associates/create/associateCreateStep1Container";
+import AssociateCreateStep2Container from "./associates/create/associateCreateStep2Container";
+import AssociateCreateStep3Container from "./associates/create/associateCreateStep3Container";
+import AssociateDemoteContainer from "./associates/demote/associateDemoteContainer";
 
 class AppContainer extends React.Component {
     render() {
@@ -76,6 +87,18 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:slug/update" exact component={requiresAuth(ClientUpdateContainer)} />
                                 <Route path="/client/:slug/demote" exact component={requiresAuth(ClientDemoteContainer)} />
 
+                                { /* ASSOCIATES */ }
+                                <Route path="/associates/add/step-1" exact component={requiresAuth(AssociateCreateStep1Container)} />
+                                <Route path="/associates/add/step-2" exact component={requiresAuth(AssociateCreateStep2Container)} />
+                                <Route path="/associates/add/step-3" exact component={requiresAuth(AssociateCreateStep3Container)} />
+                                <Route path="/associates" exact component={requiresAuth(AssociateListContainer)} />
+                                <Route path="/associates/search" exact component={requiresAuth(AssociateSearchContainer)} />
+                                <Route path="/associates/search-results" exact component={requiresAuth(AssociateSearchResultContainer)} />
+                                <Route path="/associate/:slug" exact component={requiresAuth(AssociateLiteRetrieveContainer)} />
+                                <Route path="/associate/:slug/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
+                                <Route path="/associate/:slug/update" exact component={requiresAuth(AssociateUpdateContainer)} />
+                                <Route path="/associate/:slug/demote" exact component={requiresAuth(AssociateDemoteContainer)} />
+                                
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>
