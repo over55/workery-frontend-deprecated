@@ -10,7 +10,7 @@ export default class StaffDashboardComponent extends Component {
         const { dashboard } = this.props;
         const {
             customerCount, jobCount, memberCount, taskCount,
-            bulletinBoardItems, jobHistory, associateNews, teamJobHistory
+            bulletinBoardItems, jobHistory, associateNews, teamJobHistory, commentHistory
         } = dashboard;
         return (
             <div className="container-fluid">
@@ -60,6 +60,7 @@ export default class StaffDashboardComponent extends Component {
                         <JobHistoryComponent jobHistory={jobHistory} />
                         <AssociateNewsComponent associateNews={associateNews} />
                         <TeamJobHistoryComponent teamJobHistory={teamJobHistory} />
+                        <CommentHistoryComponent commentHistory={commentHistory} />
 
                     </main>
                 </div>
@@ -330,6 +331,64 @@ class TeamJobHistoryComponent extends Component {
 
 
 function teamJobHistoryLinkFormatter(cell, row){
+    return (
+        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+            View&nbsp;<i className="fas fa-chevron-right"></i>
+        </Link>
+    )
+}
+
+
+class CommentHistoryComponent extends Component {
+    render() {
+        const { commentHistory } = this.props
+        if (commentHistory === null || commentHistory === undefined || isEmpty(commentHistory)) {
+            return (
+                <div className="jumbotron">
+                    <h1 className="display-4"><i className="fas fa-comment"></i>&nbsp;Comments Comment</h1>
+                    <p className="lead">There are no comments. Feel free to add one.</p>
+
+                    <p className="lead">
+                        <Link className="btn btn-success btn-lg" to="/settings/announcements">
+                            <i className="fas fa-plus"></i>&nbsp;Add
+                        </Link>
+                    </p>
+                </div>
+            );
+        } else {
+            const columns = [{
+                dataField: 'jobID',
+                text: 'Job #',
+                sort: false
+            },{
+                dataField: 'text',
+                text: 'Comment',
+                sort: false
+            }];
+
+            return (
+                <div>
+                    <h1 className="display-4"><i className="fas fa-comment"></i>&nbsp;Comment History</h1>
+                    <div class="table-responsive-sm my-3">
+                        <BootstrapTable
+                            bootstrap4
+                            keyField='id'
+                            data={ commentHistory }
+                            columns={ columns }
+                            striped
+                            bordered={ false }
+                            noDataIndication="There are no recent comments at the moment"
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+    }
+}
+
+
+function commentHistoryLinkFormatter(cell, row){
     return (
         <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>

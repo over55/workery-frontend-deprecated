@@ -136,7 +136,13 @@ class DashboardContainer extends Component {
                     lastModified: "2019-01-01"
                 }
             ],
-            commentsHistory: [],
+            commentHistory: [
+                {
+                    id: 1,
+                    jobID: 111,
+                    text: "This is a test comment from a job.",
+                }
+            ],
         }
         return (
             <StaffDashboardComponent
