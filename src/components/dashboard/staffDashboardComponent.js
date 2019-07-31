@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import isEmpty from 'lodash/isEmpty';
 
 
 export default class StaffDashboardComponent extends Component {
     render() {
-        const { dashboardData } = this.props;
-        const { latestTasks } = dashboardData;
+        const { dashboard } = this.props;
+        const { customerCount, jobCount, memberCount, taskCount, bulletinBoardItems } = dashboard;
         return (
             <div className="container-fluid">
                 <div className="d-flex align-items-stretch">
@@ -16,35 +17,35 @@ export default class StaffDashboardComponent extends Component {
                         <section className="row text-center placeholders">
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/members" className="d-block link-ndecor" title="Members">
-                                        <h1 className="circle-title">1,100</h1>
+                                    <Link to="/members" className="d-block link-ndecor" title="Clients">
+                                        <h1 className="circle-title">{customerCount}</h1>
                                     </Link>
                                 </div>
-                                <h4><i className="fas fa-users"></i>&nbsp;Members</h4>
-                                <div className="text-muted">View Members</div>
+                                <h4><i className="fas fa-users"></i>&nbsp;Clients</h4>
+                                <div className="text-muted">View Clients</div>
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
-                                    <Link to="/watches" className="d-block link-ndecor" title="Area Coordinators">
-                                        <h1 className="circle-title">10,000</h1>
+                                    <Link to="/watches" className="d-block link-ndecor" title="Jobs">
+                                        <h1 className="circle-title">{jobCount}</h1>
                                     </Link>
                                 </div>
-                                <h4><i className="fas fa-shield-alt"></i>&nbsp;Watches</h4>
-                                <span className="text-muted">View Watches</span>
+                                <h4><i className="fas fa-shield-alt"></i>&nbsp;Jobs</h4>
+                                <span className="text-muted">View Jobs</span>
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dblue">
-                                    <Link to="/associates" className="d-block link-ndecor" title="Associates">
-                                        <h1 className="circle-title">2,200</h1>
+                                    <Link to="/associates" className="d-block link-ndecor" title="Members">
+                                        <h1 className="circle-title">{memberCount}</h1>
                                     </Link>
                                 </div>
-                                <h4><i className="fas fa-crown"></i>&nbsp;Associates</h4>
-                                <span className="text-muted">View Associates</span>
+                                <h4><i className="fas fa-crown"></i>&nbsp;Members</h4>
+                                <span className="text-muted">View Members</span>
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-orange">
                                     <Link to="/tasks" className="d-block link-ndecor" title="Items">
-                                        <h1 className="circle-title">12</h1>
+                                        <h1 className="circle-title">{taskCount}</h1>
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-tasks"></i>&nbsp;Tasks</h4>
@@ -52,23 +53,66 @@ export default class StaffDashboardComponent extends Component {
                             </div>
                         </section>
 
-                        <div className="jumbotron">
-                            <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Announcements</h1>
-                            <p className="lead">There are no announcements. Feel free to add one.</p>
+                        <AnnouncementComponent bulletinBoardItems={bulletinBoardItems} />
 
-                            <p className="lead">
-                                <Link className="btn btn-success btn-lg" to="/settings/announcements">
-                                    <i className="fas fa-plus"></i>&nbsp;Add
-                                </Link>
-                            </p>
-                        </div>
 
-                        <RecentTaskListComponent latestTasks={latestTasks} />
+
+
 
                     </main>
                 </div>
             </div>
         );
+    }
+}
+
+
+class AnnouncementComponent extends Component {
+    render() {
+        const { bulletinBoardItems } = this.props
+        if (bulletinBoardItems === null || bulletinBoardItems === undefined || isEmpty(bulletinBoardItems)) {
+            return (
+                <div className="jumbotron">
+                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Announcements</h1>
+                    <p className="lead">There are no announcements. Feel free to add one.</p>
+
+                    <p className="lead">
+                        <Link className="btn btn-success btn-lg" to="/settings/announcements">
+                            <i className="fas fa-plus"></i>&nbsp;Add
+                        </Link>
+                    </p>
+                </div>
+            );
+        } else {
+            const columns = [{
+                dataField: 'text',
+                text: 'Messages',
+                sort: false
+            }];
+
+            return (
+                <div className="jumbotron">
+                    <h1 className="display-4"><i className="fas fa-newspaper"></i>&nbsp;Office News</h1>
+                    <div class="table-responsive-sm my-3">
+                        <BootstrapTable
+                            bootstrap4
+                            keyField='id'
+                            data={ bulletinBoardItems }
+                            columns={ columns }
+                            striped
+                            bordered={ false }
+                            noDataIndication="There are no recent tasks at the moment"
+                        />
+                        <p class="lead">
+                            <Link className="btn btn-primary btn-lg px-4" to="#" role="button">
+                                <i className="fas fa-plus"></i>&nbsp;Add
+                            </Link>
+                        </p>
+                    </div>
+                </div>
+            );
+        }
+
     }
 }
 

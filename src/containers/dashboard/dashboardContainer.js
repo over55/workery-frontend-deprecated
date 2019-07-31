@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import {
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID,
-    FRONTLINE_STAFF_GROUP_ID,
-    ASSOCIATE_GROUP_ID,
-    AREA_COORDINATOR_GROUP_ID,
-    MEMBER_GROUP_ID
-} from '../../constants/api';
+// import {
+//     EXECUTIVE_GROUP_ID,
+//     MANAGEMENT_GROUP_ID,
+//     FRONTLINE_STAFF_GROUP_ID,
+//     ASSOCIATE_GROUP_ID,
+//     AREA_COORDINATOR_GROUP_ID,
+//     MEMBER_GROUP_ID
+// } from '../../constants/api';
 import StaffDashboardComponent from "../../components/dashboard/staffDashboardComponent";
-import AssociateDashboardComponent from "../../components/dashboard/associateDashboardComponent";
-import AreaCoordinatorDashboardComponent from "../../components/dashboard/areaCoordinatorDashboardComponent";
-import MemberDashboardComponent from "../../components/dashboard/memberDashboardComponent";
 import { pullProfile } from "../../actions/profileAction";
 import { pullDashboard } from "../../actions/dashboardActions";
 import { getSubdomain } from '../../helpers/urlUtility';
@@ -89,88 +86,35 @@ class DashboardContainer extends Component {
      */
 
     render() {
-        const dashboardData = {
-            latestTasks: [
+        const dashboard = {
+            customerCount: 17099,
+            jobCount: 109,
+            memberCount: 42,
+            taskCount: 119,
+            bulletinBoardItems: [
                 {
-                    'slug': 'argyle-task-1',
-                    'number': 1,
-                    'watchName': 'argyle',
-                    'prettyTypeOf': '48h follow up',
-                    'typeOf': 'unassigned-watch-associate',
-                    'absoluteUrl': '/tasks/argyle'
-                },{
-                    'slug': 'byron-task-1',
-                    'number': 2,
-                    'watchName': 'Byron',
-                    'prettyTypeOf': 'Survey',
-                    'typeOf': 'unassigned-watch-associate',
-                    'absoluteUrl': '/tasks/byron'
-                },{
-                    'slug': 'carling-task-1',
-                    'number': 3,
-                    'watchName': 'Carling',
-                    'prettyTypeOf': 'Assign associate',
-                    'typeOf': 'unassigned-watch-area-coordinator',
-                    'absoluteUrl': '/tasks/carling'
+                    id: 1,
+                    text: "July 2, 2019: As of today's date we have no plumber or electrician available. Alvaro's commercial insurance has expired and Tom is too busy to take new jobs.",
+                }, {
+                    id: 2,
+                    text: "TO ALL STAFF: Please do not call Frank Herbert for 48 hour updates & job completion. Rei (Franks's wife) emails me with all the updates.",
+                }, {
+                    id: 3,
+                    text: "6/18/19 - TO ALL STAFF - Do not follow up on Harkonan or Ix jobs. Speak to Paul, or Leto in the office prior to taking any actions."
                 }
-            ]
-        };
-        const { groupId } = this.props.user;
-        if (groupId === EXECUTIVE_GROUP_ID) {
-            return (
-                <StaffDashboardComponent
-                    // dashboard={this.props.dashboard}
-                    user={this.props.user}
-                    dashboardData={dashboardData}
-                />
-            );
+            ],
+            jobHistory: [],
+            associateNews: [],
+            teamJobHistory: [],
+            commentsHistory: [],
         }
-        else if (groupId === MANAGEMENT_GROUP_ID) {
-            return (
-                <StaffDashboardComponent
-                    // dashboard={this.props.dashboard}
-                    user={this.props.user}
-                    dashboardData={dashboardData}
-                />
-            );
-        }
-        else if (groupId === FRONTLINE_STAFF_GROUP_ID) {
-            return (
-                <StaffDashboardComponent
-                    // dashboard={this.props.dashboard}
-                    user={this.props.user}
-                    dashboardData={dashboardData}
-                />
-            );
-        }
-        else if (groupId === ASSOCIATE_GROUP_ID) {
-            return (
-                <AssociateDashboardComponent
-                    // dashboard={this.props.dashboard}
-                    user={this.props.user}
-                />
-            );
-        }
-        else if (groupId === AREA_COORDINATOR_GROUP_ID) {
-            return (
-                <AreaCoordinatorDashboardComponent
-                    // dashboard={this.props.dashboard}
-                    user={this.props.user}
-                    dashboardData={dashboardData}
-                />
-            );
-        }
-        else if (groupId === MEMBER_GROUP_ID) {
-            return (
-                <MemberDashboardComponent
-                    // dashboard={this.props.dashboard}
-                    user={this.props.user}
-                    dashboardData={dashboardData}
-                />
-            );
-        } else {
-            return null;
-        }
+        return (
+            <StaffDashboardComponent
+                // dashboard={this.props.dashboard}
+                user={this.props.user}
+                dashboard={dashboard}
+            />
+        );
     };
 }
 
