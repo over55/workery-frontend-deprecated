@@ -25,7 +25,7 @@ export default class StaffDashboardComponent extends Component {
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-user-circle"></i>&nbsp;Clients</h4>
-                                <div className="text-muted">View Clients</div>
+                                <div className="text-muted">View your client list</div>
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
@@ -34,7 +34,7 @@ export default class StaffDashboardComponent extends Component {
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-shield-alt"></i>&nbsp;Jobs</h4>
-                                <span className="text-muted">View Jobs</span>
+                                <span className="text-muted">View your job history</span>
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dblue">
@@ -43,7 +43,7 @@ export default class StaffDashboardComponent extends Component {
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-crown"></i>&nbsp;Members</h4>
-                                <span className="text-muted">View Members</span>
+                                <span className="text-muted">View Member Data</span>
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-orange">
@@ -52,7 +52,7 @@ export default class StaffDashboardComponent extends Component {
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-tasks"></i>&nbsp;Tasks</h4>
-                                <span className="text-muted">View Tasks</span>
+                                <span className="text-muted">View your tasks</span>
                             </div>
                         </section>
 
