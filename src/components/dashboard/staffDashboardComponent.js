@@ -29,11 +29,11 @@ export default class StaffDashboardComponent extends Component {
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
-                                    <Link to="/watches" className="d-block link-ndecor" title="Jobs">
+                                    <Link to="/orders" className="d-block link-ndecor" title="Jobs">
                                         <h1 className="circle-title">{jobCount}</h1>
                                     </Link>
                                 </div>
-                                <h4><i className="fas fa-shield-alt"></i>&nbsp;Jobs</h4>
+                                <h4><i className="fas fa-wrench"></i>&nbsp;Jobs</h4>
                                 <span className="text-muted">View your job history</span>
                             </div>
                             <div className="col-sm-3 placeholder">

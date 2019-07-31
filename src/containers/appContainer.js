@@ -58,6 +58,27 @@ import AssociateCreateStep2Container from "./associates/create/associateCreateSt
 import AssociateCreateStep3Container from "./associates/create/associateCreateStep3Container";
 import AssociateDemoteContainer from "./associates/demote/associateDemoteContainer";
 
+// Work Order
+import OrderListContainer from "./orders/list/orderListContainer";
+import OrderSearchContainer from "./orders/search/orderSearchContainer";
+import OrderSearchResultContainer from "./orders/search/orderSearchResultContainer";
+import OrderLiteRetrieveContainer from "./orders/retrieve/orderLiteRetrieveContainer";
+import OrderFullRetrieveContainer from "./orders/retrieve/orderFullRetrieveContainer";
+import OrderCreateStep1Container from "./orders/create/orderCreateStep1Container";
+import OrderCreateStep2Container from "./orders/create/orderCreateStep2Container";
+import OrderCreateStep3Container from "./orders/create/orderCreateStep3Container";
+import OrderCreateStep4BizContainer from "./orders/create/orderCreateStep4BizContainer";
+import OrderCreateStep4RezOrComContainer from "./orders/create/orderCreateStep4RezOrComContainer";
+import OrderCreateStep5Container from "./orders/create/orderCreateStep5Container";
+import OrderCreateStep6Container from "./orders/create/orderCreateStep6Container";
+import OrderCreateStep7Container from "./orders/create/orderCreateStep7Container";
+import OrderCreateStep8Container from "./orders/create/orderCreateStep8Container";
+import OrderUpdateContainer from "./orders/update/orderUpdateContainer";
+import OrderPromoteStep1Container from "./orders/promote/orderPromoteStep1Container";
+import OrderPromoteStep2Container from "./orders/promote/orderPromoteStep2Container";
+import OrderPromoteStep3Container from "./orders/promote/orderPromoteStep3Container";
+
+
 class AppContainer extends React.Component {
     render() {
         return (
@@ -114,6 +135,26 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:slug/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
                                 <Route path="/associate/:slug/update" exact component={requiresAuth(AssociateUpdateContainer)} />
                                 <Route path="/associate/:slug/demote" exact component={requiresAuth(AssociateDemoteContainer)} />
+
+                                { /* WORK ORDER */}
+                                <Route path="/orders/add/step-1" exact component={requiresAuth(OrderCreateStep1Container)} />
+                                <Route path="/orders/add/step-2" exact component={requiresAuth(OrderCreateStep2Container)} />
+                                <Route path="/orders/add/step-3" exact component={requiresAuth(OrderCreateStep3Container)} />
+                                <Route path="/orders/add/step-4-biz" exact component={requiresAuth(OrderCreateStep4BizContainer)} />
+                                <Route path="/orders/add/step-4-rez-or-cc" exact component={requiresAuth(OrderCreateStep4RezOrComContainer)} />
+                                <Route path="/orders/add/step-5" exact component={requiresAuth(OrderCreateStep5Container)} />
+                                <Route path="/orders/add/step-6" exact component={requiresAuth(OrderCreateStep6Container)} />
+                                <Route path="/orders/add/step-7" exact component={requiresAuth(OrderCreateStep7Container)} />
+                                <Route path="/orders/add/step-8" exact component={requiresAuth(OrderCreateStep8Container)} />
+                                <Route path="/orders" exact component={requiresAuth(OrderListContainer)} />
+                                <Route path="/orders/search" exact component={requiresAuth(OrderSearchContainer)} />
+                                <Route path="/orders/search-results" exact component={requiresAuth(OrderSearchResultContainer)} />
+                                <Route path="/order/:slug" exact component={requiresAuth(OrderLiteRetrieveContainer)} />
+                                <Route path="/order/:slug/full" exact component={requiresAuth(OrderFullRetrieveContainer)} />
+                                <Route path="/order/:slug/update" exact component={requiresAuth(OrderUpdateContainer)} />
+                                <Route path="/order/:slug/promote/step-1" exact component={requiresAuth(OrderPromoteStep1Container)} />
+                                <Route path="/order/:slug/promote/step-2" exact component={requiresAuth(OrderPromoteStep2Container)} />
+                                <Route path="/order/:slug/promote/step-3" exact component={requiresAuth(OrderPromoteStep3Container)} />
 
                                 <Route component={NotFound404Container} />
                             </Switch>
