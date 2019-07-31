@@ -1,6 +1,7 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
@@ -8,23 +9,21 @@ import {
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF
 } from '../../../constants/api';
-import { FlashMessageComponent } from "../../flashMessageComponent";
 
 
-export default class ClientFullRetrieveComponent extends Component {
+export default class ClientCreateStep8Component extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { slug, flashMessage, tagOptions, howDidYouHearOptions } = this.props;
         const {
-            typeOf, errors,
+            returnURL, typeOf, errors, onClick, isLoading,
             bizCompanyName, bizContactFirstName, bizContactLastName, bizPrimaryPhone, bizSecondaryPhone, bizEmail,
             rezFirstName, rezLastName, rezPrimaryPhone, rezSecondaryPhone, rezEmail,
             streetNumber, streetName, streetType, streetTypeOther, apartmentUnit, streetDirection, postalCode,
             watchSlug, watchIcon, watchName,
-            tags, birthYear, gender, genderLabel, howDidYouHear, howDidYouHearLabel, howDidYouHearOther,
+            tags, tagOptions, birthYear, gender, genderLabel, howDidYouHear, howDidYouHearLabel, howDidYouHearOptions, howDidYouHearOther,
             meaning, expectations, willingToVolunteer, willingToVolunteerLabel, anotherHouseholdClientRegistered, anotherHouseholdClientRegisteredLabel, totalHouseholdCount, under18YearsHouseholdCount,
             companyEmployeeCount, companyYearsInOperation, companyType,
-        } = this.props.clientData;
+        } = this.props;
         const isBizTypeOf = typeOf === BUSINESS_TYPE_OF;
         const isRezOrCom = typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF;
 
@@ -38,8 +37,6 @@ export default class ClientFullRetrieveComponent extends Component {
         else if (typeOf === COMMUNITY_CARES_TYPE_OF) {
             clientshipClass = "Community Cares";
         }
-
-        const tagsAreValid = tags !== null && tags !== undefined;
 
         // Set the how did you hear.
         let howDidYouHearFinalLabel = howDidYouHearLabel;
@@ -66,25 +63,55 @@ export default class ClientFullRetrieveComponent extends Component {
                             <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;Argyle
+                            <i className="fas fa-plus"></i>&nbsp;Add
                         </li>
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
-                <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
+                <h1>
+                    <i className="fas fa-plus"></i>&nbsp;Add Client
+                </h1>
 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/client/${slug}`}>
-                                <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Summary</span>
+                            <Link to="/clients/add/step-1">
+                                <span className="num">1.</span><span className="">Search</span>
                             </Link>
                         </div>
-                        <div id="step-2" className="st-grey active">
+                        <div id="step-2" className="st-grey">
+                            <Link to="/clients/add/step-2">
+                                <span className="num">2.</span><span className="">Results</span>
+                            </Link>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <Link to="/clients/add/step-3">
+                                <span className="num">1.</span><span className="">Type</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={returnURL}>
+                                <span className="num">4.</span><span className="">Contact</span>
+                            </Link>
+                        </div>
+                        <div id="step-5" className="st-grey">
+                            <Link to="/clients/add/step-5">
+                                <span className="num">5.</span><span className="">Address</span>
+                            </Link>
+                        </div>
+                        <div id="step-6" className="st-grey">
+                            <Link to="/clients/add/step-6">
+                                <span className="num">6.</span><span className="">Watch</span>
+                            </Link>
+                        </div>
+                         <div id="step-7" className="st-grey">
+                            <Link to="/clients/add/step-7">
+                                <span className="num">7.</span><span className="">Metrics</span>
+                            </Link>
+                        </div>
+                        <div id="step-8" className="st-grey active">
                             <strong>
-                                <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
+                                <span className="num">8.</span><span className="">Review</span>
                             </strong>
                         </div>
                     </div>
@@ -94,11 +121,11 @@ export default class ClientFullRetrieveComponent extends Component {
                     <div className="col-md-10 mx-auto p-2">
 
                         <h2>
-                            <i className="fas fa-table"></i>&nbsp;Details
+                            <i className="fas fa-table"></i>&nbsp;Review
                         </h2>
 
                         <BootstrapErrorsProcessingAlert errors={errors} />
-
+                        <p><strong>Please confirm these details before adding the client:</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
@@ -251,8 +278,8 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Tags</th>
                                     <td>
-                                        {tagsAreValid && tags.map(
-                                            (tag, i) => <TagItem tag={tag} tagOptions={tagOptions} key={i} />)
+                                        {tags && tags.map(
+                                            (tag, i) => <TagItem tag={tag} key={i} />)
                                         }
                                     </td>
                                 </tr>
@@ -318,35 +345,20 @@ export default class ClientFullRetrieveComponent extends Component {
                                         <td>{companyType}</td>
                                     </tr>
                                 }
-
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
-                                    </th>
-                                </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <Link to={`/client/${slug}/promote/step-1`}>
-                                                    Promote&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </td>
+                                    <th scope="row" className="bg-light">User agrees to conditions</th>
+                                    <td>Yes</td>
                                 </tr>
+
 
                             </tbody>
                         </table>
                         <form>
                             <div className="form-group">
-                                <Link to={`/client/${slug}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
-                                    <i className="fas fa-edit"></i>&nbsp;Update
-                                </Link>
-                                <Link to={`/clients`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
+                                </button>
+                                <Link to="/clients/add/step-7" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
@@ -360,44 +372,11 @@ export default class ClientFullRetrieveComponent extends Component {
 }
 
 
-/**
- *  Function will take the tag value which was selected and find print it with
- *  the label from the tagOptions data.
- */
 class TagItem extends Component {
     render() {
-        const { tag, tagOptions } = this.props;
-        for (let i = 0; i < tagOptions.length; i++) {
-            let tagOption = tagOptions[i];
-            if (tagOption.value === tag) {
-                return (
-                    <span className="badge badge-info badge-lg" value={tag}>{tagOption.label}</span>
-                );
-            }
-        }
-        return (null);
-    };
-}
-
-
-/**
- *  Function will take the howDidYouHear value which was selected and find
- * print it with the label from the howDidYouHearOptions data.
- */
-class HowDidYouHearText extends Component {
-    render() {
-        const { howDidYouHear, howDidYouHearOther, howDidYouHearOptions } = this.props;
-        if (howDidYouHearOther !== null && howDidYouHearOther !== undefined && howDidYouHearOther !== "") {
-            return howDidYouHearOther;
-        }
-        for (let i = 0; i < howDidYouHearOptions.length; i++) {
-            let howDidYouHearOption = howDidYouHearOptions[i];
-            if (howDidYouHearOption.value === howDidYouHear) {
-                return (
-                    <span value={howDidYouHear}>{howDidYouHearOption.label}</span>
-                );
-            }
-        }
-        return (null);
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
     };
 }

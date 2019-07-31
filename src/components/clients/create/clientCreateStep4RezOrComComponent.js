@@ -8,9 +8,9 @@ import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 
 
-export default class ClientCreateStep1Component extends Component {
+class ClientCreateStep4RezOrComComponent extends Component {
     render() {
-        const { firstName, lastName, email, phone, errors, onTextChange, isLoading, onClick } = this.props;
+        const { firstName, lastName, primaryPhone, secondaryPhone, email, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -27,23 +27,31 @@ export default class ClientCreateStep1Component extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-plus"></i>&nbsp;Add Client</h1>
+                <h1>
+                    <i className="fas fa-plus"></i>&nbsp;Add Client
+                </h1>
 
                 <div className="row">
                     <div className="step-navigation">
-                        <div id="step-1" className="st-grey active">
-                            <strong>
+                        <div id="step-1" className="st-grey">
+                            <Link to="/clients/add/step-1">
                                 <span className="num">1.</span><span className="">Search</span>
-                            </strong>
+                            </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <span className="num">2.</span><span className="">Results</span>
+                            <Link to="/clients/add/step-2">
+                                <span className="num">2.</span><span className="">Results</span>
+                            </Link>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Type</span>
+                            <Link to="/clients/add/step-3">
+                                <span className="num">3.</span><span className="">Type</span>
+                            </Link>
                         </div>
-                        <div id="step-4" className="st-grey">
-                            <span className="num">4.</span><span className="">Contact</span>
+                        <div id="step-4" className="st-grey active">
+                            <strong>
+                                <span className="num">4.</span><span className="">Contact</span>
+                            </strong>
                         </div>
                         <div id="step-5" className="st-grey">
                             <span className="num">5.</span><span className="">Address</span>
@@ -63,7 +71,10 @@ export default class ClientCreateStep1Component extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h3>Search for existing client:</h3>
+                            <h2>
+                                <i className="fas fa-id-card"></i>&nbsp;Contact
+                            </h2>
+                            <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
@@ -71,7 +82,7 @@ export default class ClientCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.firstName}
-                                label="First Name"
+                                label="First Name (*)"
                                 onChange={onTextChange}
                                 value={firstName}
                                 name="firstName"
@@ -82,7 +93,7 @@ export default class ClientCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.lastName}
-                                label="Last Name"
+                                label="Last Name (*)"
                                 onChange={onTextChange}
                                 value={lastName}
                                 name="lastName"
@@ -92,11 +103,23 @@ export default class ClientCreateStep1Component extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.phone}
-                                label="Phone"
+                                error={errors.primaryPhone}
+                                label="Primary Phone (*)"
                                 onChange={onTextChange}
-                                value={phone}
-                                name="phone"
+                                value={primaryPhone}
+                                name="primaryPhone"
+                                type="text"
+                                placeholder="+1 (xxx) xxx-xxxx"
+                            />
+
+                            <BootstrapTelephoneInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.secondaryPhone}
+                                label="Secondary Phone"
+                                onChange={onTextChange}
+                                value={secondaryPhone}
+                                name="secondaryPhone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
@@ -105,7 +128,7 @@ export default class ClientCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.email}
-                                label="E-mail"
+                                label="Email (*)"
                                 onChange={onTextChange}
                                 value={email}
                                 name="email"
@@ -114,23 +137,20 @@ export default class ClientCreateStep1Component extends Component {
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    <i className="fas fa-search"></i>&nbsp;Search
+                                    Proceed to Address&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/clients" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
-                                    <i className="fas fa-arrow-circle-left"></i> Back
+                                <Link to="/clients/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
 
                         </form>
                     </div>
                 </div>
-                <div className="col-md-12 text-center">
-                    <h3 className="p-2">- or -</h3>
-                    <a href="/clients/add/step-3" role="button">
-                        Add New Client&nbsp;<i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
+
             </main>
         );
     }
 }
+
+export default ClientCreateStep4RezOrComComponent;

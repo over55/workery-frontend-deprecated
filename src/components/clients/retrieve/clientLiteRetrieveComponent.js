@@ -18,14 +18,14 @@ export default class ClientLiteRetrieveComponent extends Component {
                             <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user-circle"></i>&nbsp;Argyle
+                            <i className="fas fa-user"></i>&nbsp;Argyle
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user-circle"></i>&nbsp;View Client</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
 
                 <div className="row">
                     <div className="step-navigation">

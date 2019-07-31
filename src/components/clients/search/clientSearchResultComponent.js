@@ -43,7 +43,7 @@ class ListComponent extends Component {
             <div className="row">
                 <div className="col-md-12">
                     <h2>
-                        <i className="fas fa-search"></i>&nbsp;Search Results
+                        <i className="fas fa-list"></i>&nbsp;Search Results
                     </h2>
 
                     <BootstrapTable

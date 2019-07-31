@@ -12,8 +12,10 @@ class ClientListContainer extends Component {
 
     constructor(props) {
         super(props)
+
         this.state = {
-            advancedSearchActive: false
+            advancedSearchActive: false,
+            errors: {},
         }
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
@@ -82,6 +84,7 @@ class ClientListContainer extends Component {
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}
                 onAdvancedSearchClick={this.onAdvancedSearchClick}
+                errors={this.state.errors}
             />
         );
     }

@@ -3,13 +3,45 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import {
+    RESIDENCE_TYPE_OF,
+    BUSINESS_TYPE_OF,
+    COMMUNITY_CARES_TYPE_OF
+} from '../../../constants/api';
+import ClientBizUpdateFormComponent from "./clientBizUpdateFormComponent";
+import ClientComUpdateFormComponent from "./clientComUpdateFormComponent";
+import ClientRezUpdateFormComponent from "./clientRezUpdateFormComponent";
 
 
 class ClientUpdateComponent extends Component {
     render() {
-        const { slug, name, errors, onTextChange, isLoading, onClick } = this.props;
+        // Common
+        const { urlArgument, slug, typeOf, errors, onTextChange, onSelectChange, onRadioChange, onMultiChange, onDOBDateTimeChange, isLoading, onClick } = this.props;
+
+        // Biz - Contact
+        const { companyName, contactFirstName, contactLastName } = this.props;
+
+        // Rez - Contact
+        const { firstName, lastName, primaryPhone, secondaryPhone, email } = this.props;
+
+        // Address
+        const { streetNumber, streetName, streetType, streetTypeOptions, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOptions, postalCode } = this.props;
+
+        // Watches
+        const { watch, watchOptions } = this.props;
+
+        // Extra
+        const {
+            tags, tagOptions, birthYear, gender, howDidYouHear, howDidYouHearOptions, howDidYouHearOther,
+            meaning, expectations, willingToVolunteer, anotherHouseholdClientRegistered, totalHouseholdCount, under18YearsHouseholdCount,
+            companyEmployeeCount, companyYearsInOperation, companyType,
+        } = this.props;
+
+        // Check the type of client this is.
+        const isBiz = typeOf === BUSINESS_TYPE_OF;
+        const isRez = typeOf === RESIDENCE_TYPE_OF;
+        const isCom = typeOf === COMMUNITY_CARES_TYPE_OF;
+
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -18,10 +50,10 @@ class ClientUpdateComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Client</Link>
+                            <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/client/${slug}/full`}><i className="fas fa-user-circle"></i>&nbsp;Argyle</Link>
+                            <Link to={`/client/${slug}/full`}><i className="fas fa-user"></i>&nbsp;Argyle</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Update
@@ -37,16 +69,159 @@ class ClientUpdateComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
-                                onChange={onTextChange}
-                                value={name}
-                                name="name"
-                                type="text"
-                            />
+                            {isRez &&
+                                <ClientRezUpdateFormComponent
+                                    urlArgument={urlArgument}
+                                    slug={slug}
+                                    typeOf={typeOf}
+                                    errors={errors}
+                                    onTextChange={onTextChange}
+                                    onRadioChange={onRadioChange}
+                                    onSelectChange={onSelectChange}
+                                    onMultiChange={onMultiChange}
+                                    onDOBDateTimeChange={onDOBDateTimeChange}
+                                    isLoading={isLoading}
+                                    onClick={onClick}
+
+                                    firstName={firstName}
+                                    lastName={lastName}
+                                    primaryPhone={primaryPhone}
+                                    secondaryPhone={secondaryPhone}
+                                    email={email}
+
+                                    streetNumber={streetNumber}
+                                    streetName={streetName}
+                                    streetType={streetType}
+                                    streetTypeOptions={streetTypeOptions}
+                                    streetTypeOther={streetTypeOther}
+                                    apartmentUnit={apartmentUnit}
+                                    streetDirection={streetDirection}
+                                    streetDirectionOptions={streetDirectionOptions}
+                                    postalCode={postalCode}
+
+                                    watch={watch}
+                                    watchOptions={watchOptions}
+
+                                    tags={tags}
+                                    tagOptions={tagOptions}
+                                    birthYear={birthYear}
+                                    gender={gender}
+                                    howDidYouHear={howDidYouHear}
+                                    // howDidYouHearOption={howDidYouHearOption}
+                                    howDidYouHearOptions={howDidYouHearOptions}
+                                    howDidYouHearOther={howDidYouHearOther}
+                                    meaning={meaning}
+                                    expectations={expectations}
+                                    willingToVolunteer={willingToVolunteer}
+                                    anotherHouseholdClientRegistered={anotherHouseholdClientRegistered}
+                                    totalHouseholdCount={totalHouseholdCount}
+                                    under18YearsHouseholdCount={under18YearsHouseholdCount}
+                                />
+                            }
+
+                            {isBiz &&
+                                <ClientBizUpdateFormComponent
+                                    urlArgument={urlArgument}
+                                    slug={slug}
+                                    typeOf={typeOf}
+                                    errors={errors}
+                                    onTextChange={onTextChange}
+                                    onRadioChange={onRadioChange}
+                                    onSelectChange={onSelectChange}
+                                    onMultiChange={onMultiChange}
+                                    onDOBDateTimeChange={onDOBDateTimeChange}
+                                    isLoading={isLoading}
+                                    onClick={onClick}
+
+                                    companyName={companyName}
+                                    contactFirstName={contactFirstName}
+                                    contactLastName={contactLastName}
+                                    primaryPhone={primaryPhone}
+                                    secondaryPhone={secondaryPhone}
+                                    email={email}
+
+                                    streetNumber={streetNumber}
+                                    streetName={streetName}
+                                    streetType={streetType}
+                                    streetTypeOptions={streetTypeOptions}
+                                    streetTypeOther={streetTypeOther}
+                                    apartmentUnit={apartmentUnit}
+                                    streetDirection={streetDirection}
+                                    streetDirectionOptions={streetDirectionOptions}
+                                    postalCode={postalCode}
+
+                                    watch={watch}
+                                    watchOptions={watchOptions}
+
+                                    tags={tags}
+                                    tagOptions={tagOptions}
+                                    birthYear={birthYear}
+                                    gender={gender}
+                                    howDidYouHear={howDidYouHear}
+                                    // howDidYouHearOption={howDidYouHearOption}
+                                    howDidYouHearOptions={howDidYouHearOptions}
+                                    howDidYouHearOther={howDidYouHearOther}
+                                    meaning={meaning}
+                                    expectations={expectations}
+                                    willingToVolunteer={willingToVolunteer}
+                                    anotherHouseholdClientRegistered={anotherHouseholdClientRegistered}
+                                    totalHouseholdCount={totalHouseholdCount}
+                                    under18YearsHouseholdCount={under18YearsHouseholdCount}
+                                    companyEmployeeCount={companyEmployeeCount}
+                                    companyYearsInOperation={companyYearsInOperation}
+                                    companyType={companyType}
+                                />
+                            }
+
+                            {isCom &&
+                                <ClientComUpdateFormComponent
+                                    urlArgument={urlArgument}
+                                    slug={slug}
+                                    typeOf={typeOf}
+                                    errors={errors}
+                                    onTextChange={onTextChange}
+                                    onRadioChange={onRadioChange}
+                                    onSelectChange={onSelectChange}
+                                    onMultiChange={onMultiChange}
+                                    onDOBDateTimeChange={onDOBDateTimeChange}
+                                    isLoading={isLoading}
+                                    onClick={onClick}
+
+                                    firstName={firstName}
+                                    lastName={lastName}
+                                    primaryPhone={primaryPhone}
+                                    secondaryPhone={secondaryPhone}
+                                    email={email}
+
+                                    streetNumber={streetNumber}
+                                    streetName={streetName}
+                                    streetType={streetType}
+                                    streetTypeOptions={streetTypeOptions}
+                                    streetTypeOther={streetTypeOther}
+                                    apartmentUnit={apartmentUnit}
+                                    streetDirection={streetDirection}
+                                    streetDirectionOptions={streetDirectionOptions}
+                                    postalCode={postalCode}
+
+                                    watch={watch}
+                                    watchOptions={watchOptions}
+
+                                    tags={tags}
+                                    tagOptions={tagOptions}
+                                    birthYear={birthYear}
+                                    gender={gender}
+                                    howDidYouHear={howDidYouHear}
+                                    // howDidYouHearOption={howDidYouHearOption}
+                                    howDidYouHearOptions={howDidYouHearOptions}
+                                    howDidYouHearOther={howDidYouHearOther}
+                                    meaning={meaning}
+                                    expectations={expectations}
+                                    willingToVolunteer={willingToVolunteer}
+                                    anotherHouseholdClientRegistered={anotherHouseholdClientRegistered}
+                                    totalHouseholdCount={totalHouseholdCount}
+                                    under18YearsHouseholdCount={under18YearsHouseholdCount}
+                                />
+                            }
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>

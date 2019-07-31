@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientDemoteComponent from "../../../components/clients/demote/clientDemoteComponent";
+import { AREA_COORDINATOR_GROUP_ID, ASSOCIATE_GROUP_ID } from "../../../constants/api";
+import ClientPromoteStep3Component from "../../../components/clients/promote/clientPromoteStep3Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import {
-    DEMOTION_REASON_CHOICES, ASSOCIATE_DEMOTION_ROLE_CHOICES
-} from "../../../constants/api";
-import { validateDemotionInput } from "../../../validators/clientValidator";
+import { localStorageGetIntegerItem, localStorageGetBooleanItem, localStorageGetDateItem } from "../../../helpers/localStorageUtility";
 
 
-class ClientPromoteContainer extends Component {
+class ClientPromoteStep2Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -26,16 +24,16 @@ class ClientPromoteContainer extends Component {
         // Update state.
         this.state = {
             slug: slug,
-            errors: {},
-            role: "",
-            roleOptions: ASSOCIATE_DEMOTION_ROLE_CHOICES,
-            reason: "",
-            reasonOptions: DEMOTION_REASON_CHOICES,
-            reasonOther: "",
+            errors: [],
+            groupId: localStorageGetIntegerItem("nwapp-client-promote-group-id"),
+            areaCoordinatorAgreement: localStorageGetBooleanItem("nwapp-client-promote-areaCoordinatorAgreement"),
+            conflictOfInterestAgreement: localStorageGetBooleanItem("nwapp-client-promote-conflictOfInterestAgreement"),
+            codeOfConductAgreement: localStorageGetBooleanItem("nwapp-client-promote-codeOfConductAgreement"),
+            confidentialityAgreement: localStorageGetBooleanItem("nwapp-client-promote-confidentialityAgreement"),
+            associateAgreement: localStorageGetBooleanItem("nwapp-client-promote-associateAgreement"),
+            policeCheckDate: localStorageGetDateItem("nwapp-client-promote-policeCheckDate"),
         }
 
-        this.onTextChange = this.onTextChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -64,13 +62,10 @@ class ClientPromoteContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(member) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        this.setState({
-            isLoading: true,
-        })
-        this.props.setFlashMessage("success", "Area coordinator has been successfully demoted.");
-        this.props.history.push("/member/"+this.state.slug);
+    onSuccessfulSubmissionCallback(client) {
+        this.setState({ errors: {}, isLoading: true, })
+        this.props.setFlashMessage("success", "Client has been successfully created.");
+        this.props.history.push("/clients");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -96,29 +91,20 @@ class ClientPromoteContainer extends Component {
         })
     }
 
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            optionKey: option,
-        });
-        console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-    }
-
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-
-        // Perform client-side validation.
-        const { errors, isValid } = validateDemotionInput(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.onSuccessfulSubmissionCallback();
-
-        // CASE 2 OF 2: Validation was a failure.
+        this.setState({
+            isLoading: true,
+        })
+        this.props.setFlashMessage("success", "Client has been successfully promoted.");
+        if (this.state.groupId === AREA_COORDINATOR_GROUP_ID) {
+            this.props.history.push("/area-coordinator/"+this.state.slug+"/full");
+        }
+        else if (this.state.groupId === ASSOCIATE_GROUP_ID) {
+            this.props.history.push("/associate/"+this.state.slug+"/full");
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.props.history.push("/client/"+this.state.slug+"/full");
         }
     }
 
@@ -129,26 +115,26 @@ class ClientPromoteContainer extends Component {
      */
 
     render() {
-        const memberData = {
+        const clientData = {
             'slug': 'Argyle',
             'number': 1,
             'name': 'Argyle',
-            'absoluteUrl': '/member/argyle'
+            'absoluteUrl': '/client/argyle'
         };
         return (
-            <ClientDemoteComponent
+            <ClientPromoteStep3Component
                 slug={this.state.slug}
-                role={this.state.role}
-                roleOptions={this.state.roleOptions}
-                reason={this.state.reason}
-                reasonOptions={this.state.reasonOptions}
-                reasonOther={this.state.reasonOther}
-                memberData={memberData}
+                clientData={clientData}
+                groupId={this.state.groupId}
+                areaCoordinatorAgreement={this.state.areaCoordinatorAgreement}
+                conflictOfInterestAgreement={this.state.conflictOfInterestAgreement}
+                codeOfConductAgreement={this.state.codeOfConductAgreement}
+                confidentialityAgreement={this.state.confidentialityAgreement}
+                associateAgreement={this.state.associateAgreement}
+                policeCheckDate={this.state.policeCheckDate}
+                errors={this.state.errors}
                 onBack={this.onBack}
                 onClick={this.onClick}
-                errors={this.state.errors}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
             />
         );
     }
@@ -172,4 +158,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientPromoteContainer);
+)(ClientPromoteStep2Container);

@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientCreateStep2Component from "../../../components/clients/create/clientCreateStep2Component";
+import ClientCreateStep4BizComponent from "../../../components/clients/create/clientCreateStep4BizComponent";
+import { validateStep4BizCreateInput } from "../../../validators/clientValidator";
+import { BUSINESS_TYPE_OF } from '../../../constants/api';
 
 
-class ClientCreateStep2Container extends Component {
+class ClientCreateStep4BizContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -14,7 +16,12 @@ class ClientCreateStep2Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            companyName: localStorage.getItem("nwapp-create-client-biz-companyName"),
+            contactFirstName: localStorage.getItem("nwapp-create-client-biz-contactFirstName"),
+            contactLastName: localStorage.getItem("nwapp-create-client-biz-contactLastName"),
+            primaryPhone: localStorage.getItem("nwapp-create-client-biz-primaryPhone"),
+            secondaryPhone: localStorage.getItem("nwapp-create-client-biz-secondaryPhone"),
+            email: localStorage.getItem("nwapp-create-client-biz-email"),
             errors: {},
             isLoading: false
         }
@@ -32,6 +39,11 @@ class ClientCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // DEVELOPERS NOTE:
+        // Since we are in this page, we need to assign the user to be
+        // a business type user.
+        localStorage.setItem("nwapp-create-client-typeOf", BUSINESS_TYPE_OF);
     }
 
     componentWillUnmount() {
@@ -49,8 +61,7 @@ class ClientCreateStep2Container extends Component {
      */
 
     onSuccessfulSubmissionCallback(client) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/clients/add/step-3");
+        this.props.history.push("/clients/add/step-5");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -74,14 +85,27 @@ class ClientCreateStep2Container extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
+        const key = "nwapp-create-client-biz-"+[e.target.name];
+        localStorage.setItem(key, e.target.value);
     }
 
-    onClick(e, slug) {
+    onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        this.props.history.push("/client/"+slug);
+        // Perform client-side validation.
+        const { errors, isValid } = validateStep4BizCreateInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            this.onSuccessfulSubmissionCallback();
+
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.onFailedSubmissionCallback(errors);
+        }
     }
+
 
     /**
      *  Main render function
@@ -89,10 +113,15 @@ class ClientCreateStep2Container extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { companyName, contactFirstName, contactLastName, primaryPhone, secondaryPhone, email, errors } = this.state;
         return (
-            <ClientCreateStep2Component
-                name={name}
+            <ClientCreateStep4BizComponent
+                companyName={companyName}
+                contactFirstName={contactFirstName}
+                contactLastName={contactLastName}
+                primaryPhone={primaryPhone}
+                secondaryPhone={secondaryPhone}
+                email={email}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -108,12 +137,11 @@ const mapStateToProps = function(store) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-    }
+    return {}
 }
 
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientCreateStep2Container);
+)(ClientCreateStep4BizContainer);

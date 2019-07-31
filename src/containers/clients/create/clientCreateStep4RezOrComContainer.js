@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientCreateStep2Component from "../../../components/clients/create/clientCreateStep2Component";
+import ClientCreateStep4RezOrComComponent from "../../../components/clients/create/clientCreateStep4RezOrComComponent";
+import { validateStep4RezOrComCreateInput } from "../../../validators/clientValidator";
+import { RESIDENCE_TYPE_OF } from '../../../constants/api';
 
 
-class ClientCreateStep2Container extends Component {
+class ClientCreateStep4RezOrComContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -14,7 +16,11 @@ class ClientCreateStep2Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            firstName: localStorage.getItem("nwapp-create-client-rez-or-com-firstName"),
+            lastName: localStorage.getItem("nwapp-create-client-rez-or-com-lastName"),
+            primaryPhone: localStorage.getItem("nwapp-create-client-rez-or-com-primaryPhone"),
+            secondaryPhone: localStorage.getItem("nwapp-create-client-rez-or-com-secondaryPhone"),
+            email: localStorage.getItem("nwapp-create-client-rez-or-com-email"),
             errors: {},
             isLoading: false
         }
@@ -32,6 +38,12 @@ class ClientCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // DEVELOPERS NOTE:
+        // Since we are in this page, we need to assign the user to be
+        // a residential type user. If the user is community cares type
+        // then this variable will be set then in page 4.
+        localStorage.setItem("nwapp-create-client-typeOf", RESIDENCE_TYPE_OF);
     }
 
     componentWillUnmount() {
@@ -49,8 +61,7 @@ class ClientCreateStep2Container extends Component {
      */
 
     onSuccessfulSubmissionCallback(client) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/clients/add/step-3");
+        this.props.history.push("/clients/add/step-5");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -74,14 +85,27 @@ class ClientCreateStep2Container extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
+        const key = "nwapp-create-client-rez-or-com-"+[e.target.name];
+        localStorage.setItem(key, e.target.value);
     }
 
-    onClick(e, slug) {
+    onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        this.props.history.push("/client/"+slug);
+        // Perform client-side validation.
+        const { errors, isValid } = validateStep4RezOrComCreateInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            this.onSuccessfulSubmissionCallback();
+
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.onFailedSubmissionCallback(errors);
+        }
     }
+
 
     /**
      *  Main render function
@@ -89,10 +113,14 @@ class ClientCreateStep2Container extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { firstName, lastName, primaryPhone, secondaryPhone, email, errors } = this.state;
         return (
-            <ClientCreateStep2Component
-                name={name}
+            <ClientCreateStep4RezOrComComponent
+                firstName={firstName}
+                lastName={lastName}
+                primaryPhone={primaryPhone}
+                secondaryPhone={secondaryPhone}
+                email={email}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -108,12 +136,11 @@ const mapStateToProps = function(store) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-    }
+    return {}
 }
 
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientCreateStep2Container);
+)(ClientCreateStep4RezOrComContainer);

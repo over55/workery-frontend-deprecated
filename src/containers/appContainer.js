@@ -32,11 +32,19 @@ import ClientSearchContainer from "./clients/search/clientSearchContainer";
 import ClientSearchResultContainer from "./clients/search/clientSearchResultContainer";
 import ClientLiteRetrieveContainer from "./clients/retrieve/clientLiteRetrieveContainer";
 import ClientFullRetrieveContainer from "./clients/retrieve/clientFullRetrieveContainer";
-import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
 import ClientCreateStep1Container from "./clients/create/clientCreateStep1Container";
 import ClientCreateStep2Container from "./clients/create/clientCreateStep2Container";
 import ClientCreateStep3Container from "./clients/create/clientCreateStep3Container";
-import ClientDemoteContainer from "./clients/demote/clientDemoteContainer";
+import ClientCreateStep4BizContainer from "./clients/create/clientCreateStep4BizContainer";
+import ClientCreateStep4RezOrComContainer from "./clients/create/clientCreateStep4RezOrComContainer";
+import ClientCreateStep5Container from "./clients/create/clientCreateStep5Container";
+import ClientCreateStep6Container from "./clients/create/clientCreateStep6Container";
+import ClientCreateStep7Container from "./clients/create/clientCreateStep7Container";
+import ClientCreateStep8Container from "./clients/create/clientCreateStep8Container";
+import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
+import ClientPromoteStep1Container from "./clients/promote/clientPromoteStep1Container";
+import ClientPromoteStep2Container from "./clients/promote/clientPromoteStep2Container";
+import ClientPromoteStep3Container from "./clients/promote/clientPromoteStep3Container";
 
 // Associate
 import AssociateListContainer from "./associates/list/associateListContainer";
@@ -79,13 +87,21 @@ class AppContainer extends React.Component {
                                 <Route path="/clients/add/step-1" exact component={requiresAuth(ClientCreateStep1Container)} />
                                 <Route path="/clients/add/step-2" exact component={requiresAuth(ClientCreateStep2Container)} />
                                 <Route path="/clients/add/step-3" exact component={requiresAuth(ClientCreateStep3Container)} />
+                                <Route path="/clients/add/step-4-biz" exact component={requiresAuth(ClientCreateStep4BizContainer)} />
+                                <Route path="/clients/add/step-4-rez-or-cc" exact component={requiresAuth(ClientCreateStep4RezOrComContainer)} />
+                                <Route path="/clients/add/step-5" exact component={requiresAuth(ClientCreateStep5Container)} />
+                                <Route path="/clients/add/step-6" exact component={requiresAuth(ClientCreateStep6Container)} />
+                                <Route path="/clients/add/step-7" exact component={requiresAuth(ClientCreateStep7Container)} />
+                                <Route path="/clients/add/step-8" exact component={requiresAuth(ClientCreateStep8Container)} />
                                 <Route path="/clients" exact component={requiresAuth(ClientListContainer)} />
                                 <Route path="/clients/search" exact component={requiresAuth(ClientSearchContainer)} />
                                 <Route path="/clients/search-results" exact component={requiresAuth(ClientSearchResultContainer)} />
                                 <Route path="/client/:slug" exact component={requiresAuth(ClientLiteRetrieveContainer)} />
                                 <Route path="/client/:slug/full" exact component={requiresAuth(ClientFullRetrieveContainer)} />
                                 <Route path="/client/:slug/update" exact component={requiresAuth(ClientUpdateContainer)} />
-                                <Route path="/client/:slug/demote" exact component={requiresAuth(ClientDemoteContainer)} />
+                                <Route path="/client/:slug/promote/step-1" exact component={requiresAuth(ClientPromoteStep1Container)} />
+                                <Route path="/client/:slug/promote/step-2" exact component={requiresAuth(ClientPromoteStep2Container)} />
+                                <Route path="/client/:slug/promote/step-3" exact component={requiresAuth(ClientPromoteStep3Container)} />
 
                                 { /* ASSOCIATES */ }
                                 <Route path="/associates/add/step-1" exact component={requiresAuth(AssociateCreateStep1Container)} />
@@ -98,7 +114,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:slug/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
                                 <Route path="/associate/:slug/update" exact component={requiresAuth(AssociateUpdateContainer)} />
                                 <Route path="/associate/:slug/demote" exact component={requiresAuth(AssociateDemoteContainer)} />
-                                
+
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>

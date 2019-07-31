@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import ClientFullRetrieveComponent from "../../../components/clients/retrieve/clientFullRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { getHowHearReactSelectOptions } from "../../../actions/howHearAction";
+import { getTagReactSelectOptions } from "../../../actions/tagAction";
 import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
@@ -19,8 +21,6 @@ class ClientFullRetrieveContainer extends Component {
     constructor(props) {
         super(props);
 
-        // Since we are using the ``react-routes-dom`` library then we
-        // fetch the URL argument as follows.
         const { slug } = this.props.match.params;
 
         // Update state.
@@ -65,15 +65,31 @@ class ClientFullRetrieveContainer extends Component {
                     streetType: "Street",
                     streetTypeOption: "",
                     streetTypeOther: "",
+                    apartmentUnit: "Upper",
                     streetDirection: "North",
                     streetDirectionOption: "",
+                    postalCode: "N6J4X4",
                     watchSlug: "argyle",
                     watchIcon: "home",
                     watchName: "Argyle",
-                    dateOfBirth: new Date(),
-                    howDidYouHear: "Internet",
+                    tags:[
+                        "security", "fitness"
+                    ],
+                    // tags:[
+                    //     {selectName: "tags", value: "security", label: "Security"},
+                    //     {selectName: "tags", value: "fitness", label: "Fitness"}
+                    // ],
+                    birthYear: 1980,
+                    gender: 2,
+                    genderLabel: "Female",
+                    howDidYouHear: "internet",
                     howDidYouHearOption: "",
                     howDidYouHearOther: "",
+                    howDidYouHearLabel: "Internet",
+                    meaning: "Insert meaning here",
+                    expectations: "Insert expectations here",
+                    willingToVolunteerLabel: "Yes",
+                    anotherHouseholdClientRegisteredLabel: "Yes",
                 }
             });
         } else if (this.state.slug === 'byron') {
@@ -100,15 +116,30 @@ class ClientFullRetrieveContainer extends Component {
                     streetType: "Street",
                     streetTypeOption: "",
                     streetTypeOther: "",
+                    apartmentUnit: null,
                     streetDirection: "",
                     streetDirectionOption: "",
+                    postalCode: "N6J4X4",
                     watchSlug: "byron",
                     watchIcon: "building",
                     watchName: "Byron",
-                    dateOfBirth: new Date(),
-                    howDidYouHear: "Internet",
+                    tags:[
+                        "security", "fitness"
+                    ],
+                    birthYear: 1975,
+                    gender: 1,
+                    genderLabel: "Male",
+                    howDidYouHear: "internet",
                     howDidYouHearOption: "",
                     howDidYouHearOther: "",
+                    howDidYouHearLabel: "Internet",
+                    meaning: "Insert meaning here",
+                    expectations: "Insert expectations here",
+                    willingToVolunteerLabel: "No",
+                    anotherHouseholdClientRegisteredLabel: "No",
+                    companyEmployeeCount: 4,
+                    companyYearsInOperation: 1,
+                    companyType: "Construction Company",
                 }
             });
         } else if (this.state.slug === 'carling') {
@@ -135,18 +166,55 @@ class ClientFullRetrieveContainer extends Component {
                     streetType: "Street",
                     streetTypeOption: "",
                     streetTypeOther: "",
+                    apartmentUnit: null,
                     streetDirection: "",
                     streetDirectionOption: "",
+                    postalCode: "N6J4X4",
                     watchSlug: "carling",
                     watchIcon: "university",
                     watchName: "Carling",
-                    dateOfBirth: new Date(),
-                    howDidYouHear: "Internet",
+                    tags:[
+                        "security", "fitness"
+                    ],
+                    birthYear: 1985,
+                    gender: 0,
+                    genderLabel: "Prefer not to say",
+                    howDidYouHear: "internet",
                     howDidYouHearOption: "",
                     howDidYouHearOther: "",
+                    howDidYouHearLabel: "Internet",
+                    meaning: "Insert meaning here",
+                    expectations: "Insert expectations here",
+                    willingToVolunteerLabel: "Maybe",
+                    anotherHouseholdClientRegisteredLabel: "Yes",
                 }
             });
         }
+
+        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
+        this.setState({
+            howDidYouHearData: {
+                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
+                    name: 'Word of mouth',
+                    slug: 'word-of-mouth'
+                },{
+                    name: 'Internet',
+                    slug: 'internet'
+                }]
+            },
+            tagsData: {
+                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
+                    name: 'Health',
+                    slug: 'health'
+                },{
+                    name: 'Security',
+                    slug: 'security'
+                },{
+                    name: 'Fitness',
+                    slug: 'fitness'
+                }]
+            }
+        });
     }
 
     componentWillUnmount() {
@@ -186,11 +254,15 @@ class ClientFullRetrieveContainer extends Component {
      */
 
     render() {
+        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
+        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
         return (
             <ClientFullRetrieveComponent
                 slug={this.state.slug}
                 clientData={this.state.clientData}
                 flashMessage={this.props.flashMessage}
+                tagOptions={tagOptions}
+                howDidYouHearOptions={howDidYouHearOptions}
             />
         );
     }

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientCreateStep2Component from "../../../components/clients/create/clientCreateStep2Component";
+import ClientPromoteStep1Component from "../../../components/clients/promote/clientPromoteStep1Component";
 
 
-class ClientCreateStep2Container extends Component {
+class ClientPromoteStep1Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -13,13 +13,16 @@ class ClientCreateStep2Container extends Component {
 
     constructor(props) {
         super(props);
+
+        // Since we are using the ``react-routes-dom`` library then we
+        // fetch the URL argument as follows.
+        const { slug } = this.props.match.params;
+
+        // Update state.
         this.state = {
-            name: null,
-            errors: {},
-            isLoading: false
+            slug: slug,
         }
 
-        this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -50,7 +53,8 @@ class ClientCreateStep2Container extends Component {
 
     onSuccessfulSubmissionCallback(client) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/clients/add/step-3");
+        this.props.setFlashMessage("success", "Client has been successfully created.");
+        this.props.history.push("/clients");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -76,12 +80,16 @@ class ClientCreateStep2Container extends Component {
         })
     }
 
-    onClick(e, slug) {
+    onClick(e, groupId) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        this.props.history.push("/client/"+slug);
+        // Set our promotion group id.
+        localStorage.setItem("nwapp-client-promote-group-id", groupId);
+
+        this.props.history.push("/client/"+this.state.slug+"/promote/step-2");
     }
+
 
     /**
      *  Main render function
@@ -89,12 +97,17 @@ class ClientCreateStep2Container extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const clientData = {
+            'slug': 'Argyle',
+            'number': 1,
+            'name': 'Argyle',
+            'absoluteUrl': '/client/argyle'
+        };
         return (
-            <ClientCreateStep2Component
-                name={name}
-                errors={errors}
-                onTextChange={this.onTextChange}
+            <ClientPromoteStep1Component
+                slug={this.state.slug}
+                clientData={clientData}
+                onBack={this.onBack}
                 onClick={this.onClick}
             />
         );
@@ -108,12 +121,11 @@ const mapStateToProps = function(store) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-    }
+    return {}
 }
 
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientCreateStep2Container);
+)(ClientPromoteStep1Container);
