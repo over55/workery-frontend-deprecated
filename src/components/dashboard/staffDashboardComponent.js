@@ -10,7 +10,7 @@ export default class StaffDashboardComponent extends Component {
         const { dashboard } = this.props;
         const {
             customerCount, jobCount, memberCount, taskCount,
-            bulletinBoardItems, jobHistory
+            bulletinBoardItems, jobHistory, associateNews, teamJobHistory
         } = dashboard;
         return (
             <div className="container-fluid">
@@ -56,12 +56,10 @@ export default class StaffDashboardComponent extends Component {
                             </div>
                         </section>
 
-                        <AnnouncementComponent bulletinBoardItems={bulletinBoardItems} />
+                        <BulletinBoardComponent bulletinBoardItems={bulletinBoardItems} />
                         <JobHistoryComponent jobHistory={jobHistory} />
-
-
-
-
+                        <AssociateNewsComponent associateNews={associateNews} />
+                        <TeamJobHistoryComponent teamJobHistory={teamJobHistory} />
 
                     </main>
                 </div>
@@ -71,7 +69,7 @@ export default class StaffDashboardComponent extends Component {
 }
 
 
-class AnnouncementComponent extends Component {
+class BulletinBoardComponent extends Component {
     render() {
         const { bulletinBoardItems } = this.props
         if (bulletinBoardItems === null || bulletinBoardItems === undefined || isEmpty(bulletinBoardItems)) {
@@ -143,6 +141,10 @@ class JobHistoryComponent extends Component {
             );
         } else {
             const columns = [{
+                dataField: 'jobID',
+                text: 'Job #',
+                sort: false
+            },{
                 dataField: 'clientName',
                 text: 'Client Name',
                 sort: false
@@ -182,6 +184,7 @@ class JobHistoryComponent extends Component {
     }
 }
 
+
 function jobHistoryLinkFormatter(cell, row){
     return (
         <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
@@ -192,69 +195,143 @@ function jobHistoryLinkFormatter(cell, row){
 
 
 
-class RecentTaskListComponent extends Component {
+class AssociateNewsComponent extends Component {
     render() {
-        const { latestTasks } = this.props;
+        const { associateNews } = this.props
+        if (associateNews === null || associateNews === undefined || isEmpty(associateNews)) {
+            return (
+                <div className="jumbotron">
+                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Associate News</h1>
+                    <p className="lead">There are no news. Feel free to add one.</p>
 
-        const columns = [{
-            dataField: 'watchName',
-            text: 'Watch Name',
-            sort: false
-        },{
-            dataField: 'prettyTypeOf',
-            text: 'Type',
-            sort: false
-        },{
-            dataField: 'slug',
-            text: '',
-            sort: false,
-            formatter: recentTaskLinkFormatter
-        }];
-
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-list"></i>&nbsp;Recent Task List
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ latestTasks }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        noDataIndication="There are no recent tasks at the moment"
-                    />
-
-                    <Link to="/tasks" className="float-right">See more&nbsp;<i className="fas fa-chevron-right"></i></Link>
-
+                    <p className="lead">
+                        <Link className="btn btn-success btn-lg" to="/settings/announcements">
+                            <i className="fas fa-plus"></i>&nbsp;Add
+                        </Link>
+                    </p>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            const columns = [{
+                dataField: 'associateName',
+                text: 'Assocate Name',
+                sort: false,
+                formatter: associateLinkFormatter
+            },{
+                dataField: 'reason',
+                text: 'Reason',
+                sort: false
+            },{
+                dataField: 'start',
+                text: 'Start',
+                sort: false
+            },{
+                dataField: 'awayUntil',
+                text: 'Away Until',
+                sort: false
+            }];
+
+            return (
+                <div className="jumbotron">
+                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Associate News</h1>
+                    <div class="table-responsive-sm my-3">
+                        <BootstrapTable
+                            bootstrap4
+                            keyField='id'
+                            data={ associateNews }
+                            columns={ columns }
+                            striped
+                            bordered={ false }
+                            noDataIndication="There are no recent tasks at the moment"
+                        />
+                        <p class="lead">
+                            <Link className="btn btn-primary btn-lg px-4" to="#" role="button">
+                                <i className="fas fa-plus"></i>&nbsp;Add
+                            </Link>
+                        </p>
+                    </div>
+                </div>
+            );
+        }
+
     }
 }
 
 
-function recentTaskLinkFormatter(cell, row){
-    // DEVELOPERS NOTE:
-    // WE ARE ASSIGNING AN ID TO THE URL. THIS IS WHERE WE NEED TO ADD MORE IDS
-    // IF HAVE MORE DIFFERENT TYPES.
-    let typeOfID = 0;
-    switch(row.typeOf) {
-        case "unassigned-watch-associate":
-            typeOfID = 1;
-            break;
-        case "unassigned-watch-area-coordinator":
-            typeOfID = 2;
-            break;
-        default:
-           typeOfID = 0;
-           break;
-    }
+function associateLinkFormatter(cell, row){
     return (
-        <Link to={`/task/${typeOfID}/${row.slug}/step-1`}>
+        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+            {row.associateName}
+        </Link>
+    )
+}
+
+
+class TeamJobHistoryComponent extends Component {
+    render() {
+        const { teamJobHistory } = this.props
+        if (teamJobHistory === null || teamJobHistory === undefined || isEmpty(teamJobHistory)) {
+            return (
+                <div className="jumbotron">
+                    <h1 className="display-4"><i className="fas fa-users"></i>&nbsp;Team Job History</h1>
+                    <p className="lead">There are no jobs. Feel free to add one.</p>
+
+                    <p className="lead">
+                        <Link className="btn btn-success btn-lg" to="/settings/announcements">
+                            <i className="fas fa-plus"></i>&nbsp;Add
+                        </Link>
+                    </p>
+                </div>
+            );
+        } else {
+            const columns = [{
+                dataField: 'jobID',
+                text: 'Job #',
+                sort: false
+            },{
+                dataField: 'clientName',
+                text: 'Client Name',
+                sort: false
+            },{
+                dataField: 'associateName',
+                text: 'Associate Name',
+                sort: false
+            },{
+                dataField: 'lastModified',
+                text: 'Last Modified',
+                sort: false
+            },,{
+                dataField: 'id',
+                text: '',
+                sort: false,
+                formatter: teamJobHistoryLinkFormatter
+            }];
+
+            return (
+                <div>
+                    <h1 className="display-4"><i className="fas fa-users"></i>&nbsp;Team Job History</h1>
+                    <div class="table-responsive-sm my-3">
+                        <BootstrapTable
+                            bootstrap4
+                            keyField='id'
+                            data={ teamJobHistory }
+                            columns={ columns }
+                            striped
+                            bordered={ false }
+                            noDataIndication="There are no recent jobs at the moment"
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+    }
+}
+
+
+function teamJobHistoryLinkFormatter(cell, row){
+    return (
+        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )

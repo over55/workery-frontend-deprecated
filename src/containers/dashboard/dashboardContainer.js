@@ -106,13 +106,36 @@ class DashboardContainer extends Component {
             jobHistory: [
                 {
                     id: 1,
+                    jobID: 111,
                     clientName: "Frank Herbert",
                     associateName: "Vladimir Harkonan",
                     lastModified: "2019-01-01"
                 }
             ],
-            associateNews: [],
-            teamJobHistory: [],
+            associateNews: [
+                {
+                    id: 1,
+                    associateName: "Bob Page",
+                    reason: "Busy taking over the world.",
+                    start: "2019-01-01",
+                    awayUntil: "Further notice",
+                },{
+                    id: 2,
+                    associateName: "Walter Simons",
+                    reason: "Busy running UNATCO.",
+                    start: "2019-06-01",
+                    awayUntil: "2019-09-01",
+                }
+            ],
+            teamJobHistory: [
+                {
+                    id: 1,
+                    jobID: 111,
+                    clientName: "Frank Herbert",
+                    associateName: "Vladimir Harkonan",
+                    lastModified: "2019-01-01"
+                }
+            ],
             commentsHistory: [],
         }
         return (
