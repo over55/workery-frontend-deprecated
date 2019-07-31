@@ -69,7 +69,7 @@ class SharedOrganizationListComponent extends Component {
                                     <h1 className="circle-title">2,200</h1>
                                 </Link>
                             </div>
-                            <h4>Associate Members</h4>
+                            <h4>Client Members</h4>
                             <span className="text-muted">View Member Data</span>
                         </div>
                         <div className="col-sm-3 placeholder">

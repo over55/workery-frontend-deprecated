@@ -41,54 +41,9 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         url: "/dashboard"
     },{
         id: "full-members",
-        icon: "users",
-        title: "Members",
-        url: "/members"
-    },{
-        id: "full-area-coordinator",
-        icon: "horse-head",
-        title: "Area Coordinators",
-        url: "/area-coordinators"
-    },{
-        id: "full-associates",
-        icon: "crown",
-        title: "Associates",
-        url: "/associates"
-    },{
-        id: "full-watches",
-        icon: "shield-alt",
-        title: "Watches",
-        url: "/watches"
-    },{
-        id: "full-items",
-        icon: "map-pin",
-        title: "Items",
-        url: "/items"
-    },{
-        id: "full-tasks",
-        icon: "tasks",
-        title: "Tasks",
-        url: "/tasks"
-    },{
-        id: "full-financials",
-        icon: "credit-card",
-        title: "Financials",
-        url: "/financials"
-    },{
-        id: "full-reports",
-        icon: "book",
-        title: "Reports",
-        url: "/reports"
-    },{
-        id: "full-staff",
-        icon: "user-tie",
-        title: "Staff",
-        url: "/staff"
-    },{
-        id: "full-settings",
-        icon: "cogs",
-        title: "Settings",
-        url: "/settings"
+        icon: "user-circle",
+        title: "Clients",
+        url: "/clients"
     },{
         id: "full-help",
         icon: "question-circle",
@@ -111,49 +66,9 @@ const AUTH_FRONTLINE_STAFF_MENU_DATA = [
         url: "/dashboard"
     },{
         id: "full-members",
-        icon: "users",
-        title: "Members",
-        url: "/members"
-    },{
-        id: "full-area-coordinator",
-        icon: "horse-head",
-        title: "Area Coordinators",
-        url: "/area-coordinators"
-    },{
-        id: "full-associates",
-        icon: "crown",
-        title: "Associates",
-        url: "/associates"
-    },{
-        id: "full-watches",
-        icon: "shield-alt",
-        title: "Watches",
-        url: "/watches"
-    },{
-        id: "full-items",
-        icon: "map-pin",
-        title: "Items",
-        url: "/items"
-    },{
-        id: "full-tasks",
-        icon: "tasks",
-        title: "Tasks",
-        url: "/tasks"
-    },{
-        id: "full-reports",
-        icon: "book",
-        title: "Reports",
-        url: "/reports"
-    },{
-        id: "full-staff",
-        icon: "user-tie",
-        title: "Staff",
-        url: "/staff"
-    },{
-        id: "full-settings",
-        icon: "cogs",
-        title: "Settings",
-        url: "/settings"
+        icon: "user-circle",
+        title: "Clients",
+        url: "/clients"
     },{
         id: "full-help",
         icon: "question-circle",

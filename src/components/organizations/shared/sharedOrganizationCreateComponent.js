@@ -43,7 +43,7 @@ class SharedOrganizationCreateComponent extends Component {
                                 value={schema}
                                 name="schema"
                                 type="text"
-                                helpText="This is the subdomain associated with the tenant. Value must be uniue and cannot be changed afterwords!"
+                                helpText="This is the subdomain clientd with the tenant. Value must be uniue and cannot be changed afterwords!"
                             />
 
                             <BootstrapInput

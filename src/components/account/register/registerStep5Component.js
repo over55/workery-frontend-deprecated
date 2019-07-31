@@ -172,7 +172,7 @@ export default class RegisterStep5Component extends Component {
                                 inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
                                 error={errors.willingToVolunteer}
-                                label="Are you willing to volunteer as a area coordinator / associate ? (*)"
+                                label="Are you willing to volunteer as a area coordinator / client ? (*)"
                                 name="willingToVolunteer"
                                 onChange={onRadioChange}
                                 selectedValue={willingToVolunteer}

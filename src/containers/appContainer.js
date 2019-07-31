@@ -26,6 +26,18 @@ import SharedOrganizationCreateContainer from "./organization/shared/sharedOrgan
 import TenantDashboardRedirectContainer from "./dashboard/tenantDashboardRedirectContainer";
 import DashboardContainer from "./dashboard/dashboardContainer";
 
+// Client
+import ClientListContainer from "./clients/list/clientListContainer";
+import ClientSearchContainer from "./clients/search/clientSearchContainer";
+import ClientSearchResultContainer from "./clients/search/clientSearchResultContainer";
+import ClientLiteRetrieveContainer from "./clients/retrieve/clientLiteRetrieveContainer";
+import ClientFullRetrieveContainer from "./clients/retrieve/clientFullRetrieveContainer";
+import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
+import ClientCreateStep1Container from "./clients/create/clientCreateStep1Container";
+import ClientCreateStep2Container from "./clients/create/clientCreateStep2Container";
+import ClientCreateStep3Container from "./clients/create/clientCreateStep3Container";
+import ClientDemoteContainer from "./clients/demote/clientDemoteContainer";
+
 
 class AppContainer extends React.Component {
     render() {
@@ -51,6 +63,19 @@ class AppContainer extends React.Component {
                                 <Route path="/organization/add" exact component={requiresAuth(SharedOrganizationCreateContainer)} />
                                 <Route path="/dashboard-redirect/:accessToken/:refreshToken" exact component={TenantDashboardRedirectContainer} />
                                 <Route path="/dashboard" exact component={requiresAuth(DashboardContainer)} />
+
+                                { /* CLIENTS */ }
+                                <Route path="/clients/add/step-1" exact component={requiresAuth(ClientCreateStep1Container)} />
+                                <Route path="/clients/add/step-2" exact component={requiresAuth(ClientCreateStep2Container)} />
+                                <Route path="/clients/add/step-3" exact component={requiresAuth(ClientCreateStep3Container)} />
+                                <Route path="/clients" exact component={requiresAuth(ClientListContainer)} />
+                                <Route path="/clients/search" exact component={requiresAuth(ClientSearchContainer)} />
+                                <Route path="/clients/search-results" exact component={requiresAuth(ClientSearchResultContainer)} />
+                                <Route path="/client/:slug" exact component={requiresAuth(ClientLiteRetrieveContainer)} />
+                                <Route path="/client/:slug/full" exact component={requiresAuth(ClientFullRetrieveContainer)} />
+                                <Route path="/client/:slug/update" exact component={requiresAuth(ClientUpdateContainer)} />
+                                <Route path="/client/:slug/demote" exact component={requiresAuth(ClientDemoteContainer)} />
+
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>

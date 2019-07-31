@@ -10,7 +10,7 @@ export default class StaffDashboardComponent extends Component {
         const { dashboard } = this.props;
         const {
             customerCount, jobCount, memberCount, taskCount,
-            bulletinBoardItems, jobHistory, associateNews, teamJobHistory, commentHistory
+            bulletinBoardItems, jobHistory, clientNews, teamJobHistory, commentHistory
         } = dashboard;
         return (
             <div className="container-fluid">
@@ -20,11 +20,11 @@ export default class StaffDashboardComponent extends Component {
                         <section className="row text-center placeholders">
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/members" className="d-block link-ndecor" title="Clients">
+                                    <Link to="/clients" className="d-block link-ndecor" title="Clients">
                                         <h1 className="circle-title">{customerCount}</h1>
                                     </Link>
                                 </div>
-                                <h4><i className="fas fa-users"></i>&nbsp;Clients</h4>
+                                <h4><i className="fas fa-user-circle"></i>&nbsp;Clients</h4>
                                 <div className="text-muted">View Clients</div>
                             </div>
                             <div className="col-sm-3 placeholder">
@@ -38,7 +38,7 @@ export default class StaffDashboardComponent extends Component {
                             </div>
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dblue">
-                                    <Link to="/associates" className="d-block link-ndecor" title="Members">
+                                    <Link to="/clients" className="d-block link-ndecor" title="Members">
                                         <h1 className="circle-title">{memberCount}</h1>
                                     </Link>
                                 </div>
@@ -58,7 +58,7 @@ export default class StaffDashboardComponent extends Component {
 
                         <BulletinBoardComponent bulletinBoardItems={bulletinBoardItems} />
                         <JobHistoryComponent jobHistory={jobHistory} />
-                        <AssociateNewsComponent associateNews={associateNews} />
+                        <ClientNewsComponent clientNews={clientNews} />
                         <TeamJobHistoryComponent teamJobHistory={teamJobHistory} />
                         <CommentHistoryComponent commentHistory={commentHistory} />
 
@@ -150,8 +150,8 @@ class JobHistoryComponent extends Component {
                 text: 'Client Name',
                 sort: false
             },{
-                dataField: 'associateName',
-                text: 'Associate Name',
+                dataField: 'clientName',
+                text: 'Client Name',
                 sort: false
             },{
                 dataField: 'lastModified',
@@ -196,13 +196,13 @@ function jobHistoryLinkFormatter(cell, row){
 
 
 
-class AssociateNewsComponent extends Component {
+class ClientNewsComponent extends Component {
     render() {
-        const { associateNews } = this.props
-        if (associateNews === null || associateNews === undefined || isEmpty(associateNews)) {
+        const { clientNews } = this.props
+        if (clientNews === null || clientNews === undefined || isEmpty(clientNews)) {
             return (
                 <div className="jumbotron">
-                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Associate News</h1>
+                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Client News</h1>
                     <p className="lead">There are no news. Feel free to add one.</p>
 
                     <p className="lead">
@@ -214,10 +214,10 @@ class AssociateNewsComponent extends Component {
             );
         } else {
             const columns = [{
-                dataField: 'associateName',
+                dataField: 'clientName',
                 text: 'Assocate Name',
                 sort: false,
-                formatter: associateLinkFormatter
+                formatter: clientLinkFormatter
             },{
                 dataField: 'reason',
                 text: 'Reason',
@@ -234,12 +234,12 @@ class AssociateNewsComponent extends Component {
 
             return (
                 <div className="jumbotron">
-                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Associate News</h1>
+                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Client News</h1>
                     <div class="table-responsive-sm my-3">
                         <BootstrapTable
                             bootstrap4
                             keyField='id'
-                            data={ associateNews }
+                            data={ clientNews }
                             columns={ columns }
                             striped
                             bordered={ false }
@@ -259,10 +259,10 @@ class AssociateNewsComponent extends Component {
 }
 
 
-function associateLinkFormatter(cell, row){
+function clientLinkFormatter(cell, row){
     return (
         <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
-            {row.associateName}
+            {row.clientName}
         </Link>
     )
 }
@@ -294,8 +294,8 @@ class TeamJobHistoryComponent extends Component {
                 text: 'Client Name',
                 sort: false
             },{
-                dataField: 'associateName',
-                text: 'Associate Name',
+                dataField: 'clientName',
+                text: 'Client Name',
                 sort: false
             },{
                 dataField: 'lastModified',
