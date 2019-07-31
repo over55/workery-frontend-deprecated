@@ -8,7 +8,10 @@ import isEmpty from 'lodash/isEmpty';
 export default class StaffDashboardComponent extends Component {
     render() {
         const { dashboard } = this.props;
-        const { customerCount, jobCount, memberCount, taskCount, bulletinBoardItems } = dashboard;
+        const {
+            customerCount, jobCount, memberCount, taskCount,
+            bulletinBoardItems, jobHistory
+        } = dashboard;
         return (
             <div className="container-fluid">
                 <div className="d-flex align-items-stretch">
@@ -54,6 +57,7 @@ export default class StaffDashboardComponent extends Component {
                         </section>
 
                         <AnnouncementComponent bulletinBoardItems={bulletinBoardItems} />
+                        <JobHistoryComponent jobHistory={jobHistory} />
 
 
 
@@ -115,6 +119,77 @@ class AnnouncementComponent extends Component {
 
     }
 }
+
+
+
+/**
+ *  LATEST ORDERS BY YOU
+ */
+class JobHistoryComponent extends Component {
+    render() {
+        const { jobHistory } = this.props
+        if (jobHistory === null || jobHistory === undefined || isEmpty(jobHistory)) {
+            return (
+                <div className="jumbotron">
+                    <h1 className="display-4"><i className="fas fa-wrench"></i>&nbsp;Job History</h1>
+                    <p className="lead">There are no jobs. Feel free to add one.</p>
+
+                    <p className="lead">
+                        <Link className="btn btn-success btn-lg" to="/settings/announcements">
+                            <i className="fas fa-plus"></i>&nbsp;Add
+                        </Link>
+                    </p>
+                </div>
+            );
+        } else {
+            const columns = [{
+                dataField: 'clientName',
+                text: 'Client Name',
+                sort: false
+            },{
+                dataField: 'associateName',
+                text: 'Associate Name',
+                sort: false
+            },{
+                dataField: 'lastModified',
+                text: 'Last Modified',
+                sort: false
+            },,{
+                dataField: 'id',
+                text: '',
+                sort: false,
+                formatter: jobHistoryLinkFormatter
+            }];
+
+            return (
+                <div>
+                    <h1 className="display-4"><i className="fas fa-wrench"></i>&nbsp;Job History</h1>
+                    <div class="table-responsive-sm my-3">
+                        <BootstrapTable
+                            bootstrap4
+                            keyField='id'
+                            data={ jobHistory }
+                            columns={ columns }
+                            striped
+                            bordered={ false }
+                            noDataIndication="There are no recent jobs at the moment"
+                        />
+                    </div>
+                </div>
+            );
+        }
+
+    }
+}
+
+function jobHistoryLinkFormatter(cell, row){
+    return (
+        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+            View&nbsp;<i className="fas fa-chevron-right"></i>
+        </Link>
+    )
+}
+
 
 
 class RecentTaskListComponent extends Component {

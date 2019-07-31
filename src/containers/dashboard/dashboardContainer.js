@@ -103,7 +103,14 @@ class DashboardContainer extends Component {
                     text: "6/18/19 - TO ALL STAFF - Do not follow up on Harkonan or Ix jobs. Speak to Paul, or Leto in the office prior to taking any actions."
                 }
             ],
-            jobHistory: [],
+            jobHistory: [
+                {
+                    id: 1,
+                    clientName: "Frank Herbert",
+                    associateName: "Vladimir Harkonan",
+                    lastModified: "2019-01-01"
+                }
+            ],
             associateNews: [],
             teamJobHistory: [],
             commentsHistory: [],
