@@ -7,11 +7,11 @@ export const APP_STATE = 'APP_STATE';
  *  The API web-services endpoints.
  */
 export const NWAPP_API_BASE_PATH = '/api'
-export const NWAPP_LOGIN_API_ENDPOINT = '/v1/login';
-export const NWAPP_REFRESH_TOKEN_API_ENDPOINT = '/v1/refresh-token';
-export const NWAPP_PROFILE_API_ENDPOINT = '/v1/profile';
-export const NWAPP_TENANT_LIST_API_ENDPOINT = '/v1/tenants';
-export const NWAPP_DASHBOARD_API_ENDPOINT = '/v1/dashboard';
+export const NWAPP_LOGIN_API_ENDPOINT = '/login';
+export const NWAPP_REFRESH_TOKEN_API_ENDPOINT = '/refresh-token';
+export const NWAPP_PROFILE_API_ENDPOINT = '/profile';
+export const NWAPP_TENANT_LIST_API_ENDPOINT = '/tenants';
+export const NWAPP_DASHBOARD_API_ENDPOINT = '/dashboard';
 
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
