@@ -99,6 +99,10 @@ import StaffCreateStep2Container from "./staff/create/staffCreateStep2Container"
 import StaffFullRetrieveContainer from "./staff/retrieve/staffFullRetrieveContainer";
 import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContainer";
 
+// Reports
+import ReportListContainer from "./reports/reportListContainer";
+
+
 
 class AppContainer extends React.Component {
     render() {
@@ -201,6 +205,9 @@ class AppContainer extends React.Component {
                                 <Route path="/staff/:slug" exact component={requiresAuth(StaffLiteRetrieveContainer)} />
                                 <Route path="/staff/:slug/full" exact component={requiresAuth(StaffFullRetrieveContainer)} />
                                 <Route path="/staff/:slug/update" exact component={requiresAuth(StaffUpdateContainer)} />
+
+                                { /* REPORTS */ }
+                                <Route path="/reports" exact component={requiresAuth(ReportListContainer)} />
 
                                 <Route component={NotFound404Container} />
                             </Switch>
