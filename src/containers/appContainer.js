@@ -107,7 +107,11 @@ class AppContainer extends React.Component {
                         <main id="main" role="main">
                             <ScrollUpButton />
                             <Switch>
+                                { /* ACCOUNT + GENERAL */}
                                 <Route path="/" exact component={LoginContainer} />
+                                <Route path="/privacy" exact component={PrivacyContainer} />
+                                <Route path="/terms" exact component={TermsContainer} />
+                                <Route path="/help" exact component={HelpContainer} />
                                 <Route path="/login" exact component={LoginContainer} />
                                 <Route path="/logout" exact component={LogoutContainer} />
                                 <Route path="/organizations" exact component={requiresAuth(SharedOrganizationListContainer)} />

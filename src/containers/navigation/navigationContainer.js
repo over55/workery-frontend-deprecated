@@ -40,10 +40,25 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         title: "Dashboard",
         url: "/dashboard"
     },{
-        id: "full-members",
+        id: "full-tasks",
+        icon: "tasks",
+        title: "Tasks",
+        url: "/tasks"
+    },{
+        id: "full-clients",
         icon: "user-circle",
         title: "Clients",
         url: "/clients"
+    },{
+        id: "full-jobs",
+        icon: "wrench",
+        title: "Jobs",
+        url: "/orders"
+    },{
+        id: "full-associates",
+        icon: "crown",
+        title: "Associates",
+        url: "/associates"
     },{
         id: "full-help",
         icon: "question-circle",
@@ -65,10 +80,25 @@ const AUTH_FRONTLINE_STAFF_MENU_DATA = [
         title: "Dashboard",
         url: "/dashboard"
     },{
-        id: "full-members",
+        id: "full-tasks",
+        icon: "tasks",
+        title: "Tasks",
+        url: "/tasks"
+    },{
+        id: "full-clients",
         icon: "user-circle",
         title: "Clients",
         url: "/clients"
+    },{
+        id: "full-jobs",
+        icon: "wrench",
+        title: "Jobs",
+        url: "/orders"
+    },{
+        id: "full-associates",
+        icon: "crown",
+        title: "Associates",
+        url: "/associates"
     },{
         id: "full-help",
         icon: "question-circle",
