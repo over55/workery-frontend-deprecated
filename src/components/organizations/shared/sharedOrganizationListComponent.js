@@ -7,16 +7,16 @@ import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from 
 
 class TableRow extends Component {
     render() {
-        const { schema, name } = this.props.row;
+        const { schemaName, name } = this.props.row;
         const accessToken = getAccessTokenFromLocalStorage();
         const refreshToken = getRefreshTokenFromLocalStorage();
 
         // Generate our redirect address.
-        const absoluteUrl =  process.env.REACT_APP_WWW_PROTOCOL + "://" + schema + "." +process.env.REACT_APP_WWW_DOMAIN+"/dashboard"+"-redirect/"+accessToken+"/"+refreshToken;
-        
+        const absoluteUrl =  process.env.REACT_APP_WWW_PROTOCOL + "://" + schemaName + "." +process.env.REACT_APP_WWW_DOMAIN+"/dashboard"+"-redirect/"+accessToken+"/"+refreshToken;
+
         return (
             <tr>
-                <td>{schema}</td>
+                <td>{schemaName}</td>
                 <td>{name}</td>
                 <td>
                     <a href={absoluteUrl}>

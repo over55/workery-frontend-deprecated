@@ -57,7 +57,7 @@ export function postLogout(user) {
         const config = {
             baseURL: getAPIBaseURL(),
             headers: {
-                'Authorization': "Bearer " + user.token,
+                'Authorization': "JWT " + user.token,
                 'Content-Type': 'application/msgpack;',
                 'Accept': 'application/msgpack',
             },

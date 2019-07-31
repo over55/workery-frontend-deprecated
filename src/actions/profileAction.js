@@ -53,7 +53,7 @@ export function pullProfile(successCallback=null, failedCallback=null) {
         const customAxios = axios.create({
             baseURL: getAPIBaseURL(),
             headers: {
-                'Authorization': "Bearer " + accessToken,
+                'Authorization': "JWT " + accessToken,
                 'Content-Type': 'application/json;',
                 'Accept': 'application/json',
             },
@@ -139,7 +139,7 @@ export function postProfile(data, successCallback, failedCallback) {
         const customAxios = axios.create({
             baseURL: getAPIBaseURL(),
             headers: {
-                'Authorization': "Bearer " + accessToken,
+                'Authorization': "JWT " + accessToken,
                 'Content-Type': 'application/msgpack;',
                 'Accept': 'application/msgpack',
             },

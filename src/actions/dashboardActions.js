@@ -52,7 +52,7 @@ export function pullDashboard(schema, successCallback=null, failedCallback=null)
         const customAxios = axios.create({
             baseURL: getAPIBaseURL(),
             headers: {
-                'Authorization': "Bearer " + accessToken,
+                'Authorization': "JWT " + accessToken,
                 'Content-Type': 'application/json;',
                 'Accept': 'application/json',
             },

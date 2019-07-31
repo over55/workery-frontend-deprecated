@@ -74,16 +74,16 @@ export function postLogin(email, password, successCallback=null, failedCallback=
             profile['isAPIRequestRunning'] = false;
             profile['errors'] = {};
 
+            // SAVE OUR CREDENTIALS IN PERSISTENT STORAGE. THIS IS AN IMPORTANT
+            // STEP BECAUSE OUR TOKEN UTILITY HELPER NEEDS THIS.
+            setAccessTokenInLocalStorage(profile.token);
+            setRefreshTokenInLocalStorage(null);
+
             // Update the global state of the application to store our
             // user profile for the application.
             store.dispatch(
                 setLoginSuccess(profile)
             );
-
-            // SAVE OUR CREDENTIALS IN PERSISTENT STORAGE. THIS IS AN IMPORTANT
-            // STEP BECAUSE OUR TOKEN UTILITY HELPER NEEDS THIS.
-            setAccessTokenInLocalStorage(profile.accessToken);
-            setRefreshTokenInLocalStorage(profile.refreshToken);
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON

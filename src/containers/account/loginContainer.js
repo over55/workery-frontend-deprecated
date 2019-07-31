@@ -69,10 +69,13 @@ class LoginContainer extends Component {
      *  to the user's respected dashboard belonging to the tenant they belong to.
      */
     onSuccessfulSubmissionCallback(profile) {
+        console.log(profile); // For debugging purposes.
+
         this.setState({ errors: {}, });
         const { schemaName } = profile;
         if (schemaName === null || schemaName === undefined || schemaName === "null") {
             const location = process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_WWW_DOMAIN + "/organizations";
+            console.log(location);
             window.location = location; // Do not use `react-router-dom` library.
         } else {
             const accessToken = getAccessTokenFromLocalStorage();
