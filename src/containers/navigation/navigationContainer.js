@@ -55,15 +55,20 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         title: "Jobs",
         url: "/orders"
     },{
+        id: "full-associates",
+        icon: "crown",
+        title: "Associates",
+        url: "/associates"
+    },{
         id: "full-reports",
         icon: "book",
         title: "Reports",
         url: "/reports"
     },{
-        id: "full-associates",
-        icon: "crown",
-        title: "Associates",
-        url: "/associates"
+        id: "full-financials",
+        icon: "credit-card",
+        title: "Financials",
+        url: "/financials"
     },{
         id: "full-staff",
         icon: "user-tie",
