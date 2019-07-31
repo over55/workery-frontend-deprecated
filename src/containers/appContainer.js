@@ -102,6 +102,33 @@ import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContai
 // Reports
 import ReportListContainer from "./reports/reportListContainer";
 
+// // Financials
+// import FinancialListContainer from "./financials/list/financialListContainer";
+// import FinanciaRetrieveContainer from "./financials/retrieve/financialRetrieveContainer";
+// import FinanciaUpdateContainer from "./financials/update/financialUpdateContainer";
+
+// Settings
+import SettingListContainer from "./settings/settingListContainer";
+
+import TagsListContainer from "./settings/tags/list/tagListContainer";
+import TagDeleteContainer from "./settings/tags/tagDeleteContainer";
+import TagCreateContainer from "./settings/tags/tagCreateContainer";
+import TagUpdateContainer from "./settings/tags/tagUpdateContainer";
+
+import HowHearsListContainer from "./settings/howHear/list/howHearListContainer";
+import HowHearDeleteContainer from "./settings/howHear/howHearDeleteContainer";
+import HowHearCreateContainer from "./settings/howHear/howHearCreateContainer";
+import HowHearUpdateContainer from "./settings/howHear/howHearUpdateContainer";
+
+import AnnouncementListContainer from "./settings/announcements/list/announcementListContainer";
+import AnnouncementDeleteContainer from "./settings/announcements/announcementDeleteContainer";
+import AnnouncementCreateContainer from "./settings/announcements/announcementCreateContainer";
+import AnnouncementUpdateContainer from "./settings/announcements/announcementUpdateContainer";
+
+import ResourcesListContainer from "./settings/resources/list/resourceListContainer";
+import ResourceDeleteContainer from "./settings/resources/resourceDeleteContainer";
+import ResourceCreateContainer from "./settings/resources/resourceCreateContainer";
+import ResourceUpdateContainer from "./settings/resources/resourceUpdateContainer";
 
 
 class AppContainer extends React.Component {
@@ -208,6 +235,25 @@ class AppContainer extends React.Component {
 
                                 { /* REPORTS */ }
                                 <Route path="/reports" exact component={requiresAuth(ReportListContainer)} />
+
+                                { /* SETTINGS */ }
+                                <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
+                                <Route path="/settings/tags" exact component={requiresAuth(TagsListContainer)} />
+                                <Route path="/settings/tag/add" exact component={requiresAuth(TagCreateContainer)} />
+                                <Route path="/settings/tag/:slug/delete" exact component={requiresAuth(TagDeleteContainer)} />
+                                <Route path="/settings/tag/:slug/update" exact component={requiresAuth(TagUpdateContainer)} />
+                                <Route path="/settings/how-hears" exact component={requiresAuth(HowHearsListContainer)} />
+                                <Route path="/settings/how-hears/add" exact component={requiresAuth(HowHearCreateContainer)} />
+                                <Route path="/settings/how-hear/:slug/delete" exact component={requiresAuth(HowHearDeleteContainer)} />
+                                <Route path="/settings/how-hear/:slug/update" exact component={requiresAuth(HowHearUpdateContainer)} />
+                                <Route path="/settings/announcements" exact component={requiresAuth(AnnouncementListContainer)} />
+                                <Route path="/settings/announcements/add" exact component={requiresAuth(AnnouncementCreateContainer)} />
+                                <Route path="/settings/announcement/:slug/delete" exact component={requiresAuth(AnnouncementDeleteContainer)} />
+                                <Route path="/settings/announcement/:slug/update" exact component={requiresAuth(AnnouncementUpdateContainer)} />
+                                <Route path="/settings/resources" exact component={requiresAuth(ResourcesListContainer)} />
+                                <Route path="/settings/resource/add" exact component={requiresAuth(ResourceCreateContainer)} />
+                                <Route path="/settings/resource/:slug/delete" exact component={requiresAuth(ResourceDeleteContainer)} />
+                                <Route path="/settings/resource/:slug/update" exact component={requiresAuth(ResourceUpdateContainer)} />
 
                                 <Route component={NotFound404Container} />
                             </Switch>

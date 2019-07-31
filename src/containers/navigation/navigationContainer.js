@@ -70,6 +70,11 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         title: "Staff",
         url: "/staff"
     },{
+        id: "full-settings",
+        icon: "cogs",
+        title: "Settings",
+        url: "/settings"
+    },{
         id: "full-help",
         icon: "question-circle",
         title: "Help",
