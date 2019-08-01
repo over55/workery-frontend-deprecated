@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import ClientListComponent from "../../../components/clients/list/clientListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { pullClientList } from "../../../actions/clientActions";
 
 
 class ClientListContainer extends Component {
@@ -18,7 +19,6 @@ class ClientListContainer extends Component {
             clients: [],
         }
         this.onFilterClick = this.onFilterClick.bind(this);
-        this.filterClients = this.filterClients.bind(this);
     }
 
     /**
@@ -29,34 +29,9 @@ class ClientListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        // Load from API...
-        const clients = [{
-            'slug': 'argyle',
-            'icon': 'home',
-            'firstName': "Bob",
-            'lastName': "Page",
-            "phone": "(111) 222-3333",
-            'email': "1@1.com",
-            "typeOf": "active",
-        },{
-            'slug': 'byron',
-            'icon': 'building',
-            'firstName': "Walter",
-            'lastName': "Simons",
-            "phone": "(222) 333-4444",
-            'email': "2@2.com",
-            "typeOf": "active",
-        },{
-            'slug': 'carling',
-            'icon': 'university',
-            'firstName': "JC",
-            'lastName': "Denton",
-            "phone": "(333) 444-5555",
-            'email': "3@3.com",
-            "typeOf": "active",
-        }];
+        this.props.pullClientList(this.props.user, 1);
         this.setState({
-            clients: clients,
+            clients: [],
         });
     }
 
@@ -97,21 +72,6 @@ class ClientListContainer extends Component {
         })
     }
 
-    filterClients() {
-        let filteredClients = [];
-        if (this.state.clients === undefined || this.state.clients === null) {
-            return [];
-        }
-        for (let i = 0; i < this.state.clients.length; i++) {
-            let client = this.state.clients[i];
-            if (client.typeOf === this.state.filter) {
-                filteredClients.push(client);
-            }
-        }
-        return filteredClients;
-    }
-
-
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -123,7 +83,7 @@ class ClientListContainer extends Component {
             <ClientListComponent
                 filter={this.state.filter}
                 onFilterClick={this.onFilterClick}
-                clients={this.filterClients()}
+                clientList={this.props.clientList}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -134,6 +94,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        clientList: store.clientListState,
     };
 }
 
@@ -141,7 +102,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullClientList: (user, page, filtersMap) => {
+            dispatch(
+                pullClientList(user, page, filtersMap)
+            )
+        },
     }
 }
 

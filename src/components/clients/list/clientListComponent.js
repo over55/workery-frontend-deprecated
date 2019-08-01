@@ -162,7 +162,7 @@ function detailLinkFormatter(cell, row){
 
 class ClientListComponent extends Component {
     render() {
-        const { filter, onFilterClick, clients, flashMessage } = this.props;
+        const { filter, onFilterClick, clientList, flashMessage } = this.props;
 
         const isActive = filter === "active";
         const isInactive = filter === "inactive";
@@ -212,10 +212,10 @@ class ClientListComponent extends Component {
                 <ClientFilterComponent filter={filter} onFilterClick={onFilterClick} />
 
                 {isActive &&
-                    <ActiveListComponent clients={clients} />
+                    <ActiveListComponent clients={clientList.results} />
                 }
                 {isInactive &&
-                    <InactiveListComponent clients={clients} />
+                    <InactiveListComponent clients={clientList.results} />
                 }
 
 
