@@ -38,7 +38,7 @@ export const setClientListSuccess = (info) => ({
  *  Function will pull the ``instrument`` API endpoint and override our
  *  global application state for the 'dashboard'.
  */
-export function pullClientList(page=1, filtersMap=new Map()) {
+export function pullClientList(page=1, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -78,6 +78,13 @@ export function pullClientList(page=1, filtersMap=new Map()) {
                 setClientListSuccess(data)
             );
 
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(data);
+            }
+
         }).catch( (exception) => { // ERROR
             if (exception.response) {
                 const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
@@ -94,12 +101,12 @@ export function pullClientList(page=1, filtersMap=new Map()) {
                     })
                 );
 
-                // // DEVELOPERS NOTE:
-                // // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // // OBJECT WE GOT FROM THE API.
-                // if (failedCallback) {
-                //     failedCallback(errors);
-                // }
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => { // FINALLY

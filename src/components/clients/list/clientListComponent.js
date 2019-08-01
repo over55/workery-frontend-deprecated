@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import ClientFilterComponent from "./clientFilterComponent";
@@ -9,7 +10,16 @@ import ClientFilterComponent from "./clientFilterComponent";
 
 class ActiveListComponent extends Component {
     render() {
-        const { clients, onTableChange } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
+
+            // Data
+            clients,
+
+            // Everything else.
+            onTableChange
+        } = this.props;
 
         const columns = [{
             dataField: 'icon',
@@ -53,14 +63,15 @@ class ActiveListComponent extends Component {
 
                     <BootstrapTable
                         bootstrap4
-                        remote={ { sort: true } }
-                        onTableChange={ onTableChange }
                         keyField='slug'
                         data={ clients }
                         columns={ columns }
                         striped
                         bordered={ false }
                         noDataIndication="There are no active clients at the moment"
+                        remote
+                        onTableChange={ onTableChange }
+                        pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
                     />
 
                 </div>
@@ -72,7 +83,16 @@ class ActiveListComponent extends Component {
 
 class InactiveListComponent extends Component {
     render() {
-        const { clients, onTableChange } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
+
+            // Data
+            clients,
+
+            // Everything else.
+            onTableChange
+        } = this.props;
 
         const columns = [{
             dataField: 'icon',
@@ -119,14 +139,15 @@ class InactiveListComponent extends Component {
 
                     <BootstrapTable
                         bootstrap4
-                        remote={ { sort: true } }
-                        onTableChange={ onTableChange }
                         keyField='slug'
                         data={ clients }
                         columns={ columns }
                         striped
                         bordered={ false }
                         noDataIndication="There are no inactive clients at the moment"
+                        remote={ { sort: true } }
+                        onTableChange={ onTableChange }
+                        pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
                     />
 
                 </div>
@@ -164,7 +185,14 @@ function detailLinkFormatter(cell, row){
 class ClientListComponent extends Component {
     render() {
         const {
-            filter, onFilterClick, clientList, flashMessage, onTableChange
+            // Pagination
+            page, sizePerPage, totalSize,
+
+            // Data
+            clientList,
+
+            // Everything else...
+            filter, onFilterClick, flashMessage, onTableChange
         } = this.props;
 
         const isActive = filter === "active";
@@ -215,10 +243,22 @@ class ClientListComponent extends Component {
                 <ClientFilterComponent filter={filter} onFilterClick={onFilterClick} />
 
                 {isActive &&
-                    <ActiveListComponent clients={clientList.results} onTableChange={onTableChange} />
+                    <ActiveListComponent
+                        page={page}
+                        sizePerPage={sizePerPage}
+                        totalSize={totalSize}
+                        clients={clientList.results}
+                        onTableChange={onTableChange}
+                    />
                 }
                 {isInactive &&
-                    <InactiveListComponent clients={clientList.results} onTableChange={onTableChange} />
+                    <InactiveListComponent
+                        page={page}
+                        sizePerPage={sizePerPage}
+                        totalSize={totalSize}
+                        clients={clientList.results}
+                        onTableChange={onTableChange}
+                     />
                 }
 
 

@@ -16,12 +16,22 @@ class ClientListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            // Pagination
             page: 1,
+            sizePerPage: 25,
+            totalSize: 0,
+
+            // Sorting
+            sortMap: new Map(),
+
+            // Everything else
             filter: "active",
             clients: [],
         }
         this.onFilterClick = this.onFilterClick.bind(this);
         this.onTableChange = this.onTableChange.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
 
     /**
@@ -32,7 +42,7 @@ class ClientListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        this.props.pullClientList(1); // Load up the default page.
+        this.props.pullClientList(1, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
     }
 
     componentWillUnmount() {
@@ -52,8 +62,18 @@ class ClientListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+            },
+            ()=>{
+                console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+            }
+        )
     }
 
     onFailedSubmissionCallback(errors) {
@@ -72,16 +92,45 @@ class ClientListContainer extends Component {
         })
     }
 
-    onTableChange(type, { sortField, sortOrder, data }) {
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage }) {
         if (type === "sort") {
-            var filtersMap = new Map();
+            // STEP 1:
+            // WE NEED TO GENERATE A 'SORT-MAP' TO KNOW WHAT URL PARAMETERS
+            // TO GENERATE WHEN WE MAKE THE SUBMISSION TO THE API.
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+            var sortMap = new Map();
             if (sortOrder === "asc") {
-                filtersMap.set('o', decamelize(sortField));
+                sortMap.set('o', decamelize(sortField));
             }
             if (sortOrder === "desc") {
-                filtersMap.set('o', "-"+decamelize(sortField));
+                sortMap.set('o', "-"+decamelize(sortField));
             }
-            this.props.pullClientList(this.state.page, filtersMap);
+
+            // STEP 2:
+            // SAVE THE SORT-MAP AND THEN MAKE THE SUBMISSION TO THE API.
+            this.setState(
+                { sortMap: sortMap },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullClientList(this.state.page, sortMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "pagination") {
+            console.log(type, page, sizePerPage); // For debugging purposes only.
+
+            this.setState(
+                { page: page, sizePerPage:sizePerPage },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullClientList(page, this.state.sortMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else {
+            alert("Unsupported feature detected!!"+type);
         }
     }
 
@@ -91,10 +140,14 @@ class ClientListContainer extends Component {
      */
 
     render() {
-
+        const { page, sizePerPage, totalSize } = this.state;
         return (
             <ClientListComponent
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
                 filter={this.state.filter}
+
                 onFilterClick={this.onFilterClick}
                 clientList={this.props.clientList}
                 onTableChange={this.onTableChange}
@@ -117,9 +170,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullClientList: (page, filtersMap) => {
+        pullClientList: (page, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullClientList(page, filtersMap)
+                pullClientList(page, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
