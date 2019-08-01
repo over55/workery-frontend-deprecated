@@ -6,6 +6,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapTableLoadingAnimation } from "../../bootstrap/bootstrapTableLoadingAnimation";
 
 
 class RemoteListComponent extends Component {
@@ -68,11 +69,7 @@ class RemoteListComponent extends Component {
         }];
 
         return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-table"></i>&nbsp;List
-                    </h2>
+
 
                     <BootstrapTable
                         bootstrap4
@@ -88,8 +85,7 @@ class RemoteListComponent extends Component {
                         filter={ filterFactory() }
                     />
 
-                </div>
-            </div>
+
         );
     }
 }
@@ -197,13 +193,24 @@ class ClientListComponent extends Component {
                         </section>
                     </div>
                 </div>
-                <RemoteListComponent
-                    page={page}
-                    sizePerPage={sizePerPage}
-                    totalSize={totalSize}
-                    clients={clientList.results}
-                    onTableChange={onTableChange}
-                />
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;List
+                        </h2>
+                        {clientList.results
+                            ?<RemoteListComponent
+                                page={page}
+                                sizePerPage={sizePerPage}
+                                totalSize={totalSize}
+                                clients={clientList.results}
+                                onTableChange={onTableChange}
+                            />
+                            :<BootstrapTableLoadingAnimation />
+                        }
+                    </div>
+                </div>
             </div>
         );
     }
