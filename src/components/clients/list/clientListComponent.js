@@ -6,7 +6,6 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
-import ClientFilterComponent from "./clientFilterComponent";
 
 
 class RemoteListComponent extends Component {
@@ -51,10 +50,11 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'state',
             text: 'Status',
-            sort: true,
+            sort: false,
             filter: selectFilter({
                 options: selectOptions
-            })
+            }),
+            formatter: statusFormatter
         },{
             dataField: 'slug',
             text: 'Financials',
@@ -81,7 +81,7 @@ class RemoteListComponent extends Component {
                         columns={ columns }
                         striped
                         bordered={ false }
-                        noDataIndication="There are no active clients at the moment"
+                        noDataIndication="There are no clients at the moment"
                         remote
                         onTableChange={ onTableChange }
                         pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
@@ -96,9 +96,32 @@ class RemoteListComponent extends Component {
 
 
 function iconFormatter(cell, row){
-    return (
-        <i className={`fas fa-${row.icon}`}></i>
-    )
+    switch(row.typeOf) {
+        case 3:
+            return <i className="fas fa-building"></i>;
+            break;
+        case 2:
+            return <i className="fas fa-home"></i>;
+            break;
+        default:
+            return <i className="fas fa-question"></i>;
+            break;
+    }
+}
+
+
+function statusFormatter(cell, row){
+    switch(row.state) {
+        case "active":
+            return <i className="fas fa-check-circle"></i>;
+            break;
+        case "inactive":
+            return <i className="fas fa-times-circle"></i>;
+            break;
+        default:
+        return <i className="fas fa-question-circle"></i>;
+            break;
+    }
 }
 
 
