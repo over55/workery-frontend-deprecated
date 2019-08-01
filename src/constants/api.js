@@ -73,6 +73,11 @@ export const STAFF_GROUP_MEMBERSHIP_IDS_ARRAY = [
 
 
 /**
+ *  The pagination values we use.
+ */
+export const STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION = 100;
+
+/**
  *  The generic type of that we can use in the system.
  */
 export const RESIDENCE_TYPE_OF = 1

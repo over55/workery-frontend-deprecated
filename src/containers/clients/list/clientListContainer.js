@@ -5,7 +5,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import ClientListComponent from "../../../components/clients/list/clientListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullClientList } from "../../../actions/clientActions";
-
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 class ClientListContainer extends Component {
     /**
@@ -18,11 +18,11 @@ class ClientListContainer extends Component {
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: 25,
+            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
-            // Sorting
-            sortMap: new Map(),
+            // Sorting, Filtering, & Searching
+            parametersMap: new Map(),
 
             // Everything else
             filter: "active",
@@ -98,22 +98,22 @@ class ClientListContainer extends Component {
             // WE NEED TO GENERATE A 'SORT-MAP' TO KNOW WHAT URL PARAMETERS
             // TO GENERATE WHEN WE MAKE THE SUBMISSION TO THE API.
             console.log(type, sortField, sortOrder); // For debugging purposes only.
-            var sortMap = new Map();
+            var parametersMap = new Map();
             if (sortOrder === "asc") {
-                sortMap.set('o', decamelize(sortField));
+                parametersMap.set('o', decamelize(sortField));
             }
             if (sortOrder === "desc") {
-                sortMap.set('o', "-"+decamelize(sortField));
+                parametersMap.set('o', "-"+decamelize(sortField));
             }
 
             // STEP 2:
             // SAVE THE SORT-MAP AND THEN MAKE THE SUBMISSION TO THE API.
             this.setState(
-                { sortMap: sortMap },
+                { parametersMap: parametersMap },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullClientList(this.state.page, sortMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullClientList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -125,7 +125,7 @@ class ClientListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullClientList(page, this.state.sortMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullClientList(page, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
