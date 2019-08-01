@@ -23,12 +23,7 @@ class ClientListContainer extends Component {
 
             // Sorting, Filtering, & Searching
             parametersMap: new Map(),
-
-            // Everything else
-            filter: "active",
-            clients: [],
         }
-        this.onFilterClick = this.onFilterClick.bind(this);
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -85,20 +80,17 @@ class ClientListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onFilterClick(e, filter) {
-        e.preventDefault();
-        this.setState({
-            filter: filter,
-        })
-    }
+    /**
+     *  Function takes the user interactions made with the table and perform
+     *  remote API calls to update the table based on user selection.
+     */
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
 
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage }) {
         if (type === "sort") {
-            // STEP 1:
-            // WE NEED TO GENERATE A 'SORT-MAP' TO KNOW WHAT URL PARAMETERS
-            // TO GENERATE WHEN WE MAKE THE SUBMISSION TO THE API.
             console.log(type, sortField, sortOrder); // For debugging purposes only.
-            var parametersMap = new Map();
+
             if (sortOrder === "asc") {
                 parametersMap.set('o', decamelize(sortField));
             }
@@ -106,8 +98,6 @@ class ClientListContainer extends Component {
                 parametersMap.set('o', "-"+decamelize(sortField));
             }
 
-            // STEP 2:
-            // SAVE THE SORT-MAP AND THEN MAKE THE SUBMISSION TO THE API.
             this.setState(
                 { parametersMap: parametersMap },
                 ()=>{
@@ -123,13 +113,27 @@ class ClientListContainer extends Component {
             this.setState(
                 { page: page, sizePerPage:sizePerPage },
                 ()=>{
-                    // STEP 3:
-                    // SUBMIT TO OUR API.
                     this.props.pullClientList(page, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
-        } else {
+        } else if (type === "filter") {
+            console.log(type, filters); // For debugging purposes only.
+            if (filters.state === undefined) {
+                parametersMap.remove("state");
+            } else {
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
+            }
+            this.setState(
+                { parametersMap: parametersMap },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullClientList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+        }else {
             alert("Unsupported feature detected!!"+type);
         }
     }
@@ -146,9 +150,7 @@ class ClientListContainer extends Component {
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-                filter={this.state.filter}
 
-                onFilterClick={this.onFilterClick}
                 clientList={this.props.clientList}
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}

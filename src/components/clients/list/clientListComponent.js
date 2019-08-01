@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import ClientFilterComponent from "./clientFilterComponent";
 
 
-class ActiveListComponent extends Component {
+class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
@@ -20,6 +21,11 @@ class ActiveListComponent extends Component {
             // Everything else.
             onTableChange
         } = this.props;
+
+        const selectOptions = {
+            "active": 'Active',
+            "inactive": 'Inactive',
+        };
 
         const columns = [{
             dataField: 'icon',
@@ -43,6 +49,13 @@ class ActiveListComponent extends Component {
             text: 'Email',
             sort: true
         },{
+            dataField: 'state',
+            text: 'Status',
+            sort: true,
+            filter: selectFilter({
+                options: selectOptions
+            })
+        },{
             dataField: 'slug',
             text: 'Financials',
             sort: false,
@@ -58,7 +71,7 @@ class ActiveListComponent extends Component {
             <div className="row">
                 <div className="col-md-12">
                     <h2>
-                        <i className="fas fa-user-check"></i>&nbsp;Active Clients
+                        <i className="fas fa-table"></i>&nbsp;List
                     </h2>
 
                     <BootstrapTable
@@ -72,82 +85,7 @@ class ActiveListComponent extends Component {
                         remote
                         onTableChange={ onTableChange }
                         pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
-                    />
-
-                </div>
-            </div>
-        );
-    }
-}
-
-
-class InactiveListComponent extends Component {
-    render() {
-        const {
-            // Pagination
-            page, sizePerPage, totalSize,
-
-            // Data
-            clients,
-
-            // Everything else.
-            onTableChange
-        } = this.props;
-
-        const columns = [{
-            dataField: 'icon',
-            text: '',
-            sort: false,
-            formatter: iconFormatter,
-            style: {
-                width: 10,
-            }
-        },{
-            dataField: 'givenName',
-            text: 'First Name',
-            sort: true
-        },{
-            dataField: 'lastName',
-            text: 'Last Name',
-            sort: true
-        },{
-            dataField: 'telephone',
-            text: 'Watch',
-            sort: true
-        },{
-            dataField: 'email',
-            text: 'Email',
-            sort: true
-        },{
-            dataField: 'slug',
-            text: 'Financials',
-            sort: false,
-            formatter: financialExternalLinkFormatter
-        },{
-            dataField: 'slug',
-            text: 'Details',
-            sort: false,
-            formatter: detailLinkFormatter
-        }];
-
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-user-times"></i>&nbsp;Inactive Clients
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ clients }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        noDataIndication="There are no inactive clients at the moment"
-                        remote={ { sort: true } }
-                        onTableChange={ onTableChange }
-                        pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
+                        filter={ filterFactory() }
                     />
 
                 </div>
@@ -192,11 +130,8 @@ class ClientListComponent extends Component {
             clientList,
 
             // Everything else...
-            filter, onFilterClick, flashMessage, onTableChange
+            flashMessage, onTableChange
         } = this.props;
-
-        const isActive = filter === "active";
-        const isInactive = filter === "inactive";
 
         return (
             <div>
@@ -239,29 +174,13 @@ class ClientListComponent extends Component {
                         </section>
                     </div>
                 </div>
-
-                <ClientFilterComponent filter={filter} onFilterClick={onFilterClick} />
-
-                {isActive &&
-                    <ActiveListComponent
-                        page={page}
-                        sizePerPage={sizePerPage}
-                        totalSize={totalSize}
-                        clients={clientList.results}
-                        onTableChange={onTableChange}
-                    />
-                }
-                {isInactive &&
-                    <InactiveListComponent
-                        page={page}
-                        sizePerPage={sizePerPage}
-                        totalSize={totalSize}
-                        clients={clientList.results}
-                        onTableChange={onTableChange}
-                     />
-                }
-
-
+                <RemoteListComponent
+                    page={page}
+                    sizePerPage={sizePerPage}
+                    totalSize={totalSize}
+                    clients={clientList.results}
+                    onTableChange={onTableChange}
+                />
             </div>
         );
     }
