@@ -10,7 +10,7 @@ export default class StaffDashboardComponent extends Component {
         const { dashboard } = this.props;
         const {
             customerCount, jobCount, memberCount, taskCount,
-            bulletinBoardItems, jobHistory, awayLog, teamJobHistory, commentHistory
+            bulletinBoardItems, jobHistory, awayLog, teamJobHistory, pastFewDayComments
         } = dashboard;
         return (
             <div className="container-fluid">
@@ -60,7 +60,7 @@ export default class StaffDashboardComponent extends Component {
                         <JobHistoryComponent jobHistory={jobHistory} />
                         <AwayLogComponent awayLog={awayLog} />
                         <TeamJobHistoryComponent teamJobHistory={teamJobHistory} />
-                        <CommentHistoryComponent commentHistory={commentHistory} />
+                        <CommentHistoryComponent commentHistory={pastFewDayComments} />
 
                     </main>
                 </div>
@@ -422,9 +422,10 @@ class CommentHistoryComponent extends Component {
             );
         } else {
             const columns = [{
-                dataField: 'jobID',
+                dataField: 'about',
                 text: 'Job #',
-                sort: false
+                sort: false,
+                formatter: commentHistoryJobLinkFormatter,
             },{
                 dataField: 'text',
                 text: 'Comment',
@@ -445,6 +446,7 @@ class CommentHistoryComponent extends Component {
                             noDataIndication="There are no recent comments at the moment"
                         />
                     </div>
+                    <a href="#" class="float-right">See more comments&nbsp;<i class="fas fa-chevron-right"></i></a>
                 </div>
             );
         }
@@ -452,6 +454,14 @@ class CommentHistoryComponent extends Component {
     }
 }
 
+
+function commentHistoryJobLinkFormatter(cell, row){
+    return (
+        <Link to={`/en/jobs/summary/detail/${row.about}/lite/`}>
+            {row.about}
+        </Link>
+    )
+}
 
 function commentHistoryLinkFormatter(cell, row){
     return (
