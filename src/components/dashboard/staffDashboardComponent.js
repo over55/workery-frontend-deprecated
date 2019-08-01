@@ -10,7 +10,7 @@ export default class StaffDashboardComponent extends Component {
         const { dashboard } = this.props;
         const {
             customerCount, jobCount, memberCount, taskCount,
-            bulletinBoardItems, jobHistory, clientNews, teamJobHistory, commentHistory
+            bulletinBoardItems, jobHistory, awayLog, teamJobHistory, commentHistory
         } = dashboard;
         return (
             <div className="container-fluid">
@@ -58,7 +58,7 @@ export default class StaffDashboardComponent extends Component {
 
                         <BulletinBoardComponent bulletinBoardItems={bulletinBoardItems} />
                         <JobHistoryComponent jobHistory={jobHistory} />
-                        <ClientNewsComponent clientNews={clientNews} />
+                        <AwayLogComponent awayLog={awayLog} />
                         <TeamJobHistoryComponent teamJobHistory={teamJobHistory} />
                         <CommentHistoryComponent commentHistory={commentHistory} />
 
@@ -196,10 +196,10 @@ function jobHistoryLinkFormatter(cell, row){
 
 
 
-class ClientNewsComponent extends Component {
+class AwayLogComponent extends Component {
     render() {
-        const { clientNews } = this.props
-        if (clientNews === null || clientNews === undefined || isEmpty(clientNews)) {
+        const { awayLog } = this.props
+        if (awayLog === null || awayLog === undefined || isEmpty(awayLog)) {
             return (
                 <div className="jumbotron">
                     <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Client News</h1>
@@ -214,32 +214,35 @@ class ClientNewsComponent extends Component {
             );
         } else {
             const columns = [{
-                dataField: 'clientName',
+                dataField: 'associateName',
                 text: 'Assocate Name',
                 sort: false,
-                formatter: clientLinkFormatter
+                formatter: associateLinkFormatter
             },{
                 dataField: 'reason',
                 text: 'Reason',
-                sort: false
+                sort: false,
+                formatter: associateReasonFormatter
             },{
-                dataField: 'start',
+                dataField: 'startDate',
                 text: 'Start',
-                sort: false
+                sort: false,
+                formatter: associateStartDateFormatter
             },{
-                dataField: 'awayUntil',
+                dataField: 'untilDate',
                 text: 'Away Until',
-                sort: false
+                sort: false,
+                formatter: associateUntilDateFormatter,
             }];
 
             return (
                 <div className="jumbotron">
-                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Client News</h1>
+                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Associate News</h1>
                     <div class="table-responsive-sm my-3">
                         <BootstrapTable
                             bootstrap4
                             keyField='id'
-                            data={ clientNews }
+                            data={ awayLog }
                             columns={ columns }
                             striped
                             bordered={ false }
@@ -259,13 +262,75 @@ class ClientNewsComponent extends Component {
 }
 
 
-function clientLinkFormatter(cell, row){
+function associateReasonFormatter(cell, row){
+    switch (row.reason) {
+        case 1:
+            return (
+                <div>
+                    <i class="fas fa-umbrella"></i>&nbsp;{row.reasonOther}
+                </div>
+            );
+            break;
+        case 2:
+            return (
+                <div>
+                    <i class="fas fa-plane"></i>&nbsp;Going on vacation
+                </div>
+            );
+            break;
+        case 3:
+            return (
+                <div>
+                    <i class="fas fa-home"></i>&nbsp;Personal reasons
+                </div>
+            );
+            break;
+        case 4:
+            return (
+                <div>
+                    <i class="fas fa-university"></i>&nbsp;Commercial insurance expired
+                </div>
+            );
+            break;
+        case 5:
+            return (
+                <div>
+                    <i class="fas fa-university"></i>&nbsp;Police check expired
+                </div>
+            );
+            break;
+        default:
+            return (null)
+            break;
+    }
+}
+
+
+function associateLinkFormatter(cell, row){
     return (
-        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
-            {row.clientName}
+        <Link to={`/en/jobs/summary/detail/${row.associate}/lite/`} id={row.associate}>
+            {row.associateName}
         </Link>
     )
 }
+
+function associateStartDateFormatter(cell, row){
+    if (row.startDate === undefined || row.startDate === null) {
+        return "-";
+    } else {
+        return row.startDate
+    }
+}
+
+
+function associateUntilDateFormatter(cell, row){
+    if (row.untilDate === undefined || row.untilDate === null) {
+        return "Further notice.";
+    } else {
+        return row.untilDate;
+    }
+}
+
 
 
 class TeamJobHistoryComponent extends Component {
