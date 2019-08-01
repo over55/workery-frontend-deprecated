@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import isEmpty from 'lodash/isEmpty';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 
 export default class StaffDashboardComponent extends Component {
@@ -10,7 +12,7 @@ export default class StaffDashboardComponent extends Component {
         const { dashboard } = this.props;
         const {
             customerCount, jobCount, memberCount, taskCount,
-            bulletinBoardItems, jobHistory, awayLog, teamJobHistory, pastFewDayComments
+            bulletinBoardItems, lastModifiedJobsByUser, awayLog, lastModifiedJobsByTeam, pastFewDayComments
         } = dashboard;
         return (
             <div className="container-fluid">
@@ -57,9 +59,9 @@ export default class StaffDashboardComponent extends Component {
                         </section>
 
                         <BulletinBoardComponent bulletinBoardItems={bulletinBoardItems} />
-                        <JobHistoryComponent jobHistory={jobHistory} />
+                        <JobHistoryComponent jobHistory={lastModifiedJobsByUser} />
                         <AwayLogComponent awayLog={awayLog} />
-                        <TeamJobHistoryComponent teamJobHistory={teamJobHistory} />
+                        <TeamJobHistoryComponent teamJobHistory={lastModifiedJobsByTeam} />
                         <CommentHistoryComponent commentHistory={pastFewDayComments} />
 
                     </main>
@@ -142,22 +144,24 @@ class JobHistoryComponent extends Component {
             );
         } else {
             const columns = [{
-                dataField: 'jobID',
+                dataField: 'id',
                 text: 'Job #',
+                sort: false,
+                formatter: jobHistoryIDFormatter
+            },{
+                dataField: 'associateName',
+                text: 'Associate Name',
                 sort: false
             },{
-                dataField: 'clientName',
-                text: 'Client Name',
-                sort: false
-            },{
-                dataField: 'clientName',
+                dataField: 'customerName',
                 text: 'Client Name',
                 sort: false
             },{
                 dataField: 'lastModified',
                 text: 'Last Modified',
-                sort: false
-            },,{
+                sort: false,
+                formatter: jobHistoryLastModifiedFormatter
+            },{
                 dataField: 'id',
                 text: '',
                 sort: false,
@@ -183,6 +187,22 @@ class JobHistoryComponent extends Component {
         }
 
     }
+}
+
+
+function jobHistoryIDFormatter(cell, row){
+    return (
+        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+            {row.id}
+        </Link>
+    )
+}
+
+
+function jobHistoryLastModifiedFormatter(cell, row){
+    return (
+        <Moment format="YYYY/MM/DD hh:mm:ss a">{row.lastModified}</Moment>
+    )
 }
 
 
@@ -351,26 +371,28 @@ class TeamJobHistoryComponent extends Component {
             );
         } else {
             const columns = [{
-                dataField: 'jobID',
+                dataField: 'id',
                 text: 'Job #',
+                sort: false,
+                formatter: jobHistoryIDFormatter
+            },{
+                dataField: 'associateName',
+                text: 'Associate Name',
                 sort: false
             },{
-                dataField: 'clientName',
-                text: 'Client Name',
-                sort: false
-            },{
-                dataField: 'clientName',
+                dataField: 'customerName',
                 text: 'Client Name',
                 sort: false
             },{
                 dataField: 'lastModified',
                 text: 'Last Modified',
-                sort: false
-            },,{
+                sort: false,
+                formatter: jobHistoryLastModifiedFormatter
+            },{
                 dataField: 'id',
                 text: '',
                 sort: false,
-                formatter: teamJobHistoryLinkFormatter
+                formatter: jobHistoryLinkFormatter
             }];
 
             return (
