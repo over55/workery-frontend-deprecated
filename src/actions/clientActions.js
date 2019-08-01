@@ -38,7 +38,7 @@ export const setClientListSuccess = (info) => ({
  *  Function will pull the ``instrument`` API endpoint and override our
  *  global application state for the 'dashboard'.
  */
-export function pullClientList(user, page=1, filtersMap=new Map()) {
+export function pullClientList(page=1, filtersMap=new Map()) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(

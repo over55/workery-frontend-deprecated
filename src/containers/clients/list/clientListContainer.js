@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { camelizeKeys, decamelize } from 'humps';
 
 import ClientListComponent from "../../../components/clients/list/clientListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
@@ -15,10 +16,12 @@ class ClientListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            page: 1,
             filter: "active",
             clients: [],
         }
         this.onFilterClick = this.onFilterClick.bind(this);
+        this.onTableChange = this.onTableChange.bind(this);
     }
 
     /**
@@ -29,10 +32,7 @@ class ClientListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        this.props.pullClientList(this.props.user, 1);
-        this.setState({
-            clients: [],
-        });
+        this.props.pullClientList(1); // Load up the default page.
     }
 
     componentWillUnmount() {
@@ -72,6 +72,19 @@ class ClientListContainer extends Component {
         })
     }
 
+    onTableChange(type, { sortField, sortOrder, data }) {
+        if (type === "sort") {
+            var filtersMap = new Map();
+            if (sortOrder === "asc") {
+                filtersMap.set('o', decamelize(sortField));
+            }
+            if (sortOrder === "desc") {
+                filtersMap.set('o', "-"+decamelize(sortField));
+            }
+            this.props.pullClientList(this.state.page, filtersMap);
+        }
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -84,6 +97,7 @@ class ClientListContainer extends Component {
                 filter={this.state.filter}
                 onFilterClick={this.onFilterClick}
                 clientList={this.props.clientList}
+                onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -103,9 +117,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullClientList: (user, page, filtersMap) => {
+        pullClientList: (page, filtersMap) => {
             dispatch(
-                pullClientList(user, page, filtersMap)
+                pullClientList(page, filtersMap)
             )
         },
     }

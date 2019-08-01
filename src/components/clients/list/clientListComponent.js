@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
@@ -10,7 +9,7 @@ import ClientFilterComponent from "./clientFilterComponent";
 
 class ActiveListComponent extends Component {
     render() {
-        const { clients } = this.props;
+        const { clients, onTableChange } = this.props;
 
         const columns = [{
             dataField: 'icon',
@@ -18,7 +17,7 @@ class ActiveListComponent extends Component {
             sort: false,
             formatter: iconFormatter
         },{
-            dataField: 'firstName',
+            dataField: 'givenName',
             text: 'First Name',
             sort: true
         },{
@@ -26,7 +25,7 @@ class ActiveListComponent extends Component {
             text: 'Last Name',
             sort: true
         },{
-            dataField: 'phone',
+            dataField: 'telephone',
             text: 'Phone',
             sort: true
         },{
@@ -54,12 +53,13 @@ class ActiveListComponent extends Component {
 
                     <BootstrapTable
                         bootstrap4
+                        remote={ { sort: true } }
+                        onTableChange={ onTableChange }
                         keyField='slug'
                         data={ clients }
                         columns={ columns }
                         striped
                         bordered={ false }
-                        pagination={ paginationFactory() }
                         noDataIndication="There are no active clients at the moment"
                     />
 
@@ -72,7 +72,7 @@ class ActiveListComponent extends Component {
 
 class InactiveListComponent extends Component {
     render() {
-        const { clients } = this.props;
+        const { clients, onTableChange } = this.props;
 
         const columns = [{
             dataField: 'icon',
@@ -83,7 +83,7 @@ class InactiveListComponent extends Component {
                 width: 10,
             }
         },{
-            dataField: 'firstName',
+            dataField: 'givenName',
             text: 'First Name',
             sort: true
         },{
@@ -91,7 +91,7 @@ class InactiveListComponent extends Component {
             text: 'Last Name',
             sort: true
         },{
-            dataField: 'phone',
+            dataField: 'telephone',
             text: 'Watch',
             sort: true
         },{
@@ -119,12 +119,13 @@ class InactiveListComponent extends Component {
 
                     <BootstrapTable
                         bootstrap4
+                        remote={ { sort: true } }
+                        onTableChange={ onTableChange }
                         keyField='slug'
                         data={ clients }
                         columns={ columns }
                         striped
                         bordered={ false }
-                        pagination={ paginationFactory() }
                         noDataIndication="There are no inactive clients at the moment"
                     />
 
@@ -162,7 +163,9 @@ function detailLinkFormatter(cell, row){
 
 class ClientListComponent extends Component {
     render() {
-        const { filter, onFilterClick, clientList, flashMessage } = this.props;
+        const {
+            filter, onFilterClick, clientList, flashMessage, onTableChange
+        } = this.props;
 
         const isActive = filter === "active";
         const isInactive = filter === "inactive";
@@ -212,10 +215,10 @@ class ClientListComponent extends Component {
                 <ClientFilterComponent filter={filter} onFilterClick={onFilterClick} />
 
                 {isActive &&
-                    <ActiveListComponent clients={clientList.results} />
+                    <ActiveListComponent clients={clientList.results} onTableChange={onTableChange} />
                 }
                 {isInactive &&
-                    <InactiveListComponent clients={clientList.results} />
+                    <InactiveListComponent clients={clientList.results} onTableChange={onTableChange} />
                 }
 
 
