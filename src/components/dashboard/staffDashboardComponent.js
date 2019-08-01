@@ -11,7 +11,7 @@ export default class StaffDashboardComponent extends Component {
     render() {
         const { dashboard } = this.props;
         const {
-            customerCount, jobCount, memberCount, taskCount,
+            customerCount, jobCount, memberCount, tasksCount,
             bulletinBoardItems, lastModifiedJobsByUser, awayLog, lastModifiedJobsByTeam, pastFewDayComments
         } = dashboard;
         return (
@@ -50,7 +50,7 @@ export default class StaffDashboardComponent extends Component {
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-orange">
                                     <Link to="/tasks" className="d-block link-ndecor" title="Items">
-                                        <h1 className="circle-title">{taskCount}</h1>
+                                        <h1 className="circle-title">{tasksCount}</h1>
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-tasks"></i>&nbsp;Tasks</h4>
