@@ -158,7 +158,7 @@ function statusFormatter(cell, row){
 
 function financialExternalLinkFormatter(cell, row){
     return (
-        <a target="_blank" href={`/financial/${row.slug}`}>
+        <a target="_blank" href={`/financial/${row.id}`}>
             View&nbsp;<i className="fas fa-external-link-alt"></i>
         </a>
     )

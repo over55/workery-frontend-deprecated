@@ -5,8 +5,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import AssociateListComponent from "../../../components/associates/list/associateListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullAssociateList } from "../../../actions/associateActions";
-import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
-
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 class AssociateListContainer extends Component {
     /**
@@ -19,11 +18,14 @@ class AssociateListContainer extends Component {
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
             parametersMap: new Map(),
+
+            // Overaly
+            isLoading: true,
         }
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -38,7 +40,7 @@ class AssociateListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        this.props.pullAssociateList(1, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
+        this.props.pullAssociateList(1, TINY_RESULTS_SIZE_PER_PAGE_PAGINATION, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
     }
 
     componentWillUnmount() {
@@ -64,6 +66,7 @@ class AssociateListContainer extends Component {
             {
                 page: response.page,
                 totalSize: response.count,
+                isLoading: false,
             },
             ()=>{
                 console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
@@ -74,6 +77,7 @@ class AssociateListContainer extends Component {
 
     onFailedSubmissionCallback(errors) {
         console.log(errors);
+        this.setState({ isLoading: false });
     }
 
     /**
@@ -100,11 +104,11 @@ class AssociateListContainer extends Component {
             }
 
             this.setState(
-                { parametersMap: parametersMap },
+                { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullAssociateList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullAssociateList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -112,9 +116,9 @@ class AssociateListContainer extends Component {
             console.log(type, page, sizePerPage); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage },
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullAssociateList(page, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullAssociateList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -127,11 +131,11 @@ class AssociateListContainer extends Component {
                 parametersMap.set("state", filterVal);
             }
             this.setState(
-                { parametersMap: parametersMap },
+                { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullAssociateList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullAssociateList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -145,16 +149,16 @@ class AssociateListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize } = this.state;
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <AssociateListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-
                 associateList={this.props.associateList}
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -173,9 +177,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullAssociateList: (page, map, onSuccessCallback, onFailureCallback) => {
+        pullAssociateList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullAssociateList(page, map, onSuccessCallback, onFailureCallback)
+                pullAssociateList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

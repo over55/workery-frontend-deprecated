@@ -38,19 +38,21 @@ export const setAssociateListSuccess = (info) => ({
  *  Function will pull the ``instrument`` API endpoint and override our
  *  global application state for the 'dashboard'.
  */
-export function pullAssociateList(page=1, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullAssociateList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
             setAssociateListRequest()
         );
 
+        console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback); // For debugging purposes only.
+
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ASSOCIATE_LIST_API_ENDPOINT+"?page="+page;
+        let aURL = WORKERY_ASSOCIATE_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
