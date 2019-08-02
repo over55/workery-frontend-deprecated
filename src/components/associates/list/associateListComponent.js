@@ -32,8 +32,8 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
+            1: 'Active',
+            0: 'Inactive',
         };
 
         const columns = [{
@@ -58,12 +58,12 @@ class RemoteListComponent extends Component {
             sort: false,
             filter: selectFilter({
                 options: selectOptions,
-                defaultValue: 'active',
+                defaultValue: 1,
                 withoutEmptyOption: true
             }),
             formatter: statusFormatter
         },{
-            dataField: 'slug',
+            dataField: 'id',
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
@@ -119,10 +119,10 @@ class RemoteListComponent extends Component {
 
 function statusFormatter(cell, row){
     switch(row.state) {
-        case "active":
+        case 1:
             return <i className="fas fa-check-circle"></i>;
             break;
-        case "inactive":
+        case 0:
             return <i className="fas fa-times-circle"></i>;
             break;
         default:
