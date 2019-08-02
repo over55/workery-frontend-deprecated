@@ -34,13 +34,39 @@ class RemoteListComponent extends Component {
         // DEVELOPERS NOTE:
         // Where did `2` and `3` values come from? These are the `true` and
         // `false` values specified by `django-rest-framework` in the API.
-        const selectOptions = {
+        const isClosedSelectOptions = {
             3: 'Pending',
             2: 'Closed',
         };
 
+        const typeOfSelectOptions = {
+            1: 'Assign associate',
+            2: 'Follow up is job complete',
+            3: 'Follow up customer survey',
+            4: 'Follow up did associate accept job',
+            5: 'Follow up was ongoing job updated',
+        };
+
+        /*
+        ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID = 1
+        FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID = 2
+        FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID = 3
+        FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID = 4
+        UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID = 5
+
+        TASK_ITEM_TYPE_OF_CHOICES = (
+            (ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID, _('Assign associate')),
+            (FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID, _('Follow up is job complete')),
+            (FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID, _('Follow up customer survey')),
+            (FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up did associate accept job')),
+            (UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up was ongoing job updated')),
+        )
+
+        */
+
+
         const columns = [{
-            dataField: 'typeOf',
+            dataField: 'orderTypeOf',
             text: '',
             sort: false,
             formatter: iconFormatter
@@ -49,9 +75,15 @@ class RemoteListComponent extends Component {
             text: 'Due Date',
             sort: true,
         },{
-            dataField: 'title',
+            dataField: 'typeOf',
             text: 'Task',
             sort: true,
+            filter: selectFilter({
+                options: typeOfSelectOptions,
+                // defaultValue: 4, // Note: `4` is `pending`.
+                // withoutEmptyOption: true
+            }),
+            formatter: typeOfFormatter,
         },{
             dataField: 'customerName',
             text: 'Client',
@@ -65,7 +97,7 @@ class RemoteListComponent extends Component {
             text: 'Status',
             sort: false,
             filter: selectFilter({
-                options: selectOptions,
+                options: isClosedSelectOptions,
                 defaultValue: 3, // Note: `3` is `pending`.
                 withoutEmptyOption: true
             }),
@@ -138,6 +170,12 @@ function iconFormatter(cell, row){
             break;
     }
 }
+
+
+function typeOfFormatter(cell, row){
+    return row.title
+}
+
 
 
 function statusFormatter(cell, row){

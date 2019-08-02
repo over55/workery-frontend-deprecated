@@ -39,8 +39,6 @@ class TaskListContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        this.props.pullTaskList(1, TINY_RESULTS_SIZE_PER_PAGE_PAGINATION, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
     }
 
     componentWillUnmount() {
@@ -130,6 +128,14 @@ class TaskListContainer extends Component {
                 const filterVal = filters.isClosed.filterVal;
                 parametersMap.set("isClosed", filterVal);
             }
+
+            if (filters.typeOf === undefined) {
+                parametersMap.delete("typeOf");
+            } else {
+                const filterVal = filters.typeOf.filterVal;
+                parametersMap.set("typeOf", filterVal);
+            }
+
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
