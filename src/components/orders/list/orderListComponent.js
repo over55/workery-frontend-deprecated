@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+// import overlayFactory from 'react-bootstrap-table2-overlay';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
-import { BootstrapTableLoadingAnimation } from "../../bootstrap/bootstrapTableLoadingAnimation";
+
+
+const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
+);
 
 
 class RemoteListComponent extends Component {
@@ -19,7 +27,7 @@ class RemoteListComponent extends Component {
             orders,
 
             // Everything else.
-            onTableChange
+            onTableChange, isLoading
         } = this.props;
 
         const selectOptions = {
@@ -74,10 +82,37 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
+        const paginationOption = {
+            page: page,
+            sizePerPage: sizePerPage,
+            totalSize: totalSize,
+            sizePerPageList: [{
+                text: '10', value: 10
+            }, {
+                text: '25', value: 25
+            }, {
+                text: '50', value: 50
+            }, {
+                text: '100', value: 100
+            }, {
+                text: 'All', value: totalSize
+            }],
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            firstPageText: 'First',
+            prePageText: 'Back',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+        };
+
         return (
             <BootstrapTable
                 bootstrap4
-                keyField='slug'
+                keyField='id'
                 data={ orders }
                 columns={ columns }
                 striped
@@ -85,8 +120,10 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no orders at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
+                pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
+                loading={ isLoading }
+                // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
             />
         );
     }
@@ -122,7 +159,7 @@ function detailLinkFormatter(cell, row){
 }
 
 
-export default class OrderListComponent extends Component {
+class OrderListComponent extends Component {
     render() {
         const {
             // Pagination
@@ -132,8 +169,11 @@ export default class OrderListComponent extends Component {
             orderList,
 
             // Everything else...
-            flashMessage, onTableChange
+            flashMessage, onTableChange, isLoading
         } = this.props;
+
+        const orders = orderList.results ? orderList.results : [];
+
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -181,19 +221,19 @@ export default class OrderListComponent extends Component {
                         <h2>
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
-                        {orderList.results
-                            ?<RemoteListComponent
-                                page={page}
-                                sizePerPage={sizePerPage}
-                                totalSize={totalSize}
-                                orders={orderList.results}
-                                onTableChange={onTableChange}
-                            />
-                            :<BootstrapTableLoadingAnimation />
-                        }
+                        <RemoteListComponent
+                            page={page}
+                            sizePerPage={sizePerPage}
+                            totalSize={totalSize}
+                            orders={orders}
+                            onTableChange={onTableChange}
+                            isLoading={isLoading}
+                        />
                     </div>
                 </div>
             </div>
         );
     }
 }
+
+export default OrderListComponent;

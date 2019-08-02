@@ -5,7 +5,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import OrderListComponent from "../../../components/orders/list/orderListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullOrderList } from "../../../actions/orderActions";
-import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 class OrderListContainer extends Component {
     /**
@@ -18,11 +18,14 @@ class OrderListContainer extends Component {
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
             parametersMap: new Map(),
+
+            // Overaly
+            isLoading: true,
         }
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -37,7 +40,7 @@ class OrderListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        this.props.pullOrderList(1, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
+        this.props.pullOrderList(1, TINY_RESULTS_SIZE_PER_PAGE_PAGINATION, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
     }
 
     componentWillUnmount() {
@@ -63,6 +66,7 @@ class OrderListContainer extends Component {
             {
                 page: response.page,
                 totalSize: response.count,
+                isLoading: false,
             },
             ()=>{
                 console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
@@ -73,6 +77,7 @@ class OrderListContainer extends Component {
 
     onFailedSubmissionCallback(errors) {
         console.log(errors);
+        this.setState({ isLoading: false });
     }
 
     /**
@@ -91,10 +96,11 @@ class OrderListContainer extends Component {
         if (type === "sort") {
             console.log(type, sortField, sortOrder); // For debugging purposes only.
 
-            // API MODIFICATIONS HERE TO SUPPORT OUR API ENDPOINT SORTING.
+            // DEVELOPERS NOTE:
+
             let aSortField = sortField.replace("Name", "");
-            if (aSortField === "client") {
-                aSortField = "customer";
+            if (aSortField === "customer") {
+                aSortField = "client";
             }
 
             if (sortOrder === "asc") {
@@ -105,11 +111,11 @@ class OrderListContainer extends Component {
             }
 
             this.setState(
-                { parametersMap: parametersMap },
+                { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -117,9 +123,9 @@ class OrderListContainer extends Component {
             console.log(type, page, sizePerPage); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage },
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullOrderList(page, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -132,11 +138,11 @@ class OrderListContainer extends Component {
                 parametersMap.set("state", filterVal);
             }
             this.setState(
-                { parametersMap: parametersMap },
+                { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -150,16 +156,16 @@ class OrderListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize } = this.state;
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <OrderListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-
                 orderList={this.props.orderList}
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -178,9 +184,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderList: (page, map, onSuccessCallback, onFailureCallback) => {
+        pullOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderList(page, map, onSuccessCallback, onFailureCallback)
+                pullOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
