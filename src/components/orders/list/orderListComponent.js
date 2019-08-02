@@ -109,17 +109,7 @@ function iconFormatter(cell, row){
 
 
 function statusFormatter(cell, row){
-    switch(row.state) {
-        case "active":
-            return <i className="fas fa-check-circle"></i>;
-            break;
-        case "inactive":
-            return <i className="fas fa-times-circle"></i>;
-            break;
-        default:
-        return <i className="fas fa-question-circle"></i>;
-            break;
-    }
+    return row.prettyState;
 }
 
 
