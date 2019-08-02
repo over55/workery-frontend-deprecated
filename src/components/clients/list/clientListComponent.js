@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+import overlayFactory from 'react-bootstrap-table2-overlay';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
-import { BootstrapTableLoadingAnimation } from "../../bootstrap/bootstrapTableLoadingAnimation";
+
+
+const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
+);
 
 
 class RemoteListComponent extends Component {
@@ -19,7 +27,7 @@ class RemoteListComponent extends Component {
             clients,
 
             // Everything else.
-            onTableChange
+            onTableChange, isLoading
         } = this.props;
 
         const selectOptions = {
@@ -53,7 +61,9 @@ class RemoteListComponent extends Component {
             text: 'Status',
             sort: false,
             filter: selectFilter({
-                options: selectOptions
+                options: selectOptions,
+                defaultValue: 'active',
+                withoutEmptyOption: true
             }),
             formatter: statusFormatter
         },{
@@ -68,24 +78,49 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
+        const paginationOption = {
+            page: page,
+            sizePerPage: sizePerPage,
+            totalSize: totalSize,
+            sizePerPageList: [{
+                text: '10', value: 10
+            }, {
+                text: '25', value: 25
+            }, {
+                text: '50', value: 50
+            }, {
+                text: '100', value: 100
+            }, {
+                text: 'All', value: totalSize
+            }],
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            firstPageText: 'First',
+            prePageText: 'Back',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+        };
+
         return (
-
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ clients }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        noDataIndication="There are no clients at the moment"
-                        remote
-                        onTableChange={ onTableChange }
-                        pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
-                        filter={ filterFactory() }
-                    />
-
-
+            <BootstrapTable
+                bootstrap4
+                keyField='id'
+                data={ clients }
+                columns={ columns }
+                striped
+                bordered={ false }
+                noDataIndication="There are no clients at the moment"
+                remote
+                onTableChange={ onTableChange }
+                pagination={ paginationFactory(paginationOption) }
+                filter={ filterFactory() }
+                loading={ isLoading }
+                overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
+            />
         );
     }
 }
@@ -149,8 +184,10 @@ class ClientListComponent extends Component {
             clientList,
 
             // Everything else...
-            flashMessage, onTableChange
+            flashMessage, onTableChange, isLoading
         } = this.props;
+
+        const clients = clientList.results ? clientList.results : [];
 
         return (
             <div>
@@ -199,16 +236,14 @@ class ClientListComponent extends Component {
                         <h2>
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
-                        {clientList.results
-                            ?<RemoteListComponent
-                                page={page}
-                                sizePerPage={sizePerPage}
-                                totalSize={totalSize}
-                                clients={clientList.results}
-                                onTableChange={onTableChange}
-                            />
-                            :<BootstrapTableLoadingAnimation />
-                        }
+                        <RemoteListComponent
+                            page={page}
+                            sizePerPage={sizePerPage}
+                            totalSize={totalSize}
+                            clients={clients}
+                            onTableChange={onTableChange}
+                            isLoading={isLoading}
+                        />
                     </div>
                 </div>
             </div>

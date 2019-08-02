@@ -5,7 +5,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import ClientListComponent from "../../../components/clients/list/clientListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullClientList } from "../../../actions/clientActions";
-import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 class ClientListContainer extends Component {
     /**
@@ -18,11 +18,14 @@ class ClientListContainer extends Component {
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
             parametersMap: new Map(),
+
+            // Overaly
+            isLoading: true,
         }
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -37,7 +40,7 @@ class ClientListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        this.props.pullClientList(1, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
+        this.props.pullClientList(1, TINY_RESULTS_SIZE_PER_PAGE_PAGINATION, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
     }
 
     componentWillUnmount() {
@@ -63,6 +66,7 @@ class ClientListContainer extends Component {
             {
                 page: response.page,
                 totalSize: response.count,
+                isLoading: false,
             },
             ()=>{
                 console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
@@ -73,6 +77,7 @@ class ClientListContainer extends Component {
 
     onFailedSubmissionCallback(errors) {
         console.log(errors);
+        this.setState({ isLoading: false });
     }
 
     /**
@@ -99,11 +104,11 @@ class ClientListContainer extends Component {
             }
 
             this.setState(
-                { parametersMap: parametersMap },
+                { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullClientList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullClientList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -111,9 +116,9 @@ class ClientListContainer extends Component {
             console.log(type, page, sizePerPage); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage },
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullClientList(page, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullClientList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -126,11 +131,11 @@ class ClientListContainer extends Component {
                 parametersMap.set("state", filterVal);
             }
             this.setState(
-                { parametersMap: parametersMap },
+                { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullClientList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullClientList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -144,16 +149,16 @@ class ClientListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize } = this.state;
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <ClientListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-
                 clientList={this.props.clientList}
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -172,9 +177,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullClientList: (page, map, onSuccessCallback, onFailureCallback) => {
+        pullClientList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullClientList(page, map, onSuccessCallback, onFailureCallback)
+                pullClientList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
