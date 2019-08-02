@@ -31,9 +31,12 @@ class RemoteListComponent extends Component {
             onTableChange, isLoading
         } = this.props;
 
+        // DEVELOPERS NOTE:
+        // Where did `2` and `3` values come from? These are the `true` and
+        // `false` values specified by `django-rest-framework` in the API.
         const selectOptions = {
-            false: 'Pending',
-            true: 'Closed',
+            3: 'Pending',
+            2: 'Closed',
         };
 
         const columns = [{
@@ -63,8 +66,8 @@ class RemoteListComponent extends Component {
             sort: false,
             filter: selectFilter({
                 options: selectOptions,
-                // defaultValue: false,
-                // withoutEmptyOption: true
+                defaultValue: 3, // Note: `3` is `pending`.
+                withoutEmptyOption: true
             }),
             formatter: statusFormatter
         },{
@@ -139,10 +142,10 @@ function iconFormatter(cell, row){
 
 function statusFormatter(cell, row){
     switch(row.isClosed) {
-        case true:
+        case false:
             return <i className="fas fa-clock"></i>;
             break;
-        case false:
+        case true:
             return <i className="fas fa-check-circle"></i>;
             break;
         default:

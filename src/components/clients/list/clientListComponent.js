@@ -190,8 +190,6 @@ class ClientListComponent extends Component {
 
         const clients = clientList.results ? clientList.results : [];
 
-        console.log(isLoading)
-
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

@@ -124,11 +124,11 @@ class TaskListContainer extends Component {
 
         } else if (type === "filter") {
             console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
+            if (filters.isClosed === undefined) {
+                parametersMap.delete("isClosed");
             } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
+                const filterVal = filters.isClosed.filterVal;
+                parametersMap.set("isClosed", filterVal);
             }
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },
