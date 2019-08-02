@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { camelizeKeys, decamelize } from 'humps';
 
 import TaskListComponent from "../../../components/tasks/list/taskListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-
+import { pullTaskList } from "../../../actions/taskActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 class TaskListContainer extends Component {
     /**
@@ -14,11 +16,20 @@ class TaskListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: "unassigned",
-            tasks: [],
+            // Pagination
+            page: 1,
+            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            totalSize: 0,
+
+            // Sorting, Filtering, & Searching
+            parametersMap: new Map(),
+
+            // Overaly
+            isLoading: true,
         }
-        this.onFilterClick = this.onFilterClick.bind(this);
-        this.filterTasks = this.filterTasks.bind(this);
+        this.onTableChange = this.onTableChange.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
 
     /**
@@ -29,32 +40,7 @@ class TaskListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        // Load from API...
-        const tasks = [{
-            'slug': 'argyle-task-1',
-            'dueDate': "July 20, 2019",
-            'taskName': "Assign Associate to Watch",
-            "watchName": "Argyle",
-            "category": "unassigned",
-            "typeOf": "unassigned-watch-associate",
-        },{
-            'slug': 'byron-task-1',
-            'dueDate': "April 10, 2019",
-            'taskName': "Assign Area Coordinator to Watch",
-            "watchName": "Byron",
-            "category": "unassigned",
-            "typeOf": "unassigned-watch-area-coordinator",
-        },{
-            'slug': 'carling-task-1',
-            'dueDate': "January 2, 2019",
-            'taskName': "Assign Area Coordinator to Watch",
-            "watchName": "Carling",
-            "category": "unassigned",
-            "typeOf": "unassigned-watch-associate",
-        }];
-        this.setState({
-            tasks: tasks,
-        });
+        this.props.pullTaskList(1, TINY_RESULTS_SIZE_PER_PAGE_PAGINATION, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
     }
 
     componentWillUnmount() {
@@ -74,12 +60,24 @@ class TaskListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+            }
+        )
     }
 
     onFailedSubmissionCallback(errors) {
         console.log(errors);
+        this.setState({ isLoading: false });
     }
 
     /**
@@ -87,27 +85,63 @@ class TaskListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onFilterClick(e, filter) {
-        e.preventDefault();
-        this.setState({
-            filter: filter,
-        })
-    }
+    /**
+     *  Function takes the user interactions made with the table and perform
+     *  remote API calls to update the table based on user selection.
+     */
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
 
-    filterTasks() {
-        let filteredTasks = [];
-        if (this.state.tasks === undefined || this.state.tasks === null) {
-            return [];
-        }
-        for (let i = 0; i < this.state.tasks.length; i++) {
-            let task = this.state.tasks[i];
-            if (task.category === this.state.filter) {
-                filteredTasks.push(task);
+        if (type === "sort") {
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+
+            if (sortOrder === "asc") {
+                parametersMap.set('o', decamelize(sortField));
             }
-        }
-        return filteredTasks;
-    }
+            if (sortOrder === "desc") {
+                parametersMap.set('o', "-"+decamelize(sortField));
+            }
 
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullTaskList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "pagination") {
+            console.log(type, page, sizePerPage); // For debugging purposes only.
+
+            this.setState(
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                ()=>{
+                    this.props.pullTaskList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "filter") {
+            console.log(type, filters); // For debugging purposes only.
+            if (filters.state === undefined) {
+                parametersMap.delete("state");
+            } else {
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
+            }
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullTaskList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+        }else {
+            alert("Unsupported feature detected!!"+type);
+        }
+    }
 
     /**
      *  Main render function
@@ -115,13 +149,16 @@ class TaskListContainer extends Component {
      */
 
     render() {
-
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <TaskListComponent
-                filter={this.state.filter}
-                onFilterClick={this.onFilterClick}
-                tasks={this.filterTasks()}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                taskList={this.props.taskList}
+                onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -131,6 +168,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        taskList: store.taskListState,
     };
 }
 
@@ -138,7 +176,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullTaskList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTaskList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

@@ -1,177 +1,174 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+// import overlayFactory from 'react-bootstrap-table2-overlay';
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
-import TaskFilterComponent from "./taskFilterComponent";
 
 
-class UnassignedListComponent extends Component {
+const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
+);
+
+
+class RemoteListComponent extends Component {
     render() {
-        const { tasks } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
+
+            // Data
+            tasks,
+
+            // Everything else.
+            onTableChange, isLoading
+        } = this.props;
+
+        const selectOptions = {
+            "active": 'Active',
+            "inactive": 'Inactive',
+        };
 
         const columns = [{
-            dataField: 'dueDate',
-            text: 'Due Date',
-            sort: true
-        },{
-            dataField: 'taskName',
-            text: 'Task',
-            sort: true
-        },{
-            dataField: 'watchName',
-            text: 'Watch',
-            sort: true
-        },{
-            dataField: 'slug',
+            dataField: 'icon',
             text: '',
             sort: false,
-            formatter: linkFormatter
+            formatter: iconFormatter
+        },{
+            dataField: 'givenName',
+            text: 'First Name',
+            sort: true
+        },{
+            dataField: 'lastName',
+            text: 'Last Name',
+            sort: true
+        },{
+            dataField: 'telephone',
+            text: 'Phone',
+            sort: true
+        },{
+            dataField: 'email',
+            text: 'Email',
+            sort: true
+        },{
+            dataField: 'state',
+            text: 'Status',
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 'active',
+                withoutEmptyOption: true
+            }),
+            formatter: statusFormatter
+        },{
+            dataField: 'slug',
+            text: 'Financials',
+            sort: false,
+            formatter: financialExternalLinkFormatter
+        },{
+            dataField: 'slug',
+            text: 'Details',
+            sort: false,
+            formatter: detailLinkFormatter
         }];
 
+        const paginationOption = {
+            page: page,
+            sizePerPage: sizePerPage,
+            totalSize: totalSize,
+            sizePerPageList: [{
+                text: '10', value: 10
+            }, {
+                text: '25', value: 25
+            }, {
+                text: '50', value: 50
+            }, {
+                text: '100', value: 100
+            }, {
+                text: 'All', value: totalSize
+            }],
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            firstPageText: 'First',
+            prePageText: 'Back',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+        };
+
         return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-clock"></i>&nbsp;Unassigned Tasks
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ tasks }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no unassigned tasks at the moment"
-                    />
-
-                </div>
-            </div>
+            <BootstrapTable
+                bootstrap4
+                keyField='id'
+                data={ tasks }
+                columns={ columns }
+                striped
+                bordered={ false }
+                noDataIndication="There are no tasks at the moment"
+                remote
+                onTableChange={ onTableChange }
+                pagination={ paginationFactory(paginationOption) }
+                filter={ filterFactory() }
+                loading={ isLoading }
+                // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
+            />
         );
     }
 }
 
 
-class PendingListComponent extends Component {
-    render() {
-        const { tasks } = this.props;
-
-        const columns = [{
-            dataField: 'dueDate',
-            text: 'Due Date',
-            sort: true
-        },{
-            dataField: 'taskName',
-            text: 'Task',
-            sort: true
-        },{
-            dataField: 'watchName',
-            text: 'Watch',
-            sort: true
-        },{
-            dataField: 'slug',
-            text: '',
-            sort: false,
-            formatter: linkFormatter
-        }];
-
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-clock"></i>&nbsp;Pending Tasks
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ tasks }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no pending tasks at the moment"
-                    />
-
-                </div>
-            </div>
-        );
-    }
-}
-
-
-
-
-class ClosedListComponent extends Component {
-    render() {
-        const { tasks } = this.props;
-
-        const columns = [{
-            dataField: 'dueDate',
-            text: 'Due Date',
-            sort: true
-        },{
-            dataField: 'taskName',
-            text: 'Task',
-            sort: true
-        },{
-            dataField: 'watchName',
-            text: 'Watch',
-            sort: true
-        },{
-            dataField: 'slug',
-            text: '',
-            sort: false,
-            formatter: linkFormatter
-        }];
-
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-clock"></i>&nbsp;Closed Tasks
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ tasks }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no closed tasks at the moment"
-                    />
-
-                </div>
-            </div>
-        );
-    }
-}
-
-
-function linkFormatter(cell, row){
-    // DEVELOPERS NOTE:
-    // WE ARE ASSIGNING AN ID TO THE URL. THIS IS WHERE WE NEED TO ADD MORE IDS
-    // IF HAVE MORE DIFFERENT TYPES.
-    let typeOfID = 0;
+function iconFormatter(cell, row){
     switch(row.typeOf) {
-        case "unassigned-watch-associate":
-            typeOfID = 1;
+        case 3:
+            return <i className="fas fa-building"></i>;
             break;
-        case "unassigned-watch-area-coordinator":
-            typeOfID = 2;
+        case 2:
+            return <i className="fas fa-home"></i>;
             break;
         default:
-           typeOfID = 0;
-           break;
+            return <i className="fas fa-question"></i>;
+            break;
     }
+}
+
+
+function statusFormatter(cell, row){
+    switch(row.state) {
+        case "active":
+            return <i className="fas fa-check-circle"></i>;
+            break;
+        case "inactive":
+            return <i className="fas fa-times-circle"></i>;
+            break;
+        default:
+        return <i className="fas fa-question-circle"></i>;
+            break;
+    }
+}
+
+
+function financialExternalLinkFormatter(cell, row){
     return (
-        <Link to={`/task/${typeOfID}/${row.slug}/step-1`}>
+        <a target="_blank" href={`/financial/${row.id}`}>
+            View&nbsp;<i className="fas fa-external-link-alt"></i>
+        </a>
+    )
+}
+
+
+function detailLinkFormatter(cell, row){
+    return (
+        <Link to={`/task/${row.slug}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
@@ -180,14 +177,25 @@ function linkFormatter(cell, row){
 
 class TaskListComponent extends Component {
     render() {
-        const { filter, onFilterClick, tasks, flashMessage } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
 
-        const isPending = filter === "pending";
-        const isUnassigned = filter === "unassigned";
-        const isClosed = filter === "closed";
+            // Data
+            taskList,
+
+            // Everything else...
+            flashMessage, onTableChange, isLoading
+        } = this.props;
+
+        // const tasks = taskList.results ? taskList.results : [];
+        const tasks = [];
+
+        console.log(isLoading)
 
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -199,30 +207,22 @@ class TaskListComponent extends Component {
                     </ol>
                 </nav>
 
-                <div className="row">
-                    <div className="col-md-12">
-                        <section className="row text-center placeholders">
-                            <div className="col-sm-12 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
-                                    <Link to="/tasks/search" className="d-block link-ndecor" title="Search">
-                                        <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Search</h4>
-                                <span className="text-muted">Search Tasks</span>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-tasks"></i>&nbsp;Tasks</h1>
 
-{ /*
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
+                            <div className="col-sm-6 placeholder">
+                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
+                                    <Link to="/tasks/add/step-1" className="d-block link-ndecor" title="Tasks">
+                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
+                                    </Link>
+                                </div>
+                                <h4>Add</h4>
+                                <div className="text-muted">Add Tasks</div>
+                            </div>
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
                                     <Link to="/tasks/search" className="d-block link-ndecor" title="Search">
@@ -235,20 +235,22 @@ class TaskListComponent extends Component {
                         </section>
                     </div>
                 </div>
-*/}
-                <TaskFilterComponent filter={filter} onFilterClick={onFilterClick} />
 
-                {isUnassigned &&
-                    <UnassignedListComponent tasks={tasks} />
-                }
-                {isPending &&
-                    <PendingListComponent tasks={tasks} />
-                }
-                {isClosed &&
-                    <ClosedListComponent tasks={tasks} />
-                }
-
-
+                <div className="row">
+                    <div className="col-md-12">
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;List
+                        </h2>
+                        <RemoteListComponent
+                            page={page}
+                            sizePerPage={sizePerPage}
+                            totalSize={totalSize}
+                            tasks={tasks}
+                            onTableChange={onTableChange}
+                            isLoading={isLoading}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }

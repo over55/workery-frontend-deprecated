@@ -15,6 +15,7 @@ export const NWAPP_DASHBOARD_API_ENDPOINT = '/dashboard';
 export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/customers';
 export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
 export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';
+export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const NWAPP_LOGOUT_API_ENDPOINT ='/logout';
