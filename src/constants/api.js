@@ -13,6 +13,7 @@ export const NWAPP_PROFILE_API_ENDPOINT = '/profile';
 export const NWAPP_TENANT_LIST_API_ENDPOINT = '/franchises';
 export const NWAPP_DASHBOARD_API_ENDPOINT = '/dashboard';
 export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/customers';
+export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const NWAPP_LOGOUT_API_ENDPOINT ='/logout';

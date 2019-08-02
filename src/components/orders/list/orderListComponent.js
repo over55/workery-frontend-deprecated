@@ -1,108 +1,72 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
-import OrderFilterComponent from "./orderFilterComponent";
+import { BootstrapTableLoadingAnimation } from "../../bootstrap/bootstrapTableLoadingAnimation";
 
 
-class ActiveListComponent extends Component {
+class RemoteListComponent extends Component {
     render() {
-        const { orders } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
+
+            // Data
+            orders,
+
+            // Everything else.
+            onTableChange
+        } = this.props;
+
+        const selectOptions = {
+            "new": 'New',
+            "declined": 'Declined',
+            "pending": 'Pending',
+            "cancelled": 'Cancelled',
+            "ongoing": 'Ongoing',
+            "in_progress": 'In-progress',
+            "completed_and_unpaid": 'Completed and Unpaid',
+            "completed_and_paid": 'Completed and Paid',
+            "archived": 'Archived',
+        };
 
         const columns = [{
-            dataField: 'icon',
+            dataField: 'typeOf',
             text: '',
             sort: false,
             formatter: iconFormatter
         },{
-            dataField: 'firstName',
-            text: 'First Name',
+            dataField: 'id',
+            text: 'Job #',
             sort: true
         },{
-            dataField: 'lastName',
-            text: 'Last Name',
+            dataField: 'customerName',
+            text: 'Client',
             sort: true
         },{
-            dataField: 'phone',
-            text: 'Phone',
+            dataField: 'associateName',
+            text: 'Associate',
             sort: true
         },{
-            dataField: 'email',
-            text: 'Email',
+            dataField: 'assignmentDate',
+            text: 'Assign Date',
             sort: true
         },{
-            dataField: 'slug',
-            text: 'Financials',
+            dataField: 'startDate',
+            text: 'Start Date',
+            sort: true
+        },{
+            dataField: 'state',
+            text: 'Status',
             sort: false,
-            formatter: financialExternalLinkFormatter
-        },{
-            dataField: 'slug',
-            text: 'Details',
-            sort: false,
-            formatter: detailLinkFormatter
-        }];
-
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-user-check"></i>&nbsp;Active Orders
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ orders }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no active orders at the moment"
-                    />
-
-                </div>
-            </div>
-        );
-    }
-}
-
-
-class InactiveListComponent extends Component {
-    render() {
-        const { orders } = this.props;
-
-        const columns = [{
-            dataField: 'icon',
-            text: '',
-            sort: false,
-            formatter: iconFormatter,
-            style: {
-                width: 10,
-            }
-        },{
-            dataField: 'firstName',
-            text: 'First Name',
-            sort: true
-        },{
-            dataField: 'lastName',
-            text: 'Last Name',
-            sort: true
-        },{
-            dataField: 'phone',
-            text: 'Watch',
-            sort: true
-        },{
-            dataField: 'email',
-            text: 'Email',
-            sort: true
-        },{
-            dataField: 'slug',
-            text: 'Financials',
-            sort: false,
-            formatter: financialExternalLinkFormatter
+            filter: selectFilter({
+                options: selectOptions
+            }),
+            formatter: statusFormatter
         },{
             dataField: 'slug',
             text: 'Details',
@@ -111,43 +75,51 @@ class InactiveListComponent extends Component {
         }];
 
         return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-user-times"></i>&nbsp;Inactive Orders
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ orders }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no inactive orders at the moment"
-                    />
-
-                </div>
-            </div>
+            <BootstrapTable
+                bootstrap4
+                keyField='slug'
+                data={ orders }
+                columns={ columns }
+                striped
+                bordered={ false }
+                noDataIndication="There are no orders at the moment"
+                remote
+                onTableChange={ onTableChange }
+                pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
+                filter={ filterFactory() }
+            />
         );
     }
 }
 
 
 function iconFormatter(cell, row){
-    return (
-        <i className={`fas fa-${row.icon}`}></i>
-    )
+    switch(row.typeOf) {
+        case 2:
+            return <i className="fas fa-building"></i>;
+            break;
+        case 1:
+            return <i className="fas fa-home"></i>;
+            break;
+        default:
+            return <i className="fas fa-question"></i>;
+            break;
+    }
 }
 
 
-function financialExternalLinkFormatter(cell, row){
-    return (
-        <a target="_blank" href={`/financial/${row.slug}`}>
-            View&nbsp;<i className="fas fa-external-link-alt"></i>
-        </a>
-    )
+function statusFormatter(cell, row){
+    switch(row.state) {
+        case "active":
+            return <i className="fas fa-check-circle"></i>;
+            break;
+        case "inactive":
+            return <i className="fas fa-times-circle"></i>;
+            break;
+        default:
+        return <i className="fas fa-question-circle"></i>;
+            break;
+    }
 }
 
 
@@ -160,13 +132,18 @@ function detailLinkFormatter(cell, row){
 }
 
 
-class OrderListComponent extends Component {
+export default class OrderListComponent extends Component {
     render() {
-        const { filter, onFilterClick, orders, flashMessage } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
 
-        const isActive = filter === "active";
-        const isInactive = filter === "inactive";
+            // Data
+            orderList,
 
+            // Everything else...
+            flashMessage, onTableChange
+        } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -175,21 +152,21 @@ class OrderListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Orders
+                            <i className="fas fa-user-circle"></i>&nbsp;Orders
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
+                <h1><i className="fas fa-user-circle"></i>&nbsp;Orders</h1>
 
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/orders/add/step-1" className="d-block link-ndecor" title="Clients">
+                                    <Link to="/orders/add/step-1" className="d-block link-ndecor" title="Orders">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
@@ -209,19 +186,24 @@ class OrderListComponent extends Component {
                     </div>
                 </div>
 
-                <OrderFilterComponent filter={filter} onFilterClick={onFilterClick} />
-
-                {isActive &&
-                    <ActiveListComponent orders={orders} />
-                }
-                {isInactive &&
-                    <InactiveListComponent orders={orders} />
-                }
-
-
+                <div className="row">
+                    <div className="col-md-12">
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;List
+                        </h2>
+                        {orderList.results
+                            ?<RemoteListComponent
+                                page={page}
+                                sizePerPage={sizePerPage}
+                                totalSize={totalSize}
+                                orders={orderList.results}
+                                onTableChange={onTableChange}
+                            />
+                            :<BootstrapTableLoadingAnimation />
+                        }
+                    </div>
+                </div>
             </div>
         );
     }
 }
-
-export default OrderListComponent;

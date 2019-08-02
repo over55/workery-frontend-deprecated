@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { camelizeKeys, decamelize } from 'humps';
 
 import OrderListComponent from "../../../components/orders/list/orderListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-
+import { pullOrderList } from "../../../actions/orderActions";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 class OrderListContainer extends Component {
     /**
@@ -14,11 +16,17 @@ class OrderListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: "active",
-            orders: [],
+            // Pagination
+            page: 1,
+            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            totalSize: 0,
+
+            // Sorting, Filtering, & Searching
+            parametersMap: new Map(),
         }
-        this.onFilterClick = this.onFilterClick.bind(this);
-        this.filterOrders = this.filterOrders.bind(this);
+        this.onTableChange = this.onTableChange.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
 
     /**
@@ -29,35 +37,7 @@ class OrderListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        // Load from API...
-        const orders = [{
-            'slug': 'argyle',
-            'icon': 'home',
-            'firstName': "Bob",
-            'lastName': "Page",
-            "phone": "(111) 222-3333",
-            'email': "1@1.com",
-            "typeOf": "active",
-        },{
-            'slug': 'byron',
-            'icon': 'building',
-            'firstName': "Walter",
-            'lastName': "Simons",
-            "phone": "(222) 333-4444",
-            'email': "2@2.com",
-            "typeOf": "active",
-        },{
-            'slug': 'carling',
-            'icon': 'university',
-            'firstName': "JC",
-            'lastName': "Denton",
-            "phone": "(333) 444-5555",
-            'email': "3@3.com",
-            "typeOf": "active",
-        }];
-        this.setState({
-            orders: orders,
-        });
+        this.props.pullOrderList(1, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback); // Load up the default page.
     }
 
     componentWillUnmount() {
@@ -77,8 +57,18 @@ class OrderListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+            },
+            ()=>{
+                console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+            }
+        )
     }
 
     onFailedSubmissionCallback(errors) {
@@ -90,27 +80,63 @@ class OrderListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onFilterClick(e, filter) {
-        e.preventDefault();
-        this.setState({
-            filter: filter,
-        })
-    }
+    /**
+     *  Function takes the user interactions made with the table and perform
+     *  remote API calls to update the table based on user selection.
+     */
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
 
-    filterOrders() {
-        let filteredOrders = [];
-        if (this.state.orders === undefined || this.state.orders === null) {
-            return [];
-        }
-        for (let i = 0; i < this.state.orders.length; i++) {
-            let order = this.state.orders[i];
-            if (order.typeOf === this.state.filter) {
-                filteredOrders.push(order);
+        if (type === "sort") {
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+
+            if (sortOrder === "asc") {
+                parametersMap.set('o', decamelize(sortField));
             }
-        }
-        return filteredOrders;
-    }
+            if (sortOrder === "desc") {
+                parametersMap.set('o', "-"+decamelize(sortField));
+            }
 
+            this.setState(
+                { parametersMap: parametersMap },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullOrderList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "pagination") {
+            console.log(type, page, sizePerPage); // For debugging purposes only.
+
+            this.setState(
+                { page: page, sizePerPage:sizePerPage },
+                ()=>{
+                    this.props.pullOrderList(page, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "filter") {
+            console.log(type, filters); // For debugging purposes only.
+            if (filters.state === undefined) {
+                parametersMap.delete("state");
+            } else {
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
+            }
+            this.setState(
+                { parametersMap: parametersMap },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullOrderList(this.state.page, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+        }else {
+            alert("Unsupported feature detected!!"+type);
+        }
+    }
 
     /**
      *  Main render function
@@ -118,12 +144,15 @@ class OrderListContainer extends Component {
      */
 
     render() {
-
+        const { page, sizePerPage, totalSize } = this.state;
         return (
             <OrderListComponent
-                filter={this.state.filter}
-                onFilterClick={this.onFilterClick}
-                orders={this.filterOrders()}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+
+                orderList={this.props.orderList}
+                onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -134,6 +163,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        orderList: store.orderListState,
     };
 }
 
@@ -141,7 +171,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullOrderList: (page, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderList(page, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 
