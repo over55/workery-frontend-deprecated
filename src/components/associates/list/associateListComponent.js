@@ -1,16 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
-import AssociateFilterComponent from "./associateFilterComponent";
+import { BootstrapTableLoadingAnimation } from "../../bootstrap/bootstrapTableLoadingAnimation";
 
 
-class ActiveListComponent extends Component {
+class RemoteListComponent extends Component {
     render() {
-        const { associates } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
+
+            // Data
+            associates,
+
+            // Everything else.
+            onTableChange
+        } = this.props;
+
+        const selectOptions = {
+            "active": 'Active',
+            "inactive": 'Inactive',
+        };
 
         const columns = [{
             dataField: 'icon',
@@ -18,7 +33,7 @@ class ActiveListComponent extends Component {
             sort: false,
             formatter: iconFormatter
         },{
-            dataField: 'firstName',
+            dataField: 'givenName',
             text: 'First Name',
             sort: true
         },{
@@ -26,7 +41,7 @@ class ActiveListComponent extends Component {
             text: 'Last Name',
             sort: true
         },{
-            dataField: 'phone',
+            dataField: 'telephone',
             text: 'Phone',
             sort: true
         },{
@@ -34,70 +49,13 @@ class ActiveListComponent extends Component {
             text: 'Email',
             sort: true
         },{
-            dataField: 'slug',
-            text: 'Financials',
+            dataField: 'state',
+            text: 'Status',
             sort: false,
-            formatter: financialExternalLinkFormatter
-        },{
-            dataField: 'slug',
-            text: 'Details',
-            sort: false,
-            formatter: detailLinkFormatter
-        }];
-
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-user-check"></i>&nbsp;Active Associates
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ associates }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no active associates at the moment"
-                    />
-
-                </div>
-            </div>
-        );
-    }
-}
-
-
-class InactiveListComponent extends Component {
-    render() {
-        const { associates } = this.props;
-
-        const columns = [{
-            dataField: 'icon',
-            text: '',
-            sort: false,
-            formatter: iconFormatter,
-            style: {
-                width: 10,
-            }
-        },{
-            dataField: 'firstName',
-            text: 'First Name',
-            sort: true
-        },{
-            dataField: 'lastName',
-            text: 'Last Name',
-            sort: true
-        },{
-            dataField: 'phone',
-            text: 'Watch',
-            sort: true
-        },{
-            dataField: 'email',
-            text: 'Email',
-            sort: true
+            filter: selectFilter({
+                options: selectOptions
+            }),
+            formatter: statusFormatter
         },{
             dataField: 'slug',
             text: 'Financials',
@@ -111,11 +69,7 @@ class InactiveListComponent extends Component {
         }];
 
         return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-user-times"></i>&nbsp;Inactive Associates
-                    </h2>
+
 
                     <BootstrapTable
                         bootstrap4
@@ -124,21 +78,46 @@ class InactiveListComponent extends Component {
                         columns={ columns }
                         striped
                         bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no inactive associates at the moment"
+                        noDataIndication="There are no associates at the moment"
+                        remote
+                        onTableChange={ onTableChange }
+                        pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
+                        filter={ filterFactory() }
                     />
 
-                </div>
-            </div>
+
         );
     }
 }
 
 
 function iconFormatter(cell, row){
-    return (
-        <i className={`fas fa-${row.icon}`}></i>
-    )
+    switch(row.typeOf) {
+        case 3:
+            return <i className="fas fa-building"></i>;
+            break;
+        case 2:
+            return <i className="fas fa-home"></i>;
+            break;
+        default:
+            return <i className="fas fa-question"></i>;
+            break;
+    }
+}
+
+
+function statusFormatter(cell, row){
+    switch(row.state) {
+        case "active":
+            return <i className="fas fa-check-circle"></i>;
+            break;
+        case "inactive":
+            return <i className="fas fa-times-circle"></i>;
+            break;
+        default:
+        return <i className="fas fa-question-circle"></i>;
+            break;
+    }
 }
 
 
@@ -153,7 +132,7 @@ function financialExternalLinkFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/associate/${row.slug}`}>
+        <Link to={`/associate/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
@@ -162,10 +141,16 @@ function detailLinkFormatter(cell, row){
 
 class AssociateListComponent extends Component {
     render() {
-        const { filter, onFilterClick, associates, flashMessage } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
 
-        const isActive = filter === "active";
-        const isInactive = filter === "inactive";
+            // Data
+            associateList,
+
+            // Everything else...
+            flashMessage, onTableChange
+        } = this.props;
 
         return (
             <div>
@@ -189,7 +174,7 @@ class AssociateListComponent extends Component {
                         <section className="row text-center placeholders">
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/associates/add/step-1" className="d-block link-ndecor" title="Clients">
+                                    <Link to="/associates/add/step-1" className="d-block link-ndecor" title="Associates">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
@@ -209,16 +194,23 @@ class AssociateListComponent extends Component {
                     </div>
                 </div>
 
-                <AssociateFilterComponent filter={filter} onFilterClick={onFilterClick} />
-
-                {isActive &&
-                    <ActiveListComponent associates={associates} />
-                }
-                {isInactive &&
-                    <InactiveListComponent associates={associates} />
-                }
-
-
+                <div className="row">
+                    <div className="col-md-12">
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;List
+                        </h2>
+                        {associateList.results
+                            ?<RemoteListComponent
+                                page={page}
+                                sizePerPage={sizePerPage}
+                                totalSize={totalSize}
+                                associates={associateList.results}
+                                onTableChange={onTableChange}
+                            />
+                            :<BootstrapTableLoadingAnimation />
+                        }
+                    </div>
+                </div>
             </div>
         );
     }

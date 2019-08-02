@@ -5,7 +5,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { APP_STATE } from "./constants/redux";
 import {
     LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, PROFILE_SUCCESS,
-    TENANT_LIST_SUCCESS, CLIENT_LIST_SUCCESS, ORDER_LIST_SUCCESS
+    TENANT_LIST_SUCCESS, CLIENT_LIST_SUCCESS, ORDER_LIST_SUCCESS,
+    ASSOCIATE_LIST_SUCCESS
 } from "./constants/actionTypes";
 import userReducer from "./reducers/userReducer";
 import tenantListReducer from "./reducers/tenantReducer";
@@ -13,6 +14,7 @@ import dashboardReducer from "./reducers/dashboardReducer";
 import flashMessageReducer from "./reducers/flashMessageReducer";
 import clientItemListReducer from "./reducers/clientReducers";
 import orderListReducer from "./reducers/orderReducers";
+import associateListReducer from "./reducers/associateReducers";
 
 
 // Combine Reducers
@@ -24,6 +26,7 @@ const appReducer = combineReducers({
     clientListState: clientItemListReducer,
     // clientItemDetailState: clientItemDetailReducer,
     orderListState: orderListReducer,
+    associateListState: associateListReducer,
 });
 
 
