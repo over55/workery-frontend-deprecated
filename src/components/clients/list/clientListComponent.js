@@ -7,7 +7,7 @@ import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
-import overlayFactory from 'react-bootstrap-table2-overlay';
+// import overlayFactory from 'react-bootstrap-table2-overlay';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -16,6 +16,16 @@ const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
 );
 
+
+const NoDataIndication = () => (
+  <div className="spinner">
+    <div className="rect1" />
+    <div className="rect2" />
+    <div className="rect3" />
+    <div className="rect4" />
+    <div className="rect5" />
+  </div>
+);
 
 class RemoteListComponent extends Component {
     render() {
@@ -119,7 +129,7 @@ class RemoteListComponent extends Component {
                 pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
-                overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
+                // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
             />
         );
     }
