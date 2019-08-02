@@ -32,49 +32,44 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
+            false: 'Pending',
+            true: 'Closed',
         };
 
         const columns = [{
-            dataField: 'icon',
+            dataField: 'typeOf',
             text: '',
             sort: false,
             formatter: iconFormatter
         },{
-            dataField: 'givenName',
-            text: 'First Name',
-            sort: true
+            dataField: 'dueDate',
+            text: 'Due Date',
+            sort: true,
         },{
-            dataField: 'lastName',
-            text: 'Last Name',
-            sort: true
+            dataField: 'title',
+            text: 'Task',
+            sort: true,
         },{
-            dataField: 'telephone',
-            text: 'Phone',
-            sort: true
+            dataField: 'customerName',
+            text: 'Client',
+            sort: true,
         },{
-            dataField: 'email',
-            text: 'Email',
-            sort: true
+            dataField: 'associateName',
+            text: 'Associate',
+            sort: true,
         },{
-            dataField: 'state',
+            dataField: 'isClosed',
             text: 'Status',
             sort: false,
             filter: selectFilter({
                 options: selectOptions,
-                defaultValue: 'active',
-                withoutEmptyOption: true
+                // defaultValue: false,
+                // withoutEmptyOption: true
             }),
             formatter: statusFormatter
         },{
-            dataField: 'slug',
-            text: 'Financials',
-            sort: false,
-            formatter: financialExternalLinkFormatter
-        },{
-            dataField: 'slug',
-            text: 'Details',
+            dataField: 'id',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];
@@ -128,11 +123,11 @@ class RemoteListComponent extends Component {
 
 
 function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case 3:
+    switch(row.orderTypeOf) {
+        case 2:
             return <i className="fas fa-building"></i>;
             break;
-        case 2:
+        case 1:
             return <i className="fas fa-home"></i>;
             break;
         default:
@@ -143,12 +138,12 @@ function iconFormatter(cell, row){
 
 
 function statusFormatter(cell, row){
-    switch(row.state) {
-        case "active":
-            return <i className="fas fa-check-circle"></i>;
+    switch(row.isClosed) {
+        case true:
+            return <i className="fas fa-clock"></i>;
             break;
-        case "inactive":
-            return <i className="fas fa-times-circle"></i>;
+        case false:
+            return <i className="fas fa-check-circle"></i>;
             break;
         default:
         return <i className="fas fa-question-circle"></i>;
@@ -168,7 +163,7 @@ function financialExternalLinkFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/task/${row.slug}`}>
+        <Link to={`/task/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
@@ -188,10 +183,7 @@ class TaskListComponent extends Component {
             flashMessage, onTableChange, isLoading
         } = this.props;
 
-        // const tasks = taskList.results ? taskList.results : [];
-        const tasks = [];
-
-        console.log(isLoading)
+        const tasks = (taskList && taskList.results) ? taskList.results : [];
 
         return (
             <div>

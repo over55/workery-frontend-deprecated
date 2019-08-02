@@ -96,18 +96,11 @@ class OrderListContainer extends Component {
         if (type === "sort") {
             console.log(type, sortField, sortOrder); // For debugging purposes only.
 
-            // DEVELOPERS NOTE:
-
-            let aSortField = sortField.replace("Name", "");
-            if (aSortField === "customer") {
-                aSortField = "client";
-            }
-
             if (sortOrder === "asc") {
-                parametersMap.set('o', decamelize(aSortField));
+                parametersMap.set('o', decamelize(sortField));
             }
             if (sortOrder === "desc") {
-                parametersMap.set('o', "-"+decamelize(aSortField));
+                parametersMap.set('o', "-"+decamelize(sortField));
             }
 
             this.setState(

@@ -28,7 +28,7 @@ const appReducer = combineReducers({
     // clientItemDetailState: clientItemDetailReducer,
     orderListState: orderListReducer,
     associateListState: associateListReducer,
-    taskListSate: taskListReducer,
+    taskListState: taskListReducer,
 });
 
 
