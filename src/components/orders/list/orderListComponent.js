@@ -142,14 +142,14 @@ export default class OrderListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user-circle"></i>&nbsp;Orders
+                            <i className="fas fa-wrench"></i>&nbsp;Orders
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user-circle"></i>&nbsp;Orders</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
 
                 <div className="row">
                     <div className="col-md-12">
