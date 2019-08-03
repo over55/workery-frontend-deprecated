@@ -2,6 +2,7 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize } from 'humps';
 import isEmpty from 'lodash/isEmpty';
+import msgpack from 'msgpack-lite';
 
 import {
     CLIENT_LIST_REQUEST,
@@ -62,8 +63,10 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            const responseData = successResponse.data;
-            // console.log(responseData); // For debugging purposes.
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+
+            console.log(responseData); // For debugging purposes.
 
             let data = camelizeKeys(responseData);
 
@@ -89,7 +92,10 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
 
                 let errors = camelizeKeys(responseData);
 

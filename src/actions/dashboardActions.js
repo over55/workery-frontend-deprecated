@@ -4,11 +4,7 @@ import { camelizeKeys } from 'humps';
 import msgpack from 'msgpack-lite';
 
 import { DASHBOARD_REQUEST, DASHBOARD_FAILURE, DASHBOARD_SUCCESS } from '../constants/actionTypes';
-// import { NWAPP_DASHBOARD_API_URL } from '../constants/api';
-import {
-    getAccessTokenFromLocalStorage, attachAxiosRefreshTokenHandler
-} from '../helpers/jwtUtility';
-import { getAPIBaseURL } from '../helpers/urlUtility';
+import getCustomAxios from '../helpers/customAxios';
 import { NWAPP_DASHBOARD_API_ENDPOINT } from "../constants/api"
 
 
@@ -44,26 +40,15 @@ export function pullDashboard(schema, successCallback=null, failedCallback=null)
             setDashboardRequest()
         );
 
-        // IMPORTANT: THIS IS THE ONLY WAY WE CAN GET THE ACCESS TOKEN.
-        const accessToken = getAccessTokenFromLocalStorage();
-
-        // Create a new Axios instance using our oAuth 2.0 bearer token
-        // and various other headers.
-        const customAxios = axios.create({
-            baseURL: getAPIBaseURL(),
-            headers: {
-                'Authorization': "JWT " + accessToken,
-                'Content-Type': 'application/json;',
-                'Accept': 'application/json',
-            },
-        })
-
-        // Attach our Axios "refesh token" interceptor.
-        attachAxiosRefreshTokenHandler(customAxios);
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
 
         // Make the call to the web-service.
         customAxios.get(NWAPP_DASHBOARD_API_ENDPOINT).then( (successResponse) => { // SUCCESS
-            const responseData = successResponse.data
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+
+            console.log(responseData); // For debugging purposes.
 
             let dashboard = camelizeKeys(responseData);
 
@@ -86,7 +71,10 @@ export function pullDashboard(schema, successCallback=null, failedCallback=null)
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
 
                 let errors = camelizeKeys(responseData);
 

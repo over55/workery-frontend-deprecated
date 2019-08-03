@@ -25,10 +25,10 @@ export default function getCustomAxios() {
         baseURL: getAPIBaseURL(),
         headers: {
             'Authorization': "JWT " + accessToken,
-            'Content-Type': 'application/json;',
-            'Accept': 'application/json',
+            'Content-Type': 'application/msgpack;',
+            'Accept': 'application/msgpack',
         },
-        responseType: 'json'
+        responseType: 'arraybuffer'
     });
 
     // Attach our Axios "refesh token" interceptor.
