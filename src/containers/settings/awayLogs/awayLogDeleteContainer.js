@@ -66,14 +66,14 @@ class AwayLogDeleteContainer extends Component {
     onBack(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.history.push("/settings/awayLogs/");
+        this.props.history.push("/settings/away-logs/");
     }
 
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.setFlashMessage("success", "AwayLog has been successfully deleted.");
-        this.props.history.push("/settings/awayLogs");
+        this.props.setFlashMessage("success", "Away log has been successfully deleted.");
+        this.props.history.push("/settings/away-logs");
     }
 
     /**
@@ -86,7 +86,7 @@ class AwayLogDeleteContainer extends Component {
             'slug': 'Argyle',
             'number': 1,
             'name': 'Argyle',
-            'absoluteUrl': '/settings/awayLog/argyle'
+            'absoluteUrl': '/settings/away-log/argyle'
         };
         return (
             <AwayLogDeleteComponent

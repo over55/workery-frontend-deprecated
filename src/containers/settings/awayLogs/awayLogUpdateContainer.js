@@ -59,7 +59,7 @@ class AwayLogUpdateContainer extends Component {
     onSuccessfulSubmissionCallback(awayLog) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "AwayLog has been successfully updated.");
-        this.props.history.push("/settings/awayLogs");
+        this.props.history.push("/settings/away-logs");
     }
 
     onFailedSubmissionCallback(errors) {

@@ -52,8 +52,8 @@ class AwayLogCreateContainer extends Component {
 
     onSuccessfulSubmissionCallback(tag) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "AwayLog has been successfully created.");
-        this.props.history.push("/settings/awayLogs");
+        this.props.setFlashMessage("success", "Away log has been successfully created.");
+        this.props.history.push("/settings/away-logs");
     }
 
     onFailedSubmissionCallback(errors) {
