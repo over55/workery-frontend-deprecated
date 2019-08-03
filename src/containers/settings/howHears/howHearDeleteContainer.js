@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import HowHearDeleteComponent from "../../../components/settings/howHear/howHearDeleteComponent";
+import HowHearDeleteComponent from "../../../components/settings/howHears/howHearDeleteComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 
 

@@ -7,7 +7,7 @@ import { validateStep5CreateInput } from "../../../validators/registerValidator"
 import {
     localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem
 } from '../../../helpers/localStorageUtility';
-import { getHowHearReactSelectOptions } from "../../../actions/howHearAction";
+import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagAction";
 import {
     RESIDENCE_TYPE_OF,

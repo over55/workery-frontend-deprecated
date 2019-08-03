@@ -115,10 +115,10 @@ import TagDeleteContainer from "./settings/tags/tagDeleteContainer";
 import TagCreateContainer from "./settings/tags/tagCreateContainer";
 import TagUpdateContainer from "./settings/tags/tagUpdateContainer";
 
-import HowHearsListContainer from "./settings/howHear/list/howHearListContainer";
-import HowHearDeleteContainer from "./settings/howHear/howHearDeleteContainer";
-import HowHearCreateContainer from "./settings/howHear/howHearCreateContainer";
-import HowHearUpdateContainer from "./settings/howHear/howHearUpdateContainer";
+import HowHearsListContainer from "./settings/howHears/list/howHearListContainer";
+import HowHearDeleteContainer from "./settings/howHears/howHearDeleteContainer";
+import HowHearCreateContainer from "./settings/howHears/howHearCreateContainer";
+import HowHearUpdateContainer from "./settings/howHears/howHearUpdateContainer";
 
 import AnnouncementListContainer from "./settings/announcements/list/announcementListContainer";
 import AnnouncementDeleteContainer from "./settings/announcements/announcementDeleteContainer";

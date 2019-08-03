@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import HowHearUpdateComponent from "../../../components/settings/howHear/howHearUpdateComponent";
+import HowHearCreateComponent from "../../../components/settings/howHears/howHearCreateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import validateInput from "../../../validators/howHearValidator";
 
 
-class HowHearUpdateContainer extends Component {
+class HowHearCreateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -15,16 +15,10 @@ class HowHearUpdateContainer extends Component {
 
     constructor(props) {
         super(props);
-
-        // Since we are using the ``react-routes-dom`` library then we
-        // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
-
         this.state = {
             name: null,
             errors: {},
-            isLoading: false,
-            slug: slug
+            isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
@@ -58,7 +52,7 @@ class HowHearUpdateContainer extends Component {
 
     onSuccessfulSubmissionCallback(howHear) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "How hear has been successfully updated.");
+        this.props.setFlashMessage("success", "How hear item has been successfully created.");
         this.props.history.push("/settings/how-hears");
     }
 
@@ -111,7 +105,7 @@ class HowHearUpdateContainer extends Component {
     render() {
         const { name, errors } = this.state;
         return (
-            <HowHearUpdateComponent
+            <HowHearCreateComponent
                 name={name}
                 errors={errors}
                 onTextChange={this.onTextChange}
@@ -139,4 +133,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(HowHearUpdateContainer);
+)(HowHearCreateContainer);

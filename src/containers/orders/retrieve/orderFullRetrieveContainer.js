@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import OrderFullRetrieveComponent from "../../../components/orders/retrieve/orderFullRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { getHowHearReactSelectOptions } from "../../../actions/howHearAction";
+import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
 import {
     RESIDENCE_TYPE_OF,

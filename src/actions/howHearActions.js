@@ -5,11 +5,11 @@ import isEmpty from 'lodash/isEmpty';
 import msgpack from 'msgpack-lite';
 
 import {
-    TAG_LIST_REQUEST,
-    TAG_LIST_FAILURE,
-    TAG_LIST_SUCCESS
+    HOW_HEAR_LIST_REQUEST,
+    HOW_HEAR_LIST_FAILURE,
+    HOW_HEAR_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_TAG_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_HOW_HEAR_LIST_API_ENDPOINT } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -17,30 +17,30 @@ import getCustomAxios from '../helpers/customAxios';
  * Utility function takes the API data and converts it to HTML dropdown
  * options which will be consumed by the `react-select` library elements.
  */
-export function getTagReactSelectOptions(tagList=[], selectName="tag") {
-    const tagOptions = [];
-    const isNotProductionsEmpty = isEmpty(tagList) === false;
+export function getHowHearReactSelectOptions(howHearList=[], selectName="howHear") {
+    const howHearOptions = [];
+    const isNotProductionsEmpty = isEmpty(howHearList) === false;
     if (isNotProductionsEmpty) {
-        const results = tagList.results;
+        const results = howHearList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
             for (let i = 0; i < results.length; i++) {
-                let tag = results[i];
-                tagOptions.push({
+                let howHear = results[i];
+                howHearOptions.push({
                     selectName: selectName,
-                    value: tag.slug,
-                    label: tag.name
+                    value: howHear.slug,
+                    label: howHear.name
                 });
-                // console.log(tag);
+                // console.log(howHear);
             }
         }
     }
-    return tagOptions;
+    return howHearOptions;
 }
 
 
-export const setTagListRequest = () => ({
-    type: TAG_LIST_REQUEST,
+export const setHowHearListRequest = () => ({
+    type: HOW_HEAR_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
         page: 1,
@@ -49,14 +49,14 @@ export const setTagListRequest = () => ({
 });
 
 
-export const setTagListFailure = (info) => ({
-    type: TAG_LIST_FAILURE,
+export const setHowHearListFailure = (info) => ({
+    type: HOW_HEAR_LIST_FAILURE,
     payload: info,
 });
 
 
-export const setTagListSuccess = (info) => ({
-    type: TAG_LIST_SUCCESS,
+export const setHowHearListSuccess = (info) => ({
+    type: HOW_HEAR_LIST_SUCCESS,
     payload: info,
 });
 
@@ -65,11 +65,11 @@ export const setTagListSuccess = (info) => ({
  *  Function will pull the ``instrument`` API endpoint and override our
  *  global application state for the 'dashboard'.
  */
-export function pullTagList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullHowHearList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
-            setTagListRequest()
+            setHowHearListRequest()
         );
 
         console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback);
@@ -79,7 +79,7 @@ export function pullTagList(page=1, sizePerPage=10, filtersMap=new Map(), onSucc
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_TAG_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_HOW_HEAR_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -106,7 +106,7 @@ export function pullTagList(page=1, sizePerPage=10, filtersMap=new Map(), onSucc
             // Update the global state of the application to store our
             // user data for the application.
             store.dispatch(
-                setTagListSuccess(data)
+                setHowHearListSuccess(data)
             );
 
             // DEVELOPERS NOTE:
@@ -125,11 +125,11 @@ export function pullTagList(page=1, sizePerPage=10, filtersMap=new Map(), onSucc
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("pullTagList | error:", errors); // For debuggin purposes only.
+                console.log("pullHowHearList | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
-                    setTagListFailure({
+                    setHowHearListFailure({
                         isAPIRequestRunning: false,
                         errors: errors
                     })
