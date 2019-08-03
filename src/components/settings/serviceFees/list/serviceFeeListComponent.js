@@ -41,6 +41,11 @@ class RemoteListComponent extends Component {
             text: 'Title',
             sort: true
         },{
+            dataField: 'percentage',
+            text: 'Percentage',
+            sort: true,
+            formatter: percentFormatter,
+        },{
             dataField: 'description',
             text: 'Description',
             sort: true
@@ -96,6 +101,13 @@ class RemoteListComponent extends Component {
             />
         );
     }
+}
+
+
+function percentFormatter(cell, row){
+    return (
+        <div>{row.percentage}&nbsp;%</div>
+    )
 }
 
 
