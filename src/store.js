@@ -7,7 +7,8 @@ import {
     LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, PROFILE_SUCCESS,
     TENANT_LIST_SUCCESS, CLIENT_LIST_SUCCESS, ORDER_LIST_SUCCESS,
     ASSOCIATE_LIST_SUCCESS, TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS,
-    TAG_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS
+    TAG_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS,
+    SKILL_SET_LIST_SUCCESS
 } from "./constants/actionTypes";
 import userReducer from "./reducers/userReducer";
 import tenantListReducer from "./reducers/tenantReducer";
@@ -23,6 +24,7 @@ import tagListReducer from "./reducers/tagReducers";
 import howHearListReducer from "./reducers/howHearReducers";
 import awayLogListReducer from "./reducers/awayLogReducers";
 import bulletinBoardItemListReducer from "./reducers/bulletinBoardItemReducers";
+import skillSetListReducer from "./reducers/skillSetReducers";
 
 
 // Combine Reducers
@@ -41,6 +43,7 @@ const appReducer = combineReducers({
     howHearListState: howHearListReducer,
     awayLogListState: awayLogListReducer,
     bulletinBoardItemListState: bulletinBoardItemListReducer,
+    skillSetListState: skillSetListReducer,
 });
 
 
