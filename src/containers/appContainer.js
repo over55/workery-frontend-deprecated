@@ -135,6 +135,11 @@ import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/bull
 import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/bulletinBoardItemCreateContainer";
 import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/bulletinBoardItemUpdateContainer";
 
+import SkillSetsListContainer from "./settings/skillSets/list/skillSetListContainer";
+import SkillSetDeleteContainer from "./settings/skillSets/skillSetDeleteContainer";
+import SkillSetCreateContainer from "./settings/skillSets/skillSetCreateContainer";
+import SkillSetUpdateContainer from "./settings/skillSets/skillSetUpdateContainer";
+
 class AppContainer extends React.Component {
     render() {
         return (
@@ -267,6 +272,10 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/bulletin-board-items/add" exact component={requiresAuth(BulletinBoardItemCreateContainer)} />
                                 <Route path="/settings/bulletin-board-item/:slug/delete" exact component={requiresAuth(BulletinBoardItemDeleteContainer)} />
                                 <Route path="/settings/bulletin-board-item/:slug/update" exact component={requiresAuth(BulletinBoardItemUpdateContainer)} />
+                                <Route path="/settings/skill-sets" exact component={requiresAuth(SkillSetsListContainer)} />
+                                <Route path="/settings/skill-sets/add" exact component={requiresAuth(SkillSetCreateContainer)} />
+                                <Route path="/settings/skill-set/:slug/delete" exact component={requiresAuth(SkillSetDeleteContainer)} />
+                                <Route path="/settings/skill-set/:slug/update" exact component={requiresAuth(SkillSetUpdateContainer)} />
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>
