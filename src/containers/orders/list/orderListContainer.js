@@ -39,6 +39,13 @@ class OrderListContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // DEVELOPERS NOTE:
+        // Since in the react-table does not have a default filter selected so
+        // when the page loads the API call does not get made! We need to do it
+        // here when the component finished loading. We only write this code
+        // here if no filter was selected in the table.
+        this.props.pullOrderList(this.state.page, this.state.sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     componentWillUnmount() {
