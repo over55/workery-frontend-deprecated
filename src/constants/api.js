@@ -20,6 +20,7 @@ export const WORKERY_STAFF_LIST_API_ENDPOINT = '/staves';
 export const WORKERY_FINANCIAL_LIST_API_ENDPOINT = '/financials';
 export const WORKERY_TAG_LIST_API_ENDPOINT = '/tags';
 export const WORKERY_HOW_HEAR_LIST_API_ENDPOINT = '/how_hears';
+export const WORKERY_AWAY_LOG_LIST_API_ENDPOINT = '/away-logs';
 
 
 // OLD - PLEASE DO SOMETHING WITH THESE.

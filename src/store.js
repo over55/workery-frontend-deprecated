@@ -7,7 +7,7 @@ import {
     LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, PROFILE_SUCCESS,
     TENANT_LIST_SUCCESS, CLIENT_LIST_SUCCESS, ORDER_LIST_SUCCESS,
     ASSOCIATE_LIST_SUCCESS, TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS,
-    TAG_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS
+    TAG_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS
 } from "./constants/actionTypes";
 import userReducer from "./reducers/userReducer";
 import tenantListReducer from "./reducers/tenantReducer";
@@ -21,7 +21,7 @@ import staffListReducer from "./reducers/staffReducers";
 import financialListReducer from "./reducers/financialReducers";
 import tagListReducer from "./reducers/tagReducers";
 import howHearListReducer from "./reducers/howHearReducers";
-
+import awayLogReducer from "./reducers/awayLogReducers";
 
 // Combine Reducers
 const appReducer = combineReducers({
@@ -37,6 +37,7 @@ const appReducer = combineReducers({
     financialListState: financialListReducer,
     tagListState: tagListReducer,
     howHearListState: howHearListReducer,
+    awayLogState: awayLogReducer,
 });
 
 
@@ -67,7 +68,7 @@ const localStorageMiddleware = ({ getState }) => {
         if ([
             LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, PROFILE_SUCCESS,
             TENANT_LIST_SUCCESS, CLIENT_LIST_SUCCESS, ORDER_LIST_SUCCESS,
-            TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS
+            TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS
         ].includes(result.type)) {
             // console.log("De-hydrating store...");
             localStorage.setItem(APP_STATE, JSON.stringify(getState()))
