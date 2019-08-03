@@ -101,9 +101,14 @@ class RemoteListComponent extends Component {
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/settings/tag/${row.id}/update`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
-        </Link>
+        <div>
+            <Link to={`/settings/tag/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
+                <i className="fas fa-edit"></i>&nbsp;Edit
+            </Link>&nbsp;&nbsp;&nbsp;
+            <Link to={`/settings/tag/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
+                <i className="fas fa-minus"></i>&nbsp;Remove
+            </Link>
+        </div>
     )
 }
 
