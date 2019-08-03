@@ -1,15 +1,15 @@
-import { CLIENT_LIST_REQUEST, CLIENT_LIST_FAILURE, CLIENT_LIST_SUCCESS } from '../constants/actionTypes';
+import { STAFF_LIST_REQUEST, STAFF_LIST_FAILURE, STAFF_LIST_SUCCESS } from '../constants/actionTypes';
 
 
-const clientItemListReducer = function(state = [], action = {}) {
+const staffListReducer = function(state = [], action = {}) {
     switch (action.type) {
-        case CLIENT_LIST_REQUEST:
+        case STAFF_LIST_REQUEST:
             return Object.assign({}, state, action.payload);
 
-        case CLIENT_LIST_FAILURE:
+        case STAFF_LIST_FAILURE:
             return Object.assign({}, state, action.payload);
 
-        case CLIENT_LIST_SUCCESS:
+        case STAFF_LIST_SUCCESS:
             return Object.assign({}, state, action.payload);
 
         default:
@@ -17,4 +17,4 @@ const clientItemListReducer = function(state = [], action = {}) {
     }
 }
 
-export default clientItemListReducer;
+export default staffListReducer;

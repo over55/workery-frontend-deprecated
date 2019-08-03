@@ -4,16 +4,16 @@ import { camelizeKeys, decamelize } from 'humps';
 import isEmpty from 'lodash/isEmpty';
 
 import {
-    CLIENT_LIST_REQUEST,
-    CLIENT_LIST_FAILURE,
-    CLIENT_LIST_SUCCESS
+    STAFF_LIST_REQUEST,
+    STAFF_LIST_FAILURE,
+    STAFF_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_CLIENT_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_STAFF_LIST_API_ENDPOINT } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
-export const setClientListRequest = () => ({
-    type: CLIENT_LIST_REQUEST,
+export const setStaffListRequest = () => ({
+    type: STAFF_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
         page: 1,
@@ -22,14 +22,14 @@ export const setClientListRequest = () => ({
 });
 
 
-export const setClientListFailure = (info) => ({
-    type: CLIENT_LIST_FAILURE,
+export const setStaffListFailure = (info) => ({
+    type: STAFF_LIST_FAILURE,
     payload: info,
 });
 
 
-export const setClientListSuccess = (info) => ({
-    type: CLIENT_LIST_SUCCESS,
+export const setStaffListSuccess = (info) => ({
+    type: STAFF_LIST_SUCCESS,
     payload: info,
 });
 
@@ -38,11 +38,11 @@ export const setClientListSuccess = (info) => ({
  *  Function will pull the ``instrument`` API endpoint and override our
  *  global application state for the 'dashboard'.
  */
-export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullStaffList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
-            setClientListRequest()
+            setStaffListRequest()
         );
 
         console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback);
@@ -52,7 +52,7 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_CLIENT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_STAFF_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -77,7 +77,7 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
             // Update the global state of the application to store our
             // user data for the application.
             store.dispatch(
-                setClientListSuccess(data)
+                setStaffListSuccess(data)
             );
 
             // DEVELOPERS NOTE:
@@ -93,11 +93,11 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("pullClientList | error:", errors); // For debuggin purposes only.
+                console.log("pullStaffList | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
-                    setClientListFailure({
+                    setStaffListFailure({
                         isAPIRequestRunning: false,
                         errors: errors
                     })

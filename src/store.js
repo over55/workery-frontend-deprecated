@@ -16,6 +16,7 @@ import clientItemListReducer from "./reducers/clientReducers";
 import orderListReducer from "./reducers/orderReducers";
 import associateListReducer from "./reducers/associateReducers";
 import taskListReducer from "./reducers/taskReducers";
+import staffListReducer from "./reducers/staffReducers";
 
 
 // Combine Reducers
@@ -29,6 +30,7 @@ const appReducer = combineReducers({
     orderListState: orderListReducer,
     associateListState: associateListReducer,
     taskListState: taskListReducer,
+    staffListState: staffListReducer,
 });
 
 
