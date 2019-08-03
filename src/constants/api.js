@@ -26,6 +26,7 @@ export const WORKERY_SKILL_SET_LIST_API_ENDPOINT = '/skill_sets';
 export const WORKERY_INSURANCE_REQUIREMENT_LIST_API_ENDPOINT = '/insurance_requirements';
 export const WORKERY_SERVICE_FEE_LIST_API_ENDPOINT = '/order_service_fees';
 export const WORKERY_DEACTIVATED_CLIENT_LIST_API_ENDPOINT = '/deactivated-customers';
+export const WORKERY_VEHICLE_TYPE_LIST_API_ENDPOINT = '/vehicle_types';
 
 
 // OLD - PLEASE DO SOMETHING WITH THESE.

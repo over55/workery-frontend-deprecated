@@ -29,6 +29,8 @@ import skillSetListReducer from "./reducers/skillSetReducers";
 import insuranceRequirementListReducer from "./reducers/insuranceRequirementReducers";
 import serviceFeeListReducer from "./reducers/serviceFeeReducers";
 import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
+import vehicleTypeListReducer from "./reducers/vehicleTypeReducers";
+
 
 
 // Combine Reducers
@@ -51,6 +53,7 @@ const appReducer = combineReducers({
     insuranceRequirementListState: insuranceRequirementListReducer,
     serviceFeeListState: serviceFeeListReducer,
     deactivatedClientListState: deactivatedClientListReducer,
+    vehicleTypeListState: vehicleTypeListReducer,
 });
 
 
@@ -83,7 +86,7 @@ const localStorageMiddleware = ({ getState }) => {
             TENANT_LIST_SUCCESS, CLIENT_LIST_SUCCESS, ORDER_LIST_SUCCESS,
             TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS,
             SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
-            DEACTIVATED_CLIENT_LIST_SUCCESS
+            DEACTIVATED_CLIENT_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, TAG_LIST_SUCCESS, ASSOCIATE_LIST_SUCCESS
         ].includes(result.type)) {
             // console.log("De-hydrating store...");
             localStorage.setItem(APP_STATE, JSON.stringify(getState()))

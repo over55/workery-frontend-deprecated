@@ -152,6 +152,10 @@ import ServiceFeeUpdateContainer from "./settings/serviceFees/serviceFeeUpdateCo
 
 import DeactivatedClientListContainer from "./settings/deactivatedClients/list/deactivatedClientListContainer";
 
+import VehicleTypesListContainer from "./settings/vehicleTypes/list/vehicleTypeListContainer";
+import VehicleTypeDeleteContainer from "./settings/vehicleTypes/vehicleTypeDeleteContainer";
+import VehicleTypeCreateContainer from "./settings/vehicleTypes/vehicleTypeCreateContainer";
+import VehicleTypeUpdateContainer from "./settings/vehicleTypes/vehicleTypeUpdateContainer";
 
 class AppContainer extends React.Component {
     render() {
@@ -298,6 +302,10 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/service-fee/:slug/delete" exact component={requiresAuth(ServiceFeeDeleteContainer)} />
                                 <Route path="/settings/service-fee/:slug/update" exact component={requiresAuth(ServiceFeeUpdateContainer)} />
                                 <Route path="/settings/deactivated-clients" exact component={requiresAuth(DeactivatedClientListContainer)} />
+                                <Route path="/settings/vehicle-types" exact component={requiresAuth(VehicleTypesListContainer)} />
+                                <Route path="/settings/vehicle-type/add" exact component={requiresAuth(VehicleTypeCreateContainer)} />
+                                <Route path="/settings/vehicle-type/:slug/delete" exact component={requiresAuth(VehicleTypeDeleteContainer)} />
+                                <Route path="/settings/vehicle-type/:slug/update" exact component={requiresAuth(VehicleTypeUpdateContainer)} />
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>
