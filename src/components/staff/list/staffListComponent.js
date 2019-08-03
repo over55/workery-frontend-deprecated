@@ -165,35 +165,35 @@ class StaffListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-crown"></i>&nbsp;Staffs
+                            <i className="fas fa-user-tie"></i>&nbsp;Staff
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-crown"></i>&nbsp;Staffs</h1>
+                <h1><i className="fas fa-user-tie"></i>&nbsp;Staff</h1>
 
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/staffs/add/step-1" className="d-block link-ndecor" title="Staffs">
+                                    <Link to="/staff/add/step-1" className="d-block link-ndecor" title="Staff">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
                                 <h4>Add</h4>
-                                <div className="text-muted">Add Staffs</div>
+                                <div className="text-muted">Add Staff</div>
                             </div>
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
-                                    <Link to="/staffs/search" className="d-block link-ndecor" title="Search">
+                                    <Link to="/staff/search" className="d-block link-ndecor" title="Search">
                                         <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
                                     </Link>
                                 </div>
                                 <h4>Search</h4>
-                                <span className="text-muted">Search Staffs</span>
+                                <span className="text-muted">Search Staff</span>
                             </div>
                         </section>
                     </div>
