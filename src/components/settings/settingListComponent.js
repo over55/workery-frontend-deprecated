@@ -65,9 +65,9 @@ class SettingListComponent extends Component {
                                                 <i className="fas fa-bullhorn fa-3x"></i>
                                             </div>
                                             <div className="card-body">
-                                                <h3 className="card-title">Announcements</h3>
-                                                <p className="card-text">Add or remove announcements.</p>
-                                                <Link to="/settings/announcements" className="btn btn-success btn-lg">
+                                                <h3 className="card-title">Associate News</h3>
+                                                <p className="card-text">Add or remove news items.</p>
+                                                <Link to="/settings/awayLogs" className="btn btn-success btn-lg">
                                                     Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                                 </Link>
                                             </div>

@@ -7,7 +7,7 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 
 
-class AnnouncementUpdateComponent extends Component {
+class AwayLogUpdateComponent extends Component {
     render() {
         const { name, errors, onTextChange, isLoading, onClick } = this.props;
         return (
@@ -21,7 +21,7 @@ class AnnouncementUpdateComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/announcements"><i className="fas fa-bullhorn"></i>&nbsp;Announcements</Link>
+                            <Link to="/settings/awayLogs"><i className="fas fa-bullhorn"></i>&nbsp;AwayLogs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Update
@@ -32,7 +32,7 @@ class AnnouncementUpdateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Update Announcement</h1>
+                            <h1>Update AwayLog</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -52,7 +52,7 @@ class AnnouncementUpdateComponent extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/settings/announcements" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/settings/awayLogs" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
@@ -66,4 +66,4 @@ class AnnouncementUpdateComponent extends Component {
     }
 }
 
-export default AnnouncementUpdateComponent;
+export default AwayLogUpdateComponent;

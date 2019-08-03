@@ -120,10 +120,10 @@ import HowHearDeleteContainer from "./settings/howHears/howHearDeleteContainer";
 import HowHearCreateContainer from "./settings/howHears/howHearCreateContainer";
 import HowHearUpdateContainer from "./settings/howHears/howHearUpdateContainer";
 
-import AnnouncementListContainer from "./settings/announcements/list/announcementListContainer";
-import AnnouncementDeleteContainer from "./settings/announcements/announcementDeleteContainer";
-import AnnouncementCreateContainer from "./settings/announcements/announcementCreateContainer";
-import AnnouncementUpdateContainer from "./settings/announcements/announcementUpdateContainer";
+import AwayLogListContainer from "./settings/awayLogs/list/awayLogListContainer";
+import AwayLogDeleteContainer from "./settings/awayLogs/awayLogDeleteContainer";
+import AwayLogCreateContainer from "./settings/awayLogs/awayLogCreateContainer";
+import AwayLogUpdateContainer from "./settings/awayLogs/awayLogUpdateContainer";
 
 import ResourcesListContainer from "./settings/resources/list/resourceListContainer";
 import ResourceDeleteContainer from "./settings/resources/resourceDeleteContainer";
@@ -251,10 +251,10 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/how-hears/add" exact component={requiresAuth(HowHearCreateContainer)} />
                                 <Route path="/settings/how-hear/:slug/delete" exact component={requiresAuth(HowHearDeleteContainer)} />
                                 <Route path="/settings/how-hear/:slug/update" exact component={requiresAuth(HowHearUpdateContainer)} />
-                                <Route path="/settings/announcements" exact component={requiresAuth(AnnouncementListContainer)} />
-                                <Route path="/settings/announcements/add" exact component={requiresAuth(AnnouncementCreateContainer)} />
-                                <Route path="/settings/announcement/:slug/delete" exact component={requiresAuth(AnnouncementDeleteContainer)} />
-                                <Route path="/settings/announcement/:slug/update" exact component={requiresAuth(AnnouncementUpdateContainer)} />
+                                <Route path="/settings/awayLogs" exact component={requiresAuth(AwayLogListContainer)} />
+                                <Route path="/settings/awayLogs/add" exact component={requiresAuth(AwayLogCreateContainer)} />
+                                <Route path="/settings/awayLog/:slug/delete" exact component={requiresAuth(AwayLogDeleteContainer)} />
+                                <Route path="/settings/awayLog/:slug/update" exact component={requiresAuth(AwayLogUpdateContainer)} />
                                 <Route path="/settings/resources" exact component={requiresAuth(ResourcesListContainer)} />
                                 <Route path="/settings/resource/add" exact component={requiresAuth(ResourceCreateContainer)} />
                                 <Route path="/settings/resource/:slug/delete" exact component={requiresAuth(ResourceDeleteContainer)} />

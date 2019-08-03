@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AnnouncementUpdateComponent from "../../../components/settings/announcements/announcementUpdateComponent";
+import AwayLogUpdateComponent from "../../../components/settings/awayLogs/awayLogUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/announcementValidator";
+import validateInput from "../../../validators/awayLogValidator";
 
 
-class AnnouncementUpdateContainer extends Component {
+class AwayLogUpdateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -56,10 +56,10 @@ class AnnouncementUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(announcement) {
+    onSuccessfulSubmissionCallback(awayLog) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Announcement has been successfully updated.");
-        this.props.history.push("/settings/announcements");
+        this.props.setFlashMessage("success", "AwayLog has been successfully updated.");
+        this.props.history.push("/settings/awayLogs");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -111,7 +111,7 @@ class AnnouncementUpdateContainer extends Component {
     render() {
         const { name, errors } = this.state;
         return (
-            <AnnouncementUpdateComponent
+            <AwayLogUpdateComponent
                 name={name}
                 errors={errors}
                 onTextChange={this.onTextChange}
@@ -139,4 +139,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AnnouncementUpdateContainer);
+)(AwayLogUpdateContainer);

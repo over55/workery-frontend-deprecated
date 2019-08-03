@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AnnouncementDeleteComponent from "../../../components/settings/announcements/announcementDeleteComponent";
+import AwayLogDeleteComponent from "../../../components/settings/awayLogs/awayLogDeleteComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 
 
-class AnnouncementDeleteContainer extends Component {
+class AwayLogDeleteContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -66,14 +66,14 @@ class AnnouncementDeleteContainer extends Component {
     onBack(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.history.push("/settings/announcements/");
+        this.props.history.push("/settings/awayLogs/");
     }
 
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.setFlashMessage("success", "Announcement has been successfully deleted.");
-        this.props.history.push("/settings/announcements");
+        this.props.setFlashMessage("success", "AwayLog has been successfully deleted.");
+        this.props.history.push("/settings/awayLogs");
     }
 
     /**
@@ -82,15 +82,15 @@ class AnnouncementDeleteContainer extends Component {
      */
 
     render() {
-        const announcementData = {
+        const awayLogData = {
             'slug': 'Argyle',
             'number': 1,
             'name': 'Argyle',
-            'absoluteUrl': '/settings/announcement/argyle'
+            'absoluteUrl': '/settings/awayLog/argyle'
         };
         return (
-            <AnnouncementDeleteComponent
-                announcementData={announcementData}
+            <AwayLogDeleteComponent
+                awayLogData={awayLogData}
                 onBack={this.onBack}
                 onClick={this.onClick}
                 flashMessage={this.props.flashMessage}
@@ -118,4 +118,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AnnouncementDeleteContainer);
+)(AwayLogDeleteContainer);
