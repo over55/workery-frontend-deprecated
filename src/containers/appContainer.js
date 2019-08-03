@@ -140,6 +140,11 @@ import SkillSetDeleteContainer from "./settings/skillSets/skillSetDeleteContaine
 import SkillSetCreateContainer from "./settings/skillSets/skillSetCreateContainer";
 import SkillSetUpdateContainer from "./settings/skillSets/skillSetUpdateContainer";
 
+import InsuranceRequirementsListContainer from "./settings/tags/list/tagListContainer";
+import InsuranceRequirementDeleteContainer from "./settings/tags/tagDeleteContainer";
+import InsuranceRequirementCreateContainer from "./settings/tags/tagCreateContainer";
+import InsuranceRequirementUpdateContainer from "./settings/tags/tagUpdateContainer";
+
 class AppContainer extends React.Component {
     render() {
         return (
@@ -276,6 +281,11 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/skill-sets/add" exact component={requiresAuth(SkillSetCreateContainer)} />
                                 <Route path="/settings/skill-set/:slug/delete" exact component={requiresAuth(SkillSetDeleteContainer)} />
                                 <Route path="/settings/skill-set/:slug/update" exact component={requiresAuth(SkillSetUpdateContainer)} />
+                                <Route path="/settings/insurance-requirements" exact component={requiresAuth(InsuranceRequirementsListContainer)} />
+                                <Route path="/settings/insurance-requirement/add" exact component={requiresAuth(InsuranceRequirementCreateContainer)} />
+                                <Route path="/settings/insurance-requirement/:slug/delete" exact component={requiresAuth(InsuranceRequirementDeleteContainer)} />
+                                <Route path="/settings/insurance-requirement/:slug/update" exact component={requiresAuth(InsuranceRequirementUpdateContainer)} />
+
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>
