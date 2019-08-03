@@ -12,7 +12,7 @@ import userReducer from "./reducers/userReducer";
 import tenantListReducer from "./reducers/tenantReducer";
 import dashboardReducer from "./reducers/dashboardReducer";
 import flashMessageReducer from "./reducers/flashMessageReducer";
-import clientItemListReducer from "./reducers/clientReducers";
+import clientListReducer from "./reducers/clientReducers";
 import orderListReducer from "./reducers/orderReducers";
 import associateListReducer from "./reducers/associateReducers";
 import taskListReducer from "./reducers/taskReducers";
@@ -26,7 +26,7 @@ const appReducer = combineReducers({
     dashboardState: dashboardReducer,
     tenantListState: tenantListReducer,
     flashMessageState: flashMessageReducer,
-    clientListState: clientItemListReducer,
+    clientListState: clientListReducer,
     orderListState: orderListReducer,
     associateListState: associateListReducer,
     taskListState: taskListReducer,
