@@ -21,6 +21,7 @@ export const WORKERY_FINANCIAL_LIST_API_ENDPOINT = '/financials';
 export const WORKERY_TAG_LIST_API_ENDPOINT = '/tags';
 export const WORKERY_HOW_HEAR_LIST_API_ENDPOINT = '/how_hears';
 export const WORKERY_AWAY_LOG_LIST_API_ENDPOINT = '/away-logs';
+export const WORKERY_BULLETIN_BOARD_ITEM_LIST_API_ENDPOINT = '/bulletin_board_items';
 
 
 // OLD - PLEASE DO SOMETHING WITH THESE.

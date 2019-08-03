@@ -130,6 +130,10 @@ import ResourceDeleteContainer from "./settings/resources/resourceDeleteContaine
 import ResourceCreateContainer from "./settings/resources/resourceCreateContainer";
 import ResourceUpdateContainer from "./settings/resources/resourceUpdateContainer";
 
+import BulletinBoardItemsListContainer from "./settings/bulletinBoardItems/list/bulletinBoardItemListContainer";
+import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/bulletinBoardItemDeleteContainer";
+import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/bulletinBoardItemCreateContainer";
+import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/bulletinBoardItemUpdateContainer";
 
 class AppContainer extends React.Component {
     render() {
@@ -259,7 +263,10 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/resource/add" exact component={requiresAuth(ResourceCreateContainer)} />
                                 <Route path="/settings/resource/:slug/delete" exact component={requiresAuth(ResourceDeleteContainer)} />
                                 <Route path="/settings/resource/:slug/update" exact component={requiresAuth(ResourceUpdateContainer)} />
-
+                                <Route path="/settings/bulletin-board-items" exact component={requiresAuth(BulletinBoardItemsListContainer)} />
+                                <Route path="/settings/bulletin-board-items/add" exact component={requiresAuth(BulletinBoardItemCreateContainer)} />
+                                <Route path="/settings/bulletin-board-item/:slug/delete" exact component={requiresAuth(BulletinBoardItemDeleteContainer)} />
+                                <Route path="/settings/bulletin-board-item/:slug/update" exact component={requiresAuth(BulletinBoardItemUpdateContainer)} />
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>

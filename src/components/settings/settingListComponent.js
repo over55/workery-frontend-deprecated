@@ -28,8 +28,21 @@ class SettingListComponent extends Component {
                         <h1><i className="fas fa-cogs"></i>&nbsp;Setting</h1>
                         <div className="row">
                             <div className="col-md-12">
-
                                 <div className="card-group row">
+                                    <div className="col-sm-3">
+                                        <div className="card box-shadow text-center mx-auto">
+                                            <div className="card-custom-top-2">
+                                                <i className="fas fa-newspaper fa-3x"></i>
+                                            </div>
+                                            <div className="card-body">
+                                                <h3 className="card-title">Office News</h3>
+                                                <p className="card-text">View setting about office news</p>
+                                                <Link to="/settings/bulletin-board-items" className="btn btn-success btn-lg">
+                                                    Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="col-sm-3">
                                         <div className="card box-shadow text-center mx-auto">
                                             <div className="card-custom-top-2">

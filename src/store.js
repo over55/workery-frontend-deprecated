@@ -22,6 +22,8 @@ import financialListReducer from "./reducers/financialReducers";
 import tagListReducer from "./reducers/tagReducers";
 import howHearListReducer from "./reducers/howHearReducers";
 import awayLogListReducer from "./reducers/awayLogReducers";
+import bulletinBoardItemListReducer from "./reducers/bulletinBoardItemReducers";
+
 
 // Combine Reducers
 const appReducer = combineReducers({
@@ -38,6 +40,7 @@ const appReducer = combineReducers({
     tagListState: tagListReducer,
     howHearListState: howHearListReducer,
     awayLogListState: awayLogListReducer,
+    bulletinBoardItemListState: bulletinBoardItemListReducer,
 });
 
 
