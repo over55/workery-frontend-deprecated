@@ -24,6 +24,7 @@ export const WORKERY_AWAY_LOG_LIST_API_ENDPOINT = '/away-logs';
 export const WORKERY_BULLETIN_BOARD_ITEM_LIST_API_ENDPOINT = '/bulletin_board_items';
 export const WORKERY_SKILL_SET_LIST_API_ENDPOINT = '/skill_sets';
 export const WORKERY_INSURANCE_REQUIREMENT_LIST_API_ENDPOINT = '/insurance_requirements';
+export const WORKERY_SERVICE_FEE_LIST_API_ENDPOINT = '/order_service_fees';
 
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
