@@ -145,6 +145,11 @@ import InsuranceRequirementDeleteContainer from "./settings/insuranceRequirement
 import InsuranceRequirementCreateContainer from "./settings/insuranceRequirements/insuranceRequirementCreateContainer";
 import InsuranceRequirementUpdateContainer from "./settings/insuranceRequirements/insuranceRequirementUpdateContainer";
 
+import ServiceFeesListContainer from "./settings/serviceFees/list/serviceFeeListContainer";
+import ServiceFeeDeleteContainer from "./settings/serviceFees/serviceFeeDeleteContainer";
+import ServiceFeeCreateContainer from "./settings/serviceFees/serviceFeeCreateContainer";
+import ServiceFeeUpdateContainer from "./settings/serviceFees/serviceFeeUpdateContainer";
+
 class AppContainer extends React.Component {
     render() {
         return (
@@ -285,7 +290,10 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/insurance-requirement/add" exact component={requiresAuth(InsuranceRequirementCreateContainer)} />
                                 <Route path="/settings/insurance-requirement/:slug/delete" exact component={requiresAuth(InsuranceRequirementDeleteContainer)} />
                                 <Route path="/settings/insurance-requirement/:slug/update" exact component={requiresAuth(InsuranceRequirementUpdateContainer)} />
-
+                                <Route path="/settings/service-fees" exact component={requiresAuth(ServiceFeesListContainer)} />
+                                <Route path="/settings/service-fee/add" exact component={requiresAuth(ServiceFeeCreateContainer)} />
+                                <Route path="/settings/service-fee/:slug/delete" exact component={requiresAuth(ServiceFeeDeleteContainer)} />
+                                <Route path="/settings/service-fee/:slug/update" exact component={requiresAuth(ServiceFeeUpdateContainer)} />
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>
