@@ -47,19 +47,23 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'isForAssociate',
             text: 'Associate ?',
-            sort: true
+            sort: true,
+            formatter: isForAssociateIconFormatter,
         },{
             dataField: 'isForCustomer',
             text: 'Customer ?',
-            sort: true
+            sort: true,
+            formatter: isForCustomerIconFormatter,
         },{
             dataField: 'isForPartner',
             text: 'Partner ?',
-            sort: true
+            sort: true,
+            formatter: isForPartnerIconFormatter,
         },{
             dataField: 'isForStaff',
             text: 'Staff ?',
-            sort: true
+            sort: true,
+            formatter: isForStaffIconFormatter,
         },{
             dataField: 'id',
             text: 'Details',
@@ -111,6 +115,42 @@ class RemoteListComponent extends Component {
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
             />
         );
+    }
+}
+
+
+function isForAssociateIconFormatter(cell, row){
+    if (row.isForAssociate) {
+        return <i className="fas fa-check-circle"></i>;
+    } else {
+        return <i className="fas fa-times-circle"></i>
+    }
+}
+
+
+function isForCustomerIconFormatter(cell, row){
+    if (row.isForCustomer) {
+        return <i className="fas fa-check-circle"></i>;
+    } else {
+        return <i className="fas fa-times-circle"></i>
+    }
+}
+
+
+function isForPartnerIconFormatter(cell, row){
+    if (row.isForPartner) {
+        return <i className="fas fa-check-circle"></i>;
+    } else {
+        return <i className="fas fa-times-circle"></i>
+    }
+}
+
+
+function isForStaffIconFormatter(cell, row){
+    if (row.isForStaff) {
+        return <i className="fas fa-check-circle"></i>;
+    } else {
+        return <i className="fas fa-times-circle"></i>
     }
 }
 
