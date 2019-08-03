@@ -66,14 +66,14 @@ class InsuranceRequirementDeleteContainer extends Component {
     onBack(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.history.push("/settings/insuranceRequirements/");
+        this.props.history.push("/settings/insurance-requirements/");
     }
 
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.setFlashMessage("success", "InsuranceRequirement has been successfully deleted.");
-        this.props.history.push("/settings/insuranceRequirements");
+        this.props.setFlashMessage("success", "Insurance requirement has been successfully deleted.");
+        this.props.history.push("/settings/insurance-requirements");
     }
 
     /**
@@ -86,7 +86,7 @@ class InsuranceRequirementDeleteContainer extends Component {
             'slug': 'Argyle',
             'number': 1,
             'name': 'Argyle',
-            'absoluteUrl': '/settings/insuranceRequirement/argyle'
+            'absoluteUrl': '/settings/insurance-requirement/argyle'
         };
         return (
             <InsuranceRequirementDeleteComponent

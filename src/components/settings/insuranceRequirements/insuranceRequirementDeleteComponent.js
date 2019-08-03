@@ -18,7 +18,7 @@ class InsuranceRequirementDeleteComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/insuranceRequirements"><i className="fas fa-insuranceRequirements"></i>&nbsp;InsuranceRequirements</Link>
+                            <Link to="/settings/insurance-requirements"><i className="fas fa-balance-scale"></i>&nbsp;Insurance Requirements</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-minus"></i>&nbsp;Remove
@@ -28,10 +28,10 @@ class InsuranceRequirementDeleteComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-minus"></i>&nbsp;Remove InsuranceRequirement</h1>
+                <h1><i className="fas fa-minus"></i>&nbsp;Remove Insurance Requirement</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
-                        <p><strong>Please confirm these details before deleting the insuranceRequirement</strong></p>
+                        <p><strong>Please confirm these details before deleting the insurance requirements</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">

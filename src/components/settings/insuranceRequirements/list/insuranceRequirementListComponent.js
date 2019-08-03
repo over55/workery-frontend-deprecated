@@ -86,7 +86,7 @@ class RemoteListComponent extends Component {
                 columns={ columns }
                 striped
                 bordered={ false }
-                noDataIndication="There are no insuranceRequirements at the moment"
+                noDataIndication="There are no insurance requirements at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -102,10 +102,10 @@ class RemoteListComponent extends Component {
 function detailLinkFormatter(cell, row){
     return (
         <div>
-            <Link to={`/settings/insuranceRequirement/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
+            <Link to={`/settings/insurance-requirement/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
                 <i className="fas fa-edit"></i>&nbsp;Edit
             </Link>&nbsp;&nbsp;&nbsp;
-            <Link to={`/settings/insuranceRequirement/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
+            <Link to={`/settings/insurance-requirement/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
                 <i className="fas fa-minus"></i>&nbsp;Remove
             </Link>
         </div>
@@ -140,21 +140,21 @@ class InsuranceRequirementListComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-insuranceRequirements"></i>&nbsp;InsuranceRequirements
+                            <i className="fas fa-balance-scale"></i>&nbsp;Insurance Requirements
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-insuranceRequirements"></i>&nbsp;InsuranceRequirements</h1>
+                <h1><i className="fas fa-balance-scale"></i>&nbsp;Insurance Requirements</h1>
 
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
                             <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/settings/insuranceRequirement/add" className="d-block link-ndecor" title="InsuranceRequirements">
+                                    <Link to="/settings/insurance-requirement/add" className="d-block link-ndecor" title="InsuranceRequirements">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>

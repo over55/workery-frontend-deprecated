@@ -52,8 +52,8 @@ class InsuranceRequirementCreateContainer extends Component {
 
     onSuccessfulSubmissionCallback(insuranceRequirement) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "InsuranceRequirement has been successfully created.");
-        this.props.history.push("/settings/insuranceRequirements");
+        this.props.setFlashMessage("success", "Insurance requirement has been successfully created.");
+        this.props.history.push("/settings/insurance-requirements");
     }
 
     onFailedSubmissionCallback(errors) {

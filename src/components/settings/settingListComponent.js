@@ -108,7 +108,7 @@ class SettingListComponent extends Component {
                                             </div>
                                             <div className="card-body">
                                                 <h3 className="card-title">Insurance Requirements</h3>
-                                                <p className="card-text">View setting about office news</p>
+                                                <p className="card-text">View setting about insurance requirements</p>
                                                 <Link to="/settings/insurance-requirements" className="btn btn-success btn-lg">
                                                     Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                                 </Link>

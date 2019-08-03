@@ -140,10 +140,10 @@ import SkillSetDeleteContainer from "./settings/skillSets/skillSetDeleteContaine
 import SkillSetCreateContainer from "./settings/skillSets/skillSetCreateContainer";
 import SkillSetUpdateContainer from "./settings/skillSets/skillSetUpdateContainer";
 
-import InsuranceRequirementsListContainer from "./settings/tags/list/tagListContainer";
-import InsuranceRequirementDeleteContainer from "./settings/tags/tagDeleteContainer";
-import InsuranceRequirementCreateContainer from "./settings/tags/tagCreateContainer";
-import InsuranceRequirementUpdateContainer from "./settings/tags/tagUpdateContainer";
+import InsuranceRequirementsListContainer from "./settings/insuranceRequirements/list/insuranceRequirementListContainer";
+import InsuranceRequirementDeleteContainer from "./settings/insuranceRequirements/insuranceRequirementDeleteContainer";
+import InsuranceRequirementCreateContainer from "./settings/insuranceRequirements/insuranceRequirementCreateContainer";
+import InsuranceRequirementUpdateContainer from "./settings/insuranceRequirements/insuranceRequirementUpdateContainer";
 
 class AppContainer extends React.Component {
     render() {

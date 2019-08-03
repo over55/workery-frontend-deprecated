@@ -21,7 +21,7 @@ class InsuranceRequirementCreateComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/insuranceRequirements"><i className="fas fa-insuranceRequirements"></i>&nbsp;InsuranceRequirements</Link>
+                            <Link to="/settings/insurance-requirements"><i className="fas fa-balance-scale"></i>&nbsp;Insurance Requirements</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -32,7 +32,7 @@ class InsuranceRequirementCreateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Create New InsuranceRequirement</h1>
+                            <h1>Create New Insurance Requirement</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -52,7 +52,7 @@ class InsuranceRequirementCreateComponent extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/settings/insuranceRequirements" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/settings/insurance-requirements" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
