@@ -6,7 +6,8 @@ import { APP_STATE } from "./constants/redux";
 import {
     LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, PROFILE_SUCCESS,
     TENANT_LIST_SUCCESS, CLIENT_LIST_SUCCESS, ORDER_LIST_SUCCESS,
-    ASSOCIATE_LIST_SUCCESS, TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS
+    ASSOCIATE_LIST_SUCCESS, TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS,
+    TAG_LIST_SUCCESS
 } from "./constants/actionTypes";
 import userReducer from "./reducers/userReducer";
 import tenantListReducer from "./reducers/tenantReducer";
@@ -18,6 +19,7 @@ import associateListReducer from "./reducers/associateReducers";
 import taskListReducer from "./reducers/taskReducers";
 import staffListReducer from "./reducers/staffReducers";
 import financialListReducer from "./reducers/financialReducers";
+import tagListReducer from "./reducers/tagReducers";
 
 
 // Combine Reducers
@@ -32,6 +34,7 @@ const appReducer = combineReducers({
     taskListState: taskListReducer,
     staffListState: staffListReducer,
     financialListState: financialListReducer,
+    tagListState: tagListReducer,
 });
 
 

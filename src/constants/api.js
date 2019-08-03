@@ -18,6 +18,8 @@ export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';
 export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
 export const WORKERY_STAFF_LIST_API_ENDPOINT = '/staves';
 export const WORKERY_FINANCIAL_LIST_API_ENDPOINT = '/financials';
+export const WORKERY_TAG_LIST_API_ENDPOINT = '/tags';
+
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const NWAPP_LOGOUT_API_ENDPOINT ='/logout';
@@ -29,7 +31,6 @@ export const NWAPP_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api
 export const NWAPP_ONBOARDING_API_URL = process.env.REACT_APP_API_HOST+'/api/onboarding';
 export const NWAPP_PURCHASE_DEVICE_API_URL = process.env.REACT_APP_API_HOST+'/api/purchase-device';
 export const NWAPP_PROFILE_API_URL = process.env.REACT_APP_API_HOST+'/api/profile';
-
 
 
 /**
