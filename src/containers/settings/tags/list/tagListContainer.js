@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { camelizeKeys, decamelize } from 'humps';
 
 import TagListComponent from "../../../../components/settings/tags/list/tagListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullTagList } from "../../../../actions/tagActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class TagListContainer extends Component {
@@ -14,11 +17,20 @@ class TagListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: "active",
-            tags: [],
+            // Pagination
+            page: 1,
+            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            totalSize: 0,
+
+            // Sorting, Filtering, & Searching
+            parametersMap: new Map(),
+
+            // Overaly
+            isLoading: true,
         }
-        this.onFilterClick = this.onFilterClick.bind(this);
-        this.filterTags = this.filterTags.bind(this);
+        this.onTableChange = this.onTableChange.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
 
     /**
@@ -28,29 +40,18 @@ class TagListContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // Load from API...
-        this.setState({
-            tags: [{
-                'slug': 'Argyle',
-                'number': 1,
-                'name': 'Argyle',
-                'state': 'active',
-                'absoluteUrl': '/settings/tag/argyle'
-            },{
-                'slug': 'byron',
-                'number': 2,
-                'name': 'Byron',
-                'state': 'active',
-                'absoluteUrl': '/settings/tag/byron'
-            },{
-                'slug': 'carling',
-                'number': 3,
-                'name': 'Carling',
-                'state': 'active',
-                'absoluteUrl': '/settings/tag/carling'
-            }],
-        });
+        // DEVELOPERS NOTE:
+        // Since in the react-table does not have a default filter selected so
+        // when the page loads the API call does not get made! We need to do it
+        // here when the component finished loading. We only write this code
+        // here if no filter was selected in the table.
+        this.props.pullTagList(
+            this.state.page,
+            this.state.sizePerPage,
+            this.state.parametersMap,
+            this.onSuccessfulSubmissionCallback,
+            this.onFailedSubmissionCallback
+        );
     }
 
     componentWillUnmount() {
@@ -70,12 +71,24 @@ class TagListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+            }
+        )
     }
 
     onFailedSubmissionCallback(errors) {
         console.log(errors);
+        this.setState({ isLoading: false });
     }
 
     /**
@@ -83,27 +96,63 @@ class TagListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onFilterClick(e, filter) {
-        e.preventDefault();
-        this.setState({
-            filter: filter,
-        })
-    }
+    /**
+     *  Function takes the user interactions made with the table and perform
+     *  remote API calls to update the table based on user selection.
+     */
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
 
-    filterTags() {
-        let filteredTags = [];
-        if (this.state.tags === undefined || this.state.tags === null) {
-            return [];
-        }
-        for (let i = 0; i < this.state.tags.length; i++) {
-            let tag = this.state.tags[i];
-            if (tag.state === this.state.filter) {
-                filteredTags.push(tag);
+        if (type === "sort") {
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+
+            if (sortOrder === "asc") {
+                parametersMap.set('o', decamelize(sortField));
             }
-        }
-        return filteredTags;
-    }
+            if (sortOrder === "desc") {
+                parametersMap.set('o', "-"+decamelize(sortField));
+            }
 
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullTagList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "pagination") {
+            console.log(type, page, sizePerPage); // For debugging purposes only.
+
+            this.setState(
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                ()=>{
+                    this.props.pullTagList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "filter") {
+            console.log(type, filters); // For debugging purposes only.
+            if (filters.state === undefined) {
+                parametersMap.delete("state");
+            } else {
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
+            }
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullTagList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+        }else {
+            alert("Unsupported feature detected!!"+type);
+        }
+    }
 
     /**
      *  Main render function
@@ -111,13 +160,16 @@ class TagListContainer extends Component {
      */
 
     render() {
-
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <TagListComponent
-                filter={this.state.filter}
-                onFilterClick={this.onFilterClick}
-                tags={this.filterTags()}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                tagList={this.props.tagList}
+                onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -127,6 +179,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        tagList: store.tagListState,
     };
 }
 
@@ -134,7 +187,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

@@ -1,131 +1,131 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+// import overlayFactory from 'react-bootstrap-table2-overlay';
 
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
-import TagFilterComponent from "./tagFilterComponent";
 
 
-class ActiveListComponent extends Component {
+const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
+);
+
+
+class RemoteListComponent extends Component {
     render() {
-        const { tags } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
+
+            // Data
+            tags,
+
+            // Everything else.
+            onTableChange, isLoading
+        } = this.props;
+
+        const selectOptions = {
+            "active": 'Active',
+            "inactive": 'Inactive',
+        };
 
         const columns = [{
-            dataField: 'number',
-            text: 'Number',
+            dataField: 'text',
+            text: 'Text',
             sort: true
         },{
-            dataField: 'name',
-            text: 'Name',
+            dataField: 'description',
+            text: 'Description',
             sort: true
         },{
-            dataField: 'slug',
+            dataField: 'id',
             text: 'Details',
             sort: false,
-            formatter: buttonsFormatter
+            formatter: detailLinkFormatter
         }];
 
+        const paginationOption = {
+            page: page,
+            sizePerPage: sizePerPage,
+            totalSize: totalSize,
+            sizePerPageList: [{
+                text: '10', value: 10
+            }, {
+                text: '25', value: 25
+            }, {
+                text: '50', value: 50
+            }, {
+                text: '100', value: 100
+            }, {
+                text: 'All', value: totalSize
+            }],
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            firstPageText: 'First',
+            prePageText: 'Back',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+        };
+
         return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-check-circle"></i>&nbsp;Active Tags
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ tags }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no active tags at the moment"
-                    />
-
-                </div>
-            </div>
+            <BootstrapTable
+                bootstrap4
+                keyField='id'
+                data={ tags }
+                columns={ columns }
+                striped
+                bordered={ false }
+                noDataIndication="There are no tags at the moment"
+                remote
+                onTableChange={ onTableChange }
+                pagination={ paginationFactory(paginationOption) }
+                filter={ filterFactory() }
+                loading={ isLoading }
+                // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
+            />
         );
     }
 }
 
 
-class InactiveListComponent extends Component {
-    render() {
-        const { tags } = this.props;
-
-        const columns = [{
-            dataField: 'number',
-            text: 'Number',
-            sort: true
-        },{
-            dataField: 'name',
-            text: 'Name',
-            sort: true
-        },{
-            dataField: 'slug',
-            text: '',
-            sort: false,
-            formatter: buttonsFormatter
-        }];
-
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-check-circle"></i>&nbsp;Inactive Tags
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ tags }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no archived tags at the moment"
-                    />
-
-                </div>
-            </div>
-        );
-    }
-}
-
-
-function iconFormatter(cell, row){
+function detailLinkFormatter(cell, row){
     return (
-        <i className={`fas fa-${row.icon}`}></i>
-    )
-}
-
-
-function buttonsFormatter(cell, row){
-    return (
-        <div>
-            <Link to={`/settings/tag/${row.slug}/update`} className="btn btn-primary pl-4 pr-4">
-                <i className="fas fa-edit"></i>&nbsp;Edit
-            </Link>&nbsp;&nbsp;&nbsp;
-            <Link to={`/settings/tag/${row.slug}/delete`} className="btn btn-danger pl-4 pr-4">
-                <i className="fas fa-minus"></i>&nbsp;Remove
-            </Link>
-        </div>
+        <Link to={`/settings/tag/${row.id}/update`}>
+            View&nbsp;<i className="fas fa-chevron-right"></i>
+        </Link>
     )
 }
 
 
 class TagListComponent extends Component {
     render() {
-        const { filter, onFilterClick, tags, flashMessage } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
 
-        const isActive = filter === "active";
-        const isInactive = filter === "archived";
+            // Data
+            tagList,
+
+            // Everything else...
+            flashMessage, onTableChange, isLoading
+        } = this.props;
+
+        const tags = tagList.results ? tagList.results : [];
 
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -149,7 +149,7 @@ class TagListComponent extends Component {
                         <section className="row text-center placeholders">
                             <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/settings/tag/add" className="d-block link-ndecor" title="Clients">
+                                    <Link to="/settings/tag/add" className="d-block link-ndecor" title="Tags">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
@@ -160,16 +160,21 @@ class TagListComponent extends Component {
                     </div>
                 </div>
 
-                <TagFilterComponent filter={filter} onFilterClick={onFilterClick} />
-
-                {isActive &&
-                    <ActiveListComponent tags={tags} />
-                }
-                {isInactive &&
-                    <InactiveListComponent tags={tags} />
-                }
-
-
+                <div className="row">
+                    <div className="col-md-12">
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;List
+                        </h2>
+                        <RemoteListComponent
+                            page={page}
+                            sizePerPage={sizePerPage}
+                            totalSize={totalSize}
+                            tags={tags}
+                            onTableChange={onTableChange}
+                            isLoading={isLoading}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import OrderFullRetrieveComponent from "../../../components/orders/retrieve/orderFullRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { getHowHearReactSelectOptions } from "../../../actions/howHearAction";
-import { getTagReactSelectOptions } from "../../../actions/tagAction";
+import { getTagReactSelectOptions } from "../../../actions/tagActions";
 import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
