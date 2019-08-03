@@ -150,6 +150,9 @@ import ServiceFeeDeleteContainer from "./settings/serviceFees/serviceFeeDeleteCo
 import ServiceFeeCreateContainer from "./settings/serviceFees/serviceFeeCreateContainer";
 import ServiceFeeUpdateContainer from "./settings/serviceFees/serviceFeeUpdateContainer";
 
+import DeactivatedClientListContainer from "./settings/deactivatedClients/list/deactivatedClientListContainer";
+
+
 class AppContainer extends React.Component {
     render() {
         return (
@@ -294,6 +297,7 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/service-fee/add" exact component={requiresAuth(ServiceFeeCreateContainer)} />
                                 <Route path="/settings/service-fee/:slug/delete" exact component={requiresAuth(ServiceFeeDeleteContainer)} />
                                 <Route path="/settings/service-fee/:slug/update" exact component={requiresAuth(ServiceFeeUpdateContainer)} />
+                                <Route path="/settings/deactivated-clients" exact component={requiresAuth(DeactivatedClientListContainer)} />
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>

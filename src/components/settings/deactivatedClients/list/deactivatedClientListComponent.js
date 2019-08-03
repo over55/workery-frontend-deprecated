@@ -9,8 +9,8 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 
 const customTotal = (from, to, size) => (
@@ -25,56 +25,23 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            clients,
+            deactivatedClients,
 
             // Everything else.
             onTableChange, isLoading
         } = this.props;
 
-        const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
-        };
-
         const columns = [{
-            dataField: 'icon',
-            text: '',
-            sort: false,
-            formatter: iconFormatter
-        },{
-            dataField: 'givenName',
-            text: 'First Name',
+            dataField: 'name',
+            text: 'Name',
             sort: true
         },{
-            dataField: 'lastName',
-            text: 'Last Name',
-            sort: true
-        },{
-            dataField: 'telephone',
-            text: 'Phone',
-            sort: true
-        },{
-            dataField: 'email',
-            text: 'Email',
-            sort: true
-        },{
-            dataField: 'state',
-            text: 'Status',
-            sort: false,
-            filter: selectFilter({
-                options: selectOptions,
-                defaultValue: 'active',
-                withoutEmptyOption: true
-            }),
-            formatter: statusFormatter
-        },{
-            dataField: 'slug',
-            text: 'Financials',
-            sort: false,
-            formatter: financialExternalLinkFormatter
+            dataField: 'reason',
+            text: 'Reason',
+            sort: false
         },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];
@@ -110,11 +77,11 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ clients }
+                data={ deactivatedClients }
                 columns={ columns }
                 striped
                 bordered={ false }
-                noDataIndication="There are no clients at the moment"
+                noDataIndication="There are no deactivatedClients at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -127,45 +94,6 @@ class RemoteListComponent extends Component {
 }
 
 
-function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case 3:
-            return <i className="fas fa-building"></i>;
-            break;
-        case 2:
-            return <i className="fas fa-home"></i>;
-            break;
-        default:
-            return <i className="fas fa-question"></i>;
-            break;
-    }
-}
-
-
-function statusFormatter(cell, row){
-    switch(row.state) {
-        case "active":
-            return <i className="fas fa-check-circle"></i>;
-            break;
-        case "inactive":
-            return <i className="fas fa-times-circle"></i>;
-            break;
-        default:
-        return <i className="fas fa-question-circle"></i>;
-            break;
-    }
-}
-
-
-function financialExternalLinkFormatter(cell, row){
-    return (
-        <a target="_blank" href={`/financial/${row.id}`}>
-            View&nbsp;<i className="fas fa-external-link-alt"></i>
-        </a>
-    )
-}
-
-
 function detailLinkFormatter(cell, row){
     return (
         <Link to={`/client/${row.id}`}>
@@ -175,20 +103,21 @@ function detailLinkFormatter(cell, row){
 }
 
 
-class ClientListComponent extends Component {
+
+class DeactivatedClientListComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            clientList,
+            deactivatedClientList,
 
             // Everything else...
             flashMessage, onTableChange, isLoading
         } = this.props;
 
-        const clients = clientList.results ? clientList.results : [];
+        const deactivatedClients = deactivatedClientList.results ? deactivatedClientList.results : [];
 
         return (
             <div>
@@ -198,40 +127,18 @@ class ClientListComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
+                        <li className="breadcrumb-item">
+                           <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
+                        </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user-circle"></i>&nbsp;Clients
+                            <i className="fas fa-frown"></i>&nbsp;Deactivated Clients
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user-circle"></i>&nbsp;Clients</h1>
-
-                <div className="row">
-                    <div className="col-md-12">
-                        <section className="row text-center placeholders">
-                            <div className="col-sm-6 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/clients/add/step-1" className="d-block link-ndecor" title="Clients">
-                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Add</h4>
-                                <div className="text-muted">Add Clients</div>
-                            </div>
-                            <div className="col-sm-6 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
-                                    <Link to="/clients/search" className="d-block link-ndecor" title="Search">
-                                        <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Search</h4>
-                                <span className="text-muted">Search Clients</span>
-                            </div>
-                        </section>
-                    </div>
-                </div>
+                <h1><i className="fas fa-frown"></i>&nbsp;Deactivated Clients</h1>
 
                 <div className="row">
                     <div className="col-md-12">
@@ -242,7 +149,7 @@ class ClientListComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            clients={clients}
+                            deactivatedClients={deactivatedClients}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
@@ -253,4 +160,4 @@ class ClientListComponent extends Component {
     }
 }
 
-export default ClientListComponent;
+export default DeactivatedClientListComponent;
