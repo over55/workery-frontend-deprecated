@@ -104,6 +104,7 @@ import ReportListContainer from "./reports/reportListContainer";
 
 // Financials
 import FinancialListContainer from "./financials/list/financialListContainer";
+import FinancialRetrieveContainer from "./financials/retrieve/financialRetrieveContainer";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -262,6 +263,7 @@ class AppContainer extends React.Component {
 
                                 { /* FINANCIALS */ }
                                 <Route path="/financials" exact component={requiresAuth(FinancialListContainer)} />
+                                <Route path="/financial/:id" exact component={requiresAuth(FinancialRetrieveContainer)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />

@@ -11,7 +11,7 @@ import {
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
 
-export default class FinancialFullRetrieveComponent extends Component {
+export default class FinancialRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const { slug, flashMessage, tagOptions, howDidYouHearOptions } = this.props;
@@ -74,21 +74,6 @@ export default class FinancialFullRetrieveComponent extends Component {
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-user"></i>&nbsp;View Financial</h1>
-
-                <div className="row">
-                    <div className="step-navigation">
-                        <div id="step-1" className="st-grey">
-                            <Link to={`/financial/${slug}`}>
-                                <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Summary</span>
-                            </Link>
-                        </div>
-                        <div id="step-2" className="st-grey active">
-                            <strong>
-                                <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
-                            </strong>
-                        </div>
-                    </div>
-                </div>
 
                 <div className="row pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
