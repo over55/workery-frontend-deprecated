@@ -9,7 +9,7 @@ import {
     ASSOCIATE_LIST_SUCCESS, TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS,
     TAG_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS,
     SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
-    DEACTIVATED_CLIENT_LIST_SUCCESS
+    DEACTIVATED_CLIENT_LIST_SUCCESS, PARTNER_LIST_SUCCESS
 } from "./constants/actionTypes";
 import userReducer from "./reducers/userReducer";
 import tenantListReducer from "./reducers/tenantReducer";
@@ -30,6 +30,7 @@ import insuranceRequirementListReducer from "./reducers/insuranceRequirementRedu
 import serviceFeeListReducer from "./reducers/serviceFeeReducers";
 import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
 import vehicleTypeListReducer from "./reducers/vehicleTypeReducers";
+import partnerListReducer from "./reducers/partnerReducers";
 
 
 
@@ -54,6 +55,7 @@ const appReducer = combineReducers({
     serviceFeeListState: serviceFeeListReducer,
     deactivatedClientListState: deactivatedClientListReducer,
     vehicleTypeListState: vehicleTypeListReducer,
+    partnerListState: partnerListReducer,
 });
 
 
