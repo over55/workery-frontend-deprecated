@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { camelizeKeys, decamelize } from 'humps';
 
 import SharedOrganizationListComponent from "../../../components/organizations/shared/sharedOrganizationListComponent";
 import { pullTenantList } from "../../../actions/tenantActions";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 
 class SharedOrganizationListContainer extends Component {
@@ -15,8 +17,19 @@ class SharedOrganizationListContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {}
+        this.state = {
+            // Pagination
+            page: 1,
+            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            totalSize: 0,
 
+            // Sorting, Filtering, & Searching
+            parametersMap: new Map(),
+
+            // Overaly
+            isLoading: true,
+        };
+        this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -45,22 +58,88 @@ class SharedOrganizationListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(tenantList) {
-        this.setState({
-            tenantList: tenantList
-        });
-    }
+     onSuccessfulSubmissionCallback(response) {
+         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+         this.setState(
+             {
+                 page: response.page,
+                 totalSize: response.count,
+                 isLoading: false,
+             },
+             ()=>{
+                 console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
+                 console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+             }
+         )
+     }
 
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        });
-    }
+     onFailedSubmissionCallback(errors) {
+         console.log(errors);
+         this.setState({ isLoading: false });
+     }
 
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
+
+    /**
+     *  Function takes the user interactions made with the table and perform
+     *  remote API calls to update the table based on user selection.
+     */
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        if (type === "sort") {
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+
+            if (sortOrder === "asc") {
+                parametersMap.set('o', decamelize(sortField));
+            }
+            if (sortOrder === "desc") {
+                parametersMap.set('o', "-"+decamelize(sortField));
+            }
+
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullTenantList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "pagination") {
+            console.log(type, page, sizePerPage); // For debugging purposes only.
+
+            this.setState(
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                ()=>{
+                    this.props.pullTenantList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "filter") {
+            console.log(type, filters); // For debugging purposes only.
+            if (filters.state === undefined) {
+                parametersMap.delete("state");
+            } else {
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
+            }
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullTenantList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+        }else {
+            alert("Unsupported feature detected!!"+type);
+        }
+    }
 
 
     /**
@@ -69,22 +148,16 @@ class SharedOrganizationListContainer extends Component {
      */
 
     render() {
-        // // Return our GUI.
-        // const sampleData = [ //TODO: REPLACE WITH REAL CODE AS FOUND IN THE `LOGIN CONTAINER`.
-        //     {
-        //         "schema": "london",
-        //         "name": "City of London Neighbourhood Watch",
-        //         "absoluteUrl": process.env.REACT_APP_WWW_PROTOCOL + "://london."+process.env.REACT_APP_WWW_DOMAIN+"/dashboard"
-        //     },{
-        //         "schema": "toronto",
-        //         "name": "City of Toronto Neighbourhood Watch",
-        //         "absoluteUrl": process.env.REACT_APP_WWW_PROTOCOL +"://toronto."+process.env.REACT_APP_WWW_DOMAIN+"/dashboard"
-        //     }
-        // ];
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <SharedOrganizationListComponent
-                tenantList={this.state.tenantList}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                tenantList={this.props.tenantList}
+                onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -93,7 +166,7 @@ class SharedOrganizationListContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        // device: store.deviceState,
+        tenantList: store.tenantListState,
         flashMessage: store.flashMessageState,
     };
 }
