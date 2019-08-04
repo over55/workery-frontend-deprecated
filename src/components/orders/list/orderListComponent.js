@@ -153,7 +153,7 @@ function statusFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.slug}`}>
+        <Link to={`/order/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
