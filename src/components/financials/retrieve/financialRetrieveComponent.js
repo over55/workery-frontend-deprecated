@@ -73,7 +73,7 @@ export default class FinancialRetrieveComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Financial</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Financial Details</h1>
 
                 <div className="row pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
