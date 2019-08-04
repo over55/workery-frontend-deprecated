@@ -13,7 +13,7 @@ import { WORKERY_FINANCIAL_LIST_API_ENDPOINT } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
-export const setClientListRequest = () => ({
+export const setFinancialListRequest = () => ({
     type: FINANCIAL_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
@@ -23,13 +23,13 @@ export const setClientListRequest = () => ({
 });
 
 
-export const setClientListFailure = (info) => ({
+export const setFinancialListFailure = (info) => ({
     type: FINANCIAL_LIST_FAILURE,
     payload: info,
 });
 
 
-export const setClientListSuccess = (info) => ({
+export const setFinancialListSuccess = (info) => ({
     type: FINANCIAL_LIST_SUCCESS,
     payload: info,
 });
@@ -39,11 +39,11 @@ export const setClientListSuccess = (info) => ({
  *  Function will pull the ``instrument`` API endpoint and override our
  *  global application state for the 'dashboard'.
  */
-export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullFinancialList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
-            setClientListRequest()
+            setFinancialListRequest()
         );
 
         console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback);
@@ -80,7 +80,7 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
             // Update the global state of the application to store our
             // user data for the application.
             store.dispatch(
-                setClientListSuccess(data)
+                setFinancialListSuccess(data)
             );
 
             // DEVELOPERS NOTE:
@@ -99,11 +99,11 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("pullClientList | error:", errors); // For debuggin purposes only.
+                console.log("pullFinancialList | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
-                    setClientListFailure({
+                    setFinancialListFailure({
                         isAPIRequestRunning: false,
                         errors: errors
                     })

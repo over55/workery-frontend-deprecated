@@ -104,8 +104,6 @@ import ReportListContainer from "./reports/reportListContainer";
 
 // Financials
 import FinancialListContainer from "./financials/list/financialListContainer";
-import FinanciaRetrieveContainer from "./financials/retrieve/financialRetrieveContainer";
-import FinanciaUpdateContainer from "./financials/update/financialUpdateContainer";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -264,8 +262,6 @@ class AppContainer extends React.Component {
 
                                 { /* FINANCIALS */ }
                                 <Route path="/financials" exact component={requiresAuth(FinancialListContainer)} />
-                                <Route path="/financial/:slug" exact component={requiresAuth(FinanciaRetrieveContainer)} />
-                                <Route path="/financial/:slug/update" exact component={requiresAuth(FinanciaUpdateContainer)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />

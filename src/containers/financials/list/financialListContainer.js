@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { camelizeKeys, decamelize } from 'humps';
 
 import FinancialListComponent from "../../../components/financials/list/financialListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-
+import { pullOrderList } from "../../../actions/orderActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 class FinancialListContainer extends Component {
     /**
@@ -14,11 +16,20 @@ class FinancialListContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: "unpaid",
-            financials: [],
+            // Pagination
+            page: 1,
+            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            totalSize: 0,
+
+            // Sorting, Filtering, & Searching
+            parametersMap: new Map(),
+
+            // Overaly
+            isLoading: true,
         }
-        this.onFilterClick = this.onFilterClick.bind(this);
-        this.filterFinancials = this.filterFinancials.bind(this);
+        this.onTableChange = this.onTableChange.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
 
     /**
@@ -28,36 +39,6 @@ class FinancialListContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // Load from API...
-        const financials = [{
-            'slug': 'argyle',
-            'icon': 'home',
-            'firstName': "Bob",
-            'lastName': "Page",
-            "phone": "(111) 222-3333",
-            'email': "1@1.com",
-            "typeOf": "unpaid",
-        },{
-            'slug': 'byron',
-            'icon': 'building',
-            'firstName': "Walter",
-            'lastName': "Simons",
-            "phone": "(222) 333-4444",
-            'email': "2@2.com",
-            "typeOf": "unpaid",
-        },{
-            'slug': 'carling',
-            'icon': 'university',
-            'firstName': "JC",
-            'lastName': "Denton",
-            "phone": "(333) 444-5555",
-            'email': "3@3.com",
-            "typeOf": "unpaid",
-        }];
-        this.setState({
-            financials: financials,
-        });
     }
 
     componentWillUnmount() {
@@ -77,12 +58,24 @@ class FinancialListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+            }
+        )
     }
 
     onFailedSubmissionCallback(errors) {
         console.log(errors);
+        this.setState({ isLoading: false });
     }
 
     /**
@@ -90,27 +83,63 @@ class FinancialListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onFilterClick(e, filter) {
-        e.preventDefault();
-        this.setState({
-            filter: filter,
-        })
-    }
+    /**
+     *  Function takes the user interactions made with the table and perform
+     *  remote API calls to update the table based on user selection.
+     */
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
 
-    filterFinancials() {
-        let filteredFinancials = [];
-        if (this.state.financials === undefined || this.state.financials === null) {
-            return [];
-        }
-        for (let i = 0; i < this.state.financials.length; i++) {
-            let financial = this.state.financials[i];
-            if (financial.typeOf === this.state.filter) {
-                filteredFinancials.push(financial);
+        if (type === "sort") {
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+
+            if (sortOrder === "asc") {
+                parametersMap.set('o', decamelize(sortField));
             }
-        }
-        return filteredFinancials;
-    }
+            if (sortOrder === "desc") {
+                parametersMap.set('o', "-"+decamelize(sortField));
+            }
 
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "pagination") {
+            console.log(type, page, sizePerPage); // For debugging purposes only.
+
+            this.setState(
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                ()=>{
+                    this.props.pullOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "filter") {
+            console.log(type, filters); // For debugging purposes only.
+            if (filters.state === undefined) {
+                parametersMap.delete("state");
+            } else {
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
+            }
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+        }else {
+            alert("Unsupported feature detected!!"+type);
+        }
+    }
 
     /**
      *  Main render function
@@ -118,13 +147,16 @@ class FinancialListContainer extends Component {
      */
 
     render() {
-
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <FinancialListComponent
-                filter={this.state.filter}
-                onFilterClick={this.onFilterClick}
-                financials={this.filterFinancials()}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                orderList={this.props.orderList}
+                onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -134,6 +166,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        orderList: store.orderListState,
     };
 }
 
@@ -141,7 +174,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

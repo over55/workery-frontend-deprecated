@@ -1,38 +1,72 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+// import overlayFactory from 'react-bootstrap-table2-overlay';
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
-import FinancialFilterComponent from "./financialFilterComponent";
 
 
-class UnpaidListComponent extends Component {
+const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
+);
+
+
+class RemoteListComponent extends Component {
     render() {
-        const { financials } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
+
+            // Data
+            orders,
+
+            // Everything else.
+            onTableChange, isLoading
+        } = this.props;
+
+        const selectOptions = {
+            "completed_and_unpaid": 'Completed and Unpaid',
+            "completed_and_paid": 'Completed and Paid',
+        };
 
         const columns = [{
-            dataField: 'icon',
+            dataField: 'typeOf',
             text: '',
             sort: false,
             formatter: iconFormatter
         },{
-            dataField: 'firstName',
-            text: 'First Name',
+            dataField: 'id',
+            text: 'Job #',
             sort: true
         },{
-            dataField: 'lastName',
-            text: 'Last Name',
+            dataField: 'customerName',
+            text: 'Client',
             sort: true
         },{
-            dataField: 'phone',
-            text: 'Phone',
+            dataField: 'associateName',
+            text: 'Associate',
             sort: true
         },{
-            dataField: 'email',
-            text: 'Email',
+            dataField: 'invoiceServiceFeePaymentDate',
+            text: 'Payment Date',
             sort: true
+        },{
+            dataField: 'state',
+            text: 'Status',
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 'completed_and_unpaid',
+                withoutEmptyOption: true
+            }),
+            formatter: statusFormatter
         },{
             dataField: 'slug',
             text: 'Details',
@@ -40,158 +74,77 @@ class UnpaidListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-clock"></i>&nbsp;Unpaid Financials
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ financials }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no unpaid financials at the moment"
-                    />
-
-                </div>
-            </div>
-        );
-    }
-}
-
-
-class PaidListComponent extends Component {
-    render() {
-        const { financials } = this.props;
-
-        const columns = [{
-            dataField: 'icon',
-            text: '',
-            sort: false,
-            formatter: iconFormatter,
-            style: {
-                width: 10,
-            }
-        },{
-            dataField: 'firstName',
-            text: 'First Name',
-            sort: true
-        },{
-            dataField: 'lastName',
-            text: 'Last Name',
-            sort: true
-        },{
-            dataField: 'phone',
-            text: 'Watch',
-            sort: true
-        },{
-            dataField: 'email',
-            text: 'Email',
-            sort: true
-        },{
-            dataField: 'slug',
-            text: 'Details',
-            sort: false,
-            formatter: detailLinkFormatter
-        }];
+        const paginationOption = {
+            page: page,
+            sizePerPage: sizePerPage,
+            totalSize: totalSize,
+            sizePerPageList: [{
+                text: '10', value: 10
+            }, {
+                text: '25', value: 25
+            }, {
+                text: '50', value: 50
+            }, {
+                text: '100', value: 100
+            }, {
+                text: 'All', value: totalSize
+            }],
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            firstPageText: 'First',
+            prePageText: 'Back',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+        };
 
         return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-check"></i>&nbsp;Paid Financials
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ financials }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no paid financials at the moment"
-                    />
-
-                </div>
-            </div>
-        );
-    }
-}
-
-
-class AlldListComponent extends Component {
-    render() {
-        const { financials } = this.props;
-
-        const columns = [{
-            dataField: 'icon',
-            text: '',
-            sort: false,
-            formatter: iconFormatter
-        },{
-            dataField: 'firstName',
-            text: 'First Name',
-            sort: true
-        },{
-            dataField: 'lastName',
-            text: 'Last Name',
-            sort: true
-        },{
-            dataField: 'phone',
-            text: 'Phone',
-            sort: true
-        },{
-            dataField: 'email',
-            text: 'Email',
-            sort: true
-        },{
-            dataField: 'slug',
-            text: 'Details',
-            sort: false,
-            formatter: detailLinkFormatter
-        }];
-
-        return (
-            <div className="row">
-                <div className="col-md-12">
-                    <h2>
-                        <i className="fas fa-list"></i>&nbsp;All Financials
-                    </h2>
-
-                    <BootstrapTable
-                        bootstrap4
-                        keyField='slug'
-                        data={ financials }
-                        columns={ columns }
-                        striped
-                        bordered={ false }
-                        pagination={ paginationFactory() }
-                        noDataIndication="There are no financials at the moment"
-                    />
-
-                </div>
-            </div>
+            <BootstrapTable
+                bootstrap4
+                keyField='id'
+                data={ orders }
+                columns={ columns }
+                striped
+                bordered={ false }
+                noDataIndication="There are no orders at the moment"
+                remote
+                onTableChange={ onTableChange }
+                pagination={ paginationFactory(paginationOption) }
+                filter={ filterFactory() }
+                loading={ isLoading }
+                // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
+            />
         );
     }
 }
 
 
 function iconFormatter(cell, row){
-    return (
-        <i className={`fas fa-${row.icon}`}></i>
-    )
+    switch(row.typeOf) {
+        case 2:
+            return <i className="fas fa-building"></i>;
+            break;
+        case 1:
+            return <i className="fas fa-home"></i>;
+            break;
+        default:
+            return <i className="fas fa-question"></i>;
+            break;
+    }
+}
+
+
+function statusFormatter(cell, row){
+    return row.prettyState;
 }
 
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/financial/${row.slug}`}>
+        <Link to={`/order/${row.slug}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
@@ -200,42 +153,77 @@ function detailLinkFormatter(cell, row){
 
 class FinancialListComponent extends Component {
     render() {
-        const { filter, onFilterClick, financials, flashMessage } = this.props;
+        const {
+            // Pagination
+            page, sizePerPage, totalSize,
 
-        const isUnpaid = filter === "unpaid";
-        const isPaid = filter === "paid";
-        const isAll = filter === "all";
+            // Data
+            orderList,
+
+            // Everything else...
+            flashMessage, onTableChange, isLoading
+        } = this.props;
+
+        const orders = orderList.results ? orderList.results : [];
 
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-credit-card"></i>&nbsp;Financials
+                            <i className="fas fa-wrench"></i>&nbsp;Financials
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-credit-card"></i>&nbsp;Financials</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;Financials</h1>
 
-                <FinancialFilterComponent filter={filter} onFilterClick={onFilterClick} />
+                <div className="row">
+                    <div className="col-md-12">
+                        <section className="row text-center placeholders">
+                            <div className="col-sm-6 placeholder">
+                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
+                                    <Link to="/orders/add/step-1" className="d-block link-ndecor" title="Financials">
+                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
+                                    </Link>
+                                </div>
+                                <h4>Add</h4>
+                                <div className="text-muted">Add Financials</div>
+                            </div>
+                            <div className="col-sm-6 placeholder">
+                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
+                                    <Link to="/orders/search" className="d-block link-ndecor" title="Search">
+                                        <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
+                                    </Link>
+                                </div>
+                                <h4>Search</h4>
+                                <span className="text-muted">Search Financials</span>
+                            </div>
+                        </section>
+                    </div>
+                </div>
 
-                {isUnpaid &&
-                    <UnpaidListComponent financials={financials} />
-                }
-                {isPaid &&
-                    <PaidListComponent financials={financials} />
-                }
-                {isAll &&
-                    <AlldListComponent financials={financials} />
-                }
-
-
+                <div className="row">
+                    <div className="col-md-12">
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;List
+                        </h2>
+                        <RemoteListComponent
+                            page={page}
+                            sizePerPage={sizePerPage}
+                            totalSize={totalSize}
+                            orders={orders}
+                            onTableChange={onTableChange}
+                            isLoading={isLoading}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }

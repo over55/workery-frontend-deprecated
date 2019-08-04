@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import FinancialRetrieveComponent from "../../../components/financials/retrieve/financialRetrieveComponent";
+import FinancialLiteRetrieveComponent from "../../../components/financials/retrieve/financialLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 
 
-class FinanciaRetrieveContainer extends Component {
+class FinancialLiteRetrieveContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -13,7 +13,10 @@ class FinanciaRetrieveContainer extends Component {
 
     constructor(props) {
         super(props);
+
         const { slug } = this.props.match.params;
+
+        // Update state.
         this.state = {
             slug: slug,
         }
@@ -24,21 +27,21 @@ class FinanciaRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
-    componentDidMount() {
-        window.scrollTo(0, 0);  // Start the page at the top of the page.
-    }
+     componentDidMount() {
+         window.scrollTo(0, 0);  // Start the page at the top of the page.
+     }
 
-    componentWillUnmount() {
-        // This code will fix the "ReactJS & Redux: Can't perform a React state
-        // update on an unmounted component" issue as explained in:
-        // https://stackoverflow.com/a/53829700
-        this.setState = (state,callback)=>{
-            return;
-        };
+     componentWillUnmount() {
+         // This code will fix the "ReactJS & Redux: Can't perform a React state
+         // update on an unmounted component" issue as explained in:
+         // https://stackoverflow.com/a/53829700
+         this.setState = (state,callback)=>{
+             return;
+         };
 
-        // Clear any and all flash messages in our queue to be rendered.
-        this.props.clearFlashMessage();
-    }
+         // Clear any and all flash messages in our queue to be rendered.
+         this.props.clearFlashMessage();
+     }
 
     /**
      *  API callback functions
@@ -59,17 +62,22 @@ class FinanciaRetrieveContainer extends Component {
      */
 
 
-
     /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
-        const { slug } = this.state;
+        const financialData = {
+            'slug': 'Argyle',
+            'number': 1,
+            'name': 'Argyle',
+            'absoluteUrl': '/financial/argyle'
+        };
         return (
-            <FinancialRetrieveComponent
-                slug={slug}
+            <FinancialLiteRetrieveComponent
+                slug={this.state.slug}
+                financialData={financialData}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -95,4 +103,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(FinanciaRetrieveContainer);
+)(FinancialLiteRetrieveContainer);
