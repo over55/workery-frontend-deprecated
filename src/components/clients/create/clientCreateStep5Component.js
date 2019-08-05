@@ -73,7 +73,7 @@ class ClientCreateStep5Component extends Component {
                                 <span className="num">5.</span><span className="">Address</span>
                             </strong>
                         </div>
-                         <div id="step-6" className="st-grey">
+                        <div id="step-6" className="st-grey">
                             <span className="num">6.</span><span className="">Metrics</span>
                         </div>
                         <div id="step-7" className="st-grey">

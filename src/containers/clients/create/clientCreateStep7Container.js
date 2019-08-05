@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Scroll from 'react-scroll';
 
 import ClientCreateStep7Component from "../../../components/clients/create/clientCreateStep7Component";
-import { validateStep7CreateInput } from "../../../validators/clientValidator";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
 import {
-    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem
+    localStorageGetObjectItem, localStorageGetArrayItem
 } from '../../../helpers/localStorageUtility';
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
 import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
@@ -38,32 +35,53 @@ class ClientCreateStep7Container extends Component {
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
+            bizCompanyName: localStorage.getItem("nwapp-create-client-biz-companyName"),
+            bizContactFirstName: localStorage.getItem("nwapp-create-client-biz-contactFirstName"),
+            bizContactLastName: localStorage.getItem("nwapp-create-client-biz-contactLastName"),
+            bizPrimaryPhone: localStorage.getItem("nwapp-create-client-biz-primaryPhone"),
+            bizSecondaryPhone: localStorage.getItem("nwapp-create-client-biz-secondaryPhone"),
+            bizEmail: localStorage.getItem("nwapp-create-client-biz-email"),
+            rezFirstName: localStorage.getItem("nwapp-create-client-rez-or-com-firstName"),
+            rezLastName: localStorage.getItem("nwapp-create-client-rez-or-com-lastName"),
+            rezPrimaryPhone: localStorage.getItem("nwapp-create-client-rez-or-com-primaryPhone"),
+            rezSecondaryPhone: localStorage.getItem("nwapp-create-client-rez-or-com-secondaryPhone"),
+            rezEmail: localStorage.getItem("nwapp-create-client-rez-or-com-email"),
+            streetNumber: localStorage.getItem("nwapp-create-client-streetNumber"),
+            streetName: localStorage.getItem("nwapp-create-client-streetName"),
+            streetType: localStorage.getItem("nwapp-create-client-streetType"),
+            streetTypeOption: localStorageGetObjectItem('nwapp-create-client-streetTypeOption'),
+            streetTypeOther: localStorage.getItem("nwapp-create-client-streetTypeOther"),
+            apartmentUnit: localStorage.getItem("nwapp-create-client-apartmentUnit"),
+            streetDirection: localStorage.getItem("nwapp-create-client-streetDirection"),
+            streetDirectionOption: localStorageGetObjectItem('nwapp-create-client-streetDirectionOption'),
+            postalCode: localStorage.getItem("nwapp-create-client-postalCode"),
+            watchSlug: localStorage.getItem('nwapp-create-client-watch-slug'),
+            watchIcon: localStorage.getItem('nwapp-create-client-watch-icon'),
+            watchName: localStorage.getItem('nwapp-create-client-watch-name'),
             tags: localStorageGetArrayItem("nwapp-create-client-tags"),
             birthYear: localStorage.getItem("nwapp-create-client-birthYear"),
             gender: parseInt(localStorage.getItem("nwapp-create-client-gender")),
+            genderLabel: localStorage.getItem("nwapp-create-client-gender-label"),
             howDidYouHear: localStorage.getItem("nwapp-create-client-howDidYouHear"),
+            howDidYouHearLabel: localStorage.getItem("nwapp-create-client-howDidYouHearLabel"),
             howDidYouHearOption: localStorageGetObjectItem('nwapp-create-client-howDidYouHearOption'),
             howDidYouHearOther: localStorage.getItem("nwapp-create-client-howDidYouHearOther"),
             meaning: localStorage.getItem("nwapp-create-client-meaning"),
             expectations: localStorage.getItem("nwapp-create-client-expectations"),
             willingToVolunteer: parseInt(localStorage.getItem("nwapp-create-client-willingToVolunteer")),
+            willingToVolunteerLabel: localStorage.getItem("nwapp-create-client-willingToVolunteer-label"),
             anotherHouseholdClientRegistered: parseInt(localStorage.getItem("nwapp-create-client-anotherHouseholdClientRegistered")),
+            anotherHouseholdClientRegisteredLabel: localStorage.getItem("nwapp-create-client-anotherHouseholdClientRegistered-label"),
             totalHouseholdCount: parseInt(localStorage.getItem("nwapp-create-client-totalHouseholdCount")),
             under18YearsHouseholdCount: parseInt(localStorage.getItem("nwapp-create-client-under18YearsHouseholdCount")),
-            companyEmployeeCount: parseInt(localStorage.getItem("nwapp-create-client-under18YearsHouseholdCount")),
+            companyEmployeeCount: parseInt(localStorage.getItem("nwapp-create-client-companyEmployeeCount")),
             companyYearsInOperation: parseInt(localStorage.getItem("nwapp-create-client-companyYearsInOperation")),
             companyType: localStorage.getItem("nwapp-create-client-companyType"),
             errors: {},
             isLoading: false
         }
 
-        this.onTextChange = this.onTextChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
-        this.onMultiChange = this.onMultiChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
 
     /**
@@ -73,31 +91,6 @@ class ClientCreateStep7Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
-        this.setState({
-            howDidYouHearData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Word of mouth',
-                    slug: 'word-of-mouth'
-                },{
-                    name: 'Internet',
-                    slug: 'internet'
-                }]
-            },
-            tagsData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Health',
-                    slug: 'health'
-                },{
-                    name: 'Security',
-                    slug: 'security'
-                },{
-                    name: 'Fitness',
-                    slug: 'fitness'
-                }]
-            }
-        });
     }
 
     componentWillUnmount() {
@@ -114,105 +107,20 @@ class ClientCreateStep7Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(client) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/clients/add/step-8");
-    }
-
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        });
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
-    }
-
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-        localStorage.setItem('nwapp-create-client-'+[e.target.name], e.target.value);
-    }
-
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            optionKey: option,
-        });
-        localStorage.setItem('nwapp-create-client-'+[option.selectName].toString(), option.value);
-        localStorage.setItem('nwapp-create-client-'+[option.selectName].toString()+"Label", option.label);
-        localStorageSetObjectOrArrayItem('nnwapp-create-client-'+optionKey, option);
-        // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "nwapp-create-client-"+[e.target.name];
-        const storageLabelKey =  "nwapp-create-client-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
-    }
-
-    onMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // Set all the tags we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
-        });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'nwapp-create-client-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
-    }
-
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // console.log(this.state); // For debugging purposes only.
-
-        // Perform client-side validation.
-        const { errors, isValid } = validateStep7CreateInput(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.onSuccessfulSubmissionCallback();
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailedSubmissionCallback(errors);
-        }
+        this.setState({ errors: {}, isLoading: true, })
+        this.props.setFlashMessage("success", "Client has been successfully created.");
+        this.props.history.push("/clients");
     }
+
 
     /**
      *  Main render function
@@ -221,40 +129,62 @@ class ClientCreateStep7Container extends Component {
 
     render() {
         const {
-            typeOf, returnURL, tags, birthYear, gender, howDidYouHear, howDidYouHearOther, meaning, expectations,
-            willingToVolunteer, anotherHouseholdClientRegistered, totalHouseholdCount, under18YearsHouseholdCount,
+            returnURL, typeOf, errors,
+            bizCompanyName, bizContactFirstName, bizContactLastName, bizPrimaryPhone, bizSecondaryPhone, bizEmail,
+            rezFirstName, rezLastName, rezPrimaryPhone, rezSecondaryPhone, rezEmail,
+            streetNumber, streetName, streetType, streetTypeOption, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOption, postalCode,
+            watchSlug, watchIcon, watchName,
+            tags, birthYear, gender, genderLabel, howDidYouHear, howDidYouHearOther, howDidYouHearLabel, meaning, expectations,
+            willingToVolunteer, willingToVolunteerLabel, anotherHouseholdClientRegistered, anotherHouseholdClientRegisteredLabel, totalHouseholdCount, under18YearsHouseholdCount,
             companyEmployeeCount, companyYearsInOperation, companyType,
-            errors
         } = this.state;
-
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
-        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
 
         return (
             <ClientCreateStep7Component
-                typeOf={typeOf}
                 returnURL={returnURL}
+                typeOf={typeOf}
+                bizCompanyName={bizCompanyName}
+                bizContactFirstName={bizContactFirstName}
+                bizContactLastName={bizContactLastName}
+                bizPrimaryPhone={bizPrimaryPhone}
+                bizSecondaryPhone={bizSecondaryPhone}
+                bizEmail={bizEmail}
+                rezFirstName={rezFirstName}
+                rezLastName={rezLastName}
+                rezPrimaryPhone={rezPrimaryPhone}
+                rezSecondaryPhone={rezSecondaryPhone}
+                rezEmail={rezEmail}
+                streetNumber={streetNumber}
+                streetName={streetName}
+                streetType={streetType}
+                streetTypeOption={streetTypeOption}
+                streetTypeOther={streetTypeOther}
+                apartmentUnit={apartmentUnit}
+                streetDirection={streetDirection}
+                streetDirectionOption={streetDirectionOption}
+                postalCode={postalCode}
+                watchSlug={watchSlug}
+                watchIcon={watchIcon}
+                watchName={watchName}
                 tags={tags}
-                tagOptions={tagOptions}
                 birthYear={birthYear}
                 gender={gender}
-                errors={errors}
-                onTextChange={this.onTextChange}
+                genderLabel={genderLabel}
                 howDidYouHear={howDidYouHear}
-                howDidYouHearOptions={howDidYouHearOptions}
+                howDidYouHearLabel={howDidYouHearLabel}
                 howDidYouHearOther={howDidYouHearOther}
                 meaning={meaning}
                 expectations={expectations}
                 willingToVolunteer={willingToVolunteer}
+                willingToVolunteerLabel={willingToVolunteerLabel}
                 anotherHouseholdClientRegistered={anotherHouseholdClientRegistered}
+                anotherHouseholdClientRegisteredLabel={anotherHouseholdClientRegisteredLabel}
                 totalHouseholdCount={totalHouseholdCount}
                 under18YearsHouseholdCount={under18YearsHouseholdCount}
                 companyEmployeeCount={companyEmployeeCount}
                 companyYearsInOperation={companyYearsInOperation}
                 companyType={companyType}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
+                errors={errors}
                 onClick={this.onClick}
             />
         );
@@ -268,7 +198,11 @@ const mapStateToProps = function(store) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        }
+    }
 }
 
 

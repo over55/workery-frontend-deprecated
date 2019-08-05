@@ -40,7 +40,6 @@ import ClientCreateStep4RezContainer from "./clients/create/clientCreateStep4Rez
 import ClientCreateStep5Container from "./clients/create/clientCreateStep5Container";
 import ClientCreateStep6Container from "./clients/create/clientCreateStep6Container";
 import ClientCreateStep7Container from "./clients/create/clientCreateStep7Container";
-import ClientCreateStep8Container from "./clients/create/clientCreateStep8Container";
 import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
 import ClientPromoteStep1Container from "./clients/promote/clientPromoteStep1Container";
 import ClientPromoteStep2Container from "./clients/promote/clientPromoteStep2Container";
@@ -216,7 +215,6 @@ class AppContainer extends React.Component {
                                 <Route path="/clients/add/step-5" exact component={requiresAuth(ClientCreateStep5Container)} />
                                 <Route path="/clients/add/step-6" exact component={requiresAuth(ClientCreateStep6Container)} />
                                 <Route path="/clients/add/step-7" exact component={requiresAuth(ClientCreateStep7Container)} />
-                                <Route path="/clients/add/step-8" exact component={requiresAuth(ClientCreateStep8Container)} />
                                 <Route path="/clients" exact component={requiresAuth(ClientListContainer)} />
                                 <Route path="/clients/search" exact component={requiresAuth(ClientSearchContainer)} />
                                 <Route path="/clients/search-results" exact component={requiresAuth(ClientSearchResultContainer)} />

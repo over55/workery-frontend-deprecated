@@ -1,25 +1,48 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
-import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { BUSINESS_TYPE_OF, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
+import {
+    RESIDENCE_TYPE_OF,
+    BUSINESS_TYPE_OF,
+    COMMUNITY_CARES_TYPE_OF
+} from '../../../constants/api';
 
 
 export default class ClientCreateStep7Component extends Component {
+    // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const {
-            typeOf, returnURL, tags, tagOptions, birthYear, gender, howDidYouHear, howDidYouHearOptions, howDidYouHearOther,
-            meaning, expectations, willingToVolunteer, anotherHouseholdClientRegistered, totalHouseholdCount, under18YearsHouseholdCount,
+            returnURL, typeOf, errors, onClick, isLoading,
+            bizCompanyName, bizContactFirstName, bizContactLastName, bizPrimaryPhone, bizSecondaryPhone, bizEmail,
+            rezFirstName, rezLastName, rezPrimaryPhone, rezSecondaryPhone, rezEmail,
+            streetNumber, streetName, streetType, streetTypeOther, apartmentUnit, streetDirection, postalCode,
+            watchSlug, watchIcon, watchName,
+            tags, tagOptions, birthYear, gender, genderLabel, howDidYouHear, howDidYouHearLabel, howDidYouHearOptions, howDidYouHearOther,
+            meaning, expectations, willingToVolunteer, willingToVolunteerLabel, anotherHouseholdClientRegistered, anotherHouseholdClientRegisteredLabel, totalHouseholdCount, under18YearsHouseholdCount,
             companyEmployeeCount, companyYearsInOperation, companyType,
-            onRadioChange,  onMultiChange,
-            errors, onTextChange, onSelectChange, isLoading, onClick
         } = this.props;
-        const isOtherHowDidYouHearSelected = howDidYouHear === 'Other';
+        const isBizTypeOf = typeOf === BUSINESS_TYPE_OF;
+        const isRezOrCom = typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF;
+
+        let clientshipClass;
+        if (typeOf === BUSINESS_TYPE_OF) {
+            clientshipClass = "Business";
+        }
+        else if (typeOf === RESIDENCE_TYPE_OF) {
+            clientshipClass = "Residential";
+        }
+        else if (typeOf === COMMUNITY_CARES_TYPE_OF) {
+            clientshipClass = "Community Cares";
+        }
+
+        // Set the how did you hear.
+        let howDidYouHearFinalLabel = howDidYouHearLabel;
+        if (howDidYouHear === "other") {
+            howDidYouHearFinalLabel = howDidYouHearOther;
+        }
 
         // This code checks to see if we need to display the household count fields.
         let showHouseholdCount = false;
@@ -28,8 +51,6 @@ export default class ClientCreateStep7Component extends Component {
         } catch (error) {
             // Do nothing.
         }
-
-        const isBizTypeOf = typeOf === BUSINESS_TYPE_OF || typeOf === toString(BUSINESS_TYPE_OF);
 
         return (
             <main id="main" role="main">
@@ -65,7 +86,7 @@ export default class ClientCreateStep7Component extends Component {
                         </div>
                         <div id="step-3" className="st-grey">
                             <Link to="/clients/add/step-3">
-                                <span className="num">3.</span><span className="">Type</span>
+                                <span className="num">1.</span><span className="">Type</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
@@ -83,204 +104,264 @@ export default class ClientCreateStep7Component extends Component {
                                 <span className="num">6.</span><span className="">Watch</span>
                             </Link>
                         </div>
-                         <div id="step-7" className="st-grey active">
-                            <strong>
+                         <div id="step-7" className="st-grey">
+                            <Link to="/clients/add/step-7">
                                 <span className="num">7.</span><span className="">Metrics</span>
-                            </strong>
+                            </Link>
                         </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
+                        <div id="step-8" className="st-grey active">
+                            <strong>
+                                <span className="num">8.</span><span className="">Review</span>
+                            </strong>
                         </div>
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-5 mx-auto mt-2">
+                <div className="row pt-3 mb-4 pb-2">
+                    <div className="col-md-10 mx-auto p-2">
+
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;Review
+                        </h2>
+
+                        <BootstrapErrorsProcessingAlert errors={errors} />
+                        <p><strong>Please confirm these details before adding the client:</strong></p>
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-sitemap"></i>&nbsp;Type
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Clientship Class</th>
+                                    <td>{clientshipClass}</td>
+                                </tr>
+
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-id-card"></i>&nbsp;Contact
+                                    </th>
+                                </tr>
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Company Name</th>
+                                        <td>{bizCompanyName}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Contact First Name</th>
+                                        <td>{bizContactFirstName}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Contact Last Name</th>
+                                        <td>{bizContactLastName}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Primary Phone #</th>
+                                        <td>{bizPrimaryPhone}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Secondary Phone #</th>
+                                        <td>{bizSecondaryPhone}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Email</th>
+                                        <td>{bizEmail}</td>
+                                    </tr>
+                                }
+
+                                {isRezOrCom &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">First Name</th>
+                                        <td>{rezFirstName}</td>
+                                    </tr>
+                                }
+                                {isRezOrCom &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Last Name</th>
+                                        <td>{rezLastName}</td>
+                                    </tr>
+                                }
+                                {isRezOrCom &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Primary Phone #</th>
+                                        <td>{rezPrimaryPhone}</td>
+                                    </tr>
+                                }
+                                {isRezOrCom &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Secondary Phone #</th>
+                                        <td>{rezSecondaryPhone}</td>
+                                    </tr>
+                                }
+                                {isRezOrCom &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Email</th>
+                                        <td>{rezEmail}</td>
+                                    </tr>
+                                }
+
+
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-address-book"></i>&nbsp;Address
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Street Number</th>
+                                    <td>{streetNumber}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Street Name</th>
+                                    <td>{streetName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Street Type</th>
+                                    <td>{streetType}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Street Type (Other)</th>
+                                    <td>{streetTypeOther}</td>
+                                </tr>
+                                {apartmentUnit &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Apartment Unit</th>
+                                        <td>{apartmentUnit}</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Street Direction</th>
+                                    <td>{streetDirection}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Postal Code</th>
+                                    <td>{postalCode}</td>
+                                </tr>
+
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-shield-alt"></i>&nbsp;Watch
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Name</th>
+                                    <td>
+                                        <a href={`/watch-biz/${watchSlug}`} target="_blank" rel="noopener noreferrer">
+                                            <i className={`fas fa-${watchIcon}`}></i>&nbsp;{watchName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Tags</th>
+                                    <td>
+                                        {tags && tags.map(
+                                            (tag, i) => <TagItem tag={tag} key={i} />)
+                                        }
+                                    </td>
+                                </tr>
+                                {birthYear &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Year of Birth</th>
+                                        <td>
+                                            {birthYear}
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Gender</th>
+                                    <td>{genderLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">How did you hear about us?</th>
+                                    <td>{howDidYouHearFinalLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">What does NW mean to you?</th>
+                                    <td>{meaning}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">What do you expect from NW?</th>
+                                    <td>{expectations}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Are you willing to volunteer as a area coordinator / associate?</th>
+                                    <td>{willingToVolunteerLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is there another client of your household which is registered with?</th>
+                                    <td>{anotherHouseholdClientRegisteredLabel}</td>
+                                </tr>
+                                {showHouseholdCount &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">How many people are in your household?</th>
+                                        <td>{totalHouseholdCount}</td>
+                                    </tr>
+                                }
+                                {showHouseholdCount &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">How many people in your household are under the age of 18?</th>
+                                        <td>{under18YearsHouseholdCount}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">How many employees does your business have?</th>
+                                        <td>{companyEmployeeCount}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">How many years has your company been in operation?</th>
+                                        <td>{companyYearsInOperation}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">What type of business is this?</th>
+                                        <td>{companyType}</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">User agrees to conditions</th>
+                                    <td>Yes</td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
                         <form>
-                            <h2>
-                                <i className="fas fa-chart-pie"></i>&nbsp;Metrics
-                            </h2>
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
-
-                            <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-user-shield"></i>&nbsp;Personal Information
-                            </p>
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-success"
-                                label="Tags"
-                                name="tags"
-                                defaultOptionLabel="Please select the tag."
-                                options={tagOptions}
-                                selectedOptions={tags}
-                                error={errors.tags}
-                                onMultiChange={onMultiChange}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.gender}
-                                label="Please select your gender (*)"
-                                name="gender"
-                                onChange={onRadioChange}
-                                selectedValue={gender}
-                                options={GENDER_RADIO_CHOICES}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.birthYear}
-                                label="Year of Birth (*)"
-                                onChange={onTextChange}
-                                value={birthYear}
-                                name="birthYear"
-                                type="number"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="How did you hear about us? (*)"
-                                name="howDidYouHear"
-                                defaultOptionLabel="Please select how you heard about us."
-                                options={howDidYouHearOptions}
-                                value={howDidYouHear}
-                                error={errors.howDidYouHear}
-                                onSelectChange={onSelectChange}
-                            />
-
-                            {isOtherHowDidYouHearSelected &&
-                                <BootstrapInput
-                                    inputClassName="form-control form-control-lg"
-                                    borderColour="border-primary"
-                                    error={errors.howDidYouHearOther}
-                                    label="Other (*)"
-                                    onChange={onTextChange}
-                                    value={howDidYouHearOther}
-                                    name="howDidYouHearOther"
-                                    type="text"
-                                />
-                            }
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.meaning}
-                                label="What does NW mean to you (*)"
-                                onChange={onTextChange}
-                                value={meaning}
-                                name="meaning"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.expectations}
-                                label="What do you expect from NW? (*)"
-                                onChange={onTextChange}
-                                value={expectations}
-                                name="expectations"
-                                type="text"
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.willingToVolunteer}
-                                label="Are you willing to volunteer as a area coordinator / associate ? (*)"
-                                name="willingToVolunteer"
-                                onChange={onRadioChange}
-                                selectedValue={willingToVolunteer}
-                                options={WILLING_TO_VOLUNTEER_CHOICES}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.anotherHouseholdClientRegistered}
-                                label="Is there another client of your household which is registered with us? (*)"
-                                name="anotherHouseholdClientRegistered"
-                                onChange={onRadioChange}
-                                selectedValue={anotherHouseholdClientRegistered}
-                                options={ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES}
-                            />
-
-                            {showHouseholdCount &&
-                                <div>
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.totalHouseholdCount}
-                                        label="How many people are in your household? (*)"
-                                        onChange={onTextChange}
-                                        value={totalHouseholdCount}
-                                        name="totalHouseholdCount"
-                                        type="number"
-                                    />
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.under18YearsHouseholdCount}
-                                        label="How many people in your household are under the age of 18? (*)"
-                                        onChange={onTextChange}
-                                        value={under18YearsHouseholdCount}
-                                        name="under18YearsHouseholdCount"
-                                        type="number"
-                                    />
-                                </div>
-                            }
-
-                            {isBizTypeOf &&
-                                <div>
-                                    <p className="border-bottom mb-3 pb-1 text-secondary">
-                                        <i className="fas fa-building"></i>&nbsp;Business Information
-                                    </p>
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.companyEmployeeCount}
-                                        label="How many employees does your business have (*)"
-                                        onChange={onTextChange}
-                                        value={companyEmployeeCount}
-                                        name="companyEmployeeCount"
-                                        type="number"
-                                    />
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.companyYearsInOperation}
-                                        label="How many years has your company been in operation (*)"
-                                        onChange={onTextChange}
-                                        value={companyYearsInOperation}
-                                        name="companyYearsInOperation"
-                                        type="number"
-                                    />
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.companyType}
-                                        label="What type of business is this? (*)"
-                                        onChange={onTextChange}
-                                        value={companyType}
-                                        name="companyType"
-                                        type="text"
-                                    />
-                                </div>
-                            }
-
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/clients/add/step-6" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/clients/add/step-7" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -288,4 +369,14 @@ export default class ClientCreateStep7Component extends Component {
             </main>
         );
     }
+}
+
+
+class TagItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
 }
