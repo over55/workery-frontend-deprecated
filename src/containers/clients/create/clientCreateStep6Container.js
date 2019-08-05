@@ -44,15 +44,6 @@ class ClientCreateStep6Container extends Component {
             howDidYouHear: localStorage.getItem("nwapp-create-client-howDidYouHear"),
             howDidYouHearOption: localStorageGetObjectItem('nwapp-create-client-howDidYouHearOption'),
             howDidYouHearOther: localStorage.getItem("nwapp-create-client-howDidYouHearOther"),
-            meaning: localStorage.getItem("nwapp-create-client-meaning"),
-            expectations: localStorage.getItem("nwapp-create-client-expectations"),
-            willingToVolunteer: parseInt(localStorage.getItem("nwapp-create-client-willingToVolunteer")),
-            anotherHouseholdClientRegistered: parseInt(localStorage.getItem("nwapp-create-client-anotherHouseholdClientRegistered")),
-            totalHouseholdCount: parseInt(localStorage.getItem("nwapp-create-client-totalHouseholdCount")),
-            under18YearsHouseholdCount: parseInt(localStorage.getItem("nwapp-create-client-under18YearsHouseholdCount")),
-            companyEmployeeCount: parseInt(localStorage.getItem("nwapp-create-client-under18YearsHouseholdCount")),
-            companyYearsInOperation: parseInt(localStorage.getItem("nwapp-create-client-companyYearsInOperation")),
-            companyType: localStorage.getItem("nwapp-create-client-companyType"),
             errors: {},
             isLoading: false
         }
@@ -200,9 +191,7 @@ class ClientCreateStep6Container extends Component {
 
     render() {
         const {
-            typeOf, returnURL, tags, birthYear, gender, howDidYouHear, howDidYouHearOther, meaning, expectations,
-            willingToVolunteer, anotherHouseholdClientRegistered, totalHouseholdCount, under18YearsHouseholdCount,
-            companyEmployeeCount, companyYearsInOperation, companyType,
+            typeOf, returnURL, tags, birthYear, gender, howDidYouHear, howDidYouHearOther,
             errors
         } = this.state;
 
@@ -222,15 +211,6 @@ class ClientCreateStep6Container extends Component {
                 howDidYouHear={howDidYouHear}
                 howDidYouHearOptions={howDidYouHearOptions}
                 howDidYouHearOther={howDidYouHearOther}
-                meaning={meaning}
-                expectations={expectations}
-                willingToVolunteer={willingToVolunteer}
-                anotherHouseholdClientRegistered={anotherHouseholdClientRegistered}
-                totalHouseholdCount={totalHouseholdCount}
-                under18YearsHouseholdCount={under18YearsHouseholdCount}
-                companyEmployeeCount={companyEmployeeCount}
-                companyYearsInOperation={companyYearsInOperation}
-                companyType={companyType}
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
                 onMultiChange={this.onMultiChange}

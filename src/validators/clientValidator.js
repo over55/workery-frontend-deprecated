@@ -238,26 +238,10 @@ export function validateStep5CreateInput(data) {
     }
 }
 
-
 /**
  *  Validator will validate step 6 in the client creation form.
  */
 export function validateStep6CreateInput(data) {
-    let errors = {};
-
-    // Do nothing.
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    }
-}
-
-
-/**
- *  Validator will validate step 7 in the client creation form.
- */
-export function validateStep7CreateInput(data) {
     let errors = {};
 
     if (data.birthYear === undefined || data.birthYear === null || data.birthYear === "") {

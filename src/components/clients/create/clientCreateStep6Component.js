@@ -14,20 +14,10 @@ export default class ClientCreateStep6Component extends Component {
     render() {
         const {
             typeOf, returnURL, tags, tagOptions, birthYear, gender, howDidYouHear, howDidYouHearOptions, howDidYouHearOther,
-            meaning, expectations, willingToVolunteer, anotherHouseholdClientRegistered, totalHouseholdCount, under18YearsHouseholdCount,
-            companyEmployeeCount, companyYearsInOperation, companyType,
             onRadioChange,  onMultiChange,
             errors, onTextChange, onSelectChange, isLoading, onClick
         } = this.props;
         const isOtherHowDidYouHearSelected = howDidYouHear === 'Other';
-
-        // This code checks to see if we need to display the household count fields.
-        let showHouseholdCount = false;
-        try {
-            showHouseholdCount = parseInt(anotherHouseholdClientRegistered) === 0;
-        } catch (error) {
-            // Do nothing.
-        }
 
         const isBizTypeOf = typeOf === BUSINESS_TYPE_OF || typeOf === toString(BUSINESS_TYPE_OF);
 
@@ -163,113 +153,6 @@ export default class ClientCreateStep6Component extends Component {
                                     name="howDidYouHearOther"
                                     type="text"
                                 />
-                            }
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.meaning}
-                                label="What does NW mean to you (*)"
-                                onChange={onTextChange}
-                                value={meaning}
-                                name="meaning"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.expectations}
-                                label="What do you expect from NW? (*)"
-                                onChange={onTextChange}
-                                value={expectations}
-                                name="expectations"
-                                type="text"
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.willingToVolunteer}
-                                label="Are you willing to volunteer as a area coordinator / associate ? (*)"
-                                name="willingToVolunteer"
-                                onChange={onRadioChange}
-                                selectedValue={willingToVolunteer}
-                                options={WILLING_TO_VOLUNTEER_CHOICES}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.anotherHouseholdClientRegistered}
-                                label="Is there another client of your household which is registered with us? (*)"
-                                name="anotherHouseholdClientRegistered"
-                                onChange={onRadioChange}
-                                selectedValue={anotherHouseholdClientRegistered}
-                                options={ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES}
-                            />
-
-                            {showHouseholdCount &&
-                                <div>
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.totalHouseholdCount}
-                                        label="How many people are in your household? (*)"
-                                        onChange={onTextChange}
-                                        value={totalHouseholdCount}
-                                        name="totalHouseholdCount"
-                                        type="number"
-                                    />
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.under18YearsHouseholdCount}
-                                        label="How many people in your household are under the age of 18? (*)"
-                                        onChange={onTextChange}
-                                        value={under18YearsHouseholdCount}
-                                        name="under18YearsHouseholdCount"
-                                        type="number"
-                                    />
-                                </div>
-                            }
-
-                            {isBizTypeOf &&
-                                <div>
-                                    <p className="border-bottom mb-3 pb-1 text-secondary">
-                                        <i className="fas fa-building"></i>&nbsp;Business Information
-                                    </p>
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.companyEmployeeCount}
-                                        label="How many employees does your business have (*)"
-                                        onChange={onTextChange}
-                                        value={companyEmployeeCount}
-                                        name="companyEmployeeCount"
-                                        type="number"
-                                    />
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.companyYearsInOperation}
-                                        label="How many years has your company been in operation (*)"
-                                        onChange={onTextChange}
-                                        value={companyYearsInOperation}
-                                        name="companyYearsInOperation"
-                                        type="number"
-                                    />
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.companyType}
-                                        label="What type of business is this? (*)"
-                                        onChange={onTextChange}
-                                        value={companyType}
-                                        name="companyType"
-                                        type="text"
-                                    />
-                                </div>
                             }
 
                             <div className="form-group">
