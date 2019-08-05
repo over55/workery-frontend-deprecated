@@ -3,14 +3,18 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 
 
 class ClientCreateStep4BizComponent extends Component {
     render() {
-        const { companyName, contactFirstName, contactLastName, primaryPhone, secondaryPhone, email, errors, onTextChange, isLoading, onClick } = this.props;
+        const {
+            companyName, contactFirstName, contactLastName,
+            primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
+            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors, onTextChange, onSelectChange, isLoading, onClick
+        } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -120,6 +124,17 @@ class ClientCreateStep4BizComponent extends Component {
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
 
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Primary Telephone type (*)"
+                                name="primaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={primaryPhoneTypeOfOptions}
+                                value={primaryPhoneTypeOf}
+                                error={errors.primaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
+                            />
+
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
@@ -130,6 +145,17 @@ class ClientCreateStep4BizComponent extends Component {
                                 name="secondaryPhone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-success"
+                                label="Secondary Telephone type"
+                                name="secondaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={secondaryPhoneTypeOfOptions}
+                                value={secondaryPhoneTypeOf}
+                                error={errors.secondaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapInput

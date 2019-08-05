@@ -628,14 +628,42 @@ export const IS_OK_TO_TEXT_CHOICES = [
 export const TELEPHONE_CONTACT_POINT_TYPE_OF_ID = 1
 export const MOBILE_CONTACT_POINT_TYPE_OF_ID = 2
 export const WORK_CONTACT_POINT_TYPE_OF_ID = 3
-
-// export const TELEPHONE_CONTACT_POINT_TYPE_OF_CHOICES = (
-//     (TELEPHONE_CONTACT_POINT_TYPE_OF_ID, _('Telephone')),
-//     (MOBILE_CONTACT_POINT_TYPE_OF_ID, _('Mobile')),
-//     (WORK_CONTACT_POINT_TYPE_OF_ID, _('Work Telephone'))
-// )
-
-
+export const PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES = [
+    {
+        id: 'primaryPhoneTypeOf-1-choice',
+        selectName: "primaryPhoneTypeOf",
+        value: TELEPHONE_CONTACT_POINT_TYPE_OF_ID,
+        label: "Landline"
+    },{
+        id: 'primaryPhoneTypeOf-2-choice',
+        selectName: "primaryPhoneTypeOf",
+        value: MOBILE_CONTACT_POINT_TYPE_OF_ID,
+        label: "Mobile"
+    },{
+        id: 'primaryPhoneTypeOf-3-choice',
+        selectName: "primaryPhoneTypeOf",
+        value: WORK_CONTACT_POINT_TYPE_OF_ID,
+        label: "Work"
+    }
+];
+export const SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES = [
+    {
+        id: 'secondaryPhoneTypeOf-1-choice',
+        selectName: "secondaryPhoneTypeOf",
+        value: TELEPHONE_CONTACT_POINT_TYPE_OF_ID,
+        label: "Landline"
+    },{
+        id: 'secondaryPhoneTypeOf-2-choice',
+        selectName: "secondaryPhoneTypeOf",
+        value: MOBILE_CONTACT_POINT_TYPE_OF_ID,
+        label: "Mobile"
+    },{
+        id: 'secondaryPhoneTypeOf-3-choice',
+        selectName: "secondaryPhoneTypeOf",
+        value: WORK_CONTACT_POINT_TYPE_OF_ID,
+        label: "Work"
+    }
+];
 
 // # The following constants are used by the "Job" model.
 // #

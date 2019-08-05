@@ -4,8 +4,12 @@ import Scroll from 'react-scroll';
 
 import ClientCreateStep4BizComponent from "../../../components/clients/create/clientCreateStep4BizComponent";
 import { validateStep4BizCreateInput } from "../../../validators/clientValidator";
-import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
-
+import {
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
+    SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
+} from '../../../constants/api';
+import { localStorageSetObjectOrArrayItem, localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
 class ClientCreateStep4BizContainer extends Component {
     /**
@@ -20,13 +24,16 @@ class ClientCreateStep4BizContainer extends Component {
             contactFirstName: localStorage.getItem("workery-create-client-biz-contactFirstName"),
             contactLastName: localStorage.getItem("workery-create-client-biz-contactLastName"),
             primaryPhone: localStorage.getItem("workery-create-client-biz-primaryPhone"),
+            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-biz-primaryPhoneTypeOf"),
             secondaryPhone: localStorage.getItem("workery-create-client-biz-secondaryPhone"),
+            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-biz-secondaryPhoneTypeOf"),
             email: localStorage.getItem("workery-create-client-biz-email"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -90,6 +97,20 @@ class ClientCreateStep4BizContainer extends Component {
         localStorage.setItem(key, e.target.value);
     }
 
+    onSelectChange(option) {
+        console.log(option);
+        const optionKey = [option.selectName]+"Option";
+        this.setState(
+            { [option.selectName]: option.value, [optionKey]: option, },
+            ()=>{
+                localStorage.setItem('workery-create-client-biz-'+[option.selectName].toString(), option.value);
+                localStorage.setItem('workery-create-client-biz-'+[option.selectName].toString()+"Label", option.label);
+                localStorageSetObjectOrArrayItem('workery-create-client-biz-'+optionKey, option);
+                console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+            }
+        );
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -114,17 +135,24 @@ class ClientCreateStep4BizContainer extends Component {
      */
 
     render() {
-        const { companyName, contactFirstName, contactLastName, primaryPhone, secondaryPhone, email, errors } = this.state;
+        const {
+            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, errors
+        } = this.state;
         return (
             <ClientCreateStep4BizComponent
                 companyName={companyName}
                 contactFirstName={contactFirstName}
                 contactLastName={contactLastName}
                 primaryPhone={primaryPhone}
+                primaryPhoneTypeOf={primaryPhoneTypeOf}
+                primaryPhoneTypeOfOptions={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
                 secondaryPhone={secondaryPhone}
+                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
+                secondaryPhoneTypeOfOptions={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
                 email={email}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                onSelectChange={this.onSelectChange}
                 onClick={this.onClick}
             />
         );

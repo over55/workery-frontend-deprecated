@@ -149,6 +149,9 @@ export function validateStep4BizCreateInput(data) {
     if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
         errors.primaryPhone = 'This field is required';
     }
+    if (data.primaryPhoneTypeOf === undefined || data.primaryPhoneTypeOf === null || data.primaryPhoneTypeOf === "" || isNaN(data.primaryPhoneTypeOf) ) {
+        errors.primaryPhoneTypeOf = 'This field is required';
+    }
     if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
         errors.email = 'This field is required';
     }

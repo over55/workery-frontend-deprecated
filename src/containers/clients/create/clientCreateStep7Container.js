@@ -45,8 +45,12 @@ class ClientCreateStep7Container extends Component {
         else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/clients/add/step-4-biz";
             primaryPhone = localStorage.getItem("workery-create-client-biz-primaryPhone");
+            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-biz-primaryPhoneTypeOf");
             secondaryPhone =  localStorage.getItem("workery-create-client-biz-secondaryPhone");
+            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-biz-secondaryPhoneTypeOf");
             email = localStorage.getItem("workery-create-client-biz-email");
+            isOkToEmail = localStorageGetIntegerItem("workery-create-client-biz-isOkToEmail");
+            isOkToText = localStorageGetIntegerItem("workery-create-client-biz-isOkToText");
         }
 
         this.state = {
