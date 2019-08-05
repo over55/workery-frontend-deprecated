@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import ClientCreateStep2Component from "../../../components/clients/create/clientCreateStep2Component";
+import { pullClientList } from "../../../actions/clientActions";
 
 
 class ClientCreateStep2Container extends Component {
@@ -14,15 +15,26 @@ class ClientCreateStep2Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            firstName: localStorage.getItem("workery-create-client-firstName"),
+            lastName: localStorage.getItem("workery-create-client-lastName"),
+            email: localStorage.getItem("workery-create-client-email"),
+            phone: localStorage.getItem("workery-create-client-phone"),
+            isLoading: false,
             errors: {},
-            isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
-        this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.getParametersMapFromState = this.getParametersMapFromState.bind(this);
+    }
+
+    getParametersMapFromState() {
+        const parametersMap = new Map();
+        if (this.state.firstName !== undefined && this.state.firstName !== null) {
+            parametersMap['firstName'] = this.state.firstName;
+        }
+        return parametersMap;
     }
 
     /**
@@ -32,6 +44,7 @@ class ClientCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullClientList(1, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -48,14 +61,25 @@ class ClientCreateStep2Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(client) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/clients/add/step-3");
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+            }
+        )
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
-            errors: errors
+            errors: errors,
+            isLoading: false
         })
 
         // The following code will cause the screen to scroll to the top of
@@ -76,26 +100,23 @@ class ClientCreateStep2Container extends Component {
         })
     }
 
-    onClick(e, slug) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
-
-        this.props.history.push("/client/"+slug);
-    }
-
     /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
+        const clients = (this.props.clientList && this.props.clientList.results) ? this.props.clientList.results : [];
         return (
             <ClientCreateStep2Component
-                name={name}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                clients={clients}
+                isLoading={isLoading}
                 errors={errors}
                 onTextChange={this.onTextChange}
-                onClick={this.onClick}
             />
         );
     }
@@ -104,11 +125,17 @@ class ClientCreateStep2Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        clientList: store.clientListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        pullClientList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullClientList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

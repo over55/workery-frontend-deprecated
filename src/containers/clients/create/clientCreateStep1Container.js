@@ -14,7 +14,10 @@ class ClientCreateStep1Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            firstName: localStorage.getItem("workery-create-client-firstName"),
+            lastName: localStorage.getItem("workery-create-client-lastName"),
+            email: localStorage.getItem("workery-create-client-email"),
+            phone: localStorage.getItem("workery-create-client-phone"),
             errors: {},
             isLoading: false
         }
@@ -74,6 +77,9 @@ class ClientCreateStep1Container extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
+
+        const key = "workery-create-client-"+[e.target.name].toString();
+        localStorage.setItem(key, e.target.value);
     }
 
     onClick(e) {
@@ -90,10 +96,13 @@ class ClientCreateStep1Container extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { firstName, lastName, email, phone, errors, isLoading } = this.state
         return (
             <ClientCreateStep1Component
-                name={name}
+                firstName={firstName}
+                lastName={lastName}
+                email={email}
+                phone={phone}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}

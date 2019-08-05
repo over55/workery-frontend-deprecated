@@ -3,9 +3,36 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 
+class CardComponent extends Component {
+    render() {
+        const { client, isLoading } = this.props;
+        return (
+            <div className="col-sm-3">
+                <div className="card bg-light">
+                    <div className="card-body">
+                        <h5 className="card-title">
+                            <Link to={`/client/${client.id}`}>
+                                <strong><i className="fas fa-home"></i>&nbsp;{client.givenName}&nbsp;{client.lastName}</strong>
+                            </Link>
+                        </h5>
+                        <p className="card-text">
+                            {client.streetAddress}<br />
+                            {client.addressLocality}, {client.addressRegion}<br />
+                            {client.telephone}
+                        </p>
+                        <Link to={`/client/${client.id}`} type="button" className="btn btn-primary btn-lg btn-block" disabled={isLoading}>
+                            Select&nbsp;<i class="fas fa-chevron-right"></i>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
 export default class ClientCreateStep2Component extends Component {
     render() {
-        const { isLoading, onClick } = this.props;
+        const { clients, isLoading, errors } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -62,56 +89,9 @@ export default class ClientCreateStep2Component extends Component {
                 </div>
 
                 <div className="card-group row">
-
-                    <div className="col-sm-3">
-                        <div className="card bg-light">
-                            <div className="card-body">
-                                <h5 className="card-title">
-                                    <Link to="#">
-                                        <strong><i className="fas fa-home"></i>&nbsp;Rodolfo Martinez</strong>
-                                    </Link>
-                                </h5>
-                                <p className="card-text">1848 Mickleborough Dr<br />
-                                    London, ON<br />
-                                    (519)521-3135
-                                </p>
-                                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={ (event)=> { onClick(event, "rodolfo-martinez") } } disabled={isLoading}>Select&nbsp;<i class="fas fa-chevron-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-3">
-                        <div className="card bg-light">
-                            <div className="card-body">
-                                <h5 className="card-title">
-                                    <Link to="#">
-                                        <strong><i className="fas fa-building"></i>&nbsp;Frank Herbert</strong>
-                                    </Link>
-                                </h5>
-                                <p className="card-text">1234 Dune Street<br />
-                                    London, ON<br />
-                                    (123)123-1234
-                                </p>
-                                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={ (event)=> { onClick(event, "frank-herbert") } } disabled={isLoading}>Select&nbsp;<i class="fas fa-chevron-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-3">
-                        <div className="card bg-light">
-                            <div className="card-body">
-                                <h5 className="card-title">
-                                    <Link to="#">
-                                        <strong><i className="fas fa-university"></i>&nbsp;Robert A. Heinlein</strong>
-                                    </Link>
-                                </h5>
-                                <p className="card-text">4567 Startship Trooper Avenue<br />
-                                    Toronto, ON<br />
-                                    (321)123-1234
-                                </p>
-                                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={ (event)=> { onClick(event, "robert-a-heinlein") } } disabled={isLoading}>Select&nbsp;<i class="fas fa-chevron-right"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
+                    {clients && clients.map(
+                        (client) => <CardComponent client={client} key={client.id} isLoading={isLoading} />)
+                    }
                 </div>
 
                 <div class="col-sm-12 mx-auto mt-3 mb-3 text-center">

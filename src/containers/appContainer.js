@@ -220,12 +220,12 @@ class AppContainer extends React.Component {
                                 <Route path="/clients" exact component={requiresAuth(ClientListContainer)} />
                                 <Route path="/clients/search" exact component={requiresAuth(ClientSearchContainer)} />
                                 <Route path="/clients/search-results" exact component={requiresAuth(ClientSearchResultContainer)} />
-                                <Route path="/client/:slug" exact component={requiresAuth(ClientLiteRetrieveContainer)} />
-                                <Route path="/client/:slug/full" exact component={requiresAuth(ClientFullRetrieveContainer)} />
-                                <Route path="/client/:slug/update" exact component={requiresAuth(ClientUpdateContainer)} />
-                                <Route path="/client/:slug/promote/step-1" exact component={requiresAuth(ClientPromoteStep1Container)} />
-                                <Route path="/client/:slug/promote/step-2" exact component={requiresAuth(ClientPromoteStep2Container)} />
-                                <Route path="/client/:slug/promote/step-3" exact component={requiresAuth(ClientPromoteStep3Container)} />
+                                <Route path="/client/:id" exact component={requiresAuth(ClientLiteRetrieveContainer)} />
+                                <Route path="/client/:id/full" exact component={requiresAuth(ClientFullRetrieveContainer)} />
+                                <Route path="/client/:id/update" exact component={requiresAuth(ClientUpdateContainer)} />
+                                <Route path="/client/:id/promote/step-1" exact component={requiresAuth(ClientPromoteStep1Container)} />
+                                <Route path="/client/:id/promote/step-2" exact component={requiresAuth(ClientPromoteStep2Container)} />
+                                <Route path="/client/:id/promote/step-3" exact component={requiresAuth(ClientPromoteStep3Container)} />
 
                                 { /* ASSOCIATES */ }
                                 <Route path="/associates/add/step-1" exact component={requiresAuth(AssociateCreateStep1Container)} />
@@ -234,10 +234,10 @@ class AppContainer extends React.Component {
                                 <Route path="/associates" exact component={requiresAuth(AssociateListContainer)} />
                                 <Route path="/associates/search" exact component={requiresAuth(AssociateSearchContainer)} />
                                 <Route path="/associates/search-results" exact component={requiresAuth(AssociateSearchResultContainer)} />
-                                <Route path="/associate/:slug" exact component={requiresAuth(AssociateLiteRetrieveContainer)} />
-                                <Route path="/associate/:slug/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
-                                <Route path="/associate/:slug/update" exact component={requiresAuth(AssociateUpdateContainer)} />
-                                <Route path="/associate/:slug/demote" exact component={requiresAuth(AssociateDemoteContainer)} />
+                                <Route path="/associate/:id" exact component={requiresAuth(AssociateLiteRetrieveContainer)} />
+                                <Route path="/associate/:id/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
+                                <Route path="/associate/:id/update" exact component={requiresAuth(AssociateUpdateContainer)} />
+                                <Route path="/associate/:id/demote" exact component={requiresAuth(AssociateDemoteContainer)} />
 
                                 { /* WORK ORDER */}
                                 <Route path="/orders/add/step-1" exact component={requiresAuth(OrderCreateStep1Container)} />
@@ -252,23 +252,23 @@ class AppContainer extends React.Component {
                                 <Route path="/orders" exact component={requiresAuth(OrderListContainer)} />
                                 <Route path="/orders/search" exact component={requiresAuth(OrderSearchContainer)} />
                                 <Route path="/orders/search-results" exact component={requiresAuth(OrderSearchResultContainer)} />
-                                <Route path="/order/:slug" exact component={requiresAuth(OrderLiteRetrieveContainer)} />
-                                <Route path="/order/:slug/full" exact component={requiresAuth(OrderFullRetrieveContainer)} />
-                                <Route path="/order/:slug/update" exact component={requiresAuth(OrderUpdateContainer)} />
-                                <Route path="/order/:slug/promote/step-1" exact component={requiresAuth(OrderPromoteStep1Container)} />
-                                <Route path="/order/:slug/promote/step-2" exact component={requiresAuth(OrderPromoteStep2Container)} />
-                                <Route path="/order/:slug/promote/step-3" exact component={requiresAuth(OrderPromoteStep3Container)} />
+                                <Route path="/order/:id" exact component={requiresAuth(OrderLiteRetrieveContainer)} />
+                                <Route path="/order/:id/full" exact component={requiresAuth(OrderFullRetrieveContainer)} />
+                                <Route path="/order/:id/update" exact component={requiresAuth(OrderUpdateContainer)} />
+                                <Route path="/order/:id/promote/step-1" exact component={requiresAuth(OrderPromoteStep1Container)} />
+                                <Route path="/order/:id/promote/step-2" exact component={requiresAuth(OrderPromoteStep2Container)} />
+                                <Route path="/order/:id/promote/step-3" exact component={requiresAuth(OrderPromoteStep3Container)} />
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />
                                 <Route path="/tasks/search" exact component={requiresAuth(TaskSearchContainer)} />
                                 <Route path="/tasks/search-results" exact component={requiresAuth(TaskSearchResultContainer)} />
-                                <Route path="/task/1/:slug/step-1" exact component={requiresAuth(AssignWatchAssociateTaskStep1Container)} />
-                                <Route path="/task/1/:slug/step-2" exact component={requiresAuth(AssignWatchAssociateTaskStep2Container)} />
-                                <Route path="/task/1/:slug/step-3" exact component={requiresAuth(AssignWatchAssociateTaskStep3Container)} />
-                                <Route path="/task/2/:slug/step-1" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep1Container)} />
-                                <Route path="/task/2/:slug/step-2" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep2Container)} />
-                                <Route path="/task/2/:slug/step-3" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep3Container)} />
+                                <Route path="/task/1/:id/step-1" exact component={requiresAuth(AssignWatchAssociateTaskStep1Container)} />
+                                <Route path="/task/1/:id/step-2" exact component={requiresAuth(AssignWatchAssociateTaskStep2Container)} />
+                                <Route path="/task/1/:id/step-3" exact component={requiresAuth(AssignWatchAssociateTaskStep3Container)} />
+                                <Route path="/task/2/:id/step-1" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep1Container)} />
+                                <Route path="/task/2/:id/step-2" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep2Container)} />
+                                <Route path="/task/2/:id/step-3" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep3Container)} />
 
                                 { /* STAFF */ }
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />
@@ -276,9 +276,9 @@ class AppContainer extends React.Component {
                                 <Route path="/staff" exact component={requiresAuth(StaffListContainer)} />
                                 <Route path="/staff/search" exact component={requiresAuth(StaffSearchContainer)} />
                                 <Route path="/staff/search-results" exact component={requiresAuth(StaffSearchResultContainer)} />
-                                <Route path="/staff/:slug" exact component={requiresAuth(StaffLiteRetrieveContainer)} />
-                                <Route path="/staff/:slug/full" exact component={requiresAuth(StaffFullRetrieveContainer)} />
-                                <Route path="/staff/:slug/update" exact component={requiresAuth(StaffUpdateContainer)} />
+                                <Route path="/staff/:id" exact component={requiresAuth(StaffLiteRetrieveContainer)} />
+                                <Route path="/staff/:id/full" exact component={requiresAuth(StaffFullRetrieveContainer)} />
+                                <Route path="/staff/:id/update" exact component={requiresAuth(StaffUpdateContainer)} />
 
                                 { /* REPORTS */ }
                                 <Route path="/reports" exact component={requiresAuth(ReportListContainer)} />
@@ -291,41 +291,41 @@ class AppContainer extends React.Component {
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
                                 <Route path="/settings/tags" exact component={requiresAuth(TagsListContainer)} />
                                 <Route path="/settings/tag/add" exact component={requiresAuth(TagCreateContainer)} />
-                                <Route path="/settings/tag/:slug/delete" exact component={requiresAuth(TagDeleteContainer)} />
-                                <Route path="/settings/tag/:slug/update" exact component={requiresAuth(TagUpdateContainer)} />
+                                <Route path="/settings/tag/:id/delete" exact component={requiresAuth(TagDeleteContainer)} />
+                                <Route path="/settings/tag/:id/update" exact component={requiresAuth(TagUpdateContainer)} />
                                 <Route path="/settings/how-hears" exact component={requiresAuth(HowHearsListContainer)} />
                                 <Route path="/settings/how-hears/add" exact component={requiresAuth(HowHearCreateContainer)} />
-                                <Route path="/settings/how-hear/:slug/delete" exact component={requiresAuth(HowHearDeleteContainer)} />
-                                <Route path="/settings/how-hear/:slug/update" exact component={requiresAuth(HowHearUpdateContainer)} />
+                                <Route path="/settings/how-hear/:id/delete" exact component={requiresAuth(HowHearDeleteContainer)} />
+                                <Route path="/settings/how-hear/:id/update" exact component={requiresAuth(HowHearUpdateContainer)} />
                                 <Route path="/settings/away-logs" exact component={requiresAuth(AwayLogListContainer)} />
                                 <Route path="/settings/away-logs/add" exact component={requiresAuth(AwayLogCreateContainer)} />
-                                <Route path="/settings/away-log/:slug/delete" exact component={requiresAuth(AwayLogDeleteContainer)} />
-                                <Route path="/settings/away-log/:slug/update" exact component={requiresAuth(AwayLogUpdateContainer)} />
+                                <Route path="/settings/away-log/:id/delete" exact component={requiresAuth(AwayLogDeleteContainer)} />
+                                <Route path="/settings/away-log/:id/update" exact component={requiresAuth(AwayLogUpdateContainer)} />
                                 <Route path="/settings/resources" exact component={requiresAuth(ResourcesListContainer)} />
                                 <Route path="/settings/resource/add" exact component={requiresAuth(ResourceCreateContainer)} />
-                                <Route path="/settings/resource/:slug/delete" exact component={requiresAuth(ResourceDeleteContainer)} />
-                                <Route path="/settings/resource/:slug/update" exact component={requiresAuth(ResourceUpdateContainer)} />
+                                <Route path="/settings/resource/:id/delete" exact component={requiresAuth(ResourceDeleteContainer)} />
+                                <Route path="/settings/resource/:id/update" exact component={requiresAuth(ResourceUpdateContainer)} />
                                 <Route path="/settings/bulletin-board-items" exact component={requiresAuth(BulletinBoardItemsListContainer)} />
                                 <Route path="/settings/bulletin-board-items/add" exact component={requiresAuth(BulletinBoardItemCreateContainer)} />
-                                <Route path="/settings/bulletin-board-item/:slug/delete" exact component={requiresAuth(BulletinBoardItemDeleteContainer)} />
-                                <Route path="/settings/bulletin-board-item/:slug/update" exact component={requiresAuth(BulletinBoardItemUpdateContainer)} />
+                                <Route path="/settings/bulletin-board-item/:id/delete" exact component={requiresAuth(BulletinBoardItemDeleteContainer)} />
+                                <Route path="/settings/bulletin-board-item/:id/update" exact component={requiresAuth(BulletinBoardItemUpdateContainer)} />
                                 <Route path="/settings/skill-sets" exact component={requiresAuth(SkillSetsListContainer)} />
                                 <Route path="/settings/skill-sets/add" exact component={requiresAuth(SkillSetCreateContainer)} />
-                                <Route path="/settings/skill-set/:slug/delete" exact component={requiresAuth(SkillSetDeleteContainer)} />
-                                <Route path="/settings/skill-set/:slug/update" exact component={requiresAuth(SkillSetUpdateContainer)} />
+                                <Route path="/settings/skill-set/:id/delete" exact component={requiresAuth(SkillSetDeleteContainer)} />
+                                <Route path="/settings/skill-set/:id/update" exact component={requiresAuth(SkillSetUpdateContainer)} />
                                 <Route path="/settings/insurance-requirements" exact component={requiresAuth(InsuranceRequirementsListContainer)} />
                                 <Route path="/settings/insurance-requirement/add" exact component={requiresAuth(InsuranceRequirementCreateContainer)} />
-                                <Route path="/settings/insurance-requirement/:slug/delete" exact component={requiresAuth(InsuranceRequirementDeleteContainer)} />
-                                <Route path="/settings/insurance-requirement/:slug/update" exact component={requiresAuth(InsuranceRequirementUpdateContainer)} />
+                                <Route path="/settings/insurance-requirement/:id/delete" exact component={requiresAuth(InsuranceRequirementDeleteContainer)} />
+                                <Route path="/settings/insurance-requirement/:id/update" exact component={requiresAuth(InsuranceRequirementUpdateContainer)} />
                                 <Route path="/settings/service-fees" exact component={requiresAuth(ServiceFeesListContainer)} />
                                 <Route path="/settings/service-fee/add" exact component={requiresAuth(ServiceFeeCreateContainer)} />
-                                <Route path="/settings/service-fee/:slug/delete" exact component={requiresAuth(ServiceFeeDeleteContainer)} />
-                                <Route path="/settings/service-fee/:slug/update" exact component={requiresAuth(ServiceFeeUpdateContainer)} />
+                                <Route path="/settings/service-fee/:id/delete" exact component={requiresAuth(ServiceFeeDeleteContainer)} />
+                                <Route path="/settings/service-fee/:id/update" exact component={requiresAuth(ServiceFeeUpdateContainer)} />
                                 <Route path="/settings/deactivated-clients" exact component={requiresAuth(DeactivatedClientListContainer)} />
                                 <Route path="/settings/vehicle-types" exact component={requiresAuth(VehicleTypesListContainer)} />
                                 <Route path="/settings/vehicle-type/add" exact component={requiresAuth(VehicleTypeCreateContainer)} />
-                                <Route path="/settings/vehicle-type/:slug/delete" exact component={requiresAuth(VehicleTypeDeleteContainer)} />
-                                <Route path="/settings/vehicle-type/:slug/update" exact component={requiresAuth(VehicleTypeUpdateContainer)} />
+                                <Route path="/settings/vehicle-type/:id/delete" exact component={requiresAuth(VehicleTypeDeleteContainer)} />
+                                <Route path="/settings/vehicle-type/:id/update" exact component={requiresAuth(VehicleTypeUpdateContainer)} />
 
                                 { /* PARTNERS */ }
                                 <Route path="/partners/add/step-1" exact component={requiresAuth(PartnerCreateStep1Container)} />
@@ -340,14 +340,14 @@ class AppContainer extends React.Component {
                                 <Route path="/partners" exact component={requiresAuth(PartnerListContainer)} />
                                 <Route path="/partners/search" exact component={requiresAuth(PartnerSearchContainer)} />
                                 <Route path="/partners/search-results" exact component={requiresAuth(PartnerSearchResultContainer)} />
-                                <Route path="/partner/:slug" exact component={requiresAuth(PartnerLiteRetrieveContainer)} />
-                                <Route path="/partner/:slug/full" exact component={requiresAuth(PartnerFullRetrieveContainer)} />
-                                <Route path="/partner/:slug/update" exact component={requiresAuth(PartnerUpdateContainer)} />
-                                <Route path="/partner/:slug/promote/step-1" exact component={requiresAuth(PartnerPromoteStep1Container)} />
-                                <Route path="/partner/:slug/promote/step-2" exact component={requiresAuth(PartnerPromoteStep2Container)} />
-                                <Route path="/partner/:slug/promote/step-3" exact component={requiresAuth(PartnerPromoteStep3Container)} />
+                                <Route path="/partner/:id" exact component={requiresAuth(PartnerLiteRetrieveContainer)} />
+                                <Route path="/partner/:id/full" exact component={requiresAuth(PartnerFullRetrieveContainer)} />
+                                <Route path="/partner/:id/update" exact component={requiresAuth(PartnerUpdateContainer)} />
+                                <Route path="/partner/:id/promote/step-1" exact component={requiresAuth(PartnerPromoteStep1Container)} />
+                                <Route path="/partner/:id/promote/step-2" exact component={requiresAuth(PartnerPromoteStep2Container)} />
+                                <Route path="/partner/:id/promote/step-3" exact component={requiresAuth(PartnerPromoteStep3Container)} />
 
-
+                                { /* EVERYTHING ELSE... */ }
                                 <Route component={NotFound404Container} />
                             </Switch>
                         </main>
