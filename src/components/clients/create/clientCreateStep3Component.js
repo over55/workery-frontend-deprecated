@@ -71,8 +71,8 @@ export default class ClientCreateStep3Component extends Component {
                                 <i className="fas fa-home fa-3x"></i>
                             </div>
                             <div className="card-body">
-                                <h3 className="card-title">Residential / Community Cares</h3>
-                                <p className="card-text">Add a residential or community cares client</p>
+                                <h3 className="card-title">Residential</h3>
+                                <p className="card-text">Add a residential client</p>
                                 <Link to="/clients/add/step-4-rez-or-cc" className="btn btn-primary btn-lg">
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </Link>

@@ -8,7 +8,7 @@ import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 
 
-class ClientCreateStep4RezOrComComponent extends Component {
+class ClientCreateStep4RezComponent extends Component {
     render() {
         const { firstName, lastName, primaryPhone, secondaryPhone, email, errors, onTextChange, isLoading, onClick } = this.props;
         return (
@@ -153,4 +153,4 @@ class ClientCreateStep4RezOrComComponent extends Component {
     }
 }
 
-export default ClientCreateStep4RezOrComComponent;
+export default ClientCreateStep4RezComponent;

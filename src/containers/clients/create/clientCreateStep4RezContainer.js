@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientCreateStep4RezOrComComponent from "../../../components/clients/create/clientCreateStep4RezOrComComponent";
-import { validateStep4RezOrComCreateInput } from "../../../validators/clientValidator";
+import ClientCreateStep4RezComponent from "../../../components/clients/create/clientCreateStep4RezComponent";
+import { validateStep4RezCreateInput } from "../../../validators/clientValidator";
 import { RESIDENCE_TYPE_OF } from '../../../constants/api';
 
 
-class ClientCreateStep4RezOrComContainer extends Component {
+class ClientCreateStep4RezContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -94,7 +94,7 @@ class ClientCreateStep4RezOrComContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateStep4RezOrComCreateInput(this.state);
+        const { errors, isValid } = validateStep4RezCreateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -115,7 +115,7 @@ class ClientCreateStep4RezOrComContainer extends Component {
     render() {
         const { firstName, lastName, primaryPhone, secondaryPhone, email, errors } = this.state;
         return (
-            <ClientCreateStep4RezOrComComponent
+            <ClientCreateStep4RezComponent
                 firstName={firstName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
@@ -143,4 +143,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientCreateStep4RezOrComContainer);
+)(ClientCreateStep4RezContainer);

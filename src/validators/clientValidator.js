@@ -152,7 +152,7 @@ export function validateInput(data) {
 /**
  *  Validator will validate step 4 in the client creation form.
  */
-export function validateStep4RezOrComCreateInput(data) {
+export function validateStep4RezCreateInput(data) {
     let errors = {};
 
     if (data.firstName === undefined || data.firstName === null || validator.isEmpty(data.firstName) || data.firstName === "") {
