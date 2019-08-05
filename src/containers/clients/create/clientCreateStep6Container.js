@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import ClientCreateStep6Component from "../../../components/clients/create/clientCreateStep6Component";
 import { validateStep6CreateInput } from "../../../validators/clientValidator";
 import {
-    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
 } from '../../../helpers/localStorageUtility';
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
@@ -26,7 +26,7 @@ class ClientCreateStep6Container extends Component {
         super(props);
 
         // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("nwapp-create-client-typeOf"));
+        const typeOf = parseInt(localStorage.getItem("workery-create-client-typeOf"));
         let returnURL;
         if (typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF) {
             returnURL = "/clients/add/step-4-rez-or-cc";
@@ -38,18 +38,19 @@ class ClientCreateStep6Container extends Component {
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
-            tags: localStorageGetArrayItem("nwapp-create-client-tags"),
-            birthYear: localStorage.getItem("nwapp-create-client-birthYear"),
-            gender: parseInt(localStorage.getItem("nwapp-create-client-gender")),
-            howDidYouHear: localStorage.getItem("nwapp-create-client-howDidYouHear"),
-            howDidYouHearOption: localStorageGetObjectItem('nwapp-create-client-howDidYouHearOption'),
-            howDidYouHearOther: localStorage.getItem("nwapp-create-client-howDidYouHearOther"),
+            tags: localStorageGetArrayItem("workery-create-client-tags"),
+            dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
+            gender: localStorageGetIntegerItem("workery-create-client-gender"),
+            howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
+            howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
+            howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onDateOfBirthChange = this.onDateOfBirthChange.bind(this);
         this.onMultiChange = this.onMultiChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -110,7 +111,7 @@ class ClientCreateStep6Container extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        localStorage.setItem('nwapp-create-client-'+[e.target.name], e.target.value);
+        localStorage.setItem('workery-create-client-'+[e.target.name], e.target.value);
     }
 
     onSelectChange(option) {
@@ -119,16 +120,16 @@ class ClientCreateStep6Container extends Component {
             [option.selectName]: option.value,
             optionKey: option,
         });
-        localStorage.setItem('nwapp-create-client-'+[option.selectName].toString(), option.value);
-        localStorage.setItem('nwapp-create-client-'+[option.selectName].toString()+"Label", option.label);
-        localStorageSetObjectOrArrayItem('nnwapp-create-client-'+optionKey, option);
+        localStorage.setItem('workery-create-client-'+[option.selectName].toString(), option.value);
+        localStorage.setItem('workery-create-client-'+[option.selectName].toString()+"Label", option.label);
+        localStorageSetObjectOrArrayItem('workery-create-client-'+optionKey, option);
         // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "nwapp-create-client-"+[e.target.name];
-        const storageLabelKey =  "nwapp-create-client-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-create-client-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -161,8 +162,15 @@ class ClientCreateStep6Container extends Component {
         });
 
         // // Set all the tags we have selected to the STORAGE.
-        const key = 'nwapp-create-client-' + args[1].name;
+        const key = 'workery-create-client-' + args[1].name;
         localStorageSetObjectOrArrayItem(key, selectedOptions);
+    }
+
+    onDateOfBirthChange(dateObj) {
+        this.setState({
+            dateOfBirth: dateObj,
+        })
+        localStorageSetObjectOrArrayItem('workery-create-client-dateOfBirth', dateObj);
     }
 
     onClick(e) {
@@ -191,11 +199,11 @@ class ClientCreateStep6Container extends Component {
 
     render() {
         const {
-            typeOf, returnURL, tags, birthYear, gender, howDidYouHear, howDidYouHearOther,
+            typeOf, returnURL, tags, dateOfBirth, gender, howHear, howHearOther,
             errors
         } = this.state;
 
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
+        const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
 
         return (
@@ -204,16 +212,17 @@ class ClientCreateStep6Container extends Component {
                 returnURL={returnURL}
                 tags={tags}
                 tagOptions={tagOptions}
-                birthYear={birthYear}
+                dateOfBirth={dateOfBirth}
                 gender={gender}
                 errors={errors}
                 onTextChange={this.onTextChange}
-                howDidYouHear={howDidYouHear}
-                howDidYouHearOptions={howDidYouHearOptions}
-                howDidYouHearOther={howDidYouHearOther}
+                howHear={howHear}
+                howHearOptions={howHearOptions}
+                howHearOther={howHearOther}
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
                 onMultiChange={this.onMultiChange}
+                onDateOfBirthChange={this.onDateOfBirthChange}
                 onClick={this.onClick}
             />
         );

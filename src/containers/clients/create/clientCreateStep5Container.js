@@ -26,7 +26,7 @@ class ClientCreateStep5Container extends Component {
         super(props);
 
         // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("nwapp-create-client-typeOf"));
+        const typeOf = parseInt(localStorage.getItem("workery-create-client-typeOf"));
         let returnURL;
         if (typeOf === RESIDENCE_TYPE_OF || typeOf === BUSINESS_TYPE_OF) {
             returnURL = "/clients/add/step-4-rez-or-cc";

@@ -7,17 +7,18 @@ import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BUSINESS_TYPE_OF, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
 
 
 export default class ClientCreateStep6Component extends Component {
     render() {
         const {
-            typeOf, returnURL, tags, tagOptions, birthYear, gender, howDidYouHear, howDidYouHearOptions, howDidYouHearOther,
+            typeOf, returnURL, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther,
             onRadioChange,  onMultiChange,
-            errors, onTextChange, onSelectChange, isLoading, onClick
+            errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
-        const isOtherHowDidYouHearSelected = howDidYouHear === 'Other';
+        const isOtherHowDidYouHearSelected = howHear === 'Other';
 
         const isBizTypeOf = typeOf === BUSINESS_TYPE_OF || typeOf === toString(BUSINESS_TYPE_OF);
 
@@ -120,25 +121,24 @@ export default class ClientCreateStep6Component extends Component {
                                 options={GENDER_RADIO_CHOICES}
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.birthYear}
-                                label="Year of Birth (*)"
-                                onChange={onTextChange}
-                                value={birthYear}
-                                name="birthYear"
-                                type="number"
+                            <BootstrapDatePicker
+                                label="Date of Birth (*)"
+                                name="dateOfBirth"
+                                dateObj={dateOfBirth}
+                                onTimeChange={onDateOfBirthChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.dateOfBirth}
                             />
 
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="How did you hear about us? (*)"
-                                name="howDidYouHear"
+                                name="howHear"
                                 defaultOptionLabel="Please select how you heard about us."
-                                options={howDidYouHearOptions}
-                                value={howDidYouHear}
-                                error={errors.howDidYouHear}
+                                options={howHearOptions}
+                                value={howHear}
+                                error={errors.howHear}
                                 onSelectChange={onSelectChange}
                             />
 
@@ -146,11 +146,11 @@ export default class ClientCreateStep6Component extends Component {
                                 <BootstrapInput
                                     inputClassName="form-control form-control-lg"
                                     borderColour="border-primary"
-                                    error={errors.howDidYouHearOther}
+                                    error={errors.howHearOther}
                                     label="Other (*)"
                                     onChange={onTextChange}
-                                    value={howDidYouHearOther}
-                                    name="howDidYouHearOther"
+                                    value={howHearOther}
+                                    name="howHearOther"
                                     type="text"
                                 />
                             }
