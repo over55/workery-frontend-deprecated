@@ -13,9 +13,8 @@ import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
 class ClientCreateStep5Component extends Component {
     render() {
         const {
-            billingGivenName, billingLastName, billingCountry,
-            billingRegion, billingLocality, billingPostalCode, billingEmail,
-            billingTelephone, billingStreetAddress,
+            country,
+            region, locality, postalCode, streetAddress,
 
             returnURL,
             errors,
@@ -96,54 +95,54 @@ class ClientCreateStep5Component extends Component {
                             <BootstrapCountrySelect
                                 inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.billingCountry}
+                                error={errors.country}
                                 label="Country (*)"
-                                value={billingCountry}
+                                value={country}
                                 onChange={onBillingCountryChange}
                                 priorityOptions={["CA", "US", "MX"]}
-                                name="billingCountry"
+                                name="country"
                             />
                             <BootstrapRegionSelect
                                 inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.billingRegion}
+                                error={errors.region}
                                 label="Province / state (*)"
-                                country={billingCountry}
-                                value={billingRegion}
+                                country={country}
+                                value={region}
                                 onChange={onBillingRegionChange}
-                                name="billingRegion"
+                                name="region"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.billingLocality}
+                                error={errors.locality}
                                 label="City (*)"
                                 onChange={onTextChange}
-                                value={billingLocality}
-                                name="billingLocality"
+                                value={locality}
+                                name="locality"
                                 type="text"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.billingStreetAddress}
+                                error={errors.streetAddress}
                                 label="Street address (*)"
                                 onChange={onTextChange}
-                                value={billingStreetAddress}
-                                name="billingStreetAddress"
+                                value={streetAddress}
+                                name="streetAddress"
                                 type="text"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.billingPostalCode}
+                                error={errors.postalCode}
                                 label="Postal / zip (*)"
                                 onChange={onTextChange}
-                                value={billingPostalCode}
-                                name="billingPostalCode"
+                                value={postalCode}
+                                name="postalCode"
                                 type="text"
                             />
 

@@ -28,7 +28,7 @@ class ClientCreateStep5Container extends Component {
         // Get the type of.
         const typeOf = parseInt(localStorage.getItem("nwapp-create-client-typeOf"));
         let returnURL;
-        if (typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF) {
+        if (typeOf === RESIDENCE_TYPE_OF || typeOf === BUSINESS_TYPE_OF) {
             returnURL = "/clients/add/step-4-rez-or-cc";
         }
         else if (typeOf === BUSINESS_TYPE_OF) {
@@ -38,13 +38,11 @@ class ClientCreateStep5Container extends Component {
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
-            billingCountry: localStorage.getItem("add-device-billingCountry"),
-            billingRegion: localStorage.getItem("add-device-billingRegion"),
-            billingLocality: localStorage.getItem("add-device-billingLocality"),
-            billingPostalCode: localStorage.getItem("add-device-billingPostalCode"),
-            billingTelephone: localStorage.getItem("add-device-billingTelephone"),
-            billingEmail: localStorage.getItem("add-device-billingEmail"),
-            billingStreetAddress: localStorage.getItem("add-device-billingStreetAddress"),
+            country: localStorage.getItem("add-device-country"),
+            region: localStorage.getItem("add-device-region"),
+            locality: localStorage.getItem("add-device-locality"),
+            postalCode: localStorage.getItem("add-device-postalCode"),
+            streetAddress: localStorage.getItem("add-device-streetAddress"),
             errors: {},
             isLoading: false
         }
@@ -129,19 +127,19 @@ class ClientCreateStep5Container extends Component {
     onBillingCountryChange(value) {
         // Update state.
         if (value === null || value === undefined || value === '') {
-            this.setState({ billingCountry: null, billingRegion: null })
+            this.setState({ country: null, region: null })
         } else {
-            this.setState({ billingCountry: value, billingRegion: null })
+            this.setState({ country: value, region: null })
         }
 
         // Update persistent storage.
-        localStorage.setItem('add-device-billingCountry', value);
-        localStorage.setItem('add-device-billingRegion', null);
+        localStorage.setItem('add-device-country', value);
+        localStorage.setItem('add-device-region', null);
     }
 
     onBillingRegionChange(value) {
-        this.setState({ billingRegion: value }); // Update state.
-        localStorage.setItem('add-device-billingRegion', value); // Update persistent storage.
+        this.setState({ region: value }); // Update state.
+        localStorage.setItem('add-device-region', value); // Update persistent storage.
     }
 
     onClick(e) {
@@ -170,23 +168,17 @@ class ClientCreateStep5Container extends Component {
     render() {
         const { referrer, errors, isLoading } = this.state;
         const {
-            billingGivenName, billingLastName,
-            billingCountry, billingRegion, billingLocality,
-            billingPostalCode, billingStreetAddress,
-            billingEmail, billingTelephone,
+            country, region, locality,
+            postalCode, streetAddress,
         } = this.state;
         const { user } = this.props;
         return (
             <ClientCreateStep5Component
-                billingGivenName={billingGivenName}
-                billingLastName={billingLastName}
-                billingCountry={billingCountry}
-                billingRegion={billingRegion}
-                billingLocality={billingLocality}
-                billingStreetAddress={billingStreetAddress}
-                billingPostalCode={billingPostalCode}
-                billingEmail={billingEmail}
-                billingTelephone={billingTelephone}
+                country={country}
+                region={region}
+                locality={locality}
+                streetAddress={streetAddress}
+                postalCode={postalCode}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
                 onBillingCountryChange={this.onBillingCountryChange}
