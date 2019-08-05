@@ -4,17 +4,28 @@ import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
+import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
+import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
+import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
+
 
 
 class ClientCreateStep5Component extends Component {
     render() {
         const {
-            streetNumber, streetName, apartmentUnit, streetType, streetTypeOptions, streetTypeOther, streetDirection, streetDirectionOptions, postalCode,
-            returnURL, errors, onTextChange, onSelectChange, isLoading, onClick
-        } = this.props;
+            billingGivenName, billingLastName, billingCountry,
+            billingRegion, billingLocality, billingPostalCode, billingEmail,
+            billingTelephone, billingStreetAddress,
 
-        const isOtherStreetTypeSelected = streetType === 'Other';
+            returnURL,
+            errors,
+            onTextChange,
+            onSelectChange,
+            onBillingCountryChange,
+            onBillingRegionChange,
+            onClick,
+            isLoading
+        } = this.props;
 
         return (
             <main id="main" role="main">
@@ -63,14 +74,11 @@ class ClientCreateStep5Component extends Component {
                                 <span className="num">5.</span><span className="">Address</span>
                             </strong>
                         </div>
-                        <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Watch</span>
+                         <div id="step-6" className="st-grey">
+                            <span className="num">6.</span><span className="">Metrics</span>
                         </div>
-                         <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Metrics</span>
-                        </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
+                        <div id="step-7" className="st-grey">
+                            <span className="num">7.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -85,89 +93,63 @@ class ClientCreateStep5Component extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                            <BootstrapCountrySelect
+                                inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.streetNumber}
-                                label="Street Number (*)"
+                                error={errors.billingCountry}
+                                label="Country (*)"
+                                value={billingCountry}
+                                onChange={onBillingCountryChange}
+                                priorityOptions={["CA", "US", "MX"]}
+                                name="billingCountry"
+                            />
+                            <BootstrapRegionSelect
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.billingRegion}
+                                label="Province / state (*)"
+                                country={billingCountry}
+                                value={billingRegion}
+                                onChange={onBillingRegionChange}
+                                name="billingRegion"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.billingLocality}
+                                label="City (*)"
                                 onChange={onTextChange}
-                                value={streetNumber}
-                                name="streetNumber"
+                                value={billingLocality}
+                                name="billingLocality"
                                 type="text"
                             />
 
                             <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                                inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.streetName}
-                                label="Street Name (*)"
+                                error={errors.billingStreetAddress}
+                                label="Street address (*)"
                                 onChange={onTextChange}
-                                value={streetName}
-                                name="streetName"
+                                value={billingStreetAddress}
+                                name="billingStreetAddress"
                                 type="text"
                             />
 
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Street Type (*)"
-                                name="streetType"
-                                defaultOptionLabel="Please select a street type."
-                                options={streetTypeOptions}
-                                value={streetType}
-                                error={errors.streetType}
-                                onSelectChange={onSelectChange}
-                            />
-
                             <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                error={errors.apartmentUnit}
-                                label="Apt. Unit"
-                                onChange={onTextChange}
-                                value={apartmentUnit}
-                                name="apartmentUnit"
-                                type="text"
-                            />
-
-                            {isOtherStreetTypeSelected &&
-                                <BootstrapInput
-                                    inputClassName="form-control form-control-lg"
-                                    borderColour="border-primary"
-                                    error={errors.streetTypeOther}
-                                    label="Street Type Other (*)"
-                                    onChange={onTextChange}
-                                    value={streetTypeOther}
-                                    name="streetTypeOther"
-                                    type="text"
-                                />
-                            }
-
-                            <BootstrapSingleSelect
-                                borderColour="border-successs"
-                                label="Street Direction"
-                                name="streetDirection"
-                                defaultOptionLabel="Please select a street direction."
-                                options={streetDirectionOptions}
-                                value={streetDirection}
-                                error={errors.streetDirection}
-                                onSelectChange={onSelectChange}
-                                helpText="Please pick direction if address has legally designated direction, ex.: `123 Centre Street South`."
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                                inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.postalCode}
-                                label="Postal Code (*)"
+                                error={errors.billingPostalCode}
+                                label="Postal / zip (*)"
                                 onChange={onTextChange}
-                                value={postalCode}
-                                name="postalCode"
+                                value={billingPostalCode}
+                                name="billingPostalCode"
                                 type="text"
                             />
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    Proceed to Watch&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                    Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to={returnURL} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back

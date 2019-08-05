@@ -38,15 +38,13 @@ class ClientCreateStep5Container extends Component {
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
-            streetNumber: localStorage.getItem("nwapp-create-client-streetNumber"),
-            streetName: localStorage.getItem("nwapp-create-client-streetName"),
-            streetType: localStorage.getItem("nwapp-create-client-streetType"),
-            apartmentUnit: localStorage.getItem("nwapp-create-client-apartmentUnit"),
-            streetTypeOption: localStorageGetObjectItem('nwapp-create-client-streetTypeOption'),
-            streetTypeOther: localStorage.getItem("nwapp-create-client-streetTypeOther"),
-            streetDirection: localStorage.getItem("nwapp-create-client-streetDirection"),
-            streetDirectionOption: localStorageGetObjectItem('nwapp-create-client-streetDirectionOption'),
-            postalCode: localStorage.getItem("nwapp-create-client-postalCode"),
+            billingCountry: localStorage.getItem("add-device-billingCountry"),
+            billingRegion: localStorage.getItem("add-device-billingRegion"),
+            billingLocality: localStorage.getItem("add-device-billingLocality"),
+            billingPostalCode: localStorage.getItem("add-device-billingPostalCode"),
+            billingTelephone: localStorage.getItem("add-device-billingTelephone"),
+            billingEmail: localStorage.getItem("add-device-billingEmail"),
+            billingStreetAddress: localStorage.getItem("add-device-billingStreetAddress"),
             errors: {},
             isLoading: false
         }
@@ -56,6 +54,8 @@ class ClientCreateStep5Container extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
+        this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
     }
 
     /**
@@ -103,22 +103,45 @@ class ClientCreateStep5Container extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-        localStorage.setItem('nwapp-create-client-'+[e.target.name], e.target.value);
+     onTextChange(e) {
+         // Update our state.
+         this.setState({
+             [e.target.name]: e.target.value,
+         });
+
+         // Update our persistent storage.
+         const key = "add-device-"+[e.target.name];
+         localStorage.setItem(key, e.target.value)
+     }
+
+     onSelectChange(option) {
+         const optionKey = [option.selectName]+"Option";
+         this.setState({
+             [option.selectName]: option.value,
+             optionKey: option,
+         });
+         localStorage.setItem('add-device-'+[option.selectName], option.value);
+         localStorageSetObjectOrArrayItem('add-device-'+optionKey, option);
+         // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+         // console.log(this.state);
+     }
+
+    onBillingCountryChange(value) {
+        // Update state.
+        if (value === null || value === undefined || value === '') {
+            this.setState({ billingCountry: null, billingRegion: null })
+        } else {
+            this.setState({ billingCountry: value, billingRegion: null })
+        }
+
+        // Update persistent storage.
+        localStorage.setItem('add-device-billingCountry', value);
+        localStorage.setItem('add-device-billingRegion', null);
     }
 
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            optionKey: option,
-        });
-        localStorage.setItem('nwapp-create-client-'+[option.selectName], option.value);
-        localStorageSetObjectOrArrayItem('nwapp-create-client-'+optionKey, option);
-        // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+    onBillingRegionChange(value) {
+        this.setState({ billingRegion: value }); // Update state.
+        localStorage.setItem('add-device-billingRegion', value); // Update persistent storage.
     }
 
     onClick(e) {
@@ -145,23 +168,32 @@ class ClientCreateStep5Container extends Component {
      */
 
     render() {
-        const { returnURL, streetNumber, streetName, streetType, apartmentUnit, streetTypeOther, streetDirection, postalCode, errors } = this.state;
+        const { referrer, errors, isLoading } = this.state;
+        const {
+            billingGivenName, billingLastName,
+            billingCountry, billingRegion, billingLocality,
+            billingPostalCode, billingStreetAddress,
+            billingEmail, billingTelephone,
+        } = this.state;
+        const { user } = this.props;
         return (
             <ClientCreateStep5Component
-                returnURL={returnURL}
-                streetNumber={streetNumber}
-                streetName={streetName}
-                streetType={streetType}
-                apartmentUnit={apartmentUnit}
-                streetTypeOptions={BASIC_STREET_TYPE_CHOICES}
-                streetTypeOther={streetTypeOther}
-                streetDirection={streetDirection}
-                streetDirectionOptions={STREET_DIRECTION_CHOICES}
-                postalCode={postalCode}
-                errors={errors}
+                billingGivenName={billingGivenName}
+                billingLastName={billingLastName}
+                billingCountry={billingCountry}
+                billingRegion={billingRegion}
+                billingLocality={billingLocality}
+                billingStreetAddress={billingStreetAddress}
+                billingPostalCode={billingPostalCode}
+                billingEmail={billingEmail}
+                billingTelephone={billingTelephone}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
-                onClick={this.onClick}
+                onBillingCountryChange={this.onBillingCountryChange}
+                onBillingRegionChange={this.onBillingRegionChange}
+                onNextClick={this.onNextClick}
+                errors={errors}
+                isLoading={isLoading}
             />
         );
     }
