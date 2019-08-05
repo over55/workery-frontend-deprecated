@@ -11,51 +11,51 @@ import {
     SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
     DEACTIVATED_CLIENT_LIST_SUCCESS, PARTNER_LIST_SUCCESS
 } from "./constants/actionTypes";
-import userReducer from "./reducers/userReducer";
-import tenantListReducer from "./reducers/tenantReducer";
+import { associateListReducer, associateDetailReducer } from "./reducers/associateReducers";
+import { awayLogListReducer, awayLogDetailReducer } from "./reducers/awayLogReducers";
+import { bulletinBoardItemListReducer, bulletinBoardItemDetailReducer } from "./reducers/bulletinBoardItemReducers";
+import { clientListReducer, clientDetailReducer } from "./reducers/clientReducers";
 import dashboardReducer from "./reducers/dashboardReducer";
-import flashMessageReducer from "./reducers/flashMessageReducer";
-import clientListReducer from "./reducers/clientReducers";
-import orderListReducer from "./reducers/orderReducers";
-import associateListReducer from "./reducers/associateReducers";
-import taskListReducer from "./reducers/taskReducers";
-import staffListReducer from "./reducers/staffReducers";
-import financialListReducer from "./reducers/financialReducers";
-import tagListReducer from "./reducers/tagReducers";
-import howHearListReducer from "./reducers/howHearReducers";
-import awayLogListReducer from "./reducers/awayLogReducers";
-import bulletinBoardItemListReducer from "./reducers/bulletinBoardItemReducers";
-import skillSetListReducer from "./reducers/skillSetReducers";
-import insuranceRequirementListReducer from "./reducers/insuranceRequirementReducers";
-import serviceFeeListReducer from "./reducers/serviceFeeReducers";
 import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
-import vehicleTypeListReducer from "./reducers/vehicleTypeReducers";
-import partnerListReducer from "./reducers/partnerReducers";
+import flashMessageReducer from "./reducers/flashMessageReducer";
+import { howHearListReducer, howHearDetailReducer } from "./reducers/howHearReducers";
+import { insuranceRequirementListReducer, insuranceRequirementDetailReducer } from "./reducers/insuranceRequirementReducers";
+import { orderListReducer, orderDetailReducer } from "./reducers/orderReducers";
+import { partnerListReducer, partnerDetailReducer } from "./reducers/partnerReducers";
+import { serviceFeeListReducer, serviceFeeDetailReducer } from "./reducers/serviceFeeReducers";
+import { skillSetListReducer, skillSetDetailReducer } from "./reducers/skillSetReducers";
+import { staffListReducer, staffDetailReducer } from "./reducers/staffReducers";
+import { tagListReducer, tagDetailReducer } from "./reducers/tagReducers";
+import { tenantListReducer, tenantDetailReducer } from "./reducers/tenantReducer";
+import userReducer from "./reducers/userReducer";
+import { taskListReducer, taskDetailReducer } from "./reducers/taskReducers";
+import financialListReducer from "./reducers/financialReducers";
+import { vehicleTypeListReducer, vehicleTypeDetailReducer } from "./reducers/vehicleTypeReducers";
 
 
 
 // Combine Reducers
 const appReducer = combineReducers({
-    userState: userReducer,
+    associateListState: associateListReducer, associateDetailState: associateDetailReducer,
+    awayLogListState: awayLogListReducer, awayLogDetailState: awayLogDetailReducer,
+    bulletinBoardItemListState: bulletinBoardItemListReducer, bulletinBoardItemDetailState: bulletinBoardItemDetailReducer,
+    clientListState: clientListReducer, clientDetailState: clientDetailReducer,
     dashboardState: dashboardReducer,
-    tenantListState: tenantListReducer,
-    flashMessageState: flashMessageReducer,
-    clientListState: clientListReducer,
-    orderListState: orderListReducer,
-    associateListState: associateListReducer,
-    taskListState: taskListReducer,
-    staffListState: staffListReducer,
-    financialListState: financialListReducer,
-    tagListState: tagListReducer,
-    howHearListState: howHearListReducer,
-    awayLogListState: awayLogListReducer,
-    bulletinBoardItemListState: bulletinBoardItemListReducer,
-    skillSetListState: skillSetListReducer,
-    insuranceRequirementListState: insuranceRequirementListReducer,
-    serviceFeeListState: serviceFeeListReducer,
     deactivatedClientListState: deactivatedClientListReducer,
-    vehicleTypeListState: vehicleTypeListReducer,
-    partnerListState: partnerListReducer,
+    flashMessageState: flashMessageReducer,
+    howHearListState: howHearListReducer, howHearDetailState: howHearDetailReducer,
+    insuranceRequirementListState: insuranceRequirementListReducer, insuranceRequirementDetailState: insuranceRequirementDetailReducer,
+    orderListState: orderListReducer, orderDetailState: orderDetailReducer,
+    partnerListState: partnerListReducer, partnerDetailState: partnerDetailReducer,
+    serviceFeeListState: serviceFeeListReducer, serviceFeeDetailState: serviceFeeDetailReducer,
+    skillSetListState: skillSetListReducer, skillSetDetailState: skillSetDetailReducer,
+    staffListState: staffListReducer, staffDetailState: staffDetailReducer,
+    tagListState: tagListReducer, tagDetailState: tagDetailReducer,
+    taskListState: taskListReducer, taskDetailState: taskDetailReducer,
+    tenantListState: tenantListReducer, tenantDetailState: tenantDetailReducer,
+    userState: userReducer,
+    financialListState: financialListReducer,
+    vehicleTypeListState: vehicleTypeListReducer, vehicleTypeDetailState: vehicleTypeDetailReducer,
 });
 
 
