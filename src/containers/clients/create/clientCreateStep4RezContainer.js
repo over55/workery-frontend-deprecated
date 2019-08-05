@@ -4,7 +4,9 @@ import Scroll from 'react-scroll';
 
 import ClientCreateStep4RezComponent from "../../../components/clients/create/clientCreateStep4RezComponent";
 import { validateStep4RezCreateInput } from "../../../validators/clientValidator";
-import { RESIDENCE_TYPE_OF } from '../../../constants/api';
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    TELEPHONE_CONTACT_POINT_TYPE_OF_ID } from '../../../constants/api';
 
 
 class ClientCreateStep4RezContainer extends Component {
@@ -46,8 +48,10 @@ class ClientCreateStep4RezContainer extends Component {
         // Since we are in this page, we need to assign the user to be
         // a residential type user. If the user is community cares type
         // then this variable will be set then in page 4.
-        localStorage.setItem("workery-create-client-typeOf", RESIDENCE_TYPE_OF);
+        localStorage.setItem("workery-create-client-typeOf", RESIDENTIAL_CUSTOMER_TYPE_OF_ID);
         localStorage.setItem("workery-create-client-typeOf-label", "Residential");
+        localStorage.setItem("workery-create-client-rez-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
+        localStorage.setItem("workery-create-client-rez-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
     }
 
     componentWillUnmount() {

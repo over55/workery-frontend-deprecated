@@ -620,3 +620,81 @@ export const IS_OK_TO_TEXT_CHOICES = [
         label: "No"
     }
 ];
+
+
+// # The following constants are used by the "contant_point" models.
+// #
+
+export const TELEPHONE_CONTACT_POINT_TYPE_OF_ID = 1
+export const MOBILE_CONTACT_POINT_TYPE_OF_ID = 2
+export const WORK_CONTACT_POINT_TYPE_OF_ID = 3
+
+// export const TELEPHONE_CONTACT_POINT_TYPE_OF_CHOICES = (
+//     (TELEPHONE_CONTACT_POINT_TYPE_OF_ID, _('Telephone')),
+//     (MOBILE_CONTACT_POINT_TYPE_OF_ID, _('Mobile')),
+//     (WORK_CONTACT_POINT_TYPE_OF_ID, _('Work Telephone'))
+// )
+
+
+
+// # The following constants are used by the "Job" model.
+// #
+//
+// RESIDENTIAL_JOB_TYPE_OF_ID = 1
+// COMMERCIAL_JOB_TYPE_OF_ID = 2
+// UNASSIGNED_JOB_TYPE_OF_ID = 3
+//
+// JOB_TYPE_OF_CHOICES = (
+//     (RESIDENTIAL_JOB_TYPE_OF_ID, _('Residential Job Type')),
+//     (COMMERCIAL_JOB_TYPE_OF_ID, _('Commercial Job Type')),
+//     (UNASSIGNED_JOB_TYPE_OF_ID, _('Unassigned Job Type'))
+// )
+//
+//
+// # The following constants are used by the "Customer" model.
+// #
+
+export const UNASSIGNED_CUSTOMER_TYPE_OF_ID = 1
+export const RESIDENTIAL_CUSTOMER_TYPE_OF_ID = 2
+export const COMMERCIAL_CUSTOMER_TYPE_OF_ID = 3
+
+// CUSTOMER_TYPE_OF_CHOICES = (
+//     (RESIDENTIAL_CUSTOMER_TYPE_OF_ID, _('Residential Customer')),
+//     (COMMERCIAL_CUSTOMER_TYPE_OF_ID, _('Commercial Customer')),
+//     (UNASSIGNED_CUSTOMER_TYPE_OF_ID, _('Unknown Customer'))
+// )
+//
+//
+// # The following constants are used by the "Organization" model.
+// #
+//
+// UNKNOWN_ORGANIZATION_TYPE_OF_ID = 1
+// PRIVATE_ORGANIZATION_TYPE_OF_ID = 2
+// NON_PROFIT_ORGANIZATION_TYPE_OF_ID = 3
+// GOVERNMENT_ORGANIZATION_TYPE_OF_ID = 4
+//
+// ORGANIZATION_TYPE_OF_CHOICES = (
+//     (UNKNOWN_ORGANIZATION_TYPE_OF_ID, _('Unknown Organization Type')),
+//     (PRIVATE_ORGANIZATION_TYPE_OF_ID, _('Private Organization Type')),
+//     (NON_PROFIT_ORGANIZATION_TYPE_OF_ID, _('Non-Profit Organization Type')),
+//     (GOVERNMENT_ORGANIZATION_TYPE_OF_ID, _('Government Organization')),
+// )
+//
+//
+// # The following constants are used by the "Customer" model.
+// #
+//
+// ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID = 1
+// FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID = 2
+// FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID = 3
+// FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID = 4
+// UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID = 5
+//
+// TASK_ITEM_TYPE_OF_CHOICES = (
+//     (ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID, _('Assign associate')),
+//     (FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID, _('Follow up is job complete')),
+//     (FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID, _('Follow up customer survey')),
+//     (FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up did associate accept job')),
+//     (UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up was ongoing job updated')),
+// )
+//

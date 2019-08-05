@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
-    RESIDENCE_TYPE_OF,
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF
 } from '../../../constants/api';
@@ -26,13 +26,13 @@ export default class ClientFullRetrieveComponent extends Component {
             companyEmployeeCount, companyYearsInOperation, companyType,
         } = this.props.clientData;
         const isBizTypeOf = typeOf === BUSINESS_TYPE_OF;
-        const isRezOrCom = typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF;
+        const isRezOrCom = typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID;
 
         let clientshipClass;
         if (typeOf === BUSINESS_TYPE_OF) {
             clientshipClass = "Business";
         }
-        else if (typeOf === RESIDENCE_TYPE_OF) {
+        else if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             clientshipClass = "Residential";
         }
         else if (typeOf === COMMUNITY_CARES_TYPE_OF) {

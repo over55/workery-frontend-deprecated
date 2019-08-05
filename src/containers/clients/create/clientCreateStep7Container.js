@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import ClientCreateStep7Component from "../../../components/clients/create/clientCreateStep7Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import {
     localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
 } from '../../../helpers/localStorageUtility';
-import {
-    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF,
-} from '../../../constants/api';
+import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 import { postClientDetail } from '../../../actions/clientActions';
 import { validateStep7CreateInput } from "../../../validators/clientValidator";
 
@@ -27,19 +26,23 @@ class ClientCreateStep7Container extends Component {
         const typeOf = localStorageGetIntegerItem("workery-create-client-typeOf");
         let returnURL;
         let primaryPhone;
+        let primaryPhoneTypeOf;
         let secondaryPhone;
+        let secondaryPhoneTypeOf;
         let email;
         let isOkToEmail;
         let isOkToText;
-        if (typeOf === RESIDENCE_TYPE_OF) {
+        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/clients/add/step-4-rez-or-cc";
             primaryPhone = localStorage.getItem("workery-create-client-rez-primaryPhone");
+            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-rez-primaryPhoneTypeOf");
             secondaryPhone = localStorage.getItem("workery-create-client-rez-secondaryPhone");
+            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-rez-secondaryPhoneTypeOf");
             email = localStorage.getItem("workery-create-client-rez-email");
-            isOkToEmail = parseInt(localStorage.getItem("workery-create-client-rez-isOkToEmail"));
-            isOkToText = parseInt(localStorage.getItem("workery-create-client-rez-isOkToText"));
+            isOkToEmail = localStorageGetIntegerItem("workery-create-client-rez-isOkToEmail");
+            isOkToText = localStorageGetIntegerItem("workery-create-client-rez-isOkToText");
         }
-        else if (typeOf === BUSINESS_TYPE_OF) {
+        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/clients/add/step-4-biz";
             primaryPhone = localStorage.getItem("workery-create-client-biz-primaryPhone");
             secondaryPhone =  localStorage.getItem("workery-create-client-biz-secondaryPhone");
@@ -55,7 +58,9 @@ class ClientCreateStep7Container extends Component {
             firstName: localStorage.getItem("workery-create-client-rez-firstName"),
             lastName: localStorage.getItem("workery-create-client-rez-lastName"),
             primaryPhone: primaryPhone,
+            primaryPhoneTypeOf: primaryPhoneTypeOf,
             secondaryPhone: secondaryPhone,
+            secondaryPhoneTypeOf: secondaryPhoneTypeOf,
             email: email,
             isOkToEmail: isOkToEmail,
             isOkToText: isOkToText,
@@ -85,12 +90,86 @@ class ClientCreateStep7Container extends Component {
             // Everything else
             returnURL: returnURL,
             errors: {},
-            isLoading: false
+            isLoading: false,
+            password: localStorage.getItem("workery-create-client-password"),
+            passwordRepeat: localStorage.getItem("workery-create-client-password-repeat"),
         }
 
         this.onSubmitClick = this.onSubmitClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.getPostData = this.getPostData.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // (1) Given name - We need t refactor name for API field match.
+        postData.givenName = this.state.firstName;
+
+        // (2) Middle name (API ISSUE)
+        postData.middleName = this.state.middleName;
+
+        // (2) Join date - We need to format as per required API format.
+        const joinDateMoment = moment(this.state.joinDate);
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
+
+        // (3) Tags - We need to only return our `id` values.
+        let idTags = [];
+        for (let i = 0; i < this.state.tags.length; i++) {
+            let tag = this.state.tags[i];
+            idTags.push(tag.value);
+        }
+        postData.tags = idTags;
+
+        // (4) How Hear Other - This field may not be null, therefore make blank.
+        if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
+            postData.howHearOther = "";
+        }
+
+        // (5) Password & Password Repeat
+        if (this.state.password === undefined || this.state.password === null || this.state.password === '' || this.state.password.length == 0) {
+            var randomString = Math.random().toString(34).slice(-10);
+            randomString += "A";
+            randomString += "!";
+            postData.password = randomString;
+            postData.passwordRepeat = randomString;
+        }
+
+        // (6) Organization Type Of - This field may not be null, therefore make blank.
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+            postData.organizationTypeOf = "";
+        }
+
+        // (7) Extra Comment: This field is required.
+        if (this.state.comment === undefined || this.state.comment === null) {
+            postData.extraComment = "";
+        } else {
+            postData.extraComment = this.state.comment;
+        }
+
+        // (8) Telephone: This field is required.
+        postData.telephone = this.state.primaryPhone;
+        postData.telephoneTypeOf = this.state.primaryPhoneTypeOf;
+        postData.otherTelephoneTypeOf = this.state.secondaryPhoneTypeOf;
+
+        // (9) Address Country: This field is required.
+        postData.addressCountry = this.state.country;
+
+        // (10) Address Locality: This field is required.
+        postData.addressLocality = this.state.locality;
+
+        // (11) Address Region: This field is required.
+        postData.addressRegion = this.state.region
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -131,7 +210,7 @@ class ClientCreateStep7Container extends Component {
             // Once our state has been validated `client-side` then we will
             // make an API request with the server to create our new production.
             this.props.postClientDetail(
-                this.state,
+                this.getPostData(),
                 this.onSuccessCallback,
                 this.onFailureCallback
             );
@@ -156,8 +235,10 @@ class ClientCreateStep7Container extends Component {
                 isLoading: false,
             },
             ()=>{
-                console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
                 console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+                this.props.setFlashMessage("success", "Client has been successfully created.");
+                this.props.history.push("/clients");
             }
         )
     }

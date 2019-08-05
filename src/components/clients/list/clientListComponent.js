@@ -11,6 +11,10 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+} from '../../../constants/api';
 
 
 const customTotal = (from, to, size) => (
@@ -129,10 +133,10 @@ class RemoteListComponent extends Component {
 
 function iconFormatter(cell, row){
     switch(row.typeOf) {
-        case 3:
+        case COMMERCIAL_CUSTOMER_TYPE_OF_ID:
             return <i className="fas fa-building"></i>;
             break;
-        case 2:
+        case RESIDENTIAL_CUSTOMER_TYPE_OF_ID:
             return <i className="fas fa-home"></i>;
             break;
         default:

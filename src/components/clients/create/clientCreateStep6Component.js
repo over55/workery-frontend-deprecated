@@ -9,7 +9,7 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { BUSINESS_TYPE_OF, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
 
 
 export default class ClientCreateStep6Component extends Component {
@@ -21,7 +21,7 @@ export default class ClientCreateStep6Component extends Component {
         } = this.props;
         const isOtherHowDidYouHearSelected = howHear === 'Other';
 
-        const isBizTypeOf = typeOf === BUSINESS_TYPE_OF || typeOf === toString(BUSINESS_TYPE_OF);
+        const isBizTypeOf = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID || typeOf === toString(COMMERCIAL_CUSTOMER_TYPE_OF_ID);
 
         return (
             <main id="main" role="main">

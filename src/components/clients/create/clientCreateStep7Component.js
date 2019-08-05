@@ -5,11 +5,7 @@ import Moment from 'react-moment';
 // import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
-} from '../../../constants/api';
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 
 
 export default class ClientCreateStep7Component extends Component {
@@ -57,7 +53,7 @@ export default class ClientCreateStep7Component extends Component {
             isLoading,
             onSubmitClick,
         } = this.props;
-        const isBizTypeOf = typeOf === BUSINESS_TYPE_OF;
+        const isBizTypeOf = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
 
         // // Set the how did you hear.
         // let howDidYouHearFinalLabel = howDidYouHearLabel;

@@ -6,8 +6,8 @@ import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
 import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
     COMMUNITY_CARES_TYPE_OF
 } from '../../../constants/api';
 
@@ -48,7 +48,7 @@ class ClientFullRetrieveContainer extends Component {
                     number: 1,
                     name: 'Argyle',
                     absoluteUrl: '/client/argyle',
-                    typeOf: RESIDENCE_TYPE_OF,
+                    typeOf: RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
                     bizCompanyName: "",
                     bizContactFirstName: "",
                     bizContactLastName: "",
@@ -99,7 +99,7 @@ class ClientFullRetrieveContainer extends Component {
                     number: 1,
                     name: 'Byron',
                     absoluteUrl: '/client/byron',
-                    typeOf: BUSINESS_TYPE_OF,
+                    typeOf: COMMERCIAL_CUSTOMER_TYPE_OF_ID,
                     bizCompanyName: "City Pop Music",
                     bizContactFirstName: "Mariya",
                     bizContactLastName: "Takeuchi",

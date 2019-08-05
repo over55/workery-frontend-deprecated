@@ -6,7 +6,7 @@ import ClientUpdateComponent from "../../../components/clients/update/clientUpda
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateInput } from "../../../validators/clientValidator";
 import {
-    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
@@ -53,7 +53,7 @@ class ClientUpdateContainer extends Component {
         //TODO: REPLACE THE FOLLOWING CODE WITH API LOADING CODE.
         if (this.state.slug === 'argyle') {
             this.setState({
-                typeOf: RESIDENCE_TYPE_OF,
+                typeOf: RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
                 slug: 'argyle',
                 number: 1,
                 name: 'Argyle',
@@ -84,7 +84,7 @@ class ClientUpdateContainer extends Component {
             });
         } else if (this.state.slug === 'byron') {
             this.setState({
-                typeOf: BUSINESS_TYPE_OF,
+                typeOf: COMMERCIAL_CUSTOMER_TYPE_OF_ID,
                 slug: 'byron',
                 number: 1,
                 name: 'Byron',

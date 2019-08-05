@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import ClientCreateStep4BizComponent from "../../../components/clients/create/clientCreateStep4BizComponent";
 import { validateStep4BizCreateInput } from "../../../validators/clientValidator";
-import { BUSINESS_TYPE_OF } from '../../../constants/api';
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 
 
 class ClientCreateStep4BizContainer extends Component {
@@ -43,7 +43,7 @@ class ClientCreateStep4BizContainer extends Component {
         // DEVELOPERS NOTE:
         // Since we are in this page, we need to assign the user to be
         // a business type user.
-        localStorage.setItem("workery-create-client-typeOf", BUSINESS_TYPE_OF);
+        localStorage.setItem("workery-create-client-typeOf", COMMERCIAL_CUSTOMER_TYPE_OF_ID);
         localStorage.setItem("workery-create-client-typeOf-label", "Business");
     }
 

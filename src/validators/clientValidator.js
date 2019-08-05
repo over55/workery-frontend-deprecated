@@ -1,9 +1,8 @@
 import validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF,
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
     ASSOCIATE_GROUP_ID
 } from '../constants/api';
 
@@ -13,7 +12,7 @@ export function validateInput(data) {
 
     // --- CONTACT --- //
 
-    if (data.typeOf === RESIDENCE_TYPE_OF) {
+    if (data.typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
 
         if (data.firstName === undefined || data.firstName === null || validator.isEmpty(data.firstName) || data.firstName === "") {
             errors.firstName = 'This field is required';
@@ -34,7 +33,7 @@ export function validateInput(data) {
             errors.isOkToText = 'This field is required';
         }
 
-    } else if (data.typeOf === BUSINESS_TYPE_OF) {
+    } else if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
 
         if (data.companyName === undefined || data.companyName === null || validator.isEmpty(data.companyName) || data.companyName === "") {
             errors.companyName = 'This field is required';

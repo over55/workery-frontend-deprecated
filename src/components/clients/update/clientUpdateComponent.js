@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
-    RESIDENCE_TYPE_OF,
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF
 } from '../../../constants/api';
@@ -39,7 +39,7 @@ class ClientUpdateComponent extends Component {
 
         // Check the type of client this is.
         const isBiz = typeOf === BUSINESS_TYPE_OF;
-        const isRez = typeOf === RESIDENCE_TYPE_OF;
+        const isRez = typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID;
         const isCom = typeOf === COMMUNITY_CARES_TYPE_OF;
 
         return (

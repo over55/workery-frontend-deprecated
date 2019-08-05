@@ -10,9 +10,8 @@ import {
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
 
 
@@ -28,10 +27,10 @@ class ClientCreateStep6Container extends Component {
         // Get the type of.
         const typeOf = parseInt(localStorage.getItem("workery-create-client-typeOf"));
         let returnURL;
-        if (typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF) {
+        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/clients/add/step-4-rez-or-cc";
         }
-        else if (typeOf === BUSINESS_TYPE_OF) {
+        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/clients/add/step-4-biz";
         }
 
