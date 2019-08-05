@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+
 
 class CardComponent extends Component {
     render() {
@@ -32,9 +34,10 @@ class CardComponent extends Component {
 
 export default class ClientCreateStep2Component extends Component {
     render() {
-        const { clients, isLoading, errors } = this.props;
+        const { clients, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick } = this.props;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -91,6 +94,15 @@ export default class ClientCreateStep2Component extends Component {
                 <div className="card-group row">
                     {clients && clients.map(
                         (client) => <CardComponent client={client} key={client.id} isLoading={isLoading} />)
+                    }
+                </div>
+
+                <div className="float-right">
+                    {hasPrevious &&
+                        <Link onClick={onPreviousClick}><i class="fas fa-arrow-circle-left"></i>&nbsp;Previous</Link>
+                    }&nbsp;&nbsp;
+                    {hasNext &&
+                        <Link onClick={onNextClick}>Next&nbsp;<i class="fas fa-arrow-circle-right"></i></Link>
                     }
                 </div>
 

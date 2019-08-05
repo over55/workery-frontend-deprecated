@@ -19,20 +19,32 @@ class ClientCreateStep2Container extends Component {
             lastName: localStorage.getItem("workery-create-client-lastName"),
             email: localStorage.getItem("workery-create-client-email"),
             phone: localStorage.getItem("workery-create-client-phone"),
-            isLoading: false,
+            isLoading: true,
             errors: {},
+            page: 1,
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.getParametersMapFromState = this.getParametersMapFromState.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
     }
 
     getParametersMapFromState() {
         const parametersMap = new Map();
         if (this.state.firstName !== undefined && this.state.firstName !== null) {
-            parametersMap['firstName'] = this.state.firstName;
+            parametersMap.set('givenName', this.state.firstName);
+        }
+        if (this.state.lastName !== undefined && this.state.lastName !== null) {
+            parametersMap.set('lastName', this.state.lastName);
+        }
+        if (this.state.email !== undefined && this.state.email !== null) {
+            parametersMap.set('email', this.state.email);
+        }
+        if (this.state.phone !== undefined && this.state.phone !== null) {
+            parametersMap.set('phone', this.state.phone);
         }
         return parametersMap;
     }
@@ -100,6 +112,32 @@ class ClientCreateStep2Container extends Component {
         })
     }
 
+    onNextClick(e) {
+        const page = this.state.page + 1;
+        this.setState(
+            {
+                page: page,
+                isLoading: true,
+            },
+            ()=>{
+                this.props.pullClientList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+            }
+        )
+    }
+
+    onPreviousClick(e) {
+        const page = this.state.page - 1;
+        this.setState(
+            {
+                page: page,
+                isLoading: true,
+            },
+            ()=>{
+                this.props.pullClientList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+            }
+        )
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -108,6 +146,8 @@ class ClientCreateStep2Container extends Component {
     render() {
         const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
         const clients = (this.props.clientList && this.props.clientList.results) ? this.props.clientList.results : [];
+        const hasNext = this.props.clientList.next !== null;
+        const hasPrevious = this.props.clientList.previous !== null;
         return (
             <ClientCreateStep2Component
                 page={page}
@@ -117,6 +157,10 @@ class ClientCreateStep2Container extends Component {
                 isLoading={isLoading}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                hasNext={hasNext}
+                onNextClick={this.onNextClick}
+                hasPrevious={hasPrevious}
+                onPreviousClick={this.onPreviousClick}
             />
         );
     }
