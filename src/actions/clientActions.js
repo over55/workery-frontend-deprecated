@@ -105,7 +105,7 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 //                                 CREATE                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function postClientDetail(user, data, successCallback, failedCallback) {
+export function postClientDetail(postData, successCallback, failedCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -117,7 +117,7 @@ export function postClientDetail(user, data, successCallback, failedCallback) {
 
         // The following code will convert the `camelized` data into `snake case`
         // data so our API endpoint will be able to read it.
-        let decamelizedData = decamelizeKeys(data);
+        let decamelizedData = decamelizeKeys(postData);
 
         // Encode from JS Object to MessagePack (Buffer)
         var buffer = msgpack.encode(decamelizedData);

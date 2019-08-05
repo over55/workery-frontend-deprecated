@@ -55,7 +55,7 @@ export default class ClientCreateStep7Component extends Component {
             returnURL,
             errors,
             isLoading,
-            onClick,
+            onSubmitClick,
         } = this.props;
         const isBizTypeOf = typeOf === BUSINESS_TYPE_OF;
 
@@ -263,7 +263,7 @@ export default class ClientCreateStep7Component extends Component {
                         </table>
                         <form>
                             <div className="form-group">
-                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onSubmitClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
                                 <Link to="/clients/add/step-6" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">

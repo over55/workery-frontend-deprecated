@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Scroll from 'react-scroll';
 
 import ClientCreateStep7Component from "../../../components/clients/create/clientCreateStep7Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
@@ -7,10 +8,10 @@ import {
     localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
 } from '../../../helpers/localStorageUtility';
 import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
+    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF,
 } from '../../../constants/api';
+import { postClientDetail } from '../../../actions/clientActions';
+import { validateStep7CreateInput } from "../../../validators/clientValidator";
 
 
 class ClientCreateStep7Container extends Component {
@@ -30,7 +31,7 @@ class ClientCreateStep7Container extends Component {
         let email;
         let isOkToEmail;
         let isOkToText;
-        if (typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF) {
+        if (typeOf === RESIDENCE_TYPE_OF) {
             returnURL = "/clients/add/step-4-rez-or-cc";
             primaryPhone = localStorage.getItem("workery-create-client-rez-primaryPhone");
             secondaryPhone = localStorage.getItem("workery-create-client-rez-secondaryPhone");
@@ -87,7 +88,9 @@ class ClientCreateStep7Container extends Component {
             isLoading: false
         }
 
-        this.onClick = this.onClick.bind(this);
+        this.onSubmitClick = this.onSubmitClick.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -118,15 +121,59 @@ class ClientCreateStep7Container extends Component {
      *------------------------------------------------------------
      */
 
-    onClick(e) {
-        // Prevent the default HTML form submit code to run on the browser side.
+    onSubmitClick(e) {
         e.preventDefault();
 
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Client has been successfully created.");
-        this.props.history.push("/clients");
+        const { errors, isValid } = validateStep7CreateInput(this.state);
+        // console.log(errors, isValid); // For debugging purposes only.
+
+        if (isValid) {
+            // Once our state has been validated `client-side` then we will
+            // make an API request with the server to create our new production.
+            this.props.postClientDetail(
+                this.state,
+                this.onSuccessCallback,
+                this.onFailureCallback
+            );
+        } else {
+            this.setState({
+                errors: errors,
+                isLoading: false,
+            })
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
     }
 
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+            }
+        )
+    }
+
+    onFailureCallback(errors) {
+        this.setState({
+            errors: errors,
+            isLoading: false
+        })
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
 
     /**
      *  Main render function
@@ -217,7 +264,7 @@ class ClientCreateStep7Container extends Component {
                 returnURL={returnURL}
                 errors={errors}
                 isLoading={isLoading}
-                onClick={this.onClick}
+                onSubmitClick={this.onSubmitClick}
             />
         );
     }
@@ -233,7 +280,10 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        postClientDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postClientDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 
