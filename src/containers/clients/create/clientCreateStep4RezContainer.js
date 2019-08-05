@@ -16,13 +16,13 @@ class ClientCreateStep4RezContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-client-firstName"),
-            lastName: localStorage.getItem("workery-create-client-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-client-primaryPhone"),
-            secondaryPhone: localStorage.getItem("workery-create-client-secondaryPhone"),
-            email: localStorage.getItem("workery-create-client-email"),
-            isOkToEmail: parseInt(localStorage.getItem("workery-create-client-isOkToEmail")),
-            isOkToText: parseInt(localStorage.getItem("workery-create-client-isOkToText")),
+            firstName: localStorage.getItem("workery-create-client-rez-firstName"),
+            lastName: localStorage.getItem("workery-create-client-rez-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-client-rez-primaryPhone"),
+            secondaryPhone: localStorage.getItem("workery-create-client-rez-secondaryPhone"),
+            email: localStorage.getItem("workery-create-client-rez-email"),
+            isOkToEmail: parseInt(localStorage.getItem("workery-create-client-rez-isOkToEmail")),
+            isOkToText: parseInt(localStorage.getItem("workery-create-client-rez-isOkToText")),
             errors: {},
             isLoading: false
         }
@@ -46,7 +46,7 @@ class ClientCreateStep4RezContainer extends Component {
         // Since we are in this page, we need to assign the user to be
         // a residential type user. If the user is community cares type
         // then this variable will be set then in page 4.
-        localStorage.setItem("workery-create-client-typeOf", RESIDENCE_TYPE_OF);
+        localStorage.setItem("workery-create-client-rez-typeOf", RESIDENCE_TYPE_OF);
     }
 
     componentWillUnmount() {
@@ -88,14 +88,14 @@ class ClientCreateStep4RezContainer extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        const key = "workery-create-client-"+[e.target.name];
+        const key = "workery-create-client-rez-"+[e.target.name];
         localStorage.setItem(key, e.target.value);
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-client-"+[e.target.name];
-        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-create-client-rez-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-rez-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();

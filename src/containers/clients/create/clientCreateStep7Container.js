@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ClientCreateStep7Component from "../../../components/clients/create/clientCreateStep7Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import {
-    localStorageGetObjectItem, localStorageGetArrayItem
+    localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
 } from '../../../helpers/localStorageUtility';
 import {
     RESIDENCE_TYPE_OF,
@@ -25,58 +25,61 @@ class ClientCreateStep7Container extends Component {
         // Get the type of.
         const typeOf = parseInt(localStorage.getItem("nwapp-create-client-typeOf"));
         let returnURL;
+        let primaryPhone;
+        let secondaryPhone;
+        let email;
+        let isOkToEmail;
+        let isOkToText;
         if (typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF) {
             returnURL = "/clients/add/step-4-rez-or-cc";
+            primaryPhone = localStorage.getItem("workery-create-client-rez-primaryPhone");
+            secondaryPhone = localStorage.getItem("workery-create-client-rez-secondaryPhone");
+            email = localStorage.getItem("workery-create-client-rez-email");
+            isOkToEmail = parseInt(localStorage.getItem("workery-create-client-rez-isOkToEmail"));
+            isOkToText = parseInt(localStorage.getItem("workery-create-client-rez-isOkToText"));
         }
         else if (typeOf === BUSINESS_TYPE_OF) {
             returnURL = "/clients/add/step-4-biz";
+            primaryPhone = localStorage.getItem("workery-create-client-biz-primaryPhone");
+            secondaryPhone =  localStorage.getItem("workery-create-client-biz-secondaryPhone");
+            email = localStorage.getItem("workery-create-client-biz-email");
         }
 
         this.state = {
-            returnURL: returnURL,
+            // Step 3
             typeOf: typeOf,
-            bizCompanyName: localStorage.getItem("nwapp-create-client-biz-companyName"),
-            bizContactFirstName: localStorage.getItem("nwapp-create-client-biz-contactFirstName"),
-            bizContactLastName: localStorage.getItem("nwapp-create-client-biz-contactLastName"),
-            bizPrimaryPhone: localStorage.getItem("nwapp-create-client-biz-primaryPhone"),
-            bizSecondaryPhone: localStorage.getItem("nwapp-create-client-biz-secondaryPhone"),
-            bizEmail: localStorage.getItem("nwapp-create-client-biz-email"),
-            rezFirstName: localStorage.getItem("nwapp-create-client-rez-or-com-firstName"),
-            rezLastName: localStorage.getItem("nwapp-create-client-rez-or-com-lastName"),
-            rezPrimaryPhone: localStorage.getItem("nwapp-create-client-rez-or-com-primaryPhone"),
-            rezSecondaryPhone: localStorage.getItem("nwapp-create-client-rez-or-com-secondaryPhone"),
-            rezEmail: localStorage.getItem("nwapp-create-client-rez-or-com-email"),
-            streetNumber: localStorage.getItem("nwapp-create-client-streetNumber"),
-            streetName: localStorage.getItem("nwapp-create-client-streetName"),
-            streetType: localStorage.getItem("nwapp-create-client-streetType"),
-            streetTypeOption: localStorageGetObjectItem('nwapp-create-client-streetTypeOption'),
-            streetTypeOther: localStorage.getItem("nwapp-create-client-streetTypeOther"),
-            apartmentUnit: localStorage.getItem("nwapp-create-client-apartmentUnit"),
-            streetDirection: localStorage.getItem("nwapp-create-client-streetDirection"),
-            streetDirectionOption: localStorageGetObjectItem('nwapp-create-client-streetDirectionOption'),
-            postalCode: localStorage.getItem("nwapp-create-client-postalCode"),
-            watchSlug: localStorage.getItem('nwapp-create-client-watch-slug'),
-            watchIcon: localStorage.getItem('nwapp-create-client-watch-icon'),
-            watchName: localStorage.getItem('nwapp-create-client-watch-name'),
-            tags: localStorageGetArrayItem("nwapp-create-client-tags"),
-            birthYear: localStorage.getItem("nwapp-create-client-birthYear"),
-            gender: parseInt(localStorage.getItem("nwapp-create-client-gender")),
-            genderLabel: localStorage.getItem("nwapp-create-client-gender-label"),
-            howDidYouHear: localStorage.getItem("nwapp-create-client-howDidYouHear"),
-            howDidYouHearLabel: localStorage.getItem("nwapp-create-client-howDidYouHearLabel"),
-            howDidYouHearOption: localStorageGetObjectItem('nwapp-create-client-howDidYouHearOption'),
-            howDidYouHearOther: localStorage.getItem("nwapp-create-client-howDidYouHearOther"),
-            meaning: localStorage.getItem("nwapp-create-client-meaning"),
-            expectations: localStorage.getItem("nwapp-create-client-expectations"),
-            willingToVolunteer: parseInt(localStorage.getItem("nwapp-create-client-willingToVolunteer")),
-            willingToVolunteerLabel: localStorage.getItem("nwapp-create-client-willingToVolunteer-label"),
-            anotherHouseholdClientRegistered: parseInt(localStorage.getItem("nwapp-create-client-anotherHouseholdClientRegistered")),
-            anotherHouseholdClientRegisteredLabel: localStorage.getItem("nwapp-create-client-anotherHouseholdClientRegistered-label"),
-            totalHouseholdCount: parseInt(localStorage.getItem("nwapp-create-client-totalHouseholdCount")),
-            under18YearsHouseholdCount: parseInt(localStorage.getItem("nwapp-create-client-under18YearsHouseholdCount")),
-            companyEmployeeCount: parseInt(localStorage.getItem("nwapp-create-client-companyEmployeeCount")),
-            companyYearsInOperation: parseInt(localStorage.getItem("nwapp-create-client-companyYearsInOperation")),
-            companyType: localStorage.getItem("nwapp-create-client-companyType"),
+
+            // Step 4 - Residential & Business
+            firstName: localStorage.getItem("workery-create-client-rez-firstName"),
+            lastName: localStorage.getItem("workery-create-client-rez-lastName"),
+            primaryPhone: primaryPhone,
+            secondaryPhone: secondaryPhone,
+            email: email,
+            isOkToEmail: isOkToEmail,
+            isOkToText: isOkToText,
+            companyName: localStorage.getItem("workery-create-client-biz-companyName"),
+            contactFirstName: localStorage.getItem("workery-create-client-biz-contactFirstName"),
+            contactLastName: localStorage.getItem("workery-create-client-biz-contactLastName"),
+
+            // Step 5 - Address
+            country: localStorage.getItem("workery-create-client-country"),
+            region: localStorage.getItem("workery-create-client-region"),
+            locality: localStorage.getItem("workery-create-client-locality"),
+            postalCode: localStorage.getItem("workery-create-client-postalCode"),
+            streetAddress: localStorage.getItem("workery-create-client-streetAddress"),
+
+            // Step 6 - Metrics
+            tags: localStorageGetArrayItem("workery-create-client-tags"),
+            dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
+            gender: localStorageGetIntegerItem("workery-create-client-gender"),
+            howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
+            howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
+            howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
+            joinDate: localStorageGetDateItem("workery-create-client-joinDate"),
+            comment: localStorage.getItem("workery-create-client-comment"),
+
+            // Everything else
+            returnURL: returnURL,
             errors: {},
             isLoading: false
         }
@@ -129,62 +132,92 @@ class ClientCreateStep7Container extends Component {
 
     render() {
         const {
-            returnURL, typeOf, errors,
-            bizCompanyName, bizContactFirstName, bizContactLastName, bizPrimaryPhone, bizSecondaryPhone, bizEmail,
-            rezFirstName, rezLastName, rezPrimaryPhone, rezSecondaryPhone, rezEmail,
-            streetNumber, streetName, streetType, streetTypeOption, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOption, postalCode,
-            watchSlug, watchIcon, watchName,
-            tags, birthYear, gender, genderLabel, howDidYouHear, howDidYouHearOther, howDidYouHearLabel, meaning, expectations,
-            willingToVolunteer, willingToVolunteerLabel, anotherHouseholdClientRegistered, anotherHouseholdClientRegisteredLabel, totalHouseholdCount, under18YearsHouseholdCount,
-            companyEmployeeCount, companyYearsInOperation, companyType,
+            // Step 3
+            typeOf,
+
+            // Step 4 - Residential
+            rezFirstName,
+            rezLastName,
+            rezPrimaryPhone,
+            rezSecondaryPhone,
+            rezEmail,
+            rezIsOkToEmail,
+            rezIsOkToText,
+
+            // Step 4 - Business
+            bizCompanyName,
+            bizContactFirstName,
+            bizContactLastName,
+            bizPrimaryPhone,
+            bizSecondaryPhone,
+            bizEmail,
+
+            // Step 5 - Address
+            country,
+            region,
+            locality,
+            postalCode,
+            streetAddress,
+
+            // Step 6 - Metrics
+            tags,
+            dateOfBirth,
+            gender,
+            howHear,
+            howHearOption,
+            howHearOther,
+            joinDate,
+            comment,
+
+            // Everything else
+            returnURL,
+            errors,
+            isLoading,
         } = this.state;
 
         return (
             <ClientCreateStep7Component
-                returnURL={returnURL}
+                // Step 3
                 typeOf={typeOf}
+
+                // Step 4 - Residential
+                rezFirstName={rezFirstName}
+                rezLastName={rezLastName}
+                rezPrimaryPhone={rezPrimaryPhone}
+                rezSecondaryPhone={rezSecondaryPhone}
+                rezEmail={rezEmail}
+                rezIsOkToEmail={rezIsOkToEmail}
+                rezIsOkToText={rezIsOkToText}
+
+                // Step 4 - Business
                 bizCompanyName={bizCompanyName}
                 bizContactFirstName={bizContactFirstName}
                 bizContactLastName={bizContactLastName}
                 bizPrimaryPhone={bizPrimaryPhone}
                 bizSecondaryPhone={bizSecondaryPhone}
                 bizEmail={bizEmail}
-                rezFirstName={rezFirstName}
-                rezLastName={rezLastName}
-                rezPrimaryPhone={rezPrimaryPhone}
-                rezSecondaryPhone={rezSecondaryPhone}
-                rezEmail={rezEmail}
-                streetNumber={streetNumber}
-                streetName={streetName}
-                streetType={streetType}
-                streetTypeOption={streetTypeOption}
-                streetTypeOther={streetTypeOther}
-                apartmentUnit={apartmentUnit}
-                streetDirection={streetDirection}
-                streetDirectionOption={streetDirectionOption}
+
+                // Step 5 - Address
+                country={country}
+                region={region}
+                locality={locality}
                 postalCode={postalCode}
-                watchSlug={watchSlug}
-                watchIcon={watchIcon}
-                watchName={watchName}
+                streetAddress={streetAddress}
+
+                // Step 6 - Metrics
                 tags={tags}
-                birthYear={birthYear}
+                dateOfBirth={dateOfBirth}
                 gender={gender}
-                genderLabel={genderLabel}
-                howDidYouHear={howDidYouHear}
-                howDidYouHearLabel={howDidYouHearLabel}
-                howDidYouHearOther={howDidYouHearOther}
-                meaning={meaning}
-                expectations={expectations}
-                willingToVolunteer={willingToVolunteer}
-                willingToVolunteerLabel={willingToVolunteerLabel}
-                anotherHouseholdClientRegistered={anotherHouseholdClientRegistered}
-                anotherHouseholdClientRegisteredLabel={anotherHouseholdClientRegisteredLabel}
-                totalHouseholdCount={totalHouseholdCount}
-                under18YearsHouseholdCount={under18YearsHouseholdCount}
-                companyEmployeeCount={companyEmployeeCount}
-                companyYearsInOperation={companyYearsInOperation}
-                companyType={companyType}
+                howHear={howHear}
+                howHearOption={howHearOption}
+                howHearOther={howHearOther}
+                joinDate={joinDate}
+                comment={comment}
+
+                // Everything else
+                returnURL={returnURL}
                 errors={errors}
+                isLoading={isLoading}
                 onClick={this.onClick}
             />
         );

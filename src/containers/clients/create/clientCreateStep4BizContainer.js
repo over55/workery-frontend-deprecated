@@ -16,12 +16,12 @@ class ClientCreateStep4BizContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyName: localStorage.getItem("nwapp-create-client-biz-companyName"),
-            contactFirstName: localStorage.getItem("nwapp-create-client-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("nwapp-create-client-biz-contactLastName"),
-            primaryPhone: localStorage.getItem("nwapp-create-client-biz-primaryPhone"),
-            secondaryPhone: localStorage.getItem("nwapp-create-client-biz-secondaryPhone"),
-            email: localStorage.getItem("nwapp-create-client-biz-email"),
+            companyName: localStorage.getItem("workery-create-client-biz-companyName"),
+            contactFirstName: localStorage.getItem("workery-create-client-biz-contactFirstName"),
+            contactLastName: localStorage.getItem("workery-create-client-biz-contactLastName"),
+            primaryPhone: localStorage.getItem("workery-create-client-biz-primaryPhone"),
+            secondaryPhone: localStorage.getItem("workery-create-client-biz-secondaryPhone"),
+            email: localStorage.getItem("workery-create-client-biz-email"),
             errors: {},
             isLoading: false
         }
@@ -85,7 +85,7 @@ class ClientCreateStep4BizContainer extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        const key = "nwapp-create-client-biz-"+[e.target.name];
+        const key = "workery-create-client-biz-"+[e.target.name];
         localStorage.setItem(key, e.target.value);
     }
 

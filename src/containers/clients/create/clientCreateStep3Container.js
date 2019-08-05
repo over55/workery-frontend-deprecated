@@ -46,8 +46,7 @@ class ClientCreateStep3Container extends Component {
 
     render() {
         return (
-            <ClientCreateStep3Component
-            />
+            <ClientCreateStep3Component />
         );
     }
 }
