@@ -258,59 +258,6 @@ export default class ClientCreateStep7Component extends Component {
                                     <th scope="row" className="bg-light">Comment(s)</th>
                                     <td>{comment}</td>
                                 </tr>
-{ /*
-
-
-
-
-
-                                <tr>
-                                    <th scope="row" className="bg-light">What do you expect from NW?</th>
-                                    <td>{expectations}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Are you willing to volunteer as a area coordinator / associate?</th>
-                                    <td>{willingToVolunteerLabel}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Is there another client of your household which is registered with?</th>
-                                    <td>{anotherHouseholdClientRegisteredLabel}</td>
-                                </tr>
-                                {showHouseholdCount &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">How many people are in your household?</th>
-                                        <td>{totalHouseholdCount}</td>
-                                    </tr>
-                                }
-                                {showHouseholdCount &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">How many people in your household are under the age of 18?</th>
-                                        <td>{under18YearsHouseholdCount}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">How many employees does your business have?</th>
-                                        <td>{companyEmployeeCount}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">How many years has your company been in operation?</th>
-                                        <td>{companyYearsInOperation}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">What type of business is this?</th>
-                                        <td>{companyType}</td>
-                                    </tr>
-                                }
-                                <tr>
-                                    <th scope="row" className="bg-light">User agrees to conditions</th>
-                                    <td>Yes</td>
-                                </tr>
-*/ }
 
                             </tbody>
                         </table>
