@@ -28,8 +28,8 @@ export function getHowHearReactSelectOptions(howHearList=[], selectName="howHear
                 let howHear = results[i];
                 howHearOptions.push({
                     selectName: selectName,
-                    value: howHear.slug,
-                    label: howHear.name
+                    value: howHear.id,
+                    label: howHear.text
                 });
                 // console.log(howHear);
             }

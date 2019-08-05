@@ -28,8 +28,8 @@ export function getTagReactSelectOptions(tagList=[], selectName="tag") {
                 let tag = results[i];
                 tagOptions.push({
                     selectName: selectName,
-                    value: tag.slug,
-                    label: tag.name
+                    value: tag.id,
+                    label: tag.text
                 });
                 // console.log(tag);
             }

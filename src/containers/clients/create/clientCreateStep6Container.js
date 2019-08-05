@@ -7,8 +7,8 @@ import { validateStep6CreateInput } from "../../../validators/clientValidator";
 import {
     localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem
 } from '../../../helpers/localStorageUtility';
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
+import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
+import { getTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
@@ -74,30 +74,9 @@ class ClientCreateStep6Container extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
-        this.setState({
-            howDidYouHearData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Word of mouth',
-                    slug: 'word-of-mouth'
-                },{
-                    name: 'Internet',
-                    slug: 'internet'
-                }]
-            },
-            tagsData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Health',
-                    slug: 'health'
-                },{
-                    name: 'Security',
-                    slug: 'security'
-                },{
-                    name: 'Fitness',
-                    slug: 'fitness'
-                }]
-            }
-        });
+         // Fetch all our GUI drop-down options which are populated by the API.
+        this.props.pullHowHearList(1,1000);
+        this.props.pullTagList(1,1000);
     }
 
     componentWillUnmount() {
@@ -227,8 +206,8 @@ class ClientCreateStep6Container extends Component {
             errors
         } = this.state;
 
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
-        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
+        const howDidYouHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
+        const tagOptions = getTagReactSelectOptions(this.props.tagList);
 
         return (
             <ClientCreateStep6Component
@@ -264,11 +243,24 @@ class ClientCreateStep6Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        tagList: store.tagListState,
+        howHearList: store.howHearListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        pullHowHearList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullHowHearList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+    }
 }
 
 
