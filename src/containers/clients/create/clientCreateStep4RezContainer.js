@@ -6,8 +6,9 @@ import ClientCreateStep4RezComponent from "../../../components/clients/create/cl
 import { validateStep4RezCreateInput } from "../../../validators/clientValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    TELEPHONE_CONTACT_POINT_TYPE_OF_ID } from '../../../constants/api';
-
+    TELEPHONE_CONTACT_POINT_TYPE_OF_ID
+} from '../../../constants/api';
+import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
 class ClientCreateStep4RezContainer extends Component {
     /**
@@ -23,8 +24,8 @@ class ClientCreateStep4RezContainer extends Component {
             primaryPhone: localStorage.getItem("workery-create-client-rez-primaryPhone"),
             secondaryPhone: localStorage.getItem("workery-create-client-rez-secondaryPhone"),
             email: localStorage.getItem("workery-create-client-rez-email"),
-            isOkToEmail: parseInt(localStorage.getItem("workery-create-client-rez-isOkToEmail")),
-            isOkToText: parseInt(localStorage.getItem("workery-create-client-rez-isOkToText")),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-client-rez-isOkToEmail"),
+            isOkToText: localStorageGetIntegerItem("workery-create-client-rez-isOkToText"),
             errors: {},
             isLoading: false
         }

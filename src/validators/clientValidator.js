@@ -155,6 +155,12 @@ export function validateStep4BizCreateInput(data) {
     if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
         errors.email = 'This field is required';
     }
+    if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
+        errors.isOkToEmail = 'This field is required';
+    }
+    if (data.isOkToText === undefined || data.isOkToText === null || data.isOkToText === "" || isNaN(data.isOkToText) ) {
+        errors.isOkToText = 'This field is required';
+    }
 
     return {
         errors,

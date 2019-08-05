@@ -28,12 +28,15 @@ class ClientCreateStep4BizContainer extends Component {
             secondaryPhone: localStorage.getItem("workery-create-client-biz-secondaryPhone"),
             secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-biz-secondaryPhoneTypeOf"),
             email: localStorage.getItem("workery-create-client-biz-email"),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-client-biz-isOkToEmail"),
+            isOkToText: localStorageGetIntegerItem("workery-create-client-biz-isOkToText"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -111,6 +114,32 @@ class ClientCreateStep4BizContainer extends Component {
         );
     }
 
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-client-biz-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-biz-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+        localStorage.setItem(storageValueKey, value) // Save to storage.
+        localStorage.setItem(storageLabelKey, label) // Save to storage.
+
+        // For the debugging purposes only.
+        console.log({
+            "STORE-VALUE-KEY": storageValueKey,
+            "STORE-VALUE": value,
+            "STORAGE-VALUE-KEY": storeValueKey,
+            "STORAGE-VALUE": value,
+            "STORAGE-LABEL-KEY": storeLabelKey,
+            "STORAGE-LABEL": label,
+        });
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -136,7 +165,7 @@ class ClientCreateStep4BizContainer extends Component {
 
     render() {
         const {
-            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, errors
+            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
         } = this.state;
         return (
             <ClientCreateStep4BizComponent
@@ -150,9 +179,12 @@ class ClientCreateStep4BizContainer extends Component {
                 secondaryPhoneTypeOf={secondaryPhoneTypeOf}
                 secondaryPhoneTypeOfOptions={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
                 email={email}
+                isOkToEmail={isOkToEmail}
+                isOkToText={isOkToText}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
+                onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
             />
         );

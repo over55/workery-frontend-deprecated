@@ -6,6 +6,8 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
 
 
 class ClientCreateStep4BizComponent extends Component {
@@ -13,7 +15,9 @@ class ClientCreateStep4BizComponent extends Component {
         const {
             companyName, contactFirstName, contactLastName,
             primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
-            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors, onTextChange, onSelectChange, isLoading, onClick
+            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors,
+            isOkToEmail, isOkToText,
+            onTextChange, onSelectChange, onRadioChange, isLoading, onClick
         } = this.props;
         return (
             <main id="main" role="main">
@@ -167,6 +171,30 @@ class ClientCreateStep4BizComponent extends Component {
                                 value={email}
                                 name="email"
                                 type="text"
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isOkToEmail}
+                                label="Ok to E-Mail? (*)"
+                                name="isOkToEmail"
+                                onChange={onRadioChange}
+                                selectedValue={isOkToEmail}
+                                options={IS_OK_TO_EMAIL_CHOICES}
+                                helpText='Selecting \"yes\" will result in client getting emails from our system.'
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isOkToText}
+                                label="Ok to Text? (*)"
+                                name="isOkToText"
+                                onChange={onRadioChange}
+                                selectedValue={isOkToText}
+                                options={IS_OK_TO_TEXT_CHOICES}
+                                helpText='Selecting \"yes\" will result in client getting text-messages on their phone from our system.'
                             />
 
                             <div className="form-group">
