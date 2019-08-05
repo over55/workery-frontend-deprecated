@@ -43,7 +43,8 @@ class ClientCreateStep4BizContainer extends Component {
         // DEVELOPERS NOTE:
         // Since we are in this page, we need to assign the user to be
         // a business type user.
-        localStorage.setItem("nwapp-create-client-typeOf", BUSINESS_TYPE_OF);
+        localStorage.setItem("workery-create-client-typeOf", BUSINESS_TYPE_OF);
+        localStorage.setItem("workery-create-client-typeOf-label", "Business");
     }
 
     componentWillUnmount() {

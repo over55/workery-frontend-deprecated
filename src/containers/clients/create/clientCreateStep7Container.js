@@ -23,7 +23,7 @@ class ClientCreateStep7Container extends Component {
         super(props);
 
         // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("nwapp-create-client-typeOf"));
+        const typeOf = localStorageGetIntegerItem("workery-create-client-typeOf");
         let returnURL;
         let primaryPhone;
         let secondaryPhone;
@@ -48,6 +48,7 @@ class ClientCreateStep7Container extends Component {
         this.state = {
             // Step 3
             typeOf: typeOf,
+            typeOfLabel: localStorage.getItem("workery-create-client-typeOf-label"),
 
             // Step 4 - Residential & Business
             firstName: localStorage.getItem("workery-create-client-rez-firstName"),
@@ -72,7 +73,9 @@ class ClientCreateStep7Container extends Component {
             tags: localStorageGetArrayItem("workery-create-client-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
             gender: localStorageGetIntegerItem("workery-create-client-gender"),
+            genderLabel: localStorage.getItem("workery-create-client-gender-label"),
             howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
+            howHearLabel: localStorage.getItem("workery-create-client-howHearLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
             joinDate: localStorageGetDateItem("workery-create-client-joinDate"),
@@ -134,23 +137,19 @@ class ClientCreateStep7Container extends Component {
         const {
             // Step 3
             typeOf,
+            typeOfLabel,
 
-            // Step 4 - Residential
-            rezFirstName,
-            rezLastName,
-            rezPrimaryPhone,
-            rezSecondaryPhone,
-            rezEmail,
-            rezIsOkToEmail,
-            rezIsOkToText,
-
-            // Step 4 - Business
-            bizCompanyName,
-            bizContactFirstName,
-            bizContactLastName,
-            bizPrimaryPhone,
-            bizSecondaryPhone,
-            bizEmail,
+            // Step 4 - Residential & Business
+            firstName,
+            lastName,
+            primaryPhone,
+            secondaryPhone,
+            email,
+            isOkToEmail,
+            isOkToText,
+            companyName,
+            contactFirstName,
+            contactLastName,
 
             // Step 5 - Address
             country,
@@ -163,7 +162,9 @@ class ClientCreateStep7Container extends Component {
             tags,
             dateOfBirth,
             gender,
+            genderLabel,
             howHear,
+            howHearLabel,
             howHearOption,
             howHearOther,
             joinDate,
@@ -179,23 +180,19 @@ class ClientCreateStep7Container extends Component {
             <ClientCreateStep7Component
                 // Step 3
                 typeOf={typeOf}
+                typeOfLabel={typeOfLabel}
 
-                // Step 4 - Residential
-                rezFirstName={rezFirstName}
-                rezLastName={rezLastName}
-                rezPrimaryPhone={rezPrimaryPhone}
-                rezSecondaryPhone={rezSecondaryPhone}
-                rezEmail={rezEmail}
-                rezIsOkToEmail={rezIsOkToEmail}
-                rezIsOkToText={rezIsOkToText}
-
-                // Step 4 - Business
-                bizCompanyName={bizCompanyName}
-                bizContactFirstName={bizContactFirstName}
-                bizContactLastName={bizContactLastName}
-                bizPrimaryPhone={bizPrimaryPhone}
-                bizSecondaryPhone={bizSecondaryPhone}
-                bizEmail={bizEmail}
+                // Step 4 - Residential & Business
+                firstName={firstName}
+                lastName={lastName}
+                primaryPhone={primaryPhone}
+                secondaryPhone={secondaryPhone}
+                email={email}
+                isOkToEmail={isOkToEmail}
+                isOkToText={isOkToText}
+                companyName={companyName}
+                contactFirstName={contactFirstName}
+                contactLastName={contactLastName}
 
                 // Step 5 - Address
                 country={country}
@@ -208,7 +205,9 @@ class ClientCreateStep7Container extends Component {
                 tags={tags}
                 dateOfBirth={dateOfBirth}
                 gender={gender}
+                genderLabel={genderLabel}
                 howHear={howHear}
+                howHearLabel={howHearLabel}
                 howHearOption={howHearOption}
                 howHearOther={howHearOther}
                 joinDate={joinDate}

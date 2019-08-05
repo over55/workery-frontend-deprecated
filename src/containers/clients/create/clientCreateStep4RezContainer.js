@@ -46,7 +46,8 @@ class ClientCreateStep4RezContainer extends Component {
         // Since we are in this page, we need to assign the user to be
         // a residential type user. If the user is community cares type
         // then this variable will be set then in page 4.
-        localStorage.setItem("workery-create-client-rez-typeOf", RESIDENCE_TYPE_OF);
+        localStorage.setItem("workery-create-client-typeOf", RESIDENCE_TYPE_OF);
+        localStorage.setItem("workery-create-client-typeOf-label", "Residential");
     }
 
     componentWillUnmount() {

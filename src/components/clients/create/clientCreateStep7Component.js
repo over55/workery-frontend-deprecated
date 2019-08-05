@@ -1,6 +1,7 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
 // import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
@@ -15,42 +16,62 @@ export default class ClientCreateStep7Component extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const {
-            returnURL, typeOf, errors, onClick, isLoading,
-            bizCompanyName, bizContactFirstName, bizContactLastName, bizPrimaryPhone, bizSecondaryPhone, bizEmail,
-            rezFirstName, rezLastName, rezPrimaryPhone, rezSecondaryPhone, rezEmail,
-            streetNumber, streetName, streetType, streetTypeOther, apartmentUnit, streetDirection, postalCode,
-            watchSlug, watchIcon, watchName,
-            tags, tagOptions, birthYear, gender, genderLabel, howDidYouHear, howDidYouHearLabel, howDidYouHearOptions, howDidYouHearOther,
-            meaning, expectations, willingToVolunteer, willingToVolunteerLabel, anotherHouseholdClientRegistered, anotherHouseholdClientRegisteredLabel, totalHouseholdCount, under18YearsHouseholdCount,
-            companyEmployeeCount, companyYearsInOperation, companyType,
+            // Step 3
+            typeOf,
+            typeOfLabel,
+
+            // Step 4 - Residential & Business
+            firstName,
+            lastName,
+            primaryPhone,
+            secondaryPhone,
+            email,
+            isOkToEmail,
+            isOkToText,
+            companyName,
+            contactFirstName,
+            contactLastName,
+
+            // Step 5 - Address
+            country,
+            region,
+            locality,
+            postalCode,
+            streetAddress,
+
+            // Step 6 - Metrics
+            tags,
+            dateOfBirth,
+            gender,
+            genderLabel,
+            howHear,
+            howHearLabel,
+            howHearOption,
+            howHearOther,
+            joinDate,
+            comment,
+
+            // Everything else
+            returnURL,
+            errors,
+            isLoading,
+            onClick,
         } = this.props;
         const isBizTypeOf = typeOf === BUSINESS_TYPE_OF;
-        const isRezOrCom = typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF;
 
-        let clientshipClass;
-        if (typeOf === BUSINESS_TYPE_OF) {
-            clientshipClass = "Business";
-        }
-        else if (typeOf === RESIDENCE_TYPE_OF) {
-            clientshipClass = "Residential";
-        }
-        else if (typeOf === COMMUNITY_CARES_TYPE_OF) {
-            clientshipClass = "Community Cares";
-        }
-
-        // Set the how did you hear.
-        let howDidYouHearFinalLabel = howDidYouHearLabel;
-        if (howDidYouHear === "other") {
-            howDidYouHearFinalLabel = howDidYouHearOther;
-        }
-
-        // This code checks to see if we need to display the household count fields.
-        let showHouseholdCount = false;
-        try {
-            showHouseholdCount = parseInt(anotherHouseholdClientRegistered) === 0;
-        } catch (error) {
-            // Do nothing.
-        }
+        // // Set the how did you hear.
+        // let howDidYouHearFinalLabel = howDidYouHearLabel;
+        // if (howDidYouHear === "other") {
+        //     howDidYouHearFinalLabel = howDidYouHearOther;
+        // }
+        //
+        // // This code checks to see if we need to display the household count fields.
+        // let showHouseholdCount = false;
+        // try {
+        //     showHouseholdCount = parseInt(anotherHouseholdClientRegistered) === 0;
+        // } catch (error) {
+        //     // Do nothing.
+        // }
 
         return (
             <main id="main" role="main">
@@ -130,10 +151,8 @@ export default class ClientCreateStep7Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Clientship Class</th>
-                                    <td>{clientshipClass}</td>
+                                    <td>{typeOfLabel}</td>
                                 </tr>
-
-
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
@@ -143,127 +162,66 @@ export default class ClientCreateStep7Component extends Component {
                                 {isBizTypeOf &&
                                     <tr>
                                         <th scope="row" className="bg-light">Company Name</th>
-                                        <td>{bizCompanyName}</td>
+                                        <td>{companyName}</td>
                                     </tr>
                                 }
-                                {isBizTypeOf &&
-                                    <tr>
+                                {isBizTypeOf
+                                    ?<tr>
                                         <th scope="row" className="bg-light">Contact First Name</th>
-                                        <td>{bizContactFirstName}</td>
+                                        <td>{contactFirstName}</td>
                                     </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Contact Last Name</th>
-                                        <td>{bizContactLastName}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Primary Phone #</th>
-                                        <td>{bizPrimaryPhone}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Secondary Phone #</th>
-                                        <td>{bizSecondaryPhone}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Email</th>
-                                        <td>{bizEmail}</td>
-                                    </tr>
-                                }
-
-                                {isRezOrCom &&
-                                    <tr>
+                                    :<tr>
                                         <th scope="row" className="bg-light">First Name</th>
-                                        <td>{rezFirstName}</td>
+                                        <td>{firstName}</td>
                                     </tr>
                                 }
-                                {isRezOrCom &&
-                                    <tr>
+                                {isBizTypeOf
+                                    ?<tr>
+                                        <th scope="row" className="bg-light">Contact Last Name</th>
+                                        <td>{contactLastName}</td>
+                                    </tr>
+                                    :<tr>
                                         <th scope="row" className="bg-light">Last Name</th>
-                                        <td>{rezLastName}</td>
+                                        <td>{lastName}</td>
                                     </tr>
                                 }
-                                {isRezOrCom &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Primary Phone #</th>
-                                        <td>{rezPrimaryPhone}</td>
-                                    </tr>
-                                }
-                                {isRezOrCom &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Secondary Phone #</th>
-                                        <td>{rezSecondaryPhone}</td>
-                                    </tr>
-                                }
-                                {isRezOrCom &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Email</th>
-                                        <td>{rezEmail}</td>
-                                    </tr>
-                                }
-
-
-
-
+                                <tr>
+                                    <th scope="row" className="bg-light">Primary Phone #</th>
+                                    <td>{primaryPhone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Secondary Phone #</th>
+                                    <td>{secondaryPhone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Email</th>
+                                    <td>{email}</td>
+                                </tr>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-address-book"></i>&nbsp;Address
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Street Number</th>
-                                    <td>{streetNumber}</td>
+                                    <th scope="row" className="bg-light">Street Address</th>
+                                    <td>{streetAddress}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Street Name</th>
-                                    <td>{streetName}</td>
+                                    <th scope="row" className="bg-light">Locality</th>
+                                    <td>{locality}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Street Type</th>
-                                    <td>{streetType}</td>
+                                    <th scope="row" className="bg-light">Region</th>
+                                    <td>{region}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Street Type (Other)</th>
-                                    <td>{streetTypeOther}</td>
-                                </tr>
-                                {apartmentUnit &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Apartment Unit</th>
-                                        <td>{apartmentUnit}</td>
-                                    </tr>
-                                }
-                                <tr>
-                                    <th scope="row" className="bg-light">Street Direction</th>
-                                    <td>{streetDirection}</td>
+                                    <th scope="row" className="bg-light">Country</th>
+                                    <td>{country}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Postal Code</th>
                                     <td>{postalCode}</td>
                                 </tr>
-
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-shield-alt"></i>&nbsp;Watch
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Name</th>
-                                    <td>
-                                        <a href={`/watch-biz/${watchSlug}`} target="_blank" rel="noopener noreferrer">
-                                            <i className={`fas fa-${watchIcon}`}></i>&nbsp;{watchName}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-
-
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
@@ -274,30 +232,38 @@ export default class ClientCreateStep7Component extends Component {
                                     <th scope="row" className="bg-light">Tags</th>
                                     <td>
                                         {tags && tags.map(
-                                            (tag, i) => <TagItem tag={tag} key={i} />)
+                                            (tag, i) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </td>
                                 </tr>
-                                {birthYear &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Year of Birth</th>
-                                        <td>
-                                            {birthYear}
-                                        </td>
-                                    </tr>
-                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Date of Birth</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{dateOfBirth}</Moment>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
                                     <td>{genderLabel}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did you hear about us?</th>
-                                    <td>{howDidYouHearFinalLabel}</td>
+                                    <td>{howHearLabel}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">What does NW mean to you?</th>
-                                    <td>{meaning}</td>
+                                    <th scope="row" className="bg-light">Join Date</th>
+                                    <td><Moment format="YYYY/MM/DD">{joinDate}</Moment></td>
                                 </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Comment(s)</th>
+                                    <td>{comment}</td>
+                                </tr>
+{ /*
+
+
+
+
+
                                 <tr>
                                     <th scope="row" className="bg-light">What do you expect from NW?</th>
                                     <td>{expectations}</td>
@@ -344,7 +310,7 @@ export default class ClientCreateStep7Component extends Component {
                                     <th scope="row" className="bg-light">User agrees to conditions</th>
                                     <td>Yes</td>
                                 </tr>
-
+*/ }
 
                             </tbody>
                         </table>
@@ -353,7 +319,7 @@ export default class ClientCreateStep7Component extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/clients/add/step-7" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/clients/add/step-6" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
