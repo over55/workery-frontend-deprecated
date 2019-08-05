@@ -22,7 +22,7 @@ class ClientCreateStep5Component extends Component {
             onSelectChange,
             onBillingCountryChange,
             onBillingRegionChange,
-            onClick,
+            onNextClick,
             isLoading
         } = this.props;
 
@@ -147,7 +147,7 @@ class ClientCreateStep5Component extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
                                     Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to={returnURL} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">

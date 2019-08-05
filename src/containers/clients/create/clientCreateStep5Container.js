@@ -38,18 +38,18 @@ class ClientCreateStep5Container extends Component {
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
-            country: localStorage.getItem("add-device-country"),
-            region: localStorage.getItem("add-device-region"),
-            locality: localStorage.getItem("add-device-locality"),
-            postalCode: localStorage.getItem("add-device-postalCode"),
-            streetAddress: localStorage.getItem("add-device-streetAddress"),
+            country: localStorage.getItem("workery-create-client-country"),
+            region: localStorage.getItem("workery-create-client-region"),
+            locality: localStorage.getItem("workery-create-client-locality"),
+            postalCode: localStorage.getItem("workery-create-client-postalCode"),
+            streetAddress: localStorage.getItem("workery-create-client-streetAddress"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.onClick = this.onClick.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
         this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
@@ -108,7 +108,7 @@ class ClientCreateStep5Container extends Component {
          });
 
          // Update our persistent storage.
-         const key = "add-device-"+[e.target.name];
+         const key = "workery-create-client-"+[e.target.name];
          localStorage.setItem(key, e.target.value)
      }
 
@@ -118,8 +118,8 @@ class ClientCreateStep5Container extends Component {
              [option.selectName]: option.value,
              optionKey: option,
          });
-         localStorage.setItem('add-device-'+[option.selectName], option.value);
-         localStorageSetObjectOrArrayItem('add-device-'+optionKey, option);
+         localStorage.setItem('workery-create-client-'+[option.selectName], option.value);
+         localStorageSetObjectOrArrayItem('workery-create-client-'+optionKey, option);
          // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
          // console.log(this.state);
      }
@@ -133,16 +133,16 @@ class ClientCreateStep5Container extends Component {
         }
 
         // Update persistent storage.
-        localStorage.setItem('add-device-country', value);
-        localStorage.setItem('add-device-region', null);
+        localStorage.setItem('workery-create-client-country', value);
+        localStorage.setItem('workery-create-client-region', null);
     }
 
     onBillingRegionChange(value) {
         this.setState({ region: value }); // Update state.
-        localStorage.setItem('add-device-region', value); // Update persistent storage.
+        localStorage.setItem('workery-create-client-region', value); // Update persistent storage.
     }
 
-    onClick(e) {
+    onNextClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
@@ -166,7 +166,7 @@ class ClientCreateStep5Container extends Component {
      */
 
     render() {
-        const { referrer, errors, isLoading } = this.state;
+        const { referrer, errors, isLoading, returnURL } = this.state;
         const {
             country, region, locality,
             postalCode, streetAddress,
@@ -185,6 +185,7 @@ class ClientCreateStep5Container extends Component {
                 onBillingRegionChange={this.onBillingRegionChange}
                 onNextClick={this.onNextClick}
                 errors={errors}
+                returnURL={returnURL}
                 isLoading={isLoading}
             />
         );
