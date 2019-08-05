@@ -23,7 +23,9 @@ export default class ClientCreateStep7Component extends Component {
             secondaryPhone,
             email,
             isOkToEmail,
+            isOkToEmailLabel,
             isOkToText,
+            isOkToTextLabel,
             companyName,
             contactFirstName,
             contactLastName,
@@ -192,6 +194,14 @@ export default class ClientCreateStep7Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Email</th>
                                     <td>{email}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is Ok to email?</th>
+                                    <td>{isOkToEmailLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is Ok to text?</th>
+                                    <td>{isOkToTextLabel}</td>
                                 </tr>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">

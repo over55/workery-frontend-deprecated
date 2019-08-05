@@ -32,6 +32,8 @@ class ClientCreateStep7Container extends Component {
         let email;
         let isOkToEmail;
         let isOkToText;
+        let isOkToEmailLabel;
+        let isOkToTextLabel;
         if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/clients/add/step-4-rez-or-cc";
             primaryPhone = localStorage.getItem("workery-create-client-rez-primaryPhone");
@@ -41,6 +43,8 @@ class ClientCreateStep7Container extends Component {
             email = localStorage.getItem("workery-create-client-rez-email");
             isOkToEmail = localStorageGetIntegerItem("workery-create-client-rez-isOkToEmail");
             isOkToText = localStorageGetIntegerItem("workery-create-client-rez-isOkToText");
+            isOkToEmailLabel = localStorageGetIntegerItem("workery-create-client-rez-isOkToEmail-label");
+            isOkToTextLabel = localStorageGetIntegerItem("workery-create-client-rez-isOkToText-label");
         }
         else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/clients/add/step-4-biz";
@@ -51,6 +55,8 @@ class ClientCreateStep7Container extends Component {
             email = localStorage.getItem("workery-create-client-biz-email");
             isOkToEmail = localStorageGetIntegerItem("workery-create-client-biz-isOkToEmail");
             isOkToText = localStorageGetIntegerItem("workery-create-client-biz-isOkToText");
+            isOkToEmailLabel = localStorage.getItem("workery-create-client-biz-isOkToEmail-label");
+            isOkToTextLabel = localStorage.getItem("workery-create-client-biz-isOkToText-label");
         }
 
         this.state = {
@@ -67,7 +73,9 @@ class ClientCreateStep7Container extends Component {
             secondaryPhoneTypeOf: secondaryPhoneTypeOf,
             email: email,
             isOkToEmail: isOkToEmail,
+            isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
+            isOkToTextLabel: isOkToTextLabel,
             companyName: localStorage.getItem("workery-create-client-biz-companyName"),
             contactFirstName: localStorage.getItem("workery-create-client-biz-contactFirstName"),
             contactLastName: localStorage.getItem("workery-create-client-biz-contactLastName"),
@@ -278,7 +286,9 @@ class ClientCreateStep7Container extends Component {
             secondaryPhone,
             email,
             isOkToEmail,
+            isOkToEmailLabel,
             isOkToText,
+            isOkToTextLabel,
             companyName,
             contactFirstName,
             contactLastName,
@@ -321,7 +331,9 @@ class ClientCreateStep7Container extends Component {
                 secondaryPhone={secondaryPhone}
                 email={email}
                 isOkToEmail={isOkToEmail}
+                isOkToEmailLabel={isOkToEmailLabel}
                 isOkToText={isOkToText}
+                isOkToTextLabel={isOkToTextLabel}
                 companyName={companyName}
                 contactFirstName={contactFirstName}
                 contactLastName={contactLastName}
