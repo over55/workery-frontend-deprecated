@@ -44,6 +44,8 @@ class ClientCreateStep6Container extends Component {
             howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
+            joinDate: localStorageGetDateItem("workery-create-client-joinDate"),
+            comment: localStorage.getItem("workery-create-client-comment"),
             errors: {},
             isLoading: false
         }
@@ -51,6 +53,7 @@ class ClientCreateStep6Container extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onDateOfBirthChange = this.onDateOfBirthChange.bind(this);
+        this.onJoinDateChange = this.onJoinDateChange.bind(this);
         this.onMultiChange = this.onMultiChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -87,7 +90,7 @@ class ClientCreateStep6Container extends Component {
 
     onSuccessfulSubmissionCallback(client) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/clients/add/step-8");
+        this.props.history.push("/clients/add/step-7");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -173,6 +176,13 @@ class ClientCreateStep6Container extends Component {
         localStorageSetObjectOrArrayItem('workery-create-client-dateOfBirth', dateObj);
     }
 
+    onJoinDateChange(dateObj) {
+        this.setState({
+            joinDate: dateObj,
+        })
+        localStorageSetObjectOrArrayItem('workery-create-client-joinDate', dateObj);
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -199,7 +209,7 @@ class ClientCreateStep6Container extends Component {
 
     render() {
         const {
-            typeOf, returnURL, tags, dateOfBirth, gender, howHear, howHearOther,
+            typeOf, returnURL, tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
             errors
         } = this.state;
 
@@ -214,15 +224,18 @@ class ClientCreateStep6Container extends Component {
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
                 gender={gender}
+                joinDate={joinDate}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 howHear={howHear}
                 howHearOptions={howHearOptions}
                 howHearOther={howHearOther}
+                comment={comment}
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
                 onMultiChange={this.onMultiChange}
                 onDateOfBirthChange={this.onDateOfBirthChange}
+                onJoinDateChange={this.onJoinDateChange}
                 onClick={this.onClick}
             />
         );

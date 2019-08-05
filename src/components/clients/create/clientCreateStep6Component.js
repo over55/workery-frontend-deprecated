@@ -8,14 +8,15 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BUSINESS_TYPE_OF, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
 
 
 export default class ClientCreateStep6Component extends Component {
     render() {
         const {
-            typeOf, returnURL, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther,
-            onRadioChange,  onMultiChange,
+            typeOf, returnURL, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
+            onRadioChange,  onMultiChange, onJoinDateChange, comment,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
         const isOtherHowDidYouHearSelected = howHear === 'Other';
@@ -69,18 +70,13 @@ export default class ClientCreateStep6Component extends Component {
                                 <span className="num">5.</span><span className="">Address</span>
                             </Link>
                         </div>
-                        <div id="step-6" className="st-grey">
-                            <Link to="/clients/add/step-6">
-                                <span className="num">6.</span><span className="">Watch</span>
-                            </Link>
-                        </div>
-                         <div id="step-7" className="st-grey active">
+                         <div id="step-6" className="st-grey active">
                             <strong>
-                                <span className="num">7.</span><span className="">Metrics</span>
+                                <span className="num">6.</span><span className="">Metrics</span>
                             </strong>
                         </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
+                        <div id="step-7" className="st-grey">
+                            <span className="num">7.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -155,11 +151,33 @@ export default class ClientCreateStep6Component extends Component {
                                 />
                             }
 
+                            <BootstrapDatePicker
+                                label="Join date (*)"
+                                name="joinDate"
+                                dateObj={joinDate}
+                                onTimeChange={onJoinDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.joinDate}
+                            />
+
+                            <BootstrapTextarea
+                                name="comment"
+                                borderColour="border-success"
+                                label="Additional Comments"
+                                placeholder="Write any additional comments here."
+                                rows="5"
+                                value={comment}
+                                helpText="This is the comment of the organization."
+                                onChange={onTextChange}
+                                error={errors.comment}
+                            />
+
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/clients/add/step-6" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/clients/add/step-5" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

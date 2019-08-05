@@ -259,6 +259,9 @@ export function validateStep6CreateInput(data) {
             }
         }
     }
+    if (data.joinDate === undefined || data.joinDate === null || data.joinDate === "" || isNaN(data.joinDate) ) {
+        errors.joinDate = 'This field is required';
+    }    
     return {
         errors,
         isValid: isEmpty(errors)
