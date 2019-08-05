@@ -574,3 +574,33 @@ export const ITEM_INCIDENT_ACCEPT_AUTHORITY_COOPERATION_CHOICES = [
         label: "No"
     }
 ];
+
+
+export const IS_OK_TO_EMAIL_CHOICES = [
+    {
+        id: 'isOkToEmail-t-choice',
+        name: "isOkToEmail",
+        value: 1,
+        label: "Yes"
+    },{
+        id: 'isOkToEmail-f-choice',
+        name: "isOkToEmail",
+        value: 0,
+        label: "No"
+    }
+];
+
+
+export const IS_OK_TO_TEXT_CHOICES = [
+    {
+        id: 'isOkToText-t-choice',
+        name: "isOkToText",
+        value: 1,
+        label: "Yes"
+    },{
+        id: 'isOkToText-f-choice',
+        name: "isOkToText",
+        value: 0,
+        label: "No"
+    }
+];

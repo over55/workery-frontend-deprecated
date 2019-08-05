@@ -16,16 +16,19 @@ class ClientCreateStep4RezContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("nwapp-create-client-rez-or-com-firstName"),
-            lastName: localStorage.getItem("nwapp-create-client-rez-or-com-lastName"),
-            primaryPhone: localStorage.getItem("nwapp-create-client-rez-or-com-primaryPhone"),
-            secondaryPhone: localStorage.getItem("nwapp-create-client-rez-or-com-secondaryPhone"),
-            email: localStorage.getItem("nwapp-create-client-rez-or-com-email"),
+            firstName: localStorage.getItem("workery-create-client-firstName"),
+            lastName: localStorage.getItem("workery-create-client-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-client-primaryPhone"),
+            secondaryPhone: localStorage.getItem("workery-create-client-secondaryPhone"),
+            email: localStorage.getItem("workery-create-client-email"),
+            isOkToEmail: parseInt(localStorage.getItem("workery-create-client-isOkToEmail")),
+            isOkToText: parseInt(localStorage.getItem("workery-create-client-isOkToText")),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -43,7 +46,7 @@ class ClientCreateStep4RezContainer extends Component {
         // Since we are in this page, we need to assign the user to be
         // a residential type user. If the user is community cares type
         // then this variable will be set then in page 4.
-        localStorage.setItem("nwapp-create-client-typeOf", RESIDENCE_TYPE_OF);
+        localStorage.setItem("workery-create-client-typeOf", RESIDENCE_TYPE_OF);
     }
 
     componentWillUnmount() {
@@ -85,8 +88,34 @@ class ClientCreateStep4RezContainer extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        const key = "nwapp-create-client-rez-or-com-"+[e.target.name];
+        const key = "workery-create-client-"+[e.target.name];
         localStorage.setItem(key, e.target.value);
+    }
+
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-client-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+        localStorage.setItem(storageValueKey, value) // Save to storage.
+        localStorage.setItem(storageLabelKey, label) // Save to storage.
+
+        // For the debugging purposes only.
+        console.log({
+            "STORE-VALUE-KEY": storageValueKey,
+            "STORE-VALUE": value,
+            "STORAGE-VALUE-KEY": storeValueKey,
+            "STORAGE-VALUE": value,
+            "STORAGE-LABEL-KEY": storeLabelKey,
+            "STORAGE-LABEL": label,
+        });
     }
 
     onClick(e) {
@@ -113,7 +142,9 @@ class ClientCreateStep4RezContainer extends Component {
      */
 
     render() {
-        const { firstName, lastName, primaryPhone, secondaryPhone, email, errors } = this.state;
+        const {
+            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
+        } = this.state;
         return (
             <ClientCreateStep4RezComponent
                 firstName={firstName}
@@ -121,8 +152,11 @@ class ClientCreateStep4RezContainer extends Component {
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
                 email={email}
+                isOkToEmail={isOkToEmail}
+                isOkToText={isOkToText}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
             />
         );
