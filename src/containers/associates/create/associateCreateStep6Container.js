@@ -45,6 +45,12 @@ class AssociateCreateStep6Container extends Component {
             hourlySalaryDesired: localStorageGetIntegerItem("workery-create-associate-hourlySalaryDesired"),
             limitSpecial: localStorage.getItem("workery-create-associate-limitSpecial"),
             duesDate: localStorageGetDateItem("workery-create-associate-duesDate"),
+            commercialInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-commercialInsuranceExpiryDate"),
+            autoInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-autoInsuranceExpiryDate"),
+            wsibInsuranceDate: localStorageGetDateItem("workery-create-associate-wsibInsuranceDate"),
+            policeCheck: localStorageGetDateItem("workery-create-associate-policeCheck"),
+            taxId: localStorage.getItem("workery-create-associate-taxId"),
+            driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
             returnURL: returnURL,
             typeOf: typeOf,
             errors: {},
@@ -56,6 +62,10 @@ class AssociateCreateStep6Container extends Component {
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
         this.onInsuranceRequirementMultiChange = this.onInsuranceRequirementMultiChange.bind(this);
         this.onDuesDateChange = this.onDuesDateChange.bind(this);
+        this.onCommercialInsuranceExpiryDate = this.onCommercialInsuranceExpiryDate.bind(this);
+        this.onAutoInsuranceExpiryDateChange = this.onAutoInsuranceExpiryDateChange.bind(this);
+        this.onWsibInsuranceDateChange = this.onWsibInsuranceDateChange.bind(this);
+        this.onPoliceCheckDateChange = this.onPoliceCheckDateChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -191,10 +201,35 @@ class AssociateCreateStep6Container extends Component {
     onDuesDateChange(dateObj) {
         this.setState(
             { duesDate: dateObj },
-            ()=>{
-                localStorageSetObjectOrArrayItem('workery-create-associate-duesDate', dateObj);
-                console.log(this.state);
-            }
+            ()=>{ localStorageSetObjectOrArrayItem('workery-create-associate-duesDate', dateObj); }
+        );
+    }
+
+    onCommercialInsuranceExpiryDate(dateObj) {
+        this.setState(
+            { commercialInsuranceExpiryDate: dateObj },
+            ()=>{ localStorageSetObjectOrArrayItem('workery-create-associate-commercialInsuranceExpiryDate', dateObj); }
+        );
+    }
+
+    onAutoInsuranceExpiryDateChange(dateObj) {
+        this.setState(
+            { autoInsuranceExpiryDate: dateObj },
+            ()=>{ localStorageSetObjectOrArrayItem('workery-create-associate-autoInsuranceExpiryDate', dateObj); }
+        );
+    }
+
+    onWsibInsuranceDateChange(dateObj) {
+        this.setState(
+            { wsibInsuranceDate: dateObj },
+            ()=>{ localStorageSetObjectOrArrayItem('workery-create-associate-wsibInsuranceDate', dateObj); }
+        );
+    }
+
+    onPoliceCheckDateChange(dateObj) {
+        this.setState(
+            { policeCheck: dateObj },
+            ()=>{ localStorageSetObjectOrArrayItem('workery-create-associate-policeCheck', dateObj); }
         );
     }
 
@@ -223,10 +258,10 @@ class AssociateCreateStep6Container extends Component {
 
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
             skillSet,
             insuranceRequirements,
-            duesDate,
+            duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
             errors, isLoading, returnURL } = this.state;
         const {
             country, region, locality,
@@ -238,6 +273,8 @@ class AssociateCreateStep6Container extends Component {
                 description={description}
                 hourlySalaryDesired={hourlySalaryDesired}
                 limitSpecial={limitSpecial}
+                taxId={taxId}
+                driversLicenseClass={driversLicenseClass}
                 onTextChange={this.onTextChange}
 
                 skillSet={skillSet}
@@ -250,6 +287,14 @@ class AssociateCreateStep6Container extends Component {
 
                 duesDate={duesDate}
                 onDuesDateChange={this.onDuesDateChange}
+                commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
+                onCommercialInsuranceExpiryDate={this.onCommercialInsuranceExpiryDate}
+                autoInsuranceExpiryDate={autoInsuranceExpiryDate}
+                onAutoInsuranceExpiryDateChange={this.onAutoInsuranceExpiryDateChange}
+                wsibInsuranceDate={wsibInsuranceDate}
+                onWsibInsuranceDateChange={this.onWsibInsuranceDateChange}
+                policeCheck={policeCheck}
+                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
 
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}

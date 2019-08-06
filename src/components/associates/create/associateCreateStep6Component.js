@@ -13,11 +13,15 @@ import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 class AssociateCreateStep6Component extends Component {
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial, onTextChange,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, onTextChange,
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
             returnURL, errors, isLoading, onNextClick, onSelectChange, onRadioChange,
             skillSet, skillSetOptions, onSkillSetMultiChange,
             duesDate, onDuesDateChange,
+            commercialInsuranceExpiryDate, onCommercialInsuranceExpiryDate,
+            autoInsuranceExpiryDate, onAutoInsuranceExpiryDateChange,
+            wsibInsuranceDate, onWsibInsuranceDateChange,
+            policeCheck, onPoliceCheckDateChange
         } = this.props;
 
         return (
@@ -157,6 +161,69 @@ class AssociateCreateStep6Component extends Component {
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.duesDate}
                             />
+
+                            <BootstrapDatePicker
+                                label="Commercial Insurance Expiry Date (*)"
+                                name="commercialInsuranceExpiryDate"
+                                dateObj={commercialInsuranceExpiryDate}
+                                onTimeChange={onCommercialInsuranceExpiryDate}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.commercialInsuranceExpiryDate}
+                            />
+
+                            <BootstrapDatePicker
+                                label="Auto Insurance Expiry Date"
+                                name="autoInsuranceExpiryDate"
+                                dateObj={autoInsuranceExpiryDate}
+                                onTimeChange={onAutoInsuranceExpiryDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.autoInsuranceExpiryDate}
+                            />
+
+                            <BootstrapDatePicker
+                                label="WSIB Insurance Date"
+                                name="wsibInsuranceDate"
+                                dateObj={wsibInsuranceDate}
+                                onTimeChange={onWsibInsuranceDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.wsibInsuranceDate}
+                            />
+
+                            <BootstrapDatePicker
+                                label="Police Check Expiry (*)"
+                                name="policeCheck"
+                                dateObj={policeCheck}
+                                onTimeChange={onPoliceCheckDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.policeCheck}
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.taxId}
+                                label="HST #"
+                                onChange={onTextChange}
+                                value={taxId}
+                                name="taxId"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.driversLicenseClass}
+                                label="Drivers license class(es):"
+                                onChange={onTextChange}
+                                value={driversLicenseClass}
+                                name="driversLicenseClass"
+                                type="text"
+                            />
+
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
