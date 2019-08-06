@@ -228,9 +228,10 @@ export function validateStep6CreateInput(data) {
     if (data.policeCheck === undefined || data.policeCheck === null || data.policeCheck === "" || isNaN(data.policeCheck) ) {
         errors.policeCheck = 'This field is required';
     }
-
-
-
+    if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
+        errors.isActive = 'This field is required';
+    }
+    
     return {
         errors,
         isValid: isEmpty(errors)

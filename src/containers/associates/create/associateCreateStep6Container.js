@@ -57,6 +57,8 @@ class AssociateCreateStep6Container extends Component {
             emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
             emergencyContactAlternativeTelephone: localStorage.getItem("workery-create-associate-emergencyContactAlternativeTelephone"),
+            comment: localStorage.getItem("workery-create-associate-comment"),
+            isActive: localStorageGetIntegerItem("workery-create-associate-isActive"),
             returnURL: returnURL,
             typeOf: typeOf,
             errors: {},
@@ -280,12 +282,13 @@ class AssociateCreateStep6Container extends Component {
 
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, comment,
             skillSet,
             insuranceRequirements,
             vehicleTypes,
             duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
             emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
+            isActive,
             errors, isLoading, returnURL
         } = this.state;
 
@@ -301,6 +304,7 @@ class AssociateCreateStep6Container extends Component {
                 emergencyContactRelationship={emergencyContactRelationship}
                 emergencyContactTelephone={emergencyContactTelephone}
                 emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
+                comment={comment}
                 onTextChange={this.onTextChange}
 
                 skillSet={skillSet}
@@ -327,6 +331,8 @@ class AssociateCreateStep6Container extends Component {
                 onPoliceCheckDateChange={this.onPoliceCheckDateChange}
 
                 onSelectChange={this.onSelectChange}
+
+                isActive={isActive}
                 onRadioChange={this.onRadioChange}
 
                 onNextClick={this.onNextClick}

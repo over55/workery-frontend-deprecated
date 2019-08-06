@@ -726,3 +726,22 @@ export const COMMERCIAL_CUSTOMER_TYPE_OF_ID = 3
 //     (UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up was ongoing job updated')),
 // )
 //
+
+// # The following constants are used by the "contant_point" models.
+// #
+
+export const IS_ACTIVE_TYPE = 1;
+export const IS_INACTIVE_TYPE_OF = 2;
+export const IS_ACTIVE_TYPE_OF_CHOICES = [
+    {
+        id: 'isActive-1-choice',
+        selectName: "isActive",
+        value: IS_ACTIVE_TYPE,
+        label: "Active"
+    },{
+        id: 'isActive-2-choice',
+        selectName: "isActive",
+        value: IS_INACTIVE_TYPE_OF,
+        label: "Inactive"
+    }
+];

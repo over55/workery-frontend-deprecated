@@ -9,14 +9,17 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { IS_ACTIVE_TYPE_OF_CHOICES } from "../../../constants/api";
 
 
 class AssociateCreateStep6Component extends Component {
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
+            returnURL, errors, isLoading, onNextClick, onSelectChange,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, comment, onTextChange,
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
-            returnURL, errors, isLoading, onNextClick, onSelectChange, onRadioChange,
+            isActive, onRadioChange,
             skillSet, skillSetOptions, onSkillSetMultiChange,
             vehicleTypes, vehicleTypeOptions, onVehicleTypeMultiChange,
             duesDate, onDuesDateChange,
@@ -113,7 +116,7 @@ class AssociateCreateStep6Component extends Component {
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-balance-scale"></i>&nbsp;Legality, Insurance, etc
+                                <i className="fas fa-balance-scale"></i>&nbsp;Legality, Insurance, financial, etc
                             </p>
 
                             <BootstrapMultipleSelect
@@ -300,6 +303,30 @@ class AssociateCreateStep6Component extends Component {
                             <p className="border-bottom mb-3 pb-1 text-secondary">
                                 <i className="fas fa-server"></i>&nbsp;System
                             </p>
+
+                            <BootstrapTextarea
+                                name="comment"
+                                borderColour="border-success"
+                                label="Additional comment(s)"
+                                placeholder="Please write any comments here."
+                                rows="5"
+                                value={comment}
+                                helpText="This will be used to create a comment and attach it to the user account."
+                                onChange={onTextChange}
+                                error={errors.comment}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isActive}
+                                label="Is active? (*)"
+                                name="isActive"
+                                onChange={onRadioChange}
+                                selectedValue={isActive}
+                                options={IS_ACTIVE_TYPE_OF_CHOICES}
+                                helpText='Selecting \"yes\" will grant the associate login ability.'
+                            />
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
