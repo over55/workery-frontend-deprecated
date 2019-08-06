@@ -8,12 +8,13 @@ import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 
 
 class AssociateCreateStep6Component extends Component {
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, onTextChange,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
             returnURL, errors, isLoading, onNextClick, onSelectChange, onRadioChange,
             skillSet, skillSetOptions, onSkillSetMultiChange,
@@ -96,6 +97,10 @@ class AssociateCreateStep6Component extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-graduation-cap"></i>&nbsp;Skills
+                            </p>
+
                             <BootstrapMultipleSelect
                                 borderColour="border-primary"
                                 label="Skill Set (*)"
@@ -106,6 +111,10 @@ class AssociateCreateStep6Component extends Component {
                                 error={errors.skillSet}
                                 onMultiChange={onSkillSetMultiChange}
                             />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-balance-scale"></i>&nbsp;Legality, Insurance, etc
+                            </p>
 
                             <BootstrapMultipleSelect
                                 borderColour="border-primary"
@@ -237,6 +246,60 @@ class AssociateCreateStep6Component extends Component {
                                 error={errors.vehicleTypes}
                                 onMultiChange={onVehicleTypeMultiChange}
                             />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-user-friends"></i>&nbsp;Emergency Contact
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.emergencyContactName}
+                                label="Full name"
+                                onChange={onTextChange}
+                                value={emergencyContactName}
+                                name="emergencyContactName"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.emergencyContactRelationship}
+                                label="Relationship"
+                                onChange={onTextChange}
+                                value={emergencyContactRelationship}
+                                name="emergencyContactRelationship"
+                                type="text"
+                            />
+
+                            <BootstrapTelephoneInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.emergencyContactTelephone}
+                                label="Primary Phone"
+                                onChange={onTextChange}
+                                value={emergencyContactTelephone}
+                                name="emergencyContactTelephone"
+                                type="text"
+                                placeholder="+1 (xxx) xxx-xxxx"
+                            />
+
+                            <BootstrapTelephoneInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.emergencyContactAlternativeTelephone}
+                                label="Secondary Phone"
+                                onChange={onTextChange}
+                                value={emergencyContactAlternativeTelephone}
+                                name="emergencyContactAlternativeTelephone"
+                                type="text"
+                                placeholder="+1 (xxx) xxx-xxxx"
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-server"></i>&nbsp;System
+                            </p>
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>

@@ -53,6 +53,10 @@ class AssociateCreateStep6Container extends Component {
             taxId: localStorage.getItem("workery-create-associate-taxId"),
             driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
             vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
+            emergencyContactName: localStorage.getItem("workery-create-associate-emergencyContactName"),
+            emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
+            emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
+            emergencyContactAlternativeTelephone: localStorage.getItem("workery-create-associate-emergencyContactAlternativeTelephone"),
             returnURL: returnURL,
             typeOf: typeOf,
             errors: {},
@@ -281,11 +285,10 @@ class AssociateCreateStep6Container extends Component {
             insuranceRequirements,
             vehicleTypes,
             duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
-            errors, isLoading, returnURL } = this.state;
-        const {
-            country, region, locality,
-            postalCode, streetAddress,
+            emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
+            errors, isLoading, returnURL
         } = this.state;
+
         const { user } = this.props;
         return (
             <AssociateCreateStep6Component
@@ -294,6 +297,10 @@ class AssociateCreateStep6Container extends Component {
                 limitSpecial={limitSpecial}
                 taxId={taxId}
                 driversLicenseClass={driversLicenseClass}
+                emergencyContactName={emergencyContactName}
+                emergencyContactRelationship={emergencyContactRelationship}
+                emergencyContactTelephone={emergencyContactTelephone}
+                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
                 onTextChange={this.onTextChange}
 
                 skillSet={skillSet}
