@@ -60,6 +60,7 @@ import AssociateCreateStep4RezContainer from "./associates/create/associateCreat
 import AssociateCreateStep5Container from "./associates/create/associateCreateStep5Container";
 import AssociateCreateStep6Container from "./associates/create/associateCreateStep6Container";
 import AssociateCreateStep7Container from "./associates/create/associateCreateStep7Container";
+import AssociateCreateStep8Container from "./associates/create/associateCreateStep8Container";
 import AssociateDemoteContainer from "./associates/demote/associateDemoteContainer";
 
 // Work Order
@@ -239,6 +240,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associates/add/step-5" exact component={requiresAuth(AssociateCreateStep5Container)} />
                                 <Route path="/associates/add/step-6" exact component={requiresAuth(AssociateCreateStep6Container)} />
                                 <Route path="/associates/add/step-7" exact component={requiresAuth(AssociateCreateStep7Container)} />
+                                <Route path="/associates/add/step-8" exact component={requiresAuth(AssociateCreateStep8Container)} />
                                 <Route path="/associates" exact component={requiresAuth(AssociateListContainer)} />
                                 <Route path="/associates/search" exact component={requiresAuth(AssociateSearchContainer)} />
                                 <Route path="/associates/search-results" exact component={requiresAuth(AssociateSearchResultContainer)} />

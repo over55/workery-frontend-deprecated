@@ -49,10 +49,13 @@ export default class AssociateCreateStep1Component extends Component {
                             <span className="num">5.</span><span className="">Address</span>
                         </div>
                         <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Metrics</span>
+                            <span className="num">6.</span><span className="">Account</span>
                         </div>
                         <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Review</span>
+                            <span className="num">7.</span><span className="">Metrics</span>
+                        </div>
+                        <div id="step-8" className="st-grey">
+                            <span className="num">8.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>

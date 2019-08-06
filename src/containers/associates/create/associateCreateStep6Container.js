@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import AssociateCreateStep6Component from "../../../components/associates/create/associateCreateStep6Component";
-import { validateStep6CreateInput } from "../../../validators/associateValidator";
 import {
-    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
 } from '../../../helpers/localStorageUtility';
-import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
+import { validateStep6CreateInput } from "../../../validators/associateValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
+import { BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES } from "../../../constants/api";
+
 
 
 class AssociateCreateStep6Container extends Component {
@@ -37,27 +37,22 @@ class AssociateCreateStep6Container extends Component {
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
-            tags: localStorageGetArrayItem("workery-create-associate-tags"),
-            dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-associate-gender"),
-            howHear: localStorageGetIntegerItem("workery-create-associate-howHear"),
-            howHearOption: localStorageGetObjectItem('workery-create-associate-howHearOption'),
-            howHearOther: localStorage.getItem("workery-create-associate-howHearOther"),
-            joinDate: localStorageGetDateItem("workery-create-associate-joinDate"),
-            comment: localStorage.getItem("workery-create-associate-comment"),
+            country: localStorage.getItem("workery-create-associate-country"),
+            region: localStorage.getItem("workery-create-associate-region"),
+            locality: localStorage.getItem("workery-create-associate-locality"),
+            postalCode: localStorage.getItem("workery-create-associate-postalCode"),
+            streetAddress: localStorage.getItem("workery-create-associate-streetAddress"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.onDateOfBirthChange = this.onDateOfBirthChange.bind(this);
-        this.onJoinDateChange = this.onJoinDateChange.bind(this);
-        this.onMultiChange = this.onMultiChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
-        this.onClick = this.onClick.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
+        this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
     }
 
     /**
@@ -67,10 +62,6 @@ class AssociateCreateStep6Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-         // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
     }
 
     componentWillUnmount() {
@@ -89,13 +80,13 @@ class AssociateCreateStep6Container extends Component {
 
     onSuccessfulSubmissionCallback(associate) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/associates/add/step-7");
+        this.props.history.push("/associates/add/step-6");
     }
 
     onFailedSubmissionCallback(errors) {
         this.setState({
             errors: errors
-        });
+        })
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -109,84 +100,50 @@ class AssociateCreateStep6Container extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-        localStorage.setItem('workery-create-associate-'+[e.target.name], e.target.value);
+     onTextChange(e) {
+         // Update our state.
+         this.setState({
+             [e.target.name]: e.target.value,
+         });
+
+         // Update our persistent storage.
+         const key = "workery-create-associate-"+[e.target.name];
+         localStorage.setItem(key, e.target.value)
+     }
+
+     onSelectChange(option) {
+         const optionKey = [option.selectName]+"Option";
+         this.setState({
+             [option.selectName]: option.value,
+             optionKey: option,
+         });
+         localStorage.setItem('workery-create-associate-'+[option.selectName], option.value);
+         localStorageSetObjectOrArrayItem('workery-create-associate-'+optionKey, option);
+         // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+         // console.log(this.state);
+     }
+
+    onBillingCountryChange(value) {
+        // Update state.
+        if (value === null || value === undefined || value === '') {
+            this.setState({ country: null, region: null })
+        } else {
+            this.setState({ country: value, region: null })
+        }
+
+        // Update persistent storage.
+        localStorage.setItem('workery-create-associate-country', value);
+        localStorage.setItem('workery-create-associate-region', null);
     }
 
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            optionKey: option,
-        });
-        localStorage.setItem('workery-create-associate-'+[option.selectName].toString(), option.value);
-        localStorage.setItem('workery-create-associate-'+[option.selectName].toString()+"Label", option.label);
-        localStorageSetObjectOrArrayItem('workery-create-associate-'+optionKey, option);
-        // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+    onBillingRegionChange(value) {
+        this.setState({ region: value }); // Update state.
+        localStorage.setItem('workery-create-associate-region', value); // Update persistent storage.
     }
 
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "workery-create-associate-"+[e.target.name];
-        const storageLabelKey =  "workery-create-associate-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
-    }
-
-    onMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // Set all the tags we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
-        });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-create-associate-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
-    }
-
-    onDateOfBirthChange(dateObj) {
-        this.setState({
-            dateOfBirth: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-associate-dateOfBirth', dateObj);
-    }
-
-    onJoinDateChange(dateObj) {
-        this.setState({
-            joinDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-associate-joinDate', dateObj);
-    }
-
-    onClick(e) {
+    onNextClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-
-        // console.log(this.state); // For debugging purposes only.
 
         // Perform associate-side validation.
         const { errors, isValid } = validateStep6CreateInput(this.state);
@@ -201,41 +158,34 @@ class AssociateCreateStep6Container extends Component {
         }
     }
 
+
     /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
+        const { referrer, errors, isLoading, returnURL } = this.state;
         const {
-            typeOf, returnURL, tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
-            errors
+            country, region, locality,
+            postalCode, streetAddress,
         } = this.state;
-
-        const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
-        const tagOptions = getTagReactSelectOptions(this.props.tagList);
-
+        const { user } = this.props;
         return (
             <AssociateCreateStep6Component
-                typeOf={typeOf}
-                returnURL={returnURL}
-                tags={tags}
-                tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
+                country={country}
+                region={region}
+                locality={locality}
+                streetAddress={streetAddress}
+                postalCode={postalCode}
                 onTextChange={this.onTextChange}
-                howHear={howHear}
-                howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                comment={comment}
                 onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onJoinDateChange={this.onJoinDateChange}
-                onClick={this.onClick}
+                onBillingCountryChange={this.onBillingCountryChange}
+                onBillingRegionChange={this.onBillingRegionChange}
+                onNextClick={this.onNextClick}
+                errors={errors}
+                returnURL={returnURL}
+                isLoading={isLoading}
             />
         );
     }
@@ -244,24 +194,11 @@ class AssociateCreateStep6Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        tagList: store.tagListState,
-        howHearList: store.howHearListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-        pullHowHearList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullHowHearList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
-        },
-        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
-        },
-    }
+    return {}
 }
 
 

@@ -204,6 +204,34 @@ export function validateStep5CreateInput(data) {
 export function validateStep6CreateInput(data) {
     let errors = {};
 
+    if (data.streetAddress === undefined || data.streetAddress === null || validator.isEmpty(data.streetAddress) || data.streetAddress === "") {
+        errors.streetAddress = 'This field is required';
+    }
+    if (data.region === undefined || data.region === null || validator.isEmpty(data.region) || data.region === "") {
+        errors.region = 'This field is required';
+    }
+    if (data.locality === undefined || data.locality === null || validator.isEmpty(data.locality) || data.locality === "") {
+        errors.locality = 'This field is required';
+    }
+    if (data.country === undefined || data.country === null || validator.isEmpty(data.country) || data.country === "") {
+        errors.country = 'This field is required';
+    }
+    if (data.postalCode === undefined || data.postalCode === null || validator.isEmpty(data.postalCode) || data.postalCode === "") {
+        errors.postalCode = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+/**
+ *  Validator will validate step 7 in the associate creation form.
+ */
+export function validateStep7CreateInput(data) {
+    let errors = {};
+
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
     }
@@ -231,43 +259,9 @@ export function validateStep6CreateInput(data) {
 /**
  *  Validator will validate step 7 in the associate creation form.
  */
-export function validateStep7CreateInput(data) {
+export function validateStep8CreateInput(data) {
     return validateInput(data);
 }
-
-
-export function validatePromotionInput(data) {
-    let errors = {};
-
-    if (data.groupId === undefined || data.groupId === null || data.groupId === "") {
-        errors.groupId = 'This field is required';
-    } else {
-        if (data.areaCoordinatorAgreement === undefined || data.areaCoordinatorAgreement === null || data.areaCoordinatorAgreement === "" || data.areaCoordinatorAgreement === false) {
-            errors.areaCoordinatorAgreement = 'This field is required.';
-        }
-        if (data.conflictOfInterestAgreement === undefined || data.conflictOfInterestAgreement === null || data.conflictOfInterestAgreement === "" || data.conflictOfInterestAgreement === false) {
-            errors.conflictOfInterestAgreement = 'This field is required';
-        }
-        if (data.codeOfConductAgreement === undefined || data.codeOfConductAgreement === null || data.codeOfConductAgreement === "" || data.codeOfConductAgreement === false) {
-            errors.codeOfConductAgreement = 'This field is required';
-        }
-        if (data.confidentialityAgreement === undefined || data.confidentialityAgreement === null || data.confidentialityAgreement === "" || data.confidentialityAgreement === false) {
-            errors.confidentialityAgreement = 'This field is required';
-        }
-        if (data.groupId === ASSOCIATE_GROUP_ID) {
-            if (data.associateAgreement === undefined || data.associateAgreement === null || data.associateAgreement === "" || data.associateAgreement === false) {
-                errors.associateAgreement = 'This field is required';
-            }
-        }
-    }
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    }
-}
-
-
 
 
 /**
