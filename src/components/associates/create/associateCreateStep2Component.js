@@ -2,19 +2,49 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+
+
+class CardComponent extends Component {
+    render() {
+        const { associate, isLoading } = this.props;
+        return (
+            <div className="col-sm-3">
+                <div className="card bg-light">
+                    <div className="card-body">
+                        <h5 className="card-title">
+                            <Link to={`/associate/${associate.id}`}>
+                                <strong><i className="fas fa-home"></i>&nbsp;{associate.givenName}&nbsp;{associate.lastName}</strong>
+                            </Link>
+                        </h5>
+                        <p className="card-text">
+                            {associate.streetAddress}<br />
+                            {associate.addressLocality}, {associate.addressRegion}<br />
+                            {associate.telephone}
+                        </p>
+                        <Link to={`/associate/${associate.id}`} type="button" className="btn btn-primary btn-lg btn-block" disabled={isLoading}>
+                            Select&nbsp;<i class="fas fa-chevron-right"></i>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
 
 export default class AssociateCreateStep2Component extends Component {
     render() {
-        const { isLoading, onClick } = this.props;
+        const { associates, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick } = this.props;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/associates"><i className="fas fa-crown"></i>&nbsp;Associates</Link>
+                            <Link to="/associates"><i className="fas fa-user-circle"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -22,7 +52,7 @@ export default class AssociateCreateStep2Component extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-plus"></i>&nbsp;Add Form</h1>
+                <h1><i className="fas fa-plus"></i>&nbsp;Add Associate</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -37,80 +67,54 @@ export default class AssociateCreateStep2Component extends Component {
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Review</span>
+                            <span className="num">3.</span><span className="">Type</span>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <span className="num">4.</span><span className="">Contact</span>
+                        </div>
+                        <div id="step-5" className="st-grey">
+                            <span className="num">5.</span><span className="">Address</span>
+                        </div>
+                        <div id="step-6" className="st-grey">
+                            <span className="num">6.</span><span className="">Metrics</span>
+                        </div>
+                        <div id="step-7" className="st-grey">
+                            <span className="num">7.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-sm-12 mx-auto mt-3 mb-3 text-center">
-            		<h5>Please select the area coordinator to promote.</h5>
+            		<h5>Please select the associate.</h5>
                 </div>
 
                 <div className="card-group row">
+                    {associates && associates.map(
+                        (associate) => <CardComponent associate={associate} key={associate.id} isLoading={isLoading} />)
+                    }
+                </div>
 
-                    <div className="col-sm-3">
-                        <div className="card bg-light">
-                            <div className="card-body">
-                                <h5 className="card-title">
-                                    <Link to="#">
-                                        <strong><i className="fas fa-home"></i>&nbsp;Rodolfo Martinez</strong>
-                                    </Link>
-                                </h5>
-                                <p className="card-text">1848 Mickleborough Dr<br />
-                                    London, ON<br />
-                                    (519)521-3135
-                                </p>
-                                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={ (event)=> { onClick(event, "rodolfo-martinez") } } disabled={isLoading}>Select</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-3">
-                        <div className="card bg-light">
-                            <div className="card-body">
-                                <h5 className="card-title">
-                                    <Link to="#">
-                                        <strong><i className="fas fa-building"></i>&nbsp;Frank Herbert</strong>
-                                    </Link>
-                                </h5>
-                                <p className="card-text">1234 Dune Street<br />
-                                    London, ON<br />
-                                    (123)123-1234
-                                </p>
-                                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={ (event)=> { onClick(event, "frank-herbert") } } disabled={isLoading}>Select</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-sm-3">
-                        <div className="card bg-light">
-                            <div className="card-body">
-                                <h5 className="card-title">
-                                    <Link to="#">
-                                        <strong><i className="fas fa-university"></i>&nbsp;Robert A. Heinlein</strong>
-                                    </Link>
-                                </h5>
-                                <p className="card-text">4567 Startship Trooper Avenue<br />
-                                    Toronto, ON<br />
-                                    (321)123-1234
-                                </p>
-                                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={ (event)=> { onClick(event, "robert-a-heinlein") } } disabled={isLoading}>Select</button>
-                            </div>
-                        </div>
-                    </div>
-
+                <div className="float-right">
+                    {hasPrevious &&
+                        <Link onClick={onPreviousClick}><i class="fas fa-arrow-circle-left"></i>&nbsp;Previous</Link>
+                    }&nbsp;&nbsp;
+                    {hasNext &&
+                        <Link onClick={onNextClick}>Next&nbsp;<i class="fas fa-arrow-circle-right"></i></Link>
+                    }
                 </div>
 
                 <div class="col-sm-12 mx-auto mt-3 mb-3 text-center">
-            		<h5>Would you like to add a NEW area coordinator?</h5>
-                    <a href="/associates/add/step-1">
+            		<h5>Would you like to add a NEW associate?</h5>
+                    <Link to="/associates/add/step-1">
             		    <button type="button" class="btn btn-lg btn-dark m-3">
                             <i class="fas fa-arrow-circle-left"></i>&nbsp;No - use search again
             		    </button>
-                    </a>
-            		<a href="/area-coordinators/add/step-1" target="_blank">
+                    </Link>
+            		<Link to="/associates/add/step-3">
             		    <button type="button" class="btn btn-lg btn-success m-3">
-            		       <i class="fas fa-external-link-alt"></i>&nbsp;Yes - add a new area coordinator
+            		       <i class="fas fa-user"></i>&nbsp;Yes - add a new associate
             		    </button>
-                    </a>
+                    </Link>
                 </div>
 
 

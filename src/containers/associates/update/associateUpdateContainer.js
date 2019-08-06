@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import AssociateUpdateComponent from "../../../components/associates/update/associateUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/associateValidator";
+import { validateInput } from "../../../validators/associateValidator";
 
 
 class AssociateUpdateContainer extends Component {

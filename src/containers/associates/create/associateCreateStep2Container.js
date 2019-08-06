@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import AssociateCreateStep2Component from "../../../components/associates/create/associateCreateStep2Component";
+import { pullAssociateList } from "../../../actions/associateActions";
 
 
 class AssociateCreateStep2Container extends Component {
@@ -14,15 +15,38 @@ class AssociateCreateStep2Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            firstName: localStorage.getItem("workery-create-associate-firstName"),
+            lastName: localStorage.getItem("workery-create-associate-lastName"),
+            email: localStorage.getItem("workery-create-associate-email"),
+            phone: localStorage.getItem("workery-create-associate-phone"),
+            isLoading: true,
             errors: {},
-            isLoading: false
+            page: 1,
         }
 
         this.onTextChange = this.onTextChange.bind(this);
-        this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.getParametersMapFromState = this.getParametersMapFromState.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
+    }
+
+    getParametersMapFromState() {
+        const parametersMap = new Map();
+        if (this.state.firstName !== undefined && this.state.firstName !== null) {
+            parametersMap.set('givenName', this.state.firstName);
+        }
+        if (this.state.lastName !== undefined && this.state.lastName !== null) {
+            parametersMap.set('lastName', this.state.lastName);
+        }
+        if (this.state.email !== undefined && this.state.email !== null) {
+            parametersMap.set('email', this.state.email);
+        }
+        if (this.state.phone !== undefined && this.state.phone !== null) {
+            parametersMap.set('phone', this.state.phone);
+        }
+        return parametersMap;
     }
 
     /**
@@ -32,6 +56,7 @@ class AssociateCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullAssociateList(1, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -48,14 +73,25 @@ class AssociateCreateStep2Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(associate) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/associates/add/step-3");
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+            }
+        )
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
-            errors: errors
+            errors: errors,
+            isLoading: false
         })
 
         // The following code will cause the screen to scroll to the top of
@@ -76,14 +112,30 @@ class AssociateCreateStep2Container extends Component {
         })
     }
 
-    onClick(e, slug) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
+    onNextClick(e) {
+        const page = this.state.page + 1;
+        this.setState(
+            {
+                page: page,
+                isLoading: true,
+            },
+            ()=>{
+                this.props.pullAssociateList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+            }
+        )
+    }
 
-        // Save the slug
-        localStorage.setItem('nwapp-create-associate-slug', slug);
-
-        this.onSuccessfulSubmissionCallback();
+    onPreviousClick(e) {
+        const page = this.state.page - 1;
+        this.setState(
+            {
+                page: page,
+                isLoading: true,
+            },
+            ()=>{
+                this.props.pullAssociateList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+            }
+        )
     }
 
     /**
@@ -92,13 +144,23 @@ class AssociateCreateStep2Container extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
+        const associates = (this.props.associateList && this.props.associateList.results) ? this.props.associateList.results : [];
+        const hasNext = this.props.associateList.next !== null;
+        const hasPrevious = this.props.associateList.previous !== null;
         return (
             <AssociateCreateStep2Component
-                name={name}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                associates={associates}
+                isLoading={isLoading}
                 errors={errors}
                 onTextChange={this.onTextChange}
-                onClick={this.onClick}
+                hasNext={hasNext}
+                onNextClick={this.onNextClick}
+                hasPrevious={hasPrevious}
+                onPreviousClick={this.onPreviousClick}
             />
         );
     }
@@ -107,11 +169,17 @@ class AssociateCreateStep2Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        associateList: store.associateListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        pullAssociateList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullAssociateList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

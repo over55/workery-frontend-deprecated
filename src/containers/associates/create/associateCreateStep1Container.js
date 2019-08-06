@@ -14,7 +14,10 @@ class AssociateCreateStep1Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            firstName: localStorage.getItem("workery-create-associate-firstName"),
+            lastName: localStorage.getItem("workery-create-associate-lastName"),
+            email: localStorage.getItem("workery-create-associate-email"),
+            phone: localStorage.getItem("workery-create-associate-phone"),
             errors: {},
             isLoading: false
         }
@@ -74,6 +77,9 @@ class AssociateCreateStep1Container extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
+
+        const key = "workery-create-associate-"+[e.target.name].toString();
+        localStorage.setItem(key, e.target.value);
     }
 
     onClick(e) {
@@ -90,10 +96,13 @@ class AssociateCreateStep1Container extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { firstName, lastName, email, phone, errors, isLoading } = this.state
         return (
             <AssociateCreateStep1Component
-                name={name}
+                firstName={firstName}
+                lastName={lastName}
+                email={email}
+                phone={phone}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
