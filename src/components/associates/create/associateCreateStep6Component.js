@@ -13,6 +13,7 @@ class AssociateCreateStep6Component extends Component {
         const {
             returnURL, errors, isLoading, onNextClick, onTextChange, onSelectChange, onRadioChange,
             skillSet, skillSetOptions, onSkillSetMultiChange,
+            insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
         } = this.props;
 
         return (
@@ -95,6 +96,17 @@ class AssociateCreateStep6Component extends Component {
                                 selectedOptions={skillSet}
                                 error={errors.skillSet}
                                 onMultiChange={onSkillSetMultiChange}
+                            />
+
+                            <BootstrapMultipleSelect
+                                borderColour="border-primary"
+                                label="Insurance Requirements (*)"
+                                name="insuranceRequirements"
+                                defaultOptionLabel="Please select the insurance requirements."
+                                options={insuranceRequirementOptions}
+                                selectedOptions={insuranceRequirements}
+                                error={errors.insuranceRequirements}
+                                onMultiChange={onInsuranceRequirementMultiChange}
                             />
 
                             <div className="form-group">

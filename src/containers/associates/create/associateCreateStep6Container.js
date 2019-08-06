@@ -12,6 +12,7 @@ import {
     COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
 import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
+import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
 
 
 class AssociateCreateStep6Container extends Component {
@@ -35,6 +36,7 @@ class AssociateCreateStep6Container extends Component {
 
         this.state = {
             skillSet: localStorageGetArrayItem("workery-create-associate-skillSet"),
+            insuranceRequirements: localStorageGetArrayItem("workery-create-associate-insuranceRequirements"),
             returnURL: returnURL,
             typeOf: typeOf,
             errors: {},
@@ -44,6 +46,7 @@ class AssociateCreateStep6Container extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
+        this.onInsuranceRequirementMultiChange = this.onInsuranceRequirementMultiChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -60,6 +63,7 @@ class AssociateCreateStep6Container extends Component {
 
         // DEVELOPERS NOTE: Fetch our skillset list.
         this.props.pullSkillSetList(1, 1000);
+        this.props.pullInsuranceRequirementList(1, 1000);
     }
 
     componentWillUnmount() {
@@ -161,6 +165,20 @@ class AssociateCreateStep6Container extends Component {
         localStorageSetObjectOrArrayItem(key, selectedOptions);
     }
 
+    onInsuranceRequirementMultiChange(...args) {
+        // Extract the select options from the parameter.
+        const selectedOptions = args[0];
+
+        // Set all the skill sets we have selected to the STORE.
+        this.setState({
+            insuranceRequirements: selectedOptions,
+        });
+
+        // // Set all the tags we have selected to the STORAGE.
+        const key = 'workery-create-associate-' + args[1].name;
+        localStorageSetObjectOrArrayItem(key, selectedOptions);
+    }
+
     onNextClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -185,22 +203,26 @@ class AssociateCreateStep6Container extends Component {
      */
 
     render() {
-        const { skillSet, errors, isLoading, returnURL } = this.state;
+        const { skillSet, insuranceRequirements, errors, isLoading, returnURL } = this.state;
         const {
             country, region, locality,
             postalCode, streetAddress,
         } = this.state;
         const { user } = this.props;
-        console.log("RENDER", skillSet);
         return (
             <AssociateCreateStep6Component
                 skillSet={skillSet}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
+                onSkillSetMultiChange={this.onSkillSetMultiChange}
+
+                insuranceRequirements={insuranceRequirements}
+                insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
+                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
 
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
+
                 onNextClick={this.onNextClick}
                 errors={errors}
                 returnURL={returnURL}
@@ -214,6 +236,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         skillSetList: store.skillSetListState,
+        insuranceRequirementList: store.insuranceRequirementListState,
     };
 }
 
@@ -224,9 +247,13 @@ const mapDispatchToProps = dispatch => {
                 pullSkillSetList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
+        pullInsuranceRequirementList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullInsuranceRequirementList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
-
 
 export default connect(
     mapStateToProps,

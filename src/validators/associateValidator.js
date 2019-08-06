@@ -207,6 +207,9 @@ export function validateStep6CreateInput(data) {
     if (data.skillSet === undefined || data.skillSet === null || data.skillSet === "" || isEmpty(data.skillSet) ) {
         errors.skillSet = 'This field is required';
     }
+    if (data.insuranceRequirements === undefined || data.insuranceRequirements === null || data.insuranceRequirements === "" || isEmpty(data.insuranceRequirements) ) {
+        errors.insuranceRequirements = 'This field is required';
+    }
 
     return {
         errors,
