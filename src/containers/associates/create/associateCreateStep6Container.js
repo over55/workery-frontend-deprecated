@@ -17,6 +17,7 @@ import {
 } from '../../../constants/api';
 import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
 import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
+import { getVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../actions/vehicleTypeActions";
 
 
 class AssociateCreateStep6Container extends Component {
@@ -51,6 +52,7 @@ class AssociateCreateStep6Container extends Component {
             policeCheck: localStorageGetDateItem("workery-create-associate-policeCheck"),
             taxId: localStorage.getItem("workery-create-associate-taxId"),
             driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
+            vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
             returnURL: returnURL,
             typeOf: typeOf,
             errors: {},
@@ -61,6 +63,7 @@ class AssociateCreateStep6Container extends Component {
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
         this.onInsuranceRequirementMultiChange = this.onInsuranceRequirementMultiChange.bind(this);
+        this.onVehicleTypeMultiChange = this.onVehicleTypeMultiChange.bind(this);
         this.onDuesDateChange = this.onDuesDateChange.bind(this);
         this.onCommercialInsuranceExpiryDate = this.onCommercialInsuranceExpiryDate.bind(this);
         this.onAutoInsuranceExpiryDateChange = this.onAutoInsuranceExpiryDateChange.bind(this);
@@ -83,6 +86,7 @@ class AssociateCreateStep6Container extends Component {
         // DEVELOPERS NOTE: Fetch our skillset list.
         this.props.pullSkillSetList(1, 1000);
         this.props.pullInsuranceRequirementList(1, 1000);
+        this.props.pullVehicleTypeList(1, 1000);
     }
 
     componentWillUnmount() {
@@ -198,6 +202,20 @@ class AssociateCreateStep6Container extends Component {
         localStorageSetObjectOrArrayItem(key, selectedOptions);
     }
 
+    onVehicleTypeMultiChange(...args) {
+        // Extract the select options from the parameter.
+        const selectedOptions = args[0];
+
+        // Set all the skill sets we have selected to the STORE.
+        this.setState({
+            vehicleTypes: selectedOptions,
+        });
+
+        // // Set all the tags we have selected to the STORAGE.
+        const key = 'workery-create-associate-' + args[1].name;
+        localStorageSetObjectOrArrayItem(key, selectedOptions);
+    }
+
     onDuesDateChange(dateObj) {
         this.setState(
             { duesDate: dateObj },
@@ -261,6 +279,7 @@ class AssociateCreateStep6Container extends Component {
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
             skillSet,
             insuranceRequirements,
+            vehicleTypes,
             duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
             errors, isLoading, returnURL } = this.state;
         const {
@@ -284,6 +303,10 @@ class AssociateCreateStep6Container extends Component {
                 insuranceRequirements={insuranceRequirements}
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
                 onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
+
+                vehicleTypes={vehicleTypes}
+                vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
+                onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
 
                 duesDate={duesDate}
                 onDuesDateChange={this.onDuesDateChange}
@@ -313,6 +336,7 @@ const mapStateToProps = function(store) {
         user: store.userState,
         skillSetList: store.skillSetListState,
         insuranceRequirementList: store.insuranceRequirementListState,
+        vehicleTypeList: store.vehicleTypeListState,
     };
 }
 
@@ -326,6 +350,11 @@ const mapDispatchToProps = dispatch => {
         pullInsuranceRequirementList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullInsuranceRequirementList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullVehicleTypeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullVehicleTypeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

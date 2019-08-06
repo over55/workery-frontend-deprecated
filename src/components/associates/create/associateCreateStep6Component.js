@@ -17,6 +17,7 @@ class AssociateCreateStep6Component extends Component {
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
             returnURL, errors, isLoading, onNextClick, onSelectChange, onRadioChange,
             skillSet, skillSetOptions, onSkillSetMultiChange,
+            vehicleTypes, vehicleTypeOptions, onVehicleTypeMultiChange,
             duesDate, onDuesDateChange,
             commercialInsuranceExpiryDate, onCommercialInsuranceExpiryDate,
             autoInsuranceExpiryDate, onAutoInsuranceExpiryDateChange,
@@ -173,6 +174,7 @@ class AssociateCreateStep6Component extends Component {
                             />
 
                             <BootstrapDatePicker
+                                borderColour="border-success"
                                 label="Auto Insurance Expiry Date"
                                 name="autoInsuranceExpiryDate"
                                 dateObj={autoInsuranceExpiryDate}
@@ -183,6 +185,7 @@ class AssociateCreateStep6Component extends Component {
                             />
 
                             <BootstrapDatePicker
+                                borderColour="border-success"
                                 label="WSIB Insurance Date"
                                 name="wsibInsuranceDate"
                                 dateObj={wsibInsuranceDate}
@@ -224,6 +227,16 @@ class AssociateCreateStep6Component extends Component {
                                 type="text"
                             />
 
+                            <BootstrapMultipleSelect
+                                borderColour="border-success"
+                                label="Vehicle Types"
+                                name="vehicleTypes"
+                                defaultOptionLabel="Please select the vehicle types."
+                                options={vehicleTypeOptions}
+                                selectedOptions={vehicleTypes}
+                                error={errors.vehicleTypes}
+                                onMultiChange={onVehicleTypeMultiChange}
+                            />
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>

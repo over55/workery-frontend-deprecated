@@ -17,7 +17,7 @@ import getCustomAxios from '../helpers/customAxios';
  * Utility function takes the API data and converts it to HTML dropdown
  * options which will be consumed by the `react-select` library elements.
  */
-export function getVehicleTypeReactSelectOptions(vehicleTypeList=[], selectName="vehicleType") {
+export function getVehicleTypeReactSelectOptions(vehicleTypeList=[], selectName="vehicleTypes") {
     const vehicleTypeOptions = [];
     const isNotProductionsEmpty = isEmpty(vehicleTypeList) === false;
     if (isNotProductionsEmpty) {
@@ -28,8 +28,8 @@ export function getVehicleTypeReactSelectOptions(vehicleTypeList=[], selectName=
                 let vehicleType = results[i];
                 vehicleTypeOptions.push({
                     selectName: selectName,
-                    value: vehicleType.slug,
-                    label: vehicleType.name
+                    value: vehicleType.id,
+                    label: vehicleType.text
                 });
                 // console.log(vehicleType);
             }
