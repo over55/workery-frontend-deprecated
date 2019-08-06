@@ -214,11 +214,15 @@ export default class AssociateCreateStep8Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Is Ok to email?</th>
-                                    <td>{isOkToEmailLabel}</td>
+                                    <td>
+                                        {isOkToEmailLabel}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Is Ok to text?</th>
-                                    <td>{isOkToTextLabel}</td>
+                                    <td>
+                                        {isOkToTextLabel}
+                                    </td>
                                 </tr>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">

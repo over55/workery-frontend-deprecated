@@ -43,8 +43,8 @@ class ClientCreateStep7Container extends Component {
             email = localStorage.getItem("workery-create-client-rez-email");
             isOkToEmail = localStorageGetIntegerItem("workery-create-client-rez-isOkToEmail");
             isOkToText = localStorageGetIntegerItem("workery-create-client-rez-isOkToText");
-            isOkToEmailLabel = localStorageGetIntegerItem("workery-create-client-rez-isOkToEmail-label");
-            isOkToTextLabel = localStorageGetIntegerItem("workery-create-client-rez-isOkToText-label");
+            isOkToEmailLabel = localStorage.getItem("workery-create-client-rez-isOkToEmail-label");
+            isOkToTextLabel = localStorage.getItem("workery-create-client-rez-isOkToText-label");
         }
         else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/clients/add/step-4-biz";

@@ -43,8 +43,8 @@ class AssociateCreateStep8Container extends Component {
             email = localStorage.getItem("workery-create-associate-rez-email");
             isOkToEmail = localStorageGetIntegerItem("workery-create-associate-rez-isOkToEmail");
             isOkToText = localStorageGetIntegerItem("workery-create-associate-rez-isOkToText");
-            isOkToEmailLabel = localStorageGetIntegerItem("workery-create-associate-rez-isOkToEmail-label");
-            isOkToTextLabel = localStorageGetIntegerItem("workery-create-associate-rez-isOkToText-label");
+            isOkToEmailLabel = localStorage.getItem("workery-create-associate-rez-isOkToEmail-label");
+            isOkToTextLabel = localStorage.getItem("workery-create-associate-rez-isOkToText-label");
         }
         else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/associates/add/step-4-biz";
