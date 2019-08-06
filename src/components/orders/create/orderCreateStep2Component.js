@@ -7,7 +7,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 
 class CardComponent extends Component {
     render() {
-        const { client, isLoading } = this.props;
+        const { client, isLoading, onClientClick } = this.props;
         return (
             <div className="col-sm-3">
                 <div className="card bg-light">
@@ -22,9 +22,9 @@ class CardComponent extends Component {
                             {client.addressLocality}, {client.addressRegion}<br />
                             {client.telephone}
                         </p>
-                        <Link to={`/client/${client.id}`} type="button" className="btn btn-primary btn-lg btn-block" disabled={isLoading}>
+                        <button type="button" className="btn btn-primary btn-lg btn-block" disabled={isLoading} onClick={ (event)=>{ onClientClick(event, client.id) } }>
                             Select&nbsp;<i class="fas fa-chevron-right"></i>
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -32,9 +32,10 @@ class CardComponent extends Component {
     }
 }
 
+
 export default class OrderCreateStep2Component extends Component {
     render() {
-        const { clients, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick } = this.props;
+        const { clients, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick, onClientClick } = this.props;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -90,7 +91,7 @@ export default class OrderCreateStep2Component extends Component {
 
                 <div className="card-group row">
                     {clients && clients.map(
-                        (client) => <CardComponent client={client} key={client.id} isLoading={isLoading} />)
+                        (client) => <CardComponent client={client} key={client.id} isLoading={isLoading} onClientClick={onClientClick} />)
                     }
                 </div>
 

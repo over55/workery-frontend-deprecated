@@ -24,7 +24,7 @@ class OrderCreateStep2Container extends Component {
             page: 1,
         }
 
-        this.onTextChange = this.onTextChange.bind(this);
+        this.onClientClick = this.onClientClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.getParametersMapFromState = this.getParametersMapFromState.bind(this);
@@ -106,10 +106,14 @@ class OrderCreateStep2Container extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
+    onClientClick(e, clientId) {
+        this.setState(
+            { isLoading: true },
+            ()=>{
+                localStorage.setItem("workery-create-order-clientId", clientId);
+                this.props.history.push("/orders/add/step-3");
+            }
+        );
     }
 
     onNextClick(e) {
@@ -156,7 +160,7 @@ class OrderCreateStep2Container extends Component {
                 clients={clients}
                 isLoading={isLoading}
                 errors={errors}
-                onTextChange={this.onTextChange}
+                onClientClick={this.onClientClick}
                 hasNext={hasNext}
                 onNextClick={this.onNextClick}
                 hasPrevious={hasPrevious}
