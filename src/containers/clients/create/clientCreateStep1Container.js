@@ -76,8 +76,7 @@ class ClientCreateStep1Container extends Component {
     onTextChange(e) {
         this.setState({
             [e.target.name]: e.target.value,
-        })
-
+        });
         const key = "workery-create-client-"+[e.target.name].toString();
         localStorage.setItem(key, e.target.value);
     }

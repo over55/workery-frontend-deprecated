@@ -14,7 +14,10 @@ class OrderCreateStep1Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            firstName: localStorage.getItem("workery-create-order-firstName"),
+            lastName: localStorage.getItem("workery-create-order-lastName"),
+            email: localStorage.getItem("workery-create-order-email"),
+            phone: localStorage.getItem("workery-create-order-phone"),
             errors: {},
             isLoading: false
         }
@@ -73,7 +76,10 @@ class OrderCreateStep1Container extends Component {
     onTextChange(e) {
         this.setState({
             [e.target.name]: e.target.value,
-        })
+        });
+
+        const key = "workery-create-order-"+[e.target.name].toString();
+        localStorage.setItem(key, e.target.value);
     }
 
     onClick(e) {

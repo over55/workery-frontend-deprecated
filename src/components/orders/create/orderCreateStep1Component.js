@@ -63,7 +63,7 @@ export default class OrderCreateStep1Component extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h3>Search for existing order:</h3>
+                            <h3>Search for existing client:</h3>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
@@ -126,8 +126,8 @@ export default class OrderCreateStep1Component extends Component {
                 </div>
                 <div className="col-md-12 text-center">
                     <h3 className="p-2">- or -</h3>
-                    <a href="/orders/add/step-3" role="button">
-                        Add New Order&nbsp;<i class="fas fa-chevron-right"></i>
+                    <a href="/clients/add/step-3" role="button" target="_blank">
+                        Add New Client&nbsp;<i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
             </main>
