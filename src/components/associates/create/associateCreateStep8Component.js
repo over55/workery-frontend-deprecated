@@ -37,7 +37,19 @@ export default class AssociateCreateStep8Component extends Component {
             postalCode,
             streetAddress,
 
-            // Step 6 - Metrics
+            // Step 6 - Account
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
+            insuranceRequirements,
+            isActive,
+            skillSet,
+            vehicleTypes,
+            duesDate,
+            commercialInsuranceExpiryDate,
+            autoInsuranceExpiryDate,
+            wsibInsuranceDate,
+            policeCheck,
+
+            // Step 7 - Metrics
             tags,
             dateOfBirth,
             gender,
@@ -232,6 +244,111 @@ export default class AssociateCreateStep8Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Postal Code</th>
                                     <td>{postalCode}</td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-user-circle"></i>&nbsp;Account
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill set</th>
+                                    <td>
+                                        {skillSet && skillSet.map(
+                                            (skill) => <TagItem tag={skill} key={skill.id} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Insurance</th>
+                                    <td>
+                                        {insuranceRequirements && insuranceRequirements.map(
+                                            (insuranceRequirement) => <TagItem tag={insuranceRequirement} key={insuranceRequirement.id} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Hourly Rate</th>
+                                    <td>${hourlySalaryDesired} / hour</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Limitation or special consideration</th>
+                                    <td>{limitSpecial}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Member Dues</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{duesDate}</Moment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Commercial Insurance Expiry Date</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{commercialInsuranceExpiryDate}</Moment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Auto Insurance Expiry Date</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{autoInsuranceExpiryDate}</Moment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">WSIB Insurance Date</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{wsibInsuranceDate}</Moment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Police Check Expiry</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{policeCheck}</Moment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">HST #</th>
+                                    <td>{taxId}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Drivers license class(es)</th>
+                                    <td>{driversLicenseClass}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Vehicle Type</th>
+                                    <td>
+                                        {vehicleTypes && vehicleTypes.map(
+                                            (vehicleType) => <TagItem tag={vehicleType} key={vehicleType.id} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Emergency Contact Full-Name</th>
+                                    <td>{emergencyContactName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Emergency Contact Relationship</th>
+                                    <td>{emergencyContactRelationship}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Emergency Contact Contact Telephone</th>
+                                    <td>{emergencyContactTelephone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Emergency Contact Alternative Telephone</th>
+                                    <td>{emergencyContactAlternativeTelephone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{description}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is Account Active?</th>
+                                    <td>
+                                        {isActive
+                                            ?"Yes"
+                                            :"No"
+                                        }
+                                    </td>
                                 </tr>
 
                                 <tr className="bg-dark">

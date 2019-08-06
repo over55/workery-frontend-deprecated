@@ -87,7 +87,27 @@ class AssociateCreateStep8Container extends Component {
             postalCode: localStorage.getItem("workery-create-associate-postalCode"),
             streetAddress: localStorage.getItem("workery-create-associate-streetAddress"),
 
-            // Step 6 - Metrics
+            // Step 6 - Account
+            skillSet: localStorageGetArrayItem("workery-create-associate-skillSet"),
+            insuranceRequirements: localStorageGetArrayItem("workery-create-associate-insuranceRequirements"),
+            description: localStorage.getItem("workery-create-associate-description"),
+            hourlySalaryDesired: localStorageGetIntegerItem("workery-create-associate-hourlySalaryDesired"),
+            limitSpecial: localStorage.getItem("workery-create-associate-limitSpecial"),
+            duesDate: localStorageGetDateItem("workery-create-associate-duesDate"),
+            commercialInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-commercialInsuranceExpiryDate"),
+            autoInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-autoInsuranceExpiryDate"),
+            wsibInsuranceDate: localStorageGetDateItem("workery-create-associate-wsibInsuranceDate"),
+            policeCheck: localStorageGetDateItem("workery-create-associate-policeCheck"),
+            taxId: localStorage.getItem("workery-create-associate-taxId"),
+            driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
+            vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
+            emergencyContactName: localStorage.getItem("workery-create-associate-emergencyContactName"),
+            emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
+            emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
+            emergencyContactAlternativeTelephone: localStorage.getItem("workery-create-associate-emergencyContactAlternativeTelephone"),
+            isActive: localStorageGetIntegerItem("workery-create-associate-isActive"),
+
+            // Step 7 - Metrics
             tags: localStorageGetArrayItem("workery-create-associate-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
             gender: localStorageGetIntegerItem("workery-create-associate-gender"),
@@ -300,7 +320,27 @@ class AssociateCreateStep8Container extends Component {
             postalCode,
             streetAddress,
 
-            // Step 6 - Metrics
+            // Step 6 - Account
+            skillSet,
+            insuranceRequirements,
+            description,
+            hourlySalaryDesired,
+            limitSpecial,
+            duesDate,
+            commercialInsuranceExpiryDate,
+            autoInsuranceExpiryDate,
+            wsibInsuranceDate,
+            policeCheck,
+            taxId,
+            driversLicenseClass,
+            vehicleTypes,
+            emergencyContactName,
+            emergencyContactRelationship,
+            emergencyContactTelephone,
+            emergencyContactAlternativeTelephone,
+            isActive,
+
+            // Step 7 - Metrics
             tags,
             dateOfBirth,
             gender,
@@ -345,7 +385,27 @@ class AssociateCreateStep8Container extends Component {
                 postalCode={postalCode}
                 streetAddress={streetAddress}
 
-                // Step 6 - Metrics
+                // Step 6 - Account
+                skillSet={skillSet}
+                insuranceRequirements={insuranceRequirements}
+                description={description}
+                hourlySalaryDesired={hourlySalaryDesired}
+                limitSpecial={limitSpecial}
+                duesDate={duesDate}
+                commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
+                autoInsuranceExpiryDate={autoInsuranceExpiryDate}
+                wsibInsuranceDate={wsibInsuranceDate}
+                policeCheck={policeCheck}
+                taxId={taxId}
+                driversLicenseClass={driversLicenseClass}
+                vehicleTypes={vehicleTypes}
+                emergencyContactName={emergencyContactName}
+                emergencyContactRelationship={emergencyContactRelationship}
+                emergencyContactTelephone={emergencyContactTelephone}
+                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
+                isActive={isActive}
+
+                // Step 7 - Metrics
                 tags={tags}
                 dateOfBirth={dateOfBirth}
                 gender={gender}

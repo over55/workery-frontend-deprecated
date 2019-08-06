@@ -57,7 +57,6 @@ class AssociateCreateStep6Container extends Component {
             emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
             emergencyContactAlternativeTelephone: localStorage.getItem("workery-create-associate-emergencyContactAlternativeTelephone"),
-            comment: localStorage.getItem("workery-create-associate-comment"),
             isActive: localStorageGetIntegerItem("workery-create-associate-isActive"),
             returnURL: returnURL,
             typeOf: typeOf,
@@ -282,7 +281,7 @@ class AssociateCreateStep6Container extends Component {
 
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, comment,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
             skillSet,
             insuranceRequirements,
             vehicleTypes,
@@ -304,7 +303,6 @@ class AssociateCreateStep6Container extends Component {
                 emergencyContactRelationship={emergencyContactRelationship}
                 emergencyContactTelephone={emergencyContactTelephone}
                 emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                comment={comment}
                 onTextChange={this.onTextChange}
 
                 skillSet={skillSet}

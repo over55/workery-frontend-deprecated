@@ -17,7 +17,7 @@ class AssociateCreateStep6Component extends Component {
     render() {
         const {
             returnURL, errors, isLoading, onNextClick, onSelectChange,
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, comment, onTextChange,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
             isActive, onRadioChange,
             skillSet, skillSetOptions, onSkillSetMultiChange,
@@ -128,18 +128,6 @@ class AssociateCreateStep6Component extends Component {
                                 selectedOptions={insuranceRequirements}
                                 error={errors.insuranceRequirements}
                                 onMultiChange={onInsuranceRequirementMultiChange}
-                            />
-
-                            <BootstrapTextarea
-                                name="description"
-                                borderColour="border-success"
-                                label="Description"
-                                placeholder="Write any additional details here."
-                                rows="5"
-                                value={description}
-                                helpText="This is the description of the associate."
-                                onChange={onTextChange}
-                                error={errors.description}
                             />
 
                             <BootstrapInput
@@ -305,15 +293,15 @@ class AssociateCreateStep6Component extends Component {
                             </p>
 
                             <BootstrapTextarea
-                                name="comment"
+                                name="description"
                                 borderColour="border-success"
-                                label="Additional comment(s)"
-                                placeholder="Please write any comments here."
+                                label="Description"
+                                placeholder="Write any additional details here."
                                 rows="5"
-                                value={comment}
-                                helpText="This will be used to create a comment and attach it to the user account."
+                                value={description}
+                                helpText="This is the description of the associate."
                                 onChange={onTextChange}
-                                error={errors.comment}
+                                error={errors.description}
                             />
 
                             <BootstrapRadio
