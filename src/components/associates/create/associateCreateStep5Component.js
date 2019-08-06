@@ -74,10 +74,13 @@ class AssociateCreateStep5Component extends Component {
                             </strong>
                         </div>
                         <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Metrics</span>
+                            <span className="num">6.</span><span className="">Account</span>
                         </div>
                         <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Review</span>
+                            <span className="num">7.</span><span className="">Metrics</span>
+                        </div>
+                        <div id="step-8" className="st-grey">
+                            <span className="num">8.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -148,7 +151,7 @@ class AssociateCreateStep5Component extends Component {
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
-                                    Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                    Proceed to Account&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to={returnURL} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back

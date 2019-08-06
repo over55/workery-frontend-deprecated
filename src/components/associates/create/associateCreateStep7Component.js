@@ -70,13 +70,18 @@ export default class AssociateCreateStep7Component extends Component {
                                 <span className="num">5.</span><span className="">Address</span>
                             </Link>
                         </div>
-                         <div id="step-6" className="st-grey active">
+                        <div id="step-6" className="st-grey">
+                            <Link to="/associates/add/step-6">
+                                <span className="num">6.</span><span className="">Account</span>
+                            </Link>
+                        </div>
+                         <div id="step-7" className="st-grey active">
                             <strong>
-                                <span className="num">6.</span><span className="">Metrics</span>
+                                <span className="num">7.</span><span className="">Metrics</span>
                             </strong>
                         </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Review</span>
+                        <div id="step-8" className="st-grey">
+                            <span className="num">8.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -177,7 +182,7 @@ export default class AssociateCreateStep7Component extends Component {
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/associates/add/step-5" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/associates/add/step-6" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

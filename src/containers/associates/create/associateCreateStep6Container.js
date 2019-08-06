@@ -80,7 +80,7 @@ class AssociateCreateStep6Container extends Component {
 
     onSuccessfulSubmissionCallback(associate) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/associates/add/step-6");
+        this.props.history.push("/associates/add/step-7");
     }
 
     onFailedSubmissionCallback(errors) {
