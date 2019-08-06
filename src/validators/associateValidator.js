@@ -60,8 +60,8 @@ export function validateInput(data) {
 
     // --- ACCOUNT --- //
 
-    if (data.skillSet === undefined || data.skillSet === null || data.skillSet === "" || isEmpty(data.skillSet) ) {
-        errors.skillSet = 'This field is required';
+    if (data.skillSets === undefined || data.skillSets === null || data.skillSets === "" || isEmpty(data.skillSets) ) {
+        errors.skillSets = 'This field is required';
     }
     if (data.insuranceRequirements === undefined || data.insuranceRequirements === null || data.insuranceRequirements === "" || isEmpty(data.insuranceRequirements) ) {
         errors.insuranceRequirements = 'This field is required';
@@ -220,8 +220,8 @@ export function validateStep5CreateInput(data) {
 export function validateStep6CreateInput(data) {
     let errors = {};
 
-    if (data.skillSet === undefined || data.skillSet === null || data.skillSet === "" || isEmpty(data.skillSet) ) {
-        errors.skillSet = 'This field is required';
+    if (data.skillSets === undefined || data.skillSets === null || data.skillSets === "" || isEmpty(data.skillSets) ) {
+        errors.skillSets = 'This field is required';
     }
     if (data.insuranceRequirements === undefined || data.insuranceRequirements === null || data.insuranceRequirements === "" || isEmpty(data.insuranceRequirements) ) {
         errors.insuranceRequirements = 'This field is required';

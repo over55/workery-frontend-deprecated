@@ -20,7 +20,7 @@ class AssociateCreateStep6Component extends Component {
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
             isActive, onRadioChange,
-            skillSet, skillSetOptions, onSkillSetMultiChange,
+            skillSets, skillSetOptions, onSkillSetMultiChange,
             vehicleTypes, vehicleTypeOptions, onVehicleTypeMultiChange,
             duesDate, onDuesDateChange,
             commercialInsuranceExpiryDate, onCommercialInsuranceExpiryDate,
@@ -107,11 +107,11 @@ class AssociateCreateStep6Component extends Component {
                             <BootstrapMultipleSelect
                                 borderColour="border-primary"
                                 label="Skill Set (*)"
-                                name="skillSet"
+                                name="skillSets"
                                 defaultOptionLabel="Please select the skills."
                                 options={skillSetOptions}
-                                selectedOptions={skillSet}
-                                error={errors.skillSet}
+                                selectedOptions={skillSets}
+                                error={errors.skillSets}
                                 onMultiChange={onSkillSetMultiChange}
                             />
 

@@ -40,7 +40,7 @@ class AssociateCreateStep6Container extends Component {
         }
 
         this.state = {
-            skillSet: localStorageGetArrayItem("workery-create-associate-skillSet"),
+            skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
             insuranceRequirements: localStorageGetArrayItem("workery-create-associate-insuranceRequirements"),
             description: localStorage.getItem("workery-create-associate-description"),
             hourlySalaryDesired: localStorageGetIntegerItem("workery-create-associate-hourlySalaryDesired"),
@@ -185,7 +185,7 @@ class AssociateCreateStep6Container extends Component {
 
         // Set all the skill sets we have selected to the STORE.
         this.setState({
-            skillSet: selectedOptions,
+            skillSets: selectedOptions,
         });
 
         // // Set all the tags we have selected to the STORAGE.
@@ -282,7 +282,7 @@ class AssociateCreateStep6Container extends Component {
     render() {
         const {
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
-            skillSet,
+            skillSets,
             insuranceRequirements,
             vehicleTypes,
             duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
@@ -305,7 +305,7 @@ class AssociateCreateStep6Container extends Component {
                 emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
                 onTextChange={this.onTextChange}
 
-                skillSet={skillSet}
+                skillSets={skillSets}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
                 onSkillSetMultiChange={this.onSkillSetMultiChange}
 

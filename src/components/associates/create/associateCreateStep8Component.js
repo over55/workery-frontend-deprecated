@@ -6,6 +6,7 @@ import Moment from 'react-moment';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 
 
 export default class AssociateCreateStep8Component extends Component {
@@ -41,7 +42,7 @@ export default class AssociateCreateStep8Component extends Component {
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
             insuranceRequirements,
             isActive,
-            skillSet,
+            skillSets,
             vehicleTypes,
             duesDate,
             commercialInsuranceExpiryDate,
@@ -68,23 +69,9 @@ export default class AssociateCreateStep8Component extends Component {
             onSubmitClick,
         } = this.props;
         const isBizTypeOf = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
-
-        // // Set the how did you hear.
-        // let howDidYouHearFinalLabel = howDidYouHearLabel;
-        // if (howDidYouHear === "other") {
-        //     howDidYouHearFinalLabel = howDidYouHearOther;
-        // }
-        //
-        // // This code checks to see if we need to display the household count fields.
-        // let showHouseholdCount = false;
-        // try {
-        //     showHouseholdCount = parseInt(anotherHouseholdAssociateRegistered) === 0;
-        // } catch (error) {
-        //     // Do nothing.
-        // }
-
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -258,7 +245,7 @@ export default class AssociateCreateStep8Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Skill set</th>
                                     <td>
-                                        {skillSet && skillSet.map(
+                                        {skillSets && skillSets.map(
                                             (skill) => <TagItem tag={skill} key={skill.id} />)
                                         }
                                     </td>

@@ -88,7 +88,7 @@ class AssociateCreateStep8Container extends Component {
             streetAddress: localStorage.getItem("workery-create-associate-streetAddress"),
 
             // Step 6 - Account
-            skillSet: localStorageGetArrayItem("workery-create-associate-skillSet"),
+            skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
             insuranceRequirements: localStorageGetArrayItem("workery-create-associate-insuranceRequirements"),
             description: localStorage.getItem("workery-create-associate-description"),
             hourlySalaryDesired: localStorageGetIntegerItem("workery-create-associate-hourlySalaryDesired"),
@@ -151,6 +151,42 @@ class AssociateCreateStep8Container extends Component {
         const joinDateMoment = moment(this.state.joinDate);
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
 
+        // (2) Dues date - We need to format as per required API format.
+        const duesDateMoment = moment(this.state.duesDate);
+        postData.duesDate = duesDateMoment.format("YYYY-MM-DD")
+
+        // (2) commercialInsuranceExpiry date - We need to format as per required API format.
+        const commercialInsuranceExpiryDateMoment = moment(this.state.commercialInsuranceExpiryDate);
+        postData.commercialInsuranceExpiryDate = commercialInsuranceExpiryDateMoment.format("YYYY-MM-DD")
+
+        // (2) autoInsuranceExpiryDate - We need to format as per required API format.
+        const autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
+        postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD")
+
+        // (2) wsibInsuranceDate date - We need to format as per required API format.
+        const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDate);
+        postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD")
+
+        // (2) Join date - We need to format as per required API format.
+        const policeCheckMoment = moment(this.state.policeCheck);
+        postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD")
+
+        // (3) skillSets - We need to only return our `id` values.
+        let idSkillSets = [];
+        for (let i = 0; i < this.state.skillSets.length; i++) {
+            let skill = this.state.skillSets[i];
+            idSkillSets.push(skill.value);
+        }
+        postData.skillSets = idSkillSets;
+
+        // (3) Tags - We need to only return our `id` values.
+        let idVehicleTypes = [];
+        for (let i = 0; i < this.state.vehicleTypes.length; i++) {
+            let vehicle = this.state.tags[i];
+            idVehicleTypes.push(vehicle.value);
+        }
+        postData.vehicleTypes = idVehicleTypes;
+
         // (3) Tags - We need to only return our `id` values.
         let idTags = [];
         for (let i = 0; i < this.state.tags.length; i++) {
@@ -158,6 +194,14 @@ class AssociateCreateStep8Container extends Component {
             idTags.push(tag.value);
         }
         postData.tags = idTags;
+
+        // (3) insuranceRequirements - We need to only return our `id` values.
+        let idInsuranceRequirements = [];
+        for (let i = 0; i < this.state.insuranceRequirements.length; i++) {
+            let insurance = this.state.insuranceRequirements[i];
+            idInsuranceRequirements.push(insurance.value);
+        }
+        postData.insuranceRequirements = idInsuranceRequirements;
 
         // (4) How Hear Other - This field may not be null, therefore make blank.
         if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
@@ -239,12 +283,17 @@ class AssociateCreateStep8Container extends Component {
         // console.log(errors, isValid); // For debugging purposes only.
 
         if (isValid) {
-            // Once our state has been validated `associate-side` then we will
-            // make an API request with the server to create our new production.
-            this.props.postAssociateDetail(
-                this.getPostData(),
-                this.onSuccessCallback,
-                this.onFailureCallback
+            this.setState(
+                { errors: errors, isLoading: true,},
+                ()=>{
+                    // Once our state has been validated `associate-side` then we will
+                    // make an API request with the server to create our new production.
+                    this.props.postAssociateDetail(
+                        this.getPostData(),
+                        this.onSuccessCallback,
+                        this.onFailureCallback
+                    );
+                }
             );
         } else {
             this.setState({
@@ -261,18 +310,10 @@ class AssociateCreateStep8Container extends Component {
     }
 
     onSuccessCallback(response) {
-        console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
-        this.setState(
-            {
-                isLoading: false,
-            },
-            ()=>{
-                console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
-                console.log("onSuccessCallback | State (Post-Fetch):", this.state);
-                this.props.setFlashMessage("success", "Associate has been successfully created.");
-                this.props.history.push("/associates");
-            }
-        )
+        console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+        console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
+        this.props.setFlashMessage("success", "Associate has been successfully created.");
+        this.props.history.push("/associates");
     }
 
     onFailureCallback(errors) {
@@ -321,7 +362,7 @@ class AssociateCreateStep8Container extends Component {
             streetAddress,
 
             // Step 6 - Account
-            skillSet,
+            skillSets,
             insuranceRequirements,
             description,
             hourlySalaryDesired,
@@ -386,7 +427,7 @@ class AssociateCreateStep8Container extends Component {
                 streetAddress={streetAddress}
 
                 // Step 6 - Account
-                skillSet={skillSet}
+                skillSets={skillSets}
                 insuranceRequirements={insuranceRequirements}
                 description={description}
                 hourlySalaryDesired={hourlySalaryDesired}
