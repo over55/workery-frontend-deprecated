@@ -6,14 +6,16 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
+import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 
 
 class AssociateCreateStep6Component extends Component {
     render() {
         const {
-            returnURL, errors, isLoading, onNextClick, onTextChange, onSelectChange, onRadioChange,
-            skillSet, skillSetOptions, onSkillSetMultiChange,
+            description, hourlySalaryDesired, limitSpecial, onTextChange,
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
+            returnURL, errors, isLoading, onNextClick, onSelectChange, onRadioChange,
+            skillSet, skillSetOptions, onSkillSetMultiChange,
         } = this.props;
 
         return (
@@ -107,6 +109,41 @@ class AssociateCreateStep6Component extends Component {
                                 selectedOptions={insuranceRequirements}
                                 error={errors.insuranceRequirements}
                                 onMultiChange={onInsuranceRequirementMultiChange}
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-success"
+                                label="Description"
+                                placeholder="Write any additional details here."
+                                rows="5"
+                                value={description}
+                                helpText="This is the description of the associate."
+                                onChange={onTextChange}
+                                error={errors.description}
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.hourlySalaryDesired}
+                                label="Hourly Rate (*)"
+                                onChange={onTextChange}
+                                value={hourlySalaryDesired}
+                                name="hourlySalaryDesired"
+                                type="number"
+                            />
+
+                            <BootstrapTextarea
+                                name="limitSpecial"
+                                borderColour="border-success"
+                                label="Limitation or special consideration"
+                                placeholder="Please Write any limitation or special consideration that we must know about."
+                                rows="5"
+                                value={limitSpecial}
+                                helpText="This will be used to help better serve our associates."
+                                onChange={onTextChange}
+                                error={errors.limitSpecial}
                             />
 
                             <div className="form-group">

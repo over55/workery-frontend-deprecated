@@ -210,6 +210,10 @@ export function validateStep6CreateInput(data) {
     if (data.insuranceRequirements === undefined || data.insuranceRequirements === null || data.insuranceRequirements === "" || isEmpty(data.insuranceRequirements) ) {
         errors.insuranceRequirements = 'This field is required';
     }
+    if (data.hourlySalaryDesired === undefined || data.hourlySalaryDesired === null || data.hourlySalaryDesired === "" || isNaN(data.hourlySalaryDesired) ) {
+        errors.hourlySalaryDesired = 'This field is required';
+    }
+    
 
     return {
         errors,

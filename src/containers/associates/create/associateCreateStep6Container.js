@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import AssociateCreateStep6Component from "../../../components/associates/create/associateCreateStep6Component";
 import {
-    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem, localStorageGetIntegerItem
 } from '../../../helpers/localStorageUtility';
 import { validateStep6CreateInput } from "../../../validators/associateValidator";
 import {
@@ -25,7 +25,7 @@ class AssociateCreateStep6Container extends Component {
         super(props);
 
         // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("workery-create-associate-typeOf"));
+        const typeOf = localStorageGetIntegerItem("workery-create-associate-typeOf");
         let returnURL;
         if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/associates/add/step-4-rez-or-cc";
@@ -37,6 +37,9 @@ class AssociateCreateStep6Container extends Component {
         this.state = {
             skillSet: localStorageGetArrayItem("workery-create-associate-skillSet"),
             insuranceRequirements: localStorageGetArrayItem("workery-create-associate-insuranceRequirements"),
+            description: localStorage.getItem("workery-create-associate-description"),
+            hourlySalaryDesired: localStorageGetIntegerItem("workery-create-associate-hourlySalaryDesired"),
+            limitSpecial: localStorage.getItem("workery-create-associate-limitSpecial"),
             returnURL: returnURL,
             typeOf: typeOf,
             errors: {},
@@ -203,7 +206,8 @@ class AssociateCreateStep6Container extends Component {
      */
 
     render() {
-        const { skillSet, insuranceRequirements, errors, isLoading, returnURL } = this.state;
+        const {
+            description, hourlySalaryDesired, limitSpecial, skillSet, insuranceRequirements, errors, isLoading, returnURL } = this.state;
         const {
             country, region, locality,
             postalCode, streetAddress,
@@ -211,6 +215,11 @@ class AssociateCreateStep6Container extends Component {
         const { user } = this.props;
         return (
             <AssociateCreateStep6Component
+                description={description}
+                hourlySalaryDesired={hourlySalaryDesired}
+                limitSpecial={limitSpecial}
+                onTextChange={this.onTextChange}
+
                 skillSet={skillSet}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
                 onSkillSetMultiChange={this.onSkillSetMultiChange}
@@ -219,7 +228,6 @@ class AssociateCreateStep6Container extends Component {
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
                 onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
 
-                onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
 
