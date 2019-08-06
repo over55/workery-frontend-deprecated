@@ -120,12 +120,17 @@ export default class AssociateCreateStep8Component extends Component {
                         </div>
                         <div id="step-6" className="st-grey">
                             <Link to="/associates/add/step-6">
+                                <span className="num">6.</span><span className="">Account</span>
+                            </Link>
+                        </div>
+                        <div id="step-7" className="st-grey">
+                            <Link to="/associates/add/step-7">
                                 <span className="num">6.</span><span className="">Metrics</span>
                             </Link>
                         </div>
-                        <div id="step-7" className="st-grey active">
+                        <div id="step-8" className="st-grey active">
                             <strong>
-                                <span className="num">7.</span><span className="">Review</span>
+                                <span className="num">8.</span><span className="">Review</span>
                             </strong>
                         </div>
                     </div>

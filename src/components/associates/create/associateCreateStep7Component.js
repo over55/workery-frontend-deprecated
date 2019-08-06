@@ -75,7 +75,7 @@ export default class AssociateCreateStep7Component extends Component {
                                 <span className="num">6.</span><span className="">Account</span>
                             </Link>
                         </div>
-                         <div id="step-7" className="st-grey active">
+                        <div id="step-7" className="st-grey active">
                             <strong>
                                 <span className="num">7.</span><span className="">Metrics</span>
                             </strong>
