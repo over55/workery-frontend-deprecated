@@ -5,25 +5,14 @@ import { Link } from "react-router-dom";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
-import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
-import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
-
+import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 
 
 class AssociateCreateStep6Component extends Component {
     render() {
         const {
-            country,
-            region, locality, postalCode, streetAddress,
-
-            returnURL,
-            errors,
-            onTextChange,
-            onSelectChange,
-            onBillingCountryChange,
-            onBillingRegionChange,
-            onNextClick,
-            isLoading
+            returnURL, errors, isLoading, onNextClick, onTextChange, onSelectChange, onRadioChange,
+            skillSet, skillSetOptions, onSkillSetMultiChange,
         } = this.props;
 
         return (
@@ -91,64 +80,21 @@ class AssociateCreateStep6Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-address-book"></i>&nbsp;Address
+                                <i className="fas fa-user-circle"></i>&nbsp;Account
                             </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapCountrySelect
-                                inputClassName="form-control"
+                            <BootstrapMultipleSelect
                                 borderColour="border-primary"
-                                error={errors.country}
-                                label="Country (*)"
-                                value={country}
-                                onChange={onBillingCountryChange}
-                                priorityOptions={["CA", "US", "MX"]}
-                                name="country"
-                            />
-                            <BootstrapRegionSelect
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.region}
-                                label="Province / state (*)"
-                                country={country}
-                                value={region}
-                                onChange={onBillingRegionChange}
-                                name="region"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.locality}
-                                label="City (*)"
-                                onChange={onTextChange}
-                                value={locality}
-                                name="locality"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.streetAddress}
-                                label="Street address (*)"
-                                onChange={onTextChange}
-                                value={streetAddress}
-                                name="streetAddress"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.postalCode}
-                                label="Postal / zip (*)"
-                                onChange={onTextChange}
-                                value={postalCode}
-                                name="postalCode"
-                                type="text"
+                                label="Skill Set (*)"
+                                name="skillSet"
+                                defaultOptionLabel="Please select the skills."
+                                options={skillSetOptions}
+                                selectedOptions={skillSet}
+                                error={errors.skillSet}
+                                onMultiChange={onSkillSetMultiChange}
                             />
 
                             <div className="form-group">

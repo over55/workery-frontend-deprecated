@@ -28,8 +28,8 @@ export function getSkillSetReactSelectOptions(skillSetList=[], selectName="skill
                 let skillSet = results[i];
                 skillSetOptions.push({
                     selectName: selectName,
-                    value: skillSet.slug,
-                    label: skillSet.name
+                    value: skillSet.id,
+                    label: skillSet.subCategory
                 });
                 // console.log(skillSet);
             }
