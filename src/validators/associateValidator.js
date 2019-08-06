@@ -213,7 +213,9 @@ export function validateStep6CreateInput(data) {
     if (data.hourlySalaryDesired === undefined || data.hourlySalaryDesired === null || data.hourlySalaryDesired === "" || isNaN(data.hourlySalaryDesired) ) {
         errors.hourlySalaryDesired = 'This field is required';
     }
-    
+    if (data.duesDate === undefined || data.duesDate === null || data.duesDate === "" || isNaN(data.duesDate) ) {
+        errors.duesDate = 'This field is required';
+    }
 
     return {
         errors,

@@ -4,7 +4,11 @@ import Scroll from 'react-scroll';
 
 import AssociateCreateStep6Component from "../../../components/associates/create/associateCreateStep6Component";
 import {
-    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem, localStorageGetIntegerItem
+    localStorageGetObjectItem,
+    localStorageSetObjectOrArrayItem,
+    localStorageGetArrayItem,
+    localStorageGetIntegerItem,
+    localStorageGetDateItem
 } from '../../../helpers/localStorageUtility';
 import { validateStep6CreateInput } from "../../../validators/associateValidator";
 import {
@@ -40,6 +44,7 @@ class AssociateCreateStep6Container extends Component {
             description: localStorage.getItem("workery-create-associate-description"),
             hourlySalaryDesired: localStorageGetIntegerItem("workery-create-associate-hourlySalaryDesired"),
             limitSpecial: localStorage.getItem("workery-create-associate-limitSpecial"),
+            duesDate: localStorageGetDateItem("workery-create-associate-duesDate"),
             returnURL: returnURL,
             typeOf: typeOf,
             errors: {},
@@ -50,6 +55,7 @@ class AssociateCreateStep6Container extends Component {
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
         this.onInsuranceRequirementMultiChange = this.onInsuranceRequirementMultiChange.bind(this);
+        this.onDuesDateChange = this.onDuesDateChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -182,6 +188,16 @@ class AssociateCreateStep6Container extends Component {
         localStorageSetObjectOrArrayItem(key, selectedOptions);
     }
 
+    onDuesDateChange(dateObj) {
+        this.setState(
+            { duesDate: dateObj },
+            ()=>{
+                localStorageSetObjectOrArrayItem('workery-create-associate-duesDate', dateObj);
+                console.log(this.state);
+            }
+        );
+    }
+
     onNextClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -207,7 +223,11 @@ class AssociateCreateStep6Container extends Component {
 
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial, skillSet, insuranceRequirements, errors, isLoading, returnURL } = this.state;
+            description, hourlySalaryDesired, limitSpecial,
+            skillSet,
+            insuranceRequirements,
+            duesDate,
+            errors, isLoading, returnURL } = this.state;
         const {
             country, region, locality,
             postalCode, streetAddress,
@@ -227,6 +247,9 @@ class AssociateCreateStep6Container extends Component {
                 insuranceRequirements={insuranceRequirements}
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
                 onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
+
+                duesDate={duesDate}
+                onDuesDateChange={this.onDuesDateChange}
 
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}

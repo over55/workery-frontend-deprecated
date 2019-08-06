@@ -7,6 +7,7 @@ import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 
 
 class AssociateCreateStep6Component extends Component {
@@ -16,6 +17,7 @@ class AssociateCreateStep6Component extends Component {
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
             returnURL, errors, isLoading, onNextClick, onSelectChange, onRadioChange,
             skillSet, skillSetOptions, onSkillSetMultiChange,
+            duesDate, onDuesDateChange,
         } = this.props;
 
         return (
@@ -144,6 +146,16 @@ class AssociateCreateStep6Component extends Component {
                                 helpText="This will be used to help better serve our associates."
                                 onChange={onTextChange}
                                 error={errors.limitSpecial}
+                            />
+
+                            <BootstrapDatePicker
+                                label="Member Dues (*)"
+                                name="duesDate"
+                                dateObj={duesDate}
+                                onTimeChange={onDuesDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.duesDate}
                             />
 
                             <div className="form-group">
