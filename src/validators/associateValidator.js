@@ -36,21 +36,7 @@ export function validateInput(data) {
 
     } else if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
 
-        if (data.companyName === undefined || data.companyName === null || validator.isEmpty(data.companyName) || data.companyName === "") {
-            errors.companyName = 'This field is required';
-        }
-        if (data.contactFirstName === undefined || data.contactFirstName === null || validator.isEmpty(data.contactFirstName) || data.contactFirstName === "") {
-            errors.contactFirstName = 'This field is required';
-        }
-        if (data.contactLastName === undefined || data.contactLastName === null || validator.isEmpty(data.contactLastName) || data.contactLastName === "") {
-            errors.contactLastName = 'This field is required';
-        }
-        if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-            errors.primaryPhone = 'This field is required';
-        }
-        if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
-            errors.email = 'This field is required';
-        }
+        alert("TODO"); // TODO: IMPLEMENT WHEN READY.
 
     }
 
@@ -72,7 +58,37 @@ export function validateInput(data) {
         errors.postalCode = 'This field is required';
     }
 
-    // --- EXTRA --- //
+    // --- ACCOUNT --- //
+
+    if (data.skillSet === undefined || data.skillSet === null || data.skillSet === "" || isEmpty(data.skillSet) ) {
+        errors.skillSet = 'This field is required';
+    }
+    if (data.insuranceRequirements === undefined || data.insuranceRequirements === null || data.insuranceRequirements === "" || isEmpty(data.insuranceRequirements) ) {
+        errors.insuranceRequirements = 'This field is required';
+    }
+    if (data.hourlySalaryDesired === undefined || data.hourlySalaryDesired === null || data.hourlySalaryDesired === "" || isNaN(data.hourlySalaryDesired) ) {
+        errors.hourlySalaryDesired = 'This field is required';
+    }
+    if (data.duesDate === undefined || data.duesDate === null || data.duesDate === "" || isNaN(data.duesDate) ) {
+        errors.duesDate = 'This field is required';
+    }
+    if (data.commercialInsuranceExpiryDate === undefined || data.commercialInsuranceExpiryDate === null || data.commercialInsuranceExpiryDate === "" || isNaN(data.commercialInsuranceExpiryDate) ) {
+        errors.commercialInsuranceExpiryDate = 'This field is required';
+    }
+    // if (data.autoInsuranceExpiryDate === undefined || data.autoInsuranceExpiryDate === null || data.autoInsuranceExpiryDate === "" || isNaN(data.autoInsuranceExpiryDate) ) {
+    //     errors.autoInsuranceExpiryDate = 'This field is required';
+    // }
+    // if (data.wsibInsuranceDate === undefined || data.wsibInsuranceDate === null || data.wsibInsuranceDate === "" || isNaN(data.wsibInsuranceDate) ) {
+    //     errors.wsibInsuranceDate = 'This field is required';
+    // }
+    if (data.policeCheck === undefined || data.policeCheck === null || data.policeCheck === "" || isNaN(data.policeCheck) ) {
+        errors.policeCheck = 'This field is required';
+    }
+    if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
+        errors.isActive = 'This field is required';
+    }
+
+    // --- METRICS --- //
 
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
@@ -231,7 +247,7 @@ export function validateStep6CreateInput(data) {
     if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
         errors.isActive = 'This field is required';
     }
-    
+
     return {
         errors,
         isValid: isEmpty(errors)
