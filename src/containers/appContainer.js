@@ -75,8 +75,6 @@ import OrderCreateStep3Container from "./orders/create/orderCreateStep3Container
 import OrderCreateStep4Container from "./orders/create/orderCreateStep4Container";
 import OrderCreateStep5Container from "./orders/create/orderCreateStep5Container";
 import OrderCreateStep6Container from "./orders/create/orderCreateStep6Container";
-import OrderCreateStep7Container from "./orders/create/orderCreateStep7Container";
-import OrderCreateStep8Container from "./orders/create/orderCreateStep8Container";
 import OrderUpdateContainer from "./orders/update/orderUpdateContainer";
 import OrderPromoteStep1Container from "./orders/promote/orderPromoteStep1Container";
 import OrderPromoteStep2Container from "./orders/promote/orderPromoteStep2Container";
@@ -255,8 +253,6 @@ class AppContainer extends React.Component {
                                 <Route path="/orders/add/step-4" exact component={requiresAuth(OrderCreateStep4Container)} />
                                 <Route path="/orders/add/step-5" exact component={requiresAuth(OrderCreateStep5Container)} />
                                 <Route path="/orders/add/step-6" exact component={requiresAuth(OrderCreateStep6Container)} />
-                                <Route path="/orders/add/step-7" exact component={requiresAuth(OrderCreateStep7Container)} />
-                                <Route path="/orders/add/step-8" exact component={requiresAuth(OrderCreateStep8Container)} />
                                 <Route path="/orders" exact component={requiresAuth(OrderListContainer)} />
                                 <Route path="/orders/search" exact component={requiresAuth(OrderSearchContainer)} />
                                 <Route path="/orders/search-results" exact component={requiresAuth(OrderSearchResultContainer)} />
