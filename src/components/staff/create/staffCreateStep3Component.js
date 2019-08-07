@@ -2,9 +2,12 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { FRONTLINE_GROUP_ID, MANAGEMENT_GROUP_ID } from "../../../constants/api";
+
 
 export default class StaffCreateStep3Component extends Component {
     render() {
+        const { onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -13,7 +16,7 @@ export default class StaffCreateStep3Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-crown"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -39,7 +42,7 @@ export default class StaffCreateStep3Component extends Component {
                         </div>
                         <div id="step-3" className="st-grey active">
                             <strong>
-                                <span className="num">3.</span><span className="">Type</span>
+                                <span className="num">3.</span><span className="">Group</span>
                             </strong>
                         </div>
                         <div id="step-4" className="st-grey">
@@ -61,40 +64,40 @@ export default class StaffCreateStep3Component extends Component {
                 </div>
 
                 <h2>
-                    <i className="fas fa-sitemap"></i>&nbsp;Select Staff Type
+                    <i className="fas fa-sitemap"></i>&nbsp;Select Group Membership
                 </h2>
 
                 <div className="card-group row">
-                    <div className="col-sm-12">
-                        <div className="card box-shadow text-center mx-auto">
-                            <div className="card-custom-top-2">
-                                <i className="fas fa-home fa-3x"></i>
-                            </div>
-                            <div className="card-body">
-                                <h3 className="card-title">Residential</h3>
-                                <p className="card-text">Add a residential staff</p>
-                                <Link to="/staff/add/step-4-rez-or-cc" className="btn btn-primary btn-lg">
-                                    Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-{ /*
                     <div className="col-sm-6">
                         <div className="card box-shadow text-center mx-auto">
                             <div className="card-custom-top-2">
-                                <i className="fas fa-building fa-3x"></i>
+                                <i className="fas fa-user-friends fa-3x"></i>
                             </div>
                             <div className="card-body">
-                                <h3 className="card-title">Business</h3>
-                                <p className="card-text">Add a business staff</p>
-                                <Link to="/staff/add/step-4-biz" className="btn btn-primary btn-lg">
+                                <h3 className="card-title">Frontline Staff</h3>
+                                <p className="card-text">Add a residential staff</p>
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, FRONTLINE_GROUP_ID)} }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>
-*/}
+
+                    <div className="col-sm-6">
+                        <div className="card box-shadow text-center mx-auto">
+                            <div className="card-custom-top-2">
+                                <i className="fas fa-users-cog fa-3x"></i>
+                            </div>
+                            <div className="card-body">
+                                <h3 className="card-title">Management</h3>
+                                <p className="card-text">Add a business staff</p>
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, MANAGEMENT_GROUP_ID)} }>
+                                    Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div className="form-group">

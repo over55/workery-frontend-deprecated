@@ -44,7 +44,7 @@ export default class StaffCreateStep2Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-crown"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -67,7 +67,7 @@ export default class StaffCreateStep2Component extends Component {
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Type</span>
+                            <span className="num">3.</span><span className="">Group</span>
                         </div>
                         <div id="step-4" className="st-grey">
                             <span className="num">4.</span><span className="">Contact</span>

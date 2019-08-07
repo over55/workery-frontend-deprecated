@@ -127,7 +127,7 @@ export function staffValidator(data) {
 /**
  *  Validator will validate step 4 in the staff creation form.
  */
-export function validateStep4RezCreateInput(data) {
+export function validateStep4CreateInput(data) {
     let errors = {};
 
     if (data.firstName === undefined || data.firstName === null || validator.isEmpty(data.firstName) || data.firstName === "") {
@@ -138,44 +138,6 @@ export function validateStep4RezCreateInput(data) {
     }
     if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
         errors.primaryPhone = 'This field is required';
-    }
-    if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
-        errors.email = 'This field is required';
-    }
-    if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
-        errors.isOkToEmail = 'This field is required';
-    }
-    if (data.isOkToText === undefined || data.isOkToText === null || data.isOkToText === "" || isNaN(data.isOkToText) ) {
-        errors.isOkToText = 'This field is required';
-    }
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    }
-}
-
-
-/**
- *  Validator will validate step 4 in the staff creation form.
- */
-export function validateStep4BizCreateInput(data) {
-    let errors = {};
-
-    if (data.companyName === undefined || data.companyName === null || validator.isEmpty(data.companyName) || data.companyName === "") {
-        errors.companyName = 'This field is required';
-    }
-    if (data.contactFirstName === undefined || data.contactFirstName === null || validator.isEmpty(data.contactFirstName) || data.contactFirstName === "") {
-        errors.contactFirstName = 'This field is required';
-    }
-    if (data.contactLastName === undefined || data.contactLastName === null || validator.isEmpty(data.contactLastName) || data.contactLastName === "") {
-        errors.contactLastName = 'This field is required';
-    }
-    if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-        errors.primaryPhone = 'This field is required';
-    }
-    if (data.primaryPhoneTypeOf === undefined || data.primaryPhoneTypeOf === null || data.primaryPhoneTypeOf === "" || isNaN(data.primaryPhoneTypeOf) ) {
-        errors.primaryPhoneTypeOf = 'This field is required';
     }
     if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
         errors.email = 'This field is required';

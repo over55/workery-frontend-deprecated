@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import StaffCreateStep4BizComponent from "../../../components/staff/create/staffCreateStep4BizComponent";
-import { validateStep4BizCreateInput } from "../../../validators/staffValidator";
+import StaffCreateStep4Component from "../../../components/staff/create/staffCreateStep4Component";
+import { validateStep4CreateInput } from "../../../validators/staffValidator";
 import {
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
-    SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    TELEPHONE_CONTACT_POINT_TYPE_OF_ID
 } from '../../../constants/api';
-import { localStorageSetObjectOrArrayItem, localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
-class StaffCreateStep4BizContainer extends Component {
+class StaffCreateStep4Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -20,22 +19,18 @@ class StaffCreateStep4BizContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyName: localStorage.getItem("workery-create-staff-biz-companyName"),
-            contactFirstName: localStorage.getItem("workery-create-staff-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-staff-biz-contactLastName"),
-            primaryPhone: localStorage.getItem("workery-create-staff-biz-primaryPhone"),
-            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-staff-biz-primaryPhoneTypeOf"),
-            secondaryPhone: localStorage.getItem("workery-create-staff-biz-secondaryPhone"),
-            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-staff-biz-secondaryPhoneTypeOf"),
-            email: localStorage.getItem("workery-create-staff-biz-email"),
-            isOkToEmail: localStorageGetIntegerItem("workery-create-staff-biz-isOkToEmail"),
-            isOkToText: localStorageGetIntegerItem("workery-create-staff-biz-isOkToText"),
+            firstName: localStorage.getItem("workery-create-staff-rez-firstName"),
+            lastName: localStorage.getItem("workery-create-staff-rez-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-staff-rez-primaryPhone"),
+            secondaryPhone: localStorage.getItem("workery-create-staff-rez-secondaryPhone"),
+            email: localStorage.getItem("workery-create-staff-rez-email"),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-staff-rez-isOkToEmail"),
+            isOkToText: localStorageGetIntegerItem("workery-create-staff-rez-isOkToText"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -52,9 +47,12 @@ class StaffCreateStep4BizContainer extends Component {
 
         // DEVELOPERS NOTE:
         // Since we are in this page, we need to assign the user to be
-        // a business type user.
-        localStorage.setItem("workery-create-staff-typeOf", COMMERCIAL_CUSTOMER_TYPE_OF_ID);
-        localStorage.setItem("workery-create-staff-typeOf-label", "Business");
+        // a residential type user. If the user is community cares type
+        // then this variable will be set then in page 4.
+        localStorage.setItem("workery-create-staff-typeOf", RESIDENTIAL_CUSTOMER_TYPE_OF_ID);
+        localStorage.setItem("workery-create-staff-typeOf-label", "Residential");
+        localStorage.setItem("workery-create-staff-rez-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
+        localStorage.setItem("workery-create-staff-rez-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
     }
 
     componentWillUnmount() {
@@ -96,28 +94,14 @@ class StaffCreateStep4BizContainer extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        const key = "workery-create-staff-biz-"+[e.target.name];
+        const key = "workery-create-staff-rez-"+[e.target.name];
         localStorage.setItem(key, e.target.value);
-    }
-
-    onSelectChange(option) {
-        console.log(option);
-        const optionKey = [option.selectName]+"Option";
-        this.setState(
-            { [option.selectName]: option.value, [optionKey]: option, },
-            ()=>{
-                localStorage.setItem('workery-create-staff-biz-'+[option.selectName].toString(), option.value);
-                localStorage.setItem('workery-create-staff-biz-'+[option.selectName].toString()+"Label", option.label);
-                localStorageSetObjectOrArrayItem('workery-create-staff-biz-'+optionKey, option);
-                console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-            }
-        );
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-staff-biz-"+[e.target.name];
-        const storageLabelKey =  "workery-create-staff-biz-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-create-staff-rez-"+[e.target.name];
+        const storageLabelKey =  "workery-create-staff-rez-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -145,7 +129,7 @@ class StaffCreateStep4BizContainer extends Component {
         e.preventDefault();
 
         // Perform staff-side validation.
-        const { errors, isValid } = validateStep4BizCreateInput(this.state);
+        const { errors, isValid } = validateStep4CreateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -165,25 +149,19 @@ class StaffCreateStep4BizContainer extends Component {
 
     render() {
         const {
-            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
+            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
         } = this.state;
         return (
-            <StaffCreateStep4BizComponent
-                companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
+            <StaffCreateStep4Component
+                firstName={firstName}
+                lastName={lastName}
                 primaryPhone={primaryPhone}
-                primaryPhoneTypeOf={primaryPhoneTypeOf}
-                primaryPhoneTypeOfOptions={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
                 secondaryPhone={secondaryPhone}
-                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
-                secondaryPhoneTypeOfOptions={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
                 email={email}
                 isOkToEmail={isOkToEmail}
                 isOkToText={isOkToText}
                 errors={errors}
                 onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
             />
@@ -205,4 +183,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(StaffCreateStep4BizContainer);
+)(StaffCreateStep4Container);

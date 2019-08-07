@@ -3,21 +3,18 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
+// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
 
 
-class AsociateCreateStep4BizComponent extends Component {
+class StaffCreateStep4Component extends Component {
     render() {
         const {
-            companyName, contactFirstName, contactLastName,
-            primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
-            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors,
-            isOkToEmail, isOkToText,
-            onTextChange, onSelectChange, onRadioChange, isLoading, onClick
+            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors,
+            onTextChange, onRadioChange, isLoading, onClick
         } = this.props;
         return (
             <main id="main" role="main">
@@ -27,7 +24,7 @@ class AsociateCreateStep4BizComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/asociates"><i className="fas fa-user-circle"></i>&nbsp;Asociates</Link>
+                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -36,24 +33,24 @@ class AsociateCreateStep4BizComponent extends Component {
                 </nav>
 
                 <h1>
-                    <i className="fas fa-plus"></i>&nbsp;Add Asociate
+                    <i className="fas fa-plus"></i>&nbsp;Add Staff
                 </h1>
 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to="/asociates/add/step-1">
+                            <Link to="/staff/add/step-1">
                                 <span className="num">1.</span><span className="">Search</span>
                             </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to="/asociates/add/step-2">
+                            <Link to="/staff/add/step-2">
                                 <span className="num">2.</span><span className="">Results</span>
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <Link to="/asociates/add/step-3">
-                                <span className="num">3.</span><span className="">Type</span>
+                            <Link to="/staff/add/step-3">
+                                <span className="num">3.</span><span className="">Group</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey active">
@@ -65,10 +62,13 @@ class AsociateCreateStep4BizComponent extends Component {
                             <span className="num">5.</span><span className="">Address</span>
                         </div>
                         <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Metrics</span>
+                            <span className="num">6.</span><span className="">Account</span>
                         </div>
                         <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Review</span>
+                            <span className="num">7.</span><span className="">Metrics</span>
+                        </div>
+                        <div id="step-8" className="st-grey">
+                            <span className="num">8.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@ class AsociateCreateStep4BizComponent extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                               <i className="fas fa-id-card"></i>&nbsp;Contact
+                                <i className="fas fa-id-card"></i>&nbsp;Contact
                             </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
@@ -86,33 +86,22 @@ class AsociateCreateStep4BizComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.companyName}
-                                label="Company Name (*)"
+                                error={errors.firstName}
+                                label="First Name (*)"
                                 onChange={onTextChange}
-                                value={companyName}
-                                name="companyName"
+                                value={firstName}
+                                name="firstName"
                                 type="text"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.contactFirstName}
-                                label="Contact First Name (*)"
+                                error={errors.lastName}
+                                label="Last Name (*)"
                                 onChange={onTextChange}
-                                value={contactFirstName}
-                                name="contactFirstName"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.contactLastName}
-                                label="Contact Last Name (*)"
-                                onChange={onTextChange}
-                                value={contactLastName}
-                                name="contactLastName"
+                                value={lastName}
+                                name="lastName"
                                 type="text"
                             />
 
@@ -128,17 +117,6 @@ class AsociateCreateStep4BizComponent extends Component {
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
 
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Primary Telephone type (*)"
-                                name="primaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={primaryPhoneTypeOfOptions}
-                                value={primaryPhoneTypeOf}
-                                error={errors.primaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
-                            />
-
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
@@ -149,17 +127,6 @@ class AsociateCreateStep4BizComponent extends Component {
                                 name="secondaryPhone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-success"
-                                label="Secondary Telephone type"
-                                name="secondaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={secondaryPhoneTypeOfOptions}
-                                value={secondaryPhoneTypeOf}
-                                error={errors.secondaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapInput
@@ -182,7 +149,7 @@ class AsociateCreateStep4BizComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToEmail}
                                 options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting "yes" will result in asociate getting emails from our system.'
+                                helpText='Selecting "yes" will result in staff getting emails from our system.'
                             />
 
                             <BootstrapRadio
@@ -194,15 +161,16 @@ class AsociateCreateStep4BizComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToText}
                                 options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting "yes" will result in asociate getting text-messages on their phone from our system.'
+                                helpText='Selecting "yes" will result in staff getting text-messages on their phone from our system.'
                             />
+
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Proceed to Address&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/asociates/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
-                                    <i className="fas fa-arrow-circle-left"></i> Back
+                                <Link to="/staff/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
 
@@ -215,4 +183,4 @@ class AsociateCreateStep4BizComponent extends Component {
     }
 }
 
-export default AsociateCreateStep4BizComponent;
+export default StaffCreateStep4Component;

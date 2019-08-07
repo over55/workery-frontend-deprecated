@@ -4,11 +4,24 @@ import { connect } from 'react-redux';
 import StaffCreateStep3Component from "../../../components/staff/create/staffCreateStep3Component";
 
 
+
 class StaffCreateStep3Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
      */
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            groupId: localStorage.getItem("workery-create-staff-groupId"),
+            isLoading: true,
+            errors: {},
+            page: 1,
+        }
+
+        this.onClick = this.onClick.bind(this);
+    }
 
     /**
      *  Component Life-cycle Management
@@ -37,6 +50,11 @@ class StaffCreateStep3Container extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
+    onClick(e, groupId) {
+        e.preventDefault();
+        localStorage.setItem("workery-create-staff-groupId", groupId);
+        this.props.history.push("/staff/add/step-4");
+    }
 
 
     /**
@@ -46,7 +64,7 @@ class StaffCreateStep3Container extends Component {
 
     render() {
         return (
-            <StaffCreateStep3Component />
+            <StaffCreateStep3Component onClick={this.onClick} />
         );
     }
 }

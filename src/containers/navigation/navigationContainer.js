@@ -10,10 +10,9 @@ import { getSubdomain } from '../../helpers/urlUtility';
 import {
     EXECUTIVE_GROUP_ID,
     MANAGEMENT_GROUP_ID,
-    FRONTLINE_STAFF_GROUP_ID,
+    FRONTLINE_GROUP_ID,
     ASSOCIATE_GROUP_ID,
-    AREA_COORDINATOR_GROUP_ID,
-    MEMBER_GROUP_ID,
+    CUSTOMER_GROUP_ID,
     ANONYMOUS_GROUP_ID,
 } from '../../constants/api';
 
@@ -158,26 +157,6 @@ const AUTH_ASSOCIATE_MENU_DATA = [
 ];
 
 
-const AUTH_AREA_COORDINATOR_MENU_DATA = [
-    {
-        id: "full-dashboard",
-        icon: "tachometer-alt",
-        title: "Dashboard",
-        url: "/dashboard"
-    },{
-        id: "full-help",
-        icon: "question-circle",
-        title: "Help",
-        url: "/help"
-    },{
-        id: "full-logout",
-        icon: "sign-out-alt",
-        title: "Logout",
-        url: "/logout"
-    }
-];
-
-
 const AUTH_MEMBER_MENU_DATA = [
     {
         id: "full-dashboard",
@@ -202,10 +181,9 @@ const AUTH_MEMBER_MENU_DATA = [
 export const NAVIGATION_TREE = {
     [EXECUTIVE_GROUP_ID]: AUTH_MANAGEMENT_STAFF_MENU_DATA,
     [MANAGEMENT_GROUP_ID]: AUTH_MANAGEMENT_STAFF_MENU_DATA,
-    [FRONTLINE_STAFF_GROUP_ID]: AUTH_FRONTLINE_STAFF_MENU_DATA,
+    [FRONTLINE_GROUP_ID]: AUTH_FRONTLINE_STAFF_MENU_DATA,
     [ASSOCIATE_GROUP_ID]: AUTH_ASSOCIATE_MENU_DATA,
-    [AREA_COORDINATOR_GROUP_ID]: AUTH_AREA_COORDINATOR_MENU_DATA,
-    [MEMBER_GROUP_ID]: AUTH_MEMBER_MENU_DATA,
+    [CUSTOMER_GROUP_ID]: AUTH_MEMBER_MENU_DATA,
     [ANONYMOUS_GROUP_ID]: ANON_MENU_DATA,
 }
 

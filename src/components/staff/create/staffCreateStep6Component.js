@@ -37,7 +37,7 @@ class StaffCreateStep6Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-crown"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -63,7 +63,7 @@ class StaffCreateStep6Component extends Component {
                         </div>
                         <div id="step-3" className="st-grey">
                             <Link to="/staff/add/step-3">
-                                <span className="num">3.</span><span className="">Type</span>
+                                <span className="num">3.</span><span className="">Group</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
@@ -94,7 +94,7 @@ class StaffCreateStep6Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-crown"></i>&nbsp;Account
+                                <i className="fas fa-user-tie"></i>&nbsp;Account
                             </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 

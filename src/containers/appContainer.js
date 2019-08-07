@@ -41,9 +41,6 @@ import ClientCreateStep5Container from "./clients/create/clientCreateStep5Contai
 import ClientCreateStep6Container from "./clients/create/clientCreateStep6Container";
 import ClientCreateStep7Container from "./clients/create/clientCreateStep7Container";
 import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
-import ClientPromoteStep1Container from "./clients/promote/clientPromoteStep1Container";
-import ClientPromoteStep2Container from "./clients/promote/clientPromoteStep2Container";
-import ClientPromoteStep3Container from "./clients/promote/clientPromoteStep3Container";
 
 // Associate
 import AssociateListContainer from "./associates/list/associateListContainer";
@@ -76,9 +73,6 @@ import OrderCreateStep4Container from "./orders/create/orderCreateStep4Container
 import OrderCreateStep5Container from "./orders/create/orderCreateStep5Container";
 import OrderCreateStep6Container from "./orders/create/orderCreateStep6Container";
 import OrderUpdateContainer from "./orders/update/orderUpdateContainer";
-import OrderPromoteStep1Container from "./orders/promote/orderPromoteStep1Container";
-import OrderPromoteStep2Container from "./orders/promote/orderPromoteStep2Container";
-import OrderPromoteStep3Container from "./orders/promote/orderPromoteStep3Container";
 
 // Tasks
 import TaskListContainer from "./tasks/list/taskListContainer";
@@ -101,8 +95,7 @@ import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContai
 import StaffCreateStep1Container from "./staff/create/staffCreateStep1Container";
 import StaffCreateStep2Container from "./staff/create/staffCreateStep2Container";
 import StaffCreateStep3Container from "./staff/create/staffCreateStep3Container";
-import StaffCreateStep4BizContainer from "./staff/create/staffCreateStep4BizContainer";
-import StaffCreateStep4RezContainer from "./staff/create/staffCreateStep4RezContainer";
+import StaffCreateStep4Container from "./staff/create/staffCreateStep4Container";
 import StaffCreateStep5Container from "./staff/create/staffCreateStep5Container";
 import StaffCreateStep6Container from "./staff/create/staffCreateStep6Container";
 import StaffCreateStep7Container from "./staff/create/staffCreateStep7Container";
@@ -179,9 +172,6 @@ import PartnerCreateStep4Container from "./partners/create/partnerCreateStep4Con
 import PartnerCreateStep5Container from "./partners/create/partnerCreateStep5Container";
 import PartnerCreateStep6Container from "./partners/create/partnerCreateStep6Container";
 import PartnerUpdateContainer from "./partners/update/partnerUpdateContainer";
-import PartnerPromoteStep1Container from "./partners/promote/partnerPromoteStep1Container";
-import PartnerPromoteStep2Container from "./partners/promote/partnerPromoteStep2Container";
-import PartnerPromoteStep3Container from "./partners/promote/partnerPromoteStep3Container";
 
 
 class AppContainer extends React.Component {
@@ -228,9 +218,6 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id" exact component={requiresAuth(ClientLiteRetrieveContainer)} />
                                 <Route path="/client/:id/full" exact component={requiresAuth(ClientFullRetrieveContainer)} />
                                 <Route path="/client/:id/update" exact component={requiresAuth(ClientUpdateContainer)} />
-                                <Route path="/client/:id/promote/step-1" exact component={requiresAuth(ClientPromoteStep1Container)} />
-                                <Route path="/client/:id/promote/step-2" exact component={requiresAuth(ClientPromoteStep2Container)} />
-                                <Route path="/client/:id/promote/step-3" exact component={requiresAuth(ClientPromoteStep3Container)} />
 
                                 { /* ASSOCIATES */ }
                                 <Route path="/associates/add/step-1" exact component={requiresAuth(AssociateCreateStep1Container)} />
@@ -263,9 +250,6 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:id" exact component={requiresAuth(OrderLiteRetrieveContainer)} />
                                 <Route path="/order/:id/full" exact component={requiresAuth(OrderFullRetrieveContainer)} />
                                 <Route path="/order/:id/update" exact component={requiresAuth(OrderUpdateContainer)} />
-                                <Route path="/order/:id/promote/step-1" exact component={requiresAuth(OrderPromoteStep1Container)} />
-                                <Route path="/order/:id/promote/step-2" exact component={requiresAuth(OrderPromoteStep2Container)} />
-                                <Route path="/order/:id/promote/step-3" exact component={requiresAuth(OrderPromoteStep3Container)} />
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />
@@ -282,8 +266,7 @@ class AppContainer extends React.Component {
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />
                                 <Route path="/staff/add/step-2" exact component={requiresAuth(StaffCreateStep2Container)} />
                                 <Route path="/staff/add/step-3" exact component={requiresAuth(StaffCreateStep3Container)} />
-                                <Route path="/staff/add/step-4-biz" exact component={requiresAuth(StaffCreateStep4BizContainer)} />
-                                <Route path="/staff/add/step-4-rez-or-cc" exact component={requiresAuth(StaffCreateStep4RezContainer)} />
+                                <Route path="/staff/add/step-4" exact component={requiresAuth(StaffCreateStep4Container)} />
                                 <Route path="/staff/add/step-5" exact component={requiresAuth(StaffCreateStep5Container)} />
                                 <Route path="/staff/add/step-6" exact component={requiresAuth(StaffCreateStep6Container)} />
                                 <Route path="/staff/add/step-7" exact component={requiresAuth(StaffCreateStep7Container)} />
@@ -355,9 +338,6 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id" exact component={requiresAuth(PartnerLiteRetrieveContainer)} />
                                 <Route path="/partner/:id/full" exact component={requiresAuth(PartnerFullRetrieveContainer)} />
                                 <Route path="/partner/:id/update" exact component={requiresAuth(PartnerUpdateContainer)} />
-                                <Route path="/partner/:id/promote/step-1" exact component={requiresAuth(PartnerPromoteStep1Container)} />
-                                <Route path="/partner/:id/promote/step-2" exact component={requiresAuth(PartnerPromoteStep2Container)} />
-                                <Route path="/partner/:id/promote/step-3" exact component={requiresAuth(PartnerPromoteStep3Container)} />
 
                                 { /* EVERYTHING ELSE... */ }
                                 <Route component={NotFound404Container} />

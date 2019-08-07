@@ -64,10 +64,9 @@ export const WORKERY_PROFILE_API_URL = process.env.REACT_APP_API_HOST+'/api/prof
  */
 export const EXECUTIVE_GROUP_ID = 1
 export const MANAGEMENT_GROUP_ID = 2
-export const FRONTLINE_STAFF_GROUP_ID = 3
+export const FRONTLINE_GROUP_ID = 3
 export const ASSOCIATE_GROUP_ID = 4
-export const AREA_COORDINATOR_GROUP_ID = 5
-export const MEMBER_GROUP_ID = 6
+export const CUSTOMER_GROUP_ID = 5
 export const ANONYMOUS_GROUP_ID = 0
 export const GROUP_MEMBERSHIP_CHOICES = [
     {
@@ -80,7 +79,7 @@ export const GROUP_MEMBERSHIP_CHOICES = [
         label: "Manager"
     },{
         selectName: "group",
-        value: FRONTLINE_STAFF_GROUP_ID,
+        value: FRONTLINE_GROUP_ID,
         label: "Frontline Staff"
     },{
         selectName: "group",
@@ -88,18 +87,9 @@ export const GROUP_MEMBERSHIP_CHOICES = [
         label: "Associate"
     },{
         selectName: "group",
-        value: AREA_COORDINATOR_GROUP_ID,
-        label: "Area Coordinator"
-    },{
-        selectName: "group",
-        value: MEMBER_GROUP_ID,
+        value: CUSTOMER_GROUP_ID,
         label: "Member"
     }
-];
-export const STAFF_GROUP_MEMBERSHIP_IDS_ARRAY = [
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID,
-    FRONTLINE_STAFF_GROUP_ID,
 ];
 
 
@@ -480,7 +470,7 @@ export const TENANT_STAFF_GROUP_MEMBERSHIP_CHOICES = [
         label: "Management"
     },{
         selectName: "accountType",
-        value: FRONTLINE_STAFF_GROUP_ID,
+        value: FRONTLINE_GROUP_ID,
         label: "Frontline Staff"
     }
 ];
