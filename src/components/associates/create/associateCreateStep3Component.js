@@ -79,7 +79,7 @@ export default class AssociateCreateStep3Component extends Component {
                             </div>
                         </div>
                     </div>
-                    { /*
+{ /*
                     <div className="col-sm-6">
                         <div className="card box-shadow text-center mx-auto">
                             <div className="card-custom-top-2">
@@ -94,7 +94,7 @@ export default class AssociateCreateStep3Component extends Component {
                             </div>
                         </div>
                     </div>
-                    */ }
+*/}
                 </div>
 
                 <div className="form-group">

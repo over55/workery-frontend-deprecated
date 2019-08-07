@@ -14,7 +14,10 @@ class PartnerCreateStep1Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            firstName: localStorage.getItem("workery-create-partner-firstName"),
+            lastName: localStorage.getItem("workery-create-partner-lastName"),
+            email: localStorage.getItem("workery-create-partner-email"),
+            phone: localStorage.getItem("workery-create-partner-phone"),
             errors: {},
             isLoading: false
         }
@@ -73,7 +76,9 @@ class PartnerCreateStep1Container extends Component {
     onTextChange(e) {
         this.setState({
             [e.target.name]: e.target.value,
-        })
+        });
+        const key = "workery-create-partner-"+[e.target.name].toString();
+        localStorage.setItem(key, e.target.value);
     }
 
     onClick(e) {
@@ -90,10 +95,13 @@ class PartnerCreateStep1Container extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { firstName, lastName, email, phone, errors, isLoading } = this.state
         return (
             <PartnerCreateStep1Component
-                name={name}
+                firstName={firstName}
+                lastName={lastName}
+                email={email}
+                phone={phone}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}

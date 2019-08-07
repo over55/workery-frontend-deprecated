@@ -179,6 +179,13 @@ class ClientCreateStep7Container extends Component {
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
 
+        // () First Name and Last Name if biz
+        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            postData.firstName = this.state.contactFirstName;
+            postData.givenName = this.state.contactFirstName;
+            postData.lastName = this.state.contactLastName;
+        }
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;

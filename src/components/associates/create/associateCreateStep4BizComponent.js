@@ -10,7 +10,7 @@ import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
 
 
-class AssociateCreateStep4BizComponent extends Component {
+class AsociateCreateStep4BizComponent extends Component {
     render() {
         const {
             companyName, contactFirstName, contactLastName,
@@ -27,7 +27,7 @@ class AssociateCreateStep4BizComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/associates"><i className="fas fa-crown"></i>&nbsp;Associates</Link>
+                            <Link to="/asociates"><i className="fas fa-user-circle"></i>&nbsp;Asociates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -36,23 +36,23 @@ class AssociateCreateStep4BizComponent extends Component {
                 </nav>
 
                 <h1>
-                    <i className="fas fa-plus"></i>&nbsp;Add Associate
+                    <i className="fas fa-plus"></i>&nbsp;Add Asociate
                 </h1>
 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to="/associates/add/step-1">
+                            <Link to="/asociates/add/step-1">
                                 <span className="num">1.</span><span className="">Search</span>
                             </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to="/associates/add/step-2">
+                            <Link to="/asociates/add/step-2">
                                 <span className="num">2.</span><span className="">Results</span>
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <Link to="/associates/add/step-3">
+                            <Link to="/asociates/add/step-3">
                                 <span className="num">3.</span><span className="">Type</span>
                             </Link>
                         </div>
@@ -65,13 +65,10 @@ class AssociateCreateStep4BizComponent extends Component {
                             <span className="num">5.</span><span className="">Address</span>
                         </div>
                         <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Account</span>
+                            <span className="num">6.</span><span className="">Metrics</span>
                         </div>
                         <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Metrics</span>
-                        </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
+                            <span className="num">7.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -185,7 +182,7 @@ class AssociateCreateStep4BizComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToEmail}
                                 options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting \"yes\" will result in associate getting emails from our system.'
+                                helpText='Selecting \"yes\" will result in asociate getting emails from our system.'
                             />
 
                             <BootstrapRadio
@@ -197,14 +194,14 @@ class AssociateCreateStep4BizComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToText}
                                 options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting \"yes\" will result in associate getting text-messages on their phone from our system.'
+                                helpText='Selecting \"yes\" will result in asociate getting text-messages on their phone from our system.'
                             />
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Proceed to Address&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/associates/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/asociates/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
@@ -218,4 +215,4 @@ class AssociateCreateStep4BizComponent extends Component {
     }
 }
 
-export default AssociateCreateStep4BizComponent;
+export default AsociateCreateStep4BizComponent;

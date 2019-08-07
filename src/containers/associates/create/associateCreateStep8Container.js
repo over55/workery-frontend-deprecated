@@ -147,7 +147,7 @@ class AssociateCreateStep8Container extends Component {
         // (2) Middle name (API ISSUE)
         postData.middleName = this.state.middleName;
 
-        // (2) Join date - We need to format as per required API format.
+        // (3) Join date - We need to format as per required API format.
         const joinDateMoment = moment(this.state.joinDate);
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
 
@@ -229,10 +229,16 @@ class AssociateCreateStep8Container extends Component {
             postData.extraComment = this.state.comment;
         }
 
+        // () Other telephone type of
+        let secondaryPhoneTypeOf = this.state.secondaryPhoneTypeOf;
+        if (secondaryPhoneTypeOf === undefined || secondaryPhoneTypeOf === null || isNaN(secondaryPhoneTypeOf) ) {
+            secondaryPhoneTypeOf = 1; // Choose default.
+        }
+        postData.otherTelephoneTypeOf = secondaryPhoneTypeOf;
+
         // (8) Telephone: This field is required.
         postData.telephone = this.state.primaryPhone;
         postData.telephoneTypeOf = this.state.primaryPhoneTypeOf;
-        postData.otherTelephoneTypeOf = this.state.secondaryPhoneTypeOf;
 
         // (9) Address Country: This field is required.
         postData.addressCountry = this.state.country;
@@ -242,6 +248,13 @@ class AssociateCreateStep8Container extends Component {
 
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
+
+        // () First Name and Last Name if biz
+        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            postData.firstName = this.state.contactFirstName;
+            postData.givenName = this.state.contactFirstName;
+            postData.lastName = this.state.contactLastName;
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

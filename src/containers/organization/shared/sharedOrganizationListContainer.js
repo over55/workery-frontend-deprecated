@@ -40,7 +40,7 @@ class SharedOrganizationListContainer extends Component {
      */
 
     componentDidMount() {
-        this.props.pullTenantList(this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        this.props.pullTenantList(this.state.page, this.state.sizePerPage, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
         window.scrollTo(0, 0);  // Start the page at the top of the page.
     }
 

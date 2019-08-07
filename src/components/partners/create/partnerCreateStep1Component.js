@@ -39,9 +39,6 @@ export default class PartnerCreateStep1Component extends Component {
                         <div id="step-2" className="st-grey">
                             <span className="num">2.</span><span className="">Results</span>
                         </div>
-                        <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Type</span>
-                        </div>
                         <div id="step-4" className="st-grey">
                             <span className="num">4.</span><span className="">Contact</span>
                         </div>
