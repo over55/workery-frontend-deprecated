@@ -27,6 +27,7 @@ class OrderCreateStep6Container extends Component {
         super(props);
 
         this.state = {
+            clientGivenId: localStorageGetIntegerItem("workery-create-order-clientId"),
             clientGivenName: localStorage.getItem("workery-create-order-clientGivenName"),
             clientLastName: localStorage.getItem("workery-create-order-clientLastName", ),
             startDate: localStorageGetDateItem("workery-create-order-startDate"),
@@ -52,6 +53,40 @@ class OrderCreateStep6Container extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        // (1) Extra Comment: This field is required.
+        if (this.state.comment === undefined || this.state.comment === null) {
+            postData.extraComment = "";
+        } else {
+            postData.extraComment = this.state.comment;
+        }
+
+        // (2) Skill sets - We need to only return our `id` values.
+        let idSkillSets = [];
+        if (this.state.skillSets !== undefined && this.state.skillSets !== null) {
+            for (let i = 0; i < this.state.skillSets.length; i++) {
+                let skill = this.state.skillSets[i];
+                idSkillSets.push(skill.value);
+            }
+        }
+        postData.skillSets = idSkillSets;
+
+        // (3) Tag - We need to only return our `id` values.
+        let idTags = [];
+        if (this.state.tags !== undefined && this.state.tags !== null) {
+            for (let i = 0; i < this.state.tags.length; i++) {
+                let tag = this.state.tags[i];
+                idTags.push(tag.value);
+            }
+        }
+        postData.tags = idTags;
+
+        // (4) Customer
+        postData.customer = this.state.clientGivenId
+
+        // (5) Start date - We need to format as per required API format.
+        const startDateMoment = moment(this.state.startDate);
+        postData.startDate = startDateMoment.format("YYYY-MM-DD")
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
