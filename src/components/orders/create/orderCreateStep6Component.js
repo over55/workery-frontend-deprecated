@@ -11,7 +11,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 export default class OrderCreateStep6Component extends Component {
     render() {
         const {
-            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, comment, isLoading, errors, onSubmitClick
+            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, tags, comment, isLoading, errors, onSubmitClick
         } = this.props;
         return (
             <main id="main" role="main">
@@ -129,11 +129,19 @@ export default class OrderCreateStep6Component extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-comment-alt"></i>&nbsp;Comments
+                                        <i className="fas fa-chart-pie"></i>&nbsp;Metrics
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Text</th>
+                                    <th scope="row" className="bg-light">Tags</th>
+                                    <td>
+                                        {tags && tags.map(
+                                            (tag) => <TagItem tag={tag} key={tag.id} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Additional Comment(s)</th>
                                     <td>{comment}</td>
                                 </tr>
                             </tbody>
@@ -160,6 +168,16 @@ export default class OrderCreateStep6Component extends Component {
 
 
 class SkillItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
+}
+
+
+class TagItem extends Component {
     render() {
         const { label, value } = this.props.tag;
         return (

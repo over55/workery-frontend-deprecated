@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 
 
 export default class OrderCreateStep5Component extends Component {
     render() {
         const {
             comment, onTextChange,
+            tags, tagOptions, onTagMultiChange,
             onNextClick, errors,
         } = this.props;
         return (
@@ -56,7 +58,7 @@ export default class OrderCreateStep5Component extends Component {
                         </div>
                         <div id="step-5" className="st-grey active">
                             <strong>
-                                <span className="num">5.</span><span className="">Comments</span>
+                                <span className="num">5.</span><span className="">Metrics</span>
                             </strong>
                         </div>
                         <div id="step-6" className="st-grey">
@@ -69,11 +71,22 @@ export default class OrderCreateStep5Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-comment-alt"></i>&nbsp;Comments
+                                <i className="fas fa-chart-pie"></i>&nbsp;Metrics
                             </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
+
+                            <BootstrapMultipleSelect
+                                borderColour="border-success"
+                                label="Tags"
+                                name="tags"
+                                defaultOptionLabel="Please select the tag."
+                                options={tagOptions}
+                                selectedOptions={tags}
+                                error={errors.tags}
+                                onMultiChange={onTagMultiChange}
+                            />
 
                             <BootstrapTextarea
                                 name="comment"
@@ -89,7 +102,7 @@ export default class OrderCreateStep5Component extends Component {
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
-                                    Proceed to Comments&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                    Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to="/orders/add/step-4" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back

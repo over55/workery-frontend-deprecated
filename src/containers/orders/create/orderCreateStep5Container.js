@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import OrderCreateStep5Component from "../../../components/orders/create/orderCreateStep5Component";
 import { validateStep5CreateInput } from "../../../validators/orderValidator";
+import { getTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
+import { localStorageSetObjectOrArrayItem, localStorageGetArrayItem } from '../../../helpers/localStorageUtility';
 
 
 class OrderCreateStep5Container extends Component {
@@ -15,11 +17,13 @@ class OrderCreateStep5Container extends Component {
         super(props);
         this.state = {
             comment: localStorage.getItem("workery-create-order-comment"),
+            tags: localStorageGetArrayItem("workery-create-order-tags"),
             isLoading: true,
             errors: {},
             page: 1,
         }
         this.onTextChange = this.onTextChange.bind(this);
+        this.onTagMultiChange = this.onTagMultiChange.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
     }
 
@@ -30,6 +34,9 @@ class OrderCreateStep5Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+       // Fetch all our GUI drop-down options which are populated by the API.
+       this.props.pullTagList(1,1000);
     }
 
     componentWillUnmount() {
@@ -62,6 +69,20 @@ class OrderCreateStep5Container extends Component {
         localStorage.setItem(key, e.target.value)
     }
 
+    onTagMultiChange(...args) {
+        // Extract the select options from the parameter.
+        const selectedOptions = args[0];
+
+        // Set all the tags we have selected to the STORE.
+        this.setState({
+            tags: selectedOptions,
+        });
+
+        // // Set all the tags we have selected to the STORAGE.
+        const key = 'workery-create-order-' + args[1].name;
+        localStorageSetObjectOrArrayItem(key, selectedOptions);
+    }
+
     onNextClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -91,11 +112,15 @@ class OrderCreateStep5Container extends Component {
      */
 
     render() {
-        const { comment, errors } = this.state;
+        const { comment, tags, errors } = this.state;
+        const tagOptions = getTagReactSelectOptions(this.props.tagList);
         return (
             <OrderCreateStep5Component
                 comment={comment}
                 onTextChange={this.onTextChange}
+                tags={tags}
+                tagOptions={tagOptions}
+                onTagMultiChange={this.onTagMultiChange}
                 onNextClick={this.onNextClick}
                 errors={errors}
             />
@@ -106,11 +131,18 @@ class OrderCreateStep5Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        tagList: store.tagListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+    }
 }
 
 

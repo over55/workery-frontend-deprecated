@@ -57,7 +57,7 @@ export default class OrderCreateStep4Component extends Component {
                             </strong>
                         </div>
                         <div id="step-5" className="st-grey">
-                            <span className="num">5.</span><span className="">Comments</span>
+                            <span className="num">5.</span><span className="">Metrics</span>
                         </div>
                         <div id="step-6" className="st-grey">
                             <span className="num">6.</span><span className="">Review</span>
@@ -100,7 +100,7 @@ export default class OrderCreateStep4Component extends Component {
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
-                                    Proceed to Comments&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                    Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to="/orders/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back

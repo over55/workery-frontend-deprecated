@@ -37,6 +37,7 @@ class OrderCreateStep6Container extends Component {
             homeSupportLabel: localStorage.getItem("workery-create-order-homeSupport-label"),
             skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
             description: localStorage.getItem("workery-create-order-description"),
+            tags: localStorageGetArrayItem("workery-create-order-tags"),
             comment: localStorage.getItem("workery-create-order-comment"),
         }
 
@@ -120,13 +121,13 @@ class OrderCreateStep6Container extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
-                totalSize: response.count,
                 isLoading: false,
             },
             ()=>{
                 console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+
+                this.props.history.push("/task/1/" + response.latestPendingTask + "/step-1");
             }
         )
     }
@@ -189,7 +190,7 @@ class OrderCreateStep6Container extends Component {
 
     render() {
         const {
-            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, comment, isLoading, errors,
+            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, tags, comment, isLoading, errors,
         } = this.state;
         return (
             <OrderCreateStep6Component
@@ -200,6 +201,7 @@ class OrderCreateStep6Container extends Component {
                 jobTypeLabel={jobTypeLabel}
                 homeSupportLabel={homeSupportLabel}
                 description={description}
+                tags={tags}
                 comment={comment}
                 isLoading={isLoading}
                 errors={errors}
