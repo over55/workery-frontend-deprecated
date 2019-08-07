@@ -182,7 +182,7 @@ class ClientCreateStep4BizComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToEmail}
                                 options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting \"yes\" will result in client getting emails from our system.'
+                                helpText='Selecting "yes" will result in client getting emails from our system.'
                             />
 
                             <BootstrapRadio
@@ -194,7 +194,7 @@ class ClientCreateStep4BizComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToText}
                                 options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting \"yes\" will result in client getting text-messages on their phone from our system.'
+                                helpText='Selecting "yes" will result in client getting text-messages on their phone from our system.'
                             />
 
                             <div className="form-group">

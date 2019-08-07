@@ -149,7 +149,7 @@ class StaffCreateStep4RezComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToEmail}
                                 options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting \"yes\" will result in staff getting emails from our system.'
+                                helpText='Selecting "yes" will result in staff getting emails from our system.'
                             />
 
                             <BootstrapRadio
@@ -161,7 +161,7 @@ class StaffCreateStep4RezComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToText}
                                 options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting \"yes\" will result in staff getting text-messages on their phone from our system.'
+                                helpText='Selecting "yes" will result in staff getting text-messages on their phone from our system.'
                             />
 
 

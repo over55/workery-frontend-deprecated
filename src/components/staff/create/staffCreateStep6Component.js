@@ -313,7 +313,7 @@ class StaffCreateStep6Component extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isActive}
                                 options={IS_ACTIVE_TYPE_OF_CHOICES}
-                                helpText='Selecting \"yes\" will grant the staff login ability.'
+                                helpText='Selecting "yes" will grant the staff login ability.'
                             />
 
                             <div className="form-group">
