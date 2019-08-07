@@ -158,7 +158,7 @@ class OrderCreateStep6Container extends Component {
 
         if (isValid) {
             this.setState(
-                { errors: errors, isLoading: true,},
+                { errors: errors, isLoading: true, },
                 ()=>{
                     // Once our state has been validated `associate-side` then we will
                     // make an API request with the server to create our new production.

@@ -284,7 +284,7 @@ class AssociateCreateStep8Container extends Component {
 
         if (isValid) {
             this.setState(
-                { errors: errors, isLoading: true,},
+                { errors: {}, isLoading: true,},
                 ()=>{
                     // Once our state has been validated `associate-side` then we will
                     // make an API request with the server to create our new production.

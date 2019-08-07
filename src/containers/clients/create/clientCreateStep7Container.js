@@ -219,18 +219,23 @@ class ClientCreateStep7Container extends Component {
         // console.log(errors, isValid); // For debugging purposes only.
 
         if (isValid) {
-            // Once our state has been validated `client-side` then we will
-            // make an API request with the server to create our new production.
-            this.props.postClientDetail(
-                this.getPostData(),
-                this.onSuccessCallback,
-                this.onFailureCallback
-            );
+            this.setState({
+                errors: {},
+                isLoading: true,
+            }, ()=>{
+                // Once our state has been validated `client-side` then we will
+                // make an API request with the server to create our new production.
+                this.props.postClientDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            });
         } else {
             this.setState({
                 errors: errors,
                 isLoading: false,
-            })
+            });
 
             // The following code will cause the screen to scroll to the top of
             // the page. Please see ``react-scroll`` for more information:
