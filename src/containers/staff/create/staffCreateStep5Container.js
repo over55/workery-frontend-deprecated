@@ -24,19 +24,8 @@ class StaffCreateStep5Container extends Component {
     constructor(props) {
         super(props);
 
-        // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("workery-create-staff-typeOf"));
-        let returnURL;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/staff/add/step-4-rez-or-cc";
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/staff/add/step-4-biz";
-        }
 
         this.state = {
-            returnURL: returnURL,
-            typeOf: typeOf,
             country: localStorage.getItem("workery-create-staff-country"),
             region: localStorage.getItem("workery-create-staff-region"),
             locality: localStorage.getItem("workery-create-staff-locality"),

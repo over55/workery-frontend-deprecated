@@ -14,7 +14,7 @@ class StaffCreateStep3Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            groupId: localStorage.getItem("workery-create-staff-groupId"),
+            accountType: localStorage.getItem("workery-create-staff-accountType"),
             isLoading: true,
             errors: {},
             page: 1,
@@ -50,9 +50,9 @@ class StaffCreateStep3Container extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
-    onClick(e, groupId) {
+    onClick(e, accountType) {
         e.preventDefault();
-        localStorage.setItem("workery-create-staff-groupId", groupId);
+        localStorage.setItem("workery-create-staff-accountType", accountType);
         this.props.history.push("/staff/add/step-4");
     }
 

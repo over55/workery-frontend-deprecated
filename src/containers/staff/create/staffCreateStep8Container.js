@@ -21,57 +21,31 @@ class StaffCreateStep8Container extends Component {
 
     constructor(props) {
         super(props);
-
-        // Get the type of.
-        const typeOf = localStorageGetIntegerItem("workery-create-staff-typeOf");
-        let returnURL;
-        let primaryPhone;
-        let primaryPhoneTypeOf;
-        let secondaryPhone;
-        let secondaryPhoneTypeOf;
-        let email;
-        let isOkToEmail;
-        let isOkToText;
-        let isOkToEmailLabel;
-        let isOkToTextLabel;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/staff/add/step-4-rez-or-cc";
-            primaryPhone = localStorage.getItem("workery-create-staff-rez-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-staff-rez-primaryPhoneTypeOf");
-            secondaryPhone = localStorage.getItem("workery-create-staff-rez-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-staff-rez-secondaryPhoneTypeOf");
-            email = localStorage.getItem("workery-create-staff-rez-email");
-            isOkToEmail = localStorageGetIntegerItem("workery-create-staff-rez-isOkToEmail");
-            isOkToText = localStorageGetIntegerItem("workery-create-staff-rez-isOkToText");
-            isOkToEmailLabel = localStorage.getItem("workery-create-staff-rez-isOkToEmail-label");
-            isOkToTextLabel = localStorage.getItem("workery-create-staff-rez-isOkToText-label");
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/staff/add/step-4-biz";
-            primaryPhone = localStorage.getItem("workery-create-staff-biz-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-staff-biz-primaryPhoneTypeOf");
-            secondaryPhone =  localStorage.getItem("workery-create-staff-biz-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-staff-biz-secondaryPhoneTypeOf");
-            email = localStorage.getItem("workery-create-staff-biz-email");
-            isOkToEmail = localStorageGetIntegerItem("workery-create-staff-biz-isOkToEmail");
-            isOkToText = localStorageGetIntegerItem("workery-create-staff-biz-isOkToText");
-            isOkToEmailLabel = localStorage.getItem("workery-create-staff-biz-isOkToEmail-label");
-            isOkToTextLabel = localStorage.getItem("workery-create-staff-biz-isOkToText-label");
-        }
+        const primaryPhone = localStorage.getItem("workery-create-staff-primaryPhone");
+        const primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-staff-primaryPhoneTypeOf");
+        const secondaryPhone = localStorage.getItem("workery-create-staff-secondaryPhone");
+        const secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-staff-secondaryPhoneTypeOf");
+        const workEmail = localStorage.getItem("workery-create-staff-workEmail");
+        const personalEmail = localStorage.getItem("workery-create-staff-personalEmail");
+        const isOkToEmail = localStorageGetIntegerItem("workery-create-staff-isOkToEmail");
+        const isOkToText = localStorageGetIntegerItem("workery-create-staff-isOkToText");
+        const isOkToEmailLabel = localStorage.getItem("workery-create-staff-isOkToEmail-label");
+        const isOkToTextLabel = localStorage.getItem("workery-create-staff-isOkToText-label");
 
         this.state = {
             // Step 3
-            typeOf: typeOf,
-            typeOfLabel: localStorage.getItem("workery-create-staff-typeOf-label"),
+            accountType: localStorageGetIntegerItem("workery-create-staff-accountType"),
+            accountTypeLabel: "TODO",
 
             // Step 4 - Residential & Business
-            firstName: localStorage.getItem("workery-create-staff-rez-firstName"),
-            lastName: localStorage.getItem("workery-create-staff-rez-lastName"),
+            firstName: localStorage.getItem("workery-create-staff-firstName"),
+            lastName: localStorage.getItem("workery-create-staff-lastName"),
             primaryPhone: primaryPhone,
             primaryPhoneTypeOf: primaryPhoneTypeOf,
             secondaryPhone: secondaryPhone,
             secondaryPhoneTypeOf: secondaryPhoneTypeOf,
-            email: email,
+            workEmail: workEmail,
+            personalEmail: personalEmail,
             isOkToEmail: isOkToEmail,
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
@@ -88,23 +62,14 @@ class StaffCreateStep8Container extends Component {
             streetAddress: localStorage.getItem("workery-create-staff-streetAddress"),
 
             // Step 6 - Account
-            skillSets: localStorageGetArrayItem("workery-create-staff-skillSets"),
-            insuranceRequirements: localStorageGetArrayItem("workery-create-staff-insuranceRequirements"),
             description: localStorage.getItem("workery-create-staff-description"),
-            hourlySalaryDesired: localStorageGetIntegerItem("workery-create-staff-hourlySalaryDesired"),
-            limitSpecial: localStorage.getItem("workery-create-staff-limitSpecial"),
-            duesDate: localStorageGetDateItem("workery-create-staff-duesDate"),
-            commercialInsuranceExpiryDate: localStorageGetDateItem("workery-create-staff-commercialInsuranceExpiryDate"),
-            autoInsuranceExpiryDate: localStorageGetDateItem("workery-create-staff-autoInsuranceExpiryDate"),
-            wsibInsuranceDate: localStorageGetDateItem("workery-create-staff-wsibInsuranceDate"),
             policeCheck: localStorageGetDateItem("workery-create-staff-policeCheck"),
-            taxId: localStorage.getItem("workery-create-staff-taxId"),
-            driversLicenseClass: localStorage.getItem("workery-create-staff-driversLicenseClass"),
-            vehicleTypes: localStorageGetArrayItem("workery-create-staff-vehicleTypes"),
             emergencyContactName: localStorage.getItem("workery-create-staff-emergencyContactName"),
             emergencyContactRelationship: localStorage.getItem("workery-create-staff-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-staff-emergencyContactTelephone"),
             emergencyContactAlternativeTelephone: localStorage.getItem("workery-create-staff-emergencyContactAlternativeTelephone"),
+            password: localStorage.getItem("workery-create-staff-password"),
+            passwordRepeat: localStorage.getItem("workery-create-staff-passwordRepeat"),
             isActive: localStorageGetIntegerItem("workery-create-staff-isActive"),
 
             // Step 7 - Metrics
@@ -120,11 +85,10 @@ class StaffCreateStep8Container extends Component {
             comment: localStorage.getItem("workery-create-staff-comment"),
 
             // Everything else
-            returnURL: returnURL,
             errors: {},
             isLoading: false,
             password: localStorage.getItem("workery-create-staff-password"),
-            passwordRepeat: localStorage.getItem("workery-create-staff-password-repeat"),
+            passwordRepeat: localStorage.getItem("workery-create-staff-passwordRepeat"),
         }
 
         this.onSubmitClick = this.onSubmitClick.bind(this);
@@ -147,45 +111,16 @@ class StaffCreateStep8Container extends Component {
         // (2) Middle name (API ISSUE)
         postData.middleName = this.state.middleName;
 
+        // (3) Email
+        postData.email = this.state.workEmail;
+
         // (3) Join date - We need to format as per required API format.
         const joinDateMoment = moment(this.state.joinDate);
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
 
-        // (2) Dues date - We need to format as per required API format.
-        const duesDateMoment = moment(this.state.duesDate);
-        postData.duesDate = duesDateMoment.format("YYYY-MM-DD")
-
-        // (2) commercialInsuranceExpiry date - We need to format as per required API format.
-        const commercialInsuranceExpiryDateMoment = moment(this.state.commercialInsuranceExpiryDate);
-        postData.commercialInsuranceExpiryDate = commercialInsuranceExpiryDateMoment.format("YYYY-MM-DD")
-
-        // (2) autoInsuranceExpiryDate - We need to format as per required API format.
-        const autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
-        postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD")
-
-        // (2) wsibInsuranceDate date - We need to format as per required API format.
-        const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDate);
-        postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD")
-
         // (2) Join date - We need to format as per required API format.
         const policeCheckMoment = moment(this.state.policeCheck);
         postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD")
-
-        // (3) skillSets - We need to only return our `id` values.
-        let idSkillSets = [];
-        for (let i = 0; i < this.state.skillSets.length; i++) {
-            let skill = this.state.skillSets[i];
-            idSkillSets.push(skill.value);
-        }
-        postData.skillSets = idSkillSets;
-
-        // (3) Tags - We need to only return our `id` values.
-        let idVehicleTypes = [];
-        for (let i = 0; i < this.state.vehicleTypes.length; i++) {
-            let vehicle = this.state.tags[i];
-            idVehicleTypes.push(vehicle.value);
-        }
-        postData.vehicleTypes = idVehicleTypes;
 
         // (3) Tags - We need to only return our `id` values.
         let idTags = [];
@@ -194,14 +129,6 @@ class StaffCreateStep8Container extends Component {
             idTags.push(tag.value);
         }
         postData.tags = idTags;
-
-        // (3) insuranceRequirements - We need to only return our `id` values.
-        let idInsuranceRequirements = [];
-        for (let i = 0; i < this.state.insuranceRequirements.length; i++) {
-            let insurance = this.state.insuranceRequirements[i];
-            idInsuranceRequirements.push(insurance.value);
-        }
-        postData.insuranceRequirements = idInsuranceRequirements;
 
         // (4) How Hear Other - This field may not be null, therefore make blank.
         if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
@@ -248,13 +175,6 @@ class StaffCreateStep8Container extends Component {
 
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
-
-        // () First Name and Last Name if biz
-        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.firstName = this.state.contactFirstName;
-            postData.givenName = this.state.contactFirstName;
-            postData.lastName = this.state.contactLastName;
-        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -407,7 +327,6 @@ class StaffCreateStep8Container extends Component {
             comment,
 
             // Everything else
-            returnURL,
             errors,
             isLoading,
         } = this.state;
@@ -472,7 +391,6 @@ class StaffCreateStep8Container extends Component {
                 comment={comment}
 
                 // Everything else
-                returnURL={returnURL}
                 errors={errors}
                 isLoading={isLoading}
                 onSubmitClick={this.onSubmitClick}

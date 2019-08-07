@@ -16,7 +16,6 @@ class StaffCreateStep5Component extends Component {
             country,
             region, locality, postalCode, streetAddress,
 
-            returnURL,
             errors,
             onTextChange,
             onSelectChange,
@@ -64,7 +63,7 @@ class StaffCreateStep5Component extends Component {
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <Link to={returnURL}>
+                            <Link to="/staff/add/step-4">
                                 <span className="num">4.</span><span className="">Contact</span>
                             </Link>
                         </div>
@@ -153,7 +152,7 @@ class StaffCreateStep5Component extends Component {
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
                                     Proceed to Account&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to={returnURL} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/staff/add/step-4" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
