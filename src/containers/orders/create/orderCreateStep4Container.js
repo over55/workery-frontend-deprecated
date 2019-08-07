@@ -2,13 +2,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import OrderCreateStep4Component from "../../../components/orders/create/orderCreateStep4Component";
-
+import { validateStep4CreateInput } from "../../../validators/orderValidator";
+import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
+import {
+    localStorageGetObjectItem,
+    localStorageSetObjectOrArrayItem,
+    localStorageGetArrayItem,
+    localStorageGetIntegerItem,
+    localStorageGetDateItem
+} from '../../../helpers/localStorageUtility';
 
 class OrderCreateStep4Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
      */
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            description: localStorage.getItem("workery-create-order-description"),
+            skillSets: localStorageGetArrayItem("workery-create-order-skillSets"),
+            isLoading: true,
+            errors: {},
+            page: 1,
+        }
+        this.onTextChange = this.onTextChange.bind(this);
+        this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+    }
 
     /**
      *  Component Life-cycle Management
@@ -17,6 +39,9 @@ class OrderCreateStep4Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // DEVELOPERS NOTE: Fetch our skillset list.
+        this.props.pullSkillSetList(1, 1000);
     }
 
     componentWillUnmount() {
@@ -38,6 +63,53 @@ class OrderCreateStep4Container extends Component {
      *------------------------------------------------------------
      */
 
+    onTextChange(e) {
+        // Update our state.
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
+
+        // Update our persistent storage.
+        const key = "workery-create-order-"+[e.target.name];
+        localStorage.setItem(key, e.target.value)
+    }
+
+    onSkillSetMultiChange(...args) {
+        // Extract the select options from the parameter.
+        const selectedOptions = args[0];
+
+        // Set all the skill sets we have selected to the STORE.
+        this.setState({
+            skillSets: selectedOptions,
+        });
+
+        // // Set all the tags we have selected to the STORAGE.
+        const key = 'workery-create-order-' + args[1].name;
+        localStorageSetObjectOrArrayItem(key, selectedOptions);
+    }
+
+    onNextClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        // console.log(this.state); // For debugging purposes only.
+
+        // Perform client-side validation.
+        const { errors, isValid } = validateStep4CreateInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            this.props.history.push("/orders/add/step-5");
+
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.setState({
+                isLoading: false,
+                errors: errors,
+            })
+        }
+    }
+
 
     /**
      *  Main render function
@@ -45,8 +117,16 @@ class OrderCreateStep4Container extends Component {
      */
 
     render() {
+        const { description, skillSets, errors } = this.state;
         return (
             <OrderCreateStep4Component
+                description={description}
+                onTextChange={this.onTextChange}
+                skillSets={skillSets}
+                skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
+                onSkillSetMultiChange={this.onSkillSetMultiChange}
+                errors={errors}
+                onNextClick={this.onNextClick}
             />
         );
     }
@@ -55,11 +135,18 @@ class OrderCreateStep4Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        skillSetList: store.skillSetListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        pullSkillSetList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullSkillSetList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+    }
 }
 
 

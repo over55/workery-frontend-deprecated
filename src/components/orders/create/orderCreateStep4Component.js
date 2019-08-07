@@ -2,9 +2,18 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
+
 
 export default class OrderCreateStep4Component extends Component {
     render() {
+        const {
+            description, onTextChange,
+            skillSets, skillSetOptions, onSkillSetMultiChange,
+            onNextClick, errors,
+        } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -56,32 +65,50 @@ export default class OrderCreateStep4Component extends Component {
                     </div>
                 </div>
 
-                <h2>
-                    <i className="fas fa-sitemap"></i>&nbsp;Select Order Type
-                </h2>
+                <div className="row">
+                    <div className="col-md-5 mx-auto mt-2">
+                        <form>
+                            <h2>
+                                <i className="fas fa-graduation-cap"></i>&nbsp;Skills and Description
+                            </h2>
+                            <p>All fields which have the (*) symbol are required to be filled out.</p>
 
-                <div className="card-group row">
-                    <div className="col-sm-6">
-                        <div className="card box-shadow text-center mx-auto">
-                            <div className="card-custom-top-2">
-                                <i className="fas fa-home fa-3x"></i>
-                            </div>
-                            <div className="card-body">
-                                <h3 className="card-title">Residential / Community Cares</h3>
-                                <p className="card-text">Add a residential or community cares order</p>
-                                <Link to="/orders/add/step-3" className="btn btn-primary btn-lg">
-                                    Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            <BootstrapErrorsProcessingAlert errors={errors} />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-primary"
+                                label="Describe the Job:"
+                                placeholder="Describe here."
+                                rows="5"
+                                value={description}
+                                helpText="Maximum 1,000 characters."
+                                onChange={onTextChange}
+                                error={errors.description}
+                            />
+
+                            <BootstrapMultipleSelect
+                                borderColour="border-primary"
+                                label="Skill Set (*)"
+                                name="skillSets"
+                                defaultOptionLabel="Please select the skills."
+                                options={skillSetOptions}
+                                selectedOptions={skillSets}
+                                error={errors.skillSets}
+                                onMultiChange={onSkillSetMultiChange}
+                            />
+
+                            <div className="form-group">
+                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
+                                    Proceed to Comments&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                </button>
+                                <Link to="/orders/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
-                        </div>
+
+                        </form>
                     </div>
-                </div>
-
-                <div className="form-group">
-
-                    <Link to="/orders/add/step-2" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
-                        <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
-                    </Link>
                 </div>
 
             </main>

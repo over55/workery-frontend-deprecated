@@ -21,7 +21,7 @@ export function validateInput(data) {
 
 
 /**
- *  Validator will validate step 6 in the order creation form.
+ *  Validator will validate step 3 in the order creation form.
  */
 export function validateStep3CreateInput(data) {
     let errors = {};
@@ -35,6 +35,35 @@ export function validateStep3CreateInput(data) {
     if (data.homeSupport === undefined || data.homeSupport === null || data.homeSupport === "" || isNaN(data.homeSupport) ) {
         errors.homeSupport = 'This field is required';
     }
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+export function validateStep4CreateInput(data) {
+    let errors = {};
+
+    if (data.description === undefined || data.description === null || data.description === "") {
+        errors.description = 'This field is required';
+    }
+    if (data.skillSets === undefined || data.skillSets === null || data.skillSets === "" || isEmpty(data.skillSets) ) {
+        errors.skillSets = 'This field is required';
+    }
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+export function validateStep5CreateInput(data) {
+    let errors = {};
+
+    // if (data.comment === undefined || data.comment === null || data.comment === "") {
+    //     errors.comment = 'This field is required';
+    // }
     return {
         errors,
         isValid: isEmpty(errors)
