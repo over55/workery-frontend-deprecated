@@ -37,13 +37,15 @@ export default class OrderCreateStep4Component extends Component {
                                 <span className="num">2.</span><span className="">Results</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey active">
-                            <strong>
+                        <div id="step-3" className="st-grey">
+                            <Link to="/orders/add/step-3">
                                 <span className="num">3.</span><span className="">Job Type</span>
-                            </strong>
+                            </Link>
                         </div>
-                        <div id="step-4" className="st-grey">
-                            <span className="num">4.</span><span className="">Skills and Description</span>
+                        <div id="step-4" className="st-grey active">
+                            <strong>
+                                <span className="num">4.</span><span className="">Skills and Description</span>
+                            </strong>
                         </div>
                         <div id="step-5" className="st-grey">
                             <span className="num">5.</span><span className="">Comments</span>

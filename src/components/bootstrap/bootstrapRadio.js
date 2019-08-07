@@ -18,6 +18,7 @@ export const BootstrapRadio = ({
     options,
     name,
     label = "Please select either option.",
+    helpText = null,
 }) => {
     const id = shortid.generate();
     return (
@@ -25,6 +26,9 @@ export const BootstrapRadio = ({
             <p className="mb-1">{label}</p>
             {options && options.map(
                 (optionDatum, i) => <RadioChoiceOption name={name} selectedValue={selectedValue} choiceOption={optionDatum} key={i+shortid.generate()} />)
+            }
+            {helpText &&
+                <small id={shortid.generate()} className="form-text text-muted" dangerouslySetInnerHTML={{ __html:helpText }}></small>
             }
         </div>
     );
