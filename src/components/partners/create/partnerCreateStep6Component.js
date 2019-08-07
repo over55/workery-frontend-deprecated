@@ -1,27 +1,75 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
-import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 
 
 export default class PartnerCreateStep6Component extends Component {
+    // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const {
-            typeOf, returnURL, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
-            onRadioChange,  onMultiChange, onJoinDateChange, comment,
-            errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
-        } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 'Other';
+            // Step 3
+            typeOf,
+            typeOfLabel,
 
-        const isBizTypeOf = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID || typeOf === toString(COMMERCIAL_CUSTOMER_TYPE_OF_ID);
+            // Step 4 - Residential & Business
+            firstName,
+            lastName,
+            primaryPhone,
+            secondaryPhone,
+            email,
+            isOkToEmail,
+            isOkToEmailLabel,
+            isOkToText,
+            isOkToTextLabel,
+            companyName,
+            contactFirstName,
+            contactLastName,
+
+            // Step 5 - Address
+            country,
+            region,
+            locality,
+            postalCode,
+            streetAddress,
+
+            // Step 6 - Metrics
+            tags,
+            dateOfBirth,
+            gender,
+            genderLabel,
+            howHear,
+            howHearLabel,
+            howHearOption,
+            howHearOther,
+            joinDate,
+            comment,
+
+            // Everything else
+            returnURL,
+            errors,
+            isLoading,
+            onSubmitClick,
+        } = this.props;
+        const isBizTypeOf = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
+
+        // // Set the how did you hear.
+        // let howDidYouHearFinalLabel = howDidYouHearLabel;
+        // if (howDidYouHear === "other") {
+        //     howDidYouHearFinalLabel = howDidYouHearOther;
+        // }
+        //
+        // // This code checks to see if we need to display the household count fields.
+        // let showHouseholdCount = false;
+        // try {
+        //     showHouseholdCount = parseInt(anotherHouseholdPartnerRegistered) === 0;
+        // } catch (error) {
+        //     // Do nothing.
+        // }
 
         return (
             <main id="main" role="main">
@@ -70,118 +118,164 @@ export default class PartnerCreateStep6Component extends Component {
                                 <span className="num">5.</span><span className="">Address</span>
                             </Link>
                         </div>
-                         <div id="step-6" className="st-grey active">
-                            <strong>
+                        <div id="step-6" className="st-grey">
+                            <Link to="/partners/add/step-6">
                                 <span className="num">6.</span><span className="">Metrics</span>
-                            </strong>
+                            </Link>
                         </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Review</span>
+                        <div id="step-7" className="st-grey active">
+                            <strong>
+                                <span className="num">7.</span><span className="">Review</span>
+                            </strong>
                         </div>
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-5 mx-auto mt-2">
+                <div className="row pt-3 mb-4 pb-2">
+                    <div className="col-md-10 mx-auto p-2">
+
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;Review
+                        </h2>
+
+                        <BootstrapErrorsProcessingAlert errors={errors} />
+                        <p><strong>Please confirm these details before adding the partner:</strong></p>
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-sitemap"></i>&nbsp;Type
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Partnership Class</th>
+                                    <td>{typeOfLabel}</td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-id-card"></i>&nbsp;Contact
+                                    </th>
+                                </tr>
+                                {isBizTypeOf &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Company Name</th>
+                                        <td>{companyName}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf
+                                    ?<tr>
+                                        <th scope="row" className="bg-light">Contact First Name</th>
+                                        <td>{contactFirstName}</td>
+                                    </tr>
+                                    :<tr>
+                                        <th scope="row" className="bg-light">First Name</th>
+                                        <td>{firstName}</td>
+                                    </tr>
+                                }
+                                {isBizTypeOf
+                                    ?<tr>
+                                        <th scope="row" className="bg-light">Contact Last Name</th>
+                                        <td>{contactLastName}</td>
+                                    </tr>
+                                    :<tr>
+                                        <th scope="row" className="bg-light">Last Name</th>
+                                        <td>{lastName}</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Primary Phone #</th>
+                                    <td>{primaryPhone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Secondary Phone #</th>
+                                    <td>{secondaryPhone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Email</th>
+                                    <td>{email}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is Ok to email?</th>
+                                    <td>{isOkToEmailLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is Ok to text?</th>
+                                    <td>{isOkToTextLabel}</td>
+                                </tr>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-address-book"></i>&nbsp;Address
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Street Address</th>
+                                    <td>{streetAddress}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Locality</th>
+                                    <td>{locality}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Region</th>
+                                    <td>{region}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Country</th>
+                                    <td>{country}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Postal Code</th>
+                                    <td>{postalCode}</td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Tags</th>
+                                    <td>
+                                        {tags && tags.map(
+                                            (tag, i) => <TagItem tag={tag} key={tag.id} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Date of Birth</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{dateOfBirth}</Moment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Gender</th>
+                                    <td>{genderLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">How did you hear about us?</th>
+                                    <td>{howHearLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Join Date</th>
+                                    <td><Moment format="YYYY/MM/DD">{joinDate}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Comment(s)</th>
+                                    <td>{comment}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
                         <form>
-                            <h2>
-                                <i className="fas fa-chart-pie"></i>&nbsp;Metrics
-                            </h2>
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
-
-                            <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-user-shield"></i>&nbsp;Personal Information
-                            </p>
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-success"
-                                label="Tags"
-                                name="tags"
-                                defaultOptionLabel="Please select the tag."
-                                options={tagOptions}
-                                selectedOptions={tags}
-                                error={errors.tags}
-                                onMultiChange={onMultiChange}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.gender}
-                                label="Please select your gender (*)"
-                                name="gender"
-                                onChange={onRadioChange}
-                                selectedValue={gender}
-                                options={GENDER_RADIO_CHOICES}
-                            />
-
-                            <BootstrapDatePicker
-                                label="Date of Birth (*)"
-                                name="dateOfBirth"
-                                dateObj={dateOfBirth}
-                                onTimeChange={onDateOfBirthChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.dateOfBirth}
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="How did you hear about us? (*)"
-                                name="howHear"
-                                defaultOptionLabel="Please select how you heard about us."
-                                options={howHearOptions}
-                                value={howHear}
-                                error={errors.howHear}
-                                onSelectChange={onSelectChange}
-                            />
-
-                            {isOtherHowDidYouHearSelected &&
-                                <BootstrapInput
-                                    inputClassName="form-control form-control-lg"
-                                    borderColour="border-primary"
-                                    error={errors.howHearOther}
-                                    label="Other (*)"
-                                    onChange={onTextChange}
-                                    value={howHearOther}
-                                    name="howHearOther"
-                                    type="text"
-                                />
-                            }
-
-                            <BootstrapDatePicker
-                                label="Join date (*)"
-                                name="joinDate"
-                                dateObj={joinDate}
-                                onTimeChange={onJoinDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.joinDate}
-                            />
-
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-success"
-                                label="Additional Comments"
-                                placeholder="Write any additional comments here."
-                                rows="5"
-                                value={comment}
-                                helpText="This is the comment of the organization."
-                                onChange={onTextChange}
-                                error={errors.comment}
-                            />
-
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onSubmitClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/partners/add/step-5" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/partners/add/step-6" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -189,4 +283,14 @@ export default class PartnerCreateStep6Component extends Component {
             </main>
         );
     }
+}
+
+
+class TagItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
 }
