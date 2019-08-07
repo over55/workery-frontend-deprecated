@@ -5,8 +5,8 @@ import msgpack from 'msgpack-lite';
 
 import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILURE } from "../constants/actionTypes";
 import {
-    NWAPP_PROFILE_API_ENDPOINT,
-    NWAPP_ACTIVATE_API_ENDPOINT
+    WORKERY_PROFILE_API_ENDPOINT,
+    WORKERY_ACTIVATE_API_ENDPOINT
 } from "../constants/api";
 import {
     getAccessTokenFromLocalStorage,
@@ -64,7 +64,7 @@ export function pullProfile(successCallback=null, failedCallback=null) {
         attachAxiosRefreshTokenHandler(customAxios);
 
         // Run our Axios post.
-        customAxios.get(NWAPP_PROFILE_API_ENDPOINT).then( (successResponse) => { // SUCCESS
+        customAxios.get(WORKERY_PROFILE_API_ENDPOINT).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
             // const responseData = msgpack.decode(Buffer(successResponse.data));
 
@@ -157,7 +157,7 @@ export function postProfile(data, successCallback, failedCallback) {
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.post(NWAPP_PROFILE_API_ENDPOINT, buffer).then( (successResponse) => {
+        customAxios.post(WORKERY_PROFILE_API_ENDPOINT, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 
@@ -235,7 +235,7 @@ export function postActivateProfile(accessCode, successCallback, failedCallback)
             'pr_access_code': accessCode  // Set to `snake-case` for API server.
         });
 
-        customAxios.post(NWAPP_ACTIVATE_API_ENDPOINT, buffer).then( (successResponse) => {
+        customAxios.post(WORKERY_ACTIVATE_API_ENDPOINT, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 

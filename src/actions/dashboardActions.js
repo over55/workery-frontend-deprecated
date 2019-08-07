@@ -5,7 +5,7 @@ import msgpack from 'msgpack-lite';
 
 import { DASHBOARD_REQUEST, DASHBOARD_FAILURE, DASHBOARD_SUCCESS } from '../constants/actionTypes';
 import getCustomAxios from '../helpers/customAxios';
-import { NWAPP_DASHBOARD_API_ENDPOINT } from "../constants/api"
+import { WORKERY_DASHBOARD_API_ENDPOINT } from "../constants/api"
 
 
 export const setDashboardRequest = () => ({
@@ -44,7 +44,7 @@ export function pullDashboard(schema, successCallback=null, failedCallback=null)
         const customAxios = getCustomAxios();
 
         // Make the call to the web-service.
-        customAxios.get(NWAPP_DASHBOARD_API_ENDPOINT).then( (successResponse) => { // SUCCESS
+        customAxios.get(WORKERY_DASHBOARD_API_ENDPOINT).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 

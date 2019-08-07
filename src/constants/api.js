@@ -6,13 +6,13 @@ export const APP_STATE = 'APP_STATE';
 /**
  *  The API web-services endpoints.
  */
-export const NWAPP_API_BASE_PATH = '/en/api'
-export const NWAPP_LOGIN_API_ENDPOINT = '/login';
-export const NWAPP_REFRESH_TOKEN_API_ENDPOINT = '/refresh-token';
-export const NWAPP_PROFILE_API_ENDPOINT = '/profile';
-export const NWAPP_TENANT_LIST_API_ENDPOINT = '/franchises';
-export const NWAPP_TENANT_DETAIL_API_ENDPOINT = '/franchise/';
-export const NWAPP_DASHBOARD_API_ENDPOINT = '/dashboard';
+export const WORKERY_API_BASE_PATH = '/en/api'
+export const WORKERY_LOGIN_API_ENDPOINT = '/login';
+export const WORKERY_REFRESH_TOKEN_API_ENDPOINT = '/refresh-token';
+export const WORKERY_PROFILE_API_ENDPOINT = '/profile';
+export const WORKERY_TENANT_LIST_API_ENDPOINT = '/franchises';
+export const WORKERY_TENANT_DETAIL_API_ENDPOINT = '/franchise/';
+export const WORKERY_DASHBOARD_API_ENDPOINT = '/dashboard';
 export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/customers';
 export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/customer/';
 export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
@@ -47,15 +47,15 @@ export const WORKERY_PARTNER_DETAIL_API_ENDPOINT = '/partner/';
 
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
-export const NWAPP_LOGOUT_API_ENDPOINT ='/logout';
-export const NWAPP_REGISTER_API_URL = process.env.REACT_APP_API_HOST+'/api/register';
-export const NWAPP_ACTIVATE_API_URL = process.env.REACT_APP_API_HOST+'/api/activate';
-export const NWAPP_ACTIVATE_API_ENDPOINT = '/activate';
-export const NWAPP_SEND_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/send-password-reset';
-export const NWAPP_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/reset-password';
-export const NWAPP_ONBOARDING_API_URL = process.env.REACT_APP_API_HOST+'/api/onboarding';
-export const NWAPP_PURCHASE_DEVICE_API_URL = process.env.REACT_APP_API_HOST+'/api/purchase-device';
-export const NWAPP_PROFILE_API_URL = process.env.REACT_APP_API_HOST+'/api/profile';
+export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';
+export const WORKERY_REGISTER_API_URL = process.env.REACT_APP_API_HOST+'/api/register';
+export const WORKERY_ACTIVATE_API_URL = process.env.REACT_APP_API_HOST+'/api/activate';
+export const WORKERY_ACTIVATE_API_ENDPOINT = '/activate';
+export const WORKERY_SEND_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/send-password-reset';
+export const WORKERY_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/reset-password';
+export const WORKERY_ONBOARDING_API_URL = process.env.REACT_APP_API_HOST+'/api/onboarding';
+export const WORKERY_PURCHASE_DEVICE_API_URL = process.env.REACT_APP_API_HOST+'/api/purchase-device';
+export const WORKERY_PROFILE_API_URL = process.env.REACT_APP_API_HOST+'/api/profile';
 
 
 /**

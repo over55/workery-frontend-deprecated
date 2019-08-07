@@ -4,7 +4,7 @@ import { camelizeKeys } from 'humps';
 import msgpack from 'msgpack-lite';
 
 import { LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../constants/actionTypes"
-import { NWAPP_LOGIN_API_ENDPOINT } from "../constants/api"
+import { WORKERY_LOGIN_API_ENDPOINT } from "../constants/api"
 import { setAccessTokenInLocalStorage, setRefreshTokenInLocalStorage } from '../helpers/jwtUtility';
 import { getAPIBaseURL } from '../helpers/urlUtility';
 
@@ -59,7 +59,7 @@ export function postLogin(email, password, successCallback=null, failedCallback=
             'password': password,
         };
 
-        customAxios.post(NWAPP_LOGIN_API_ENDPOINT, data).then( (successResponse) => {
+        customAxios.post(WORKERY_LOGIN_API_ENDPOINT, data).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             // const responseData = msgpack.decode(Buffer(successResponse.data));
             const responseData = successResponse.data;

@@ -1,4 +1,4 @@
-import { NWAPP_API_BASE_PATH } from "../constants/api";
+import { WORKERY_API_BASE_PATH } from "../constants/api";
 
 /**
  * Function will get the subdomain that the browser is currentl in.
@@ -42,9 +42,9 @@ export function getSubdomain() {
 export function getAPIBaseURL() {
     const schema = getSubdomain();
     if (schema !== null && schema !== undefined && schema !== "www") {
-        return process.env.REACT_APP_WWW_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + NWAPP_API_BASE_PATH;
+        return process.env.REACT_APP_WWW_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + WORKERY_API_BASE_PATH;
     } else {
-        return process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + NWAPP_API_BASE_PATH;
+        return process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN + WORKERY_API_BASE_PATH;
     }
 }
 

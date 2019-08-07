@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { camelizeKeys } from 'humps';
-import { NWAPP_API_BASE_PATH, NWAPP_LOGIN_API_ENDPOINT, NWAPP_REFRESH_TOKEN_API_ENDPOINT } from "../constants/api"
+import { WORKERY_API_BASE_PATH, WORKERY_LOGIN_API_ENDPOINT, WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../constants/api"
 
 /**
  *------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ import { NWAPP_API_BASE_PATH, NWAPP_LOGIN_API_ENDPOINT, NWAPP_REFRESH_TOKEN_API_
  */
 export function setAccessTokenInLocalStorage(accessToken) {
     if (accessToken != undefined && accessToken != null) {
-        localStorage.setItem("NWAPP_TOKEN_UTILITY_ACCESS_TOKEN_DATA", accessToken);
+        localStorage.setItem("WORKERY_TOKEN_UTILITY_ACCESS_TOKEN_DATA", accessToken);
     } else {
         console.error("Setting undefined access token");
     }
@@ -27,7 +27,7 @@ export function setAccessTokenInLocalStorage(accessToken) {
  */
 export function setRefreshTokenInLocalStorage(accessToken) {
     if (accessToken != undefined && accessToken != null)  {
-        localStorage.setItem("NWAPP_TOKEN_UTILITY_REFRESH_TOKEN_DATA", accessToken);
+        localStorage.setItem("WORKERY_TOKEN_UTILITY_REFRESH_TOKEN_DATA", accessToken);
     } else {
         console.error("Setting undefined resfresh token");
     }
@@ -37,7 +37,7 @@ export function setRefreshTokenInLocalStorage(accessToken) {
  *  Gets our access token from persistent storage.
  */
 export function getAccessTokenFromLocalStorage() {
-    return localStorage.getItem("NWAPP_TOKEN_UTILITY_ACCESS_TOKEN_DATA");
+    return localStorage.getItem("WORKERY_TOKEN_UTILITY_ACCESS_TOKEN_DATA");
 }
 
 
@@ -45,7 +45,7 @@ export function getAccessTokenFromLocalStorage() {
  *  Gets our refresh token from persisten storage.
  */
 export function getRefreshTokenFromLocalStorage() {
-    return localStorage.getItem("NWAPP_TOKEN_UTILITY_REFRESH_TOKEN_DATA");
+    return localStorage.getItem("WORKERY_TOKEN_UTILITY_REFRESH_TOKEN_DATA");
 }
 
 
@@ -55,7 +55,7 @@ export function getRefreshTokenFromLocalStorage() {
  *  Function makes a call to our login API endpoint.
  */
 function atteptLogin(email, password) {
-    const loginUrl = process.env.REACT_APP_API_HOST+NWAPP_API_BASE_PATH + NWAPP_LOGIN_API_ENDPOINT
+    const loginUrl = process.env.REACT_APP_API_HOST+WORKERY_API_BASE_PATH + WORKERY_LOGIN_API_ENDPOINT
     return axios.post(loginUrl, {
         'email': email,
         'password': password,
@@ -93,7 +93,7 @@ export async function fetchTokenCredentials(email, password) {
  *  Function makes a call to our login API endpoint.
  */
 function atteptRefresh(refreshTokenString) {
-    const refreshTolenUrl = process.env.REACT_APP_API_HOST+NWAPP_API_BASE_PATH + NWAPP_REFRESH_TOKEN_API_ENDPOINT
+    const refreshTolenUrl = process.env.REACT_APP_API_HOST+WORKERY_API_BASE_PATH + WORKERY_REFRESH_TOKEN_API_ENDPOINT
     return axios.post(refreshTolenUrl, {
         'refresh_token': refreshTokenString,
     })
