@@ -270,22 +270,20 @@ class StaffCreateStep8Container extends Component {
     render() {
         const {
             // Step 3
-            typeOf,
-            typeOfLabel,
+            accountType,
+            accountTypeLabel,
 
             // Step 4 - Residential & Business
             firstName,
             lastName,
             primaryPhone,
             secondaryPhone,
-            email,
+            workEmail,
+            personalEmail,
             isOkToEmail,
             isOkToEmailLabel,
             isOkToText,
             isOkToTextLabel,
-            companyName,
-            contactFirstName,
-            contactLastName,
 
             // Step 5 - Address
             country,
@@ -295,24 +293,15 @@ class StaffCreateStep8Container extends Component {
             streetAddress,
 
             // Step 6 - Account
-            skillSets,
-            insuranceRequirements,
             description,
-            hourlySalaryDesired,
-            limitSpecial,
-            duesDate,
-            commercialInsuranceExpiryDate,
-            autoInsuranceExpiryDate,
-            wsibInsuranceDate,
             policeCheck,
-            taxId,
-            driversLicenseClass,
-            vehicleTypes,
             emergencyContactName,
             emergencyContactRelationship,
             emergencyContactTelephone,
             emergencyContactAlternativeTelephone,
             isActive,
+            password,
+            passwordRepeat,
 
             // Step 7 - Metrics
             tags,
@@ -334,22 +323,20 @@ class StaffCreateStep8Container extends Component {
         return (
             <StaffCreateStep8Component
                 // Step 3
-                typeOf={typeOf}
-                typeOfLabel={typeOfLabel}
+                accountType={password}
+                accountTypeLabel={accountTypeLabel}
 
                 // Step 4 - Residential & Business
                 firstName={firstName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
-                email={email}
+                workEmail={workEmail}
+                personalEmail={personalEmail}
                 isOkToEmail={isOkToEmail}
                 isOkToEmailLabel={isOkToEmailLabel}
                 isOkToText={isOkToText}
                 isOkToTextLabel={isOkToTextLabel}
-                companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
 
                 // Step 5 - Address
                 country={country}
@@ -359,24 +346,15 @@ class StaffCreateStep8Container extends Component {
                 streetAddress={streetAddress}
 
                 // Step 6 - Account
-                skillSets={skillSets}
-                insuranceRequirements={insuranceRequirements}
                 description={description}
-                hourlySalaryDesired={hourlySalaryDesired}
-                limitSpecial={limitSpecial}
-                duesDate={duesDate}
-                commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
-                autoInsuranceExpiryDate={autoInsuranceExpiryDate}
-                wsibInsuranceDate={wsibInsuranceDate}
                 policeCheck={policeCheck}
-                taxId={taxId}
-                driversLicenseClass={driversLicenseClass}
-                vehicleTypes={vehicleTypes}
                 emergencyContactName={emergencyContactName}
                 emergencyContactRelationship={emergencyContactRelationship}
                 emergencyContactTelephone={emergencyContactTelephone}
                 emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
                 isActive={isActive}
+                password={password}
+                passwordRepeat={passwordRepeat}
 
                 // Step 7 - Metrics
                 tags={tags}

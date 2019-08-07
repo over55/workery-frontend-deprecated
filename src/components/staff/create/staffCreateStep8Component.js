@@ -14,22 +14,20 @@ export default class StaffCreateStep8Component extends Component {
     render() {
         const {
             // Step 3
-            typeOf,
-            typeOfLabel,
+            accountType,
+            accountTypeLabel,
 
             // Step 4 - Residential & Business
             firstName,
             lastName,
             primaryPhone,
             secondaryPhone,
-            email,
+            workEmail,
+            personalEmail,
             isOkToEmail,
             isOkToEmailLabel,
             isOkToText,
             isOkToTextLabel,
-            companyName,
-            contactFirstName,
-            contactLastName,
 
             // Step 5 - Address
             country,
@@ -39,15 +37,9 @@ export default class StaffCreateStep8Component extends Component {
             streetAddress,
 
             // Step 6 - Account
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-            insuranceRequirements,
+            description,
+            emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
             isActive,
-            skillSets,
-            vehicleTypes,
-            duesDate,
-            commercialInsuranceExpiryDate,
-            autoInsuranceExpiryDate,
-            wsibInsuranceDate,
             policeCheck,
 
             // Step 7 - Metrics
@@ -68,7 +60,6 @@ export default class StaffCreateStep8Component extends Component {
             isLoading,
             onSubmitClick,
         } = this.props;
-        const isBizTypeOf = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -108,7 +99,7 @@ export default class StaffCreateStep8Component extends Component {
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <Link to={returnURL}>
+                            <Link to="/staff/add/step-4">
                                 <span className="num">4.</span><span className="">Contact</span>
                             </Link>
                         </div>
@@ -124,10 +115,10 @@ export default class StaffCreateStep8Component extends Component {
                         </div>
                         <div id="step-7" className="st-grey">
                             <Link to="/staff/add/step-7">
-                                <span className="num">6.</span><span className="">Metrics</span>
+                                <span className="num">7.</span><span className="">Metrics</span>
                             </Link>
                         </div>
-                        <div id="step-8" className="st-grey active">
+                        <div id="step-7" className="st-grey active">
                             <strong>
                                 <span className="num">8.</span><span className="">Review</span>
                             </strong>
@@ -153,7 +144,7 @@ export default class StaffCreateStep8Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Staffhip Class</th>
-                                    <td>{typeOfLabel}</td>
+                                    <td></td>
                                 </tr>
 
                                 <tr className="bg-dark">
@@ -161,32 +152,6 @@ export default class StaffCreateStep8Component extends Component {
                                         <i className="fas fa-id-card"></i>&nbsp;Contact
                                     </th>
                                 </tr>
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Company Name</th>
-                                        <td>{companyName}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf
-                                    ?<tr>
-                                        <th scope="row" className="bg-light">Contact First Name</th>
-                                        <td>{contactFirstName}</td>
-                                    </tr>
-                                    :<tr>
-                                        <th scope="row" className="bg-light">First Name</th>
-                                        <td>{firstName}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf
-                                    ?<tr>
-                                        <th scope="row" className="bg-light">Contact Last Name</th>
-                                        <td>{contactLastName}</td>
-                                    </tr>
-                                    :<tr>
-                                        <th scope="row" className="bg-light">Last Name</th>
-                                        <td>{lastName}</td>
-                                    </tr>
-                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Primary Phone #</th>
                                     <td>{primaryPhone}</td>
@@ -196,8 +161,12 @@ export default class StaffCreateStep8Component extends Component {
                                     <td>{secondaryPhone}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Email</th>
-                                    <td>{email}</td>
+                                    <th scope="row" className="bg-light">Work Email</th>
+                                    <td>{workEmail}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Personal Email</th>
+                                    <td>{personalEmail}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Is Ok to email?</th>
@@ -243,73 +212,9 @@ export default class StaffCreateStep8Component extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Skill set</th>
-                                    <td>
-                                        {skillSets && skillSets.map(
-                                            (skill) => <TagItem tag={skill} key={skill.id} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Insurance</th>
-                                    <td>
-                                        {insuranceRequirements && insuranceRequirements.map(
-                                            (insuranceRequirement) => <TagItem tag={insuranceRequirement} key={insuranceRequirement.id} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Hourly Rate</th>
-                                    <td>${hourlySalaryDesired} / hour</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Limitation or special consideration</th>
-                                    <td>{limitSpecial}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Member Dues</th>
-                                    <td>
-                                        <Moment format="YYYY/MM/DD">{duesDate}</Moment>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Commercial Insurance Expiry Date</th>
-                                    <td>
-                                        <Moment format="YYYY/MM/DD">{commercialInsuranceExpiryDate}</Moment>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Auto Insurance Expiry Date</th>
-                                    <td>
-                                        <Moment format="YYYY/MM/DD">{autoInsuranceExpiryDate}</Moment>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">WSIB Insurance Date</th>
-                                    <td>
-                                        <Moment format="YYYY/MM/DD">{wsibInsuranceDate}</Moment>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Police Check Expiry</th>
                                     <td>
                                         <Moment format="YYYY/MM/DD">{policeCheck}</Moment>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">HST #</th>
-                                    <td>{taxId}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Drivers license class(es)</th>
-                                    <td>{driversLicenseClass}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Vehicle Type</th>
-                                    <td>
-                                        {vehicleTypes && vehicleTypes.map(
-                                            (vehicleType) => <TagItem tag={vehicleType} key={vehicleType.id} />)
-                                        }
                                     </td>
                                 </tr>
                                 <tr>
