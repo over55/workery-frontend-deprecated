@@ -72,8 +72,7 @@ import OrderFullRetrieveContainer from "./orders/retrieve/orderFullRetrieveConta
 import OrderCreateStep1Container from "./orders/create/orderCreateStep1Container";
 import OrderCreateStep2Container from "./orders/create/orderCreateStep2Container";
 import OrderCreateStep3Container from "./orders/create/orderCreateStep3Container";
-import OrderCreateStep4BizContainer from "./orders/create/orderCreateStep4BizContainer";
-import OrderCreateStep4RezOrComContainer from "./orders/create/orderCreateStep4RezOrComContainer";
+import OrderCreateStep4Container from "./orders/create/orderCreateStep4Container";
 import OrderCreateStep5Container from "./orders/create/orderCreateStep5Container";
 import OrderCreateStep6Container from "./orders/create/orderCreateStep6Container";
 import OrderCreateStep7Container from "./orders/create/orderCreateStep7Container";
@@ -253,8 +252,7 @@ class AppContainer extends React.Component {
                                 <Route path="/orders/add/step-1" exact component={requiresAuth(OrderCreateStep1Container)} />
                                 <Route path="/orders/add/step-2" exact component={requiresAuth(OrderCreateStep2Container)} />
                                 <Route path="/orders/add/step-3" exact component={requiresAuth(OrderCreateStep3Container)} />
-                                <Route path="/orders/add/step-4-biz" exact component={requiresAuth(OrderCreateStep4BizContainer)} />
-                                <Route path="/orders/add/step-4-rez-or-cc" exact component={requiresAuth(OrderCreateStep4RezOrComContainer)} />
+                                <Route path="/orders/add/step-4" exact component={requiresAuth(OrderCreateStep4Container)} />
                                 <Route path="/orders/add/step-5" exact component={requiresAuth(OrderCreateStep5Container)} />
                                 <Route path="/orders/add/step-6" exact component={requiresAuth(OrderCreateStep6Container)} />
                                 <Route path="/orders/add/step-7" exact component={requiresAuth(OrderCreateStep7Container)} />

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import OrderCreateStep5Component from "../../../components/orders/create/orderCreateStep5Component";
+import OrderCreateStep4Component from "../../../components/orders/create/orderCreateStep4Component";
 
 
-class OrderCreateStep5Container extends Component {
+class OrderCreateStep4Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -46,7 +46,7 @@ class OrderCreateStep5Container extends Component {
 
     render() {
         return (
-            <OrderCreateStep5Component
+            <OrderCreateStep4Component
             />
         );
     }
@@ -66,4 +66,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCreateStep5Container);
+)(OrderCreateStep4Container);

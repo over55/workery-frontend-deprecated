@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 
-export default class OrderCreateStep3Component extends Component {
+export default class OrderCreateStep4Component extends Component {
     render() {
         return (
             <main id="main" role="main">
@@ -67,7 +67,7 @@ export default class OrderCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Residential / Community Cares</h3>
                                 <p className="card-text">Add a residential or community cares order</p>
-                                <Link to="/orders/add/step-4" className="btn btn-primary btn-lg">
+                                <Link to="/orders/add/step-3" className="btn btn-primary btn-lg">
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </Link>
                             </div>
