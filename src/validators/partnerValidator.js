@@ -100,39 +100,7 @@ export function validateInput(data) {
 
 
 /**
- *  Validator will validate step 4 in the partner creation form.
- */
-export function validateStep4RezCreateInput(data) {
-    let errors = {};
-
-    if (data.firstName === undefined || data.firstName === null || validator.isEmpty(data.firstName) || data.firstName === "") {
-        errors.firstName = 'This field is required';
-    }
-    if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
-        errors.lastName = 'This field is required';
-    }
-    if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-        errors.primaryPhone = 'This field is required';
-    }
-    if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
-        errors.email = 'This field is required';
-    }
-    if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
-        errors.isOkToEmail = 'This field is required';
-    }
-    if (data.isOkToText === undefined || data.isOkToText === null || data.isOkToText === "" || isNaN(data.isOkToText) ) {
-        errors.isOkToText = 'This field is required';
-    }
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    }
-}
-
-
-/**
- *  Validator will validate step 4 in the partner creation form.
+ *  Validator will validate step 3 in the partner creation form.
  */
 export function validateStep3CreateInput(data) {
     let errors = {};
@@ -170,9 +138,9 @@ export function validateStep3CreateInput(data) {
 
 
 /**
- *  Validator will validate step 5 in the partner creation form.
+ *  Validator will validate step 4 in the partner creation form.
  */
-export function validateStep5CreateInput(data) {
+export function validateStep4CreateInput(data) {
     let errors = {};
 
     if (data.streetAddress === undefined || data.streetAddress === null || validator.isEmpty(data.streetAddress) || data.streetAddress === "") {
@@ -198,9 +166,9 @@ export function validateStep5CreateInput(data) {
 }
 
 /**
- *  Validator will validate step 6 in the partner creation form.
+ *  Validator will validate step 5 in the partner creation form.
  */
-export function validateStep6CreateInput(data) {
+export function validateStep5CreateInput(data) {
     let errors = {};
 
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
@@ -228,9 +196,9 @@ export function validateStep6CreateInput(data) {
 }
 
 /**
- *  Validator will validate step 7 in the partner creation form.
+ *  Validator will validate step 6 in the partner creation form.
  */
-export function validateStep7CreateInput(data) {
+export function validateStep6CreateInput(data) {
     return validateInput(data);
 }
 

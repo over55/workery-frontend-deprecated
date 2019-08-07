@@ -82,7 +82,7 @@ export default class OrderCreateStep3Component extends Component {
                             </p> */}
 
                             <BootstrapDatePicker
-                                label="Date of Birth (*)"
+                                label="Start date (*)"
                                 name="startDate"
                                 dateObj={startDate}
                                 onTimeChange={onStartDateChange}
