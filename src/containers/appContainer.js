@@ -169,11 +169,10 @@ import PartnerCreateStep1Container from "./partners/create/partnerCreateStep1Con
 import PartnerCreateStep2Container from "./partners/create/partnerCreateStep2Container";
 import PartnerCreateStep3Container from "./partners/create/partnerCreateStep3Container";
 import PartnerCreateStep4BizContainer from "./partners/create/partnerCreateStep4BizContainer";
-import PartnerCreateStep4RezOrComContainer from "./partners/create/partnerCreateStep4RezOrComContainer";
+import PartnerCreateStep4RezContainer from "./partners/create/partnerCreateStep4RezContainer";
 import PartnerCreateStep5Container from "./partners/create/partnerCreateStep5Container";
 import PartnerCreateStep6Container from "./partners/create/partnerCreateStep6Container";
 import PartnerCreateStep7Container from "./partners/create/partnerCreateStep7Container";
-import PartnerCreateStep8Container from "./partners/create/partnerCreateStep8Container";
 import PartnerUpdateContainer from "./partners/update/partnerUpdateContainer";
 import PartnerPromoteStep1Container from "./partners/promote/partnerPromoteStep1Container";
 import PartnerPromoteStep2Container from "./partners/promote/partnerPromoteStep2Container";
@@ -336,11 +335,10 @@ class AppContainer extends React.Component {
                                 <Route path="/partners/add/step-2" exact component={requiresAuth(PartnerCreateStep2Container)} />
                                 <Route path="/partners/add/step-3" exact component={requiresAuth(PartnerCreateStep3Container)} />
                                 <Route path="/partners/add/step-4-biz" exact component={requiresAuth(PartnerCreateStep4BizContainer)} />
-                                <Route path="/partners/add/step-4-rez-or-cc" exact component={requiresAuth(PartnerCreateStep4RezOrComContainer)} />
+                                <Route path="/partners/add/step-4-rez-or-cc" exact component={requiresAuth(PartnerCreateStep4RezContainer)} />
                                 <Route path="/partners/add/step-5" exact component={requiresAuth(PartnerCreateStep5Container)} />
                                 <Route path="/partners/add/step-6" exact component={requiresAuth(PartnerCreateStep6Container)} />
                                 <Route path="/partners/add/step-7" exact component={requiresAuth(PartnerCreateStep7Container)} />
-                                <Route path="/partners/add/step-8" exact component={requiresAuth(PartnerCreateStep8Container)} />
                                 <Route path="/partners" exact component={requiresAuth(PartnerListContainer)} />
                                 <Route path="/partners/search" exact component={requiresAuth(PartnerSearchContainer)} />
                                 <Route path="/partners/search-results" exact component={requiresAuth(PartnerSearchResultContainer)} />

@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import PartnerCreateStep7Component from "../../../components/partners/create/partnerCreateStep7Component";
-import { validateStep7CreateInput } from "../../../validators/partnerValidator";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
 import {
-    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem
+    localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
 } from '../../../helpers/localStorageUtility';
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
-import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
-} from '../../../constants/api';
+import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
+import { postPartnerDetail } from '../../../actions/partnerActions';
+import { validateStep7CreateInput } from "../../../validators/partnerValidator";
 
 
 class PartnerCreateStep7Container extends Component {
@@ -26,44 +23,172 @@ class PartnerCreateStep7Container extends Component {
         super(props);
 
         // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("nwapp-create-partner-typeOf"));
+        const typeOf = localStorageGetIntegerItem("workery-create-partner-typeOf");
         let returnURL;
-        if (typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF) {
+        let primaryPhone;
+        let primaryPhoneTypeOf;
+        let secondaryPhone;
+        let secondaryPhoneTypeOf;
+        let email;
+        let isOkToEmail;
+        let isOkToText;
+        let isOkToEmailLabel;
+        let isOkToTextLabel;
+        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/partners/add/step-4-rez-or-cc";
+            primaryPhone = localStorage.getItem("workery-create-partner-rez-primaryPhone");
+            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-rez-primaryPhoneTypeOf");
+            secondaryPhone = localStorage.getItem("workery-create-partner-rez-secondaryPhone");
+            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-rez-secondaryPhoneTypeOf");
+            email = localStorage.getItem("workery-create-partner-rez-email");
+            isOkToEmail = localStorageGetIntegerItem("workery-create-partner-rez-isOkToEmail");
+            isOkToText = localStorageGetIntegerItem("workery-create-partner-rez-isOkToText");
+            isOkToEmailLabel = localStorage.getItem("workery-create-partner-rez-isOkToEmail-label");
+            isOkToTextLabel = localStorage.getItem("workery-create-partner-rez-isOkToText-label");
         }
-        else if (typeOf === BUSINESS_TYPE_OF) {
+        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/partners/add/step-4-biz";
+            primaryPhone = localStorage.getItem("workery-create-partner-biz-primaryPhone");
+            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-biz-primaryPhoneTypeOf");
+            secondaryPhone =  localStorage.getItem("workery-create-partner-biz-secondaryPhone");
+            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-biz-secondaryPhoneTypeOf");
+            email = localStorage.getItem("workery-create-partner-biz-email");
+            isOkToEmail = localStorageGetIntegerItem("workery-create-partner-biz-isOkToEmail");
+            isOkToText = localStorageGetIntegerItem("workery-create-partner-biz-isOkToText");
+            isOkToEmailLabel = localStorage.getItem("workery-create-partner-biz-isOkToEmail-label");
+            isOkToTextLabel = localStorage.getItem("workery-create-partner-biz-isOkToText-label");
         }
 
         this.state = {
-            returnURL: returnURL,
+            // Step 3
             typeOf: typeOf,
-            tags: localStorageGetArrayItem("nwapp-create-partner-tags"),
-            birthYear: localStorage.getItem("nwapp-create-partner-birthYear"),
-            gender: parseInt(localStorage.getItem("nwapp-create-partner-gender")),
-            howDidYouHear: localStorage.getItem("nwapp-create-partner-howDidYouHear"),
-            howDidYouHearOption: localStorageGetObjectItem('nwapp-create-partner-howDidYouHearOption'),
-            howDidYouHearOther: localStorage.getItem("nwapp-create-partner-howDidYouHearOther"),
-            meaning: localStorage.getItem("nwapp-create-partner-meaning"),
-            expectations: localStorage.getItem("nwapp-create-partner-expectations"),
-            willingToVolunteer: parseInt(localStorage.getItem("nwapp-create-partner-willingToVolunteer")),
-            anotherHouseholdPartnerRegistered: parseInt(localStorage.getItem("nwapp-create-partner-anotherHouseholdPartnerRegistered")),
-            totalHouseholdCount: parseInt(localStorage.getItem("nwapp-create-partner-totalHouseholdCount")),
-            under18YearsHouseholdCount: parseInt(localStorage.getItem("nwapp-create-partner-under18YearsHouseholdCount")),
-            companyEmployeeCount: parseInt(localStorage.getItem("nwapp-create-partner-under18YearsHouseholdCount")),
-            companyYearsInOperation: parseInt(localStorage.getItem("nwapp-create-partner-companyYearsInOperation")),
-            companyType: localStorage.getItem("nwapp-create-partner-companyType"),
+            typeOfLabel: localStorage.getItem("workery-create-partner-typeOf-label"),
+
+            // Step 4 - Residential & Business
+            firstName: localStorage.getItem("workery-create-partner-rez-firstName"),
+            lastName: localStorage.getItem("workery-create-partner-rez-lastName"),
+            primaryPhone: primaryPhone,
+            primaryPhoneTypeOf: primaryPhoneTypeOf,
+            secondaryPhone: secondaryPhone,
+            secondaryPhoneTypeOf: secondaryPhoneTypeOf,
+            email: email,
+            isOkToEmail: isOkToEmail,
+            isOkToEmailLabel: isOkToEmailLabel,
+            isOkToText: isOkToText,
+            isOkToTextLabel: isOkToTextLabel,
+            companyName: localStorage.getItem("workery-create-partner-biz-companyName"),
+            contactFirstName: localStorage.getItem("workery-create-partner-biz-contactFirstName"),
+            contactLastName: localStorage.getItem("workery-create-partner-biz-contactLastName"),
+
+            // Step 5 - Address
+            country: localStorage.getItem("workery-create-partner-country"),
+            region: localStorage.getItem("workery-create-partner-region"),
+            locality: localStorage.getItem("workery-create-partner-locality"),
+            postalCode: localStorage.getItem("workery-create-partner-postalCode"),
+            streetAddress: localStorage.getItem("workery-create-partner-streetAddress"),
+
+            // Step 6 - Metrics
+            tags: localStorageGetArrayItem("workery-create-partner-tags"),
+            dateOfBirth: localStorageGetDateItem("workery-create-partner-dateOfBirth"),
+            gender: localStorageGetIntegerItem("workery-create-partner-gender"),
+            genderLabel: localStorage.getItem("workery-create-partner-gender-label"),
+            howHear: localStorageGetIntegerItem("workery-create-partner-howHear"),
+            howHearLabel: localStorage.getItem("workery-create-partner-howHearLabel"),
+            howHearOption: localStorageGetObjectItem('workery-create-partner-howHearOption'),
+            howHearOther: localStorage.getItem("workery-create-partner-howHearOther"),
+            joinDate: localStorageGetDateItem("workery-create-partner-joinDate"),
+            comment: localStorage.getItem("workery-create-partner-comment"),
+
+            // Everything else
+            returnURL: returnURL,
             errors: {},
-            isLoading: false
+            isLoading: false,
+            password: localStorage.getItem("workery-create-partner-password"),
+            passwordRepeat: localStorage.getItem("workery-create-partner-password-repeat"),
         }
 
-        this.onTextChange = this.onTextChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
-        this.onMultiChange = this.onMultiChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
-        this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSubmitClick = this.onSubmitClick.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.getPostData = this.getPostData.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // (1) Given name - We need t refactor name for API field match.
+        postData.givenName = this.state.firstName;
+
+        // (2) Middle name (API ISSUE)
+        postData.middleName = this.state.middleName;
+
+        // (2) Join date - We need to format as per required API format.
+        const joinDateMoment = moment(this.state.joinDate);
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
+
+        // (3) Tags - We need to only return our `id` values.
+        let idTags = [];
+        for (let i = 0; i < this.state.tags.length; i++) {
+            let tag = this.state.tags[i];
+            idTags.push(tag.value);
+        }
+        postData.tags = idTags;
+
+        // (4) How Hear Other - This field may not be null, therefore make blank.
+        if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
+            postData.howHearOther = "";
+        }
+
+        // (5) Password & Password Repeat
+        if (this.state.password === undefined || this.state.password === null || this.state.password === '' || this.state.password.length == 0) {
+            var randomString = Math.random().toString(34).slice(-10);
+            randomString += "A";
+            randomString += "!";
+            postData.password = randomString;
+            postData.passwordRepeat = randomString;
+        }
+
+        // (6) Organization Type Of - This field may not be null, therefore make blank.
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+            postData.organizationTypeOf = "";
+        }
+
+        // (7) Extra Comment: This field is required.
+        if (this.state.comment === undefined || this.state.comment === null) {
+            postData.extraComment = "";
+        } else {
+            postData.extraComment = this.state.comment;
+        }
+
+        // (8) Telephone: This field is required.
+        postData.telephone = this.state.primaryPhone;
+        postData.telephoneTypeOf = this.state.primaryPhoneTypeOf;
+        postData.otherTelephoneTypeOf = this.state.secondaryPhoneTypeOf;
+
+        // (9) Address Country: This field is required.
+        postData.addressCountry = this.state.country;
+
+        // (10) Address Locality: This field is required.
+        postData.addressLocality = this.state.locality;
+
+        // (11) Address Region: This field is required.
+        postData.addressRegion = this.state.region
+
+        // () First Name and Last Name if biz
+        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            postData.firstName = this.state.contactFirstName;
+            postData.givenName = this.state.contactFirstName;
+            postData.lastName = this.state.contactLastName;
+        }
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -73,31 +198,6 @@ class PartnerCreateStep7Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
-        this.setState({
-            howDidYouHearData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Word of mouth',
-                    slug: 'word-of-mouth'
-                },{
-                    name: 'Internet',
-                    slug: 'internet'
-                }]
-            },
-            tagsData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Health',
-                    slug: 'health'
-                },{
-                    name: 'Security',
-                    slug: 'security'
-                },{
-                    name: 'Fitness',
-                    slug: 'fitness'
-                }]
-            }
-        });
     }
 
     componentWillUnmount() {
@@ -114,15 +214,64 @@ class PartnerCreateStep7Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(partner) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/partners/add/step-8");
+    /**
+     *  Event handling functions
+     *------------------------------------------------------------
+     */
+
+    onSubmitClick(e) {
+        e.preventDefault();
+
+        const { errors, isValid } = validateStep7CreateInput(this.state);
+        // console.log(errors, isValid); // For debugging purposes only.
+
+        if (isValid) {
+            this.setState({
+                errors: {},
+                isLoading: true,
+            }, ()=>{
+                // Once our state has been validated `partner-side` then we will
+                // make an API request with the server to create our new production.
+                this.props.postPartnerDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            });
+        } else {
+            this.setState({
+                errors: errors,
+                isLoading: false,
+            });
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
     }
 
-    onFailedSubmissionCallback(errors) {
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
+                console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+                this.props.setFlashMessage("success", "Partner has been successfully created.");
+                this.props.history.push("/partners");
+            }
+        )
+    }
+
+    onFailureCallback(errors) {
         this.setState({
-            errors: errors
-        });
+            errors: errors,
+            isLoading: false
+        })
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -132,130 +281,99 @@ class PartnerCreateStep7Container extends Component {
     }
 
     /**
-     *  Event handling functions
-     *------------------------------------------------------------
-     */
-
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-        localStorage.setItem('nwapp-create-partner-'+[e.target.name], e.target.value);
-    }
-
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            optionKey: option,
-        });
-        localStorage.setItem('nwapp-create-partner-'+[option.selectName].toString(), option.value);
-        localStorage.setItem('nwapp-create-partner-'+[option.selectName].toString()+"Label", option.label);
-        localStorageSetObjectOrArrayItem('nnwapp-create-partner-'+optionKey, option);
-        // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "nwapp-create-partner-"+[e.target.name];
-        const storageLabelKey =  "nwapp-create-partner-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
-    }
-
-    onMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // Set all the tags we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
-        });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'nwapp-create-partner-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
-    }
-
-    onClick(e) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
-
-        // console.log(this.state); // For debugging purposes only.
-
-        // Perform partner-side validation.
-        const { errors, isValid } = validateStep7CreateInput(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.onSuccessfulSubmissionCallback();
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailedSubmissionCallback(errors);
-        }
-    }
-
-    /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
         const {
-            typeOf, returnURL, tags, birthYear, gender, howDidYouHear, howDidYouHearOther, meaning, expectations,
-            willingToVolunteer, anotherHouseholdPartnerRegistered, totalHouseholdCount, under18YearsHouseholdCount,
-            companyEmployeeCount, companyYearsInOperation, companyType,
-            errors
-        } = this.state;
+            // Step 3
+            typeOf,
+            typeOfLabel,
 
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
-        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
+            // Step 4 - Residential & Business
+            firstName,
+            lastName,
+            primaryPhone,
+            secondaryPhone,
+            email,
+            isOkToEmail,
+            isOkToEmailLabel,
+            isOkToText,
+            isOkToTextLabel,
+            companyName,
+            contactFirstName,
+            contactLastName,
+
+            // Step 5 - Address
+            country,
+            region,
+            locality,
+            postalCode,
+            streetAddress,
+
+            // Step 6 - Metrics
+            tags,
+            dateOfBirth,
+            gender,
+            genderLabel,
+            howHear,
+            howHearLabel,
+            howHearOption,
+            howHearOther,
+            joinDate,
+            comment,
+
+            // Everything else
+            returnURL,
+            errors,
+            isLoading,
+        } = this.state;
 
         return (
             <PartnerCreateStep7Component
+                // Step 3
                 typeOf={typeOf}
-                returnURL={returnURL}
+                typeOfLabel={typeOfLabel}
+
+                // Step 4 - Residential & Business
+                firstName={firstName}
+                lastName={lastName}
+                primaryPhone={primaryPhone}
+                secondaryPhone={secondaryPhone}
+                email={email}
+                isOkToEmail={isOkToEmail}
+                isOkToEmailLabel={isOkToEmailLabel}
+                isOkToText={isOkToText}
+                isOkToTextLabel={isOkToTextLabel}
+                companyName={companyName}
+                contactFirstName={contactFirstName}
+                contactLastName={contactLastName}
+
+                // Step 5 - Address
+                country={country}
+                region={region}
+                locality={locality}
+                postalCode={postalCode}
+                streetAddress={streetAddress}
+
+                // Step 6 - Metrics
                 tags={tags}
-                tagOptions={tagOptions}
-                birthYear={birthYear}
+                dateOfBirth={dateOfBirth}
                 gender={gender}
+                genderLabel={genderLabel}
+                howHear={howHear}
+                howHearLabel={howHearLabel}
+                howHearOption={howHearOption}
+                howHearOther={howHearOther}
+                joinDate={joinDate}
+                comment={comment}
+
+                // Everything else
+                returnURL={returnURL}
                 errors={errors}
-                onTextChange={this.onTextChange}
-                howDidYouHear={howDidYouHear}
-                howDidYouHearOptions={howDidYouHearOptions}
-                howDidYouHearOther={howDidYouHearOther}
-                meaning={meaning}
-                expectations={expectations}
-                willingToVolunteer={willingToVolunteer}
-                anotherHouseholdPartnerRegistered={anotherHouseholdPartnerRegistered}
-                totalHouseholdCount={totalHouseholdCount}
-                under18YearsHouseholdCount={under18YearsHouseholdCount}
-                companyEmployeeCount={companyEmployeeCount}
-                companyYearsInOperation={companyYearsInOperation}
-                companyType={companyType}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
-                onClick={this.onClick}
+                isLoading={isLoading}
+                onSubmitClick={this.onSubmitClick}
             />
         );
     }
@@ -268,7 +386,14 @@ const mapStateToProps = function(store) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
+        postPartnerDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPartnerDetail(postData, successCallback, failedCallback))
+        },
+    }
 }
 
 

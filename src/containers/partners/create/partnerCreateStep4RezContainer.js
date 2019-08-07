@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import PartnerCreateStep4RezOrComComponent from "../../../components/partners/create/partnerCreateStep4RezOrComComponent";
-import { validateStep4RezOrComCreateInput } from "../../../validators/partnerValidator";
-import { RESIDENCE_TYPE_OF } from '../../../constants/api';
+import PartnerCreateStep4RezComponent from "../../../components/partners/create/partnerCreateStep4RezComponent";
+import { validateStep4RezCreateInput } from "../../../validators/partnerValidator";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    TELEPHONE_CONTACT_POINT_TYPE_OF_ID
+} from '../../../constants/api';
+import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
-
-class PartnerCreateStep4RezOrComContainer extends Component {
+class PartnerCreateStep4RezContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -16,16 +19,19 @@ class PartnerCreateStep4RezOrComContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("nwapp-create-partner-rez-or-com-firstName"),
-            lastName: localStorage.getItem("nwapp-create-partner-rez-or-com-lastName"),
-            primaryPhone: localStorage.getItem("nwapp-create-partner-rez-or-com-primaryPhone"),
-            secondaryPhone: localStorage.getItem("nwapp-create-partner-rez-or-com-secondaryPhone"),
-            email: localStorage.getItem("nwapp-create-partner-rez-or-com-email"),
+            firstName: localStorage.getItem("workery-create-partner-rez-firstName"),
+            lastName: localStorage.getItem("workery-create-partner-rez-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-partner-rez-primaryPhone"),
+            secondaryPhone: localStorage.getItem("workery-create-partner-rez-secondaryPhone"),
+            email: localStorage.getItem("workery-create-partner-rez-email"),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-partner-rez-isOkToEmail"),
+            isOkToText: localStorageGetIntegerItem("workery-create-partner-rez-isOkToText"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -43,7 +49,10 @@ class PartnerCreateStep4RezOrComContainer extends Component {
         // Since we are in this page, we need to assign the user to be
         // a residential type user. If the user is community cares type
         // then this variable will be set then in page 4.
-        localStorage.setItem("nwapp-create-partner-typeOf", RESIDENCE_TYPE_OF);
+        localStorage.setItem("workery-create-partner-typeOf", RESIDENTIAL_CUSTOMER_TYPE_OF_ID);
+        localStorage.setItem("workery-create-partner-typeOf-label", "Residential");
+        localStorage.setItem("workery-create-partner-rez-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
+        localStorage.setItem("workery-create-partner-rez-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
     }
 
     componentWillUnmount() {
@@ -85,8 +94,34 @@ class PartnerCreateStep4RezOrComContainer extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        const key = "nwapp-create-partner-rez-or-com-"+[e.target.name];
+        const key = "workery-create-partner-rez-"+[e.target.name];
         localStorage.setItem(key, e.target.value);
+    }
+
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-partner-rez-"+[e.target.name];
+        const storageLabelKey =  "workery-create-partner-rez-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+        localStorage.setItem(storageValueKey, value) // Save to storage.
+        localStorage.setItem(storageLabelKey, label) // Save to storage.
+
+        // For the debugging purposes only.
+        console.log({
+            "STORE-VALUE-KEY": storageValueKey,
+            "STORE-VALUE": value,
+            "STORAGE-VALUE-KEY": storeValueKey,
+            "STORAGE-VALUE": value,
+            "STORAGE-LABEL-KEY": storeLabelKey,
+            "STORAGE-LABEL": label,
+        });
     }
 
     onClick(e) {
@@ -94,7 +129,7 @@ class PartnerCreateStep4RezOrComContainer extends Component {
         e.preventDefault();
 
         // Perform partner-side validation.
-        const { errors, isValid } = validateStep4RezOrComCreateInput(this.state);
+        const { errors, isValid } = validateStep4RezCreateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -113,16 +148,21 @@ class PartnerCreateStep4RezOrComContainer extends Component {
      */
 
     render() {
-        const { firstName, lastName, primaryPhone, secondaryPhone, email, errors } = this.state;
+        const {
+            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
+        } = this.state;
         return (
-            <PartnerCreateStep4RezOrComComponent
+            <PartnerCreateStep4RezComponent
                 firstName={firstName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
                 email={email}
+                isOkToEmail={isOkToEmail}
+                isOkToText={isOkToText}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
             />
         );
@@ -143,4 +183,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(PartnerCreateStep4RezOrComContainer);
+)(PartnerCreateStep4RezContainer);

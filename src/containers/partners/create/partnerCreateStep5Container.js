@@ -8,9 +8,8 @@ import {
 } from '../../../helpers/localStorageUtility';
 import { validateStep5CreateInput } from "../../../validators/partnerValidator";
 import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
 import { BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES } from "../../../constants/api";
 
@@ -26,36 +25,34 @@ class PartnerCreateStep5Container extends Component {
         super(props);
 
         // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("nwapp-create-partner-typeOf"));
+        const typeOf = parseInt(localStorage.getItem("workery-create-partner-typeOf"));
         let returnURL;
-        if (typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF) {
+        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/partners/add/step-4-rez-or-cc";
         }
-        else if (typeOf === BUSINESS_TYPE_OF) {
+        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/partners/add/step-4-biz";
         }
 
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
-            streetNumber: localStorage.getItem("nwapp-create-partner-streetNumber"),
-            streetName: localStorage.getItem("nwapp-create-partner-streetName"),
-            streetType: localStorage.getItem("nwapp-create-partner-streetType"),
-            apartmentUnit: localStorage.getItem("nwapp-create-partner-apartmentUnit"),
-            streetTypeOption: localStorageGetObjectItem('nwapp-create-partner-streetTypeOption'),
-            streetTypeOther: localStorage.getItem("nwapp-create-partner-streetTypeOther"),
-            streetDirection: localStorage.getItem("nwapp-create-partner-streetDirection"),
-            streetDirectionOption: localStorageGetObjectItem('nwapp-create-partner-streetDirectionOption'),
-            postalCode: localStorage.getItem("nwapp-create-partner-postalCode"),
+            country: localStorage.getItem("workery-create-partner-country"),
+            region: localStorage.getItem("workery-create-partner-region"),
+            locality: localStorage.getItem("workery-create-partner-locality"),
+            postalCode: localStorage.getItem("workery-create-partner-postalCode"),
+            streetAddress: localStorage.getItem("workery-create-partner-streetAddress"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.onClick = this.onClick.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
+        this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
     }
 
     /**
@@ -103,25 +100,48 @@ class PartnerCreateStep5Container extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-        localStorage.setItem('nwapp-create-partner-'+[e.target.name], e.target.value);
+     onTextChange(e) {
+         // Update our state.
+         this.setState({
+             [e.target.name]: e.target.value,
+         });
+
+         // Update our persistent storage.
+         const key = "workery-create-partner-"+[e.target.name];
+         localStorage.setItem(key, e.target.value)
+     }
+
+     onSelectChange(option) {
+         const optionKey = [option.selectName]+"Option";
+         this.setState({
+             [option.selectName]: option.value,
+             optionKey: option,
+         });
+         localStorage.setItem('workery-create-partner-'+[option.selectName], option.value);
+         localStorageSetObjectOrArrayItem('workery-create-partner-'+optionKey, option);
+         // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+         // console.log(this.state);
+     }
+
+    onBillingCountryChange(value) {
+        // Update state.
+        if (value === null || value === undefined || value === '') {
+            this.setState({ country: null, region: null })
+        } else {
+            this.setState({ country: value, region: null })
+        }
+
+        // Update persistent storage.
+        localStorage.setItem('workery-create-partner-country', value);
+        localStorage.setItem('workery-create-partner-region', null);
     }
 
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            optionKey: option,
-        });
-        localStorage.setItem('nwapp-create-partner-'+[option.selectName], option.value);
-        localStorageSetObjectOrArrayItem('nwapp-create-partner-'+optionKey, option);
-        // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+    onBillingRegionChange(value) {
+        this.setState({ region: value }); // Update state.
+        localStorage.setItem('workery-create-partner-region', value); // Update persistent storage.
     }
 
-    onClick(e) {
+    onNextClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
@@ -145,23 +165,27 @@ class PartnerCreateStep5Container extends Component {
      */
 
     render() {
-        const { returnURL, streetNumber, streetName, streetType, apartmentUnit, streetTypeOther, streetDirection, postalCode, errors } = this.state;
+        const { referrer, errors, isLoading, returnURL } = this.state;
+        const {
+            country, region, locality,
+            postalCode, streetAddress,
+        } = this.state;
+        const { user } = this.props;
         return (
             <PartnerCreateStep5Component
-                returnURL={returnURL}
-                streetNumber={streetNumber}
-                streetName={streetName}
-                streetType={streetType}
-                apartmentUnit={apartmentUnit}
-                streetTypeOptions={BASIC_STREET_TYPE_CHOICES}
-                streetTypeOther={streetTypeOther}
-                streetDirection={streetDirection}
-                streetDirectionOptions={STREET_DIRECTION_CHOICES}
+                country={country}
+                region={region}
+                locality={locality}
+                streetAddress={streetAddress}
                 postalCode={postalCode}
-                errors={errors}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
-                onClick={this.onClick}
+                onBillingCountryChange={this.onBillingCountryChange}
+                onBillingRegionChange={this.onBillingRegionChange}
+                onNextClick={this.onNextClick}
+                errors={errors}
+                returnURL={returnURL}
+                isLoading={isLoading}
             />
         );
     }

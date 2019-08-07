@@ -3,14 +3,22 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
 
 
 class PartnerCreateStep4BizComponent extends Component {
     render() {
-        const { companyName, contactFirstName, contactLastName, primaryPhone, secondaryPhone, email, errors, onTextChange, isLoading, onClick } = this.props;
+        const {
+            companyName, contactFirstName, contactLastName,
+            primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
+            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors,
+            isOkToEmail, isOkToText,
+            onTextChange, onSelectChange, onRadioChange, isLoading, onClick
+        } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -19,7 +27,7 @@ class PartnerCreateStep4BizComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/partners"><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                            <Link to="/partners"><i className="fas fa-user-circle"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -57,13 +65,10 @@ class PartnerCreateStep4BizComponent extends Component {
                             <span className="num">5.</span><span className="">Address</span>
                         </div>
                         <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Watch</span>
+                            <span className="num">6.</span><span className="">Metrics</span>
                         </div>
-                         <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Metrics</span>
-                        </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
+                        <div id="step-7" className="st-grey">
+                            <span className="num">7.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -123,6 +128,17 @@ class PartnerCreateStep4BizComponent extends Component {
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
 
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Primary Telephone type (*)"
+                                name="primaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={primaryPhoneTypeOfOptions}
+                                value={primaryPhoneTypeOf}
+                                error={errors.primaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
+                            />
+
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
@@ -135,6 +151,17 @@ class PartnerCreateStep4BizComponent extends Component {
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
 
+                            <BootstrapSingleSelect
+                                borderColour="border-success"
+                                label="Secondary Telephone type"
+                                name="secondaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={secondaryPhoneTypeOfOptions}
+                                value={secondaryPhoneTypeOf}
+                                error={errors.secondaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
+                            />
+
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
@@ -144,6 +171,30 @@ class PartnerCreateStep4BizComponent extends Component {
                                 value={email}
                                 name="email"
                                 type="text"
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isOkToEmail}
+                                label="Ok to E-Mail? (*)"
+                                name="isOkToEmail"
+                                onChange={onRadioChange}
+                                selectedValue={isOkToEmail}
+                                options={IS_OK_TO_EMAIL_CHOICES}
+                                helpText='Selecting \"yes\" will result in partner getting emails from our system.'
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isOkToText}
+                                label="Ok to Text? (*)"
+                                name="isOkToText"
+                                onChange={onRadioChange}
+                                selectedValue={isOkToText}
+                                options={IS_OK_TO_TEXT_CHOICES}
+                                helpText='Selecting \"yes\" will result in partner getting text-messages on their phone from our system.'
                             />
 
                             <div className="form-group">
