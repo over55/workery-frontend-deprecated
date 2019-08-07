@@ -63,27 +63,6 @@ export function validateInput(data) {
 
     // --- ACCOUNT --- //
 
-    if (data.skillSets === undefined || data.skillSets === null || data.skillSets === "" || isEmpty(data.skillSets) ) {
-        errors.skillSets = 'This field is required';
-    }
-    if (data.insuranceRequirements === undefined || data.insuranceRequirements === null || data.insuranceRequirements === "" || isEmpty(data.insuranceRequirements) ) {
-        errors.insuranceRequirements = 'This field is required';
-    }
-    if (data.hourlySalaryDesired === undefined || data.hourlySalaryDesired === null || data.hourlySalaryDesired === "" || isNaN(data.hourlySalaryDesired) ) {
-        errors.hourlySalaryDesired = 'This field is required';
-    }
-    if (data.duesDate === undefined || data.duesDate === null || data.duesDate === "" || isNaN(data.duesDate) ) {
-        errors.duesDate = 'This field is required';
-    }
-    if (data.commercialInsuranceExpiryDate === undefined || data.commercialInsuranceExpiryDate === null || data.commercialInsuranceExpiryDate === "" || isNaN(data.commercialInsuranceExpiryDate) ) {
-        errors.commercialInsuranceExpiryDate = 'This field is required';
-    }
-    // if (data.autoInsuranceExpiryDate === undefined || data.autoInsuranceExpiryDate === null || data.autoInsuranceExpiryDate === "" || isNaN(data.autoInsuranceExpiryDate) ) {
-    //     errors.autoInsuranceExpiryDate = 'This field is required';
-    // }
-    // if (data.wsibInsuranceDate === undefined || data.wsibInsuranceDate === null || data.wsibInsuranceDate === "" || isNaN(data.wsibInsuranceDate) ) {
-    //     errors.wsibInsuranceDate = 'This field is required';
-    // }
     if (data.policeCheck === undefined || data.policeCheck === null || data.policeCheck === "" || isNaN(data.policeCheck) ) {
         errors.policeCheck = 'This field is required';
     }
@@ -196,32 +175,21 @@ export function validateStep5CreateInput(data) {
 export function validateStep6CreateInput(data) {
     let errors = {};
 
-    if (data.skillSets === undefined || data.skillSets === null || data.skillSets === "" || isEmpty(data.skillSets) ) {
-        errors.skillSets = 'This field is required';
-    }
-    if (data.insuranceRequirements === undefined || data.insuranceRequirements === null || data.insuranceRequirements === "" || isEmpty(data.insuranceRequirements) ) {
-        errors.insuranceRequirements = 'This field is required';
-    }
-    if (data.hourlySalaryDesired === undefined || data.hourlySalaryDesired === null || data.hourlySalaryDesired === "" || isNaN(data.hourlySalaryDesired) ) {
-        errors.hourlySalaryDesired = 'This field is required';
-    }
-    if (data.duesDate === undefined || data.duesDate === null || data.duesDate === "" || isNaN(data.duesDate) ) {
-        errors.duesDate = 'This field is required';
-    }
-    if (data.commercialInsuranceExpiryDate === undefined || data.commercialInsuranceExpiryDate === null || data.commercialInsuranceExpiryDate === "" || isNaN(data.commercialInsuranceExpiryDate) ) {
-        errors.commercialInsuranceExpiryDate = 'This field is required';
-    }
-    // if (data.autoInsuranceExpiryDate === undefined || data.autoInsuranceExpiryDate === null || data.autoInsuranceExpiryDate === "" || isNaN(data.autoInsuranceExpiryDate) ) {
-    //     errors.autoInsuranceExpiryDate = 'This field is required';
-    // }
-    // if (data.wsibInsuranceDate === undefined || data.wsibInsuranceDate === null || data.wsibInsuranceDate === "" || isNaN(data.wsibInsuranceDate) ) {
-    //     errors.wsibInsuranceDate = 'This field is required';
-    // }
     if (data.policeCheck === undefined || data.policeCheck === null || data.policeCheck === "" || isNaN(data.policeCheck) ) {
         errors.policeCheck = 'This field is required';
     }
     if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
         errors.isActive = 'This field is required';
+    }
+    if (data.password === undefined || data.password === null || data.password === "" ) {
+        errors.password = 'This field is required';
+    }
+    if (data.passwordRepeat === undefined || data.passwordRepeat === null || data.passwordRepeat === "" ) {
+        errors.passwordRepeat = 'This field is required';
+    }
+    if (data.password !== data.passwordRepeat) {
+        errors.password = 'Password does not match!';
+        errors.passwordRepeat = 'Password does not match!';
     }
 
     return {

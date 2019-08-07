@@ -16,16 +16,10 @@ import { IS_ACTIVE_TYPE_OF_CHOICES } from "../../../constants/api";
 class StaffCreateStep6Component extends Component {
     render() {
         const {
-            returnURL, errors, isLoading, onNextClick, onSelectChange,
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
-            insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
+            errors, isLoading, onNextClick, onSelectChange,
+            password, passwordRepeat, description, emergencyContactName,
+            emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
             isActive, onRadioChange,
-            skillSets, skillSetOptions, onSkillSetMultiChange,
-            vehicleTypes, vehicleTypeOptions, onVehicleTypeMultiChange,
-            duesDate, onDuesDateChange,
-            commercialInsuranceExpiryDate, onCommercialInsuranceExpiryDate,
-            autoInsuranceExpiryDate, onAutoInsuranceExpiryDateChange,
-            wsibInsuranceDate, onWsibInsuranceDateChange,
             policeCheck, onPoliceCheckDateChange
         } = this.props;
 
@@ -67,7 +61,7 @@ class StaffCreateStep6Component extends Component {
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <Link to={returnURL}>
+                            <Link to="/staff/add/step-4">
                                 <span className="num">4.</span><span className="">Contact</span>
                             </Link>
                         </div>
@@ -101,99 +95,8 @@ class StaffCreateStep6Component extends Component {
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-graduation-cap"></i>&nbsp;Skills
+                                <i className="fas fa-user-shield"></i>&nbsp;Policy
                             </p>
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-primary"
-                                label="Skill Set (*)"
-                                name="skillSets"
-                                defaultOptionLabel="Please select the skills."
-                                options={skillSetOptions}
-                                selectedOptions={skillSets}
-                                error={errors.skillSets}
-                                onMultiChange={onSkillSetMultiChange}
-                            />
-
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-balance-scale"></i>&nbsp;Legality, Insurance, financial, etc
-                            </p>
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-primary"
-                                label="Insurance Requirements (*)"
-                                name="insuranceRequirements"
-                                defaultOptionLabel="Please select the insurance requirements."
-                                options={insuranceRequirementOptions}
-                                selectedOptions={insuranceRequirements}
-                                error={errors.insuranceRequirements}
-                                onMultiChange={onInsuranceRequirementMultiChange}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.hourlySalaryDesired}
-                                label="Hourly Rate (*)"
-                                onChange={onTextChange}
-                                value={hourlySalaryDesired}
-                                name="hourlySalaryDesired"
-                                type="number"
-                            />
-
-                            <BootstrapTextarea
-                                name="limitSpecial"
-                                borderColour="border-success"
-                                label="Limitation or special consideration"
-                                placeholder="Please Write any limitation or special consideration that we must know about."
-                                rows="5"
-                                value={limitSpecial}
-                                helpText="This will be used to help better serve our staff."
-                                onChange={onTextChange}
-                                error={errors.limitSpecial}
-                            />
-
-                            <BootstrapDatePicker
-                                label="Member Dues (*)"
-                                name="duesDate"
-                                dateObj={duesDate}
-                                onTimeChange={onDuesDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.duesDate}
-                            />
-
-                            <BootstrapDatePicker
-                                label="Commercial Insurance Expiry Date (*)"
-                                name="commercialInsuranceExpiryDate"
-                                dateObj={commercialInsuranceExpiryDate}
-                                onTimeChange={onCommercialInsuranceExpiryDate}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.commercialInsuranceExpiryDate}
-                            />
-
-                            <BootstrapDatePicker
-                                borderColour="border-success"
-                                label="Auto Insurance Expiry Date"
-                                name="autoInsuranceExpiryDate"
-                                dateObj={autoInsuranceExpiryDate}
-                                onTimeChange={onAutoInsuranceExpiryDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.autoInsuranceExpiryDate}
-                            />
-
-                            <BootstrapDatePicker
-                                borderColour="border-success"
-                                label="WSIB Insurance Date"
-                                name="wsibInsuranceDate"
-                                dateObj={wsibInsuranceDate}
-                                onTimeChange={onWsibInsuranceDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.wsibInsuranceDate}
-                            />
 
                             <BootstrapDatePicker
                                 label="Police Check Expiry (*)"
@@ -203,39 +106,6 @@ class StaffCreateStep6Component extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.policeCheck}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
-                                error={errors.taxId}
-                                label="HST #"
-                                onChange={onTextChange}
-                                value={taxId}
-                                name="taxId"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
-                                error={errors.driversLicenseClass}
-                                label="Drivers license class(es):"
-                                onChange={onTextChange}
-                                value={driversLicenseClass}
-                                name="driversLicenseClass"
-                                type="text"
-                            />
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-success"
-                                label="Vehicle Types"
-                                name="vehicleTypes"
-                                defaultOptionLabel="Please select the vehicle types."
-                                options={vehicleTypeOptions}
-                                selectedOptions={vehicleTypes}
-                                error={errors.vehicleTypes}
-                                onMultiChange={onVehicleTypeMultiChange}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -314,6 +184,28 @@ class StaffCreateStep6Component extends Component {
                                 selectedValue={isActive}
                                 options={IS_ACTIVE_TYPE_OF_CHOICES}
                                 helpText='Selecting "yes" will grant the staff login ability.'
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.password}
+                                label="Password (*)"
+                                onChange={onTextChange}
+                                value={password}
+                                name="password"
+                                type="password"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.passwordRepeat}
+                                label="Repeat Password (*)"
+                                onChange={onTextChange}
+                                value={passwordRepeat}
+                                name="passwordRepeat"
+                                type="password"
                             />
 
                             <div className="form-group">

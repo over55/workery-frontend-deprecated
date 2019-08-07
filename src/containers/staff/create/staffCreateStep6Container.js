@@ -29,50 +29,22 @@ class StaffCreateStep6Container extends Component {
     constructor(props) {
         super(props);
 
-        // Get the type of.
-        const typeOf = localStorageGetIntegerItem("workery-create-staff-typeOf");
-        let returnURL;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/staff/add/step-4-rez-or-cc";
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/staff/add/step-4-biz";
-        }
-
         this.state = {
-            skillSets: localStorageGetArrayItem("workery-create-staff-skillSets"),
-            insuranceRequirements: localStorageGetArrayItem("workery-create-staff-insuranceRequirements"),
             description: localStorage.getItem("workery-create-staff-description"),
-            hourlySalaryDesired: localStorageGetIntegerItem("workery-create-staff-hourlySalaryDesired"),
-            limitSpecial: localStorage.getItem("workery-create-staff-limitSpecial"),
-            duesDate: localStorageGetDateItem("workery-create-staff-duesDate"),
-            commercialInsuranceExpiryDate: localStorageGetDateItem("workery-create-staff-commercialInsuranceExpiryDate"),
-            autoInsuranceExpiryDate: localStorageGetDateItem("workery-create-staff-autoInsuranceExpiryDate"),
-            wsibInsuranceDate: localStorageGetDateItem("workery-create-staff-wsibInsuranceDate"),
             policeCheck: localStorageGetDateItem("workery-create-staff-policeCheck"),
-            taxId: localStorage.getItem("workery-create-staff-taxId"),
-            driversLicenseClass: localStorage.getItem("workery-create-staff-driversLicenseClass"),
-            vehicleTypes: localStorageGetArrayItem("workery-create-staff-vehicleTypes"),
             emergencyContactName: localStorage.getItem("workery-create-staff-emergencyContactName"),
             emergencyContactRelationship: localStorage.getItem("workery-create-staff-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-staff-emergencyContactTelephone"),
             emergencyContactAlternativeTelephone: localStorage.getItem("workery-create-staff-emergencyContactAlternativeTelephone"),
+            password: localStorage.getItem("workery-create-staff-password"),
+            passwordRepeat: localStorage.getItem("workery-create-staff-passwordRepeat"),
             isActive: localStorageGetIntegerItem("workery-create-staff-isActive"),
-            returnURL: returnURL,
-            typeOf: typeOf,
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
-        this.onInsuranceRequirementMultiChange = this.onInsuranceRequirementMultiChange.bind(this);
-        this.onVehicleTypeMultiChange = this.onVehicleTypeMultiChange.bind(this);
-        this.onDuesDateChange = this.onDuesDateChange.bind(this);
-        this.onCommercialInsuranceExpiryDate = this.onCommercialInsuranceExpiryDate.bind(this);
-        this.onAutoInsuranceExpiryDateChange = this.onAutoInsuranceExpiryDateChange.bind(this);
-        this.onWsibInsuranceDateChange = this.onWsibInsuranceDateChange.bind(this);
         this.onPoliceCheckDateChange = this.onPoliceCheckDateChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
@@ -179,76 +151,6 @@ class StaffCreateStep6Container extends Component {
         });
     }
 
-    onSkillSetMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            skillSets: selectedOptions,
-        });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-create-staff-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
-    }
-
-    onInsuranceRequirementMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            insuranceRequirements: selectedOptions,
-        });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-create-staff-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
-    }
-
-    onVehicleTypeMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            vehicleTypes: selectedOptions,
-        });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-create-staff-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
-    }
-
-    onDuesDateChange(dateObj) {
-        this.setState(
-            { duesDate: dateObj },
-            ()=>{ localStorageSetObjectOrArrayItem('workery-create-staff-duesDate', dateObj); }
-        );
-    }
-
-    onCommercialInsuranceExpiryDate(dateObj) {
-        this.setState(
-            { commercialInsuranceExpiryDate: dateObj },
-            ()=>{ localStorageSetObjectOrArrayItem('workery-create-staff-commercialInsuranceExpiryDate', dateObj); }
-        );
-    }
-
-    onAutoInsuranceExpiryDateChange(dateObj) {
-        this.setState(
-            { autoInsuranceExpiryDate: dateObj },
-            ()=>{ localStorageSetObjectOrArrayItem('workery-create-staff-autoInsuranceExpiryDate', dateObj); }
-        );
-    }
-
-    onWsibInsuranceDateChange(dateObj) {
-        this.setState(
-            { wsibInsuranceDate: dateObj },
-            ()=>{ localStorageSetObjectOrArrayItem('workery-create-staff-wsibInsuranceDate', dateObj); }
-        );
-    }
-
     onPoliceCheckDateChange(dateObj) {
         this.setState(
             { policeCheck: dateObj },
@@ -281,13 +183,9 @@ class StaffCreateStep6Container extends Component {
 
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
-            skillSets,
-            insuranceRequirements,
-            vehicleTypes,
-            duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
+            description, policeCheck,
             emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-            isActive,
+            isActive, password, passwordRepeat,
             errors, isLoading, returnURL
         } = this.state;
 
@@ -295,36 +193,14 @@ class StaffCreateStep6Container extends Component {
         return (
             <StaffCreateStep6Component
                 description={description}
-                hourlySalaryDesired={hourlySalaryDesired}
-                limitSpecial={limitSpecial}
-                taxId={taxId}
-                driversLicenseClass={driversLicenseClass}
                 emergencyContactName={emergencyContactName}
                 emergencyContactRelationship={emergencyContactRelationship}
                 emergencyContactTelephone={emergencyContactTelephone}
                 emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
+                password={password}
+                passwordRepeat={passwordRepeat}
                 onTextChange={this.onTextChange}
 
-                skillSets={skillSets}
-                skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-
-                insuranceRequirements={insuranceRequirements}
-                insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
-                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-
-                vehicleTypes={vehicleTypes}
-                vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
-                onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
-
-                duesDate={duesDate}
-                onDuesDateChange={this.onDuesDateChange}
-                commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
-                onCommercialInsuranceExpiryDate={this.onCommercialInsuranceExpiryDate}
-                autoInsuranceExpiryDate={autoInsuranceExpiryDate}
-                onAutoInsuranceExpiryDateChange={this.onAutoInsuranceExpiryDateChange}
-                wsibInsuranceDate={wsibInsuranceDate}
-                onWsibInsuranceDateChange={this.onWsibInsuranceDateChange}
                 policeCheck={policeCheck}
                 onPoliceCheckDateChange={this.onPoliceCheckDateChange}
 
