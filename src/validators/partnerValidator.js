@@ -134,7 +134,7 @@ export function validateStep4RezCreateInput(data) {
 /**
  *  Validator will validate step 4 in the partner creation form.
  */
-export function validateStep4BizCreateInput(data) {
+export function validateStep3CreateInput(data) {
     let errors = {};
 
     if (data.companyName === undefined || data.companyName === null || validator.isEmpty(data.companyName) || data.companyName === "") {
