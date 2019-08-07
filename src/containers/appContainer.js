@@ -96,10 +96,17 @@ import StaffListContainer from "./staff/list/staffListContainer";
 import StaffSearchContainer from "./staff/staffSearchContainer";
 import StaffSearchResultContainer from "./staff/staffSearchResultContainer";
 import StaffUpdateContainer from "./staff/update/staffUpdateContainer";
-import StaffCreateStep1Container from "./staff/create/staffCreateStep1Container";
-import StaffCreateStep2Container from "./staff/create/staffCreateStep2Container";
 import StaffFullRetrieveContainer from "./staff/retrieve/staffFullRetrieveContainer";
 import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContainer";
+import StaffCreateStep1Container from "./staff/create/staffCreateStep1Container";
+import StaffCreateStep2Container from "./staff/create/staffCreateStep2Container";
+import StaffCreateStep3Container from "./staff/create/staffCreateStep3Container";
+import StaffCreateStep4BizContainer from "./staff/create/staffCreateStep4BizContainer";
+import StaffCreateStep4RezContainer from "./staff/create/staffCreateStep4RezContainer";
+import StaffCreateStep5Container from "./staff/create/staffCreateStep5Container";
+import StaffCreateStep6Container from "./staff/create/staffCreateStep6Container";
+import StaffCreateStep7Container from "./staff/create/staffCreateStep7Container";
+import StaffCreateStep8Container from "./staff/create/staffCreateStep8Container";
 
 // Reports
 import ReportListContainer from "./reports/reportListContainer";
@@ -274,6 +281,13 @@ class AppContainer extends React.Component {
                                 { /* STAFF */ }
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />
                                 <Route path="/staff/add/step-2" exact component={requiresAuth(StaffCreateStep2Container)} />
+                                <Route path="/staff/add/step-3" exact component={requiresAuth(StaffCreateStep3Container)} />
+                                <Route path="/staff/add/step-4-biz" exact component={requiresAuth(StaffCreateStep4BizContainer)} />
+                                <Route path="/staff/add/step-4-rez-or-cc" exact component={requiresAuth(StaffCreateStep4RezContainer)} />
+                                <Route path="/staff/add/step-5" exact component={requiresAuth(StaffCreateStep5Container)} />
+                                <Route path="/staff/add/step-6" exact component={requiresAuth(StaffCreateStep6Container)} />
+                                <Route path="/staff/add/step-7" exact component={requiresAuth(StaffCreateStep7Container)} />
+                                <Route path="/staff/add/step-8" exact component={requiresAuth(StaffCreateStep8Container)} />
                                 <Route path="/staff" exact component={requiresAuth(StaffListContainer)} />
                                 <Route path="/staff/search" exact component={requiresAuth(StaffSearchContainer)} />
                                 <Route path="/staff/search-results" exact component={requiresAuth(StaffSearchResultContainer)} />

@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import StaffUpdateComponent from "../../../components/staff/update/staffUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/staffValidator";
+import { validateInput } from "../../../validators/staffValidator";
 import {
     // localStorageGetObjectItem,
     localStorageSetObjectOrArrayItem, localStorageGetDateItem, localStorageGetArrayItem
