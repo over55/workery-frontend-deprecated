@@ -77,6 +77,7 @@ class PartnerCreateStep6Container extends Component {
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
             companyName: localStorage.getItem("workery-create-partner-biz-companyName"),
+            organizationName: localStorage.getItem("workery-create-partner-biz-companyName"),
             contactFirstName: localStorage.getItem("workery-create-partner-biz-contactFirstName"),
             contactLastName: localStorage.getItem("workery-create-partner-biz-contactLastName"),
             isActive: localStorageGetIntegerItem("workery-create-partner-biz-isActive"),
@@ -166,10 +167,16 @@ class PartnerCreateStep6Container extends Component {
             postData.extraComment = this.state.comment;
         }
 
+        // () Other telephone type of
+        let secondaryPhoneTypeOf = this.state.secondaryPhoneTypeOf;
+        if (secondaryPhoneTypeOf === undefined || secondaryPhoneTypeOf === null || isNaN(secondaryPhoneTypeOf) ) {
+            secondaryPhoneTypeOf = 1; // Choose default.
+        }
+        postData.otherTelephoneTypeOf = secondaryPhoneTypeOf;
+
         // (8) Telephone: This field is required.
         postData.telephone = this.state.primaryPhone;
         postData.telephoneTypeOf = this.state.primaryPhoneTypeOf;
-        postData.otherTelephoneTypeOf = this.state.secondaryPhoneTypeOf;
 
         // (9) Address Country: This field is required.
         postData.addressCountry = this.state.country;

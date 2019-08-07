@@ -32,16 +32,11 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
+            1: 'Active',
+            0: 'Inactive',
         };
 
         const columns = [{
-            dataField: 'icon',
-            text: '',
-            sort: false,
-            formatter: iconFormatter
-        },{
             dataField: 'givenName',
             text: 'First Name',
             sort: true
@@ -63,7 +58,7 @@ class RemoteListComponent extends Component {
             sort: false,
             filter: selectFilter({
                 options: selectOptions,
-                defaultValue: 'active',
+                defaultValue: 1,
                 withoutEmptyOption: true
             }),
             formatter: statusFormatter
@@ -127,27 +122,12 @@ class RemoteListComponent extends Component {
 }
 
 
-function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case 3:
-            return <i className="fas fa-building"></i>;
-            break;
-        case 2:
-            return <i className="fas fa-home"></i>;
-            break;
-        default:
-            return <i className="fas fa-question"></i>;
-            break;
-    }
-}
-
-
 function statusFormatter(cell, row){
     switch(row.state) {
-        case "active":
+        case 2:
             return <i className="fas fa-check-circle"></i>;
             break;
-        case "inactive":
+        case 3:
             return <i className="fas fa-times-circle"></i>;
             break;
         default:
