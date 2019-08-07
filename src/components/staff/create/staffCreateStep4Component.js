@@ -13,7 +13,7 @@ import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constant
 class StaffCreateStep4Component extends Component {
     render() {
         const {
-            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors,
+            firstName, lastName, primaryPhone, secondaryPhone, workEmail, personalEmail, isOkToEmail, isOkToText, errors,
             onTextChange, onRadioChange, isLoading, onClick
         } = this.props;
         return (
@@ -132,11 +132,22 @@ class StaffCreateStep4Component extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.email}
-                                label="Email (*)"
+                                error={errors.workEmail}
+                                label="Work Email (*)"
                                 onChange={onTextChange}
-                                value={email}
-                                name="email"
+                                value={workEmail}
+                                name="workEmail"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.personalEmail}
+                                label="Personal Email (*)"
+                                onChange={onTextChange}
+                                value={personalEmail}
+                                name="personalEmail"
                                 type="text"
                             />
 

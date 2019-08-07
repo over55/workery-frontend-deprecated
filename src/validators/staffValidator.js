@@ -24,8 +24,11 @@ export function validateInput(data) {
         if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
             errors.primaryPhone = 'This field is required';
         }
-        if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
-            errors.email = 'This field is required';
+        if (data.workEmail === undefined || data.workEmail === null || validator.isEmpty(data.workEmail) || data.workEmail === "") {
+            errors.workEmail = 'This field is required';
+        }
+        if (data.personalEmail === undefined || data.personalEmail === null || validator.isEmpty(data.personalEmail) || data.personalEmail === "") {
+            errors.personalEmail = 'This field is required';
         }
         if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
             errors.isOkToEmail = 'This field is required';
@@ -139,8 +142,11 @@ export function validateStep4CreateInput(data) {
     if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
         errors.primaryPhone = 'This field is required';
     }
-    if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
-        errors.email = 'This field is required';
+    if (data.workEmail === undefined || data.workEmail === null || validator.isEmpty(data.workEmail) || data.workEmail === "") {
+        errors.workEmail = 'This field is required';
+    }
+    if (data.personalEmail === undefined || data.personalEmail === null || validator.isEmpty(data.personalEmail) || data.personalEmail === "") {
+        errors.personalEmail = 'This field is required';
     }
     if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
         errors.isOkToEmail = 'This field is required';

@@ -19,13 +19,14 @@ class StaffCreateStep4Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-staff-rez-firstName"),
-            lastName: localStorage.getItem("workery-create-staff-rez-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-staff-rez-primaryPhone"),
-            secondaryPhone: localStorage.getItem("workery-create-staff-rez-secondaryPhone"),
-            email: localStorage.getItem("workery-create-staff-rez-email"),
-            isOkToEmail: localStorageGetIntegerItem("workery-create-staff-rez-isOkToEmail"),
-            isOkToText: localStorageGetIntegerItem("workery-create-staff-rez-isOkToText"),
+            firstName: localStorage.getItem("workery-create-staff-firstName"),
+            lastName: localStorage.getItem("workery-create-staff-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-staff-primaryPhone"),
+            secondaryPhone: localStorage.getItem("workery-create-staff-secondaryPhone"),
+            workEmail: localStorage.getItem("workery-create-staff-workEmail"),
+            personalEmail: localStorage.getItem("workery-create-staff-personalEmail"),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-staff-isOkToEmail"),
+            isOkToText: localStorageGetIntegerItem("workery-create-staff-isOkToText"),
             errors: {},
             isLoading: false
         }
@@ -44,15 +45,10 @@ class StaffCreateStep4Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // DEVELOPERS NOTE:
-        // Since we are in this page, we need to assign the user to be
-        // a residential type user. If the user is community cares type
-        // then this variable will be set then in page 4.
         localStorage.setItem("workery-create-staff-typeOf", RESIDENTIAL_CUSTOMER_TYPE_OF_ID);
         localStorage.setItem("workery-create-staff-typeOf-label", "Residential");
-        localStorage.setItem("workery-create-staff-rez-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
-        localStorage.setItem("workery-create-staff-rez-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
+        localStorage.setItem("workery-create-staff-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
+        localStorage.setItem("workery-create-staff-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
     }
 
     componentWillUnmount() {
@@ -94,14 +90,14 @@ class StaffCreateStep4Container extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        const key = "workery-create-staff-rez-"+[e.target.name];
+        const key = "workery-create-staff-"+[e.target.name];
         localStorage.setItem(key, e.target.value);
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-staff-rez-"+[e.target.name];
-        const storageLabelKey =  "workery-create-staff-rez-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-create-staff-"+[e.target.name];
+        const storageLabelKey =  "workery-create-staff-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -149,7 +145,7 @@ class StaffCreateStep4Container extends Component {
 
     render() {
         const {
-            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
+            firstName, lastName, primaryPhone, secondaryPhone, workEmail, personalEmail, isOkToEmail, isOkToText, errors
         } = this.state;
         return (
             <StaffCreateStep4Component
@@ -157,7 +153,8 @@ class StaffCreateStep4Container extends Component {
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
-                email={email}
+                workEmail={workEmail}
+                personalEmail={personalEmail}
                 isOkToEmail={isOkToEmail}
                 isOkToText={isOkToText}
                 errors={errors}
