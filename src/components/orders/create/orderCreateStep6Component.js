@@ -1,15 +1,21 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation"
 
 
 export default class OrderCreateStep6Component extends Component {
     render() {
-        const { errors } = this.props;
+        const {
+            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, comment, isLoading, errors, onSubmitClick
+        } = this.props;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -71,20 +77,77 @@ export default class OrderCreateStep6Component extends Component {
                         </h2>
 
                         <BootstrapErrorsProcessingAlert errors={errors} />
-                        <p><strong>Please confirm these details before adding the associate:</strong></p>
+                        <p><strong>Please confirm these details before adding the order:</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-sitemap"></i>&nbsp;Type
+                                        <i className="fas fa-user-circle"></i>&nbsp;Client
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Associateship Class</th>
-                                    <td></td>
+                                    <th scope="row" className="bg-light">Full-Name</th>
+                                    <td>{clientGivenName}&nbsp;{clientLastName}</td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-cog"></i>&nbsp;Job Type
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Start Date</th>
+                                    <td><Moment format="YYYY/MM/DD">{startDate}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Job Type</th>
+                                    <td>{jobTypeLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Home Support?</th>
+                                    <td>{homeSupportLabel}</td>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-graduation-cap"></i>&nbsp;Skills and Description
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill sets</th>
+                                    <td>
+                                        {skillSets && skillSets.map(
+                                            (skill) => <SkillItem tag={skill} key={skill.id} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{description}</td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-comment-alt"></i>&nbsp;Comments
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Text</th>
+                                    <td>{comment}</td>
                                 </tr>
                             </tbody>
                         </table>
+
+                        <div className="form-group">
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onSubmitClick}>
+                                <i className="fas fa-check-circle"></i>&nbsp;Save
+                            </button>
+                            <Link to="/orders/add/step-5" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                            </Link>
+                        </div>
+
                     </div>
                 </div>
 
@@ -93,4 +156,14 @@ export default class OrderCreateStep6Component extends Component {
             </main>
         );
     }
+}
+
+
+class SkillItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
 }

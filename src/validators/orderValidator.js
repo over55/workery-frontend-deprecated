@@ -71,6 +71,20 @@ export function validateStep5CreateInput(data) {
 }
 
 
+export function validateStep6CreateInput(data) {
+    let errors = {};
+
+    // if (data.comment === undefined || data.comment === null || data.comment === "") {
+    //     errors.comment = 'This field is required';
+    // }
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+
 /**
  *  Validator will validate step 7 in the order creation form.
  */

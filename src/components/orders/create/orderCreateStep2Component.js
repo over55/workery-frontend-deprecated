@@ -22,7 +22,7 @@ class CardComponent extends Component {
                             {client.addressLocality}, {client.addressRegion}<br />
                             {client.telephone}
                         </p>
-                        <button type="button" className="btn btn-primary btn-lg btn-block" disabled={isLoading} onClick={ (event)=>{ onClientClick(event, client.id) } }>
+                        <button type="button" className="btn btn-primary btn-lg btn-block" disabled={isLoading} onClick={ (event)=>{ onClientClick(event, client.id, client.givenName, client.lastName) } }>
                             Select&nbsp;<i class="fas fa-chevron-right"></i>
                         </button>
                     </div>

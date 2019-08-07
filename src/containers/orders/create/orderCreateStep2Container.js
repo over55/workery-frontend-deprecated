@@ -106,11 +106,13 @@ class OrderCreateStep2Container extends Component {
      *------------------------------------------------------------
      */
 
-    onClientClick(e, clientId) {
+    onClientClick(e, clientId, clientGivenName, clientLastName) {
         this.setState(
             { isLoading: true },
             ()=>{
                 localStorage.setItem("workery-create-order-clientId", clientId);
+                localStorage.setItem("workery-create-order-clientGivenName", clientGivenName);
+                localStorage.setItem("workery-create-order-clientLastName", clientLastName);
                 this.props.history.push("/orders/add/step-3");
             }
         );

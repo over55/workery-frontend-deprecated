@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import OrderCreateStep6Component from "../../../components/orders/create/orderCreateStep6Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
@@ -8,6 +10,11 @@ import {
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF
 } from '../../../constants/api';
+import {
+    localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
+} from '../../../helpers/localStorageUtility';
+import { validateStep6CreateInput } from "../../../validators/orderValidator";
+import { postOrderDetail } from '../../../actions/orderActions';
 
 
 class OrderCreateStep6Container extends Component {
@@ -19,23 +26,36 @@ class OrderCreateStep6Container extends Component {
     constructor(props) {
         super(props);
 
-        // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("nwapp-create-order-typeOf"));
-        let returnURL;
-        if (typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF) {
-            returnURL = "/orders/add/step-4-rez-or-cc";
-        }
-        else if (typeOf === BUSINESS_TYPE_OF) {
-            returnURL = "/orders/add/step-4-biz";
+        this.state = {
+            clientGivenName: localStorage.getItem("workery-create-order-clientGivenName"),
+            clientLastName: localStorage.getItem("workery-create-order-clientLastName", ),
+            startDate: localStorageGetDateItem("workery-create-order-startDate"),
+            jobType: localStorageGetIntegerItem("workery-create-order-jobType"),
+            jobTypeLabel: localStorage.getItem("workery-create-order-jobType-label"),
+            homeSupport: localStorageGetIntegerItem("workery-create-order-homeSupport"),
+            homeSupportLabel: localStorage.getItem("workery-create-order-homeSupport-label"),
+            skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
+            description: localStorage.getItem("workery-create-order-description"),
+            comment: localStorage.getItem("workery-create-order-comment"),
         }
 
-        this.state = {
-            returnURL: returnURL,
-            watchSlug: localStorage.getItem('nwapp-create-order-watch-slug'),
-            watchIcon: localStorage.getItem('nwapp-create-order-watch-icon'),
-            watchName: localStorage.getItem('nwapp-create-order-watch-name'),
-            typeOf: typeOf,
-        }
+        this.getPostData = this.getPostData.bind(this);
+        this.onSubmitClick = this.onSubmitClick.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -45,32 +65,6 @@ class OrderCreateStep6Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // REPLACE THIS CODE WITH API CODE.
-        const tableData = [
-            {
-                slug: "argyle-watch",
-                icon: "home",
-                name: "Argyle Community Watch"
-            },{
-                slug: "byron-watch",
-                icon: "building",
-                name: "Byron Business Watch"
-            },{
-                slug: "carling-watch",
-                icon: "university",
-                name: "Carling Retirement Centre Watch"
-            }
-        ];
-
-        // Set our state.
-        this.setState({
-            tableData: tableData,
-            isLoading: false,
-        });
-
-        // Set our event handling.
-        this.onTableRowClick = this.onTableRowClick.bind(this);
     }
 
     componentWillUnmount() {
@@ -87,22 +81,71 @@ class OrderCreateStep6Container extends Component {
      *------------------------------------------------------------
      */
 
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+            }
+        )
+    }
+
+    onFailureCallback(errors) {
+        this.setState({
+            errors: errors,
+            isLoading: false
+        })
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
 
-    onTableRowClick(e, slug, icon, name) {
+    onSubmitClick(e) {
         e.preventDefault();
-        this.setState({
-            isLoading: true
-        })
-        localStorage.setItem('nwapp-create-order-watch-slug', slug);
-        localStorage.setItem('nwapp-create-order-watch-icon', icon);
-        localStorage.setItem('nwapp-create-order-watch-name', name);
-        this.props.history.push("/orders/add/step-7");
-    }
 
+        const { errors, isValid } = validateStep6CreateInput(this.state);
+        // console.log(errors, isValid); // For debugging purposes only.
+
+        if (isValid) {
+            this.setState(
+                { errors: errors, isLoading: true,},
+                ()=>{
+                    // Once our state has been validated `associate-side` then we will
+                    // make an API request with the server to create our new production.
+                    this.props.postOrderDetail(
+                        this.getPostData(),
+                        this.onSuccessCallback,
+                        this.onFailureCallback
+                    );
+                }
+            );
+        } else {
+            this.setState({
+                errors: errors,
+                isLoading: false,
+            })
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
+    }
 
     /**
      *  Main render function
@@ -110,13 +153,22 @@ class OrderCreateStep6Container extends Component {
      */
 
     render() {
-        const { returnURL, tableData, isLoading } = this.state;
+        const {
+            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, comment, isLoading, errors,
+        } = this.state;
         return (
             <OrderCreateStep6Component
-                tableData={tableData}
-                returnURL={returnURL}
+                clientGivenName={clientGivenName}
+                clientLastName={clientLastName}
+                startDate={startDate}
+                skillSets={skillSets}
+                jobTypeLabel={jobTypeLabel}
+                homeSupportLabel={homeSupportLabel}
+                description={description}
+                comment={comment}
                 isLoading={isLoading}
-                onTableRowClick={this.onTableRowClick}
+                errors={errors}
+                onSubmitClick={this.onSubmitClick}
             />
         );
     }
@@ -132,7 +184,10 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        postOrderDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postOrderDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 
