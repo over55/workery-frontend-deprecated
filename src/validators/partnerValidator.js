@@ -129,6 +129,9 @@ export function validateStep3CreateInput(data) {
     if (data.isOkToText === undefined || data.isOkToText === null || data.isOkToText === "" || isNaN(data.isOkToText) ) {
         errors.isOkToText = 'This field is required';
     }
+    if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
+        errors.isActive = 'This field is required';
+    }
 
     return {
         errors,

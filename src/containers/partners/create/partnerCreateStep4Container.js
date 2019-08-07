@@ -23,20 +23,7 @@ class PartnerCreateStep4Container extends Component {
 
     constructor(props) {
         super(props);
-
-        // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("workery-create-partner-typeOf"));
-        let returnURL;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/partners/add/step-4-rez-or-cc";
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/partners/add/step-4-biz";
-        }
-
         this.state = {
-            returnURL: returnURL,
-            typeOf: typeOf,
             country: localStorage.getItem("workery-create-partner-country"),
             region: localStorage.getItem("workery-create-partner-region"),
             locality: localStorage.getItem("workery-create-partner-locality"),
@@ -80,7 +67,7 @@ class PartnerCreateStep4Container extends Component {
 
     onSuccessfulSubmissionCallback(partner) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/partners/add/step-6");
+        this.props.history.push("/partners/add/step-5");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -165,7 +152,7 @@ class PartnerCreateStep4Container extends Component {
      */
 
     render() {
-        const { referrer, errors, isLoading, returnURL } = this.state;
+        const { referrer, errors, isLoading } = this.state;
         const {
             country, region, locality,
             postalCode, streetAddress,
@@ -184,7 +171,6 @@ class PartnerCreateStep4Container extends Component {
                 onBillingRegionChange={this.onBillingRegionChange}
                 onNextClick={this.onNextClick}
                 errors={errors}
-                returnURL={returnURL}
                 isLoading={isLoading}
             />
         );

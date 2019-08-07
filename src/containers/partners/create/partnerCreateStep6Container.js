@@ -79,6 +79,7 @@ class PartnerCreateStep6Container extends Component {
             companyName: localStorage.getItem("workery-create-partner-biz-companyName"),
             contactFirstName: localStorage.getItem("workery-create-partner-biz-contactFirstName"),
             contactLastName: localStorage.getItem("workery-create-partner-biz-contactLastName"),
+            isActive: localStorageGetIntegerItem("workery-create-partner-biz-isActive"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-partner-country"),

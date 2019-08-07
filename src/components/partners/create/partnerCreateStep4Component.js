@@ -16,7 +16,6 @@ class PartnerCreateStep4Component extends Component {
             country,
             region, locality, postalCode, streetAddress,
 
-            returnURL,
             errors,
             onTextChange,
             onSelectChange,
@@ -60,24 +59,19 @@ class PartnerCreateStep4Component extends Component {
                         </div>
                         <div id="step-3" className="st-grey">
                             <Link to="/partners/add/step-3">
-                                <span className="num">3.</span><span className="">Type</span>
+                                <span className="num">3.</span><span className="">Contact</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to={returnURL}>
-                                <span className="num">4.</span><span className="">Contact</span>
-                            </Link>
-                        </div>
-                        <div id="step-5" className="st-grey active">
+                        <div id="step-4" className="st-grey active">
                             <strong>
-                                <span className="num">5.</span><span className="">Address</span>
+                                <span className="num">4.</span><span className="">Address</span>
                             </strong>
                         </div>
-                        <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Metrics</span>
+                        <div id="step-5" className="st-grey">
+                            <span className="num">5.</span><span className="">Metrics</span>
                         </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Review</span>
+                        <div id="step-6" className="st-grey">
+                            <span className="num">6.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -150,7 +144,7 @@ class PartnerCreateStep4Component extends Component {
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
                                     Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to={returnURL} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/partners/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

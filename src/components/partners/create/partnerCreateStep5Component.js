@@ -9,13 +9,18 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
+import {
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    GENDER_RADIO_CHOICES,
+    WILLING_TO_VOLUNTEER_CHOICES,
+    ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES
+} from "../../../constants/api";
 
 
 export default class PartnerCreateStep5Component extends Component {
     render() {
         const {
-            typeOf, returnURL, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
+            typeOf, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
             onRadioChange,  onMultiChange, onJoinDateChange, comment,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
@@ -57,26 +62,21 @@ export default class PartnerCreateStep5Component extends Component {
                         </div>
                         <div id="step-3" className="st-grey">
                             <Link to="/partners/add/step-3">
-                                <span className="num">3.</span><span className="">Type</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to={returnURL}>
                                 <span className="num">4.</span><span className="">Contact</span>
                             </Link>
                         </div>
-                        <div id="step-5" className="st-grey">
-                            <Link to="/partners/add/step-5">
+                        <div id="step-4" className="st-grey">
+                            <Link to="/partners/add/step-4">
                                 <span className="num">5.</span><span className="">Address</span>
                             </Link>
                         </div>
-                         <div id="step-6" className="st-grey active">
+                         <div id="step-5" className="st-grey active">
                             <strong>
-                                <span className="num">6.</span><span className="">Metrics</span>
+                                <span className="num">5.</span><span className="">Metrics</span>
                             </strong>
                         </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Review</span>
+                        <div id="step-6" className="st-grey">
+                            <span className="num">6.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -177,7 +177,7 @@ export default class PartnerCreateStep5Component extends Component {
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/partners/add/step-5" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/partners/add/step-4" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

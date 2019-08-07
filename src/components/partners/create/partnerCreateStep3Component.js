@@ -7,7 +7,7 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
+import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, IS_ACTIVE_TYPE_OF_CHOICES } from "../../../constants/api";
 
 
 class PartnerCreateStep3BizComponent extends Component {
@@ -16,7 +16,7 @@ class PartnerCreateStep3BizComponent extends Component {
             companyName, contactFirstName, contactLastName,
             primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
             secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors,
-            isOkToEmail, isOkToText,
+            isOkToEmail, isOkToText, isActive,
             onTextChange, onSelectChange, onRadioChange, isLoading, onClick
         } = this.props;
         return (
@@ -177,7 +177,7 @@ class PartnerCreateStep3BizComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToEmail}
                                 options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting \"yes\" will result in partner getting emails from our system.'
+                                helpText='Selecting "yes" will result in partner getting emails from our system.'
                             />
 
                             <BootstrapRadio
@@ -189,7 +189,19 @@ class PartnerCreateStep3BizComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToText}
                                 options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting \"yes\" will result in partner getting text-messages on their phone from our system.'
+                                helpText='Selecting "yes" will result in partner getting text-messages on their phone from our system.'
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isActive}
+                                label="Is the account active? (*)"
+                                name="isActive"
+                                onChange={onRadioChange}
+                                selectedValue={isActive}
+                                options={IS_ACTIVE_TYPE_OF_CHOICES}
+                                helpText='Selecting "yes" will grant the parnter login ability.'
                             />
 
                             <div className="form-group">

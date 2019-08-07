@@ -89,7 +89,7 @@ class PartnerCreateStep5Container extends Component {
 
     onSuccessfulSubmissionCallback(partner) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/partners/add/step-7");
+        this.props.history.push("/partners/add/step-6");
     }
 
     onFailedSubmissionCallback(errors) {

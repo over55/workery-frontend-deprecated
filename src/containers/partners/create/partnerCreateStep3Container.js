@@ -30,6 +30,7 @@ class PartnerCreateStep3BizContainer extends Component {
             email: localStorage.getItem("workery-create-partner-biz-email"),
             isOkToEmail: localStorageGetIntegerItem("workery-create-partner-biz-isOkToEmail"),
             isOkToText: localStorageGetIntegerItem("workery-create-partner-biz-isOkToText"),
+            isActive: localStorageGetIntegerItem("workery-create-partner-biz-isActive"),
             errors: {},
             isLoading: false
         }
@@ -72,7 +73,7 @@ class PartnerCreateStep3BizContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(partner) {
-        this.props.history.push("/partners/add/step-5");
+        this.props.history.push("/partners/add/step-4");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -165,7 +166,7 @@ class PartnerCreateStep3BizContainer extends Component {
 
     render() {
         const {
-            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
+            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, isActive, errors
         } = this.state;
         return (
             <PartnerCreateStep3BizComponent
@@ -181,6 +182,7 @@ class PartnerCreateStep3BizContainer extends Component {
                 email={email}
                 isOkToEmail={isOkToEmail}
                 isOkToText={isOkToText}
+                isActive={isActive}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
