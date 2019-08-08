@@ -51,6 +51,11 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
+        const defaultSorted = [{
+            dataField: 'subCategory',
+            order: 'asc'
+        }];
+
         const paginationOption = {
             page: page,
             sizePerPage: sizePerPage,
@@ -84,6 +89,7 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ skillSets }
                 columns={ columns }
+                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There are no skillSets at the moment"
