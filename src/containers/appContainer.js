@@ -132,7 +132,7 @@ import ResourceUpdateContainer from "./settings/resources/resourceUpdateContaine
 
 import BulletinBoardItemsListContainer from "./settings/bulletinBoardItems/list/bulletinBoardItemListContainer";
 import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/bulletinBoardItemDeleteContainer";
-import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/bulletinBoardItemCreateContainer";
+import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/create/bulletinBoardItemCreateContainer";
 import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/bulletinBoardItemUpdateContainer";
 
 import SkillSetsListContainer from "./settings/skillSets/list/skillSetListContainer";
@@ -234,7 +234,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id" exact component={requiresAuth(AssociateLiteRetrieveContainer)} />
                                 <Route path="/associate/:id/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
                                 <Route path="/associate/:id/update" exact component={requiresAuth(AssociateUpdateContainer)} />
-                                
+
                                 { /* WORK ORDER */}
                                 <Route path="/orders/add/step-1" exact component={requiresAuth(OrderCreateStep1Container)} />
                                 <Route path="/orders/add/step-2" exact component={requiresAuth(OrderCreateStep2Container)} />

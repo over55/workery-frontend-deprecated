@@ -38,6 +38,11 @@ class RemoteListComponent extends Component {
             "inactive": 'Inactive',
         };
 
+        const defaultSorted = [{
+            dataField: 'createdAt',
+            order: 'desc'
+        }];
+
         const columns = [{
             dataField: 'text',
             text: 'Text',
@@ -87,6 +92,7 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ bulletinBoardItems }
                 columns={ columns }
+                defaultSorted={ defaultSorted } 
                 striped
                 bordered={ false }
                 noDataIndication="There is no office news at the moment"

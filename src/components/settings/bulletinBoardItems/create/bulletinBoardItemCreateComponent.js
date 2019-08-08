@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 
 
 class BulletinBoardItemCreateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { text, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -37,15 +37,16 @@ class BulletinBoardItemCreateComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                            <BootstrapTextarea
+                                name="text"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                label="Add message / notice to the team (*)"
+                                placeholder="Please write the message which will appear on the staff office news section in the dashboard."
+                                rows="5"
+                                value={text}
+                                helpText="This will only be visible to staff members."
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
-                                type="text"
+                                error={errors.text}
                             />
 
                             <div className="form-group">

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import BulletinBoardItemCreateComponent from "../../../components/settings/bulletinBoardItems/bulletinBoardItemCreateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/tagValidator";
+import BulletinBoardItemCreateComponent from "../../../../components/settings/bulletinBoardItems/create/bulletinBoardItemCreateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/bulletinBoardItemValidator";
+import { postBulletinBoardItemDetail } from "../../../../actions/bulletinBoardItemActions";
 
 
 class BulletinBoardItemCreateContainer extends Component {
@@ -16,15 +17,26 @@ class BulletinBoardItemCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            text: null,
             errors: {},
             isLoading: false
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.extraText = this.state.text;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -88,7 +100,11 @@ class BulletinBoardItemCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.postBulletinBoardItemDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -103,10 +119,10 @@ class BulletinBoardItemCreateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, errors } = this.state;
         return (
             <BulletinBoardItemCreateComponent
-                name={name}
+                text={text}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -125,6 +141,9 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
+        },
+        postBulletinBoardItemDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postBulletinBoardItemDetail(postData, successCallback, failedCallback))
         }
     }
 }
