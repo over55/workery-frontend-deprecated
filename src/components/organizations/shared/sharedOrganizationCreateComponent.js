@@ -12,7 +12,8 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 class SharedOrganizationCreateComponent extends Component {
     render() {
         const {
-            schema, name, description, country, region, timezone, timezoneOptions, errors={}, isLoading, onTextChange, onSelectChange, onCountryChange, onRegionChange, locality, onClick, onCancelClick
+            schema, name, alternateName, description, country, region, locality, streetAddress, postalCode, timezone, timezoneOptions,
+            errors={}, isLoading, onTextChange, onSelectChange, onCountryChange, onRegionChange, onClick, onCancelClick
         } = this.props;
         return (
             <div>
@@ -58,6 +59,18 @@ class SharedOrganizationCreateComponent extends Component {
                                 helpText="Please specify the full legal name as found on documents"
                             />
 
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.alternateName}
+                                label="Alternate Name (*)"
+                                onChange={onTextChange}
+                                value={alternateName}
+                                name="alternateName"
+                                type="text"
+                                helpText="Please specify the alternate name"
+                            />
+
                             <BootstrapTextarea
                                 name="description"
                                 borderColour="border-primary"
@@ -99,6 +112,28 @@ class SharedOrganizationCreateComponent extends Component {
                                 onChange={onTextChange}
                                 value={locality}
                                 name="locality"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.streetAddress}
+                                label="Street Address (*)"
+                                onChange={onTextChange}
+                                value={streetAddress}
+                                name="streetAddress"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.postalCode}
+                                label="Postal Code (*)"
+                                onChange={onTextChange}
+                                value={postalCode}
+                                name="postalCode"
                                 type="text"
                             />
 

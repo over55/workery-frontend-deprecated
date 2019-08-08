@@ -51,6 +51,8 @@ class SharedOrganizationListContainer extends Component {
         this.setState = (state,callback)=>{
             return;
         };
+
+        this.props.clearFlashMessage();
     }
 
     /**

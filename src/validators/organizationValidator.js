@@ -14,6 +14,9 @@ export default function validateInput(data) {
     if (data.name === undefined || data.name === null || validator.isEmpty(data.name) || data.name === "") {
         errors.name = 'This field is required';
     }
+    if (data.alternateName === undefined || data.alternateName === null || validator.isEmpty(data.alternateName) || data.alternateName === "") {
+        errors.alternateName = 'This field is required';
+    }
     if (data.description === undefined || data.description === null || validator.isEmpty(data.description) || data.description === "") {
         errors.description = 'This field is required';
     }
@@ -25,6 +28,12 @@ export default function validateInput(data) {
     }
     if (data.locality === undefined || data.locality === null || validator.isEmpty(data.locality) || data.locality === "") {
         errors.locality = 'This field is required';
+    }
+    if (data.streetAddress === undefined || data.streetAddress === null || validator.isEmpty(data.streetAddress) || data.streetAddress === "") {
+        errors.streetAddress = 'This field is required';
+    }
+    if (data.postalCode === undefined || data.postalCode === null || validator.isEmpty(data.postalCode) || data.postalCode === "") {
+        errors.postalCode = 'This field is required';
     }
     if (data.timezone === undefined || data.timezone === null || validator.isEmpty(data.timezone) || data.timezone === "") {
         errors.timezone = 'This field is required';

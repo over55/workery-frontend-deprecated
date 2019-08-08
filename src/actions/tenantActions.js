@@ -122,6 +122,8 @@ export function postTenantDetail(postData, successCallback, failedCallback) {
         // Encode from JS Object to MessagePack (Buffer)
         var buffer = msgpack.encode(decamelizedData);
 
+        console.log("postTenantDetail | data", postData);
+
         // Perform our API submission.
         customAxios.post(WORKERY_TENANT_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
