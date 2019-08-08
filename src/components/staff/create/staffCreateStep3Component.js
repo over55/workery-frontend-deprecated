@@ -76,7 +76,7 @@ export default class StaffCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Frontline Staff</h3>
                                 <p className="card-text">Add a residential staff</p>
-                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, FRONTLINE_GROUP_ID)} }>
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, FRONTLINE_GROUP_ID, "Frontline Staff")} }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                             </div>
@@ -91,7 +91,7 @@ export default class StaffCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Management</h3>
                                 <p className="card-text">Add a business staff</p>
-                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, MANAGEMENT_GROUP_ID)} }>
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, MANAGEMENT_GROUP_ID, "Management Staff")} }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                             </div>

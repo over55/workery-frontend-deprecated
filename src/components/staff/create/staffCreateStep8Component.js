@@ -14,7 +14,6 @@ export default class StaffCreateStep8Component extends Component {
     render() {
         const {
             // Step 3
-            accountType,
             accountTypeLabel,
 
             // Step 4 - Residential & Business
@@ -143,8 +142,8 @@ export default class StaffCreateStep8Component extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Staffhip Class</th>
-                                    <td></td>
+                                    <th scope="row" className="bg-light">Group Membership</th>
+                                    <td>{accountTypeLabel}</td>
                                 </tr>
 
                                 <tr className="bg-dark">

@@ -50,9 +50,10 @@ class StaffCreateStep3Container extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
-    onClick(e, accountType) {
+    onClick(e, accountType, accountTypeLabel) {
         e.preventDefault();
         localStorage.setItem("workery-create-staff-accountType", accountType);
+        localStorage.setItem("workery-create-staff-accountTypeLabel", accountTypeLabel);
         this.props.history.push("/staff/add/step-4");
     }
 

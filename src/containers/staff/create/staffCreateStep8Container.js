@@ -35,7 +35,7 @@ class StaffCreateStep8Container extends Component {
         this.state = {
             // Step 3
             accountType: localStorageGetIntegerItem("workery-create-staff-accountType"),
-            accountTypeLabel: "TODO",
+            accountTypeLabel: localStorage.getItem("workery-create-staff-accountTypeLabel"),
 
             // Step 4 - Residential & Business
             firstName: localStorage.getItem("workery-create-staff-firstName"),
