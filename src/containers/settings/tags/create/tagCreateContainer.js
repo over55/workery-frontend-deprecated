@@ -50,6 +50,7 @@ class TagCreateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
+        // Translate to API fields.
         postData.tagText = this.state.tagText;
         postData.tagDesc = this.state.tagDesc;
 
