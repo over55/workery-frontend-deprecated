@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import SkillSetCreateComponent from "../../../components/settings/skillSets/skillSetCreateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/skillSetValidator";
+import SkillSetCreateComponent from "../../../../components/settings/skillSets/create/skillSetCreateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/skillSetValidator";
+import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
+import { postSkillSetDetail } from "../../../../actions/skillSetActions";
 
 
 class SkillSetCreateContainer extends Component {
@@ -16,15 +18,36 @@ class SkillSetCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            category: "",
+            subCategory: "",
+            insuranceRequirements: [],
+            description: "",
             errors: {},
             isLoading: false
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onInsuranceRequirementMultiChange = this.onInsuranceRequirementMultiChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // (3) insuranceRequirements - We need to only return our `id` values.
+        let idInsuranceRequirements = [];
+        for (let i = 0; i < this.state.insuranceRequirements.length; i++) {
+            let insurance = this.state.insuranceRequirements[i];
+            idInsuranceRequirements.push(insurance.value);
+        }
+        postData.insuranceRequirements = idInsuranceRequirements;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -34,6 +57,9 @@ class SkillSetCreateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // DEVELOPERS NOTE: Fetch our skillset list.
+        this.props.pullInsuranceRequirementList(1, 1000);
     }
 
     componentWillUnmount() {
@@ -79,6 +105,16 @@ class SkillSetCreateContainer extends Component {
         })
     }
 
+    onInsuranceRequirementMultiChange(...args) {
+        // Extract the select options from the parameter.
+        const selectedOptions = args[0];
+
+        // Set all the skill sets we have selected to the STORE.
+        this.setState({
+            insuranceRequirements: selectedOptions,
+        });
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -88,7 +124,11 @@ class SkillSetCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.postSkillSetDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -103,10 +143,15 @@ class SkillSetCreateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { category, subCategory, insuranceRequirements, description, errors } = this.state;
         return (
             <SkillSetCreateComponent
-                name={name}
+                category={category}
+                subCategory={subCategory}
+                description={description}
+                insuranceRequirements={insuranceRequirements}
+                insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
+                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -118,6 +163,7 @@ class SkillSetCreateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        insuranceRequirementList: store.insuranceRequirementListState
     };
 }
 
@@ -125,7 +171,13 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        pullInsuranceRequirementList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(pullInsuranceRequirementList(page, sizePerPage, map, onSuccessCallback, onFailureCallback))
+        },
+        postSkillSetDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postSkillSetDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 

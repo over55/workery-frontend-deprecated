@@ -2,14 +2,21 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
 
 
 class SkillSetCreateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const {
+            category, subCategory, description, errors, onTextChange, isLoading, onClick,
+            insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
+        } = this.props;
+        console.log(insuranceRequirements);
+        // console.log(insuranceRequirementOptions)
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -40,12 +47,46 @@ class SkillSetCreateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.category}
+                                label="Category (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={category}
+                                name="category"
                                 type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.subCategory}
+                                label="Sub-Category (*)"
+                                onChange={onTextChange}
+                                value={subCategory}
+                                name="subCategory"
+                                type="text"
+                            />
+
+                            <BootstrapMultipleSelect
+                                borderColour="border-primary"
+                                label="Insurance Requirements (*)"
+                                name="insuranceRequirements"
+                                defaultOptionLabel="Please select the insurance requirements."
+                                options={insuranceRequirementOptions}
+                                selectedOptions={insuranceRequirements}
+                                error={errors.insuranceRequirements}
+                                onMultiChange={onInsuranceRequirementMultiChange}
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-primary"
+                                label="Description (*)"
+                                placeholder="Please describe this skill set."
+                                rows="5"
+                                value={description}
+                                helpText="This will only be visible to staff members."
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">
