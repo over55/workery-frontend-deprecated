@@ -33,6 +33,7 @@ import ClientSearchResultContainer from "./clients/search/clientSearchResultCont
 import ClientLiteRetrieveContainer from "./clients/retrieve/clientLiteRetrieveContainer";
 import ClientFullRetrieveContainer from "./clients/retrieve/clientFullRetrieveContainer";
 import ClientOrderListContainer from "./clients/retrieve/clientOrderListContainer";
+import ClientCommentContainer from "./clients/retrieve/clientCommentContainer";
 import ClientCreateStep1Container from "./clients/create/clientCreateStep1Container";
 import ClientCreateStep2Container from "./clients/create/clientCreateStep2Container";
 import ClientCreateStep3Container from "./clients/create/clientCreateStep3Container";
@@ -218,7 +219,7 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id" exact component={requiresAuth(ClientLiteRetrieveContainer)} />
                                 <Route path="/client/:id/full" exact component={requiresAuth(ClientFullRetrieveContainer)} />
                                 <Route path="/client/:id/orders" exact component={requiresAuth(ClientOrderListContainer)} />
-
+                                <Route path="/client/:id/comments" exact component={requiresAuth(ClientCommentContainer)} />
                                 <Route path="/client/:id/update" exact component={requiresAuth(ClientUpdateContainer)} />
 
                                 { /* ASSOCIATES */ }

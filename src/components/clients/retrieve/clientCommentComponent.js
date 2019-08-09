@@ -177,7 +177,7 @@ function detailLinkFormatter(cell, row){
 }
 
 
-export default class ClientOrderListComponent extends Component {
+export default class ClientCommentComponent extends Component {
     render() {
         const {
             // Pagination
@@ -225,15 +225,15 @@ export default class ClientOrderListComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey active">
-                            <strong>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/client/${id}/orders`}>
                                 <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
-                            </strong>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to={`/client/${id}/comments`}>
-                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
+                        </div>
+                        <div id="step-4" className="st-grey active">
+                            <strong>
+                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
+                            </strong>
                         </div>
                     </div>
                 </div>

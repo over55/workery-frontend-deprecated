@@ -49,9 +49,14 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </strong>
                         </div>
-                        <div id="step-4" className="st-grey">
+                        <div id="step-3" className="st-grey">
                             <Link to={`/client/${id}/orders`}>
                                 <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/client/${id}/comments`}>
+                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
                     </div>
