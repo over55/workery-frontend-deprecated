@@ -5,11 +5,32 @@ import { Link } from "react-router-dom";
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
 
+
+function getBooleanOptions(selectName) {
+    return [
+        {
+            id: 'howHear-'+selectName+'-1-choice',
+            selectName: selectName,
+            value: 1,
+            label: "Yes"
+        },{
+            id: 'howHear-'+selectName+'-0-choice',
+            selectName: selectName,
+            value: 0,
+            label: "No"
+        }
+    ];
+}
 
 class HowHearCreateComponent extends Component {
     render() {
-        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors, onTextChange, isLoading, onClick } = this.props;
+        const {
+            text, sortNumber, onTextChange,
+            isForAssociate, isForCustomer, isForPartner, isForStaff, onRadioChange,
+            errors, isLoading, onClick
+        } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -57,6 +78,50 @@ class HowHearCreateComponent extends Component {
                                 value={sortNumber}
                                 name="sortNumber"
                                 type="number"
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.isForAssociate}
+                                label="Is for associate?"
+                                name="isForAssociate"
+                                onChange={onRadioChange}
+                                selectedValue={isForAssociate}
+                                options={getBooleanOptions("isForAssociate")}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.isForCustomer}
+                                label="Is for customer?"
+                                name="isForCustomer"
+                                onChange={onRadioChange}
+                                selectedValue={isForCustomer}
+                                options={getBooleanOptions("isForCustomer")}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.isForPartner}
+                                label="Is for partner?"
+                                name="isForPartner"
+                                onChange={onRadioChange}
+                                selectedValue={isForPartner}
+                                options={getBooleanOptions("isForPartner")}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.isForStaff}
+                                label="Is for staff?"
+                                name="isForStaff"
+                                onChange={onRadioChange}
+                                selectedValue={isForStaff}
+                                options={getBooleanOptions("isForStaff")}
                             />
 
                             <div className="form-group">

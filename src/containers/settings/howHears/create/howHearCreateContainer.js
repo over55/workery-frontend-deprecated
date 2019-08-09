@@ -28,6 +28,7 @@ class HowHearCreateContainer extends Component {
         }
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
@@ -97,6 +98,18 @@ class HowHearCreateContainer extends Component {
         })
     }
 
+    onRadioChange(e) {
+        // Get the values.
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -140,6 +153,7 @@ class HowHearCreateContainer extends Component {
                 isForStaff={isForStaff}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
             />
         );
