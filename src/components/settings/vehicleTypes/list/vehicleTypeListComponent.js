@@ -51,6 +51,11 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
+        const defaultSorted = [{
+            dataField: 'text',
+            order: 'asc'
+        }];
+
         const paginationOption = {
             page: page,
             sizePerPage: sizePerPage,
@@ -84,6 +89,7 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ vehicleTypes }
                 columns={ columns }
+                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There are no vehicleTypes at the moment"

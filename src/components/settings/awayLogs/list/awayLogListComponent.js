@@ -65,6 +65,11 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
+        const defaultSorted = [{
+            dataField: 'associateName',
+            order: 'asc'
+        }];
+
         const paginationOption = {
             page: page,
             sizePerPage: sizePerPage,
@@ -98,6 +103,7 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ awayLogs }
                 columns={ columns }
+                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There are no away logs at the moment"
