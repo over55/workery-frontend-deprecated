@@ -28,7 +28,7 @@ export default class ClientFullRetrieveComponent extends Component {
                             <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;Argyle
+                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
                         </li>
                     </ol>
                 </nav>
@@ -48,6 +48,11 @@ export default class ClientFullRetrieveComponent extends Component {
                             <strong>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </strong>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/client/${id}/orders`}>
+                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                            </Link>
                         </div>
                     </div>
                 </div>

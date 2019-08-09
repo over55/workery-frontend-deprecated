@@ -53,10 +53,6 @@ class RemoteListComponent extends Component {
             text: 'Job #',
             sort: true
         },{
-            dataField: 'customerName',
-            text: 'Client',
-            sort: true
-        },{
             dataField: 'associateName',
             text: 'Associate',
             sort: true,
@@ -68,6 +64,10 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'startDate',
             text: 'Start Date',
+            sort: true
+        },{
+            dataField: 'completionDate',
+            text: 'Completion Date',
             sort: true
         },{
             dataField: 'state',
@@ -159,7 +159,7 @@ function associateNameFormatter(cell, row){
         <Link to={`/associate/${row.associate}`} target="_blank">
             {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
-    );
+    )
 }
 
 
@@ -177,7 +177,7 @@ function detailLinkFormatter(cell, row){
 }
 
 
-class OrderListComponent extends Component {
+export default class ClientOrderListComponent extends Component {
     render() {
         const {
             // Pagination
@@ -187,7 +187,7 @@ class OrderListComponent extends Component {
             orderList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, id, client
         } = this.props;
 
         const orders = orderList.results ? orderList.results : [];
@@ -200,8 +200,11 @@ class OrderListComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
+                        <li className="breadcrumb-item" aria-current="page">
+                            <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
+                        </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Orders
+                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
                         </li>
                     </ol>
                 </nav>
@@ -211,27 +214,22 @@ class OrderListComponent extends Component {
                 <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
 
                 <div className="row">
-                    <div className="col-md-12">
-                        <section className="row text-center placeholders">
-                            <div className="col-sm-6 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/orders/add/step-1" className="d-block link-ndecor" title="Orders">
-                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Add</h4>
-                                <div className="text-muted">Add Orders</div>
-                            </div>
-                            <div className="col-sm-6 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
-                                    <Link to="/orders/search" className="d-block link-ndecor" title="Search">
-                                        <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Search</h4>
-                                <span className="text-muted">Search Orders</span>
-                            </div>
-                        </section>
+                    <div className="step-navigation">
+                        <div id="step-1" className="st-grey">
+                            <Link to={`/client/${id}`}>
+                                <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Summary</span>
+                            </Link>
+                        </div>
+                        <div id="step-2" className="st-grey">
+                            <Link to={`/client/${id}/full`}>
+                                <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey active">
+                            <strong>
+                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                            </strong>
+                        </div>
                     </div>
                 </div>
 
@@ -254,5 +252,3 @@ class OrderListComponent extends Component {
         );
     }
 }
-
-export default OrderListComponent;
