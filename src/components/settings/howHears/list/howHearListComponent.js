@@ -71,6 +71,11 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
+        const defaultSorted = [{
+            dataField: 'sortNumber',
+            order: 'asc'
+        }];
+
         const paginationOption = {
             page: page,
             sizePerPage: sizePerPage,
@@ -104,6 +109,7 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ tty }
                 columns={ columns }
+                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There are no tty at the moment"
