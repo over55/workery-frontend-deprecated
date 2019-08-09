@@ -67,15 +67,11 @@ export default class ClientLiteRetrieveComponent extends Component {
                                         </a>
                                     </p>
                                 }
-                                <p className="m-0"><strong>Skills:</strong></p>
+                                <p className="m-0"><strong>Tags:</strong></p>
                                 <p>
-                                    <Link to="#" className="badge badge-info">Skill 1</Link>
-                                    <Link to="#" className="badge badge-info">Skill 2</Link>
-                                    <Link to="#" className="badge badge-info">Skill 3</Link>
-                                    <Link to="#" className="badge badge-dark">Skill 4</Link>
-                                    <Link to="#" className="badge badge-success">Html</Link>
-                                    <Link to="#" className="badge badge-primary">Developer</Link>
-                                    <Link to="#" className="badge badge-warning">Bootstrap</Link>
+                                    {client.tags && client.tags.map(
+                                        (tag) => <TagItem tag={tag} key={tag.id} />)
+                                    }
                                 </p>
                                 <div className="col-sm-12 p-0">
                                     <p className="m-0"><strong>Ratings:</strong></p>
@@ -96,4 +92,15 @@ export default class ClientLiteRetrieveComponent extends Component {
             </div>
         );
     }
+}
+
+
+
+class TagItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
 }
