@@ -8,8 +8,11 @@ import isEmpty from 'lodash/isEmpty';
 export default function validateInput(data) {
     let errors = {};
 
-    if (data.name === undefined || data.name === null || validator.isEmpty(data.name) || data.name === "") {
-        errors.name = 'This field is required';
+    if (data.text === undefined || data.text === null || validator.isEmpty(data.text) || data.text === "") {
+        errors.text = 'This field is required';
+    }
+    if (data.sortNumber === undefined || data.sortNumber === null || validator.isEmpty(data.sortNumber) || data.sortNumber === "") {
+        errors.sortNumber = 'This field is required';
     }
 
     return {

@@ -117,7 +117,7 @@ import TagUpdateContainer from "./settings/tags/tagUpdateContainer";
 
 import HowHearsListContainer from "./settings/howHears/list/howHearListContainer";
 import HowHearDeleteContainer from "./settings/howHears/howHearDeleteContainer";
-import HowHearCreateContainer from "./settings/howHears/howHearCreateContainer";
+import HowHearCreateContainer from "./settings/howHears/create/howHearCreateContainer";
 import HowHearUpdateContainer from "./settings/howHears/howHearUpdateContainer";
 
 import AwayLogListContainer from "./settings/awayLogs/list/awayLogListContainer";

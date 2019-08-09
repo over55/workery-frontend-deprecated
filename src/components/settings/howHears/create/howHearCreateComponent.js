@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 
 
 class HowHearCreateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -40,12 +40,23 @@ class HowHearCreateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.text}
+                                label="Text (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={text}
+                                name="text"
                                 type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.sortNumber}
+                                label="Sort # (*)"
+                                onChange={onTextChange}
+                                value={sortNumber}
+                                name="sortNumber"
+                                type="number"
                             />
 
                             <div className="form-group">

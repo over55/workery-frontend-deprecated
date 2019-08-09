@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import HowHearCreateComponent from "../../../components/settings/howHears/howHearCreateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/howHearValidator";
+import HowHearCreateComponent from "../../../../components/settings/howHears/create/howHearCreateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/howHearValidator";
+import { postHowHearDetail } from "../../../../actions/howHearActions";
 
 
 class HowHearCreateContainer extends Component {
@@ -16,15 +17,32 @@ class HowHearCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            text: "",
+            sortNumber: "",
+            isForAssociate: "",
+            isForCustomer: "",
+            isForPartner: "",
+            isForStaff: "",
             errors: {},
             isLoading: false
         }
-
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // // Translate to API fields.
+        // postData.tagText = this.state.tagText;
+        // postData.tagDesc = this.state.tagDesc;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -50,13 +68,13 @@ class HowHearCreateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(howHear) {
+    onSuccessCallback(howHear) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "How hear item has been successfully created.");
         this.props.history.push("/settings/how-hears");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -88,11 +106,19 @@ class HowHearCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.postHowHearDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 
@@ -103,10 +129,15 @@ class HowHearCreateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors } = this.state;
         return (
             <HowHearCreateComponent
-                name={name}
+                text={text}
+                sortNumber={sortNumber}
+                isForAssociate={isForAssociate}
+                isForCustomer={isForCustomer}
+                isForPartner={isForPartner}
+                isForStaff={isForStaff}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -125,7 +156,10 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        postHowHearDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postHowHearDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 
