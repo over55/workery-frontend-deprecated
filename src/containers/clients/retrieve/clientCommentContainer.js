@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
+import Scroll from 'react-scroll';
 
 import OrderListComponent from "../../../components/clients/retrieve/clientCommentComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullOrderList } from "../../../actions/orderActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import { pullClientCommentList, postClientComment } from "../../../actions/clientCommentActions";
+import { validateInput } from "../../../validators/commentValidator"
 
 
 class ClientCommentContainer extends Component {
@@ -18,11 +19,12 @@ class ClientCommentContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("customer", id);
+        parametersMap.set("about", id);
+        parametersMap.set("o", "created_at");
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            sizePerPage: 10000,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
@@ -33,10 +35,29 @@ class ClientCommentContainer extends Component {
 
             // Everything else...
             id: id,
+            text: "",
+            errors: {},
         }
-        this.onTableChange = this.onTableChange.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.getPostData = this.getPostData.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
+        this.onSuccessListCallback = this.onSuccessListCallback.bind(this);
+        this.onFailureListCallback = this.onFailureListCallback.bind(this);
+        this.onSuccessPostCallback = this.onSuccessPostCallback.bind(this);
+        this.onFailurePosttCallback = this.onFailurePosttCallback.bind(this);
+        this.onClick = this.onClick.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -46,6 +67,15 @@ class ClientCommentContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // Get our data.
+        this.props.pullClientCommentList(
+            this.state.page,
+            this.state.sizePerPage,
+            this.state.parametersMap,
+            this.onSuccessListCallback,
+            this.onFailureListCallback
+        );
     }
 
     componentWillUnmount() {
@@ -65,8 +95,8 @@ class ClientCommentContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(response) {
-        console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+    onSuccessListCallback(response) {
+        console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
                 page: response.page,
@@ -74,14 +104,34 @@ class ClientCommentContainer extends Component {
                 isLoading: false,
             },
             ()=>{
-                console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
-                console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+                console.log("onSuccessListCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessListCallback | State (Post-Fetch):", this.state);
             }
         )
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureListCallback(errors) {
         console.log(errors);
+        this.setState({ isLoading: false });
+    }
+
+    onSuccessPostCallback(response) {
+        console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
+            }
+        )
+    }
+
+    onFailurePosttCallback(errors) {
+        console.log("onFailurePosttCallback |", errors);
         this.setState({ isLoading: false });
     }
 
@@ -90,61 +140,43 @@ class ClientCommentContainer extends Component {
      *------------------------------------------------------------
      */
 
-    /**
-     *  Function takes the user interactions made with the table and perform
-     *  remote API calls to update the table based on user selection.
-     */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
-        // Copy the `parametersMap` that we already have.
-        var parametersMap = this.state.parametersMap;
+    onTextChange(e) {
+        e.preventDefault();
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
+    }
 
-        if (type === "sort") {
-            console.log(type, sortField, sortOrder); // For debugging purposes only.
+    onClick(e) {
+        e.preventDefault();
 
-            if (sortOrder === "asc") {
-                parametersMap.set('o', decamelize(sortField));
-            }
-            if (sortOrder === "desc") {
-                parametersMap.set('o', "-"+decamelize(sortField));
-            }
+        const { errors, isValid } = validateInput(this.state);
+        // console.log(errors, isValid); // For debugging purposes only.
 
-            this.setState(
-                { parametersMap: parametersMap, isLoading: true, },
-                ()=>{
-                    // STEP 3:
-                    // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
+        if (isValid) {
+            this.setState({
+                errors: {},
+                isLoading: true,
+            }, ()=>{
+                // Once our state has been validated `client-side` then we will
+                // make an API request with the server to create our new production.
+                this.props.postClientComment(
+                    this.getPostData(),
+                    this.onSuccessPostCallback,
+                    this.onFailurePostCallback
+                );
+            });
+        } else {
+            this.setState({
+                errors: errors,
+                isLoading: false,
+            });
 
-        } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
-
-            this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
-                ()=>{
-                    this.props.pullOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
-
-        } else if (type === "filter") {
-            console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
-            } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
-            }
-            this.setState(
-                { parametersMap: parametersMap, isLoading: true, },
-                ()=>{
-                    // STEP 3:
-                    // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
-        }else {
-            alert("Unsupported feature detected!!"+type);
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
         }
     }
 
@@ -154,19 +186,20 @@ class ClientCommentContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, id } = this.state;
-        const client = this.props.clientDetail ? this.props.clientDetail : [];
+        const { isLoading, id, text, errors } = this.state;
+        const client = this.props.clientDetail ? this.props.clientDetail : {};
+        const clientComments = this.props.clientCommentList ? this.props.clientCommentList.results : [];
         return (
             <OrderListComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                orderList={this.props.orderList}
-                onTableChange={this.onTableChange}
                 id={id}
+                text={text}
                 client={client}
+                clientComments={clientComments}
                 flashMessage={this.props.flashMessage}
+                onTextChange={this.onTextChange}
                 isLoading={isLoading}
+                errors={errors}
+                onClick={this.onClick}
             />
         );
     }
@@ -176,7 +209,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        orderList: store.orderListState,
+        clientCommentList: store.clientCommentListState,
         clientDetail: store.clientDetailState,
     };
 }
@@ -186,10 +219,13 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullClientCommentList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullClientCommentList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
             )
+        },
+        postClientComment: (postData, successCallback, failedCallback) => {
+            dispatch(postClientComment(postData, successCallback, failedCallback))
         },
     }
 }
