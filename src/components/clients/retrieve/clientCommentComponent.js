@@ -11,6 +11,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
+import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
@@ -78,6 +79,7 @@ export default class ClientCommentComponent extends Component {
                         )}
                         <hr className="my-4" />
                         <form>
+                            <BootstrapErrorsProcessingAlert errors={errors} />
                             <BootstrapTextarea
                                 name="text"
                                 borderColour="border-success"

@@ -20,7 +20,7 @@ class ClientCommentContainer extends Component {
         const { id } = this.props.match.params;
         const parametersMap = new Map();
         parametersMap.set("about", id);
-        parametersMap.set("o", "created_at");
+        parametersMap.set("o", "-created_at");
         this.state = {
             // Pagination
             page: 1,
@@ -43,7 +43,7 @@ class ClientCommentContainer extends Component {
         this.onSuccessListCallback = this.onSuccessListCallback.bind(this);
         this.onFailureListCallback = this.onFailureListCallback.bind(this);
         this.onSuccessPostCallback = this.onSuccessPostCallback.bind(this);
-        this.onFailurePosttCallback = this.onFailurePosttCallback.bind(this);
+        this.onFailurePostCallback = this.onFailurePostCallback.bind(this);
         this.onClick = this.onClick.bind(this);
     }
 
@@ -54,6 +54,9 @@ class ClientCommentContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        postData.about = this.state.id;
+        postData.extraText = this.state.text;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -126,13 +129,21 @@ class ClientCommentContainer extends Component {
             ()=>{
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
+                // Get our data.
+                this.props.pullClientCommentList(
+                    this.state.page,
+                    this.state.sizePerPage,
+                    this.state.parametersMap,
+                    this.onSuccessListCallback,
+                    this.onFailureListCallback
+                );
             }
         )
     }
 
-    onFailurePosttCallback(errors) {
-        console.log("onFailurePosttCallback |", errors);
-        this.setState({ isLoading: false });
+    onFailurePostCallback(errors) {
+        console.log("onFailurePostCallback |", errors);
+        this.setState({ isLoading: false, errors: errors, });
     }
 
     /**
@@ -158,6 +169,12 @@ class ClientCommentContainer extends Component {
                 errors: {},
                 isLoading: true,
             }, ()=>{
+                // The following code will cause the screen to scroll to the top of
+                // the page. Please see ``react-scroll`` for more information:
+                // https://github.com/fisshy/react-scroll
+                var scroll = Scroll.animateScroll;
+                scroll.scrollToTop();
+
                 // Once our state has been validated `client-side` then we will
                 // make an API request with the server to create our new production.
                 this.props.postClientComment(
