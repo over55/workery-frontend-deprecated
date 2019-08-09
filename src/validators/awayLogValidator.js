@@ -23,7 +23,15 @@ export default function validateInput(data) {
             }
         }
     }
-
+    if (data.untilFurtherNotice === undefined || data.untilFurtherNotice === null || isNaN(data.untilFurtherNotice) || data.untilFurtherNotice === "") {
+        errors.untilFurtherNotice = 'This field is required';
+    } else {
+        if (parseInt(data.untilFurtherNotice) === 0) {
+            if (data.untilDate === undefined || data.untilDate === null || isNaN(data.untilDate) || data.untilDate === "") {
+                errors.untilDate = 'This field is required';
+            }
+        }
+    }
     return {
         errors,
         isValid: isEmpty(errors)

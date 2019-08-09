@@ -798,3 +798,18 @@ export const AWAY_LOG_REASON_CHOICES = [
         label: "Other"
     }
 ];
+
+
+export const UNTIL_FURTHER_NOTICE_CHOICES = [
+    {
+        id: 'awayLog-untilFurtherNotice-1-choice',
+        selectName: "untilFurtherNotice",
+        value: 1,
+        label: "Yes"
+    },{
+        id: 'awayLog-untilFurtherNotice-0-choice',
+        selectName: "untilFurtherNotice",
+        value: 0,
+        label: "No"
+    }
+];

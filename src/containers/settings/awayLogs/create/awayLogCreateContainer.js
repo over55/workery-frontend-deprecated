@@ -24,13 +24,16 @@ class AwayLogCreateContainer extends Component {
             reason: null,
             reasonOther: "",
             untilFurtherNotice: null,
+            untilDate: null,
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
+        this.onUntilDateChange = this.onUntilDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -101,8 +104,26 @@ class AwayLogCreateContainer extends Component {
         });
     }
 
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-client-biz-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-biz-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+    }
+
     onStartDateChange(dateObj) {
         this.setState({ startDate: dateObj, });
+    }
+
+    onUntilDateChange(dateObj) {
+        this.setState({ untilDate: dateObj, });
     }
 
     onClick(e) {
@@ -129,7 +150,7 @@ class AwayLogCreateContainer extends Component {
      */
 
     render() {
-        const { associate, associateOption, startDate, reason, reasonOther, untilFurtherNotice, errors } = this.state;
+        const { associate, associateOption, startDate, reason, reasonOther, untilFurtherNotice, untilDate, errors } = this.state;
         const associateOptions = getAssociateReactSelectOptions(this.props.associateList);
         return (
             <AwayLogCreateComponent
@@ -140,8 +161,11 @@ class AwayLogCreateContainer extends Component {
                 reason={reason}
                 reasonOther={reasonOther}
                 untilFurtherNotice={untilFurtherNotice}
+                untilDate={untilDate}
+                onUntilDateChange={this.onUntilDateChange}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                onRadioChange={this.onRadioChange}
                 onSelectChange={this.onSelectChange}
                 onClick={this.onClick}
             />

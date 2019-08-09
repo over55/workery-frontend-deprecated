@@ -3,19 +3,21 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from "../../../bootstrap/bootstrapDatePicker";
 import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
-import { AWAY_LOG_REASON_CHOICES } from '../../../../constants/api';
+import { AWAY_LOG_REASON_CHOICES, UNTIL_FURTHER_NOTICE_CHOICES } from '../../../../constants/api';
 
 
 class AwayLogCreateComponent extends Component {
     render() {
         const {
-            associate, associateOptions, startDate, reason, reasonOther, untilFurtherNotice,
-            errors, onTextChange, onSelectChange, onStartDateChange, isLoading, onClick
+            associate, associateOptions, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
+            errors, onTextChange, onSelectChange, onStartDateChange, onUntilDateChange, onRadioChange, isLoading, onClick
         } = this.props;
         const isOtherReasonSelected = reason === 1;
+        const isNotUntilFurtherNotice = parseInt(untilFurtherNotice) === 0;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -84,6 +86,28 @@ class AwayLogCreateComponent extends Component {
                                     value={reasonOther}
                                     name="reasonOther"
                                     type="text"
+                                />
+                            }
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.untilFurtherNotice}
+                                label="Until further notice? (*)"
+                                name="untilFurtherNotice"
+                                onChange={onRadioChange}
+                                selectedValue={untilFurtherNotice}
+                                options={UNTIL_FURTHER_NOTICE_CHOICES}
+                            />
+                            {isNotUntilFurtherNotice &&
+                                <BootstrapDatePicker
+                                    label="Until date (*)"
+                                    name="untilDate"
+                                    dateObj={untilDate}
+                                    onTimeChange={onUntilDateChange}
+                                    datePickerClassName="form-control form-control-lg border"
+                                    divClassName="form-group p-0 col-md-7 mb-4"
+                                    error={errors.untilDate}
                                 />
                             }
 
