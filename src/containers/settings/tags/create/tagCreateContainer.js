@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import TagCreateComponent from "../../../components/settings/tags/tagCreateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/tagValidator";
+import TagCreateComponent from "../../../../components/settings/tags/create/tagCreateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/tagValidator";
+import { postTagDetail } from "../../../../actions/tagActions";
 
 
 class TagCreateContainer extends Component {
@@ -16,11 +17,12 @@ class TagCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            text: "",
+            description: "",
             errors: {},
             isLoading: false
         }
-
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -43,6 +45,17 @@ class TagCreateContainer extends Component {
         this.setState = (state,callback)=>{
             return;
         };
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.tagText = this.state.tagText;
+        postData.tagDesc = this.state.tagDesc;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -88,7 +101,11 @@ class TagCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.postTagDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -103,10 +120,11 @@ class TagCreateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, description, errors } = this.state;
         return (
             <TagCreateComponent
-                name={name}
+                text={text}
+                description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -125,7 +143,10 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        postTagDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postTagDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 

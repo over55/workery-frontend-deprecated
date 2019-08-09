@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 
 
 class TagCreateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { text, description, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -40,12 +40,24 @@ class TagCreateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.text}
+                                label="Text (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={text}
+                                name="text"
                                 type="text"
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-primary"
+                                label="Description (*)"
+                                placeholder="Please describe this skill set."
+                                rows="5"
+                                value={description}
+                                helpText="This will only be visible to staff members."
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">

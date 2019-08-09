@@ -112,7 +112,7 @@ import SettingListContainer from "./settings/settingListContainer";
 
 import TagsListContainer from "./settings/tags/list/tagListContainer";
 import TagDeleteContainer from "./settings/tags/tagDeleteContainer";
-import TagCreateContainer from "./settings/tags/tagCreateContainer";
+import TagCreateContainer from "./settings/tags/create/tagCreateContainer";
 import TagUpdateContainer from "./settings/tags/tagUpdateContainer";
 
 import HowHearsListContainer from "./settings/howHears/list/howHearListContainer";
