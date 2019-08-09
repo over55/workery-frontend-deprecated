@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import AwayLogCreateComponent from "../../../../components/settings/awayLogs/create/awayLogCreateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
@@ -28,15 +29,29 @@ class AwayLogCreateContainer extends Component {
             errors: {},
             isLoading: false
         }
-
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onUntilDateChange = this.onUntilDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        const startDateMoment = moment(this.state.startDate);
+        postData.startDate = startDateMoment.format("YYYY-MM-DD")
+
+        const untilDateMoment = moment(this.state.untilDate);
+        postData.untilDate = untilDateMoment.format("YYYY-MM-DD")
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -67,15 +82,20 @@ class AwayLogCreateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(tag) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Away log has been successfully created.");
-        this.props.history.push("/settings/away-logs");
+    onSuccessCallback(response) {
+        if (response !== null && response !== undefined) {
+            this.props.setFlashMessage("success", "Away log has been successfully created.");
+            this.props.history.push("/settings/away-logs");
+        } else {
+            console.log("onSuccessCallback | ERROR:",response);
+        }
+
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
-            errors: errors
+            errors: errors,
+            isLoading: false,
         })
 
         // The following code will cause the screen to scroll to the top of
@@ -106,8 +126,6 @@ class AwayLogCreateContainer extends Component {
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-client-biz-"+[e.target.name];
-        const storageLabelKey =  "workery-create-client-biz-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -135,11 +153,19 @@ class AwayLogCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.postAwayLogDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback(),
+                    this.onFailureCallback()
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 
@@ -188,6 +214,11 @@ const mapDispatchToProps = dispatch => {
         pullAssociateList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullAssociateList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        postAwayLogDetail: (postData, successCallback, failedCallback) => {
+            dispatch(
+                postAwayLogDetail(postData, successCallback, failedCallback)
             )
         },
     }

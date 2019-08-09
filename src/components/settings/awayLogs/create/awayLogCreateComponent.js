@@ -8,6 +8,7 @@ import { BootstrapDatePicker } from "../../../bootstrap/bootstrapDatePicker";
 import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 import { AWAY_LOG_REASON_CHOICES, UNTIL_FURTHER_NOTICE_CHOICES } from '../../../../constants/api';
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
 class AwayLogCreateComponent extends Component {
@@ -20,6 +21,7 @@ class AwayLogCreateComponent extends Component {
         const isNotUntilFurtherNotice = parseInt(untilFurtherNotice) === 0;
         return (
             <main id="main" role="main">
+            <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -29,7 +31,7 @@ class AwayLogCreateComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/away-logs"><i className="fas fa-bullhorn"></i>&nbsp;AwayLogs</Link>
+                            <Link to="/settings/away-logs"><i className="fas fa-bullhorn"></i>&nbsp;Away Logs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -40,7 +42,7 @@ class AwayLogCreateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Create New AwayLogs</h1>
+                            <h1>Create New Away Log</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -112,7 +114,7 @@ class AwayLogCreateComponent extends Component {
                             }
 
                             <div className="form-group">
-                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                <button type="button" className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
                                 <Link to="/settings/away-logs" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
