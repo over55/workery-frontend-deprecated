@@ -25,8 +25,8 @@ class TagCreateContainer extends Component {
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -64,13 +64,13 @@ class TagCreateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(tag) {
+    onSuccessCallback(tag) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Tag has been successfully created.");
         this.props.history.push("/settings/tags");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -102,15 +102,19 @@ class TagCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.postTagDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.postTagDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 

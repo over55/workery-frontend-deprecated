@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import VehicleTypeCreateComponent from "../../../components/settings/vehicleTypes/vehicleTypeCreateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/vehicleTypeValidator";
+import VehicleTypeCreateComponent from "../../../../components/settings/vehicleTypes/create/vehicleTypeCreateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/vehicleTypeValidator";
+import { postVehicleTypeDetail } from "../../../../actions/vehicleTypeActions";
 
 
 class VehicleTypeCreateContainer extends Component {
@@ -16,15 +17,28 @@ class VehicleTypeCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            text: "",
+            description: "",
             errors: {},
             isLoading: false
         }
-
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Translate to API fields.
+        // postData.tagText = this.state.tagText;
+        // postData.tagDesc = this.state.tagDesc;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -50,13 +64,13 @@ class VehicleTypeCreateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(vehicleType) {
+    onSuccessCallback(vehicleType) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Vehicle type has been successfully created.");
         this.props.history.push("/settings/vehicle-types");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -88,11 +102,19 @@ class VehicleTypeCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.postVehicleTypeDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 
@@ -103,10 +125,11 @@ class VehicleTypeCreateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, description, errors } = this.state;
         return (
             <VehicleTypeCreateComponent
-                name={name}
+                text={text}
+                description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -125,7 +148,10 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        postVehicleTypeDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postVehicleTypeDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 

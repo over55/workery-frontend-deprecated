@@ -30,8 +30,8 @@ class SkillSetCreateContainer extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onInsuranceRequirementMultiChange = this.onInsuranceRequirementMultiChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     getPostData() {
@@ -76,13 +76,13 @@ class SkillSetCreateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(skillSet) {
+    onSuccessCallback(skillSet) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Skill set has been successfully created.");
         this.props.history.push("/settings/skill-sets");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -124,15 +124,19 @@ class SkillSetCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.postSkillSetDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.postSkillSetDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 

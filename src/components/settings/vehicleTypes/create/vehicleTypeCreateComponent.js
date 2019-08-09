@@ -2,14 +2,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 
 
 class VehicleTypeCreateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { text, description, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -40,12 +41,23 @@ class VehicleTypeCreateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.text}
+                                label="Text (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={text}
+                                name="text"
                                 type="text"
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-primary"
+                                label="Description (*)"
+                                placeholder="Description"
+                                rows="5"
+                                value={description}
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">

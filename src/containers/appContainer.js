@@ -154,7 +154,7 @@ import DeactivatedClientListContainer from "./settings/deactivatedClients/list/d
 
 import VehicleTypesListContainer from "./settings/vehicleTypes/list/vehicleTypeListContainer";
 import VehicleTypeDeleteContainer from "./settings/vehicleTypes/vehicleTypeDeleteContainer";
-import VehicleTypeCreateContainer from "./settings/vehicleTypes/vehicleTypeCreateContainer";
+import VehicleTypeCreateContainer from "./settings/vehicleTypes/create/vehicleTypeCreateContainer";
 import VehicleTypeUpdateContainer from "./settings/vehicleTypes/vehicleTypeUpdateContainer";
 
 
