@@ -46,7 +46,9 @@ class AwayLogCreateContainer extends Component {
         const startDateMoment = moment(this.state.startDate);
         postData.startDate = startDateMoment.format("YYYY-MM-DD")
 
-        const untilDateMoment = moment(this.state.untilDate);
+        const untilDate = this.state.untilDate ? this.state.untilDate : new Date();
+
+        const untilDateMoment = moment(untilDate);
         postData.untilDate = untilDateMoment.format("YYYY-MM-DD")
 
         // Finally: Return our new modified data.
@@ -93,16 +95,18 @@ class AwayLogCreateContainer extends Component {
     }
 
     onFailureCallback(errors) {
-        this.setState({
-            errors: errors,
-            isLoading: false,
-        })
+        if (errors !== null && errors !== undefined) {
+            this.setState({
+                errors: errors,
+                isLoading: false,
+            })
 
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
     }
 
     /**
@@ -158,8 +162,8 @@ class AwayLogCreateContainer extends Component {
             }, ()=>{
                 this.props.postAwayLogDetail(
                     this.getPostData(),
-                    this.onSuccessCallback(),
-                    this.onFailureCallback()
+                    this.onSuccessCallback,
+                    this.onFailureCallback
                 );
             });
 
