@@ -56,14 +56,11 @@ class ClientLiteRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log("onSuccessCallback | Fetched", response);
-        this.setState({
-            client: response
-        });
+        console.log("onSuccessCallback | Fetched:", response);
     }
 
     onFailureCallback(errors) {
-        console.log(errors);
+        console.log("onFailureCallback | errors:", errors);
     }
 
     /**
@@ -78,7 +75,8 @@ class ClientLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id, client } = this.state;
+        const { id } = this.state;
+        const client = this.props.clientDetail ? this.props.clientDetail : [];
         return (
             <ClientLiteRetrieveComponent
                 id={id}

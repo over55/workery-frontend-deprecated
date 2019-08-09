@@ -68,11 +68,13 @@ export default class ClientLiteRetrieveComponent extends Component {
                                     </p>
                                 }
                                 <p className="m-0"><strong>Tags:</strong></p>
-                                <p>
-                                    {client.tags && client.tags.map(
-                                        (tag) => <TagItem tag={tag} key={tag.id} />)
-                                    }
-                                </p>
+                                {client &&
+                                    <p>
+                                        {client.tags && client.tags.map(
+                                            (tag) => <TagItem tag={tag} key={tag.id} />)
+                                        }
+                                    </p>
+                                }
                                 <div className="col-sm-12 p-0">
                                     <p className="m-0"><strong>Ratings:</strong></p>
                                     <div className="star-rating" data-rating="4.5">

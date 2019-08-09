@@ -3,13 +3,7 @@ import { connect } from 'react-redux';
 
 import ClientFullRetrieveComponent from "../../../components/clients/retrieve/clientFullRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
-import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    COMMUNITY_CARES_TYPE_OF
-} from '../../../constants/api';
+import { pullClientDetail } from "../../../actions/clientActions";
 
 
 class ClientFullRetrieveContainer extends Component {
@@ -21,15 +15,17 @@ class ClientFullRetrieveContainer extends Component {
     constructor(props) {
         super(props);
 
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         // Update state.
         this.state = {
-            slug: slug,
-            clientData: {},
-            errors: {},
-            isLoading: false
+            id: id,
+            client: {}
         }
+
+        // Update functions.
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -39,182 +35,7 @@ class ClientFullRetrieveContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        //TODO: REPLACE THIS CODE WITH API DATA.
-        if (this.state.slug === 'argyle') {
-            this.setState({
-                clientData: {
-                    slug: 'argyle',
-                    number: 1,
-                    name: 'Argyle',
-                    absoluteUrl: '/client/argyle',
-                    typeOf: RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-                    bizCompanyName: "",
-                    bizContactFirstName: "",
-                    bizContactLastName: "",
-                    bizPrimaryPhone: "",
-                    bizSecondaryPhone: "",
-                    bizEmail: "",
-                    rezFirstName: "Shinji",
-                    rezLastName: "Ikari",
-                    rezPrimaryPhone:  "(111) 111-1111",
-                    rezSecondaryPhone: "(222) 222-2222",
-                    rezEmail: "shinji.ikari@nerv.worldgov",
-                    streetNumber: 123,
-                    streetName: "Somewhere",
-                    streetType: "Street",
-                    streetTypeOption: "",
-                    streetTypeOther: "",
-                    apartmentUnit: "Upper",
-                    streetDirection: "North",
-                    streetDirectionOption: "",
-                    postalCode: "N6J4X4",
-                    watchSlug: "argyle",
-                    watchIcon: "home",
-                    watchName: "Argyle",
-                    tags:[
-                        "security", "fitness"
-                    ],
-                    // tags:[
-                    //     {selectName: "tags", value: "security", label: "Security"},
-                    //     {selectName: "tags", value: "fitness", label: "Fitness"}
-                    // ],
-                    birthYear: 1980,
-                    gender: 2,
-                    genderLabel: "Female",
-                    howDidYouHear: "internet",
-                    howDidYouHearOption: "",
-                    howDidYouHearOther: "",
-                    howDidYouHearLabel: "Internet",
-                    meaning: "Insert meaning here",
-                    expectations: "Insert expectations here",
-                    willingToVolunteerLabel: "Yes",
-                    anotherHouseholdClientRegisteredLabel: "Yes",
-                }
-            });
-        } else if (this.state.slug === 'byron') {
-            this.setState({
-                clientData: {
-                    slug: 'byron',
-                    number: 1,
-                    name: 'Byron',
-                    absoluteUrl: '/client/byron',
-                    typeOf: COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-                    bizCompanyName: "City Pop Music",
-                    bizContactFirstName: "Mariya",
-                    bizContactLastName: "Takeuchi",
-                    bizPrimaryPhone: "(321) 321-3210",
-                    bizSecondaryPhone: "",
-                    bizEmail: "plastic_lover@gmail.com",
-                    rezFirstName: "",
-                    rezLastName: "",
-                    rezPrimaryPhone:  "",
-                    rezSecondaryPhone: "",
-                    rezEmail: "",
-                    streetNumber: 666999,
-                    streetName: "Shinjuku",
-                    streetType: "Street",
-                    streetTypeOption: "",
-                    streetTypeOther: "",
-                    apartmentUnit: null,
-                    streetDirection: "",
-                    streetDirectionOption: "",
-                    postalCode: "N6J4X4",
-                    watchSlug: "byron",
-                    watchIcon: "building",
-                    watchName: "Byron",
-                    tags:[
-                        "security", "fitness"
-                    ],
-                    birthYear: 1975,
-                    gender: 1,
-                    genderLabel: "Male",
-                    howDidYouHear: "internet",
-                    howDidYouHearOption: "",
-                    howDidYouHearOther: "",
-                    howDidYouHearLabel: "Internet",
-                    meaning: "Insert meaning here",
-                    expectations: "Insert expectations here",
-                    willingToVolunteerLabel: "No",
-                    anotherHouseholdClientRegisteredLabel: "No",
-                    companyEmployeeCount: 4,
-                    companyYearsInOperation: 1,
-                    companyType: "Construction Company",
-                }
-            });
-        } else if (this.state.slug === 'carling') {
-            this.setState({
-                clientData: {
-                    slug: 'carling',
-                    number: 1,
-                    name: 'Carling',
-                    absoluteUrl: '/client/carling',
-                    typeOf: COMMUNITY_CARES_TYPE_OF,
-                    bizCompanyName: "",
-                    bizContactFirstName: "",
-                    bizContactLastName: "",
-                    bizPrimaryPhone: "",
-                    bizSecondaryPhone: "",
-                    bizEmail: "",
-                    rezFirstName: "Rei",
-                    rezLastName: "Ayanami",
-                    rezPrimaryPhone:  "(123) 123-12345",
-                    rezSecondaryPhone: "(987) 987-0987",
-                    rezEmail: "rei.ayanami@nerv.worldgov",
-                    streetNumber: 451,
-                    streetName: "Centre",
-                    streetType: "Street",
-                    streetTypeOption: "",
-                    streetTypeOther: "",
-                    apartmentUnit: null,
-                    streetDirection: "",
-                    streetDirectionOption: "",
-                    postalCode: "N6J4X4",
-                    watchSlug: "carling",
-                    watchIcon: "university",
-                    watchName: "Carling",
-                    tags:[
-                        "security", "fitness"
-                    ],
-                    birthYear: 1985,
-                    gender: 0,
-                    genderLabel: "Prefer not to say",
-                    howDidYouHear: "internet",
-                    howDidYouHearOption: "",
-                    howDidYouHearOther: "",
-                    howDidYouHearLabel: "Internet",
-                    meaning: "Insert meaning here",
-                    expectations: "Insert expectations here",
-                    willingToVolunteerLabel: "Maybe",
-                    anotherHouseholdClientRegisteredLabel: "Yes",
-                }
-            });
-        }
-
-        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
-        this.setState({
-            howDidYouHearData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Word of mouth',
-                    slug: 'word-of-mouth'
-                },{
-                    name: 'Internet',
-                    slug: 'internet'
-                }]
-            },
-            tagsData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Health',
-                    slug: 'health'
-                },{
-                    name: 'Security',
-                    slug: 'security'
-                },{
-                    name: 'Fitness',
-                    slug: 'fitness'
-                }]
-            }
-        });
+        this.props.pullClientDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -234,12 +55,12 @@ class ClientFullRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | Fetched:", response);
     }
 
-    onFailedSubmissionCallback(errors) {
-        console.log(errors);
+    onFailureCallback(errors) {
+        console.log("onFailureCallback | errors:", errors);
     }
 
     /**
@@ -254,15 +75,13 @@ class ClientFullRetrieveContainer extends Component {
      */
 
     render() {
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
-        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
+        const { id } = this.state;
+        const client = this.props.clientDetail ? this.props.clientDetail : [];
         return (
             <ClientFullRetrieveComponent
-                slug={this.state.slug}
-                clientData={this.state.clientData}
+                id={id}
+                client={client}
                 flashMessage={this.props.flashMessage}
-                tagOptions={tagOptions}
-                howDidYouHearOptions={howDidYouHearOptions}
             />
         );
     }
@@ -272,6 +91,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        clientDetail: store.clientDetailState,
     };
 }
 
@@ -279,7 +99,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullClientDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullClientDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 
