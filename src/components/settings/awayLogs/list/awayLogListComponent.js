@@ -100,7 +100,7 @@ class RemoteListComponent extends Component {
                 columns={ columns }
                 striped
                 bordered={ false }
-                noDataIndication="There are no awayLogs at the moment"
+                noDataIndication="There are no away logs at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }

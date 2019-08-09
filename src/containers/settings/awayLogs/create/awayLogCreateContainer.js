@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AwayLogCreateComponent from "../../../components/settings/awayLogs/awayLogCreateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/tagValidator";
+import AwayLogCreateComponent from "../../../../components/settings/awayLogs/create/awayLogCreateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/tagValidator";
+import { postAwayLogDetail } from "../../../../actions/awayLogActions";
+import { pullAssociateList, getAssociateReactSelectOptions } from "../../../../actions/associateActions";
 
 
 class AwayLogCreateContainer extends Component {
@@ -16,12 +18,17 @@ class AwayLogCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            associate: null,
+            associateOption: null,
+            startDate: null,
+            reason: null,
+            untilFurtherNotice: null,
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -34,6 +41,7 @@ class AwayLogCreateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullAssociateList(1, 10);
     }
 
     componentWillUnmount() {
@@ -79,6 +87,14 @@ class AwayLogCreateContainer extends Component {
         })
     }
 
+    onSelectChange(option) {
+        const optionKey = [option.selectName]+"Option";
+        this.setState({
+            [option.selectName]: option.value,
+            [optionKey]: option,
+        });
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -103,12 +119,18 @@ class AwayLogCreateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { associate, associateOption, startDate, reason, untilFurtherNotice, errors } = this.state;
+        const associateOptions = getAssociateReactSelectOptions(this.props.associateList);
         return (
             <AwayLogCreateComponent
-                name={name}
+                associate={associate}
+                associateOptions={associateOptions}
+                startDate={startDate}
+                reason={reason}
+                untilFurtherNotice={untilFurtherNotice}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                onSelectChange={this.onSelectChange}
                 onClick={this.onClick}
             />
         );
@@ -118,6 +140,7 @@ class AwayLogCreateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        associateList: store.associateListState,
     };
 }
 
@@ -125,7 +148,12 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        pullAssociateList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullAssociateList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

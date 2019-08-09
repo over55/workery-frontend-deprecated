@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 
 
 class AwayLogCreateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { associate, associateOptions, startDate, reason, untilFurtherNotice, errors, onTextChange, onSelectChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -37,15 +37,15 @@ class AwayLogCreateComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                            <BootstrapSingleSelect
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
-                                onChange={onTextChange}
-                                value={name}
-                                name="name"
-                                type="text"
+                                label="Associate? (*)"
+                                name="associate"
+                                defaultOptionLabel="Please select the associate."
+                                options={associateOptions}
+                                value={associate}
+                                error={errors.associate}
+                                onSelectChange={onSelectChange}
                             />
 
                             <div className="form-group">
