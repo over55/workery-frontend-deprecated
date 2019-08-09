@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import InsuranceRequirementCreateComponent from "../../../components/settings/insuranceRequirements/insuranceRequirementCreateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/insuranceRequirementValidator";
+import InsuranceRequirementCreateComponent from "../../../../components/settings/insuranceRequirements/create/insuranceRequirementCreateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/insuranceRequirementValidator";
+import { postInsuranceRequirementDetail } from "../../../../actions/insuranceRequirementActions";
 
 
 class InsuranceRequirementCreateContainer extends Component {
@@ -16,15 +17,25 @@ class InsuranceRequirementCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            text: "",
+            description: "",
             errors: {},
             isLoading: false
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -50,13 +61,13 @@ class InsuranceRequirementCreateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(insuranceRequirement) {
+    onSuccessCallback(insuranceRequirement) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Insurance requirement has been successfully created.");
         this.props.history.push("/settings/insurance-requirements");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -88,11 +99,19 @@ class InsuranceRequirementCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.postInsuranceRequirementDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 
@@ -103,10 +122,11 @@ class InsuranceRequirementCreateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, description, errors } = this.state;
         return (
             <InsuranceRequirementCreateComponent
-                name={name}
+                text={text}
+                description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -125,7 +145,12 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        postInsuranceRequirementDetail: (postData, successCallback, failedCallback) => {
+            dispatch(
+                postInsuranceRequirementDetail(postData, successCallback, failedCallback)
+            )
+        },
     }
 }
 

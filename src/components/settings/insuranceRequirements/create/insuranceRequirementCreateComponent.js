@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 
 
 class InsuranceRequirementCreateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { text, description, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -40,11 +40,22 @@ class InsuranceRequirementCreateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.text}
+                                label="Text (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={text}
+                                name="text"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.description}
+                                label="Description (*)"
+                                onChange={onTextChange}
+                                value={description}
+                                name="description"
                                 type="text"
                             />
 
