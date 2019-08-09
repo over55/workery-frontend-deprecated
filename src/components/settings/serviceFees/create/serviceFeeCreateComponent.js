@@ -2,14 +2,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 
 
 class ServiceFeeCreateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { title, percentage, description, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -40,12 +41,34 @@ class ServiceFeeCreateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.title}
+                                label="Title (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={title}
+                                name="title"
                                 type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.percentage}
+                                label="Percentage (*)"
+                                onChange={onTextChange}
+                                value={percentage}
+                                name="percentage"
+                                type="number"
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-primary"
+                                label="Description (*)"
+                                placeholder="Description"
+                                rows="5"
+                                value={description}
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">

@@ -159,7 +159,7 @@ class InsuranceRequirementListComponent extends Component {
                                     </Link>
                                 </div>
                                 <h4>Add</h4>
-                                <div className="text-muted">Add InsuranceRequirements</div>
+                                <div className="text-muted">Add Insurance Requirement</div>
                             </div>
                         </section>
                     </div>

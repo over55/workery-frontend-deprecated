@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ServiceFeeCreateComponent from "../../../components/settings/serviceFees/serviceFeeCreateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/serviceFeeValidator";
+import ServiceFeeCreateComponent from "../../../../components/settings/serviceFees/create/serviceFeeCreateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/serviceFeeValidator";
+import { postServiceFeeDetail } from "../../../../actions/serviceFeeActions";
 
 
 class ServiceFeeCreateContainer extends Component {
@@ -16,15 +17,28 @@ class ServiceFeeCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: null,
+            title: "",
+            percentage: "",
+            description: "",
             errors: {},
             isLoading: false
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.extraText = this.state.text;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -88,7 +102,11 @@ class ServiceFeeCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.postServiceFeeDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -103,10 +121,12 @@ class ServiceFeeCreateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { title, percentage, description, errors } = this.state;
         return (
             <ServiceFeeCreateComponent
-                name={name}
+                title={title}
+                percentage={percentage}
+                description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -125,6 +145,9 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
+        },
+        postServiceFeeDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postServiceFeeDetail(postData, successCallback, failedCallback))
         }
     }
 }
