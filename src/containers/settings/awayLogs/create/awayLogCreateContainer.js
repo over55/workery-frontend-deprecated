@@ -41,7 +41,11 @@ class AwayLogCreateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullAssociateList(1, 10);
+
+        // Get a filtered list of ALL the ACTIVE associates.
+        const parametersMap = new Map();
+        parametersMap.set('state', 1); // `1` is `true` in API.
+        this.props.pullAssociateList(1, 10000, parametersMap);
     }
 
     componentWillUnmount() {

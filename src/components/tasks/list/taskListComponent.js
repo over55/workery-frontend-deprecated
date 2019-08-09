@@ -109,6 +109,12 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
+        const defaultSorted = [{
+            dataField: 'dueDate',
+            order: 'desc'
+        }];
+
+
         const paginationOption = {
             page: page,
             sizePerPage: sizePerPage,
@@ -142,6 +148,7 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ tasks }
                 columns={ columns }
+                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There are no tasks at the moment"

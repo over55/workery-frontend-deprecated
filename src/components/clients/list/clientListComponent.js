@@ -83,6 +83,11 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
+        const defaultSorted = [{
+            dataField: 'lastName',
+            order: 'asc'
+        }];
+
         const paginationOption = {
             page: page,
             sizePerPage: sizePerPage,
@@ -116,6 +121,7 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ clients }
                 columns={ columns }
+                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There are no clients at the moment"
