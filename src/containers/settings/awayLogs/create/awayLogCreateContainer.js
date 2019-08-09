@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import AwayLogCreateComponent from "../../../../components/settings/awayLogs/create/awayLogCreateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import validateInput from "../../../../validators/tagValidator";
+import validateInput from "../../../../validators/awayLogValidator";
 import { postAwayLogDetail } from "../../../../actions/awayLogActions";
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../../../actions/associateActions";
 
@@ -29,6 +29,7 @@ class AwayLogCreateContainer extends Component {
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -99,6 +100,10 @@ class AwayLogCreateContainer extends Component {
         });
     }
 
+    onStartDateChange(dateObj) {
+        this.setState({ startDate: dateObj, });
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -130,6 +135,7 @@ class AwayLogCreateContainer extends Component {
                 associate={associate}
                 associateOptions={associateOptions}
                 startDate={startDate}
+                onStartDateChange={this.onStartDateChange}
                 reason={reason}
                 untilFurtherNotice={untilFurtherNotice}
                 errors={errors}

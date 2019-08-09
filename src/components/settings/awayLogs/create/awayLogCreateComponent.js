@@ -3,13 +3,16 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapDatePicker } from "../../../bootstrap/bootstrapDatePicker";
 import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 
 
 class AwayLogCreateComponent extends Component {
     render() {
-        const { associate, associateOptions, startDate, reason, untilFurtherNotice, errors, onTextChange, onSelectChange, isLoading, onClick } = this.props;
+        const {
+            associate, associateOptions, startDate, reason, untilFurtherNotice, errors, onTextChange, onSelectChange, onStartDateChange, isLoading, onClick
+        } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -46,6 +49,16 @@ class AwayLogCreateComponent extends Component {
                                 value={associate}
                                 error={errors.associate}
                                 onSelectChange={onSelectChange}
+                            />
+
+                            <BootstrapDatePicker
+                                label="Start date (*)"
+                                name="startDate"
+                                dateObj={startDate}
+                                onTimeChange={onStartDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.startDate}
                             />
 
                             <div className="form-group">
