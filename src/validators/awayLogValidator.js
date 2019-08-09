@@ -14,6 +14,15 @@ export default function validateInput(data) {
     if (data.startDate === undefined || data.startDate === null || isNaN(data.startDate) || data.startDate === "") {
         errors.startDate = 'This field is required';
     }
+    if (data.reason === undefined || data.reason === null || isNaN(data.reason) || data.reason === "") {
+        errors.reason = 'This field is required';
+    } else {
+        if (data.reason === 1) {
+            if (data.reasonOther === undefined || data.reasonOther === null || data.reasonOther === "") {
+                errors.reasonOther = 'This field is required';
+            }
+        }
+    }
 
     return {
         errors,

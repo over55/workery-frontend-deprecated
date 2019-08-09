@@ -768,3 +768,33 @@ export const HOME_SUPPORT_CHOICES = [
         label: "No"
     }
 ];
+
+
+export const AWAY_LOG_REASON_CHOICES = [
+    {
+        id: 'awayLog-reason-2-choice',
+        selectName: "reason",
+        value: 2,
+        label: "Going on vacation"
+    },{
+        id: 'awayLog-reason-3-choice',
+        selectName: "reason",
+        value: 3,
+        label: "Personal reasons"
+    },{
+        id: 'awayLog-reason-2-choice',
+        selectName: "reason",
+        value: 4,
+        label: "Commercial insurance expired"
+    },{
+        id: 'awayLog-reason-2-choice',
+        selectName: "reason",
+        value: 5,
+        label: "Policy check expired"
+    },{
+        id: 'awayLog-reason-2-choice',
+        selectName: "reason",
+        value: 1,
+        label: "Other"
+    }
+];

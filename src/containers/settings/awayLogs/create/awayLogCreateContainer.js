@@ -22,6 +22,7 @@ class AwayLogCreateContainer extends Component {
             associateOption: null,
             startDate: null,
             reason: null,
+            reasonOther: "",
             untilFurtherNotice: null,
             errors: {},
             isLoading: false
@@ -128,7 +129,7 @@ class AwayLogCreateContainer extends Component {
      */
 
     render() {
-        const { associate, associateOption, startDate, reason, untilFurtherNotice, errors } = this.state;
+        const { associate, associateOption, startDate, reason, reasonOther, untilFurtherNotice, errors } = this.state;
         const associateOptions = getAssociateReactSelectOptions(this.props.associateList);
         return (
             <AwayLogCreateComponent
@@ -137,6 +138,7 @@ class AwayLogCreateContainer extends Component {
                 startDate={startDate}
                 onStartDateChange={this.onStartDateChange}
                 reason={reason}
+                reasonOther={reasonOther}
                 untilFurtherNotice={untilFurtherNotice}
                 errors={errors}
                 onTextChange={this.onTextChange}

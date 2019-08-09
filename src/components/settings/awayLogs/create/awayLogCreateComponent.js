@@ -6,13 +6,16 @@ import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAler
 import { BootstrapDatePicker } from "../../../bootstrap/bootstrapDatePicker";
 import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { AWAY_LOG_REASON_CHOICES } from '../../../../constants/api';
 
 
 class AwayLogCreateComponent extends Component {
     render() {
         const {
-            associate, associateOptions, startDate, reason, untilFurtherNotice, errors, onTextChange, onSelectChange, onStartDateChange, isLoading, onClick
+            associate, associateOptions, startDate, reason, reasonOther, untilFurtherNotice,
+            errors, onTextChange, onSelectChange, onStartDateChange, isLoading, onClick
         } = this.props;
+        const isOtherReasonSelected = reason === 1;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -60,6 +63,29 @@ class AwayLogCreateComponent extends Component {
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.startDate}
                             />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Reason (*)"
+                                name="reason"
+                                defaultOptionLabel="Please select a reason."
+                                options={AWAY_LOG_REASON_CHOICES}
+                                value={reason}
+                                error={errors.reason}
+                                onSelectChange={onSelectChange}
+                            />
+                            {isOtherReasonSelected &&
+                                <BootstrapInput
+                                    inputClassName="form-control form-control-lg"
+                                    borderColour="border-primary"
+                                    error={errors.reasonOther}
+                                    label="Reason Other (*)"
+                                    onChange={onTextChange}
+                                    value={reasonOther}
+                                    name="reasonOther"
+                                    type="text"
+                                />
+                            }
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
