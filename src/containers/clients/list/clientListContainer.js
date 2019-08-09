@@ -7,6 +7,7 @@ import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullClientList } from "../../../actions/clientActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
+
 class ClientListContainer extends Component {
     /**
      *  Initializer & Utility

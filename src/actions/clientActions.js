@@ -105,7 +105,7 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 //                                 CREATE                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function postClientDetail(postData, successCallback, failedCallback) {
+export function postClientDetail(postData, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -127,20 +127,24 @@ export function postClientDetail(postData, successCallback, failedCallback) {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 
-            let device = camelizeKeys(responseData);
+            let client = camelizeKeys(responseData);
 
             // Extra.
-            device['isAPIRequestRunning'] = false;
-            device['errors'] = {};
-
-            // Run our success callback function.
-            successCallback(device);
+            client['isAPIRequestRunning'] = false;
+            client['errors'] = {};
 
             // Update the global state of the application to store our
-            // user device for the application.
+            // user client for the application.
             store.dispatch(
-                setClientDetailSuccess(device)
+                setClientDetailSuccess(client)
             );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(client);
+            }
         }).catch( (exception) => {
             if (exception.response) {
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
@@ -163,8 +167,8 @@ export function postClientDetail(postData, successCallback, failedCallback) {
                 // DEVELOPERS NOTE:
                 // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
                 // OBJECT WE GOT FROM THE API.
-                if (failedCallback) {
-                    failedCallback(errors);
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
                 }
             }
 
@@ -179,7 +183,7 @@ export function postClientDetail(postData, successCallback, failedCallback) {
 //                                RETRIEVE                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullClientDetail(user, slug) {
+export function pullClientDetail(id, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -189,26 +193,33 @@ export function pullClientDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_CLIENT_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_CLIENT_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             // console.log(successResult); // For debugging purposes.
 
-            let profile = camelizeKeys(responseData);
+            let client = camelizeKeys(responseData);
 
             // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
+            client['isAPIRequestRunning'] = false;
+            client['errors'] = {};
 
-            console.log("pullClientDetail | Success:", profile); // For debugging purposes.
+            console.log("pullClientDetail | Success:", client); // For debugging purposes.
 
             // Update the global state of the application to store our
-            // user profile for the application.
+            // user client for the application.
             store.dispatch(
-                setClientDetailSuccess(profile)
+                setClientDetailSuccess(client)
             );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(client);
+            }
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
@@ -229,12 +240,12 @@ export function pullClientDetail(user, slug) {
                     })
                 );
 
-                // // DEVELOPERS NOTE:
-                // // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // // OBJECT WE GOT FROM THE API.
-                // if (failedCallback) {
-                //     failedCallback(errors);
-                // }
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => { // FINALLY
@@ -248,7 +259,7 @@ export function pullClientDetail(user, slug) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putClientDetail(user, data, successCallback, failedCallback) {
+export function putClientDetail(user, data, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -269,20 +280,24 @@ export function putClientDetail(user, data, successCallback, failedCallback) {
         customAxios.put(WORKERY_CLIENT_DETAIL_API_ENDPOINT+data.slug, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
-            let device = camelizeKeys(responseData);
+            let client = camelizeKeys(responseData);
 
             // Extra.
-            device['isAPIRequestRunning'] = false;
-            device['errors'] = {};
+            client['isAPIRequestRunning'] = false;
+            client['errors'] = {};
 
             // Update the global state of the application to store our
-            // user device for the application.
+            // user client for the application.
             store.dispatch(
-                setClientDetailSuccess(device)
+                setClientDetailSuccess(client)
             );
 
-            // Run our success callback function.
-            successCallback(device);
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(client);
+            }
 
         }).catch( (exception) => {
             if (exception.response) {
@@ -306,8 +321,8 @@ export function putClientDetail(user, data, successCallback, failedCallback) {
                 // DEVELOPERS NOTE:
                 // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
                 // OBJECT WE GOT FROM THE API.
-                if (failedCallback) {
-                    failedCallback(errors);
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
                 }
             }
 
@@ -363,3 +378,34 @@ export const setClientDetailFailure = clientDetail => ({
     type: CLIENT_DETAIL_FAILURE,
     payload: clientDetail,
 });
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//                                 UTILITY                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Utility function takes the API data and converts it to HTML dropdown
+ * options which will be consumed by the `react-select` library elements.
+ */
+export function getClientReactSelectOptions(clientList=[], selectName="client") {
+    const clientOptions = [];
+    const isNotProductionsEmpty = isEmpty(clientList) === false;
+    if (isNotProductionsEmpty) {
+        const results = clientList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < results.length; i++) {
+                let client = results[i];
+                clientOptions.push({
+                    selectName: selectName,
+                    value: client.id,
+                    label: client.text
+                });
+                // console.log(client);
+            }
+        }
+    }
+    return clientOptions;
+}

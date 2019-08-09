@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import ClientLiteRetrieveComponent from "../../../components/clients/retrieve/clientLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { pullClientDetail } from "../../../actions/clientActions";
 
 
 class ClientLiteRetrieveContainer extends Component {
@@ -14,12 +15,17 @@ class ClientLiteRetrieveContainer extends Component {
     constructor(props) {
         super(props);
 
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         // Update state.
         this.state = {
-            slug: slug,
+            id: id,
+            client: {}
         }
+
+        // Update functions.
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -27,32 +33,36 @@ class ClientLiteRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
-     componentDidMount() {
-         window.scrollTo(0, 0);  // Start the page at the top of the page.
-     }
+    componentDidMount() {
+        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullClientDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+    }
 
-     componentWillUnmount() {
-         // This code will fix the "ReactJS & Redux: Can't perform a React state
-         // update on an unmounted component" issue as explained in:
-         // https://stackoverflow.com/a/53829700
-         this.setState = (state,callback)=>{
-             return;
-         };
+    componentWillUnmount() {
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
 
-         // Clear any and all flash messages in our queue to be rendered.
-         this.props.clearFlashMessage();
-     }
+        // Clear any and all flash messages in our queue to be rendered.
+        this.props.clearFlashMessage();
+    }
 
     /**
      *  API callback functions
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | Fetched", response);
+        this.setState({
+            client: response
+        });
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         console.log(errors);
     }
 
@@ -68,16 +78,11 @@ class ClientLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const clientData = {
-            'slug': 'Argyle',
-            'number': 1,
-            'name': 'Argyle',
-            'absoluteUrl': '/client/argyle'
-        };
+        const { id, client } = this.state;
         return (
             <ClientLiteRetrieveComponent
-                slug={this.state.slug}
-                clientData={clientData}
+                id={id}
+                client={client}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -88,6 +93,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        clientDetail: store.clientDetailState,
     };
 }
 
@@ -95,7 +101,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullClientDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullClientDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 
