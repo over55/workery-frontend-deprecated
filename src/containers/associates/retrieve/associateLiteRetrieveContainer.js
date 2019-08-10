@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import AssociateLiteRetrieveComponent from "../../../components/associates/retrieve/associateLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { pullAssociateDetail } from "../../../actions/associateActions";
 
 
 class AssociateLiteRetrieveContainer extends Component {
@@ -14,14 +15,17 @@ class AssociateLiteRetrieveContainer extends Component {
     constructor(props) {
         super(props);
 
-        // Since we are using the ``react-routes-dom`` library then we
-        // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         // Update state.
         this.state = {
-            slug: slug,
+            id: id,
+            associate: {}
         }
+
+        // Update functions.
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -29,33 +33,34 @@ class AssociateLiteRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
-     componentDidMount() {
-         window.scrollTo(0, 0);  // Start the page at the top of the page.
-     }
+    componentDidMount() {
+        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullAssociateDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+    }
 
-     componentWillUnmount() {
-         // This code will fix the "ReactJS & Redux: Can't perform a React state
-         // update on an unmounted component" issue as explained in:
-         // https://stackoverflow.com/a/53829700
-         this.setState = (state,callback)=>{
-             return;
-         };
+    componentWillUnmount() {
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
 
-         // Clear any and all flash messages in our queue to be rendered.
-         this.props.clearFlashMessage();
-     }
+        // Clear any and all flash messages in our queue to be rendered.
+        this.props.clearFlashMessage();
+    }
 
     /**
      *  API callback functions
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | Fetched:", response);
     }
 
-    onFailedSubmissionCallback(errors) {
-        console.log(errors);
+    onFailureCallback(errors) {
+        console.log("onFailureCallback | errors:", errors);
     }
 
     /**
@@ -70,16 +75,12 @@ class AssociateLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const associateData = {
-            'slug': 'Argyle',
-            'number': 1,
-            'name': 'Argyle',
-            'absoluteUrl': '/associate/argyle'
-        };
+        const { id } = this.state;
+        const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
             <AssociateLiteRetrieveComponent
-                slug={this.state.slug}
-                associateData={associateData}
+                id={id}
+                associate={associate}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -90,6 +91,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        associateDetail: store.associateDetailState,
     };
 }
 
@@ -97,7 +99,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullAssociateDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullAssociateDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

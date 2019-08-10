@@ -179,7 +179,7 @@ export function postAssociateDetail(postData, successCallback, failedCallback) {
 //                                RETRIEVE                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullAssociateDetail(user, slug) {
+export function pullAssociateDetail(id, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -189,26 +189,33 @@ export function pullAssociateDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             // console.log(successResult); // For debugging purposes.
 
-            let profile = camelizeKeys(responseData);
+            let associate = camelizeKeys(responseData);
 
             // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
+            associate['isAPIRequestRunning'] = false;
+            associate['errors'] = {};
 
-            console.log("pullAssociateDetail | Success:", profile); // For debugging purposes.
+            console.log("pullAssociateDetail | Success:", associate); // For debugging purposes.
 
             // Update the global state of the application to store our
-            // user profile for the application.
+            // user associate for the application.
             store.dispatch(
-                setAssociateDetailSuccess(profile)
+                setAssociateDetailSuccess(associate)
             );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(associate);
+            }
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
@@ -229,12 +236,12 @@ export function pullAssociateDetail(user, slug) {
                     })
                 );
 
-                // // DEVELOPERS NOTE:
-                // // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // // OBJECT WE GOT FROM THE API.
-                // if (failedCallback) {
-                //     failedCallback(errors);
-                // }
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => { // FINALLY

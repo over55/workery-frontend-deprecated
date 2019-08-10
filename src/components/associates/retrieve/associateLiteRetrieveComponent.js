@@ -6,7 +6,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class AssociateLiteRetrieveComponent extends Component {
     render() {
-        const { slug, flashMessage } = this.props;
+        const { id, associate, flashMessage } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -15,17 +15,17 @@ export default class AssociateLiteRetrieveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associates</Link>
+                            <Link to={`/associates`}><i className="fas fa-user-circle"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-crown"></i>&nbsp;Argyle
+                            <i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-crown"></i>&nbsp;View Associate</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Associate</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -35,8 +35,18 @@ export default class AssociateLiteRetrieveComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/associate/${slug}/full`}>
+                            <Link to={`/associate/${id}/full`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
+                            </Link>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/associate/${id}/orders`}>
+                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/associate/${id}/comments`}>
+                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
                     </div>
@@ -49,20 +59,32 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                 <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" />
                             </div>
                             <div className="col-sm-7 px-4 py-3">
-                                <h3>Rodolfo Martinez</h3>
-                                <p className="text-muted">San Francisco, USA <i className="fas fa-map-marker-alt"></i></p>
-                                <p><i className="fas fa-envelope"></i> email@example.com</p>
-                                <p><i className="fas fa-phone-square"></i> (xxx) xxx-xxxx</p>
-                                <p className="m-0"><strong>Skills:</strong></p>
-                                <p>
-                                    <Link to="#" className="badge badge-info">Skill 1</Link>
-                                    <Link to="#" className="badge badge-info">Skill 2</Link>
-                                    <Link to="#" className="badge badge-info">Skill 3</Link>
-                                    <Link to="#" className="badge badge-dark">Skill 4</Link>
-                                    <Link to="#" className="badge badge-success">Html</Link>
-                                    <Link to="#" className="badge badge-primary">Developer</Link>
-                                    <Link to="#" className="badge badge-warning">Bootstrap</Link>
-                                </p>
+                                <h3>{associate && associate.fullName}</h3>
+                                {associate && associate.address &&
+                                    <p className="text-muted">
+                                        <a href={associate.addressUrl}>{associate.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
+                                    </p>
+                                }
+                                {associate && associate.email &&
+                                    <p>
+                                        <a href={`mailto:${associate.email}`}><i className="fas fa-envelope"></i>&nbsp;{associate.email}</a>
+                                    </p>
+                                }
+                                {associate && associate.telephone &&
+                                    <p>
+                                        <a href={`tel:${associate.e164Telephone}`}>
+                                            <i className="fas fa-phone-square"></i>&nbsp;{associate.telephone}
+                                        </a>
+                                    </p>
+                                }
+                                <p className="m-0"><strong>Tags:</strong></p>
+                                {associate &&
+                                    <p>
+                                        {associate.tags && associate.tags.map(
+                                            (tag) => <TagItem tag={tag} key={tag.id} />)
+                                        }
+                                    </p>
+                                }
                                 <div className="col-sm-12 p-0">
                                     <p className="m-0"><strong>Ratings:</strong></p>
                                     <div className="star-rating" data-rating="4.5">
@@ -82,4 +104,15 @@ export default class AssociateLiteRetrieveComponent extends Component {
             </div>
         );
     }
+}
+
+
+
+class TagItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
 }

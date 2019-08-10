@@ -45,6 +45,7 @@ export const WORKERY_VEHICLE_TYPE_DETAIL_API_ENDPOINT = '/vehicle_type/';
 export const WORKERY_PARTNER_LIST_API_ENDPOINT = '/partners';
 export const WORKERY_PARTNER_DETAIL_API_ENDPOINT = '/partner/';
 export const WORKERY_CLIENT_COMMENT_LIST_API_ENDPOINT = '/customer-comments';
+export const WORKERY_ASSOCIATE_COMMENT_LIST_API_ENDPOINT = '/associate-comments';
 
 
 // OLD - PLEASE DO SOMETHING WITH THESE.

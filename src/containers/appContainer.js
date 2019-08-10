@@ -50,7 +50,8 @@ import AssociateSearchContainer from "./associates/search/associateSearchContain
 import AssociateSearchResultContainer from "./associates/search/associateSearchResultContainer";
 import AssociateLiteRetrieveContainer from "./associates/retrieve/associateLiteRetrieveContainer";
 import AssociateFullRetrieveContainer from "./associates/retrieve/associateFullRetrieveContainer";
-import AssociateUpdateContainer from "./associates/update/associateUpdateContainer";
+import AssociateOrderListContainer from "./associates/retrieve/associateOrderListContainer";
+import AssociateCommentContainer from "./associates/retrieve/associateCommentContainer";
 import AssociateCreateStep1Container from "./associates/create/associateCreateStep1Container";
 import AssociateCreateStep2Container from "./associates/create/associateCreateStep2Container";
 import AssociateCreateStep3Container from "./associates/create/associateCreateStep3Container";
@@ -60,6 +61,7 @@ import AssociateCreateStep5Container from "./associates/create/associateCreateSt
 import AssociateCreateStep6Container from "./associates/create/associateCreateStep6Container";
 import AssociateCreateStep7Container from "./associates/create/associateCreateStep7Container";
 import AssociateCreateStep8Container from "./associates/create/associateCreateStep8Container";
+import AssociateUpdateContainer from "./associates/update/associateUpdateContainer";
 
 // Work Order
 import OrderListContainer from "./orders/list/orderListContainer";
@@ -237,6 +239,8 @@ class AppContainer extends React.Component {
                                 <Route path="/associates/search-results" exact component={requiresAuth(AssociateSearchResultContainer)} />
                                 <Route path="/associate/:id" exact component={requiresAuth(AssociateLiteRetrieveContainer)} />
                                 <Route path="/associate/:id/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
+                                <Route path="/associate/:id/orders" exact component={requiresAuth(AssociateOrderListContainer)} />
+                                <Route path="/associate/:id/comments" exact component={requiresAuth(AssociateCommentContainer)} />
                                 <Route path="/associate/:id/update" exact component={requiresAuth(AssociateUpdateContainer)} />
 
                                 { /* WORK ORDER */}

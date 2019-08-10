@@ -9,7 +9,8 @@ import {
     ASSOCIATE_LIST_SUCCESS, TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS,
     TAG_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS,
     SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
-    DEACTIVATED_CLIENT_LIST_SUCCESS, PARTNER_LIST_SUCCESS, CLIENT_COMMENT_LIST_REQUEST
+    DEACTIVATED_CLIENT_LIST_SUCCESS, PARTNER_LIST_SUCCESS, CLIENT_COMMENT_LIST_REQUEST,
+    ASSOCIATE_COMMENT_LIST_REQUEST
 } from "./constants/actionTypes";
 import { associateListReducer, associateDetailReducer } from "./reducers/associateReducers";
 import { awayLogListReducer, awayLogDetailReducer } from "./reducers/awayLogReducers";
@@ -32,6 +33,7 @@ import { taskListReducer, taskDetailReducer } from "./reducers/taskReducers";
 import financialListReducer from "./reducers/financialReducers";
 import { vehicleTypeListReducer, vehicleTypeDetailReducer } from "./reducers/vehicleTypeReducers";
 import { clientCommentListReducer } from "./reducers/clientCommentReducers";
+import { associateCommentListReducer } from "./reducers/associateCommentReducers";
 
 
 // Combine Reducers
@@ -57,6 +59,7 @@ const appReducer = combineReducers({
     financialListState: financialListReducer,
     vehicleTypeListState: vehicleTypeListReducer, vehicleTypeDetailState: vehicleTypeDetailReducer,
     clientCommentListState: clientCommentListReducer,
+    associateCommentListState: associateCommentListReducer,
 });
 
 
@@ -90,7 +93,7 @@ const localStorageMiddleware = ({ getState }) => {
             TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS,
             SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
             DEACTIVATED_CLIENT_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, TAG_LIST_SUCCESS, ASSOCIATE_LIST_SUCCESS,
-            CLIENT_COMMENT_LIST_REQUEST
+            CLIENT_COMMENT_LIST_REQUEST, ASSOCIATE_COMMENT_LIST_REQUEST
         ].includes(result.type)) {
             // console.log("De-hydrating store...");
             localStorage.setItem(APP_STATE, JSON.stringify(getState()))
