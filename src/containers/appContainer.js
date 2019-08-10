@@ -51,6 +51,7 @@ import AssociateSearchResultContainer from "./associates/search/associateSearchR
 import AssociateLiteRetrieveContainer from "./associates/retrieve/associateLiteRetrieveContainer";
 import AssociateFullRetrieveContainer from "./associates/retrieve/associateFullRetrieveContainer";
 import AssociateOrderListContainer from "./associates/retrieve/associateOrderListContainer";
+import AssociateActivitySheetListContainer from "./associates/retrieve/associateActivitySheetListContainer";
 import AssociateCommentContainer from "./associates/retrieve/associateCommentContainer";
 import AssociateCreateStep1Container from "./associates/create/associateCreateStep1Container";
 import AssociateCreateStep2Container from "./associates/create/associateCreateStep2Container";
@@ -241,6 +242,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
                                 <Route path="/associate/:id/orders" exact component={requiresAuth(AssociateOrderListContainer)} />
                                 <Route path="/associate/:id/comments" exact component={requiresAuth(AssociateCommentContainer)} />
+                                <Route path="/associate/:id/activity-sheets" exact component={requiresAuth(AssociateActivitySheetListContainer)} />
                                 <Route path="/associate/:id/update" exact component={requiresAuth(AssociateUpdateContainer)} />
 
                                 { /* WORK ORDER */}

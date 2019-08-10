@@ -46,6 +46,8 @@ export const WORKERY_PARTNER_LIST_API_ENDPOINT = '/partners';
 export const WORKERY_PARTNER_DETAIL_API_ENDPOINT = '/partner/';
 export const WORKERY_CLIENT_COMMENT_LIST_API_ENDPOINT = '/customer-comments';
 export const WORKERY_ASSOCIATE_COMMENT_LIST_API_ENDPOINT = '/associate-comments';
+export const WORKERY_ACTIVITY_SHEET_LIST_API_ENDPOINT = '/activity-sheets';
+export const WORKERY_ACTIVITY_SHEET_DETAIL_API_ENDPOINT = '/activity-sheet/';
 
 
 // OLD - PLEASE DO SOMETHING WITH THESE.

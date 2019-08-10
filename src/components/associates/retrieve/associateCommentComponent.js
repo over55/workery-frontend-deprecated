@@ -56,11 +56,16 @@ export default class AssociateCommentComponent extends Component {
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
+                            <Link to={`/associate/${id}/activity-sheets`}>
+                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
                             <Link to={`/associate/${id}/orders`}>
                                 <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey active">
+                        <div id="step-5" className="st-grey active">
                             <strong>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </strong>

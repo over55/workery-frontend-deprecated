@@ -25,7 +25,7 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            orders,
+            activitySheets,
 
             // Everything else.
             onTableChange, isLoading
@@ -86,7 +86,7 @@ class RemoteListComponent extends Component {
 
         const defaultSorted = [{
             dataField: 'id',
-            order: 'desc'
+            activitySheet: 'desc'
         }];
 
         const paginationOption = {
@@ -120,12 +120,12 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ orders }
+                data={ activitySheets }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no orders at the moment"
+                noDataIndication="There are no activity sheets at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -170,27 +170,27 @@ function statusFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.id}`}>
+        <Link to={`/activitySheet/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
 }
 
 
-export default class AssociateOrderListComponent extends Component {
+export default class AssociateActivitySheetListComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            orderList,
+            activitySheetList,
 
             // Everything else...
             flashMessage, onTableChange, isLoading, id, associate
         } = this.props;
 
-        const orders = orderList.results ? orderList.results : [];
+        const activitySheets = (activitySheetList && activitySheetList.results) ? activitySheetList.results : [];
 
         return (
             <div>
@@ -211,7 +211,7 @@ export default class AssociateOrderListComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;ActivitySheets</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -225,17 +225,17 @@ export default class AssociateOrderListComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to={`/associate/${id}/activity-sheets`}>
-                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey active">
+                        <div id="step-3" className="st-grey active">
                             <strong>
-                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
                             </strong>
                         </div>
-                        <div id="step-5" className="st-grey">
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/associate/${id}/orders`}>
+                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
                             <Link to={`/associate/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
@@ -252,7 +252,7 @@ export default class AssociateOrderListComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            orders={orders}
+                            activitySheets={activitySheets}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
