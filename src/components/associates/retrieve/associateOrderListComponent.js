@@ -211,7 +211,7 @@ export default class AssociateOrderListComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Associate</h1>
 
                 <div className="row">
                     <div className="step-navigation">

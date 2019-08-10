@@ -36,7 +36,8 @@ class RemoteListComponent extends Component {
         const columns = [{
             dataField: 'job',
             text: 'Job #',
-            sort: false
+            sort: false,
+            formatter: jobFormatter,
         },{
             dataField: 'state',
             text: 'Has Accepted?',
@@ -106,6 +107,16 @@ class RemoteListComponent extends Component {
 }
 
 
+function jobFormatter(cell, row){
+    if (row.job === null || row.job === undefined || row.job === "None") { return "-"; }
+    return (
+        <Link to={`/order/${row.job}`} target="_blank">
+            {row.job}&nbsp;<i className="fas fa-external-link-alt"></i>
+        </Link>
+    )
+}
+
+
 function iconFormatter(cell, row){
     switch(row.typeOf) {
         case 2:
@@ -171,7 +182,7 @@ export default class AssociateActivitySheetListComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;ActivitySheets</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Associate</h1>
 
                 <div className="row">
                     <div className="step-navigation">
