@@ -8,6 +8,8 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
@@ -25,68 +27,34 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            activitySheets,
+            activitySheetItems,
 
             // Everything else.
             onTableChange, isLoading
         } = this.props;
 
-        const selectOptions = {
-            "new": 'New',
-            "declined": 'Declined',
-            "pending": 'Pending',
-            "cancelled": 'Cancelled',
-            "ongoing": 'Ongoing',
-            "in_progress": 'In-progress',
-            "completed_and_unpaid": 'Completed and Unpaid',
-            "completed_and_paid": 'Completed and Paid',
-            "archived": 'Archived',
-        };
-
         const columns = [{
-            dataField: 'typeOf',
-            text: '',
-            sort: false,
-            formatter: iconFormatter
-        },{
-            dataField: 'id',
+            dataField: 'job',
             text: 'Job #',
-            sort: true
-        },{
-            dataField: 'associateName',
-            text: 'Associate',
-            sort: true,
-            formatter: associateNameFormatter,
-        },{
-            dataField: 'assignmentDate',
-            text: 'Assign Date',
-            sort: true
-        },{
-            dataField: 'startDate',
-            text: 'Start Date',
-            sort: true
-        },{
-            dataField: 'completionDate',
-            text: 'Completion Date',
-            sort: true
+            sort: false
         },{
             dataField: 'state',
-            text: 'Status',
-            sort: false,
-            filter: selectFilter({
-                options: selectOptions
-            }),
-            formatter: statusFormatter
+            text: 'Has Accepted?',
+            sort: false
         },{
-            dataField: 'slug',
-            text: 'Details',
+            dataField: 'createdAt',
+            text: 'Created At',
             sort: false,
-            formatter: detailLinkFormatter
+            formatter: createdAtFormatter,
+        },{
+            dataField: 'comment',
+            text: 'Reason',
+            sort: false
         }];
 
         const defaultSorted = [{
             dataField: 'id',
-            activitySheet: 'desc'
+            order: 'desc'
         }];
 
         const paginationOption = {
@@ -120,7 +88,7 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ activitySheets }
+                data={ activitySheetItems }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
@@ -167,13 +135,8 @@ function statusFormatter(cell, row){
     return row.prettyState;
 }
 
-
-function detailLinkFormatter(cell, row){
-    return (
-        <Link to={`/activitySheet/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
-        </Link>
-    )
+function createdAtFormatter(cell, row){
+    return <Moment format="YYYY/MM/DD hh:mm:ss a">{row.createdAt}</Moment>;
 }
 
 
@@ -184,14 +147,11 @@ export default class AssociateActivitySheetListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            activitySheetList,
+            activitySheetItems,
 
             // Everything else...
             flashMessage, onTableChange, isLoading, id, associate
         } = this.props;
-
-        const activitySheets = (activitySheetList && activitySheetList.results) ? activitySheetList.results : [];
-
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -252,7 +212,7 @@ export default class AssociateActivitySheetListComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            activitySheets={activitySheets}
+                            activitySheetItems={activitySheetItems}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />

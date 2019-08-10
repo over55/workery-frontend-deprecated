@@ -163,13 +163,14 @@ class AssociateActivitySheetListContainer extends Component {
 
     render() {
         const { page, sizePerPage, totalSize, isLoading, id } = this.state;
-        const associate = this.props.associateDetail ? this.props.associateDetail : [];
+        const associate = this.props.associateDetail ? this.props.associateDetail : {};
+        const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
         return (
             <ActivitySheetListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-                activitySheetList={this.props.activitySheetList}
+                activitySheetItems={activitySheetItems}
                 onTableChange={this.onTableChange}
                 id={id}
                 associate={associate}
@@ -184,7 +185,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        activitySheetList: store.activitySheetListState,
+        activitySheetItemList: store.activitySheetItemListState,
         associateDetail: store.associateDetailState,
     };
 }
