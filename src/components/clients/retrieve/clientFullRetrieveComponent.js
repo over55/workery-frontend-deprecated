@@ -246,7 +246,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                                 </li>
                                             }
                                             <li>
-                                                <Link to="#">
+                                                <Link to={`/client/${id}/delete`}>
                                                     Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>

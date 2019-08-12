@@ -299,7 +299,7 @@ export function validateResidentialUpgradeInput(data) {
     }
     if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "") {
         errors.organizationTypeOf = 'This field is required.';
-    }    
+    }
 
     // --- ADDRESS --- //
 
@@ -331,6 +331,19 @@ export function validateActivationInput(data) {
 
     if (data.comment === undefined || data.comment === null || data.comment === "") {
         errors.comment = 'This field is required.';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+export function validateDeleteInput(data) {
+    let errors = {};
+
+    if (data.clientId === undefined || data.clientId === null || data.clientId === "") {
+        errors.clientId = 'This field is required.';
     }
 
     return {

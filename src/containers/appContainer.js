@@ -46,6 +46,7 @@ import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
 import ClientActivateOperationContainer from "./clients/operations/clientActivateOperationContainer";
 import ClientDeactivateOperationContainer from "./clients/operations/clientDeactivateOperationContainer";
 import ClientRezUpgradeOperationContainer from "./clients/operations/clientRezUpgradeOperationContainer";
+import ClientPermanentDeleteOperationContainer from "./clients/operations/clientPermanentDeleteOperationContainer";
 
 // Associate
 import AssociateListContainer from "./associates/list/associateListContainer";
@@ -229,7 +230,9 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id/update" exact component={requiresAuth(ClientUpdateContainer)} />
                                 <Route path="/client/:id/activation" exact component={requiresAuth(ClientActivateOperationContainer)} />
                                 <Route path="/client/:id/deactivation" exact component={requiresAuth(ClientDeactivateOperationContainer)} />
+                                <Route path="/client/:id/delete" exact component={requiresAuth(ClientPermanentDeleteOperationContainer)} />
                                 <Route path="/client/:id/rez-upgrade" exact component={requiresAuth(ClientRezUpgradeOperationContainer)} />
+
 
                                 { /* ASSOCIATES */ }
                                 <Route path="/associates/add/step-1" exact component={requiresAuth(AssociateCreateStep1Container)} />
