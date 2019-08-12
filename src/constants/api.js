@@ -849,3 +849,23 @@ export const DEACTIVATION_REASON_CHOICES = [
         label: "Other"
     }
 ];
+
+
+export const ORGANIZATION_TYPE_OF_CHOICES = [
+    {
+        id: 'organizationTypeOf-t-choice',
+        selectName: "organizationTypeOf",
+        value: 2,
+        label: "Private"
+    },{
+        id: 'organizationTypeOf-f-choice',
+        selectName: "organizationTypeOf",
+        value: 3,
+        label: "Non-profit"
+    },{
+        id: 'organizationTypeOf-f-choice',
+        selectName: "organizationTypeOf",
+        value: 4,
+        label: "Government"
+    }
+];

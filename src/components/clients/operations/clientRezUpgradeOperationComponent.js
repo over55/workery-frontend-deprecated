@@ -9,13 +9,13 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
 import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
+import { ORGANIZATION_TYPE_OF_CHOICES } from "../../../constants/api";
 
 
 class ClientRezUpgradeOperationComponent extends Component {
     render() {
         const {
-            companyName, country, region, locality, postalCode, streetAddress,
+            companyName, organizationTypeOf, typeOf, country, region, locality, postalCode, streetAddress,
             errors,
             onTextChange,
             onSelectChange,
@@ -67,6 +67,17 @@ class ClientRezUpgradeOperationComponent extends Component {
                                 value={companyName}
                                 name="companyName"
                                 type="text"
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Type (*)"
+                                name="organizationTypeOf"
+                                defaultOptionLabel="Please select the type."
+                                options={ORGANIZATION_TYPE_OF_CHOICES}
+                                value={organizationTypeOf}
+                                error={errors.organizationTypeOf}
+                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapCountrySelect

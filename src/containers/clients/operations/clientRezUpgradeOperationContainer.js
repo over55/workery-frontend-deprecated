@@ -24,6 +24,7 @@ class ClientRezUpgradeOperationContainer extends Component {
         super(props);
         this.state = {
             companyName: "",
+            organizationTypeOf: "",
             country: "",
             region: "",
             locality: "",
@@ -100,7 +101,7 @@ class ClientRezUpgradeOperationContainer extends Component {
 
     onSuccessCallback(response) {
         console.log("onSuccessCallback | Fetched:", response);
-        this.props.setFlashMessage("success", "Client has been successfully upgraded.");
+        this.props.setFlashMessage("success", "Residential client has been successfully upgraded to business client.");
         this.props.history.push("/client/"+this.props.clientDetail.id+"/full");
     }
 
@@ -135,9 +136,6 @@ class ClientRezUpgradeOperationContainer extends Component {
         this.setState(
             { [option.selectName]: option.value, [optionKey]: option, },
             ()=>{
-                localStorage.setItem('workery-create-client-biz-'+[option.selectName].toString(), option.value);
-                localStorage.setItem('workery-create-client-biz-'+[option.selectName].toString()+"Label", option.label);
-                localStorageSetObjectOrArrayItem('workery-create-client-biz-'+optionKey, option);
                 console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
             }
         );
@@ -219,12 +217,13 @@ class ClientRezUpgradeOperationContainer extends Component {
 
     render() {
         const {
-            companyName, country, region, locality, postalCode, streetAddress,
+            companyName, organizationTypeOf, country, region, locality, postalCode, streetAddress,
             errors
         } = this.state;
         return (
             <ClientRezUpgradeOperationComponent
                 companyName={companyName}
+                organizationTypeOf={organizationTypeOf}
                 country={country}
                 region={region}
                 locality={locality}

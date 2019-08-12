@@ -297,6 +297,9 @@ export function validateResidentialUpgradeInput(data) {
     if (data.companyName === undefined || data.companyName === null || data.companyName === "") {
         errors.companyName = 'This field is required.';
     }
+    if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "") {
+        errors.organizationTypeOf = 'This field is required.';
+    }    
 
     // --- ADDRESS --- //
 

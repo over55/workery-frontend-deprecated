@@ -7,13 +7,13 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
+import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, ORGANIZATION_TYPE_OF_CHOICES } from "../../../constants/api";
 
 
 class ClientCreateStep4BizComponent extends Component {
     render() {
         const {
-            companyName, contactFirstName, contactLastName,
+            companyName, organizationTypeOf, contactFirstName, contactLastName,
             primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
             secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors,
             isOkToEmail, isOkToText,
@@ -92,6 +92,17 @@ class ClientCreateStep4BizComponent extends Component {
                                 value={companyName}
                                 name="companyName"
                                 type="text"
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Type (*)"
+                                name="organizationTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={ORGANIZATION_TYPE_OF_CHOICES}
+                                value={organizationTypeOf}
+                                error={errors.organizationTypeOf}
+                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapInput
