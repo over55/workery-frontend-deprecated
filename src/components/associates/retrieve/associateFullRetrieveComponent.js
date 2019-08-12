@@ -91,12 +91,20 @@ export default class AssociateFullRetrieveComponent extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-user-circle"></i>&nbsp;Identification
+                                        <i className="fas fa-id-card"></i>&nbsp;Identification
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{associate.fullName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill sets</th>
+                                    <td>
+                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </td>
                                 </tr>
 
 
@@ -151,6 +159,74 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
 
 
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-user-circle"></i>&nbsp;Account
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Insurance Requirement(s)</th>
+                                    <td>
+                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Hourly salary desired</th>
+                                    <td>{associate.hourlySalaryDesired}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Limit Special</th>
+                                    <td>{associate.limitSpecial}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Member Dues Expiry</th>
+                                    <td>{associate.duesDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Commercial insurance expiry date</th>
+                                    <td>{associate.commercialInsuranceExpiryDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Auto Insurance Expiry Date</th>
+                                    <td>{associate.autoInsuranceExpiryDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">WSIB #</th>
+                                    <td>{associate.wsibNumber}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">WSIB Insurance Date</th>
+                                    <td>{associate.wsibInsuranceDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Police check date</th>
+                                    <td>{associate.policeCheck}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">HST #</th>
+                                    <td>{associate.taxId}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Drivers license class(es)</th>
+                                    <td>{associate.driversLicenseClass}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Vehicle(s)</th>
+                                    <td>TODO
+                                    {/*
+                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                        */}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Account Balance</th>
+                                    <td>{associate.balanceOwingAmount}</td>
+                                </tr>
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
@@ -275,6 +351,16 @@ class TagItem extends Component {
         const { label, value } = this.props.tag;
         return (
             <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
+}
+
+
+class SkillSetItem extends Component {
+    render() {
+        const { subCategory, value } = this.props.skillSet;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
         );
     };
 }
