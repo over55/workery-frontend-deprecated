@@ -7,17 +7,21 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
+import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
 import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
 
 
 class ClientRezUpgradeOperationComponent extends Component {
     render() {
         const {
-            companyName, contactFirstName, contactLastName,
-            primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
-            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors,
-            isOkToEmail, isOkToText,
-            onTextChange, onSelectChange, onRadioChange, isLoading, onClick, client
+            companyName, country, region, locality, postalCode, streetAddress,
+            errors,
+            onTextChange,
+            onSelectChange,
+            onBillingCountryChange,
+            onBillingRegionChange,
+            isLoading, onClick, client
         } = this.props;
         return (
             <main id="main" role="main">
@@ -52,6 +56,8 @@ class ClientRezUpgradeOperationComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
+                            <h4><i className="fas fa-building"></i>&nbsp;Company Information</h4>
+
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
@@ -63,108 +69,60 @@ class ClientRezUpgradeOperationComponent extends Component {
                                 type="text"
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                            <BootstrapCountrySelect
+                                inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.contactFirstName}
-                                label="Contact First Name (*)"
-                                onChange={onTextChange}
-                                value={contactFirstName}
-                                name="contactFirstName"
-                                type="text"
+                                error={errors.country}
+                                label="Country (*)"
+                                value={country}
+                                onChange={onBillingCountryChange}
+                                priorityOptions={["CA", "US", "MX"]}
+                                name="country"
                             />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                            <BootstrapRegionSelect
+                                inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.contactLastName}
-                                label="Contact Last Name (*)"
-                                onChange={onTextChange}
-                                value={contactLastName}
-                                name="contactLastName"
-                                type="text"
-                            />
-
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.primaryPhone}
-                                label="Primary Phone (*)"
-                                onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Primary Telephone type (*)"
-                                name="primaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={primaryPhoneTypeOfOptions}
-                                value={primaryPhoneTypeOf}
-                                error={errors.primaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
-                            />
-
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                error={errors.secondaryPhone}
-                                label="Secondary Phone"
-                                onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-success"
-                                label="Secondary Telephone type"
-                                name="secondaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={secondaryPhoneTypeOfOptions}
-                                value={secondaryPhoneTypeOf}
-                                error={errors.secondaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
+                                error={errors.region}
+                                label="Province / state (*)"
+                                country={country}
+                                value={region}
+                                onChange={onBillingRegionChange}
+                                name="region"
                             />
 
                             <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                                inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.email}
-                                label="Email (*)"
+                                error={errors.locality}
+                                label="City (*)"
                                 onChange={onTextChange}
-                                value={email}
-                                name="email"
+                                value={locality}
+                                name="locality"
                                 type="text"
                             />
 
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
+                            <BootstrapInput
+                                inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.isOkToEmail}
-                                label="Ok to E-Mail? (*)"
-                                name="isOkToEmail"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToEmail}
-                                options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting "yes" will result in client getting emails from our system.'
+                                error={errors.streetAddress}
+                                label="Street address (*)"
+                                onChange={onTextChange}
+                                value={streetAddress}
+                                name="streetAddress"
+                                type="text"
                             />
 
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
+                            <BootstrapInput
+                                inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.isOkToText}
-                                label="Ok to Text? (*)"
-                                name="isOkToText"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToText}
-                                options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting "yes" will result in client getting text-messages on their phone from our system.'
+                                error={errors.postalCode}
+                                label="Postal / zip (*)"
+                                onChange={onTextChange}
+                                value={postalCode}
+                                name="postalCode"
+                                type="text"
                             />
+
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>

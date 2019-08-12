@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import ClientRezUpgradeOperationComponent from "../../../components/clients/operations/clientRezUpgradeOperationComponent";
-import { validateStep4BizCreateInput } from "../../../validators/clientValidator";
+import { validateResidentialUpgradeInput } from "../../../validators/clientValidator";
 import {
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
@@ -24,15 +24,11 @@ class ClientRezUpgradeOperationContainer extends Component {
         super(props);
         this.state = {
             companyName: "",
-            contactFirstName: "",
-            contactLastName: "",
-            primaryPhone: "",
-            primaryPhoneTypeOf: "",
-            secondaryPhone: "",
-            secondaryPhoneTypeOf: "",
-            email: "",
-            isOkToEmail: "",
-            isOkToText: "",
+            country: "",
+            region: "",
+            locality: "",
+            postalCode: "",
+            streetAddress: "",
             errors: {},
             isLoading: false,
             client: {},
@@ -41,6 +37,8 @@ class ClientRezUpgradeOperationContainer extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
+        this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
+        this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
@@ -58,13 +56,13 @@ class ClientRezUpgradeOperationContainer extends Component {
         postData.customer = this.props.clientDetail.id;
         postData.organizationName = this.state.companyName;
         // 'organization_type_of',
-        // postData.organizationAddressCountry = this.state.
-        // postData.organizationAddressLocality = this.state.
-        // postData.organizationAddressRegion = this.state
-        // postData.organizationPostOfficeBoxNumber = this.state.
-        // postData.organizationPostalCode = this.state.
-        // postData.organizationStreetAddress = this.state.
-        // postData.organizationStreetAddressExtra = this.state.
+        postData.organizationAddressCountry = this.state.country;
+        postData.organizationAddressLocality = this.state.locality;
+        postData.organizationAddressRegion = this.state.region;
+        postData.organizationPostOfficeBoxNumber = "";
+        postData.organizationPostalCode = this.state.postalCode;
+        postData.organizationStreetAddress = this.state.streetAddress;
+        postData.organizationStreetAddressExtra = "";
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -171,12 +169,30 @@ class ClientRezUpgradeOperationContainer extends Component {
         });
     }
 
+    onBillingCountryChange(value) {
+        // Update state.
+        if (value === null || value === undefined || value === '') {
+            this.setState({ country: null, region: null })
+        } else {
+            this.setState({ country: value, region: null })
+        }
+
+        // Update persistent storage.
+        localStorage.setItem('workery-create-client-country', value);
+        localStorage.setItem('workery-create-client-region', null);
+    }
+
+    onBillingRegionChange(value) {
+        this.setState({ region: value }); // Update state.
+        localStorage.setItem('workery-create-client-region', value); // Update persistent storage.
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateStep4BizCreateInput(this.state);
+        const { errors, isValid } = validateResidentialUpgradeInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -203,38 +219,25 @@ class ClientRezUpgradeOperationContainer extends Component {
 
     render() {
         const {
-            companyName,
-            contactFirstName,
-            contactLastName,
-            primaryPhone,
-            primaryPhoneTypeOf,
-            secondaryPhone,
-            secondaryPhoneTypeOf,
-            email,
-            isOkToText,
-            isOkToEmail,
+            companyName, country, region, locality, postalCode, streetAddress,
             errors
         } = this.state;
         return (
             <ClientRezUpgradeOperationComponent
                 companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
-                primaryPhone={primaryPhone}
-                primaryPhoneTypeOf={primaryPhoneTypeOf}
-                primaryPhoneTypeOfOptions={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                secondaryPhone={secondaryPhone}
-                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
-                secondaryPhoneTypeOfOptions={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
+                country={country}
+                region={region}
+                locality={locality}
+                postalCode={postalCode}
+                streetAddress={streetAddress}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
                 client={this.props.clientDetail}
+                onBillingCountryChange={this.onBillingCountryChange}
+                onBillingRegionChange={this.onBillingRegionChange}
             />
         );
     }
