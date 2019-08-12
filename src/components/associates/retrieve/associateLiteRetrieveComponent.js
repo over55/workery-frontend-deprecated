@@ -82,6 +82,14 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                         </a>
                                     </p>
                                 }
+                                <p className="m-0"><strong>Skill sets:</strong></p>
+                                {associate &&
+                                    <p>
+                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </p>
+                                }
                                 <p className="m-0"><strong>Tags:</strong></p>
                                 {associate &&
                                     <p>
@@ -100,6 +108,26 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                         <span className="far fa-star" data-rating="5"></span>
                                     </div>
                                 </div>
+
+                                <p class="m-0"><strong>Notes:</strong></p>
+                                <p class="mb-2">
+                                    <ul>
+                                    {associate.commercialInsuranceExpiryDate &&
+                                        <li>Commercial Insurance Expiry: {associate.commercialInsuranceExpiryDate}</li>
+                                    }
+                                    {associate.wsibNumber &&
+                                        <li>WSIB # {associate.wsibNumber}</li>
+                                    }
+                                    {associate.wsibInsuranceDate &&
+                                        <li>WSIB Expiry: {associate.wsibInsuranceDate}</li>
+                                    }
+                                    {associate.latestCompletedAndPaidOrder.paidAt &&
+                                        <li>
+                                        Last service fee paid on {associate.latestCompletedAndPaidOrder.paidAt} in work order #<Link to={`/order/${associate.latestCompletedAndPaidOrder.id}`}>{associate.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
+                                        </li>
+                                    }
+                                    </ul>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -118,6 +146,16 @@ class TagItem extends Component {
         const { label, value } = this.props.tag;
         return (
             <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
+}
+
+
+class SkillSetItem extends Component {
+    render() {
+        const { subCategory, value } = this.props.skillSet;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
         );
     };
 }
