@@ -14,7 +14,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class ClientFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, client, flashMessage, errors } = this.props;
+        const { id, client, flashMessage, errors, onClientClick } = this.props;
         const { typeOf } = client;
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
         const isActiveState = client.state === "active";
@@ -223,7 +223,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to="#">
+                                                <Link onClick={onClientClick}>
                                                     Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>

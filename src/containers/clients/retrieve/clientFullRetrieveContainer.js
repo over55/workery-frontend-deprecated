@@ -26,6 +26,7 @@ class ClientFullRetrieveContainer extends Component {
         // Update functions.
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onClientClick = this.onClientClick.bind(this);
     }
 
     /**
@@ -68,6 +69,14 @@ class ClientFullRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
+    onClientClick(e) {
+        e.preventDefault();
+        localStorage.setItem("workery-create-order-clientId", this.props.clientDetail.id);
+        localStorage.setItem("workery-create-order-clientGivenName", this.props.clientDetail.givenName);
+        localStorage.setItem("workery-create-order-clientLastName", this.props.clientDetail.lastName);
+        this.props.history.push("/orders/add/step-3");
+    }
+
 
     /**
      *  Main render function
@@ -82,6 +91,7 @@ class ClientFullRetrieveContainer extends Component {
                 id={id}
                 client={client}
                 flashMessage={this.props.flashMessage}
+                onClientClick={this.onClientClick}
             />
         );
     }
