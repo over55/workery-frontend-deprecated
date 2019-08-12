@@ -17,6 +17,7 @@ export default class ClientFullRetrieveComponent extends Component {
         const { id, client, flashMessage, errors } = this.props;
         const { typeOf } = client;
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
+        const isActiveState = client.state === "active";
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -226,9 +227,15 @@ export default class ClientFullRetrieveComponent extends Component {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`/client/${id}/deactivation`}>
-                                                    Deactivate Client&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
+                                                {isActiveState
+                                                    ?<Link to={`/client/${id}/deactivation`}>
+                                                        Deactivate Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                    :<Link to={`/client/${id}/activation`}>
+                                                        Activate Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                }
+
                                             </li>
                                             <li>
                                                 <Link to="#">

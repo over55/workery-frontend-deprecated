@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientDeactivateOperationComponent from "../../../components/clients/operations/clientDeactivateOperationComponent";
+import ClientActivateOperationComponent from "../../../components/clients/operations/clientActivateOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { postClientDeactivationDetail } from "../../../actions/clientActions";
-import { validateDeactivationInput } from "../../../validators/clientValidator";
+import { validateActivationInput } from "../../../validators/clientValidator";
 
 
-class ClientDeactivateOperationContainer extends Component {
+class ClientActivateOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -47,9 +47,9 @@ class ClientDeactivateOperationContainer extends Component {
 
         // (1) Customer
         postData.customer = this.props.clientDetail.id;
-        postData.state = "inactive";
-        postData.deactivationReason = this.state.reason;
-        postData.deactivationReasonOther = this.state.reasonOther;
+        postData.state = "active";
+        postData.deactivationReason = 0; // NOT_SPECIFIED
+        postData.deactivationReasonOther = ""
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -82,8 +82,8 @@ class ClientDeactivateOperationContainer extends Component {
 
     onSuccessCallback(response) {
         console.log("onSuccessCallback | Fetched:", response);
-        this.props.setFlashMessage("success", "Client has been successfully deactivated.");
-        this.props.history.push("/client/"+this.props.clientDetail.id+"/full");
+        this.props.setFlashMessage("success", "Client has been successfully activated.");
+        this.props.history.push("/clients");
     }
 
     onFailureCallback(errors) {
@@ -117,7 +117,7 @@ class ClientDeactivateOperationContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateDeactivationInput(this.state);
+        const { errors, isValid } = validateActivationInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -154,7 +154,7 @@ class ClientDeactivateOperationContainer extends Component {
         const { id, errors, isLoading, reason, reasonOther } = this.state;
         const client = this.props.clientDetail ? this.props.clientDetail : [];
         return (
-            <ClientDeactivateOperationComponent
+            <ClientActivateOperationComponent
                 id={id}
                 errors={errors}
                 isLoading={isLoading}
@@ -194,4 +194,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientDeactivateOperationContainer);
+)(ClientActivateOperationContainer);
