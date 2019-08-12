@@ -18,6 +18,7 @@ export default class ClientFullRetrieveComponent extends Component {
         const { typeOf } = client;
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
         const isActiveState = client.state === "active";
+        const isRezClient = typeOf === 2;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -237,11 +238,13 @@ export default class ClientFullRetrieveComponent extends Component {
                                                 }
 
                                             </li>
-                                            <li>
-                                                <Link to="#">
-                                                    Upgrade Client&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
+                                            {isRezClient &&
+                                                <li>
+                                                    <Link to={`/client/${id}/rez-upgrade`}>
+                                                        Upgrade Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
                                             <li>
                                                 <Link to="#">
                                                     Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
