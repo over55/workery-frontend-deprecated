@@ -6,7 +6,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class OrderLiteRetrieveComponent extends Component {
     render() {
-        const { slug, flashMessage } = this.props;
+        const { id, flashMessage } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -35,7 +35,7 @@ export default class OrderLiteRetrieveComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/order/${slug}/full`}>
+                            <Link to={`/order/${id}/full`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>

@@ -105,7 +105,7 @@ export function pullOrderList(page=1, sizePerPage=10, filtersMap=new Map(), onSu
 //                                 CREATE                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function postOrderDetail(postData, successCallback, failedCallback) {
+export function postOrderDetail(postData, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -133,14 +133,18 @@ export function postOrderDetail(postData, successCallback, failedCallback) {
             device['isAPIRequestRunning'] = false;
             device['errors'] = {};
 
-            // Run our success callback function.
-            successCallback(device);
-
             // Update the global state of the application to store our
             // user device for the application.
             store.dispatch(
                 setOrderDetailSuccess(device)
             );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(device);
+            }
         }).catch( (exception) => {
             if (exception.response) {
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
@@ -163,8 +167,8 @@ export function postOrderDetail(postData, successCallback, failedCallback) {
                 // DEVELOPERS NOTE:
                 // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
                 // OBJECT WE GOT FROM THE API.
-                if (failedCallback) {
-                    failedCallback(errors);
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
                 }
             }
 
@@ -179,7 +183,7 @@ export function postOrderDetail(postData, successCallback, failedCallback) {
 //                                RETRIEVE                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullOrderDetail(user, slug) {
+export function pullOrderDetail(id, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -189,7 +193,7 @@ export function pullOrderDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ORDER_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_ORDER_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
@@ -229,12 +233,12 @@ export function pullOrderDetail(user, slug) {
                     })
                 );
 
-                // // DEVELOPERS NOTE:
-                // // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // // OBJECT WE GOT FROM THE API.
-                // if (failedCallback) {
-                //     failedCallback(errors);
-                // }
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => { // FINALLY
@@ -248,7 +252,7 @@ export function pullOrderDetail(user, slug) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putOrderDetail(user, data, successCallback, failedCallback) {
+export function putOrderDetail(user, data, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -282,7 +286,7 @@ export function putOrderDetail(user, data, successCallback, failedCallback) {
             );
 
             // Run our success callback function.
-            successCallback(device);
+            onSuccessCallback(device);
 
         }).catch( (exception) => {
             if (exception.response) {
@@ -306,8 +310,8 @@ export function putOrderDetail(user, data, successCallback, failedCallback) {
                 // DEVELOPERS NOTE:
                 // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
                 // OBJECT WE GOT FROM THE API.
-                if (failedCallback) {
-                    failedCallback(errors);
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
                 }
             }
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import OrderLiteRetrieveComponent from "../../../components/orders/retrieve/orderLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { pullOrderDetail } from "../../../actions/orderActions";
 
 
 class OrderLiteRetrieveContainer extends Component {
@@ -14,12 +15,17 @@ class OrderLiteRetrieveContainer extends Component {
     constructor(props) {
         super(props);
 
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         // Update state.
         this.state = {
-            slug: slug,
+            id: id,
+            order: {}
         }
+
+        // Update functions.
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -29,6 +35,7 @@ class OrderLiteRetrieveContainer extends Component {
 
      componentDidMount() {
          window.scrollTo(0, 0);  // Start the page at the top of the page.
+         this.props.pullOrderDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
      }
 
      componentWillUnmount() {
@@ -48,12 +55,12 @@ class OrderLiteRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | Fetched:", response);
     }
 
-    onFailedSubmissionCallback(errors) {
-        console.log(errors);
+    onFailureCallback(errors) {
+        console.log("onFailureCallback | errors:", errors);
     }
 
     /**
@@ -68,16 +75,11 @@ class OrderLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const orderData = {
-            'slug': 'Argyle',
-            'number': 1,
-            'name': 'Argyle',
-            'absoluteUrl': '/order/argyle'
-        };
+        const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
             <OrderLiteRetrieveComponent
-                slug={this.state.slug}
-                orderData={orderData}
+                id={this.state.id}
+                order={order}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -88,6 +90,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        orderDetail: store.orderDetail,
     };
 }
 
@@ -95,7 +98,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 
