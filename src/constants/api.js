@@ -15,6 +15,7 @@ export const WORKERY_TENANT_DETAIL_API_ENDPOINT = '/franchise/';
 export const WORKERY_DASHBOARD_API_ENDPOINT = '/dashboard';
 export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/customers';
 export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/customer/';
+export const WORKERY_CLIENT_DEACTIVATE_API_ENDPOINT = '/customers/operation/deactivation';
 export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
 export const WORKERY_ORDER_DETAIL_API_ENDPOINT = '/order/';
 export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';
@@ -815,5 +816,35 @@ export const UNTIL_FURTHER_NOTICE_CHOICES = [
         selectName: "untilFurtherNotice",
         value: 0,
         label: "No"
+    }
+];
+
+
+export const DEACTIVATION_REASON_CHOICES = [
+    {
+        id: 'deactivation-reason-2-choice',
+        selectName: "reason",
+        value: 2,
+        label: "Client is blacklisted"
+    },{
+        id: 'deactivation-reason-2-choice',
+        selectName: "reason",
+        value: 3,
+        label: "Client has moved"
+    },{
+        id: 'deactivation-reason-2-choice',
+        selectName: "reason",
+        value: 4,
+        label: "Client is deceased"
+    },{
+        id: 'deactivation-reason-2-choice',
+        selectName: "reason",
+        value: 5,
+        label: "Client does not want us to contact them"
+    },{
+        id: 'deactivation-reason-1-choice',
+        selectName: "reason",
+        value: 1,
+        label: "Other"
     }
 ];

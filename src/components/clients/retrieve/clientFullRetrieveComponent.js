@@ -221,22 +221,22 @@ export default class ClientFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to={`/client/${id}/promote/step-1`}>
+                                                <Link to="#">
                                                     Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`/client/${id}/promote/step-1`}>
+                                                <Link to={`/client/${id}/deactivation`}>
                                                     Deactivate Client&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`/client/${id}/promote/step-1`}>
+                                                <Link to="#">
                                                     Upgrade Client&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`/client/${id}/promote/step-1`}>
+                                                <Link to="#">
                                                     Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>

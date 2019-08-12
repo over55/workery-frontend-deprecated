@@ -43,6 +43,7 @@ import ClientCreateStep5Container from "./clients/create/clientCreateStep5Contai
 import ClientCreateStep6Container from "./clients/create/clientCreateStep6Container";
 import ClientCreateStep7Container from "./clients/create/clientCreateStep7Container";
 import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
+import ClientDeactivateOperationContainer from "./clients/operations/clientDeactivateOperationContainer";
 
 // Associate
 import AssociateListContainer from "./associates/list/associateListContainer";
@@ -224,6 +225,8 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id/orders" exact component={requiresAuth(ClientOrderListContainer)} />
                                 <Route path="/client/:id/comments" exact component={requiresAuth(ClientCommentContainer)} />
                                 <Route path="/client/:id/update" exact component={requiresAuth(ClientUpdateContainer)} />
+                                <Route path="/client/:id/deactivation" exact component={requiresAuth(ClientDeactivateOperationContainer)} />
+
 
                                 { /* ASSOCIATES */ }
                                 <Route path="/associates/add/step-1" exact component={requiresAuth(AssociateCreateStep1Container)} />
