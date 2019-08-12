@@ -16,6 +16,7 @@ export const WORKERY_DASHBOARD_API_ENDPOINT = '/dashboard';
 export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/customers';
 export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/customer/';
 export const WORKERY_CLIENT_DEACTIVATE_API_ENDPOINT = '/customers/operation/deactivation';
+export const WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT = '/customers/operation/upgrade-residential';
 export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
 export const WORKERY_ORDER_DETAIL_API_ENDPOINT = '/order/';
 export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';

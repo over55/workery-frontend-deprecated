@@ -10,6 +10,8 @@ import {
     SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
 } from '../../../constants/api';
 import { localStorageSetObjectOrArrayItem, localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+import { postClientResidentialUpgradeDetail } from "../../../actions/clientActions";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
 
 
 class ClientRezUpgradeOperationContainer extends Component {
@@ -21,16 +23,16 @@ class ClientRezUpgradeOperationContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyName: localStorage.getItem("workery-create-client-biz-companyName"),
-            contactFirstName: localStorage.getItem("workery-create-client-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-client-biz-contactLastName"),
-            primaryPhone: localStorage.getItem("workery-create-client-biz-primaryPhone"),
-            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-biz-primaryPhoneTypeOf"),
-            secondaryPhone: localStorage.getItem("workery-create-client-biz-secondaryPhone"),
-            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-biz-secondaryPhoneTypeOf"),
-            email: localStorage.getItem("workery-create-client-biz-email"),
-            isOkToEmail: localStorageGetIntegerItem("workery-create-client-biz-isOkToEmail"),
-            isOkToText: localStorageGetIntegerItem("workery-create-client-biz-isOkToText"),
+            companyName: "",
+            contactFirstName: "",
+            contactLastName: "",
+            primaryPhone: "",
+            primaryPhoneTypeOf: "",
+            secondaryPhone: "",
+            secondaryPhoneTypeOf: "",
+            email: "",
+            isOkToEmail: "",
+            isOkToText: "",
             errors: {},
             isLoading: false,
             client: {},
@@ -40,8 +42,33 @@ class ClientRezUpgradeOperationContainer extends Component {
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.getPostData = this.getPostData.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.customer = this.props.clientDetail.id;
+        postData.organizationName = this.state.companyName;
+        // 'organization_type_of',
+        // postData.organizationAddressCountry = this.state.
+        // postData.organizationAddressLocality = this.state.
+        // postData.organizationAddressRegion = this.state
+        // postData.organizationPostOfficeBoxNumber = this.state.
+        // postData.organizationPostalCode = this.state.
+        // postData.organizationStreetAddress = this.state.
+        // postData.organizationStreetAddressExtra = this.state.
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -73,11 +100,13 @@ class ClientRezUpgradeOperationContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(client) {
-        this.props.history.push("/clients/add/step-5");
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | Fetched:", response);
+        this.props.setFlashMessage("success", "Client has been successfully upgraded.");
+        this.props.history.push("/client/"+this.props.clientDetail.id+"/full");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -151,11 +180,18 @@ class ClientRezUpgradeOperationContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+
+            this.setState({ isLoading: true, errors: [] }, ()=>{
+                this.props.postClientResidentialUpgradeDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            })
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 
@@ -167,7 +203,17 @@ class ClientRezUpgradeOperationContainer extends Component {
 
     render() {
         const {
-            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
+            companyName,
+            contactFirstName,
+            contactLastName,
+            primaryPhone,
+            primaryPhoneTypeOf,
+            secondaryPhone,
+            secondaryPhoneTypeOf,
+            email,
+            isOkToText,
+            isOkToEmail,
+            errors
         } = this.state;
         return (
             <ClientRezUpgradeOperationComponent
@@ -202,7 +248,16 @@ const mapStateToProps = function(store) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
+        postClientResidentialUpgradeDetail: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                postClientResidentialUpgradeDetail(postData, onSuccessCallback, onFailureCallback)
+            )
+        },
+    }
 }
 
 

@@ -35,6 +35,7 @@ class ClientDeactivateOperationContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.getPostData = this.getPostData.bind(this);
     }
 
     /**
@@ -45,7 +46,6 @@ class ClientDeactivateOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // (1) Customer
         postData.customer = this.props.clientDetail.id;
         postData.state = "inactive";
         postData.deactivationReason = this.state.reason;
