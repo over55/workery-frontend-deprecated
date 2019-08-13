@@ -25,7 +25,7 @@ export default class OrderLiteRetrieveComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Order</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -44,12 +44,12 @@ export default class OrderLiteRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Tasks</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey">
+                        <div id="step-4" className="st-grey">
                             <Link to={`/order/${id}/activity-sheets`}>
                                 <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity Sheets</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey">
+                        <div id="step-5" className="st-grey">
                             <Link to={`/order/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>

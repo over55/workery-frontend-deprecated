@@ -41,7 +41,7 @@ export default class OrderCommentComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Order</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -56,13 +56,13 @@ export default class OrderCommentComponent extends Component {
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <Link to={`/associate/${id}/activity-sheets`}>
-                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
+                            <Link to={`/order/${id}/tasks`}>
+                                <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Tasks</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to={`/associate/${id}/orders`}>
-                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/associate/${id}/activity-sheets`}>
+                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
                             </Link>
                         </div>
                         <div id="step-5" className="st-grey active">

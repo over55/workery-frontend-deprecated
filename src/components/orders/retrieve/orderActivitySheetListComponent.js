@@ -172,17 +172,17 @@ export default class OrderActivitySheetListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-user-circle"></i>&nbsp;Associates</Link>
+                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Order</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{order && order.fullName}
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {order.id}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Associate</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -196,17 +196,17 @@ export default class OrderActivitySheetListComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey active">
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/order/${id}/tasks`}>
+                                <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Tasks</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey active">
                             <strong>
                                 <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
                             </strong>
                         </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to={`/order/${id}/orders`}>
-                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
+                        <div id="step-5" className="st-grey">
                             <Link to={`/order/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
