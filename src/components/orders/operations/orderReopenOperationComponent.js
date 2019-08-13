@@ -10,7 +10,7 @@ import {
 } from '../../../constants/api';
 
 
-class OrderReopenOperationComponent extends Component {
+class OrderPostponeOperationComponent extends Component {
     render() {
         // Common
         const { isLoading, onClick } = this.props;
@@ -22,4 +22,4 @@ class OrderReopenOperationComponent extends Component {
         );
     }
 }
-export default OrderReopenOperationComponent;
+export default OrderPostponeOperationComponent;

@@ -81,6 +81,7 @@ import OrderTransferOperationContainer from "./orders/operations/orderTransferOp
 import OrderUnassignAssociateOperationContainer from "./orders/operations/orderUnassignAssociateOperationContainer";
 import OrderPostponeOperationContainer from "./orders/operations/orderPostponeOperationContainer";
 import OrderCloseOperationContainer from "./orders/operations/orderCloseOperationContainer";
+import OrderReopenOperationContainer from "./orders/operations/orderReopenOperationContainer";
 import OrderCreateStep1Container from "./orders/create/orderCreateStep1Container";
 import OrderCreateStep2Container from "./orders/create/orderCreateStep2Container";
 import OrderCreateStep3Container from "./orders/create/orderCreateStep3Container";
@@ -279,6 +280,7 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:id/postpone" exact component={requiresAuth(OrderPostponeOperationContainer)} />
                                 <Route path="/order/:id/unassign-associate" exact component={requiresAuth(OrderUnassignAssociateOperationContainer)} />
                                 <Route path="/order/:id/close" exact component={requiresAuth(OrderCloseOperationContainer)} />
+                                <Route path="/order/:id/reopen" exact component={requiresAuth(OrderReopenOperationContainer)} />
                                 <Route path="/order/:id/update" exact component={requiresAuth(OrderUpdateContainer)} />
 
                                 { /* TASKS */ }
