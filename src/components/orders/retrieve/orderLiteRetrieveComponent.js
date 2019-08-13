@@ -186,6 +186,13 @@ export default class OrderLiteRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
                                         <ul>
+                                            {order.associate &&
+                                                <li>
+                                                    <Link to={`/order/${order.id}/unassign-associate`}>
+                                                        Unassign Associate&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
                                             <li>
                                                 <Link to={`/order/${order.id}/transfer`}>
                                                     Transfer&nbsp;<i className="fas fa-chevron-right"></i>
