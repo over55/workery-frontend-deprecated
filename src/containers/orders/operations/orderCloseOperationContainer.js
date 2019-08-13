@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderCloseOperationComponent from "../../../components/orders/update/orderCloseOperationComponent";
+import OrderCloseOperationComponent from "../../../components/orders/operations/orderCloseOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateInput } from "../../../validators/orderValidator";
 import {

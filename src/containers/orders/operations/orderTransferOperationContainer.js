@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderTransferOperationComponent from "../../../components/orders/update/orderTransferOperationComponent";
+import OrderTransferOperationComponent from "../../../components/orders/operations/orderTransferOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateInput } from "../../../validators/orderValidator";
 import {
@@ -23,13 +23,12 @@ class OrderTransferOperationContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { urlArgument, slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         this.state = {
             errors: {},
             isLoading: false,
-            urlArgument: urlArgument,
-            slug: slug,
+            id: id,
         }
 
         this.onTextChange = this.onTextChange.bind(this);

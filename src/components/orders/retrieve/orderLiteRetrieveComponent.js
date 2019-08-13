@@ -187,17 +187,17 @@ export default class OrderLiteRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to={`#`}>
+                                                <Link to={`/order/${order.id}/transfer`}>
                                                     Transfer&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`#`}>
+                                                <Link to={`/order/${order.id}/postpone`}>
                                                     Postpone&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`#`}>
+                                                <Link to={`/order/${order.id}/close`}>
                                                     Close&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
