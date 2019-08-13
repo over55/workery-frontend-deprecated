@@ -74,6 +74,7 @@ import OrderSearchContainer from "./orders/search/orderSearchContainer";
 import OrderSearchResultContainer from "./orders/search/orderSearchResultContainer";
 import OrderLiteRetrieveContainer from "./orders/retrieve/orderLiteRetrieveContainer";
 import OrderFullRetrieveContainer from "./orders/retrieve/orderFullRetrieveContainer";
+import OrderTaskListContainer from "./orders/retrieve/orderTaskListContainer";
 import OrderActivitySheetListContainer from "./orders/retrieve/orderActivitySheetListContainer";
 import OrderCommentContainer from "./orders/retrieve/orderCommentContainer";
 import OrderCreateStep1Container from "./orders/create/orderCreateStep1Container";
@@ -267,6 +268,7 @@ class AppContainer extends React.Component {
                                 <Route path="/orders/search-results" exact component={requiresAuth(OrderSearchResultContainer)} />
                                 <Route path="/order/:id" exact component={requiresAuth(OrderLiteRetrieveContainer)} />
                                 <Route path="/order/:id/full" exact component={requiresAuth(OrderFullRetrieveContainer)} />
+                                <Route path="/order/:id/tasks" exact component={requiresAuth(OrderTaskListContainer)} />
                                 <Route path="/order/:id/activity-sheets" exact component={requiresAuth(OrderActivitySheetListContainer)} />
                                 <Route path="/order/:id/comments" exact component={requiresAuth(OrderCommentContainer)} />
                                 <Route path="/order/:id/update" exact component={requiresAuth(OrderUpdateContainer)} />

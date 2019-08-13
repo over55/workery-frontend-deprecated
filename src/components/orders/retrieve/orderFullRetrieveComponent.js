@@ -48,6 +48,11 @@ export default class OrderFullRetrieveComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
+                            <Link to={`/order/${id}/tasks`}>
+                                <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Tasks</span>
+                            </Link>
+                        </div>
+                        <div id="step-3" className="st-grey">
                             <Link to={`/order/${id}/activity-sheets`}>
                                 <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity Sheets</span>
                             </Link>
