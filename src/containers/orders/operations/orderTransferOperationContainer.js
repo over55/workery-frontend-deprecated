@@ -4,12 +4,14 @@ import Scroll from 'react-scroll';
 
 import OrderTransferOperationComponent from "../../../components/orders/operations/orderTransferOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/orderValidator";
+import { validateTransferInput } from "../../../validators/orderValidator";
 import {
     RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
 } from '../../../constants/api';
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../../actions/associateActions";
 import { pullClientList, getClientReactSelectOptions } from "../../../actions/clientActions";
+import { postOrderTransfer } from "../../../actions/orderActions";
+
 
 
 class OrderTransferOperationContainer extends Component {
@@ -38,6 +40,7 @@ class OrderTransferOperationContainer extends Component {
             id: id,
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -45,6 +48,22 @@ class OrderTransferOperationContainer extends Component {
         this.onClientListCallback = this.onClientListCallback.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.job = this.state.id;
+        postData.customer = this.state.client;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -77,15 +96,13 @@ class OrderTransferOperationContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(order) {
-        this.setState({ errors: {}, isLoading: true, })
+        this.setState({ errors: {}, isLoading: false, })
         this.props.setFlashMessage("success", "Order has been successfully transfered.");
-        this.props.history.push("/order/"+this.state.slug+"/full");
+        this.props.history.push("/order/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -124,11 +141,17 @@ class OrderTransferOperationContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateTransferInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({ isLoading: true, errors: [] }, ()=>{
+                this.props.postOrderTransfer(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                )
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -199,6 +222,11 @@ const mapDispatchToProps = dispatch => {
         pullClientList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullClientList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        postOrderTransfer: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                postOrderTransfer(postData, onSuccessCallback, onFailureCallback)
             )
         },
     }
