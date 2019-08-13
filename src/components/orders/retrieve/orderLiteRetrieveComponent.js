@@ -6,7 +6,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class OrderLiteRetrieveComponent extends Component {
     render() {
-        const { id, flashMessage } = this.props;
+        const { id, order, flashMessage } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -18,7 +18,7 @@ export default class OrderLiteRetrieveComponent extends Component {
                             <Link to={`/orders`}><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;Argyle
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {id}
                         </li>
                     </ol>
                 </nav>
@@ -42,42 +42,78 @@ export default class OrderLiteRetrieveComponent extends Component {
                     </div>
                 </div>
 
-                <div className="row mt-4 pt-3 mb-4 pb-2">
-                    <div className="col-md-10 mx-auto rounded bg-light border p-2">
-                        <div className="row">
-                            <div className="col-sm-5">
-                                <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" />
-                            </div>
-                            <div className="col-sm-7 px-4 py-3">
-                                <h3>Rodolfo Martinez</h3>
-                                <p className="text-muted">San Francisco, USA <i className="fas fa-map-marker-alt"></i></p>
-                                <p><i className="fas fa-envelope"></i> email@example.com</p>
-                                <p><i className="fas fa-phone-square"></i> (xxx) xxx-xxxx</p>
-                                <p className="m-0"><strong>Skills:</strong></p>
-                                <p>
-                                    <Link to="#" className="badge badge-info">Skill 1</Link>
-                                    <Link to="#" className="badge badge-info">Skill 2</Link>
-                                    <Link to="#" className="badge badge-info">Skill 3</Link>
-                                    <Link to="#" className="badge badge-dark">Skill 4</Link>
-                                    <Link to="#" className="badge badge-success">Html</Link>
-                                    <Link to="#" className="badge badge-primary">Developer</Link>
-                                    <Link to="#" className="badge badge-warning">Bootstrap</Link>
-                                </p>
-                                <div className="col-sm-12 p-0">
-                                    <p className="m-0"><strong>Ratings:</strong></p>
-                                    <div className="star-rating" data-rating="4.5">
-                                        <span className="far fa-star" data-rating="1"></span>
-                                        <span className="far fa-star" data-rating="2"></span>
-                                        <span className="far fa-star" data-rating="3"></span>
-                                        <span className="far fa-star" data-rating="4"></span>
-                                        <span className="far fa-star" data-rating="5"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                <div className="row pt-3 mb-4 pb-2">
+                    <div className="col-md-10 mx-auto p-2">
+
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;Details
+                        </h2>
+
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-user-circle"></i>&nbsp;Client
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Name</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Phone Number (Landline)</th>
+                                    <td>{order.id}</td>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-crown"></i>&nbsp;Associate
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Name</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Phone Number (Landline)</th>
+                                    <td>{order.id}</td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-wrench"></i>&nbsp;Order
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">ID #</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Status</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Job Type</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill(s)</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Required Task</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
 
             </div>
         );

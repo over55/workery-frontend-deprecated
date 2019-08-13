@@ -90,7 +90,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        orderDetail: store.orderDetail,
+        orderDetail: store.orderDetailState,
     };
 }
 
