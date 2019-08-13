@@ -7,6 +7,7 @@ import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskList } from "../../../actions/taskActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
+
 class OrderTaskListContainer extends Component {
     /**
      *  Initializer & Utility
@@ -16,8 +17,6 @@ class OrderTaskListContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
-        const parametersMap = new Map();
-        parametersMap.set("order", id);
         this.state = {
             // Pagination
             page: 1,
@@ -25,12 +24,10 @@ class OrderTaskListContainer extends Component {
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
-            parametersMap: parametersMap,
+            parametersMap: new Map(),
 
-            // Overaly
+            // Everything else,
             isLoading: true,
-
-            // Everything else...
             id: id,
         }
         this.onTableChange = this.onTableChange.bind(this);
@@ -45,15 +42,6 @@ class OrderTaskListContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        this.props.pullTaskList(
-            this.state.page,
-            this.state.sizePerPage,
-            this.state.parametersMap,
-            this.onSuccessfulSubmissionCallback,
-            this.onFailedSubmissionCallback
-        );
-
     }
 
     componentWillUnmount() {
@@ -102,17 +90,20 @@ class OrderTaskListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortTask, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
-        if (type === "sort") {
-            console.log(type, sortField, sortTask); // For debugging purposes only.
+        // Always add filter to this specific job.
+        parametersMap.set("job", this.state.id);
 
-            if (sortTask === "asc") {
+        if (type === "sort") {
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+
+            if (sortOrder === "asc") {
                 parametersMap.set('o', decamelize(sortField));
             }
-            if (sortTask === "desc") {
+            if (sortOrder === "desc") {
                 parametersMap.set('o', "-"+decamelize(sortField));
             }
 
@@ -137,12 +128,20 @@ class OrderTaskListContainer extends Component {
 
         } else if (type === "filter") {
             console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
+            if (filters.isClosed === undefined) {
+                parametersMap.delete("isClosed");
             } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
+                const filterVal = filters.isClosed.filterVal;
+                parametersMap.set("isClosed", filterVal);
             }
+
+            if (filters.typeOf === undefined) {
+                parametersMap.delete("typeOf");
+            } else {
+                const filterVal = filters.typeOf.filterVal;
+                parametersMap.set("typeOf", filterVal);
+            }
+
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
@@ -162,18 +161,15 @@ class OrderTaskListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, id } = this.state;
-        const order = this.props.orderDetail ? this.props.orderDetail : {};
-        const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
+        const { id, page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <TaskListComponent
+                id={id}
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-                activitySheetItems={activitySheetItems}
+                taskList={this.props.taskList}
                 onTableChange={this.onTableChange}
-                id={id}
-                order={order}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
             />
@@ -185,8 +181,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        activitySheetItemList: store.activitySheetItemListState,
-        orderDetail: store.orderDetailState,
+        taskList: store.taskListState,
     };
 }
 

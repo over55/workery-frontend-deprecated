@@ -8,8 +8,6 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
-import Moment from 'react-moment';
-// import 'moment-timezone';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
@@ -27,36 +25,93 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            activitySheetItems,
+            tasks,
 
             // Everything else.
             onTableChange, isLoading
         } = this.props;
 
+        // DEVELOPERS NOTE:
+        // Where did `2` and `3` values come from? These are the `true` and
+        // `false` values specified by `django-rest-framework` in the API.
+        const isClosedSelectOptions = {
+            3: 'Pending',
+            2: 'Closed',
+        };
+
+        const typeOfSelectOptions = {
+            1: 'Assign associate',
+            2: 'Follow up is job complete',
+            3: 'Follow up customer survey',
+            4: 'Follow up did associate accept job',
+            5: 'Follow up was ongoing job updated',
+        };
+
+        /*
+        ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID = 1
+        FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID = 2
+        FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID = 3
+        FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID = 4
+        UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID = 5
+
+        TASK_ITEM_TYPE_OF_CHOICES = (
+            (ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID, _('Assign associate')),
+            (FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID, _('Follow up is job complete')),
+            (FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID, _('Follow up customer survey')),
+            (FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up did associate accept job')),
+            (UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up was ongoing job updated')),
+        )
+
+        */
+
+
         const columns = [{
-            dataField: 'job',
-            text: 'Job #',
+            dataField: 'orderTypeOf',
+            text: '',
             sort: false,
-            formatter: jobFormatter,
+            formatter: iconFormatter
         },{
-            dataField: 'state',
-            text: 'Has Accepted?',
-            sort: false
+            dataField: 'dueDate',
+            text: 'Due Date',
+            sort: true,
         },{
-            dataField: 'createdAt',
-            text: 'Created At',
+            dataField: 'typeOf',
+            text: 'Task',
+            sort: true,
+            filter: selectFilter({
+                options: typeOfSelectOptions,
+                // defaultValue: 4, // Note: `4` is `pending`.
+                // withoutEmptyOption: true
+            }),
+            formatter: typeOfFormatter,
+        },{
+            dataField: 'customerName',
+            text: 'Client',
+            sort: true,
+        },{
+            dataField: 'associateName',
+            text: 'Associate',
+            sort: true,
+        },{
+            dataField: 'isClosed',
+            text: 'Status',
             sort: false,
-            formatter: createdAtFormatter,
+            filter: selectFilter({
+                options: isClosedSelectOptions,
+            }),
+            formatter: statusFormatter
         },{
-            dataField: 'comment',
-            text: 'Reason',
-            sort: false
+            dataField: 'id',
+            text: '',
+            sort: false,
+            formatter: detailLinkFormatter
         }];
 
         const defaultSorted = [{
-            dataField: 'id',
+            dataField: 'dueDate',
             order: 'desc'
         }];
+
 
         const paginationOption = {
             page: page,
@@ -89,12 +144,12 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ activitySheetItems }
+                data={ tasks }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no activity sheets at the moment"
+                noDataIndication="There are no tasks at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -107,18 +162,8 @@ class RemoteListComponent extends Component {
 }
 
 
-function jobFormatter(cell, row){
-    if (row.job === null || row.job === undefined || row.job === "None") { return "-"; }
-    return (
-        <Link to={`/order/${row.job}`} target="_blank">
-            {row.job}&nbsp;<i className="fas fa-external-link-alt"></i>
-        </Link>
-    )
-}
-
-
 function iconFormatter(cell, row){
-    switch(row.typeOf) {
+    switch(row.orderTypeOf) {
         case 2:
             return <i className="fas fa-building"></i>;
             break;
@@ -132,37 +177,60 @@ function iconFormatter(cell, row){
 }
 
 
-function orderNameFormatter(cell, row){
-    if (row.orderName === null || row.orderName === undefined || row.orderName === "None") { return "-"; }
+function typeOfFormatter(cell, row){
+    return row.title
+}
+
+
+
+function statusFormatter(cell, row){
+    switch(row.isClosed) {
+        case false:
+            return <i className="fas fa-clock"></i>;
+            break;
+        case true:
+            return <i className="fas fa-check-circle"></i>;
+            break;
+        default:
+        return <i className="fas fa-question-circle"></i>;
+            break;
+    }
+}
+
+
+function financialExternalLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.order}`} target="_blank">
-            {row.orderName}&nbsp;<i className="fas fa-external-link-alt"></i>
+        <a target="_blank" href={`/financial/${row.id}`}>
+            View&nbsp;<i className="fas fa-external-link-alt"></i>
+        </a>
+    )
+}
+
+
+function detailLinkFormatter(cell, row){
+    return (
+        <Link to={`/task/${row.id}`}>
+            View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
 }
 
 
-function statusFormatter(cell, row){
-    return row.prettyState;
-}
-
-function createdAtFormatter(cell, row){
-    return <Moment format="YYYY/MM/DD hh:mm:ss a">{row.createdAt}</Moment>;
-}
-
-
-export default class OrderTaskListComponent extends Component {
+class OrderTaskListComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            activitySheetItems,
+            taskList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id, order
+            flashMessage, onTableChange, isLoading, id
         } = this.props;
+
+        const tasks = (taskList && taskList.results) ? taskList.results : [];
+
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -172,22 +240,22 @@ export default class OrderTaskListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
+                            <Link to={`/orders`}><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Order # {order.id}
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {id}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
+                <h1><i className="fas fa-tasks"></i>&nbsp;Tasks</h1>
 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/order/${id}`}>
+                            <Link to={`/order/${id}/tasks`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Summary</span>
                             </Link>
                         </div>
@@ -198,12 +266,12 @@ export default class OrderTaskListComponent extends Component {
                         </div>
                         <div id="step-3" className="st-grey active">
                             <strong>
-                                <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Task</span>
+                                <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Tasks</span>
                             </strong>
                         </div>
                         <div id="step-4" className="st-grey">
                             <Link to={`/order/${id}/activity-sheets`}>
-                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
+                                <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity Sheets</span>
                             </Link>
                         </div>
                         <div id="step-5" className="st-grey">
@@ -223,7 +291,7 @@ export default class OrderTaskListComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            activitySheetItems={activitySheetItems}
+                            tasks={tasks}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
@@ -233,3 +301,5 @@ export default class OrderTaskListComponent extends Component {
         );
     }
 }
+
+export default OrderTaskListComponent;
