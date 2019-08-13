@@ -21,6 +21,7 @@ export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
 export const WORKERY_ORDER_DETAIL_API_ENDPOINT = '/order/';
 export const WORKERY_ORDER_COMMENT_LIST_API_ENDPOINT = '/order-comments';
 export const WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT = '/orders/operation/transfer';
+export const WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT = '/orders/operation/unassign';
 export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';
 export const WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT = '/associate/';
 export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
