@@ -14,7 +14,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class OrderFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, errors, flashMessage } = this.props;
+        const { id, order, errors, flashMessage } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -26,7 +26,7 @@ export default class OrderFullRetrieveComponent extends Component {
                             <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;Argyle
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {id}
                         </li>
                     </ol>
                 </nav>
@@ -57,14 +57,116 @@ export default class OrderFullRetrieveComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;Details
                         </h2>
 
-                        <BootstrapErrorsProcessingAlert errors={errors} />
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-wrench"></i>&nbsp;Job Details
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Name</th>
+                                    <td>{order.id}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Phone Number (Landline)</th>
+                                    <td>{order.id}</td>
+                                </tr>
+
+                                { /*
+
+                                    Job Details
+                                    Job #	26,733
+                                    Client	john doe
+                                    Phone Number (Landline)	(226) 222-2222
+                                    Description	test
+                                    Skill Sets	-
+                                    Assigned Associate	-
+                                    Associate Phone Number	-
+                                    Assignment Date	-
+                                    Is Home Support Service	False
+                                    Is ongoing?	False
+                                    Status	New
+                                    Start date	Aug. 14, 2019
+                                    Completion date	-
+                                    Hours	0.0
+                                    Required Task	Assign an Associate
+                                    Financial Details
+                                    Invoice Date	-
+                                    Invoice ID(s) #	-
+                                    Invoice Quote	-
+                                    Invoice Labour	-
+                                    Invoice Material	-
+                                    Invoice Total	-
+                                    Invoice Service Fee	-
+                                    Invoice Service Fee Payment Date	-
+                                    System
+                                    Created at	Aug. 7, 2019, 12:24 p.m.
+                                    Created by	Fran S
+                                    Created from	127.0.0.1
+                                    Modified at	Aug. 7, 2019, 12:24 p.m.
+                                    Modified by	Fran S
+                                    Modified from	127.0.0.1
+
+                                */ }
+
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-wrench"></i>&nbsp;Financial Details
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Name</th>
+                                    <td>{order.id}</td>
+                                </tr>
+
+                                { /*
+
+                                    Invoice Date	-
+                                    Invoice ID(s) #	-
+                                    Invoice Quote	-
+                                    Invoice Labour	-
+                                    Invoice Material	-
+                                    Invoice Total	-
+                                    Invoice Service Fee	-
+                                    Invoice Service Fee Payment Date
+
+                                */}
 
 
 
 
 
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-server"></i>&nbsp;System Details
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Name</th>
+                                    <td>{order.id}</td>
+                                </tr>
+
+                                { /*
+
+                                    Created at	Aug. 7, 2019, 12:24 p.m.
+                                    Created by	Fran S
+                                    Created from	127.0.0.1
+                                    Modified at	Aug. 7, 2019, 12:24 p.m.
+                                    Modified by	Fran S
+                                    Modified from	127.0.0.1
+
+                                */}
+
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+
 
             </main>
         );
