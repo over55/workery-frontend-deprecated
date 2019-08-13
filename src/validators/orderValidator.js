@@ -184,3 +184,23 @@ export function validatePromotionInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateTransferInput(data) {
+    let errors = {};
+
+    if (data.associate === undefined || data.associate === null || data.associate === "" || isNaN(data.associate)) {
+        errors.associate = 'This field is required';
+    }
+    if (data.client === undefined || data.client === null || data.client === "" || isNaN(data.client)) {
+        errors.client = 'This field is required';
+    }
+    if (data.reason === undefined || data.reason === null || data.reason === "") {
+        errors.reason = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

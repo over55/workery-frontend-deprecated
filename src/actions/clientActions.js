@@ -629,7 +629,7 @@ export function getClientReactSelectOptions(clientList=[], selectName="client") 
                 clientOptions.push({
                     selectName: selectName,
                     value: client.id,
-                    label: client.text
+                    label: client.fullName
                 });
                 // console.log(client);
             }
