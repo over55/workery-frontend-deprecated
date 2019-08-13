@@ -86,7 +86,7 @@ class OrderFullRetrieveContainer extends Component {
         return (
             <OrderFullRetrieveComponent
                 id={this.state.id}
-                order={this.state.order}
+                order={order}
                 flashMessage={this.props.flashMessage}
             />
         );

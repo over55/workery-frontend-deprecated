@@ -1,6 +1,8 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
@@ -80,52 +82,119 @@ export default class OrderFullRetrieveComponent extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Name</th>
+                                    <th scope="row" className="bg-light">Order #</th>
                                     <td>{order.id}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Phone Number (Landline)</th>
-                                    <td>{order.id}</td>
+                                    <th scope="row" className="bg-light">Client Full Name</th>
+                                    <td>
+                                        <Link to={`/customer/${order.customer}`} target="_blank">
+                                            {order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
                                 </tr>
-
-                                { /*
-
-                                    Job Details
-                                    Job #	26,733
-                                    Client	john doe
-                                    Phone Number (Landline)	(226) 222-2222
-                                    Description	test
-                                    Skill Sets	-
-                                    Assigned Associate	-
-                                    Associate Phone Number	-
-                                    Assignment Date	-
-                                    Is Home Support Service	False
-                                    Is ongoing?	False
-                                    Status	New
-                                    Start date	Aug. 14, 2019
-                                    Completion date	-
-                                    Hours	0.0
-                                    Required Task	Assign an Associate
-                                    Financial Details
-                                    Invoice Date	-
-                                    Invoice ID(s) #	-
-                                    Invoice Quote	-
-                                    Invoice Labour	-
-                                    Invoice Material	-
-                                    Invoice Total	-
-                                    Invoice Service Fee	-
-                                    Invoice Service Fee Payment Date	-
-                                    System
-                                    Created at	Aug. 7, 2019, 12:24 p.m.
-                                    Created by	Fran S
-                                    Created from	127.0.0.1
-                                    Modified at	Aug. 7, 2019, 12:24 p.m.
-                                    Modified by	Fran S
-                                    Modified from	127.0.0.1
-
-                                */ }
-
-
+                                {order.customerFullName && order.customerTelephone &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Client {order.customerPrettyTelephoneTypeOf} #</th>
+                                        <td>{order.customerTelephone}</td>
+                                    </tr>
+                                }
+                                {order.customerFullName && order.customerOtherTelephone &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Client Other {order.customerPrettyTelephoneTypeOf} #</th>
+                                        <td>{order.customerOtherTelephone}</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{order.description}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill(s)</th>
+                                    <td>
+                                        {order.prettySkillSets && order.prettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Tags(s)</th>
+                                    <td>
+                                        {order.prettyTags && order.prettyTags.map(
+                                            (tag) => <TagItem tag={tag} key={`tag-${tag.id}`} />)
+                                        }
+                                    </td>
+                                </tr>
+                                {order.associateFullName && order.associateFullName &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Name</th>
+                                        <td>
+                                            <Link to={`/associate/${order.associate}`} target="_blank">
+                                                {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                }
+                                {order.associateFullName && order.associateTelephone &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">{order.associatePrettyTelephoneTypeOf} #</th>
+                                        <td>{order.associateTelephone}</td>
+                                    </tr>
+                                }
+                                {order.associateFullName && order.associateOtherTelephone &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Other {order.associatePrettyTelephoneTypeOf} #</th>
+                                        <td>{order.associateOtherTelephone}</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Assignment Date</th>
+                                    <td>{order.assignmentDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is Home Support Service</th>
+                                    <td>
+                                        {order.isHomeSupportService
+                                            ?"Yes"
+                                            :"No"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is Ongoing</th>
+                                    <td>
+                                        {order.isOngoing
+                                            ?"Yes"
+                                            :"No"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Status</th>
+                                    <td>{order.prettyStatus}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Start Date</th>
+                                    <td>{order.startDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Completion Date</th>
+                                    <td>{order.completionDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Hours</th>
+                                    <td>{order.hours}</td>
+                                </tr>
+                                {order.prettyLatestPendingTask &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Required Task</th>
+                                        <td>
+                                            <Link to={`/task/${order.latestPendingTaskTypeOf}/${order.latestPendingTask}/step-1`} target="_blank">
+                                                {order.prettyLatestPendingTask}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                }
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
@@ -133,25 +202,37 @@ export default class OrderFullRetrieveComponent extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Name</th>
-                                    <td>{order.id}</td>
+                                    <th scope="row" className="bg-light">Invoice Date</th>
+                                    <td>{order.invoiceDate}</td>
                                 </tr>
-
-                                { /*
-
-                                    Invoice Date	-
-                                    Invoice ID(s) #	-
-                                    Invoice Quote	-
-                                    Invoice Labour	-
-                                    Invoice Material	-
-                                    Invoice Total	-
-                                    Invoice Service Fee	-
-                                    Invoice Service Fee Payment Date
-
-                                */}
-
-
-
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice ID(s) #</th>
+                                    <td>{order.invoiceIds}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Quote</th>
+                                    <td>{order.invoiceQuoteAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Labour</th>
+                                    <td>{order.invoiceLabourAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Material</th>
+                                    <td>{order.invoiceMaterialAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Total</th>
+                                    <td>{order.invoiceTotalAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Service Fee</th>
+                                    <td>{order.invoiceServiceFee}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Service Fee Payment Date</th>
+                                    <td>{order.invoiceServiceFeePaymentDate}</td>
+                                </tr>
 
 
 
@@ -161,21 +242,27 @@ export default class OrderFullRetrieveComponent extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Name</th>
-                                    <td>{order.id}</td>
+                                    <th scope="row" className="bg-light">Created at</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{order.createdAt}</Moment>
+                                    </td>
                                 </tr>
-
-                                { /*
-
-                                    Created at	Aug. 7, 2019, 12:24 p.m.
-                                    Created by	Fran S
-                                    Created from	127.0.0.1
-                                    Modified at	Aug. 7, 2019, 12:24 p.m.
-                                    Modified by	Fran S
-                                    Modified from	127.0.0.1
-
-                                */}
-
+                                <tr>
+                                    <th scope="row" className="bg-light">Created by</th>
+                                    <td>{order.createdBy}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Modified at</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{order.lastModifiedAt}</Moment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Modified by</th>
+                                    <td>
+                                        {order.lastModifiedBy}
+                                    </td>
+                                </tr>
 
                             </tbody>
                         </table>
@@ -228,5 +315,17 @@ class HowDidYouHearText extends Component {
             }
         }
         return (null);
+    };
+}
+
+
+
+
+class SkillSetItem extends Component {
+    render() {
+        const { subCategory, value } = this.props.skillSet;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
+        );
     };
 }

@@ -67,35 +67,67 @@ export default class OrderLiteRetrieveComponent extends Component {
 
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-user-circle"></i>&nbsp;Client
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Name</th>
-                                    <td>{order.id}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Phone Number (Landline)</th>
-                                    <td>{order.id}</td>
-                                </tr>
+                                {order.customerFullName &&
+                                    <tr className="bg-dark">
+                                        <th scope="row" colSpan="2" className="text-light">
+                                            <i className="fas fa-user-circle"></i>&nbsp;Client
+                                        </th>
+                                    </tr>
+                                }
+                                {order.customerFullName &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Name</th>
+                                        <td>
+                                            <Link to={`/customer/${order.customer}`} target="_blank">
+                                                {order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                }
+                                {order.customerFullName && order.customerTelephone &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">{order.customerPrettyTelephoneTypeOf} #</th>
+                                        <td>{order.customerTelephone}</td>
+                                    </tr>
+                                }
+                                {order.customerFullName && order.customerOtherTelephone &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Other {order.customerPrettyTelephoneTypeOf} #</th>
+                                        <td>{order.customerOtherTelephone}</td>
+                                    </tr>
+                                }
 
 
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-crown"></i>&nbsp;Associate
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Name</th>
-                                    <td>{order.id}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Phone Number (Landline)</th>
-                                    <td>{order.id}</td>
-                                </tr>
 
+                                {order.associateFullName &&
+                                    <tr className="bg-dark">
+                                        <th scope="row" colSpan="2" className="text-light">
+                                            <i className="fas fa-crown"></i>&nbsp;Associate
+                                        </th>
+                                    </tr>
+                                }
+                                {order.associateFullName && order.associateFullName &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Name</th>
+                                        <td>
+                                            <Link to={`/associate/${order.associate}`} target="_blank">
+                                                {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                }
+                                {order.associateFullName && order.associateTelephone &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">{order.associatePrettyTelephoneTypeOf} #</th>
+                                        <td>{order.associateTelephone}</td>
+                                    </tr>
+                                }
+                                {order.associateFullName && order.associateOtherTelephone &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Other {order.associatePrettyTelephoneTypeOf} #</th>
+                                        <td>{order.associateOtherTelephone}</td>
+                                    </tr>
+                                }
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-wrench"></i>&nbsp;Order
@@ -107,24 +139,42 @@ export default class OrderLiteRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Status</th>
-                                    <td>{order.id}</td>
+                                    <td>{order.prettyStatus}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Type</th>
-                                    <td>{order.id}</td>
+                                    <td>{order.prettyTypeOf}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
-                                    <td>{order.id}</td>
+                                    <td>{order.description}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Skill(s)</th>
-                                    <td>{order.id}</td>
+                                    <td>
+                                        {order.prettySkillSets && order.prettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Required Task</th>
-                                    <td>{order.id}</td>
+                                    <th scope="row" className="bg-light">Tags(s)</th>
+                                    <td>
+                                        {order.prettyTags && order.prettyTags.map(
+                                            (tag) => <TagItem tag={tag} key={`tag-${tag.id}`} />)
+                                        }
+                                    </td>
                                 </tr>
+                                {order.prettyLatestPendingTask &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Required Task</th>
+                                        <td>
+                                            <Link to={`/task/${order.latestPendingTaskTypeOf}/${order.latestPendingTask}/step-1`} target="_blank">
+                                                {order.prettyLatestPendingTask}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -133,4 +183,24 @@ export default class OrderLiteRetrieveComponent extends Component {
             </div>
         );
     }
+}
+
+
+class TagItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
+}
+
+
+class SkillSetItem extends Component {
+    render() {
+        const { subCategory, value } = this.props.skillSet;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
+        );
+    };
 }
