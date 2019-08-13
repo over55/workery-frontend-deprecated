@@ -17,6 +17,8 @@ class OrderTaskListContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
+        const parametersMap = new Map();
+        parametersMap.set("job", id);
         this.state = {
             // Pagination
             page: 1,
@@ -24,7 +26,7 @@ class OrderTaskListContainer extends Component {
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
-            parametersMap: new Map(),
+            parametersMap: parametersMap,
 
             // Everything else,
             isLoading: true,
@@ -93,9 +95,6 @@ class OrderTaskListContainer extends Component {
     onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
-
-        // Always add filter to this specific job.
-        parametersMap.set("job", this.state.id);
 
         if (type === "sort") {
             console.log(type, sortField, sortOrder); // For debugging purposes only.

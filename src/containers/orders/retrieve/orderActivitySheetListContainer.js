@@ -17,7 +17,7 @@ class OrderActivitySheetListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("order", id);
+        parametersMap.set("job", id);
         this.state = {
             // Pagination
             page: 1,
