@@ -264,6 +264,35 @@ export default class OrderFullRetrieveComponent extends Component {
                                     </td>
                                 </tr>
 
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <td>
+                                        <ul>
+                                            <li>
+                                                <Link to={`#`}>
+                                                    Transfer&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to={`#`}>
+                                                    Postpone&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to={`#`}>
+                                                    Close&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>
