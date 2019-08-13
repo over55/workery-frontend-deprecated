@@ -172,7 +172,7 @@ export default class OrderActivitySheetListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Order</Link>
+                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-wrench"></i>&nbsp;Order # {order.id}
