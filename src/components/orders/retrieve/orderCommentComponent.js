@@ -20,7 +20,7 @@ import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 export default class OrderCommentComponent extends Component {
     render() {
         const {
-            associateComments, flashMessage, isLoading, id, associate, text, onTextChange, errors, onClick
+            orderComments, flashMessage, isLoading, id, associate, text, onTextChange, errors, onClick
         } = this.props;
         return (
             <div>
@@ -79,7 +79,7 @@ export default class OrderCommentComponent extends Component {
                 <div className="row align-items-start">
                     <h1>Comments/Notes</h1>
                     <div className="col-lg-12">
-                        {associateComments && associateComments.map(
+                        {orderComments && orderComments.map(
                             (comment) => <CommentComponent comment={comment} id={comment.id} />
                         )}
                         <hr className="my-4" />

@@ -22,6 +22,7 @@ import flashMessageReducer from "./reducers/flashMessageReducer";
 import { howHearListReducer, howHearDetailReducer } from "./reducers/howHearReducers";
 import { insuranceRequirementListReducer, insuranceRequirementDetailReducer } from "./reducers/insuranceRequirementReducers";
 import { orderListReducer, orderDetailReducer } from "./reducers/orderReducers";
+import { orderCommentListReducer } from "./reducers/orderCommentReducers";
 import { partnerListReducer, partnerDetailReducer } from "./reducers/partnerReducers";
 import { serviceFeeListReducer, serviceFeeDetailReducer } from "./reducers/serviceFeeReducers";
 import { skillSetListReducer, skillSetDetailReducer } from "./reducers/skillSetReducers";
@@ -49,6 +50,7 @@ const appReducer = combineReducers({
     howHearListState: howHearListReducer, howHearDetailState: howHearDetailReducer,
     insuranceRequirementListState: insuranceRequirementListReducer, insuranceRequirementDetailState: insuranceRequirementDetailReducer,
     orderListState: orderListReducer, orderDetailState: orderDetailReducer,
+    orderCommentListState: orderCommentListReducer,
     partnerListState: partnerListReducer, partnerDetailState: partnerDetailReducer,
     serviceFeeListState: serviceFeeListReducer, serviceFeeDetailState: serviceFeeDetailReducer,
     skillSetListState: skillSetListReducer, skillSetDetailState: skillSetDetailReducer,
