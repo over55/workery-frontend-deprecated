@@ -253,3 +253,29 @@ export function validateReopenInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validatePostponeInput(data) {
+    let errors = {};
+
+    if (data.reason === undefined || data.reason === null || data.reason === "" || isNaN(data.reason) ) {
+        errors.reason = 'This field is required';
+    } else {
+        if (data.reason === 1) {
+            if (data.reasonOther === undefined || data.reasonOther === null || data.reasonOther === "" ) {
+                errors.reasonOther = 'This field is required';
+            }
+        }
+    }
+    if (data.startDate === undefined || data.startDate === null || data.startDate === "" || isNaN(data.startDate) ) {
+        errors.startDate = 'This field is required';
+    }
+    if (data.comment === undefined || data.comment === null || data.comment === "" ) {
+        errors.comment = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

@@ -24,6 +24,7 @@ export const WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT = '/orders/operation/
 export const WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT = '/orders/operation/unassign';
 export const WORKERY_ORDER_CLOSE_OPERATION_API_ENDPOINT = '/orders/operation/close';
 export const WORKERY_ORDER_REOPEN_OPERATION_API_ENDPOINT = '/orders/operation/reopen';
+export const WORKERY_ORDER_POSTPONE_OPERATION_API_ENDPOINT = '/orders/operation/postpone';
 export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';
 export const WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT = '/associate/';
 export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
@@ -926,5 +927,30 @@ export const ORGANIZATION_TYPE_OF_CHOICES = [
         selectName: "organizationTypeOf",
         value: 4,
         label: "Government"
+    }
+];
+
+
+export const WORK_ORDER_POSTPONE_REASON_CHOICES = [
+    {
+        id: 'reason-2-choice',
+        selectName: "reason",
+        value: 2,
+        label: "Client needs more time"
+    },{
+        id: 'reason-3-choice',
+        selectName: "reason",
+        value: 3,
+        label: "Associate needs more time"
+    },{
+        id: 'reason-4-choice',
+        selectName: "reason",
+        value: 4,
+        label: "Weather"
+    },{
+        id: 'reason-1-choice',
+        selectName: "reason",
+        value: 1,
+        label: "Other"
     }
 ];
