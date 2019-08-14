@@ -18,14 +18,14 @@ class ReportListComponent extends Component {
                                    <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                                 </li>
                                 <li className="breadcrumb-item active" aria-current="page">
-                                    <i className="fas fa-book"></i>&nbsp;Reports
+                                    <i className="fas fa-chart-bar"></i>&nbsp;Reports
                                 </li>
                             </ol>
                         </nav>
 
                         <FlashMessageComponent object={flashMessage} />
 
-                        <h1><i className="fas fa-book"></i>&nbsp;Reports</h1>
+                        <h1><i className="fas fa-chart-bar"></i>&nbsp;Reports</h1>
                         <div className="row">
                             <div className="col-md-12">
 
@@ -33,12 +33,12 @@ class ReportListComponent extends Component {
                                     <div className="col-sm-3">
                                         <div className="card box-shadow text-center mx-auto">
                                             <div className="card-custom-top-2">
-                                                <i className="fas fa-crown fa-3x"></i>
+                                                <i className="fas fa-money-bill-wave fa-3x"></i>
                                             </div>
                                             <div className="card-body">
-                                                <h3 className="card-title">Associates Report</h3>
-                                                <p className="card-text">View Associates Report</p>
-                                                <Link to="#" className="btn btn-success btn-lg">
+                                                <h3 className="card-title">Service Fees</h3>
+                                                <p className="card-text">List service fees for associates.</p>
+                                                <Link to="/report/1" className="btn btn-success btn-lg">
                                                     Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                                 </Link>
                                             </div>

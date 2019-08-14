@@ -60,7 +60,7 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         url: "/associates"
     },{
         id: "full-reports",
-        icon: "book",
+        icon: "chart-bar",
         title: "Reports",
         url: "/reports"
     },{

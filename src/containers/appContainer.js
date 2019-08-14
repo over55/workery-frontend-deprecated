@@ -119,6 +119,7 @@ import StaffCreateStep8Container from "./staff/create/staffCreateStep8Container"
 
 // Reports
 import ReportListContainer from "./reports/reportListContainer";
+import Report1Container from "./reports/report1Container";
 
 // Financials
 import FinancialListContainer from "./financials/list/financialListContainer";
@@ -312,6 +313,7 @@ class AppContainer extends React.Component {
 
                                 { /* REPORTS */ }
                                 <Route path="/reports" exact component={requiresAuth(ReportListContainer)} />
+                                <Route path="/report/1" exact component={requiresAuth(Report1Container)} />
 
                                 { /* FINANCIALS */ }
                                 <Route path="/financials" exact component={requiresAuth(FinancialListContainer)} />
