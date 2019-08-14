@@ -36,8 +36,8 @@ class ReportListComponent extends Component {
                                                 <i className="fas fa-cash-register fa-3x"></i>
                                             </div>
                                             <div className="card-body">
-                                                <h3 className="card-title">Service Fees</h3>
-                                                <p className="card-text">List service fees for associates.</p>
+                                                <h3 className="card-title">Due Service Fees</h3>
+                                                <p className="card-text">List due service fees for associates.</p>
                                                 <Link to="/report/1" className="btn btn-success btn-lg">
                                                     Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                                 </Link>
