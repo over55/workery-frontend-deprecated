@@ -17,6 +17,7 @@ export default class OrderFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const { id, order, errors, flashMessage } = this.props;
+        const isCancelled = order.state === "cancelled";
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -281,20 +282,31 @@ export default class OrderFullRetrieveComponent extends Component {
                                                     </Link>
                                                 </li>
                                             }
+                                            {isCancelled
+                                                ?""
+                                                :<li>
+                                                    <Link to={`/order/${order.id}/transfer`}>
+                                                        Transfer&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
+                                            {isCancelled
+                                                ?""
+                                                :<li>
+                                                    <Link to={`/order/${order.id}/postpone`}>
+                                                        Postpone&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
                                             <li>
-                                                <Link to={`/order/${order.id}/transfer`}>
-                                                    Transfer&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/order/${order.id}/postpone`}>
-                                                    Postpone&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/order/${order.id}/close`}>
-                                                    Close&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
+                                                {isCancelled
+                                                    ?<Link to={`/order/${order.id}/reopen`}>
+                                                        Re-open&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                    :<Link to={`/order/${order.id}/close`}>
+                                                        Close&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                }
                                             </li>
                                         </ul>
                                     </td>
@@ -312,49 +324,14 @@ export default class OrderFullRetrieveComponent extends Component {
 }
 
 
-/**
- *  Function will take the tag value which was selected and find print it with
- *  the label from the tagOptions data.
- */
 class TagItem extends Component {
     render() {
-        const { tag, tagOptions } = this.props;
-        for (let i = 0; i < tagOptions.length; i++) {
-            let tagOption = tagOptions[i];
-            if (tagOption.value === tag) {
-                return (
-                    <span className="badge badge-info badge-lg" value={tag}>{tagOption.label}</span>
-                );
-            }
-        }
-        return (null);
+        const { id, text } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
+        );
     };
 }
-
-
-/**
- *  Function will take the howDidYouHear value which was selected and find
- * print it with the label from the howDidYouHearOptions data.
- */
-class HowDidYouHearText extends Component {
-    render() {
-        const { howDidYouHear, howDidYouHearOther, howDidYouHearOptions } = this.props;
-        if (howDidYouHearOther !== null && howDidYouHearOther !== undefined && howDidYouHearOther !== "") {
-            return howDidYouHearOther;
-        }
-        for (let i = 0; i < howDidYouHearOptions.length; i++) {
-            let howDidYouHearOption = howDidYouHearOptions[i];
-            if (howDidYouHearOption.value === howDidYouHear) {
-                return (
-                    <span value={howDidYouHear}>{howDidYouHearOption.label}</span>
-                );
-            }
-        }
-        return (null);
-    };
-}
-
-
 
 
 class SkillSetItem extends Component {

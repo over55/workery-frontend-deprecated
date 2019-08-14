@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import OrderUnassignAssociateOperationComponent from "../../../components/orders/operations/orderUnassignAssociateOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/orderValidator";
+import { validateUnassignAssociateInput } from "../../../validators/orderValidator";
 import {
     RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
 } from '../../../constants/api';
@@ -110,7 +110,7 @@ class OrderUnassignAssociateOperationContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateUnassignAssociateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
