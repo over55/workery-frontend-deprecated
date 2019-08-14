@@ -76,3 +76,17 @@ export function validateReport4Input(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateReport7Input(data) {
+    let errors = {};
+
+    if (data.associateType === undefined || data.associateType === null || data.associateType === "" ) {
+        errors.associateType = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

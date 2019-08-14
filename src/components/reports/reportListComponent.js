@@ -118,16 +118,16 @@ class ReportListComponent extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    { /* ###################### TODO EVERYTHING BELOW HERE ####################### */}
+
                                     <div className="col-sm-3">
                                         <div className="card box-shadow text-center mx-auto">
                                             <div className="card-custom-top-2">
-                                                <i className="fas fa-home fa-3x"></i>
+                                                <i className="fas fa-birthday-cake fa-3x"></i>
                                             </div>
                                             <div className="card-body">
-                                                <h3 className="card-title">Residential Watch Report</h3>
-                                                <p className="card-text">View RW Report</p>
-                                                <Link to="#" className="btn btn-success btn-lg">
+                                                <h3 className="card-title">Associate Birthdays</h3>
+                                                <p className="card-text">List associates by birthdate.</p>
+                                                <Link to="/report/7" className="btn btn-success btn-lg">
                                                     Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                                 </Link>
                                             </div>
