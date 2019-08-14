@@ -90,3 +90,17 @@ export function validateReport7Input(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateReport8Input(data) {
+    let errors = {};
+
+    if (data.associate === undefined || data.associate === null || data.associate === "" || isNaN(data.associate) ) {
+        errors.associate = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
