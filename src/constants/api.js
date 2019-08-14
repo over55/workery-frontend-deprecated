@@ -22,6 +22,7 @@ export const WORKERY_ORDER_DETAIL_API_ENDPOINT = '/order/';
 export const WORKERY_ORDER_COMMENT_LIST_API_ENDPOINT = '/order-comments';
 export const WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT = '/orders/operation/transfer';
 export const WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT = '/orders/operation/unassign';
+export const WORKERY_ORDER_CLOSE_OPERATION_API_ENDPOINT = '/orders/operation/close';
 export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';
 export const WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT = '/associate/';
 export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
@@ -846,6 +847,61 @@ export const DEACTIVATION_REASON_CHOICES = [
         label: "Client does not want us to contact them"
     },{
         id: 'deactivation-reason-1-choice',
+        selectName: "reason",
+        value: 1,
+        label: "Other"
+    }
+];
+
+
+export const WORK_ORDER_CLOSE_REASON_CHOICES = [
+    {
+        id: 'reason-2-choice',
+        selectName: "reason",
+        value: 2,
+        label: "Quote was too high"
+    },{
+        id: 'reason-3-choice',
+        selectName: "reason",
+        value: 3,
+        label: "Job completed by someone else"
+    },{
+        id: 'reason-5-choice',
+        selectName: "reason",
+        value: 5,
+        label: "Work no longer needed"
+    },{
+        id: 'reason-6-choice',
+        selectName: "reason",
+        value: 6,
+        label: "Client not satisfied with Associate"
+    },{
+        id: 'reason-7-choice',
+        selectName: "reason",
+        value: 7,
+        label: "Client did work themselves"
+    },{
+        id: 'reason-8-choice',
+        selectName: "reason",
+        value: 8,
+        label: "No Associate available"
+    },{
+        id: 'reason-9-choice',
+        selectName: "reason",
+        value: 9,
+        label: "Work environment unsuitable"
+    },{
+        id: 'reason-10-choice',
+        selectName: "reason",
+        value: 10,
+        label: "Client did not return call"
+    },{
+        id: 'reason-16-choice',
+        selectName: "reason",
+        value: 16,
+        label: "Client billing issue"
+    },{
+        id: 'reason-1-choice',
         selectName: "reason",
         value: 1,
         label: "Other"

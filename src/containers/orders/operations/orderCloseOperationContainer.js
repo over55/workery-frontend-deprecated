@@ -4,12 +4,11 @@ import Scroll from 'react-scroll';
 
 import OrderCloseOperationComponent from "../../../components/orders/operations/orderCloseOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/orderValidator";
+import { validateCloseInput } from "../../../validators/orderValidator";
 import {
     RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
 } from '../../../constants/api';
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
+import { postOrderClose } from "../../../actions/orderActions";
 
 
 class OrderCloseOperationContainer extends Component {
@@ -23,23 +22,38 @@ class OrderCloseOperationContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { urlArgument, slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         this.state = {
+            id: id,
             errors: {},
             isLoading: false,
-            urlArgument: urlArgument,
-            slug: slug,
+            reason: "",
+            reasonOther: "",
+            comment: "",
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
-        this.onMultiChange = this.onMultiChange.bind(this);
-        this.onDOBDateTimeChange = this.onDOBDateTimeChange.bind(this);
-        this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onClick = this.onClick.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.job = this.state.id;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -49,126 +63,6 @@ class OrderCloseOperationContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        //TODO: REPLACE THE FOLLOWING CODE WITH API LOADING CODE.
-        if (this.state.slug === 'argyle') {
-            this.setState({
-                typeOf: RESIDENCE_TYPE_OF,
-                slug: 'argyle',
-                number: 1,
-                name: 'Argyle',
-                absoluteUrl: '/order/argyle',
-                firstName: "Shinji",
-                lastName: "Ikari",
-                primaryPhone:  "(111) 111-1111",
-                secondaryPhone: "(222) 222-2222",
-                email: "shinji.ikari@nerv.worldgov",
-                streetNumber: 123,
-                streetName: "Somewhere",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                apartmentUnit: "Upper",
-                streetDirection: "North",
-                streetDirectionOption: "",
-                postalCode: "N6J4X4",
-                watchSlug: "argyle-watch",
-                watchIcon: "home",
-                watchName: "Argyle",
-                watch: "argyle-watch",
-                tags: [],
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        } else if (this.state.slug === 'byron') {
-            this.setState({
-                typeOf: BUSINESS_TYPE_OF,
-                slug: 'byron',
-                number: 1,
-                name: 'Byron',
-                absoluteUrl: '/order/byron',
-                companyName: "City Pop Music",
-                contactFirstName: "Mariya",
-                contactLastName: "Takeuchi",
-                primaryPhone: "(321) 321-3210",
-                secondaryPhone: "",
-                email: "plastic_lover@gmail.com",
-                streetNumber: 666999,
-                streetName: "Shinjuku",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                postalCode: "N6J4X4",
-                apartmentUnit: null,
-                streetDirection: "",
-                streetDirectionOption: "",
-                watchSlug: "byron-watch",
-                watchIcon: "building",
-                watchName: "Byron",
-                watch: "byron-watch",
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        } else if (this.state.slug === 'carling') {
-            this.setState({
-                typeOf: COMMUNITY_CARES_TYPE_OF,
-                slug: 'carling',
-                number: 1,
-                name: 'Carling',
-                absoluteUrl: '/order/carling',
-                firstName: "Rei",
-                lastName: "Ayanami",
-                primaryPhone:  "(123) 123-12345",
-                secondaryPhone: "(987) 987-0987",
-                email: "rei.ayanami@nerv.worldgov",
-                streetNumber: 451,
-                streetName: "Centre",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                apartmentUnit: null,
-                streetDirection: "",
-                streetDirectionOption: "",
-                postalCode: "N6J4X4",
-                watchSlug: "carling-watch",
-                watchIcon: "university",
-                watchName: "Carling",
-                watch: "carling-watch",
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        }
-
-        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
-        this.setState({
-            howDidYouHearData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Word of mouth',
-                    slug: 'word-of-mouth'
-                },{
-                    name: 'Internet',
-                    slug: 'internet'
-                }]
-            },
-            tagsData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Health',
-                    slug: 'health'
-                },{
-                    name: 'Security',
-                    slug: 'security'
-                },{
-                    name: 'Fitness',
-                    slug: 'fitness'
-                }]
-            }
-        });
     }
 
     componentWillUnmount() {
@@ -187,8 +81,8 @@ class OrderCloseOperationContainer extends Component {
 
     onSuccessfulSubmissionCallback(order) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Order has been successfully updated.");
-        this.props.history.push("/order/"+this.state.slug+"/full");
+        this.props.setFlashMessage("success", "Order has been successfully closed.");
+        this.props.history.push("/order/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -219,11 +113,15 @@ class OrderCloseOperationContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateCloseInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.postOrderClose(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -285,89 +183,18 @@ class OrderCloseOperationContainer extends Component {
      */
 
     render() {
-        const { typeOf, errors, urlArgument, slug } = this.state;
-        const {
-            name, companyName, email, firstName, contactFirstName, lastName, contactLastName, primaryPhone, secondaryPhone, streetNumber,
-            streetName, streetType, streetTypeOption, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOption, postalCode,
-            watchSlug, watchIcon, watchName, watch,
-            tags, birthYear, gender, howDidYouHear, howDidYouHearOption, howDidYouHearOther, meaning, expectations, companyEmployeeCount, companyYearsInOperation, companyType,
-            willingToVolunteer, anotherHouseholdOrderRegistered, totalHouseholdCount, under18YearsHouseholdCount,
-        } = this.state;
-
-        // REPLACE THIS CODE WITH API CODE.
-        const watchOptions = [
-            {
-                selectName: 'watch',
-                value: "argyle-watch",
-                label: "Argyle Community Watch"
-            },{
-                selectName: 'watch',
-                value: "byron-watch",
-                label: "Byron Business Watch"
-            },{
-                selectName: 'watch',
-                value: "carling-watch",
-                label: "Carling Retirement Centre Watch"
-            }
-        ];
-
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
-        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
-
+        const { id, errors, reason, reasonOther, comment, isLoading } = this.state;
         return (
             <OrderCloseOperationComponent
-                urlArgument={urlArgument}
-                slug={slug}
-                typeOf={typeOf}
-
-                name={name}
-                companyName={companyName}
-                firstName={firstName}
-                contactFirstName={contactFirstName}
-                lastName={lastName}
-                contactLastName={contactLastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                streetNumber={streetNumber}
-                streetName={streetName}
-                streetType={streetType}
-                streetTypeOption={streetTypeOption}
-                streetTypeOptions={BASIC_STREET_TYPE_CHOICES}
-                streetTypeOther={streetTypeOther}
-                apartmentUnit={apartmentUnit}
-                streetDirection={streetDirection}
-                streetDirectionOptions={STREET_DIRECTION_CHOICES}
-                streetDirectionOption={streetDirectionOption}
-                postalCode={postalCode}
-                watchSlug={watchSlug}
-                watchIcon={watchIcon}
-                watchName={watchName}
-                watchOptions={watchOptions}
-                watch={watch}
-                tags={tags}
-                tagOptions={tagOptions}
-                birthYear={birthYear}
-                gender={gender}
-                howDidYouHear={howDidYouHear}
-                howDidYouHearOption={howDidYouHearOption}
-                howDidYouHearOptions={howDidYouHearOptions}
-                howDidYouHearOther={howDidYouHearOther}
-                meaning={meaning}
-                expectations={expectations}
-                willingToVolunteer={willingToVolunteer}
-                anotherHouseholdOrderRegistered={anotherHouseholdOrderRegistered}
-                totalHouseholdCount={totalHouseholdCount}
-                under18YearsHouseholdCount={under18YearsHouseholdCount}
-                companyEmployeeCount={companyEmployeeCount}
-                companyYearsInOperation={companyYearsInOperation}
-                companyType={companyType}
+                id={id}
+                errors={errors}
+                reason={reason}
+                reasonOther={reasonOther}
+                comment={comment}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
-                onDOBDateTimeChange={this.onDOBDateTimeChange}
+                isLoading={isLoading}
                 onClick={this.onClick}
             />
         );
@@ -384,6 +211,9 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
+        },
+        postOrderClose: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(postOrderClose(postData, onSuccessCallback, onFailureCallback))
         }
     }
 }
