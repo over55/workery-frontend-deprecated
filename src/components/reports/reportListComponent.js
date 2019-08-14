@@ -33,7 +33,7 @@ class ReportListComponent extends Component {
                                     <div className="col-sm-3">
                                         <div className="card box-shadow text-center mx-auto">
                                             <div className="card-custom-top-2">
-                                                <i className="fas fa-money-bill-wave fa-3x"></i>
+                                                <i className="fas fa-cash-register fa-3x"></i>
                                             </div>
                                             <div className="card-body">
                                                 <h3 className="card-title">Service Fees</h3>
