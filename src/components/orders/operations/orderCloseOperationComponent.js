@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { WORK_ORDER_CLOSE_REASON_CHOICES } from "../../../constants/api";
 
@@ -12,8 +13,8 @@ import { WORK_ORDER_CLOSE_REASON_CHOICES } from "../../../constants/api";
 class OrderCloseOperationComponent extends Component {
     render() {
         // Common
-        const { id, errors, reason, comment, isLoading, onClick, onTextChange, onSelectChange, order } = this.props;
-
+        const { id, errors, reason, reasonOther, comment, isLoading, onClick, onTextChange, onSelectChange, order } = this.props;
+        const isReasonOther = reason === 1;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -94,6 +95,19 @@ class OrderCloseOperationComponent extends Component {
                                 error={errors.reason}
                                 onSelectChange={onSelectChange}
                             />
+
+                            {isReasonOther &&
+                                <BootstrapInput
+                                    inputClassName="form-control form-control-lg"
+                                    borderColour="border-primary"
+                                    error={errors.reasonOther}
+                                    label="Reason (Other) (*)"
+                                    onChange={onTextChange}
+                                    value={reasonOther}
+                                    name="reasonOther"
+                                    type="text"
+                                />
+                            }
 
                             <BootstrapTextarea
                                 name="comment"
