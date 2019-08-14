@@ -17,6 +17,7 @@ export default class OrderFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const { id, order, errors, flashMessage } = this.props;
+        const isCancelled = order.state === "cancelled";
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -281,20 +282,31 @@ export default class OrderFullRetrieveComponent extends Component {
                                                     </Link>
                                                 </li>
                                             }
+                                            {isCancelled
+                                                ?""
+                                                :<li>
+                                                    <Link to={`/order/${order.id}/transfer`}>
+                                                        Transfer&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
+                                            {isCancelled
+                                                ?""
+                                                :<li>
+                                                    <Link to={`/order/${order.id}/postpone`}>
+                                                        Postpone&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
                                             <li>
-                                                <Link to={`/order/${order.id}/transfer`}>
-                                                    Transfer&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/order/${order.id}/postpone`}>
-                                                    Postpone&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/order/${order.id}/close`}>
-                                                    Close&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
+                                                {isCancelled
+                                                    ?<Link to={`/order/${order.id}/reopen`}>
+                                                        Re-open&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                    :<Link to={`/order/${order.id}/close`}>
+                                                        Close&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                }
                                             </li>
                                         </ul>
                                     </td>
