@@ -47,17 +47,18 @@ class ReportListComponent extends Component {
                                     <div className="col-sm-3">
                                         <div className="card box-shadow text-center mx-auto">
                                             <div className="card-custom-top-2">
-                                                <i className="fas fa-horse-head fa-3x"></i>
+                                                <i className="fas fa-address-card fa-3x"></i>
                                             </div>
                                             <div className="card-body">
-                                                <h3 className="card-title">Area Coordinators Report</h3>
-                                                <p className="card-text">View AC Report</p>
-                                                <Link to="#" className="btn btn-success btn-lg">
+                                                <h3 className="card-title">Associate Jobs</h3>
+                                                <p className="card-text">List jobs by Associate.</p>
+                                                <Link to="/report/2" className="btn btn-success btn-lg">
                                                     Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                                 </Link>
                                             </div>
                                         </div>
                                     </div>
+                                    { /* ###################### TODO EVERYTHING BELOW HERE ####################### */}
                                     <div className="col-sm-3">
                                         <div className="card box-shadow text-center mx-auto">
                                             <div className="card-custom-top-2">

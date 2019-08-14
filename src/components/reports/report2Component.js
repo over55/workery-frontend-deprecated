@@ -8,10 +8,10 @@ import { BootstrapSingleSelect } from "../bootstrap/bootstrapSingleSelect";
 import { BootstrapPageLoadingAnimation } from "../bootstrap/bootstrapPageLoadingAnimation";
 
 
-export default class Report1Component extends Component {
+export default class Report2Component extends Component {
     render() {
         const {
-            fromDate, toDate, jobState, errors, isLoading,
+            associate, associateOptions, isAssociatesLoading, fromDate, toDate, jobState, errors, isLoading,
             onClick, onSelectChange, onFromDateChange, onToDateChange
         } = this.props;
 
@@ -28,7 +28,7 @@ export default class Report1Component extends Component {
                             <Link to={`/reports`}><i className="fas fa-chart-bar"></i>&nbsp;Reports</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-cash-register"></i>&nbsp;Due Service Fees Report
+                            <i className="fas fa-address-card"></i>&nbsp;Assocate Jobs Report
                         </li>
                     </ol>
                 </nav>
@@ -36,11 +36,23 @@ export default class Report1Component extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1><i className="fas fa-cash-register"></i>&nbsp;Due Service Fees Report</h1>
+                            <h1><i className="fas fa-address-card"></i>&nbsp;Assocate Jobs Report</h1>
 
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Associate (*)"
+                                name="associate"
+                                defaultOptionLabel="Please select the associate."
+                                options={associateOptions}
+                                value={associate}
+                                error={errors.associate}
+                                onSelectChange={onSelectChange}
+                                isLoading={isAssociatesLoading}
+                            />
 
                             <BootstrapDatePicker
                                 label="From date (*)"
@@ -109,6 +121,21 @@ export const JOB_STATE_CHOICES = [
         selectName: "jobState",
         value: 'in_progress',
         label: "In progress"
+    },{
+        id: 'jobState-5-choice',
+        selectName: "jobState",
+        value: 'pending',
+        label: "Pending"
+    },{
+        id: 'jobState-6-choice',
+        selectName: "jobState",
+        value: 'cancelled',
+        label: "Cancelled"
+    },{
+        id: 'jobState-7-choice',
+        selectName: "jobState",
+        value: 'ongoing',
+        label: "Ongoing"
     },{
         id: 'jobState-1-choice',
         selectName: "jobState",
