@@ -184,9 +184,11 @@ class OrderCloseOperationContainer extends Component {
 
     render() {
         const { id, errors, reason, reasonOther, comment, isLoading } = this.state;
+        const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
             <OrderCloseOperationComponent
                 id={id}
+                order={order}
                 errors={errors}
                 reason={reason}
                 reasonOther={reasonOther}
@@ -204,6 +206,7 @@ class OrderCloseOperationContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        orderDetail: store.orderDetailState,
     };
 }
 

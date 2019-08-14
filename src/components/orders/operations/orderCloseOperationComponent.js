@@ -12,7 +12,7 @@ import { WORK_ORDER_CLOSE_REASON_CHOICES } from "../../../constants/api";
 class OrderCloseOperationComponent extends Component {
     render() {
         // Common
-        const { id, errors, reason, comment, isLoading, onClick, onTextChange, onSelectChange } = this.props;
+        const { id, errors, reason, comment, isLoading, onClick, onTextChange, onSelectChange, order } = this.props;
 
         return (
             <main id="main" role="main">
@@ -36,6 +36,48 @@ class OrderCloseOperationComponent extends Component {
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
+
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-table"></i>&nbsp;Job Quick Info
+                                    </th>
+                                </tr>
+                                {order.customerFullName &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Client</th>
+                                        <td>
+                                            <Link to={`/customer/${order.customer}`} target="_blank">
+                                                {order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate</th>
+                                    <td>
+                                        {order.associateFullName
+                                            ?<Link to={`/customer/${order.associate}`} target="_blank">
+                                                {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Comments</th>
+                                    <td>
+                                        <Link to={`/order/${order.id}/comments`} target="_blank">
+                                            View Comments&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <br />
+
                         <form>
                             <h1><i className="fas fa-times"></i>&nbsp;Close Order</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
