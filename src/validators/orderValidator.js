@@ -240,3 +240,16 @@ export function validateCloseInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+export function validateReopenInput(data) {
+    let errors = {};
+
+    if (data.reason === undefined || data.reason === null || data.reason === "" ) {
+        errors.reason = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

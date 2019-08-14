@@ -7,6 +7,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class OrderLiteRetrieveComponent extends Component {
     render() {
         const { id, order, flashMessage } = this.props;
+        const isCancelled = order.state === "cancelled";
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -193,20 +194,31 @@ export default class OrderLiteRetrieveComponent extends Component {
                                                     </Link>
                                                 </li>
                                             }
+                                            {isCancelled
+                                                ?""
+                                                :<li>
+                                                    <Link to={`/order/${order.id}/transfer`}>
+                                                        Transfer&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
+                                            {isCancelled
+                                                ?""
+                                                :<li>
+                                                    <Link to={`/order/${order.id}/postpone`}>
+                                                        Postpone&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
                                             <li>
-                                                <Link to={`/order/${order.id}/transfer`}>
-                                                    Transfer&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/order/${order.id}/postpone`}>
-                                                    Postpone&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/order/${order.id}/close`}>
-                                                    Close&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
+                                                {isCancelled
+                                                    ?<Link to={`/order/${order.id}/reopen`}>
+                                                        Re-open&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                    :<Link to={`/order/${order.id}/close`}>
+                                                        Close&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                }
                                             </li>
                                         </ul>
                                     </td>

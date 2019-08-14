@@ -41,7 +41,7 @@ class OrderCloseOperationComponent extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-table"></i>&nbsp;Job Quick Info
+                                        <i className="fas fa-table"></i>&nbsp;Quick Info
                                     </th>
                                 </tr>
                                 {order.customerFullName &&
