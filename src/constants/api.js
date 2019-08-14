@@ -60,6 +60,7 @@ export const WORKERY_REPORT_ONE_CSV_DOWNLOAD_API_ENDPOINT = 'report/1/csv-downlo
 export const WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT = 'report/2/csv-download';
 export const WORKERY_REPORT_THREE_CSV_DOWNLOAD_API_ENDPOINT = 'report/3/csv-download';
 export const WORKERY_REPORT_FOUR_CSV_DOWNLOAD_API_ENDPOINT = 'report/4/csv-download';
+export const WORKERY_REPORT_FIVE_CSV_DOWNLOAD_API_ENDPOINT = 'report/5/csv-download';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';
