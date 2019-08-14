@@ -27,7 +27,7 @@ export default class Report8Component extends Component {
                             <Link to={`/reports`}><i className="fas fa-chart-bar"></i>&nbsp;Reports</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-address-card"></i>&nbsp;Assocate Jobs Report
+                            <i className="fas fa-hand-holding"></i>&nbsp;Assocate Skill Sets Report
                         </li>
                     </ol>
                 </nav>
@@ -35,7 +35,7 @@ export default class Report8Component extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1><i className="fas fa-address-card"></i>&nbsp;Assocate Jobs Report</h1>
+                            <h1><i className="fas fa-hand-holding"></i>&nbsp;Assocate Skill Sets Report</h1>
 
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
