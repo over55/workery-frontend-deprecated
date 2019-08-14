@@ -58,6 +58,7 @@ export const WORKERY_ACTIVITY_SHEET_LIST_API_ENDPOINT = '/activity-sheets';
 export const WORKERY_ACTIVITY_SHEET_DETAIL_API_ENDPOINT = '/activity-sheet/';
 export const WORKERY_REPORT_ONE_CSV_DOWNLOAD_API_ENDPOINT = 'report/1/csv-download';
 export const WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT = 'report/2/csv-download';
+export const WORKERY_REPORT_THREE_CSV_DOWNLOAD_API_ENDPOINT = 'report/3/csv-download';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';
