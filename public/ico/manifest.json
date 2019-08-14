@@ -1,6 +1,12 @@
 {
- "name": "App",
+ "short_name": "Workery",
+ "name": "Workery App",
  "icons": [
+  {
+    "src": "favicon.ico",
+    "sizes": "16x16",
+    "type": "image/x-icon"
+  },
   {
    "src": "\/android-icon-36x36.png",
    "sizes": "36x36",
@@ -37,5 +43,8 @@
    "type": "image\/png",
    "density": "4.0"
   }
- ]
+ ],
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }

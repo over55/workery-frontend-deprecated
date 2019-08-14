@@ -47,6 +47,7 @@ class LoginComponent extends Component {
                         <BootstrapInputGroup
                             layoutSize="large"
                             labelIconClassName="fa fa-envelope color-blue"
+							spanPrependClassName="input-group-text input-group-addon-e"	
                             name="email"
                             type="email"
                             placeholder="Email Address"
@@ -59,6 +60,7 @@ class LoginComponent extends Component {
                         <BootstrapInputGroup
                             layoutSize="large"
                             labelIconClassName="fa fa-key color-blue"
+							spanPrependClassName="input-group-text input-group-addon-p" 
                             name="password"
                             type="password"
                             placeholder="Password"
