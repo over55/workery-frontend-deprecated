@@ -66,6 +66,13 @@ export const WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/7/csv-down
 export const WORKERY_REPORT_EIGHT_CSV_DOWNLOAD_API_ENDPOINT = 'report/8/csv-download';
 export const WORKERY_REPORT_NINE_CSV_DOWNLOAD_API_ENDPOINT = 'report/9/csv-download';
 export const WORKERY_REPORT_TEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/10/csv-download';
+export const WORKERY_REPORT_ELEVEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/11/csv-download';
+export const WORKERY_REPORT_TWELVE_CSV_DOWNLOAD_API_ENDPOINT = 'report/12/csv-download';
+export const WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/13/csv-download';
+export const WORKERY_REPORT_FOURTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/14/csv-download';
+export const WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/15/csv-download';
+export const WORKERY_REPORT_SIXTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/16/csv-download';
+
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';

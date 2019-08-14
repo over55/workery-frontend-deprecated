@@ -129,6 +129,7 @@ import Report7Container from "./reports/report7Container";
 import Report8Container from "./reports/report8Container";
 import Report9Container from "./reports/report9Container";
 import Report10Container from "./reports/report10Container";
+import Report11Container from "./reports/report11Container";
 
 // Financials
 import FinancialListContainer from "./financials/list/financialListContainer";
@@ -332,6 +333,7 @@ class AppContainer extends React.Component {
                                 <Route path="/report/8" exact component={requiresAuth(Report8Container)} />
                                 <Route path="/report/9" exact component={requiresAuth(Report9Container)} />
                                 <Route path="/report/10" exact component={requiresAuth(Report10Container)} />
+                                <Route path="/report/11" exact component={requiresAuth(Report11Container)} />
 
                                 { /* FINANCIALS */ }
                                 <Route path="/financials" exact component={requiresAuth(FinancialListContainer)} />
