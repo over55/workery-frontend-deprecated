@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import Report11Component from "../../components/reports/report3Component";
+import Report11Component from "../../components/reports/report11Component";
 import { validateReport11Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_ELEVEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
