@@ -149,6 +149,21 @@ class ReportListComponent extends Component {
                                         </div>
                                     </div>
 
+                                    <div className="col-sm-3">
+                                        <div className="card box-shadow text-center mx-auto">
+                                            <div className="card-custom-top-2">
+                                                <i className="fas fa-user-circle fa-3x"></i>
+                                            </div>
+                                            <div className="card-body">
+                                                <h3 className="card-title">Client Addresses</h3>
+                                                <p className="card-text">List client addresses.</p>
+                                                <Link to="/report/9" className="btn btn-success btn-lg">
+                                                    Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
