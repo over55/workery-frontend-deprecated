@@ -130,7 +130,7 @@ class Report1Container extends Component {
             // Add minor delay and then run to remove the button ``disable`` state
             // so the user is able to click the download button again.
             setTimeout(() => {
-                this.setState({ isLoading: false, })
+                this.setState({ isLoading: false, errors: [], })
             }, 100); // 0.10 seconds.
 
         // CASE 2 OF 2: Validation was a failure.

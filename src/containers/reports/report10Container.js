@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import Report7Component from "../../components/reports/report7Component";
-import { validateReport7Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import Report10Component from "../../components/reports/report10Component";
+import { validateReport10Input } from "../../validators/reportValidator";
+import { WORKERY_REPORT_TEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 
 
-class Report7Container extends Component {
+class Report10Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -17,12 +17,15 @@ class Report7Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            associateType: "",
+            fromDate: "",
+            toDate: "",
             errors: {},
             isLoading: false
         }
 
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onFromDateChange = this.onFromDateChange.bind(this);
+        this.onToDateChange = this.onToDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -84,12 +87,20 @@ class Report7Container extends Component {
         });
     }
 
+    onFromDateChange(dateObj) {
+        this.setState({ fromDate: dateObj, });
+    }
+
+    onToDateChange(dateObj) {
+        this.setState({ toDate: dateObj, });
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateReport7Input(this.state);
+        const { errors, isValid } = validateReport10Input(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -104,8 +115,10 @@ class Report7Container extends Component {
 
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
-            const { associateType } = this.state;
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_ENDPOINT + "?filter_type="+associateType;
+            const { fromDate, toDate } = this.state;
+            const toDateString = toDate.toISOString().slice(0, 10);
+            const fromDateString = fromDate.toISOString().slice(0, 10);
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TEN_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString;
             console.log(url);
 
             // The following code will open up a new browser tab and load up the
@@ -132,17 +145,20 @@ class Report7Container extends Component {
 
     render() {
         const {
-            associateType,
+            fromDate, toDate,
             errors, isLoading
         } = this.state;
 
 
         return (
-            <Report7Component
-                associateType={associateType}
+            <Report10Component
+                fromDate={fromDate}
+                toDate={toDate}
                 isLoading={isLoading}
                 errors={errors}
                 onSelectChange={this.onSelectChange}
+                onFromDateChange={this.onFromDateChange}
+                onToDateChange={this.onToDateChange}
                 onClick={this.onClick}
                 flashMessage={this.props.flashMessage}
             />
@@ -169,4 +185,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Report7Container);
+)(Report10Container);
