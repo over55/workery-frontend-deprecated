@@ -239,6 +239,51 @@ class ReportListComponent extends Component {
                                         </div>
                                     </div>
 
+                                    <div className="col-sm-3">
+                                        <div className="card box-shadow text-center mx-auto">
+                                            <div className="card-custom-top-2">
+                                                <i className="fas fa-calendar-times fa-3x"></i>
+                                            </div>
+                                            <div className="card-body">
+                                                <h3 className="card-title">Associate Expiry Dates</h3>
+                                                <p className="card-text">List upcoming expiry dates.</p>
+                                                <Link to="/report/15" className="btn btn-success btn-lg">
+                                                    Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-3">
+                                        <div className="card box-shadow text-center mx-auto">
+                                            <div className="card-custom-top-2">
+                                                <i className="fas fa-globe fa-3x"></i>
+                                            </div>
+                                            <div className="card-body">
+                                                <h3 className="card-title">How Users Find Us (long)</h3>
+                                                <p className="card-text">List how users discovered us.</p>
+                                                <Link to="/report/16" className="btn btn-success btn-lg">
+                                                    Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-3">
+                                        <div className="card box-shadow text-center mx-auto">
+                                            <div className="card-custom-top-2">
+                                                <i className="fas fa-globe fa-3x"></i>
+                                            </div>
+                                            <div className="card-body">
+                                                <h3 className="card-title">How Users Find Us (short)</h3>
+                                                <p className="card-text">List how users discovered us.</p>
+                                                <Link to="/report/17" className="btn btn-success btn-lg">
+                                                    Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
