@@ -181,3 +181,20 @@ export function validateReport14Input(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateReport15Input(data) {
+    let errors = {};
+
+    if (data.expiryDateType === undefined || data.expiryDateType === null || data.expiryDateType === "" ) {
+        errors.expiryDateType = 'This field is required';
+    }
+    if (data.daysBeforeExpiry === undefined || data.daysBeforeExpiry === null || data.daysBeforeExpiry === "" || isNaN(data.daysBeforeExpiry) ) {
+        errors.daysBeforeExpiry = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
