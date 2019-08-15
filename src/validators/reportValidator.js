@@ -198,3 +198,23 @@ export function validateReport15Input(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateReport16Input(data) {
+    let errors = {};
+
+    if (data.fromDate === undefined || data.fromDate === null || data.fromDate === "" || isNaN(data.fromDate) ) {
+        errors.fromDate = 'This field is required';
+    }
+    if (data.toDate === undefined || data.toDate === null || data.toDate === "" || isNaN(data.toDate) ) {
+        errors.toDate = 'This field is required';
+    }
+    if (data.userType === undefined || data.userType === null || data.userType === "" ) {
+        errors.userType = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
