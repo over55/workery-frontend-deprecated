@@ -8,7 +8,7 @@ import { BootstrapSingleSelect } from "../bootstrap/bootstrapSingleSelect";
 import { BootstrapPageLoadingAnimation } from "../bootstrap/bootstrapPageLoadingAnimation";
 
 
-export default class Report16Component extends Component {
+export default class Report17Component extends Component {
     render() {
         const {
             fromDate, toDate, userType, errors, isLoading,
@@ -28,7 +28,7 @@ export default class Report16Component extends Component {
                             <Link to={`/reports`}><i className="fas fa-chart-bar"></i>&nbsp;Reports</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-globe"></i>&nbsp;How Users Find Us Report (Long)
+                            <i className="fas fa-globe"></i>&nbsp;How Users Find Us Report (Short)
                         </li>
                     </ol>
                 </nav>
