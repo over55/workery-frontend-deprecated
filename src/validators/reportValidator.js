@@ -142,8 +142,8 @@ export function validateReport11Input(data) {
 export function validateReport13Input(data) {
     let errors = {};
 
-    if (data.associate === undefined || data.associate === null || data.associate === "" || isNaN(data.associate) ) {
-        errors.associate = 'This field is required';
+    if (data.skillSets === undefined || data.skillSets === null || data.skillSets === "" || isEmpty(data.skillSets) ) {
+        errors.skillSets = 'This field is required';
     }
     if (data.fromDate === undefined || data.fromDate === null || data.fromDate === "" || isNaN(data.fromDate) ) {
         errors.fromDate = 'This field is required';

@@ -3,15 +3,18 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../bootstrap/bootstrapAlert";
+import { BootstrapSingleSelect } from '../bootstrap/bootstrapSingleSelect';
 import { BootstrapDatePicker } from '../bootstrap/bootstrapDatePicker';
-import { BootstrapSingleSelect } from "../bootstrap/bootstrapSingleSelect";
+import { BootstrapMultipleSelect } from "../bootstrap/bootstrapMultipleSelect";
+
 import { BootstrapPageLoadingAnimation } from "../bootstrap/bootstrapPageLoadingAnimation";
 
 
 export default class Report13Component extends Component {
     render() {
         const {
-            associate, associateOptions, isAssociatesLoading, fromDate, toDate, jobState, errors, isLoading,
+            skillSets, skillSetOptions, onSkillSetMultiChange, isSkillSetsLoading,
+            isLoading, errors, fromDate, toDate, jobState,
             onClick, onSelectChange, onFromDateChange, onToDateChange
         } = this.props;
 
@@ -42,16 +45,16 @@ export default class Report13Component extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapSingleSelect
+                            <BootstrapMultipleSelect
                                 borderColour="border-primary"
-                                label="Associate (*)"
-                                name="associate"
-                                defaultOptionLabel="Please select the associate."
-                                options={associateOptions}
-                                value={associate}
-                                error={errors.associate}
-                                onSelectChange={onSelectChange}
-                                isLoading={isAssociatesLoading}
+                                label="Skill Set (*)"
+                                name="skillSets"
+                                defaultOptionLabel="Please select the skills."
+                                options={skillSetOptions}
+                                selectedOptions={skillSets}
+                                error={errors.skillSets}
+                                onMultiChange={onSkillSetMultiChange}
+                                isLoading={isSkillSetsLoading}
                             />
 
                             <BootstrapDatePicker

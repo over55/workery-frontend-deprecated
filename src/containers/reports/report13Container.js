@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import Report13Component from "../../components/reports/report2Component";
-import { pullAssociateList, getAssociateReactSelectOptions } from "../../actions/associateActions";
+import Report13Component from "../../components/reports/report13Component";
+import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../actions/skillSetActions";
 import { validateReport13Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 
 
@@ -18,9 +18,9 @@ class Report13Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            associate: "",
-            associateOptions: [],
-            isAssociatesLoading: true,
+            skillSets: [],
+            skillSetOptions: [],
+            isSkillSetsLoading: true,
             fromDate: "",
             toDate: "",
             jobState: "",
@@ -28,11 +28,12 @@ class Report13Container extends Component {
             isLoading: false
         }
 
+        this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onFromDateChange = this.onFromDateChange.bind(this);
         this.onToDateChange = this.onToDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onAssociatesListCallback = this.onAssociatesListCallback.bind(this);
+        this.onSkillSetsListCallback = this.onSkillSetsListCallback.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -45,9 +46,9 @@ class Report13Container extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        const parametersMap = new Map();
-        parametersMap.set('state', 1);
-        this.props.pullAssociateList(1, 100, parametersMap, this.onAssociatesListCallback, null);
+        // DEVELOPERS NOTE: Fetch our skillset list.
+        const filtersMap = new Map();
+        this.props.pullSkillSetList(1, 1000, filtersMap, this.onSkillSetsListCallback);
     }
 
     componentWillUnmount() {
@@ -64,10 +65,20 @@ class Report13Container extends Component {
      *------------------------------------------------------------
      */
 
-    onAssociatesListCallback(associateList) {
+     onSkillSetMultiChange(...args) {
+         // Extract the select options from the parameter.
+         const selectedOptions = args[0];
+
+         // Set all the skill sets we have selected to the STORE.
+         this.setState({
+             skillSets: selectedOptions,
+         });
+    }
+
+    onSkillSetsListCallback(response) {
         this.setState({
-            associateOptions: getAssociateReactSelectOptions(associateList),
-            isAssociatesLoading: false,
+            skillSetOptions: getSkillSetReactSelectOptions(response),
+            isSkillSetsLoading: false,
         });
     }
 
@@ -132,10 +143,26 @@ class Report13Container extends Component {
 
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
-            const { associate, fromDate, toDate, jobState } = this.state;
+            const { skillSets, fromDate, toDate, jobState } = this.state;
             const toDateString = toDate.toISOString().slice(0, 10);
             const fromDateString = fromDate.toISOString().slice(0, 10);
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate;
+            console.log(skillSets);
+
+            let skillsetIds = "";
+            for (let i = 0; i < skillSets.length; i++) {
+                let value = skillSets[i].value;
+                console.log(value);
+                skillsetIds = skillsetIds + value + ",";
+            }
+
+            // If there are more then one keys then we must remove the last comma character.
+            let url = null;
+            if (skillSets.length > 0) {
+                skillsetIds = skillsetIds.slice(0, -1); // Removed last character.
+            }
+            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/en/" + WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?skillset_ids=" + skillsetIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+
+            // For debugging purposes only.
             console.log(url);
 
             // The following code will open up a new browser tab and load up the
@@ -162,16 +189,17 @@ class Report13Container extends Component {
 
     render() {
         const {
-            associate, associateOptions, isAssociatesLoading, fromDate, toDate, jobState,
+            skillSets, skillSetOptions, isSkillSetsLoading, fromDate, toDate, jobState,
             errors, isLoading
         } = this.state;
 
 
         return (
             <Report13Component
-                associate={associate}
-                associateOptions={associateOptions}
-                isAssociatesLoading={isAssociatesLoading}
+                skillSets={skillSets}
+                skillSetOptions={skillSetOptions}
+                isSkillSetsLoading={isSkillSetsLoading}
+                onSkillSetMultiChange={this.onSkillSetMultiChange}
                 fromDate={fromDate}
                 toDate={toDate}
                 jobState={jobState}
@@ -191,14 +219,15 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        skillSets: store.skillSetsState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullAssociateList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullSkillSetList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullAssociateList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullSkillSetList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
