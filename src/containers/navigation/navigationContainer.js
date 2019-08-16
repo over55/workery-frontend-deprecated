@@ -64,6 +64,11 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         title: "Reports",
         url: "/reports"
     },{
+        id: "full-toolbox",
+        icon: "toolbox",
+        title: "Skill Sets",
+        url: "/skill-sets"
+    },{
         id: "full-partners",
         icon: "handshake",
         title: "Parnters",
@@ -123,6 +128,11 @@ const AUTH_FRONTLINE_STAFF_MENU_DATA = [
         icon: "crown",
         title: "Associates",
         url: "/associates"
+    },{
+        id: "full-toolbox",
+        icon: "toolbox",
+        title: "Skill Sets",
+        url: "/skill-sets"
     },{
         id: "full-help",
         icon: "question-circle",
