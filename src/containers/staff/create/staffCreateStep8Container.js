@@ -177,7 +177,8 @@ class StaffCreateStep8Container extends Component {
         postData.addressRegion = this.state.region;
 
         // (12) birthdate
-        postData.birthdate = this.state.dateOfBirth;
+        const birthdateMoment = moment(this.state.dateOfBirth);
+        postData.birthdate = birthdateMoment.format("YYYY-MM-DD")
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

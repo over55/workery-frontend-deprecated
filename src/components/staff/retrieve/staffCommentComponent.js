@@ -41,7 +41,7 @@ export default class StaffCommentComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Staff</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -55,12 +55,7 @@ export default class StaffCommentComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to={`/staff/${id}/orders`}>
-                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey active">
+                        <div id="step-3" className="st-grey active">
                             <strong>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </strong>

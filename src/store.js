@@ -11,12 +11,15 @@ import {
     SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
     DEACTIVATED_CLIENT_LIST_SUCCESS, PARTNER_LIST_SUCCESS, CLIENT_COMMENT_LIST_REQUEST,
     ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS,
-    PARTNER_COMMENT_LIST_SUCCESS
+    PARTNER_COMMENT_LIST_SUCCESS, STAFF_COMMENT_LIST_SUCCESS
 } from "./constants/actionTypes";
+import { activitySheetItemListReducer, activitySheetItemDetailReducer } from "./reducers/activitySheetItemReducers";
+import { associateCommentListReducer } from "./reducers/associateCommentReducers";
 import { associateListReducer, associateDetailReducer } from "./reducers/associateReducers";
 import { awayLogListReducer, awayLogDetailReducer } from "./reducers/awayLogReducers";
 import { bulletinBoardItemListReducer, bulletinBoardItemDetailReducer } from "./reducers/bulletinBoardItemReducers";
 import { clientListReducer, clientDetailReducer } from "./reducers/clientReducers";
+import { clientCommentListReducer } from "./reducers/clientCommentReducers";
 import dashboardReducer from "./reducers/dashboardReducer";
 import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
 import flashMessageReducer from "./reducers/flashMessageReducer";
@@ -29,23 +32,24 @@ import { partnerCommentListReducer } from "./reducers/partnerCommentReducers";
 import { serviceFeeListReducer, serviceFeeDetailReducer } from "./reducers/serviceFeeReducers";
 import { skillSetListReducer, skillSetDetailReducer } from "./reducers/skillSetReducers";
 import { staffListReducer, staffDetailReducer } from "./reducers/staffReducers";
+import { staffCommentListReducer } from "./reducers/staffCommentReducers";
 import { tagListReducer, tagDetailReducer } from "./reducers/tagReducers";
 import { tenantListReducer, tenantDetailReducer } from "./reducers/tenantReducer";
 import userReducer from "./reducers/userReducer";
 import { taskListReducer, taskDetailReducer } from "./reducers/taskReducers";
 import financialListReducer from "./reducers/financialReducers";
 import { vehicleTypeListReducer, vehicleTypeDetailReducer } from "./reducers/vehicleTypeReducers";
-import { clientCommentListReducer } from "./reducers/clientCommentReducers";
-import { associateCommentListReducer } from "./reducers/associateCommentReducers";
-import { activitySheetItemListReducer, activitySheetItemDetailReducer } from "./reducers/activitySheetItemReducers";
 
 
 // Combine Reducers
 const appReducer = combineReducers({
+    activitySheetItemListState: activitySheetItemListReducer, activitySheetItemDetailState: activitySheetItemDetailReducer,
     associateListState: associateListReducer, associateDetailState: associateDetailReducer,
+    associateCommentListState: associateCommentListReducer,
     awayLogListState: awayLogListReducer, awayLogDetailState: awayLogDetailReducer,
     bulletinBoardItemListState: bulletinBoardItemListReducer, bulletinBoardItemDetailState: bulletinBoardItemDetailReducer,
     clientListState: clientListReducer, clientDetailState: clientDetailReducer,
+    clientCommentListState: clientCommentListReducer,
     dashboardState: dashboardReducer,
     deactivatedClientListState: deactivatedClientListReducer,
     flashMessageState: flashMessageReducer,
@@ -58,15 +62,13 @@ const appReducer = combineReducers({
     serviceFeeListState: serviceFeeListReducer, serviceFeeDetailState: serviceFeeDetailReducer,
     skillSetListState: skillSetListReducer, skillSetDetailState: skillSetDetailReducer,
     staffListState: staffListReducer, staffDetailState: staffDetailReducer,
+    staffCommentListState: staffCommentListReducer,
     tagListState: tagListReducer, tagDetailState: tagDetailReducer,
     taskListState: taskListReducer, taskDetailState: taskDetailReducer,
     tenantListState: tenantListReducer, tenantDetailState: tenantDetailReducer,
     userState: userReducer,
     financialListState: financialListReducer,
     vehicleTypeListState: vehicleTypeListReducer, vehicleTypeDetailState: vehicleTypeDetailReducer,
-    clientCommentListState: clientCommentListReducer,
-    associateCommentListState: associateCommentListReducer,
-    activitySheetItemListState: activitySheetItemListReducer, activitySheetItemDetailState: activitySheetItemDetailReducer,
 });
 
 
@@ -100,7 +102,8 @@ const localStorageMiddleware = ({ getState }) => {
             TASK_LIST_SUCCESS, FINANCIAL_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS,
             SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
             DEACTIVATED_CLIENT_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, TAG_LIST_SUCCESS, ASSOCIATE_LIST_SUCCESS,
-            CLIENT_COMMENT_LIST_REQUEST, ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS
+            CLIENT_COMMENT_LIST_REQUEST, ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS,
+            STAFF_COMMENT_LIST_SUCCESS
         ].includes(result.type)) {
             // console.log("De-hydrating store...");
             localStorage.setItem(APP_STATE, JSON.stringify(getState()))

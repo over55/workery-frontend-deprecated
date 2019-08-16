@@ -108,6 +108,7 @@ import StaffSearchResultContainer from "./staff/staffSearchResultContainer";
 import StaffUpdateContainer from "./staff/update/staffUpdateContainer";
 import StaffFullRetrieveContainer from "./staff/retrieve/staffFullRetrieveContainer";
 import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContainer";
+import StaffCommentContainer from "./staff/retrieve/staffCommentContainer";
 import StaffCreateStep1Container from "./staff/create/staffCreateStep1Container";
 import StaffCreateStep2Container from "./staff/create/staffCreateStep2Container";
 import StaffCreateStep3Container from "./staff/create/staffCreateStep3Container";
@@ -330,6 +331,7 @@ class AppContainer extends React.Component {
                                 <Route path="/staff/search-results" exact component={requiresAuth(StaffSearchResultContainer)} />
                                 <Route path="/staff/:id" exact component={requiresAuth(StaffLiteRetrieveContainer)} />
                                 <Route path="/staff/:id/full" exact component={requiresAuth(StaffFullRetrieveContainer)} />
+                                <Route path="/staff/:id/comments" exact component={requiresAuth(StaffCommentContainer)} />
                                 <Route path="/staff/:id/update" exact component={requiresAuth(StaffUpdateContainer)} />
 
                                 { /* REPORTS */ }
