@@ -174,7 +174,10 @@ class StaffCreateStep8Container extends Component {
         postData.addressLocality = this.state.locality;
 
         // (11) Address Region: This field is required.
-        postData.addressRegion = this.state.region
+        postData.addressRegion = this.state.region;
+
+        // (12) birthdate
+        postData.birthdate = this.state.dateOfBirth;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

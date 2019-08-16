@@ -1,12 +1,13 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
+    MANAGEMENT_GROUP_ID,
+    FRONTLINE_GROUP_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -15,10 +16,7 @@ export default class StaffFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const { id, staff, flashMessage, errors, onStaffClick } = this.props;
-        const { typeOf } = staff;
-        const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
-        const isActiveState = staff.state === "active";
-        const isRezStaff = typeOf === 2;
+        const { groupDescription } = staff;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -82,7 +80,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Type of Staff</th>
-                                    <td>{typeOfLabel}</td>
+                                    <td>{groupDescription}</td>
                                 </tr>
 
 
@@ -111,8 +109,12 @@ export default class StaffFullRetrieveComponent extends Component {
                                     <td><a href={`tel:${staff.e164OtherTelephone}`}>{staff.otherTelephone}</a></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Email</th>
+                                    <th scope="row" className="bg-light">Work Email</th>
                                     <td><a href={`mailto:${staff.email}`}>{staff.email}</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Personal Email</th>
+                                    <td><a href={`mailto:${staff.personalEmail}`}>{staff.personalEmail}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Ok to Email?</th>
@@ -149,6 +151,49 @@ export default class StaffFullRetrieveComponent extends Component {
 
 
 
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-user-tie"></i>&nbsp;Account
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Police Check Expiry</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{staff.policeCheck}</Moment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Emergency Contact Full-Name</th>
+                                    <td>{staff.emergencyContactName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Emergency Contact Relationship</th>
+                                    <td>{staff.emergencyContactRelationship}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Emergency Contact Contact Telephone</th>
+                                    <td>{staff.emergencyContactTelephone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Emergency Contact Alternative Telephone</th>
+                                    <td>{staff.emergencyContactAlternativeTelephone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{staff.description}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Is Account Active?</th>
+                                    <td>
+                                        {staff.state
+                                            ?"Yes"
+                                            :"No"
+                                        }
+                                    </td>
+                                </tr>
+
+
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
@@ -169,7 +214,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {staff.tags && staff.tags.map(
+                                        {staff.prettyTags && staff.prettyTags.map(
                                             (tag) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </td>
@@ -227,6 +272,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                                     Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
+                                            { /*
                                             <li>
                                                 {isActiveState
                                                     ?<Link to={`/staff/${id}/deactivation`}>
@@ -245,6 +291,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                                     </Link>
                                                 </li>
                                             }
+                                            */ }
                                             <li>
                                                 <Link to={`/staff/${id}/delete`}>
                                                     Delete Staff&nbsp;<i className="fas fa-chevron-right"></i>
@@ -277,9 +324,9 @@ export default class StaffFullRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { text, value } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={value}>{text}</span>
         );
     };
 }
