@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Scroll from 'react-scroll';
 
 import ClientSearchComponent from "../../../components/clients/search/clientSearchComponent";
+import { validateSearchInput } from "../../../validators/clientValidator";
+import { localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
 
 
 class ClientListContainer extends Component {
@@ -12,11 +15,12 @@ class ClientListContainer extends Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
+            keyword: "",
             advancedSearchActive: false,
             errors: {},
         }
+        this.onTextChange = this.onTextChange.bind(this);
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
         this.onAdvancedSearchClick = this.onAdvancedSearchClick.bind(this);
@@ -45,27 +49,41 @@ class ClientListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
-    }
-
-    onFailedSubmissionCallback(errors) {
-        console.log(errors);
-    }
-
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
 
-    onAdvancedSearchPanelToggle() {
-        this.setState({
-            advancedSearchActive: !this.state.advancedSearchActive
-        });
+    onTextChange(e) {
+        this.setState({ [e.target.name]: e.target.value, });
     }
 
-    onSearchClick() {
-        this.props.history.push("/clients/search-results");
+    onAdvancedSearchPanelToggle() {
+        this.setState({ advancedSearchActive: !this.state.advancedSearchActive });
+    }
+
+    onSearchClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        // Perform client-side validation.
+        const { errors, isValid } = validateSearchInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            localStorageSetObjectOrArrayItem('workery-search-client-details', this.state);
+            this.props.history.push("/clients/search-results");
+
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.setState({ errors: errors });
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
     }
 
     onAdvancedSearchClick() {
@@ -80,6 +98,8 @@ class ClientListContainer extends Component {
     render() {
         return (
             <ClientSearchComponent
+                keyword={this.state.keyword}
+                onTextChange={this.onTextChange}
                 advancedSearchActive={this.state.advancedSearchActive}
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}

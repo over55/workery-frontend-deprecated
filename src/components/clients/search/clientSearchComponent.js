@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+
+import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 
 
 class ClientSearchComponent extends Component {
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle } = this.props;
-        const { errors, onTextChange, phone } = this.props;
+        const { keyword, errors, onTextChange, phone } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -27,10 +30,23 @@ class ClientSearchComponent extends Component {
 
                 <div id="m-search" className="col-sm-5 mx-auto mt-4 pt-4">
 
+                    <BootstrapErrorsProcessingAlert errors={errors} />
+
                     <form id="searchForm" className="needs-validation" noValidate>
                         <div className="input-group mb-2">
-                            <input type="text" className="form-control form-control-lg border border-primary" id="keyword"
-                                name="search" placeholder="Search..." minLength="3" required="" />
+
+                            <input
+                                type="text"
+                                className="form-control form-control-lg border border-primary"
+                                id="keyword"
+                                name="search"
+                                placeholder="Search..."
+                                minLength="3"
+                                required=""
+                                value={keyword}
+                                onChange={onTextChange}
+                            />
+
                             <div className="input-group-append">
                                 <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick}>
                                     <i className="fas fa-search"></i>

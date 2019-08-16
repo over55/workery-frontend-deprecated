@@ -351,3 +351,18 @@ export function validateDeleteInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+export function validateSearchInput(data) {
+    let errors = {};
+
+    if (data.advancedSearchActive === false) {
+        if (data.search === undefined || data.search === null || data.search === "") {
+            errors.search = 'This field is required.';
+        }
+    }    
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
