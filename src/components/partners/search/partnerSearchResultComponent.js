@@ -195,7 +195,7 @@ class PartnerSearchResultComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item">
-                           <Link to={`/partners`}><i className="fas fa-crown"></i>&nbsp;Partners</Link>
+                           <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item">
                            <Link to={`/partners/search`}><i className="fas fa-search"></i>&nbsp;Search</Link>
