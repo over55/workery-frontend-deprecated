@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { camelizeKeys, decamelize } from 'humps';
 
 import ClientSearchResultComponent from "../../../components/clients/search/clientSearchResultComponent";
+import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { pullClientList } from "../../../actions/clientActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import { localStorageGetObjectItem } from '../../../helpers/localStorageUtility';
 
 
 class ClientSearchResultContainer extends Component {
@@ -9,6 +14,26 @@ class ClientSearchResultContainer extends Component {
      *  Initializer & Utility
      *------------------------------------------------------------
      */
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            // Pagination
+            page: 1,
+            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            totalSize: 0,
+
+            // Sorting, Filtering, & Searching
+            parametersMap: new Map(),
+
+            // Everything else
+            isLoading: true,
+            search: localStorageGetObjectItem('workery-search-client-details'),
+        }
+        this.onTableChange = this.onTableChange.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
 
     /**
      *  Component Life-cycle Management
@@ -26,6 +51,9 @@ class ClientSearchResultContainer extends Component {
         this.setState = (state,callback)=>{
             return;
         };
+
+        // Clear any and all flash messages in our queue to be rendered.
+        this.props.clearFlashMessage();
     }
 
     /**
@@ -33,12 +61,24 @@ class ClientSearchResultContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+        this.setState(
+            {
+                page: response.page,
+                totalSize: response.count,
+                isLoading: false,
+            },
+            ()=>{
+                console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+            }
+        )
     }
 
     onFailedSubmissionCallback(errors) {
         console.log(errors);
+        this.setState({ isLoading: false });
     }
 
     /**
@@ -46,6 +86,63 @@ class ClientSearchResultContainer extends Component {
      *------------------------------------------------------------
      */
 
+    /**
+     *  Function takes the user interactions made with the table and perform
+     *  remote API calls to update the table based on user selection.
+     */
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        if (type === "sort") {
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+
+            if (sortOrder === "asc") {
+                parametersMap.set('o', decamelize(sortField));
+            }
+            if (sortOrder === "desc") {
+                parametersMap.set('o', "-"+decamelize(sortField));
+            }
+
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullClientList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "pagination") {
+            console.log(type, page, sizePerPage); // For debugging purposes only.
+
+            this.setState(
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                ()=>{
+                    this.props.pullClientList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+
+        } else if (type === "filter") {
+            console.log(type, filters); // For debugging purposes only.
+            if (filters.state === undefined) {
+                parametersMap.delete("state");
+            } else {
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
+            }
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullClientList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
+        }else {
+            alert("Unsupported feature detected!!"+type);
+        }
+    }
 
     /**
      *  Main render function
@@ -53,37 +150,16 @@ class ClientSearchResultContainer extends Component {
      */
 
     render() {
-        const results = [{
-            'slug': 'argyle',
-            'icon': 'home',
-            'number': 1,
-            'firstName': 'Shinji',
-            'lastName': 'Ikari',
-            'phone': '(789) 789-7890',
-            'email': 'shinji.ikari@nerv.worldgov',
-            'absoluteUrl': '/client/argyle'
-        },{
-            'slug': 'byron',
-            'icon': 'home',
-            'number': 2,
-            'firstName': 'Mariya',
-            'lastName': 'Takeuchi',
-            'phone': '(321) 321-3210',
-            'email': 'plastic_lover@gmail.com',
-            'absoluteUrl': '/client/byron'
-        },{
-            'slug': 'carling',
-            'icon': 'briefcase',
-            'number': 3,
-            'firstName': 'Rei',
-            'lastName': 'Ayanami',
-            'phone': '(123) 123-1234',
-            'email': 'rei.ayanami@nerv.worldgov',
-            'absoluteUrl': '/client/carling'
-        }];
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <ClientSearchResultComponent
-                results={results}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                clientList={this.props.clientList}
+                onTableChange={this.onTableChange}
+                flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -92,11 +168,21 @@ class ClientSearchResultContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        flashMessage: store.flashMessageState,
+        clientList: store.clientListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        clearFlashMessage: () => {
+            dispatch(clearFlashMessage())
+        },
+        pullClientList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullClientList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 
