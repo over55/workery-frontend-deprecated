@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Scroll from 'react-scroll';
 
 import PartnerSearchComponent from "../../../components/partners/search/partnerSearchComponent";
+import { validateSearchInput } from "../../../validators/partnerValidator";
+import { localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
 
 
 class PartnerListContainer extends Component {
@@ -12,11 +15,16 @@ class PartnerListContainer extends Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
+            keyword: "",
             advancedSearchActive: false,
+            firstName: "",
+            lastName: "",
+            telephone: "",
+            email: "",
             errors: {},
         }
+        this.onTextChange = this.onTextChange.bind(this);
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
         this.onAdvancedSearchClick = this.onAdvancedSearchClick.bind(this);
@@ -45,31 +53,71 @@ class PartnerListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
-    }
-
-    onFailedSubmissionCallback(errors) {
-        console.log(errors);
-    }
-
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
 
+    onTextChange(e) {
+        this.setState({ [e.target.name]: e.target.value, });
+    }
+
     onAdvancedSearchPanelToggle() {
-        this.setState({
-            advancedSearchActive: !this.state.advancedSearchActive
+        this.setState({ advancedSearchActive: !this.state.advancedSearchActive });
+    }
+
+    onSearchClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+        this.setState({ advancedSearchActive: false, }, ()=> {
+            // Perform partner-side validation.
+            const { errors, isValid } = validateSearchInput(this.state);
+
+            // CASE 1 OF 2: Validation passed successfully.
+            if (isValid) {
+
+                    localStorageSetObjectOrArrayItem('workery-search-partner-details', this.state);
+                    this.props.history.push("/partners/search-results");
+
+
+            // CASE 2 OF 2: Validation was a failure.
+            } else {
+                this.setState({ errors: errors });
+
+                // The following code will cause the screen to scroll to the top of
+                // the page. Please see ``react-scroll`` for more information:
+                // https://github.com/fisshy/react-scroll
+                var scroll = Scroll.animateScroll;
+                scroll.scrollToTop();
+            }
         });
     }
 
-    onSearchClick() {
-        this.props.history.push("/partners/search-results");
-    }
+    onAdvancedSearchClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+        this.setState({ advancedSearchActive: true, }, ()=> {
+            // Perform partner-side validation.
+            const { errors, isValid } = validateSearchInput(this.state);
 
-    onAdvancedSearchClick() {
-        this.props.history.push("/partners/search-results");
+            // CASE 1 OF 2: Validation passed successfully.
+            if (isValid) {
+
+                    localStorageSetObjectOrArrayItem('workery-search-partner-details', this.state);
+                    this.props.history.push("/partners/search-results");
+
+
+            // CASE 2 OF 2: Validation was a failure.
+            } else {
+                this.setState({ errors: errors });
+
+                // The following code will cause the screen to scroll to the top of
+                // the page. Please see ``react-scroll`` for more information:
+                // https://github.com/fisshy/react-scroll
+                var scroll = Scroll.animateScroll;
+                scroll.scrollToTop();
+            }
+        });
     }
 
     /**
@@ -80,6 +128,12 @@ class PartnerListContainer extends Component {
     render() {
         return (
             <PartnerSearchComponent
+                keyword={this.state.keyword}
+                firstName={this.state.firstName}
+                lastName={this.state.lastName}
+                telephone={this.state.telephone}
+                email={this.state.email}
+                onTextChange={this.onTextChange}
                 advancedSearchActive={this.state.advancedSearchActive}
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}
