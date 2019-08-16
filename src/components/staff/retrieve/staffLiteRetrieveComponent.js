@@ -6,7 +6,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class StaffLiteRetrieveComponent extends Component {
     render() {
-        const { slug, flashMessage } = this.props;
+        const { id, staff, flashMessage } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -18,7 +18,7 @@ export default class StaffLiteRetrieveComponent extends Component {
                             <Link to={`/staff`}><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;Argyle
+                            <i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}
                         </li>
                     </ol>
                 </nav>
@@ -35,8 +35,18 @@ export default class StaffLiteRetrieveComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/staff/${slug}/full`}>
+                            <Link to={`/staff/${id}/full`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
+                            </Link>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/staff/${id}/orders`}>
+                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/staff/${id}/comments`}>
+                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
                     </div>
@@ -49,20 +59,32 @@ export default class StaffLiteRetrieveComponent extends Component {
                                 <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" />
                             </div>
                             <div className="col-sm-7 px-4 py-3">
-                                <h3>Rodolfo Martinez</h3>
-                                <p className="text-muted">San Francisco, USA <i className="fas fa-map-marker-alt"></i></p>
-                                <p><i className="fas fa-envelope"></i> email@example.com</p>
-                                <p><i className="fas fa-phone-square"></i> (xxx) xxx-xxxx</p>
-                                <p className="m-0"><strong>Skills:</strong></p>
-                                <p>
-                                    <Link to="#" className="badge badge-info">Skill 1</Link>
-                                    <Link to="#" className="badge badge-info">Skill 2</Link>
-                                    <Link to="#" className="badge badge-info">Skill 3</Link>
-                                    <Link to="#" className="badge badge-dark">Skill 4</Link>
-                                    <Link to="#" className="badge badge-success">Html</Link>
-                                    <Link to="#" className="badge badge-primary">Developer</Link>
-                                    <Link to="#" className="badge badge-warning">Bootstrap</Link>
-                                </p>
+                                <h3>{staff && staff.fullName}</h3>
+                                {staff && staff.address &&
+                                    <p className="text-muted">
+                                        <a href={staff.addressUrl}>{staff.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
+                                    </p>
+                                }
+                                {staff && staff.email &&
+                                    <p>
+                                        <a href={`mailto:${staff.email}`}><i className="fas fa-envelope"></i>&nbsp;{staff.email}</a>
+                                    </p>
+                                }
+                                {staff && staff.telephone &&
+                                    <p>
+                                        <a href={`tel:${staff.e164Telephone}`}>
+                                            <i className="fas fa-phone-square"></i>&nbsp;{staff.telephone}
+                                        </a>
+                                    </p>
+                                }
+                                <p className="m-0"><strong>Tags:</strong></p>
+                                {staff &&
+                                    <p>
+                                        {staff.tags && staff.tags.map(
+                                            (tag) => <TagItem tag={tag} key={tag.id} />)
+                                        }
+                                    </p>
+                                }
                                 <div className="col-sm-12 p-0">
                                     <p className="m-0"><strong>Ratings:</strong></p>
                                     <div className="star-rating" data-rating="4.5">
@@ -78,7 +100,19 @@ export default class StaffLiteRetrieveComponent extends Component {
                     </div>
                 </div>
 
+
             </div>
         );
     }
+}
+
+
+
+class TagItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
 }

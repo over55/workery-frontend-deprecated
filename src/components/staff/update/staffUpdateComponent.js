@@ -366,7 +366,7 @@ export default class StaffUpdateComponent extends Component {
                                 error={errors.policeCheckDate}
                             />
 
-                            <h4><i className="fas fa-user-circle"></i>&nbsp;Account</h4>
+                            <h4><i className="fas fa-user-tie"></i>&nbsp;Account</h4>
 
                             <BootstrapTextarea
                                 name="additionalComments"

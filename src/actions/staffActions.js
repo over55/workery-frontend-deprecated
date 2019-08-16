@@ -175,11 +175,12 @@ export function postStaffDetail(postData, successCallback, failedCallback) {
     }
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
 //                                RETRIEVE                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullStaffDetail(user, slug) {
+export function pullStaffDetail(id, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -189,26 +190,33 @@ export function pullStaffDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_STAFF_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_STAFF_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             // console.log(successResult); // For debugging purposes.
 
-            let profile = camelizeKeys(responseData);
+            let staff = camelizeKeys(responseData);
 
             // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
+            staff['isAPIRequestRunning'] = false;
+            staff['errors'] = {};
 
-            console.log("pullStaffDetail | Success:", profile); // For debugging purposes.
+            console.log("pullStaffDetail | Success:", staff); // For debugging purposes.
 
             // Update the global state of the application to store our
-            // user profile for the application.
+            // user staff for the application.
             store.dispatch(
-                setStaffDetailSuccess(profile)
+                setStaffDetailSuccess(staff)
             );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(staff);
+            }
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
@@ -229,12 +237,12 @@ export function pullStaffDetail(user, slug) {
                     })
                 );
 
-                // // DEVELOPERS NOTE:
-                // // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // // OBJECT WE GOT FROM THE API.
-                // if (failedCallback) {
-                //     failedCallback(errors);
-                // }
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => { // FINALLY
@@ -248,7 +256,7 @@ export function pullStaffDetail(user, slug) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putStaffDetail(user, data, successCallback, failedCallback) {
+export function putStaffDetail(user, data, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -266,23 +274,27 @@ export function putStaffDetail(user, data, successCallback, failedCallback) {
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_STAFF_DETAIL_API_ENDPOINT+data.slug, buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_STAFF_DETAIL_API_ENDPOINT+data.id, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
-            let device = camelizeKeys(responseData);
+            let staff = camelizeKeys(responseData);
 
             // Extra.
-            device['isAPIRequestRunning'] = false;
-            device['errors'] = {};
+            staff['isAPIRequestRunning'] = false;
+            staff['errors'] = {};
 
             // Update the global state of the application to store our
-            // user device for the application.
+            // user staff for the application.
             store.dispatch(
-                setStaffDetailSuccess(device)
+                setStaffDetailSuccess(staff)
             );
 
-            // Run our success callback function.
-            successCallback(device);
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(staff);
+            }
 
         }).catch( (exception) => {
             if (exception.response) {
@@ -306,8 +318,79 @@ export function putStaffDetail(user, data, successCallback, failedCallback) {
                 // DEVELOPERS NOTE:
                 // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
                 // OBJECT WE GOT FROM THE API.
-                if (failedCallback) {
-                    failedCallback(errors);
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//                                   DELETE                                   //
+////////////////////////////////////////////////////////////////////////////////
+
+export function deleteStaffDetail(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setStaffDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // Perform our API submission.
+        customAxios.delete(WORKERY_STAFF_DETAIL_API_ENDPOINT+id).then( (successResponse) => {
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            let staff = camelizeKeys(responseData);
+
+            // Extra.
+            staff['isAPIRequestRunning'] = false;
+            staff['errors'] = {};
+
+            // Update the global state of the application to store our
+            // user staff for the application.
+            store.dispatch(
+                setStaffDetailSuccess(staff)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(staff);
+            }
+
+        }).catch( (exception) => {
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("putStaffDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setStaffDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
                 }
             }
 
@@ -363,3 +446,34 @@ export const setStaffDetailFailure = staffDetail => ({
     type: STAFF_DETAIL_FAILURE,
     payload: staffDetail,
 });
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//                                 UTILITY                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Utility function takes the API data and converts it to HTML dropdown
+ * options which will be consumed by the `react-select` library elements.
+ */
+export function getStaffReactSelectOptions(staffList=[], selectName="staff") {
+    const staffOptions = [];
+    const isNotProductionsEmpty = isEmpty(staffList) === false;
+    if (isNotProductionsEmpty) {
+        const results = staffList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < results.length; i++) {
+                let staff = results[i];
+                staffOptions.push({
+                    selectName: selectName,
+                    value: staff.id,
+                    label: staff.fullName
+                });
+                // console.log(staff);
+            }
+        }
+    }
+    return staffOptions;
+}

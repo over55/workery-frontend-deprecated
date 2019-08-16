@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import StaffLiteRetrieveComponent from "../../../components/staff/retrieve/staffLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { pullStaffDetail } from "../../../actions/staffActions";
 
 
 class StaffLiteRetrieveContainer extends Component {
@@ -14,14 +15,17 @@ class StaffLiteRetrieveContainer extends Component {
     constructor(props) {
         super(props);
 
-        // Since we are using the ``react-routes-dom`` library then we
-        // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         // Update state.
         this.state = {
-            slug: slug,
+            id: id,
+            staff: {}
         }
+
+        // Update functions.
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -29,33 +33,34 @@ class StaffLiteRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
-     componentDidMount() {
-         window.scrollTo(0, 0);  // Start the page at the top of the page.
-     }
+    componentDidMount() {
+        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullStaffDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+    }
 
-     componentWillUnmount() {
-         // This code will fix the "ReactJS & Redux: Can't perform a React state
-         // update on an unmounted component" issue as explained in:
-         // https://stackoverflow.com/a/53829700
-         this.setState = (state,callback)=>{
-             return;
-         };
+    componentWillUnmount() {
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
 
-         // Clear any and all flash messages in our queue to be rendered.
-         this.props.clearFlashMessage();
-     }
+        // Clear any and all flash messages in our queue to be rendered.
+        this.props.clearFlashMessage();
+    }
 
     /**
      *  API callback functions
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | Fetched:", response);
     }
 
-    onFailedSubmissionCallback(errors) {
-        console.log(errors);
+    onFailureCallback(errors) {
+        console.log("onFailureCallback | errors:", errors);
     }
 
     /**
@@ -70,16 +75,12 @@ class StaffLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const staffData = {
-            'slug': 'Argyle',
-            'number': 1,
-            'name': 'Argyle',
-            'absoluteUrl': '/staff/argyle'
-        };
+        const { id } = this.state;
+        const staff = this.props.staffDetail ? this.props.staffDetail : [];
         return (
             <StaffLiteRetrieveComponent
-                slug={this.state.slug}
-                staffData={staffData}
+                id={id}
+                staff={staff}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -90,6 +91,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        staffDetail: store.staffDetailState,
     };
 }
 
@@ -97,7 +99,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullStaffDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullStaffDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 
