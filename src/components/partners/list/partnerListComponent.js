@@ -47,11 +47,13 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'telephone',
             text: 'Phone',
-            sort: true
+            sort: true,
+            formatter: telephoneFormatter
         },{
             dataField: 'email',
             text: 'Email',
-            sort: true
+            sort: true,
+            formatter: emailFormatter,
         },{
             dataField: 'state',
             text: 'Status',
@@ -149,6 +151,28 @@ function financialExternalLinkFormatter(cell, row){
             View&nbsp;<i className="fas fa-external-link-alt"></i>
         </a>
     )
+}
+
+
+function telephoneFormatter(cell, row){
+    return (
+        <a href={`tel:${row.e164Telephone}`}>
+            {row.telephone}
+        </a>
+    )
+}
+
+
+function emailFormatter(cell, row){
+    if (row.email === undefined || row.email === null) {
+        return ("-");
+    } else {
+        return (
+            <a href={`mailto:${row.email}`}>
+                {row.email}
+            </a>
+        )
+    }
 }
 
 
