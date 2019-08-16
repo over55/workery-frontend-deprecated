@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
-    RESIDENCE_TYPE_OF,
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF
 } from '../../../constants/api';
@@ -14,47 +14,10 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class PartnerFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { slug, flashMessage, tagOptions, howDidYouHearOptions } = this.props;
-        const {
-            typeOf, errors,
-            bizCompanyName, bizContactFirstName, bizContactLastName, bizPrimaryPhone, bizSecondaryPhone, bizEmail,
-            rezFirstName, rezLastName, rezPrimaryPhone, rezSecondaryPhone, rezEmail,
-            streetNumber, streetName, streetType, streetTypeOther, apartmentUnit, streetDirection, postalCode,
-            watchSlug, watchIcon, watchName,
-            tags, birthYear, gender, genderLabel, howDidYouHear, howDidYouHearLabel, howDidYouHearOther,
-            meaning, expectations, willingToVolunteer, willingToVolunteerLabel, anotherHouseholdPartnerRegistered, anotherHouseholdPartnerRegisteredLabel, totalHouseholdCount, under18YearsHouseholdCount,
-            companyEmployeeCount, companyYearsInOperation, companyType,
-        } = this.props.partnerData;
-        const isBizTypeOf = typeOf === BUSINESS_TYPE_OF;
-        const isRezOrCom = typeOf === RESIDENCE_TYPE_OF || typeOf === COMMUNITY_CARES_TYPE_OF;
-
-        let partnershipClass;
-        if (typeOf === BUSINESS_TYPE_OF) {
-            partnershipClass = "Business";
-        }
-        else if (typeOf === RESIDENCE_TYPE_OF) {
-            partnershipClass = "Residential";
-        }
-        else if (typeOf === COMMUNITY_CARES_TYPE_OF) {
-            partnershipClass = "Community Cares";
-        }
-
-        const tagsAreValid = tags !== null && tags !== undefined;
-
-        // Set the how did you hear.
-        let howDidYouHearFinalLabel = howDidYouHearLabel;
-        if (howDidYouHear === "other") {
-            howDidYouHearFinalLabel = howDidYouHearOther;
-        }
-
-        // This code checks to see if we need to display the household count fields.
-        let showHouseholdCount = false;
-        try {
-            showHouseholdCount = parseInt(anotherHouseholdPartnerRegistered) === 0;
-        } catch (error) {
-            // Do nothing.
-        }
-
+        const { id, partner, flashMessage, errors, onPartnerClick } = this.props;
+        const { typeOf } = partner;
+        const isActiveState = partner.state === "active";
+        const isRezPartner = typeOf === 2;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -66,19 +29,19 @@ export default class PartnerFullRetrieveComponent extends Component {
                             <Link to="/partners"><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;Argyle
+                            <i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Partner</h1>
+                <h1><i className="fas fa-handshake"></i>&nbsp;View Partner</h1>
 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/partner/${slug}`}>
+                            <Link to={`/partner/${id}`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Summary</span>
                             </Link>
                         </div>
@@ -86,6 +49,11 @@ export default class PartnerFullRetrieveComponent extends Component {
                             <strong>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </strong>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/partner/${id}/comments`}>
+                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -103,141 +71,62 @@ export default class PartnerFullRetrieveComponent extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-sitemap"></i>&nbsp;Type
+                                        <i className="fas fa-handshake"></i>&nbsp;Identification
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Partnership Class</th>
-                                    <td>{partnershipClass}</td>
+                                    <th scope="row" className="bg-light">Full Name</th>
+                                    <td>{partner.fullName}</td>
                                 </tr>
-
 
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-id-card"></i>&nbsp;Contact
-                                    </th>
-                                </tr>
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Company Name</th>
-                                        <td>{bizCompanyName}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Contact First Name</th>
-                                        <td>{bizContactFirstName}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Contact Last Name</th>
-                                        <td>{bizContactLastName}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Primary Phone #</th>
-                                        <td>{bizPrimaryPhone}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Secondary Phone #</th>
-                                        <td>{bizSecondaryPhone}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Email</th>
-                                        <td>{bizEmail}</td>
-                                    </tr>
-                                }
-
-                                {isRezOrCom &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">First Name</th>
-                                        <td>{rezFirstName}</td>
-                                    </tr>
-                                }
-                                {isRezOrCom &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Last Name</th>
-                                        <td>{rezLastName}</td>
-                                    </tr>
-                                }
-                                {isRezOrCom &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Primary Phone #</th>
-                                        <td>{rezPrimaryPhone}</td>
-                                    </tr>
-                                }
-                                {isRezOrCom &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Secondary Phone #</th>
-                                        <td>{rezSecondaryPhone}</td>
-                                    </tr>
-                                }
-                                {isRezOrCom &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Email</th>
-                                        <td>{rezEmail}</td>
-                                    </tr>
-                                }
-
-
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-address-book"></i>&nbsp;Address
+                                        <i className="fas fa-phone"></i>&nbsp;Contact
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Street Number</th>
-                                    <td>{streetNumber}</td>
+                                    <th scope="row" className="bg-light">Telephone</th>
+                                    <td><a href={`tel:${partner.e164Telephone}`}>{partner.telephone}</a></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Street Name</th>
-                                    <td>{streetName}</td>
+                                    <th scope="row" className="bg-light">Other Telephone</th>
+                                    <td><a href={`tel:${partner.e164OtherTelephone}`}>{partner.otherTelephone}</a></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Street Type</th>
-                                    <td>{streetType}</td>
+                                    <th scope="row" className="bg-light">Email</th>
+                                    <td><a href={`mailto:${partner.email}`}>{partner.email}</a></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Street Type (Other)</th>
-                                    <td>{streetTypeOther}</td>
-                                </tr>
-                                {apartmentUnit &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Apartment Unit</th>
-                                        <td>{apartmentUnit}</td>
-                                    </tr>
-                                }
-                                <tr>
-                                    <th scope="row" className="bg-light">Street Direction</th>
-                                    <td>{streetDirection}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Postal Code</th>
-                                    <td>{postalCode}</td>
-                                </tr>
-
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-shield-alt"></i>&nbsp;Watch
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Name</th>
+                                    <th scope="row" className="bg-light">Ok to Email?</th>
                                     <td>
-                                        <a href={`/watch-biz/${watchSlug}`} target="_blank" rel="noopener noreferrer">
-                                            <i className={`fas fa-${watchIcon}`}></i>&nbsp;{watchName}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </a>
+                                        {partner.isOkToEmail
+                                            ?"Yes"
+                                            :"No"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Ok to Text?</th>
+                                    <td>
+                                        {partner.isOkToText
+                                            ?"Yes"
+                                            :"No"
+                                        }
+                                    </td>
+                                </tr>
+
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Location</th>
+                                    <td>
+                                        <a href={partner.addressUrl}>{partner.fullAddress}</a>
                                     </td>
                                 </tr>
 
@@ -249,75 +138,61 @@ export default class PartnerFullRetrieveComponent extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Tags</th>
+                                    <th scope="row" className="bg-light">Date of Birth</th>
+                                    <td>{partner.birthdate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Gender</th>
+                                    <td>{partner.gender}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{partner.description}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {tagsAreValid && tags.map(
-                                            (tag, i) => <TagItem tag={tag} tagOptions={tagOptions} key={i} />)
+                                        {partner.tags && partner.tags.map(
+                                            (tag) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </td>
                                 </tr>
-                                {birthYear &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Year of Birth</th>
-                                        <td>
-                                            {birthYear}
-                                        </td>
-                                    </tr>
-                                }
                                 <tr>
-                                    <th scope="row" className="bg-light">Gender</th>
-                                    <td>{genderLabel}</td>
+                                    <th scope="row" className="bg-light">Join Date</th>
+                                    <td>{partner.joinDate}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">How did you hear about us?</th>
-                                    <td>{howDidYouHearFinalLabel}</td>
+                                    <th scope="row" className="bg-light">How did they discover us?</th>
+                                    <td>{partner.howHearPretty}</td>
+                                </tr>
+
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-server"></i>&nbsp;System
+                                    </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">What does NW mean to you?</th>
-                                    <td>{meaning}</td>
+                                    <th scope="row" className="bg-light">Account #</th>
+                                    <td>{partner.id}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">What do you expect from NW?</th>
-                                    <td>{expectations}</td>
+                                    <th scope="row" className="bg-light">Created At</th>
+                                    <td>{partner.created}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Are you willing to volunteer as a area coordinator / associate?</th>
-                                    <td>{willingToVolunteerLabel}</td>
+                                    <th scope="row" className="bg-light">Created By</th>
+                                    <td>{partner.createdBy}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Is there another partner of your household which is registered with?</th>
-                                    <td>{anotherHouseholdPartnerRegisteredLabel}</td>
+                                    <th scope="row" className="bg-light">Modified At</th>
+                                    <td>{partner.lastModified}</td>
                                 </tr>
-                                {showHouseholdCount &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">How many people are in your household?</th>
-                                        <td>{totalHouseholdCount}</td>
-                                    </tr>
-                                }
-                                {showHouseholdCount &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">How many people in your household are under the age of 18?</th>
-                                        <td>{under18YearsHouseholdCount}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">How many employees does your business have?</th>
-                                        <td>{companyEmployeeCount}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">How many years has your company been in operation?</th>
-                                        <td>{companyYearsInOperation}</td>
-                                    </tr>
-                                }
-                                {isBizTypeOf &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">What type of business is this?</th>
-                                        <td>{companyType}</td>
-                                    </tr>
-                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Modified By</th>
+                                    <td>{partner.lastModifiedBy}</td>
+                                </tr>
 
 
 
@@ -331,8 +206,31 @@ export default class PartnerFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to={`/partner/${slug}/promote/step-1`}>
-                                                    Promote&nbsp;<i className="fas fa-chevron-right"></i>
+                                                <Link onClick={onPartnerClick}>
+                                                    Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                {isActiveState
+                                                    ?<Link to={`/partner/${id}/deactivation`}>
+                                                        Deactivate Partner&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                    :<Link to={`/partner/${id}/activation`}>
+                                                        Activate Partner&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                }
+
+                                            </li>
+                                            {isRezPartner &&
+                                                <li>
+                                                    <Link to={`/partner/${id}/rez-upgrade`}>
+                                                        Upgrade Partner&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
+                                            <li>
+                                                <Link to={`/partner/${id}/delete`}>
+                                                    Delete Partner&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                         </ul>
@@ -343,7 +241,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
-                                <Link to={`/partner/${slug}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
+                                <Link to={`/partner/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
                                 </Link>
                                 <Link to={`/partners`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
@@ -360,44 +258,11 @@ export default class PartnerFullRetrieveComponent extends Component {
 }
 
 
-/**
- *  Function will take the tag value which was selected and find print it with
- *  the label from the tagOptions data.
- */
 class TagItem extends Component {
     render() {
-        const { tag, tagOptions } = this.props;
-        for (let i = 0; i < tagOptions.length; i++) {
-            let tagOption = tagOptions[i];
-            if (tagOption.value === tag) {
-                return (
-                    <span className="badge badge-info badge-lg" value={tag}>{tagOption.label}</span>
-                );
-            }
-        }
-        return (null);
-    };
-}
-
-
-/**
- *  Function will take the howDidYouHear value which was selected and find
- * print it with the label from the howDidYouHearOptions data.
- */
-class HowDidYouHearText extends Component {
-    render() {
-        const { howDidYouHear, howDidYouHearOther, howDidYouHearOptions } = this.props;
-        if (howDidYouHearOther !== null && howDidYouHearOther !== undefined && howDidYouHearOther !== "") {
-            return howDidYouHearOther;
-        }
-        for (let i = 0; i < howDidYouHearOptions.length; i++) {
-            let howDidYouHearOption = howDidYouHearOptions[i];
-            if (howDidYouHearOption.value === howDidYouHear) {
-                return (
-                    <span value={howDidYouHear}>{howDidYouHearOption.label}</span>
-                );
-            }
-        }
-        return (null);
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
     };
 }

@@ -10,7 +10,8 @@ import {
     TAG_LIST_SUCCESS, HOW_HEAR_LIST_SUCCESS, AWAY_LOG_LIST_SUCCESS,
     SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
     DEACTIVATED_CLIENT_LIST_SUCCESS, PARTNER_LIST_SUCCESS, CLIENT_COMMENT_LIST_REQUEST,
-    ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS
+    ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS,
+    PARTNER_COMMENT_LIST_SUCCESS
 } from "./constants/actionTypes";
 import { associateListReducer, associateDetailReducer } from "./reducers/associateReducers";
 import { awayLogListReducer, awayLogDetailReducer } from "./reducers/awayLogReducers";
@@ -24,6 +25,7 @@ import { insuranceRequirementListReducer, insuranceRequirementDetailReducer } fr
 import { orderListReducer, orderDetailReducer } from "./reducers/orderReducers";
 import { orderCommentListReducer } from "./reducers/orderCommentReducers";
 import { partnerListReducer, partnerDetailReducer } from "./reducers/partnerReducers";
+import { partnerCommentListReducer } from "./reducers/partnerCommentReducers";
 import { serviceFeeListReducer, serviceFeeDetailReducer } from "./reducers/serviceFeeReducers";
 import { skillSetListReducer, skillSetDetailReducer } from "./reducers/skillSetReducers";
 import { staffListReducer, staffDetailReducer } from "./reducers/staffReducers";
@@ -52,6 +54,7 @@ const appReducer = combineReducers({
     orderListState: orderListReducer, orderDetailState: orderDetailReducer,
     orderCommentListState: orderCommentListReducer,
     partnerListState: partnerListReducer, partnerDetailState: partnerDetailReducer,
+    partnerCommentListState: partnerCommentListReducer,
     serviceFeeListState: serviceFeeListReducer, serviceFeeDetailState: serviceFeeDetailReducer,
     skillSetListState: skillSetListReducer, skillSetDetailState: skillSetDetailReducer,
     staffListState: staffListReducer, staffDetailState: staffDetailReducer,

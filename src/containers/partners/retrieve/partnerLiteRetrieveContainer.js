@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import PartnerLiteRetrieveComponent from "../../../components/partners/retrieve/partnerLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { pullPartnerDetail } from "../../../actions/partnerActions";
 
 
 class PartnerLiteRetrieveContainer extends Component {
@@ -14,12 +15,17 @@ class PartnerLiteRetrieveContainer extends Component {
     constructor(props) {
         super(props);
 
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         // Update state.
         this.state = {
-            slug: slug,
+            id: id,
+            partner: {}
         }
+
+        // Update functions.
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -27,33 +33,34 @@ class PartnerLiteRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
-     componentDidMount() {
-         window.scrollTo(0, 0);  // Start the page at the top of the page.
-     }
+    componentDidMount() {
+        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullPartnerDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+    }
 
-     componentWillUnmount() {
-         // This code will fix the "ReactJS & Redux: Can't perform a React state
-         // update on an unmounted component" issue as explained in:
-         // https://stackoverflow.com/a/53829700
-         this.setState = (state,callback)=>{
-             return;
-         };
+    componentWillUnmount() {
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
 
-         // Clear any and all flash messages in our queue to be rendered.
-         this.props.clearFlashMessage();
-     }
+        // Clear any and all flash messages in our queue to be rendered.
+        this.props.clearFlashMessage();
+    }
 
     /**
      *  API callback functions
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | Fetched:", response);
     }
 
-    onFailedSubmissionCallback(errors) {
-        console.log(errors);
+    onFailureCallback(errors) {
+        console.log("onFailureCallback | errors:", errors);
     }
 
     /**
@@ -68,16 +75,12 @@ class PartnerLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const partnerData = {
-            'slug': 'Argyle',
-            'number': 1,
-            'name': 'Argyle',
-            'absoluteUrl': '/partner/argyle'
-        };
+        const { id } = this.state;
+        const partner = this.props.partnerDetail ? this.props.partnerDetail : [];
         return (
             <PartnerLiteRetrieveComponent
-                slug={this.state.slug}
-                partnerData={partnerData}
+                id={id}
+                partner={partner}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -88,6 +91,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        partnerDetail: store.partnerDetailState,
     };
 }
 
@@ -95,7 +99,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullPartnerDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullPartnerDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

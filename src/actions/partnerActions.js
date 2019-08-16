@@ -179,7 +179,7 @@ export function postPartnerDetail(postData, successCallback, failedCallback) {
 //                                RETRIEVE                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullPartnerDetail(user, slug) {
+export function pullPartnerDetail(id, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -189,26 +189,33 @@ export function pullPartnerDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_PARTNER_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_PARTNER_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             // console.log(successResult); // For debugging purposes.
 
-            let profile = camelizeKeys(responseData);
+            let partner = camelizeKeys(responseData);
 
             // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
+            partner['isAPIRequestRunning'] = false;
+            partner['errors'] = {};
 
-            console.log("pullPartnerDetail | Success:", profile); // For debugging purposes.
+            console.log("pullPartnerDetail | Success:", partner); // For debugging purposes.
 
             // Update the global state of the application to store our
-            // user profile for the application.
+            // user partner for the application.
             store.dispatch(
-                setPartnerDetailSuccess(profile)
+                setPartnerDetailSuccess(partner)
             );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(partner);
+            }
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
@@ -229,12 +236,12 @@ export function pullPartnerDetail(user, slug) {
                     })
                 );
 
-                // // DEVELOPERS NOTE:
-                // // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // // OBJECT WE GOT FROM THE API.
-                // if (failedCallback) {
-                //     failedCallback(errors);
-                // }
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => { // FINALLY
@@ -248,7 +255,7 @@ export function pullPartnerDetail(user, slug) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putPartnerDetail(user, data, successCallback, failedCallback) {
+export function putPartnerDetail(user, data, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -266,23 +273,27 @@ export function putPartnerDetail(user, data, successCallback, failedCallback) {
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_PARTNER_DETAIL_API_ENDPOINT+data.slug, buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_PARTNER_DETAIL_API_ENDPOINT+data.id, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
-            let device = camelizeKeys(responseData);
+            let partner = camelizeKeys(responseData);
 
             // Extra.
-            device['isAPIRequestRunning'] = false;
-            device['errors'] = {};
+            partner['isAPIRequestRunning'] = false;
+            partner['errors'] = {};
 
             // Update the global state of the application to store our
-            // user device for the application.
+            // user partner for the application.
             store.dispatch(
-                setPartnerDetailSuccess(device)
+                setPartnerDetailSuccess(partner)
             );
 
-            // Run our success callback function.
-            successCallback(device);
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(partner);
+            }
 
         }).catch( (exception) => {
             if (exception.response) {
@@ -306,8 +317,79 @@ export function putPartnerDetail(user, data, successCallback, failedCallback) {
                 // DEVELOPERS NOTE:
                 // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
                 // OBJECT WE GOT FROM THE API.
-                if (failedCallback) {
-                    failedCallback(errors);
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//                                   DELETE                                   //
+////////////////////////////////////////////////////////////////////////////////
+
+export function deletePartnerDetail(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setPartnerDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // Perform our API submission.
+        customAxios.delete(WORKERY_PARTNER_DETAIL_API_ENDPOINT+id).then( (successResponse) => {
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            let partner = camelizeKeys(responseData);
+
+            // Extra.
+            partner['isAPIRequestRunning'] = false;
+            partner['errors'] = {};
+
+            // Update the global state of the application to store our
+            // user partner for the application.
+            store.dispatch(
+                setPartnerDetailSuccess(partner)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(partner);
+            }
+
+        }).catch( (exception) => {
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("putPartnerDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setPartnerDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
                 }
             }
 
@@ -363,3 +445,34 @@ export const setPartnerDetailFailure = partnerDetail => ({
     type: PARTNER_DETAIL_FAILURE,
     payload: partnerDetail,
 });
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//                                 UTILITY                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Utility function takes the API data and converts it to HTML dropdown
+ * options which will be consumed by the `react-select` library elements.
+ */
+export function getPartnerReactSelectOptions(partnerList=[], selectName="partner") {
+    const partnerOptions = [];
+    const isNotProductionsEmpty = isEmpty(partnerList) === false;
+    if (isNotProductionsEmpty) {
+        const results = partnerList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < results.length; i++) {
+                let partner = results[i];
+                partnerOptions.push({
+                    selectName: selectName,
+                    value: partner.id,
+                    label: partner.fullName
+                });
+                // console.log(partner);
+            }
+        }
+    }
+    return partnerOptions;
+}

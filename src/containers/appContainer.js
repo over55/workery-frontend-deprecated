@@ -198,6 +198,7 @@ import PartnerSearchContainer from "./partners/search/partnerSearchContainer";
 import PartnerSearchResultContainer from "./partners/search/partnerSearchResultContainer";
 import PartnerLiteRetrieveContainer from "./partners/retrieve/partnerLiteRetrieveContainer";
 import PartnerFullRetrieveContainer from "./partners/retrieve/partnerFullRetrieveContainer";
+import PartnerCommentContainer from "./partners/retrieve/partnerCommentContainer";
 import PartnerCreateStep1Container from "./partners/create/partnerCreateStep1Container";
 import PartnerCreateStep2Container from "./partners/create/partnerCreateStep2Container";
 import PartnerCreateStep3Container from "./partners/create/partnerCreateStep3Container";
@@ -403,6 +404,7 @@ class AppContainer extends React.Component {
                                 <Route path="/partners/search-results" exact component={requiresAuth(PartnerSearchResultContainer)} />
                                 <Route path="/partner/:id" exact component={requiresAuth(PartnerLiteRetrieveContainer)} />
                                 <Route path="/partner/:id/full" exact component={requiresAuth(PartnerFullRetrieveContainer)} />
+                                <Route path="/partner/:id/comments" exact component={requiresAuth(PartnerCommentContainer)} />
                                 <Route path="/partner/:id/update" exact component={requiresAuth(PartnerUpdateContainer)} />
 
                                 { /* EVERYTHING ELSE... */ }

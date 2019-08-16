@@ -6,7 +6,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class PartnerLiteRetrieveComponent extends Component {
     render() {
-        const { slug, flashMessage } = this.props;
+        const { id, partner, flashMessage } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -18,14 +18,14 @@ export default class PartnerLiteRetrieveComponent extends Component {
                             <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;Argyle
+                            <i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Partner</h1>
+                <h1><i className="fas fa-handshake"></i>&nbsp;View Partner</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -35,8 +35,13 @@ export default class PartnerLiteRetrieveComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/partner/${slug}/full`}>
+                            <Link to={`/partner/${id}/full`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
+                            </Link>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/partner/${id}/comments`}>
+                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
                     </div>
@@ -49,20 +54,32 @@ export default class PartnerLiteRetrieveComponent extends Component {
                                 <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" />
                             </div>
                             <div className="col-sm-7 px-4 py-3">
-                                <h3>Rodolfo Martinez</h3>
-                                <p className="text-muted">San Francisco, USA <i className="fas fa-map-marker-alt"></i></p>
-                                <p><i className="fas fa-envelope"></i> email@example.com</p>
-                                <p><i className="fas fa-phone-square"></i> (xxx) xxx-xxxx</p>
-                                <p className="m-0"><strong>Skills:</strong></p>
-                                <p>
-                                    <Link to="#" className="badge badge-info">Skill 1</Link>
-                                    <Link to="#" className="badge badge-info">Skill 2</Link>
-                                    <Link to="#" className="badge badge-info">Skill 3</Link>
-                                    <Link to="#" className="badge badge-dark">Skill 4</Link>
-                                    <Link to="#" className="badge badge-success">Html</Link>
-                                    <Link to="#" className="badge badge-primary">Developer</Link>
-                                    <Link to="#" className="badge badge-warning">Bootstrap</Link>
-                                </p>
+                                <h3>{partner && partner.fullName}</h3>
+                                {partner && partner.address &&
+                                    <p className="text-muted">
+                                        <a href={partner.addressUrl}>{partner.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
+                                    </p>
+                                }
+                                {partner && partner.email &&
+                                    <p>
+                                        <a href={`mailto:${partner.email}`}><i className="fas fa-envelope"></i>&nbsp;{partner.email}</a>
+                                    </p>
+                                }
+                                {partner && partner.telephone &&
+                                    <p>
+                                        <a href={`tel:${partner.e164Telephone}`}>
+                                            <i className="fas fa-phone-square"></i>&nbsp;{partner.telephone}
+                                        </a>
+                                    </p>
+                                }
+                                <p className="m-0"><strong>Tags:</strong></p>
+                                {partner &&
+                                    <p>
+                                        {partner.tags && partner.tags.map(
+                                            (tag) => <TagItem tag={tag} key={tag.id} />)
+                                        }
+                                    </p>
+                                }
                                 <div className="col-sm-12 p-0">
                                     <p className="m-0"><strong>Ratings:</strong></p>
                                     <div className="star-rating" data-rating="4.5">
@@ -82,4 +99,15 @@ export default class PartnerLiteRetrieveComponent extends Component {
             </div>
         );
     }
+}
+
+
+
+class TagItem extends Component {
+    render() {
+        const { label, value } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+        );
+    };
 }
