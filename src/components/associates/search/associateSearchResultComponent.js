@@ -164,8 +164,8 @@ function emailFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/associate/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
+        <Link to={`/associate/${row.id}`} target="_blank">
+            View Associate&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
