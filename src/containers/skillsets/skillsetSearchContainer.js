@@ -21,11 +21,13 @@ class SkillsetSearchContainer extends Component {
         this.state = {
             skillSets: [],
             errors: {},
-            isLoading: false
+            isLoading: false,
+            isSkillSetsLoading: true,
         }
 
         this.onClick = this.onClick.bind(this);
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
     }
 
     /**
@@ -37,7 +39,7 @@ class SkillsetSearchContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullSkillSetList(1, 1000);
+        this.props.pullSkillSetList(1, 1000, new Map(), this.onSuccessCallback);
     }
 
     componentWillUnmount() {
@@ -54,6 +56,10 @@ class SkillsetSearchContainer extends Component {
      *------------------------------------------------------------
      */
 
+    onSuccessCallback(response) {
+        this.setState({ isSkillSetsLoading: false, });
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
@@ -69,7 +75,7 @@ class SkillsetSearchContainer extends Component {
         });
 
         // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-search-skillsets-' + args[1].name;
+        const key = 'workery-search-' + args[1].name;
         localStorageSetObjectOrArrayItem(key, selectedOptions);
     }
 
@@ -83,7 +89,7 @@ class SkillsetSearchContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true, })
-            this.props.history.push("/skillset/results");
+            this.props.history.push("/skill-sets/results");
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -106,7 +112,7 @@ class SkillsetSearchContainer extends Component {
     render() {
         const {
             skillSets,
-            errors, isLoading, returnURL
+            errors, isLoading, isSkillSetsLoading
         } = this.state;
 
         const { user } = this.props;
@@ -115,10 +121,10 @@ class SkillsetSearchContainer extends Component {
                 skillSets={skillSets}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
                 onSkillSetMultiChange={this.onSkillSetMultiChange}
+                isSkillSetsLoading={isSkillSetsLoading}
 
                 onClick={this.onClick}
                 errors={errors}
-                returnURL={returnURL}
                 isLoading={isLoading}
             />
         );

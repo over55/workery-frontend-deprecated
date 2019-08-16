@@ -139,6 +139,7 @@ import Report17Container from "./reports/report17Container";
 
 // Skill Sets
 import SkillsetSearchContainer from "./skillsets/skillsetSearchContainer";
+import SkillsetSearchResultsContainer from "./skillsets/skillsetSearchResultsContainer";
 
 // Financials
 import FinancialListContainer from "./financials/list/financialListContainer";
@@ -353,6 +354,7 @@ class AppContainer extends React.Component {
 
                                 { /* SKILLSETS */ }
                                 <Route path="/skill-sets" exact component={requiresAuth(SkillsetSearchContainer)} />
+                                <Route path="/skill-sets/results" exact component={requiresAuth(SkillsetSearchResultsContainer)} />
 
                                 { /* FINANCIALS */ }
                                 <Route path="/financials" exact component={requiresAuth(FinancialListContainer)} />

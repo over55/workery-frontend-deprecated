@@ -10,7 +10,7 @@ class SkillsetSearchComponent extends Component {
     render() {
         const {
             errors, isLoading, onClick,
-            skillSets, skillSetOptions, onSkillSetMultiChange,
+            skillSets, skillSetOptions, onSkillSetMultiChange, isSkillSetsLoading,
         } = this.props;
 
         return (
@@ -27,24 +27,18 @@ class SkillsetSearchComponent extends Component {
                 </nav>
 
                 <h1>
-                    <i className="fas fa-plus"></i>&nbsp;Add Associate
+                    <i className="fas fa-search"></i>&nbsp;Search Skill Sets
                 </h1>
-
-
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-crown"></i>&nbsp;Account
+                                <i className="fas fa-toolbox"></i>&nbsp;Skill Sets
                             </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-graduation-cap"></i>&nbsp;Skills
-                            </p>
 
                             <BootstrapMultipleSelect
                                 borderColour="border-primary"
@@ -55,6 +49,7 @@ class SkillsetSearchComponent extends Component {
                                 selectedOptions={skillSets}
                                 error={errors.skillSets}
                                 onMultiChange={onSkillSetMultiChange}
+                                isLoading={isSkillSetsLoading}
                             />
 
                             <div className="form-group">
