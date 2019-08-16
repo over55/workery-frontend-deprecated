@@ -8,8 +8,8 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 
 class ClientSearchComponent extends Component {
     render() {
-        const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle } = this.props;
-        const { keyword, phone, errors, onTextChange } = this.props;
+        const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
+        const { keyword, firstName, lastName, phone, email, errors, isLoading } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -39,7 +39,7 @@ class ClientSearchComponent extends Component {
                                 type="text"
                                 className="form-control form-control-lg border border-primary"
                                 id="keyword"
-                                name="search"
+                                name="keyword"
                                 placeholder="Search..."
                                 minLength="3"
                                 required=""
@@ -88,7 +88,30 @@ class ClientSearchComponent extends Component {
 
                     <form id="advanced-searchForm" method="get" className="needs-validation" action="" noValidate>
                         <div className="form-row">
-
+                            <div className="form-group col-md-12 mb-4">
+                                <BootstrapInput
+                                    inputClassName="form-control form-control-lg"
+                                    borderColour="border-primary"
+                                    error={errors.firstName}
+                                    label="First Name"
+                                    onChange={onTextChange}
+                                    value={firstName}
+                                    name="firstName"
+                                    type="text"
+                                    disabled={isLoading}
+                                />
+                                <BootstrapInput
+                                    inputClassName="form-control form-control-lg"
+                                    borderColour="border-primary"
+                                    error={errors.lastName}
+                                    label="Last Name"
+                                    onChange={onTextChange}
+                                    value={lastName}
+                                    name="lastName"
+                                    type="text"
+                                    disabled={isLoading}
+                                />
+                            </div>
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
@@ -99,7 +122,21 @@ class ClientSearchComponent extends Component {
                                 name="phone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
+                                disabled={isLoading}
                             />
+                            <div className="form-group col-md-12 mb-4">
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.email}
+                                label="Email"
+                                onChange={onTextChange}
+                                value={email}
+                                name="email"
+                                type="text"
+                                disabled={isLoading}
+                            />
+                            </div>
                         </div>
 
                         <div className="form-group col-md-12 mb-3 mx-auto text-center">

@@ -356,10 +356,32 @@ export function validateSearchInput(data) {
     let errors = {};
 
     if (data.advancedSearchActive === false) {
-        if (data.search === undefined || data.search === null || data.search === "") {
-            errors.search = 'This field is required.';
+        if (data.keyword === undefined || data.keyword === null || data.keyword === "") {
+            errors.keyword = 'This field is required.';
         }
-    }    
+    } else {
+        let hasEmptyField = 0;
+        if (data.firstName === undefined || data.firstName === null || data.firstName === "") {
+            hasEmptyField += 1;
+        }
+        if (data.lastName === undefined || data.lastName === null || data.lastName === "") {
+            hasEmptyField += 1;
+        }
+        if (data.phone === undefined || data.phone === null || data.phone === "") {
+            hasEmptyField += 1;
+        }
+        if (data.email === undefined || data.email === null || data.email === "") {
+            hasEmptyField += 1;
+        }
+
+        if (hasEmptyField === 4) {
+            // errors.firstName = '';
+            // errors.lastName = '';
+            // errors.phone = '';
+            // errors.email = '';
+            errors.MinimumOneFieldRequired = "Please input at leaset one field from the advanced section before submitting.";
+        }
+    }
 
     return {
         errors,

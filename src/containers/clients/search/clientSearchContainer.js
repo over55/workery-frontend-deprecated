@@ -18,12 +18,15 @@ class ClientListContainer extends Component {
         this.state = {
             keyword: "",
             advancedSearchActive: false,
+            firstName: "",
+            lastName: "",
+            phone: "",
+            email: "",
             errors: {},
         }
         this.onTextChange = this.onTextChange.bind(this);
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
-        this.onAdvancedSearchClick = this.onAdvancedSearchClick.bind(this);
     }
 
     /**
@@ -86,10 +89,6 @@ class ClientListContainer extends Component {
         }
     }
 
-    onAdvancedSearchClick() {
-        this.props.history.push("/clients/search-results");
-    }
-
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -99,11 +98,15 @@ class ClientListContainer extends Component {
         return (
             <ClientSearchComponent
                 keyword={this.state.keyword}
+                firstName={this.state.firstName}
+                lastName={this.state.lastName}
+                phone={this.state.phone}
+                email={this.state.email}
                 onTextChange={this.onTextChange}
                 advancedSearchActive={this.state.advancedSearchActive}
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}
-                onAdvancedSearchClick={this.onAdvancedSearchClick}
+                onAdvancedSearchClick={this.onSearchClick}
                 errors={this.state.errors}
             />
         );
