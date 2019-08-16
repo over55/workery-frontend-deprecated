@@ -27,6 +27,7 @@ class ClientListContainer extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
+        this.onAdvancedSearchClick = this.onAdvancedSearchClick.bind(this);
     }
 
     /**
@@ -68,25 +69,55 @@ class ClientListContainer extends Component {
     onSearchClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
+        this.setState({ advancedSearchActive: false, }, ()=> {
+            // Perform client-side validation.
+            const { errors, isValid } = validateSearchInput(this.state);
 
-        // Perform client-side validation.
-        const { errors, isValid } = validateSearchInput(this.state);
+            // CASE 1 OF 2: Validation passed successfully.
+            if (isValid) {
 
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            localStorageSetObjectOrArrayItem('workery-search-client-details', this.state);
-            this.props.history.push("/clients/search-results");
+                    localStorageSetObjectOrArrayItem('workery-search-client-details', this.state);
+                    this.props.history.push("/clients/search-results");
 
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.setState({ errors: errors });
 
-            // The following code will cause the screen to scroll to the top of
-            // the page. Please see ``react-scroll`` for more information:
-            // https://github.com/fisshy/react-scroll
-            var scroll = Scroll.animateScroll;
-            scroll.scrollToTop();
-        }
+            // CASE 2 OF 2: Validation was a failure.
+            } else {
+                this.setState({ errors: errors });
+
+                // The following code will cause the screen to scroll to the top of
+                // the page. Please see ``react-scroll`` for more information:
+                // https://github.com/fisshy/react-scroll
+                var scroll = Scroll.animateScroll;
+                scroll.scrollToTop();
+            }
+        });
+    }
+
+    onAdvancedSearchClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+        this.setState({ advancedSearchActive: true, }, ()=> {
+            // Perform client-side validation.
+            const { errors, isValid } = validateSearchInput(this.state);
+
+            // CASE 1 OF 2: Validation passed successfully.
+            if (isValid) {
+
+                    localStorageSetObjectOrArrayItem('workery-search-client-details', this.state);
+                    this.props.history.push("/clients/search-results");
+
+
+            // CASE 2 OF 2: Validation was a failure.
+            } else {
+                this.setState({ errors: errors });
+
+                // The following code will cause the screen to scroll to the top of
+                // the page. Please see ``react-scroll`` for more information:
+                // https://github.com/fisshy/react-scroll
+                var scroll = Scroll.animateScroll;
+                scroll.scrollToTop();
+            }
+        });
     }
 
     /**
@@ -106,7 +137,7 @@ class ClientListContainer extends Component {
                 advancedSearchActive={this.state.advancedSearchActive}
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}
-                onAdvancedSearchClick={this.onSearchClick}
+                onAdvancedSearchClick={this.onAdvancedSearchClick}
                 errors={this.state.errors}
             />
         );
