@@ -79,7 +79,7 @@ export default class OrderLiteRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
                                         <td>
-                                            <Link to={`/customer/${order.customer}`} target="_blank">
+                                            <Link to={`/client/${order.customer}`} target="_blank">
                                                 {order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>

@@ -55,7 +55,8 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'customerName',
             text: 'Client',
-            sort: true
+            sort: true,
+            formatter: clientFormatter,
         },{
             dataField: 'associateName',
             text: 'Associate',
@@ -162,6 +163,16 @@ function associateNameFormatter(cell, row){
     );
 }
 
+function clientFormatter(cell, row){
+    if (row.customerName === null || row.customerName === undefined || row.customerName === "None") { return "-"; }
+    return (
+        <Link to={`/client/${row.customer}`} target="_blank">
+            {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
+        </Link>
+    );
+}
+
+
 
 function statusFormatter(cell, row){
     return row.prettyState;
@@ -170,8 +181,8 @@ function statusFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
+        <Link to={`/order/${row.id}`} target="_blank">
+            View Order&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
