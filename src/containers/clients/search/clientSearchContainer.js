@@ -20,7 +20,7 @@ class ClientListContainer extends Component {
             advancedSearchActive: false,
             firstName: "",
             lastName: "",
-            phone: "",
+            telephone: "",
             email: "",
             errors: {},
         }
@@ -100,7 +100,7 @@ class ClientListContainer extends Component {
                 keyword={this.state.keyword}
                 firstName={this.state.firstName}
                 lastName={this.state.lastName}
-                phone={this.state.phone}
+                telephone={this.state.telephone}
                 email={this.state.email}
                 onTextChange={this.onTextChange}
                 advancedSearchActive={this.state.advancedSearchActive}

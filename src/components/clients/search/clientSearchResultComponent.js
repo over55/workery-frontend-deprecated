@@ -232,8 +232,14 @@ export default class ClientSearchResultComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
+                        <li className="breadcrumb-item">
+                           <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
+                        </li>
+                        <li className="breadcrumb-item">
+                           <Link to={`/clients/search`}><i className="fas fa-search"></i>&nbsp;Search</Link>
+                        </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user-circle"></i>&nbsp;Clients
+                            <i className="fas fa-list"></i>&nbsp;Search Results
                         </li>
                     </ol>
                 </nav>

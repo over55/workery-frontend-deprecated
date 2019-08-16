@@ -9,7 +9,7 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 class ClientSearchComponent extends Component {
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
-        const { keyword, firstName, lastName, phone, email, errors, isLoading } = this.props;
+        const { keyword, firstName, lastName, telephone, email, errors, isLoading } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -115,11 +115,11 @@ class ClientSearchComponent extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.phone}
-                                label="Phone"
+                                error={errors.telephone}
+                                label="Phone #"
                                 onChange={onTextChange}
-                                value={phone}
-                                name="phone"
+                                value={telephone}
+                                name="telephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                                 disabled={isLoading}

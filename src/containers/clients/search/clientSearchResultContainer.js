@@ -17,6 +17,25 @@ class ClientSearchResultContainer extends Component {
 
     constructor(props) {
         super(props);
+        const search = localStorageGetObjectItem('workery-search-client-details');
+        const parametersMap = new Map();
+        if (search.keyword !== undefined && search.keyword !== "") {
+            parametersMap.set("search", search.keyword);
+        }
+        if (search.firstName !== undefined && search.firstName !== "") {
+            parametersMap.set("given_name", search.firstName);
+        }
+        if (search.lastName !== undefined && search.lastName !== "") {
+            parametersMap.set("last_name", search.lastName);
+        }
+        if (search.telephone !== undefined && search.telephone !== "") {
+            parametersMap.set("telephone", search.telephone);
+        }
+        if (search.email !== undefined && search.email !== "") {
+            parametersMap.set("email", search.email);
+        }
+        console.log("FILTERING", parametersMap); // For debugging purposes only.
+        
         this.state = {
             // Pagination
             page: 1,
@@ -24,11 +43,11 @@ class ClientSearchResultContainer extends Component {
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
-            parametersMap: new Map(),
+            parametersMap: parametersMap,
 
             // Everything else
             isLoading: true,
-            search: localStorageGetObjectItem('workery-search-client-details'),
+            search: search,
         }
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);

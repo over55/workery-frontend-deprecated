@@ -367,7 +367,7 @@ export function validateSearchInput(data) {
         if (data.lastName === undefined || data.lastName === null || data.lastName === "") {
             hasEmptyField += 1;
         }
-        if (data.phone === undefined || data.phone === null || data.phone === "") {
+        if (data.telephone === undefined || data.telephone === null || data.telephone === "") {
             hasEmptyField += 1;
         }
         if (data.email === undefined || data.email === null || data.email === "") {
