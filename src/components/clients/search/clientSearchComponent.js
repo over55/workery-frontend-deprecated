@@ -9,7 +9,7 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 class ClientSearchComponent extends Component {
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle } = this.props;
-        const { keyword, errors, onTextChange, phone } = this.props;
+        const { keyword, phone, errors, onTextChange } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -88,25 +88,7 @@ class ClientSearchComponent extends Component {
 
                     <form id="advanced-searchForm" method="get" className="needs-validation" action="" noValidate>
                         <div className="form-row">
-                            <div className="form-group col-md-12 mb-4">
-                                <label htmlFor="firstname">First name</label>
-                                <input type="text" className="form-control form-control-lg border border-primary" id="firstname"
-                                    name="firstname" placeholder="First name" minLength="3" />
-                                <div id="firstname-error" className="invalid-feedback"></div>
-                            </div>
-                            <div className="form-group col-md-12 mb-4">
-                                <label htmlFor="lastname">Last name</label>
-                                <input type="text" className="form-control form-control-lg border border-primary" id="lastname"
-                                    name="lastname" placeholder="Last name" minLength="3" />
-                                <div id="lastname-error" className="invalid-feedback"></div>
-                            </div>
-                            <div className="form-group col-md-7 mb-4">
-                                <label htmlFor="phonenumber">Phone</label>
-                                <input type="text" className="form-control form-control-lg border border-primary"
-                                    id="phonenumber" name="phonenumber" placeholder="(xxx) xxx-xxxx" minLength="10"
-                                    maxLength="14" />
-                                <div id="phonenumber-error" className="invalid-feedback"></div>
-                            </div>
+
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
@@ -119,57 +101,9 @@ class ClientSearchComponent extends Component {
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-7 mb-4">
-                                <label htmlFor="skill_1">Skill 1</label>
-                                <select className="custom-select form-control-lg border-success" id="skill_1" name="skill_1" defaultValue="">
-                                    <option value="">Choose...</option>
-                                    <option value="developer">Developer</option>
-                                    <option value="designer">Designer</option>
-                                    <option value="accountant">Accountant</option>
-                                    <option value="manager">Manager</option>
-                                </select>
-                                <div id="s1-error" className="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-7 mb-4">
-                                <label htmlFor="skill_2">Skill 2</label>
-                                <select className="custom-select form-control-lg border-success" id="skill_2" name="skill_2" defaultValue="">
-                                    <option value="">Choose...</option>
-                                    <option value="developer">Developer</option>
-                                    <option value="designer">Designer</option>
-                                    <option value="accountant">Accountant</option>
-                                    <option value="manager">Manager</option>
-                                </select>
-                                <div id="s2-error" className="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-7 mb-4">
-                                <label htmlFor="skill_3">Skill 3</label>
-                                <select className="custom-select form-control-lg border-success" id="skill_3" name="skill_3" defaultValue="">
-                                    <option value="">Choose...</option>
-                                    <option value="developer">Developer</option>
-                                    <option value="designer">Designer</option>
-                                    <option value="accountant">Accountant</option>
-                                    <option value="manager">Manager</option>
-                                </select>
-                                <div id="s3-error" className="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div className="form-group mt-2 mb-4">
-                            <div className="form-check custom-control custom-checkbox">
-                                <input className="form-check-input custom-control-input" type="checkbox" value="yes"
-                                    id="safetyCheck" name="safetyCheck" />
-                                <label className="form-check-label custom-control-label" htmlFor="safetyCheck">
-                                    Has WSIB?
-                                </label>
-                                <div id="checkbox-error" className="invalid-feedback"></div>
-                            </div>
-                        </div>
+
                         <div className="form-group col-md-12 mb-3 mx-auto text-center">
-                            <button className="btn btn-success btn-lg btn-fxw mt-3" type="button" onClick={onAdvancedSearchClick}>
+                            <button className="btn btn-primary btn-lg btn-fxw mt-3" type="button" onClick={onAdvancedSearchClick}>
                                 <i className="fas fa-search"></i>&nbsp;Search
                             </button>
                         </div>
