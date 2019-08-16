@@ -184,12 +184,12 @@ class AssociateSearchResultComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-crown"></i>&nbsp;Associates</h1>
+                <h1><i className="fas fa-search"></i>&nbsp;Associates Search</h1>
 
                 <div className="row">
                     <div className="col-md-12">
                         <h2>
-                            <i className="fas fa-table"></i>&nbsp;List
+                            <i className="fas fa-list"></i>&nbsp;Search Results
                         </h2>
                         <RemoteListComponent
                             page={page}
