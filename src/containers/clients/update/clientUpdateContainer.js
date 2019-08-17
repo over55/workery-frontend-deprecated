@@ -195,7 +195,7 @@ class ClientUpdateContainer extends Component {
     }
 
     onFailedCallback(errors) {
-        this.setState({ errors: errors, });
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -224,11 +224,13 @@ class ClientUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putClientDetail(
-                this.getPostData(),
-                this.onSuccessCallback,
-                this.onFailedCallback
-            )
+            this.setState({ errors: {}, isLoading: true, }, ()=>{
+                this.props.putClientDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailedCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {

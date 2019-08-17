@@ -364,7 +364,7 @@ class AssociateUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.setState({ isLoading: true}, ()=>{
+            this.setState({ errors: {}, isLoading: true}, ()=>{
                 this.props.putAssociateDetail(
                     this.getPostData(),
                     this.onSuccessfulSubmissionCallback,
