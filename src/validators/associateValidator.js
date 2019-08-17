@@ -84,16 +84,16 @@ export function validateInput(data) {
     if (data.policeCheck === undefined || data.policeCheck === null || data.policeCheck === "" || isNaN(data.policeCheck) ) {
         errors.policeCheck = 'This field is required';
     }
-    if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
-        errors.isActive = 'This field is required';
-    }
+    // if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
+    //     errors.isActive = 'This field is required';
+    // }
 
     // --- METRICS --- //
 
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
     }
-    if (data.gender === undefined || data.gender === null || data.gender === "" || isNaN(data.gender) ) {
+    if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
     if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {

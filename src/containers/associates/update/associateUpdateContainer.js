@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import AssociateUpdateComponent from "../../../components/associates/update/associateUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
@@ -10,6 +11,7 @@ import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pul
 import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
 import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../actions/vehicleTypeActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
+import { putAssociateDetail } from "../../../actions/associateActions";
 
 
 class AssociateUpdateContainer extends Component {
@@ -45,8 +47,10 @@ class AssociateUpdateContainer extends Component {
             // STEP 4
             givenName: this.props.associateDetail.givenName,
             lastName: this.props.associateDetail.lastName,
-            primaryPhone: this.props.associateDetail.primaryPhone,
-            secondaryPhone: this.props.associateDetail.secondaryPhone,
+            primaryPhone: this.props.associateDetail.telephone,
+            primaryPhoneTypeOf: this.props.associateDetail.telephoneTypeOf,
+            secondaryPhone: this.props.associateDetail.otherTelephone,
+            secondaryPhoneTypeOf: this.props.associateDetail.otherTelephoneTypeOf,
             email: this.props.associateDetail.email,
             isOkToEmail: isOkToEmail,
             isOkToText: isOkToText,
@@ -94,6 +98,7 @@ class AssociateUpdateContainer extends Component {
             fullName: this.props.associateDetail.fullName,
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
@@ -109,6 +114,88 @@ class AssociateUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // (2) Middle name (API ISSUE)
+        postData.middleName = this.state.middleName;
+
+        // (2) Join date - We need to format as per required API format.
+        const joinDateMoment = moment(this.state.joinDate);
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
+
+        const duesDateMoment = moment(this.state.duesDate);
+        postData.duesDate = duesDateMoment.format("YYYY-MM-DD");
+
+        const commercialInsuranceExpiryDateMoment = moment(this.state.commercialInsuranceExpiryDate);
+        postData.commercialInsuranceExpiryDate = commercialInsuranceExpiryDateMoment.format("YYYY-MM-DD");
+
+        const autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
+        postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD");
+
+        const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDatej);
+        postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD");
+
+        const policeCheckMoment = moment(this.state.policeCheckj);
+        postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD");
+
+        // (4) How Hear Other - This field may not be null, therefore make blank.
+        if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
+            postData.howHearOther = "";
+        }
+
+        // // (5) Password & Password Repeat
+        // if (this.state.password === undefined || this.state.password === null || this.state.password === '' || this.state.password.length == 0) {
+        //     var randomString = Math.random().toString(34).slice(-10);
+        //     randomString += "A";
+        //     randomString += "!";
+        //     postData.password = randomString;
+        //     postData.passwordRepeat = randomString;
+        // }
+
+        // (6) Organization Type Of - This field may not be null, therefore make blank.
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+            postData.organizationTypeOf = "";
+        }
+
+        // (7) Extra Comment: This field is required.
+        if (this.state.comment === undefined || this.state.comment === null) {
+            postData.extraComment = "";
+        } else {
+            postData.extraComment = this.state.comment;
+        }
+
+        // (8) Telephone type: This field is required.;
+        postData.telephone = this.state.primaryPhone;
+        if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
+            postData.telephoneTypeOf = 1;
+        }
+        postData.otherTelephone = this.state.secondaryPhone;
+        if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
+            postData.otherTelephoneTypeOf = 1;
+        }
+
+        // (9) Address Country: This field is required.
+        postData.addressCountry = this.state.country;
+
+        // (10) Address Locality: This field is required.
+        postData.addressLocality = this.state.locality;
+
+        // (11) Address Region: This field is required.
+        postData.addressRegion = this.state.region
+
+        postData.isActive = true;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -144,13 +231,11 @@ class AssociateUpdateContainer extends Component {
     onSuccessfulSubmissionCallback(associate) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Associate has been successfully updated.");
-        this.props.history.push("/associates/"+this.state.slug+"/full");
+        this.props.history.push("/associate/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -279,7 +364,13 @@ class AssociateUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({ isLoading: true}, ()=>{
+                this.props.putAssociateDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -308,7 +399,7 @@ class AssociateUpdateContainer extends Component {
             tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
 
             // Everything else...
-            errors, id, fullName,
+            errors, id, fullName, isLoading,
         } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
@@ -394,6 +485,7 @@ class AssociateUpdateContainer extends Component {
                 onTagMultiChange={this.onTagMultiChange}
                 onClick={this.onClick}
                 fullName={fullName}
+                isLoading={isLoading}
             />
         );
     }
@@ -439,6 +531,11 @@ const mapDispatchToProps = dispatch => {
         pullVehicleTypeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullVehicleTypeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        putAssociateDetail: (data, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                putAssociateDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }
