@@ -103,8 +103,8 @@ import AssignWatchAreaCoordinatorTaskStep3Container from "./tasks/assignWatchAre
 
 // Staff
 import StaffListContainer from "./staff/list/staffListContainer";
-import StaffSearchContainer from "./staff/staffSearchContainer";
-import StaffSearchResultContainer from "./staff/staffSearchResultContainer";
+import StaffSearchContainer from "./staff/search/staffSearchContainer";
+import StaffSearchResultContainer from "./staff/search/staffSearchResultContainer";
 import StaffUpdateContainer from "./staff/update/staffUpdateContainer";
 import StaffFullRetrieveContainer from "./staff/retrieve/staffFullRetrieveContainer";
 import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContainer";
