@@ -271,7 +271,6 @@ class AssociateUpdateComponent extends Component {
                                 onChange={onTextChange}
                                 error={errors.limitSpecial}
                             />
-{ /*
                             <BootstrapDatePicker
                                 label="Member Dues (*)"
                                 name="duesDate"
@@ -323,7 +322,6 @@ class AssociateUpdateComponent extends Component {
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.policeCheck}
                             />
-*/}
                             <BootstrapInput
                                 inputClassName="form-control"
                                 borderColour="border-success"
@@ -507,8 +505,8 @@ class AssociateUpdateComponent extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    Proceed to Address&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
                                 <Link to="/associates/add/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back

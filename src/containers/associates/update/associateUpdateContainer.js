@@ -32,6 +32,11 @@ class AssociateUpdateContainer extends Component {
         const isOkToText = this.props.associateDetail.isOkToText === true ? 1 : 0;
         const birthdateObj = new Date(this.props.associateDetail.birthdate);
         const joinDateObj = new Date(this.props.associateDetail.joinDate);
+        const duesDateObj = new Date(this.props.associateDetail.duesDate);
+        const commercialInsuranceExpiryDateObj = new Date(this.props.associateDetail.commercialInsuranceExpiryDate);
+        const autoInsuranceExpiryDateObj = new Date(this.props.associateDetail.autoInsuranceExpiryDate);
+        const wsibInsuranceDateObj = new Date(this.props.associateDetail.wsibInsuranceDate);
+        const policeCheckObj = new Date(this.props.associateDetail.policeCheck);
 
         this.state = {
             // STEP 3
@@ -49,7 +54,7 @@ class AssociateUpdateContainer extends Component {
             // STEP 5
             country: country,
             region: region,
-            locality: this.props.associateDetail.locality,
+            locality: this.props.associateDetail.addressLocality,
             postalCode: this.props.associateDetail.postalCode,
             streetAddress: this.props.associateDetail.streetAddress,
 
@@ -59,11 +64,11 @@ class AssociateUpdateContainer extends Component {
             description: this.props.associateDetail.description,
             hourlySalaryDesired: this.props.associateDetail.hourlySalaryDesired,
             limitSpecial: this.props.associateDetail.limitSpecial,
-            duesDate: this.props.associateDetail.duesDate,
-            commercialInsuranceExpiryDate: this.props.associateDetail.commercialInsuranceExpiryDate,
-            autoInsuranceExpiryDate: this.props.associateDetail.autoInsuranceExpiryDate,
-            wsibInsuranceDate: this.props.associateDetail.wsibInsuranceDate,
-            policeCheck: this.props.associateDetail.policeCheck,
+            duesDate: duesDateObj,
+            commercialInsuranceExpiryDate: commercialInsuranceExpiryDateObj,
+            autoInsuranceExpiryDate: autoInsuranceExpiryDateObj,
+            wsibInsuranceDate: wsibInsuranceDateObj,
+            policeCheck: policeCheckObj,
             taxId: this.props.associateDetail.taxId,
             driversLicenseClass: this.props.associateDetail.driversLicenseClass,
             vehicleTypes: this.props.associateDetail.vehicleTypes,
