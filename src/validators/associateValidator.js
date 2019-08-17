@@ -15,8 +15,8 @@ export function validateInput(data) {
 
     if (data.typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
 
-        if (data.firstName === undefined || data.firstName === null || validator.isEmpty(data.firstName) || data.firstName === "") {
-            errors.firstName = 'This field is required';
+        if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
+            errors.givenName = 'This field is required';
         }
         if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
             errors.lastName = 'This field is required';
@@ -122,8 +122,8 @@ export function validateInput(data) {
 export function validateStep4RezCreateInput(data) {
     let errors = {};
 
-    if (data.firstName === undefined || data.firstName === null || validator.isEmpty(data.firstName) || data.firstName === "") {
-        errors.firstName = 'This field is required';
+    if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
+        errors.givenName = 'This field is required';
     }
     if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
         errors.lastName = 'This field is required';
@@ -327,7 +327,7 @@ export function validateSearchInput(data) {
         }
     } else {
         let hasEmptyField = 0;
-        if (data.firstName === undefined || data.firstName === null || data.firstName === "") {
+        if (data.givenName === undefined || data.givenName === null || data.givenName === "") {
             hasEmptyField += 1;
         }
         if (data.lastName === undefined || data.lastName === null || data.lastName === "") {
@@ -341,7 +341,7 @@ export function validateSearchInput(data) {
         }
 
         if (hasEmptyField === 4) {
-            // errors.firstName = '';
+            // errors.givenName = '';
             // errors.lastName = '';
             // errors.phone = '';
             // errors.email = '';

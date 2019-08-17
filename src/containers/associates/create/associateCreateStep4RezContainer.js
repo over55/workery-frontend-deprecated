@@ -19,7 +19,7 @@ class AssociateCreateStep4RezContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-associate-rez-firstName"),
+            givenName: localStorage.getItem("workery-create-associate-rez-givenName"),
             lastName: localStorage.getItem("workery-create-associate-rez-lastName"),
             primaryPhone: localStorage.getItem("workery-create-associate-rez-primaryPhone"),
             secondaryPhone: localStorage.getItem("workery-create-associate-rez-secondaryPhone"),
@@ -149,11 +149,11 @@ class AssociateCreateStep4RezContainer extends Component {
 
     render() {
         const {
-            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
+            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
         } = this.state;
         return (
             <AssociateCreateStep4RezComponent
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}

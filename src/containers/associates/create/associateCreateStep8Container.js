@@ -65,7 +65,7 @@ class AssociateCreateStep8Container extends Component {
             typeOfLabel: localStorage.getItem("workery-create-associate-typeOf-label"),
 
             // Step 4 - Residential & Business
-            firstName: localStorage.getItem("workery-create-associate-rez-firstName"),
+            givenName: localStorage.getItem("workery-create-associate-rez-givenName"),
             lastName: localStorage.getItem("workery-create-associate-rez-lastName"),
             primaryPhone: primaryPhone,
             primaryPhoneTypeOf: primaryPhoneTypeOf,
@@ -77,7 +77,7 @@ class AssociateCreateStep8Container extends Component {
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
             organizationName: localStorage.getItem("workery-create-associate-biz-organizationName"),
-            firstName: localStorage.getItem("workery-create-associate-biz-firstName"),
+            givenName: localStorage.getItem("workery-create-associate-biz-givenName"),
             lastName: localStorage.getItem("workery-create-associate-biz-lastName"),
 
             // Step 5 - Address
@@ -142,7 +142,7 @@ class AssociateCreateStep8Container extends Component {
         let postData = Object.assign({}, this.state);
 
         // (1) Given name - We need t refactor name for API field match.
-        postData.givenName = this.state.firstName;
+        postData.givenName = this.state.givenName;
 
         // (2) Middle name (API ISSUE)
         postData.middleName = this.state.middleName;
@@ -251,8 +251,8 @@ class AssociateCreateStep8Container extends Component {
 
         // () First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.firstName = this.state.firstName;
-            postData.givenName = this.state.firstName;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
             postData.lastName = this.state.lastName;
         }
 
@@ -354,7 +354,7 @@ class AssociateCreateStep8Container extends Component {
             typeOfLabel,
 
             // Step 4 - Residential & Business
-            firstName,
+            givenName,
             lastName,
             primaryPhone,
             secondaryPhone,
@@ -417,7 +417,7 @@ class AssociateCreateStep8Container extends Component {
                 typeOfLabel={typeOfLabel}
 
                 // Step 4 - Residential & Business
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
@@ -427,7 +427,7 @@ class AssociateCreateStep8Container extends Component {
                 isOkToText={isOkToText}
                 isOkToTextLabel={isOkToTextLabel}
                 organizationName={organizationName}
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
 
                 // Step 5 - Address

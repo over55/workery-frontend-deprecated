@@ -21,7 +21,7 @@ class AssociateCreateStep4BizContainer extends Component {
         super(props);
         this.state = {
             organizationName: localStorage.getItem("workery-create-associate-biz-organizationName"),
-            firstName: localStorage.getItem("workery-create-associate-biz-firstName"),
+            givenName: localStorage.getItem("workery-create-associate-biz-givenName"),
             lastName: localStorage.getItem("workery-create-associate-biz-lastName"),
             primaryPhone: localStorage.getItem("workery-create-associate-biz-primaryPhone"),
             primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-associate-biz-primaryPhoneTypeOf"),
@@ -165,12 +165,12 @@ class AssociateCreateStep4BizContainer extends Component {
 
     render() {
         const {
-            organizationName, firstName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
+            organizationName, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
         } = this.state;
         return (
             <AssociateCreateStep4BizComponent
                 organizationName={organizationName}
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 primaryPhoneTypeOf={primaryPhoneTypeOf}

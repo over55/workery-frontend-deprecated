@@ -393,3 +393,42 @@ export function getVehicleTypeReactSelectOptions(vehicleTypeList=[], selectName=
     }
     return vehicleTypeOptions;
 }
+
+
+
+/**
+ * Utlity function takes an array of `VehicleType` primary keys and the `VehicleTypes` results
+ * from the API and returns the HTML dropdown selections which will be consumed
+ * by the GUI powered by `react-select`.
+ */
+export function getPickedVehicleTypeReactSelectOptions(vehicleTypePKsArray, vehicleTypeList=[], selectName="vehicleType") {
+    const vehicleTypeOptions = [];
+    const isAPIResponseNotEmpty = isEmpty(vehicleTypeList) === false;
+    const isPKsArrayNotEmpty = isEmpty(vehicleTypePKsArray) === false;
+    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+        const results = vehicleTypeList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < vehicleTypePKsArray.length; i++) {
+                let vehicleTypePK = vehicleTypePKsArray[i];
+
+                for (let j = 0; j < results.length; j++) {
+                    let vehicleType = results[j];
+
+                    if (vehicleType.id === vehicleTypePK) {
+                        vehicleTypeOptions.push({
+                            selectName: selectName,
+                            value: vehicleType.id,
+                            label: vehicleType.text
+                        });
+                        // console.log(vehicleType);
+                    } // end IF
+
+                } //end FOR
+
+            } // end FOR
+
+        } // end IF
+    }
+    return vehicleTypeOptions;
+}
