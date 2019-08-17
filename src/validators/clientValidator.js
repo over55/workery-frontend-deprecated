@@ -53,9 +53,9 @@ export function validateInput(data) {
         if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
             errors.telephone = 'This field is required';
         }
-        if (data.otherTelephone === undefined || data.otherTelephone === null || validator.isEmpty(data.otherTelephone) || data.otherTelephone === "") {
-            errors.otherTelephone = 'This field is required';
-        }
+        // if (data.otherTelephone === undefined || data.otherTelephone === null || validator.isEmpty(data.otherTelephone) || data.otherTelephone === "") {
+        //     errors.otherTelephone = 'This field is required';
+        // }
         if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
             errors.email = 'This field is required';
         }
@@ -113,7 +113,7 @@ export function validateInput(data) {
  */
 export function validateStep4CreateInput(data) {
     let errors = {};
-    
+
     if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
         if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
             errors.organizationName = 'This field is required';

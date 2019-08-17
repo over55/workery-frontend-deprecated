@@ -44,23 +44,20 @@ class ClientUpdateContainer extends Component {
             // STEP 3
             typeOf: this.props.clientDetail.typeOf,
 
-            // STEP 4 - REZ
+            // STEP 4
             givenName: this.props.clientDetail.givenName,
             lastName: this.props.clientDetail.lastName,
-            telephone: this.props.clientDetail.telephone,
-            otherTelephone: this.props.clientDetail.otherTelephone,
-            email: this.props.clientDetail.email,
-            isOkToEmail: isOkToEmail,
-            isOkToText: isOkToText,
-
-            // STEP 4 - BIZ
             organizationName: this.props.clientDetail.organizationName,
+            organizationTypeOf: this.props.clientDetail.organizationTypeOf,
             givenName: this.props.clientDetail.givenName,
             lastName: this.props.clientDetail.lastName,
             telephone: this.props.clientDetail.telephone,
             telephoneTypeOf: this.props.clientDetail.telephoneTypeOf,
             otherTelephone: this.props.clientDetail.otherTelephone,
             otherTelephoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
+            email: this.props.clientDetail.email,
+            isOkToEmail: isOkToEmail,
+            isOkToText: isOkToText,
 
             // STEP 5
             country: country,
@@ -378,6 +375,7 @@ class ClientUpdateContainer extends Component {
 
                     // STEP 4
                     organizationName={organizationName}
+                    organizationTypeOf={organizationTypeOf}
                     givenName={givenName}
                     lastName={lastName}
                     telephone={telephone}
@@ -396,11 +394,13 @@ class ClientUpdateContainer extends Component {
                     streetAddress={streetAddress}
 
                     // STEP 6
-                    tags={tags}
-                    dateOfBirth={dateOfBirth}
+                    tags={transcodedTags}
+                    tagOptions={tagOptions}
                     onTagMultiChange={this.onTagMultiChange}
+                    dateOfBirth={dateOfBirth}
                     gender={gender}
                     howHear={howHear}
+                    howHearOptions={howHearOptions}
                     howHearOption={howHearOption}
                     howHearOther={howHearOther}
                     joinDate={joinDate}

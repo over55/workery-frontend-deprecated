@@ -21,66 +21,29 @@ class ClientCreateStep7Container extends Component {
 
     constructor(props) {
         super(props);
-
-        // Get the type of.
-        const typeOf = localStorageGetIntegerItem("workery-create-client-typeOf");
-        let givenName
-        let primaryPhone;
-        let primaryPhoneTypeOf;
-        let secondaryPhone;
-        let secondaryPhoneTypeOf;
-        let email;
-        let isOkToEmail;
-        let isOkToText;
-        let isOkToEmailLabel;
-        let isOkToTextLabel;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            primaryPhone = localStorage.getItem("workery-create-client-rez-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-rez-primaryPhoneTypeOf");
-            secondaryPhone = localStorage.getItem("workery-create-client-rez-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-rez-secondaryPhoneTypeOf");
-            email = localStorage.getItem("workery-create-client-rez-email");
-            isOkToEmail = localStorageGetIntegerItem("workery-create-client-rez-isOkToEmail");
-            isOkToText = localStorageGetIntegerItem("workery-create-client-rez-isOkToText");
-            isOkToEmailLabel = localStorage.getItem("workery-create-client-rez-isOkToEmail-label");
-            isOkToTextLabel = localStorage.getItem("workery-create-client-rez-isOkToText-label");
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            primaryPhone = localStorage.getItem("workery-create-client-biz-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-biz-primaryPhoneTypeOf");
-            secondaryPhone =  localStorage.getItem("workery-create-client-biz-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-biz-secondaryPhoneTypeOf");
-            email = localStorage.getItem("workery-create-client-biz-email");
-            isOkToEmail = localStorageGetIntegerItem("workery-create-client-biz-isOkToEmail");
-            isOkToText = localStorageGetIntegerItem("workery-create-client-biz-isOkToText");
-            isOkToEmailLabel = localStorage.getItem("workery-create-client-biz-isOkToEmail-label");
-            isOkToTextLabel = localStorage.getItem("workery-create-client-biz-isOkToText-label");
-        }
-
         this.state = {
             // Step 3
-            typeOf: typeOf,
+            typeOf: localStorageGetIntegerItem("workery-create-client-typeOf"),
             typeOfLabel: localStorage.getItem("workery-create-client-typeOf-label"),
 
             // Step 4 - Residential & Business
-            givenName: localStorage.getItem("workery-create-client-rez-givenName"),
-            givenName: localStorage.getItem("workery-create-client-rez-givenName"),
-            lastName: localStorage.getItem("workery-create-client-rez-lastName"),
-            primaryPhone: primaryPhone,
-            telephone: primaryPhone,
-            primaryPhoneTypeOf: primaryPhoneTypeOf,
-            telephoneTypeOf: primaryPhoneTypeOf,
-            secondaryPhone: secondaryPhone,
-            secondaryPhoneTypeOf: secondaryPhoneTypeOf,
-            otherTelephone: secondaryPhone,
-            otherTelephoneTypeOf: secondaryPhoneTypeOf,
-            email: email,
-            isOkToEmail: isOkToEmail,
-            isOkToEmailLabel: isOkToEmailLabel,
-            isOkToText: isOkToText,
-            isOkToTextLabel: isOkToTextLabel,
-            organizationName: localStorage.getItem("workery-create-client-biz-organizationName"),
-            organizationTypeOf: localStorageGetIntegerItem("workery-create-client-biz-organizationTypeOf"),
+            organizationName: localStorage.getItem("workery-create-client-organizationName"),
+            organizationTypeOf: localStorageGetIntegerItem("workery-create-client-organizationTypeOf"),
+            givenName: localStorage.getItem("workery-create-client-givenName"),
+            lastName: localStorage.getItem("workery-create-client-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-client-primaryPhone"),
+            telephone: localStorage.getItem("workery-create-client-primaryPhone"),
+            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-primaryPhoneTypeOf"),
+            telephoneTypeOf:localStorageGetIntegerItem("workery-create-client-primaryPhoneTypeOf"),
+            secondaryPhone: localStorage.getItem("workery-create-client-secondaryPhone"),
+            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-secondaryPhoneTypeOf"),
+            otherTelephone: localStorage.getItem("workery-create-client-secondaryPhone"),
+            otherTelephoneTypeOf: localStorageGetIntegerItem("workery-create-client-secondaryPhoneTypeOf"),
+            email: localStorage.getItem("workery-create-client-email"),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-client-isOkToEmail"),
+            isOkToEmailLabel: localStorage.getItem("workery-create-client-isOkToEmail-label"),
+            isOkToText: localStorageGetIntegerItem("workery-create-client-isOkToText"),
+            isOkToTextLabel: localStorage.getItem("workery-create-client-isOkToText-label"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-client-country"),
@@ -174,23 +137,6 @@ class ClientCreateStep7Container extends Component {
 
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
-
-        // (12) Business handling of data.
-        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.givenName = this.state.givenName;
-            postData.givenName = this.state.givenName;
-            postData.lastName = this.state.lastName;
-            postData.organizationName = this.state.organizationName;
-            postData.givenName = this.state.givenName;
-            postData.organizationAddressCountry = this.state.country;
-            postData.organizationAddressLocality  = this.state.region;
-            postData.organizationAddressRegion = this.state.locality;
-            postData.organizationStreetAddress = this.state.streetAddress;
-            postData.organizationStreetAddress_extra = "";
-            postData.organizationPostalCode = this.state.postalCode;
-            // postData.organizationPost_office_box_number = this.state.;
-            postData.organizationTags = this.state.idTags;
-        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -351,6 +297,7 @@ class ClientCreateStep7Container extends Component {
                 isOkToText={isOkToText}
                 isOkToTextLabel={isOkToTextLabel}
                 organizationName={organizationName}
+                organizationTypeOf={organizationTypeOf}
                 givenName={givenName}
                 lastName={lastName}
 

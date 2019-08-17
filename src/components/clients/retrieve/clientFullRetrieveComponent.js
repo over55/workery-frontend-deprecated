@@ -6,7 +6,8 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
+    COMMUNITY_CARES_TYPE_OF,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -19,6 +20,7 @@ export default class ClientFullRetrieveComponent extends Component {
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
         const isActiveState = client.state === "active";
         const isRezClient = typeOf === 2;
+        const isCompany = client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -91,6 +93,12 @@ export default class ClientFullRetrieveComponent extends Component {
                                         <i className="fas fa-user-circle"></i>&nbsp;Identification
                                     </th>
                                 </tr>
+                                {isCompany &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Company Name</th>
+                                        <td>{client.organizationName}</td>
+                                    </tr>
+                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{client.fullName}</td>

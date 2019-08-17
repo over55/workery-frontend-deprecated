@@ -20,8 +20,8 @@ class ClientCreateStep4Container extends Component {
         super(props);
         this.state = {
             typeOf: localStorageGetIntegerItem("workery-create-client-typeOf"),
-            organizationName: localStorage.getItem("workery-create-client-biz-organizationName"),
-            organizationTypeOf: localStorageGetIntegerItem("workery-create-client-biz-organizationTypeOf"),
+            organizationName: localStorage.getItem("workery-create-client-organizationName"),
+            organizationTypeOf: localStorageGetIntegerItem("workery-create-client-organizationTypeOf"),
             givenName: localStorage.getItem("workery-create-client-givenName"),
             lastName: localStorage.getItem("workery-create-client-lastName"),
             primaryPhone: localStorage.getItem("workery-create-client-primaryPhone"),
@@ -180,6 +180,7 @@ class ClientCreateStep4Container extends Component {
                 onTextChange={this.onTextChange}
                 onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
+                onSelectChange={this.onSelectChange}
             />
         );
     }
