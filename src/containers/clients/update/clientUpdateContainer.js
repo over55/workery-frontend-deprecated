@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientUpdateComponent from "../../../components/clients/update/clientUpdateComponent";
+import ClientBizUpdateComponent from "../../../components/clients/update/clientBizUpdateComponent";
+import ClientRezUpdateComponent from "../../../components/clients/update/clientRezUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateInput } from "../../../validators/clientValidator";
 import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
@@ -23,13 +24,56 @@ class ClientUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { urlArgument, slug } = this.props.match.params;
+        const { id } = this.props.match.params;
+
+        // Map the API fields to our fields.
+        const country = this.props.clientDetail.addressCountry === "CA" ? "Canada" : this.props.clientDetail.addressCountry;
+        const region = this.props.clientDetail.addressRegion === "ON" ? "Ontario" : this.props.clientDetail.addressRegion;
+        const isOkToEmail = this.props.clientDetail.isOkToEmail === true ? 1 : 0;
+        const isOkToText = this.props.clientDetail.isOkToText === true ? 1 : 0;
 
         this.state = {
             errors: {},
             isLoading: false,
-            urlArgument: urlArgument,
-            slug: slug,
+            id: id,
+
+            // STEP 3
+            typeOf: this.props.clientDetail.typeOf,
+
+            // STEP 4 - REZ
+            givenName: this.props.clientDetail.givenName,
+            lastName: this.props.clientDetail.lastName,
+            telephone: this.props.clientDetail.telephone,
+            otherTelephone: this.props.clientDetail.otherTelephone,
+            email: this.props.clientDetail.email,
+            isOkToEmail: isOkToEmail,
+            isOkToText: isOkToText,
+
+            // STEP 4 - BIZ
+            companyName: this.props.clientDetail.companyName,
+            contactFirstName: this.props.clientDetail.contactFirstName,
+            contactLastName: this.props.clientDetail.contactLastName,
+            telephone: this.props.clientDetail.telephone,
+            telephoneTypeOf: this.props.clientDetail.telephoneTypeOf,
+            otherTelephone: this.props.clientDetail.otherTelephone,
+            otherTelephoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
+
+            // STEP 5
+            country: country,
+            region: region,
+            locality: this.props.clientDetail.addressLocality,
+            postalCode: this.props.clientDetail.postalCode,
+            streetAddress: this.props.clientDetail.streetAddress,
+
+            // STEP 6
+            tags: this.props.clientDetail.tags,
+            dateOfBirth: this.props.clientDetail.dateOfBirth,
+            gender: this.props.clientDetail.gender,
+            howHear: this.props.clientDetail.howHear,
+            howHearOption: this.props.clientDetail.howHearOption,
+            howHearOther: this.props.clientDetail.howHearOther,
+            joinDate: this.props.clientDetail.joinDate,
+            comment: this.props.clientDetail.comment,
         }
 
         this.onTextChange = this.onTextChange.bind(this);
@@ -38,8 +82,8 @@ class ClientUpdateContainer extends Component {
         this.onMultiChange = this.onMultiChange.bind(this);
         this.onDOBDateTimeChange = this.onDOBDateTimeChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailedCallback = this.onFailedCallback.bind(this);
     }
 
     /**
@@ -49,126 +93,6 @@ class ClientUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        //TODO: REPLACE THE FOLLOWING CODE WITH API LOADING CODE.
-        if (this.state.slug === 'argyle') {
-            this.setState({
-                typeOf: RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-                slug: 'argyle',
-                number: 1,
-                name: 'Argyle',
-                absoluteUrl: '/client/argyle',
-                firstName: "Shinji",
-                lastName: "Ikari",
-                primaryPhone:  "(111) 111-1111",
-                secondaryPhone: "(222) 222-2222",
-                email: "shinji.ikari@nerv.worldgov",
-                streetNumber: 123,
-                streetName: "Somewhere",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                apartmentUnit: "Upper",
-                streetDirection: "North",
-                streetDirectionOption: "",
-                postalCode: "N6J4X4",
-                watchSlug: "argyle-watch",
-                watchIcon: "home",
-                watchName: "Argyle",
-                watch: "argyle-watch",
-                tags: [],
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        } else if (this.state.slug === 'byron') {
-            this.setState({
-                typeOf: COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-                slug: 'byron',
-                number: 1,
-                name: 'Byron',
-                absoluteUrl: '/client/byron',
-                companyName: "City Pop Music",
-                contactFirstName: "Mariya",
-                contactLastName: "Takeuchi",
-                primaryPhone: "(321) 321-3210",
-                secondaryPhone: "",
-                email: "plastic_lover@gmail.com",
-                streetNumber: 666999,
-                streetName: "Shinjuku",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                postalCode: "N6J4X4",
-                apartmentUnit: null,
-                streetDirection: "",
-                streetDirectionOption: "",
-                watchSlug: "byron-watch",
-                watchIcon: "building",
-                watchName: "Byron",
-                watch: "byron-watch",
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        } else if (this.state.slug === 'carling') {
-            this.setState({
-                typeOf: COMMUNITY_CARES_TYPE_OF,
-                slug: 'carling',
-                number: 1,
-                name: 'Carling',
-                absoluteUrl: '/client/carling',
-                firstName: "Rei",
-                lastName: "Ayanami",
-                primaryPhone:  "(123) 123-12345",
-                secondaryPhone: "(987) 987-0987",
-                email: "rei.ayanami@nerv.worldgov",
-                streetNumber: 451,
-                streetName: "Centre",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                apartmentUnit: null,
-                streetDirection: "",
-                streetDirectionOption: "",
-                postalCode: "N6J4X4",
-                watchSlug: "carling-watch",
-                watchIcon: "university",
-                watchName: "Carling",
-                watch: "carling-watch",
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        }
-
-        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
-        this.setState({
-            howDidYouHearData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Word of mouth',
-                    slug: 'word-of-mouth'
-                },{
-                    name: 'Internet',
-                    slug: 'internet'
-                }]
-            },
-            tagsData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Health',
-                    slug: 'health'
-                },{
-                    name: 'Security',
-                    slug: 'security'
-                },{
-                    name: 'Fitness',
-                    slug: 'fitness'
-                }]
-            }
-        });
     }
 
     componentWillUnmount() {
@@ -185,16 +109,14 @@ class ClientUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(client) {
+    onSuccessCallback(client) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Client has been successfully updated.");
         this.props.history.push("/client/"+this.state.slug+"/full");
     }
 
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+    onFailedCallback(errors) {
+        this.setState({ errors: errors, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -223,11 +145,11 @@ class ClientUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.onSuccessCallback();
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailedCallback(errors);
         }
     }
 
@@ -285,98 +207,127 @@ class ClientUpdateContainer extends Component {
      */
 
     render() {
-        const { typeOf, errors, urlArgument, slug } = this.state;
         const {
-            name, companyName, email, firstName, contactFirstName, lastName, contactLastName, primaryPhone, secondaryPhone, streetNumber,
-            streetName, streetType, streetTypeOption, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOption, postalCode,
-            watchSlug, watchIcon, watchName, watch,
-            tags, birthYear, gender, howDidYouHear, howDidYouHearOption, howDidYouHearOther, meaning, expectations, companyEmployeeCount, companyYearsInOperation, companyType,
-            willingToVolunteer, anotherHouseholdClientRegistered, totalHouseholdCount, under18YearsHouseholdCount,
+            errors, id,
+
+            // STEP 3
+            typeOf,
+
+            // STEP 4 - REZ
+            givenName, lastName, telephone, otherTelephone, email, isOkToText, isOkToEmail,
+
+            // STEP 4 - BIZ
+            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf,
+            secondaryPhone, secondaryPhoneTypeOf,
+
+            // STEP 5
+            country, region, locality, postalCode, streetAddress,
+
+            // STEP 6
+            tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, comment,
         } = this.state;
 
-        // REPLACE THIS CODE WITH API CODE.
-        const watchOptions = [
-            {
-                selectName: 'watch',
-                value: "argyle-watch",
-                label: "Argyle Community Watch"
-            },{
-                selectName: 'watch',
-                value: "byron-watch",
-                label: "Byron Business Watch"
-            },{
-                selectName: 'watch',
-                value: "carling-watch",
-                label: "Carling Retirement Centre Watch"
-            }
-        ];
+        const joinDateObj = new Date(joinDate);
+        const dateOfBirth = birthdate
 
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
-        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
+        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
+            return (
+                <ClientRezUpdateComponent
+                    // STEP 3
+                    typeOf={typeOf}
 
-        return (
-            <ClientUpdateComponent
-                urlArgument={urlArgument}
-                slug={slug}
-                typeOf={typeOf}
+                    // STEP 4 - REZ
+                    givenName={givenName}
+                    lastName={lastName}
+                    telephone={telephone}
+                    otherTelephone={otherTelephone}
+                    email={email}
+                    isOkToText={isOkToText}
+                    isOkToEmail={isOkToEmail}
 
-                name={name}
-                companyName={companyName}
-                firstName={firstName}
-                contactFirstName={contactFirstName}
-                lastName={lastName}
-                contactLastName={contactLastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                streetNumber={streetNumber}
-                streetName={streetName}
-                streetType={streetType}
-                streetTypeOption={streetTypeOption}
-                streetTypeOptions={BASIC_STREET_TYPE_CHOICES}
-                streetTypeOther={streetTypeOther}
-                apartmentUnit={apartmentUnit}
-                streetDirection={streetDirection}
-                streetDirectionOptions={STREET_DIRECTION_CHOICES}
-                streetDirectionOption={streetDirectionOption}
-                postalCode={postalCode}
-                watchSlug={watchSlug}
-                watchIcon={watchIcon}
-                watchName={watchName}
-                watchOptions={watchOptions}
-                watch={watch}
-                tags={tags}
-                tagOptions={tagOptions}
-                birthYear={birthYear}
-                gender={gender}
-                howDidYouHear={howDidYouHear}
-                howDidYouHearOption={howDidYouHearOption}
-                howDidYouHearOptions={howDidYouHearOptions}
-                howDidYouHearOther={howDidYouHearOther}
-                meaning={meaning}
-                expectations={expectations}
-                willingToVolunteer={willingToVolunteer}
-                anotherHouseholdClientRegistered={anotherHouseholdClientRegistered}
-                totalHouseholdCount={totalHouseholdCount}
-                under18YearsHouseholdCount={under18YearsHouseholdCount}
-                companyEmployeeCount={companyEmployeeCount}
-                companyYearsInOperation={companyYearsInOperation}
-                companyType={companyType}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
-                onDOBDateTimeChange={this.onDOBDateTimeChange}
-                onClick={this.onClick}
-            />
-        );
+                    // STEP 5
+                    country={country}
+                    region={region}
+                    locality={locality}
+                    postalCode={postalCode}
+                    streetAddress={streetAddress}
+
+                    // STEP 6
+                    tags={tags}
+                    dateOfBirth={dateOfBirth}
+                    gender={gender}
+                    howHear={howHear}
+                    howHearOption={howHearOption}
+                    howHearOther={howHearOther}
+                    joinDate={joinDateObj}
+                    comment={comment}
+
+                    // EVERYTHING ELSE
+                    id={id}
+                    errors={errors}
+                    onTextChange={this.onTextChange}
+                    onSelectChange={this.onSelectChange}
+                    onRadioChange={this.onRadioChange}
+                    onClick={this.onClick}
+                />
+            );
+        }
+        if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            return (
+                <ClientBizUpdateComponent
+                    // STEP 3
+                    typeOf={typeOf}
+
+                    // STEP 4
+                    companyName={companyName}
+                    contactFirstName={contactFirstName}
+                    contactLastName={contactLastName}
+                    primaryPhone={primaryPhone}
+                    primaryPhoneTypeOf={primaryPhoneTypeOf}
+                    secondaryPhone={secondaryPhone}
+                    secondaryPhoneTypeOf={secondaryPhoneTypeOf}
+                    email={email}
+                    isOkToEmail={isOkToEmail}
+                    isOkToText={isOkToText}
+
+                    // STEP 5
+                    country={country}
+                    region={region}
+                    locality={locality}
+                    postalCode={postalCode}
+                    streetAddress={streetAddress}
+
+                    // STEP 6
+                    tags={tags}
+                    dateOfBirth={dateOfBirth}
+                    gender={gender}
+                    howHear={howHear}
+                    howHearOption={howHearOption}
+                    howHearOther={howHearOther}
+                    joinDate={joinDate}
+                    comment={comment}
+
+                    // EVERYTHING ELSE
+                    id={id}
+                    errors={errors}
+                    onTextChange={this.onTextChange}
+                    onSelectChange={this.onSelectChange}
+                    onRadioChange={this.onRadioChange}
+                    onClick={this.onClick}
+                />
+            );
+        }
+
+        return (null);
+
+
     }
 }
 
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        clientDetail: store.clientDetailState,
     };
 }
 
