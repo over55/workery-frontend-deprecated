@@ -21,6 +21,7 @@ class ClientCreateStep4BizContainer extends Component {
         super(props);
         this.state = {
             companyName: localStorage.getItem("workery-create-client-biz-companyName"),
+            organizationTypeOf: localStorageGetIntegerItem("workery-create-client-biz-organizationTypeOf"),
             contactFirstName: localStorage.getItem("workery-create-client-biz-contactFirstName"),
             contactLastName: localStorage.getItem("workery-create-client-biz-contactLastName"),
             primaryPhone: localStorage.getItem("workery-create-client-biz-primaryPhone"),
@@ -165,11 +166,12 @@ class ClientCreateStep4BizContainer extends Component {
 
     render() {
         const {
-            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
+            companyName, organizationTypeOf, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
         } = this.state;
         return (
             <ClientCreateStep4BizComponent
                 companyName={companyName}
+                organizationTypeOf={organizationTypeOf}
                 contactFirstName={contactFirstName}
                 contactLastName={contactLastName}
                 primaryPhone={primaryPhone}

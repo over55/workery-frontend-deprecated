@@ -41,6 +41,9 @@ export function validateInput(data) {
         if (data.companyName === undefined || data.companyName === null || validator.isEmpty(data.companyName) || data.companyName === "") {
             errors.companyName = 'This field is required';
         }
+        if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "") {
+            errors.organizationTypeOf = 'This field is required';
+        }
         if (data.contactFirstName === undefined || data.contactFirstName === null || validator.isEmpty(data.contactFirstName) || data.contactFirstName === "") {
             errors.contactFirstName = 'This field is required';
         }
@@ -145,6 +148,9 @@ export function validateStep4BizCreateInput(data) {
 
     if (data.companyName === undefined || data.companyName === null || validator.isEmpty(data.companyName) || data.companyName === "") {
         errors.companyName = 'This field is required';
+    }
+    if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "") {
+        errors.organizationTypeOf = 'This field is required';
     }
     if (data.contactFirstName === undefined || data.contactFirstName === null || validator.isEmpty(data.contactFirstName) || data.contactFirstName === "") {
         errors.contactFirstName = 'This field is required';

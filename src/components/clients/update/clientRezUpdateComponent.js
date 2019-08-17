@@ -19,7 +19,7 @@ import {
 } from "../../../constants/api";
 
 
-class ClientUpdateComponent extends Component {
+export default class ClientRezUpdateComponent extends Component {
     render() {
         const {
             // STEP 3
@@ -61,7 +61,7 @@ class ClientUpdateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Update Client</h1>
+                            <h1>Update Residential Client</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -306,5 +306,3 @@ class ClientUpdateComponent extends Component {
         );
     }
 }
-
-export default ClientUpdateComponent;
