@@ -154,14 +154,14 @@ export function validateStep4RezCreateInput(data) {
 export function validateStep4BizCreateInput(data) {
     let errors = {};
 
-    if (data.companyName === undefined || data.companyName === null || validator.isEmpty(data.companyName) || data.companyName === "") {
-        errors.companyName = 'This field is required';
+    if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
+        errors.organizationName = 'This field is required';
     }
-    if (data.contactFirstName === undefined || data.contactFirstName === null || validator.isEmpty(data.contactFirstName) || data.contactFirstName === "") {
-        errors.contactFirstName = 'This field is required';
+    if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
+        errors.givenName = 'This field is required';
     }
-    if (data.contactLastName === undefined || data.contactLastName === null || validator.isEmpty(data.contactLastName) || data.contactLastName === "") {
-        errors.contactLastName = 'This field is required';
+    if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
+        errors.lastName = 'This field is required';
     }
     if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
         errors.primaryPhone = 'This field is required';

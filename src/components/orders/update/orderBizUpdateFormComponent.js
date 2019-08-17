@@ -11,8 +11,8 @@ import { GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_M
 export default class OrderBizUpdateFormComponent extends Component {
     render() {
         const { errors, onTextChange, onSelectChange, onRadioChange, onMultiChange, isLoading } = this.props;
-        const { contactFirstName, contactLastName, primaryPhone, secondaryPhone, email } = this.props;
-        const { companyName, streetNumber, streetName, streetType, streetTypeOptions, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOptions } = this.props;
+        const { givenName, lastName, primaryPhone, secondaryPhone, email } = this.props;
+        const { organizationName, streetNumber, streetName, streetType, streetTypeOptions, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOptions } = this.props;
         const { watch, watchOptions } = this.props;
         const { tags, tagOptions, birthYear, gender, howDidYouHear, howDidYouHearOptions, howDidYouHearOther, meaning, expectations, willingToVolunteer, anotherHouseholdOrderRegistered, totalHouseholdCount, under18YearsHouseholdCount, companyEmployeeCount, companyYearsInOperation, companyType } = this.props;
 
@@ -34,11 +34,11 @@ export default class OrderBizUpdateFormComponent extends Component {
                 <BootstrapInput
                     inputClassName="form-control form-control-lg"
                     borderColour="border-primary"
-                    error={errors.companyName}
+                    error={errors.organizationName}
                     label="Compan Name (*)"
                     onChange={onTextChange}
-                    value={companyName}
-                    name="companyName"
+                    value={organizationName}
+                    name="organizationName"
                     type="text"
                     disabled={isLoading}
                 />
@@ -46,11 +46,11 @@ export default class OrderBizUpdateFormComponent extends Component {
                 <BootstrapInput
                     inputClassName="form-control form-control-lg"
                     borderColour="border-primary"
-                    error={errors.contactFirstName}
+                    error={errors.givenName}
                     label="Contact First Name (*)"
                     onChange={onTextChange}
-                    value={contactFirstName}
-                    name="contactFirstName"
+                    value={givenName}
+                    name="givenName"
                     type="text"
                     disabled={isLoading}
                 />
@@ -58,11 +58,11 @@ export default class OrderBizUpdateFormComponent extends Component {
                 <BootstrapInput
                     inputClassName="form-control form-control-lg"
                     borderColour="border-primary"
-                    error={errors.contactLastName}
+                    error={errors.lastName}
                     label="Contact Last Name (*)"
                     onChange={onTextChange}
-                    value={contactLastName}
-                    name="contactLastName"
+                    value={lastName}
+                    name="lastName"
                     type="text"
                     disabled={isLoading}
                 />

@@ -20,9 +20,9 @@ class PartnerCreateStep3BizContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyName: localStorage.getItem("workery-create-partner-biz-companyName"),
-            contactFirstName: localStorage.getItem("workery-create-partner-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-partner-biz-contactLastName"),
+            organizationName: localStorage.getItem("workery-create-partner-biz-organizationName"),
+            firstName: localStorage.getItem("workery-create-partner-biz-firstName"),
+            lastName: localStorage.getItem("workery-create-partner-biz-lastName"),
             primaryPhone: localStorage.getItem("workery-create-partner-biz-primaryPhone"),
             primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-partner-biz-primaryPhoneTypeOf"),
             secondaryPhone: localStorage.getItem("workery-create-partner-biz-secondaryPhone"),
@@ -166,13 +166,13 @@ class PartnerCreateStep3BizContainer extends Component {
 
     render() {
         const {
-            companyName, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, isActive, errors
+            organizationName, firstName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, isActive, errors
         } = this.state;
         return (
             <PartnerCreateStep3BizComponent
-                companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
+                organizationName={organizationName}
+                firstName={firstName}
+                lastName={lastName}
                 primaryPhone={primaryPhone}
                 primaryPhoneTypeOf={primaryPhoneTypeOf}
                 primaryPhoneTypeOfOptions={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}

@@ -50,9 +50,9 @@ class StaffCreateStep8Container extends Component {
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
-            companyName: localStorage.getItem("workery-create-staff-biz-companyName"),
-            contactFirstName: localStorage.getItem("workery-create-staff-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-staff-biz-contactLastName"),
+            organizationName: localStorage.getItem("workery-create-staff-biz-organizationName"),
+            firstName: localStorage.getItem("workery-create-staff-biz-firstName"),
+            lastName: localStorage.getItem("workery-create-staff-biz-lastName"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-staff-country"),

@@ -54,9 +54,9 @@ class ClientUpdateContainer extends Component {
             isOkToText: isOkToText,
 
             // STEP 4 - BIZ
-            companyName: this.props.clientDetail.companyName,
-            contactFirstName: this.props.clientDetail.contactFirstName,
-            contactLastName: this.props.clientDetail.contactLastName,
+            organizationName: this.props.clientDetail.organizationName,
+            givenName: this.props.clientDetail.givenName,
+            lastName: this.props.clientDetail.lastName,
             telephone: this.props.clientDetail.telephone,
             telephoneTypeOf: this.props.clientDetail.telephoneTypeOf,
             otherTelephone: this.props.clientDetail.otherTelephone,
@@ -151,10 +151,10 @@ class ClientUpdateContainer extends Component {
 
         // () First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.firstName = this.state.contactFirstName;
-            postData.givenName = this.state.contactFirstName;
-            postData.givenName = this.state.contactFirstName;
-            postData.lastName = this.state.contactLastName;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.lastName = this.state.lastName;
         } else {
 
         }
@@ -310,7 +310,7 @@ class ClientUpdateContainer extends Component {
             givenName, lastName, telephone, telephoneTypeOf, otherTelephone, otherTelephoneTypeOf, email, isOkToText, isOkToEmail,
 
             // STEP 4 - BIZ
-            companyName, contactFirstName, contactLastName,
+            organizationName, organizationTypeOf,
 
             // STEP 5
             country, region, locality, postalCode, streetAddress,
@@ -377,9 +377,9 @@ class ClientUpdateContainer extends Component {
                     typeOf={typeOf}
 
                     // STEP 4
-                    companyName={companyName}
-                    contactFirstName={contactFirstName}
-                    contactLastName={contactLastName}
+                    organizationName={organizationName}
+                    givenName={givenName}
+                    lastName={lastName}
                     telephone={telephone}
                     telephoneTypeOf={telephoneTypeOf}
                     otherTelephone={otherTelephone}

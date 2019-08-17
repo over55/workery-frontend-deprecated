@@ -17,7 +17,7 @@ export default class StaffCreateStep8Component extends Component {
             accountTypeLabel,
 
             // Step 4 - Residential & Business
-            firstName,
+            givenName,
             lastName,
             primaryPhone,
             secondaryPhone,

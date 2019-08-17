@@ -13,7 +13,7 @@ import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, ORGANIZATION_TYPE_OF_CHO
 class ClientCreateStep4BizComponent extends Component {
     render() {
         const {
-            companyName, organizationTypeOf, contactFirstName, contactLastName,
+            organizationName, organizationTypeOf, givenName, lastName,
             primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
             secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors,
             isOkToEmail, isOkToText,
@@ -86,17 +86,17 @@ class ClientCreateStep4BizComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.companyName}
-                                label="Company Name (*)"
+                                error={errors.organizationName}
+                                label="Organization Name (*)"
                                 onChange={onTextChange}
-                                value={companyName}
-                                name="companyName"
+                                value={organizationName}
+                                name="organizationName"
                                 type="text"
                             />
 
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
-                                label="Type (*)"
+                                label="Organization Type (*)"
                                 name="organizationTypeOf"
                                 defaultOptionLabel="Please select a telephone type."
                                 options={ORGANIZATION_TYPE_OF_CHOICES}
@@ -108,22 +108,22 @@ class ClientCreateStep4BizComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.contactFirstName}
+                                error={errors.givenName}
                                 label="Contact First Name (*)"
                                 onChange={onTextChange}
-                                value={contactFirstName}
-                                name="contactFirstName"
+                                value={givenName}
+                                name="givenName"
                                 type="text"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.contactLastName}
+                                error={errors.lastName}
                                 label="Contact Last Name (*)"
                                 onChange={onTextChange}
-                                value={contactLastName}
-                                name="contactLastName"
+                                value={lastName}
+                                name="lastName"
                                 type="text"
                             />
 

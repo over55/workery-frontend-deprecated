@@ -11,7 +11,7 @@ import { GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_M
 export default class OrderComUpdateFormComponent extends Component {
     render() {
         const { errors, onTextChange, onSelectChange, onRadioChange, onMultiChange, isLoading } = this.props;
-        const { firstName, lastName, primaryPhone, secondaryPhone, email } = this.props;
+        const { givenName, lastName, primaryPhone, secondaryPhone, email } = this.props;
         const { streetNumber, streetName, streetType, streetTypeOptions, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOptions } = this.props;
         const { watch, watchOptions } = this.props;
         const { tags, tagOptions, birthYear, gender, howDidYouHear, howDidYouHearOptions, howDidYouHearOther, meaning, expectations, willingToVolunteer, anotherHouseholdOrderRegistered, totalHouseholdCount, under18YearsHouseholdCount, } = this.props;
@@ -34,11 +34,11 @@ export default class OrderComUpdateFormComponent extends Component {
                 <BootstrapInput
                     inputClassName="form-control form-control-lg"
                     borderColour="border-primary"
-                    error={errors.firstName}
+                    error={errors.givenName}
                     label="First Name (*)"
                     onChange={onTextChange}
-                    value={firstName}
-                    name="firstName"
+                    value={givenName}
+                    name="givenName"
                     type="text"
                     disabled={isLoading}
                 />

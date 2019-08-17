@@ -76,9 +76,9 @@ class AssociateCreateStep8Container extends Component {
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
-            companyName: localStorage.getItem("workery-create-associate-biz-companyName"),
-            contactFirstName: localStorage.getItem("workery-create-associate-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-associate-biz-contactLastName"),
+            organizationName: localStorage.getItem("workery-create-associate-biz-organizationName"),
+            firstName: localStorage.getItem("workery-create-associate-biz-firstName"),
+            lastName: localStorage.getItem("workery-create-associate-biz-lastName"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-associate-country"),
@@ -251,9 +251,9 @@ class AssociateCreateStep8Container extends Component {
 
         // () First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.firstName = this.state.contactFirstName;
-            postData.givenName = this.state.contactFirstName;
-            postData.lastName = this.state.contactLastName;
+            postData.firstName = this.state.firstName;
+            postData.givenName = this.state.firstName;
+            postData.lastName = this.state.lastName;
         }
 
         // Finally: Return our new modified data.
@@ -363,9 +363,7 @@ class AssociateCreateStep8Container extends Component {
             isOkToEmailLabel,
             isOkToText,
             isOkToTextLabel,
-            companyName,
-            contactFirstName,
-            contactLastName,
+            organizationName,
 
             // Step 5 - Address
             country,
@@ -428,9 +426,9 @@ class AssociateCreateStep8Container extends Component {
                 isOkToEmailLabel={isOkToEmailLabel}
                 isOkToText={isOkToText}
                 isOkToTextLabel={isOkToTextLabel}
-                companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
+                organizationName={organizationName}
+                firstName={firstName}
+                lastName={lastName}
 
                 // Step 5 - Address
                 country={country}

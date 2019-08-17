@@ -76,10 +76,10 @@ class PartnerCreateStep6Container extends Component {
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
-            companyName: localStorage.getItem("workery-create-partner-biz-companyName"),
-            organizationName: localStorage.getItem("workery-create-partner-biz-companyName"),
-            contactFirstName: localStorage.getItem("workery-create-partner-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-partner-biz-contactLastName"),
+            organizationName: localStorage.getItem("workery-create-partner-biz-organizationName"),
+            organizationName: localStorage.getItem("workery-create-partner-biz-organizationName"),
+            firstName: localStorage.getItem("workery-create-partner-biz-firstName"),
+            lastName: localStorage.getItem("workery-create-partner-biz-lastName"),
             isActive: localStorageGetIntegerItem("workery-create-partner-biz-isActive"),
 
             // Step 5 - Address
@@ -189,9 +189,9 @@ class PartnerCreateStep6Container extends Component {
 
         // () First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.firstName = this.state.contactFirstName;
-            postData.givenName = this.state.contactFirstName;
-            postData.lastName = this.state.contactLastName;
+            postData.firstName = this.state.firstName;
+            postData.givenName = this.state.firstName;
+            postData.lastName = this.state.lastName;
         }
 
         // Finally: Return our new modified data.
@@ -309,9 +309,7 @@ class PartnerCreateStep6Container extends Component {
             isOkToEmailLabel,
             isOkToText,
             isOkToTextLabel,
-            companyName,
-            contactFirstName,
-            contactLastName,
+            organizationName,
 
             // Step 5 - Address
             country,
@@ -354,9 +352,9 @@ class PartnerCreateStep6Container extends Component {
                 isOkToEmailLabel={isOkToEmailLabel}
                 isOkToText={isOkToText}
                 isOkToTextLabel={isOkToTextLabel}
-                companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
+                organizationName={organizationName}
+                firstName={firstName}
+                lastName={lastName}
 
                 // Step 5 - Address
                 country={country}

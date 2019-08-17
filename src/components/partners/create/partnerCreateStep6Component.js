@@ -17,7 +17,7 @@ export default class PartnerCreateStep6Component extends Component {
             typeOfLabel,
 
             // Step 4 - Residential & Business
-            firstName,
+            givenName,
             lastName,
             primaryPhone,
             secondaryPhone,
@@ -26,9 +26,7 @@ export default class PartnerCreateStep6Component extends Component {
             isOkToEmailLabel,
             isOkToText,
             isOkToTextLabel,
-            companyName,
-            contactFirstName,
-            contactLastName,
+            organizationName,
 
             // Step 5 - Address
             country,
@@ -154,23 +152,23 @@ export default class PartnerCreateStep6Component extends Component {
                                 {isBizTypeOf &&
                                     <tr>
                                         <th scope="row" className="bg-light">Company Name</th>
-                                        <td>{companyName}</td>
+                                        <td>{organizationName}</td>
                                     </tr>
                                 }
                                 {isBizTypeOf
                                     ?<tr>
                                         <th scope="row" className="bg-light">Contact First Name</th>
-                                        <td>{contactFirstName}</td>
+                                        <td>{givenName}</td>
                                     </tr>
                                     :<tr>
                                         <th scope="row" className="bg-light">First Name</th>
-                                        <td>{firstName}</td>
+                                        <td>{givenName}</td>
                                     </tr>
                                 }
                                 {isBizTypeOf
                                     ?<tr>
                                         <th scope="row" className="bg-light">Contact Last Name</th>
-                                        <td>{contactLastName}</td>
+                                        <td>{lastName}</td>
                                     </tr>
                                     :<tr>
                                         <th scope="row" className="bg-light">Last Name</th>

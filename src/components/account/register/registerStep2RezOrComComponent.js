@@ -10,7 +10,7 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 
 class RegisterStep2RezOrComComponent extends Component {
     render() {
-        const { firstName, lastName, primaryPhone, secondaryPhone, email, errors, onTextChange, isLoading, onClick } = this.props;
+        const { givenName, lastName, primaryPhone, secondaryPhone, email, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <h1>
@@ -60,11 +60,11 @@ class RegisterStep2RezOrComComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.firstName}
+                                error={errors.givenName}
                                 label="First Name (*)"
                                 onChange={onTextChange}
-                                value={firstName}
-                                name="firstName"
+                                value={givenName}
+                                name="givenName"
                                 type="text"
                             />
 

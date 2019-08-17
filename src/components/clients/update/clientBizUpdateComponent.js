@@ -27,7 +27,7 @@ export default class ClientBizUpdateComponent extends Component {
             typeOf,
 
             // STEP 4 - Biz
-            companyName, organizationTypeOf, contactFirstName, contactLastName,
+            organizationName, organizationTypeOf, givenName, lastName,
             telephone, telephoneTypeOf, otherTelephone, otherTypeOf, email,
             isOkToEmail, isOkToText,
 
@@ -42,7 +42,7 @@ export default class ClientBizUpdateComponent extends Component {
             onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
         const isOtherHowDidYouHearSelected = howHear === 1;
-        console.log(companyName, organizationTypeOf, contactFirstName, contactLastName,);
+        console.log(organizationName, organizationTypeOf, givenName, lastName,);
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -54,7 +54,7 @@ export default class ClientBizUpdateComponent extends Component {
                             <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/client/${id}/full`}><i className="fas fa-user"></i>&nbsp;{contactFirstName}&nbsp;{contactLastName}</Link>
+                            <Link to={`/client/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName}&nbsp;{lastName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Update
@@ -77,11 +77,11 @@ export default class ClientBizUpdateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.companyName}
+                                error={errors.organizationName}
                                 label="Company Name (*)"
                                 onChange={onTextChange}
-                                value={companyName}
-                                name="companyName"
+                                value={organizationName}
+                                name="organizationName"
                                 type="text"
                             />
 
@@ -99,22 +99,22 @@ export default class ClientBizUpdateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.contactFirstName}
+                                error={errors.givenName}
                                 label="Contact First Name (*)"
                                 onChange={onTextChange}
-                                value={contactFirstName}
-                                name="contactFirstName"
+                                value={givenName}
+                                name="givenName"
                                 type="text"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.contactLastName}
+                                error={errors.lastName}
                                 label="Contact Last Name (*)"
                                 onChange={onTextChange}
-                                value={contactLastName}
-                                name="contactLastName"
+                                value={lastName}
+                                name="lastName"
                                 type="text"
                             />
 

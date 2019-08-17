@@ -89,9 +89,9 @@ class PartnerUpdateContainer extends Component {
                 number: 1,
                 name: 'Byron',
                 absoluteUrl: '/partner/byron',
-                companyName: "City Pop Music",
-                contactFirstName: "Mariya",
-                contactLastName: "Takeuchi",
+                organizationName: "City Pop Music",
+                firstName: "Mariya",
+                lastName: "Takeuchi",
                 primaryPhone: "(321) 321-3210",
                 secondaryPhone: "",
                 email: "plastic_lover@gmail.com",
@@ -287,7 +287,7 @@ class PartnerUpdateContainer extends Component {
     render() {
         const { typeOf, errors, urlArgument, slug } = this.state;
         const {
-            name, companyName, email, firstName, contactFirstName, lastName, contactLastName, primaryPhone, secondaryPhone, streetNumber,
+            name, organizationName, email, firstName, lastName, primaryPhone, secondaryPhone, streetNumber,
             streetName, streetType, streetTypeOption, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOption, postalCode,
             watchSlug, watchIcon, watchName, watch,
             tags, birthYear, gender, howDidYouHear, howDidYouHearOption, howDidYouHearOther, meaning, expectations, companyEmployeeCount, companyYearsInOperation, companyType,
@@ -321,11 +321,11 @@ class PartnerUpdateContainer extends Component {
                 typeOf={typeOf}
 
                 name={name}
-                companyName={companyName}
+                organizationName={organizationName}
                 firstName={firstName}
-                contactFirstName={contactFirstName}
+                firstName={firstName}
                 lastName={lastName}
-                contactLastName={contactLastName}
+                lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
                 email={email}

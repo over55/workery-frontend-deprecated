@@ -24,6 +24,7 @@ class ClientCreateStep7Container extends Component {
 
         // Get the type of.
         const typeOf = localStorageGetIntegerItem("workery-create-client-typeOf");
+        let givenName
         let returnURL;
         let primaryPhone;
         let primaryPhoneTypeOf;
@@ -65,8 +66,8 @@ class ClientCreateStep7Container extends Component {
             typeOfLabel: localStorage.getItem("workery-create-client-typeOf-label"),
 
             // Step 4 - Residential & Business
-            firstName: localStorage.getItem("workery-create-client-rez-firstName"),
-            givenName: localStorage.getItem("workery-create-client-rez-firstName"),
+            givenName: localStorage.getItem("workery-create-client-rez-givenName"),
+            givenName: localStorage.getItem("workery-create-client-rez-givenName"),
             lastName: localStorage.getItem("workery-create-client-rez-lastName"),
             primaryPhone: primaryPhone,
             telephone: primaryPhone,
@@ -81,10 +82,8 @@ class ClientCreateStep7Container extends Component {
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
-            companyName: localStorage.getItem("workery-create-client-biz-companyName"),
+            organizationName: localStorage.getItem("workery-create-client-biz-organizationName"),
             organizationTypeOf: localStorageGetIntegerItem("workery-create-client-biz-organizationTypeOf"),
-            contactFirstName: localStorage.getItem("workery-create-client-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-client-biz-contactLastName"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-client-country"),
@@ -128,7 +127,7 @@ class ClientCreateStep7Container extends Component {
         let postData = Object.assign({}, this.state);
 
         // (1) Given name - We need t refactor name for API field match.
-        postData.givenName = this.state.firstName;
+        postData.givenName = this.state.givenName;
 
         // (2) Middle name (API ISSUE)
         postData.middleName = this.state.middleName;
@@ -160,8 +159,8 @@ class ClientCreateStep7Container extends Component {
         }
 
         // (6) Organization Type Of - This field may not be null, therefore make blank.
-        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
-            postData.organizationTypeOf = "";
+        if (this.state.givenName === undefined || this.state.givenName === null) {
+            postData.givenName = "";
         }
 
         // (7) Extra Comment: This field is required.
@@ -182,11 +181,11 @@ class ClientCreateStep7Container extends Component {
 
         // (12) Business handling of data.
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.firstName = this.state.contactFirstName;
-            postData.givenName = this.state.contactFirstName;
-            postData.lastName = this.state.contactLastName;
-            postData.organizationName = this.state.companyName;
-            postData.organizationTypeOf = this.state.organizationTypeOf;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.lastName = this.state.lastName;
+            postData.organizationName = this.state.organizationName;
+            postData.givenName = this.state.givenName;
             postData.organizationAddressCountry = this.state.country;
             postData.organizationAddressLocality  = this.state.region;
             postData.organizationAddressRegion = this.state.locality;
@@ -303,7 +302,7 @@ class ClientCreateStep7Container extends Component {
             typeOfLabel,
 
             // Step 4 - Residential & Business
-            firstName,
+            givenName,
             lastName,
             primaryPhone,
             secondaryPhone,
@@ -312,9 +311,8 @@ class ClientCreateStep7Container extends Component {
             isOkToEmailLabel,
             isOkToText,
             isOkToTextLabel,
-            companyName,
-            contactFirstName,
-            contactLastName,
+            organizationName,
+            organizationTypeOf,
 
             // Step 5 - Address
             country,
@@ -348,7 +346,7 @@ class ClientCreateStep7Container extends Component {
                 typeOfLabel={typeOfLabel}
 
                 // Step 4 - Residential & Business
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
@@ -357,9 +355,9 @@ class ClientCreateStep7Container extends Component {
                 isOkToEmailLabel={isOkToEmailLabel}
                 isOkToText={isOkToText}
                 isOkToTextLabel={isOkToTextLabel}
-                companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
+                organizationName={organizationName}
+                givenName={givenName}
+                lastName={lastName}
 
                 // Step 5 - Address
                 country={country}

@@ -19,7 +19,7 @@ export default class StaffUpdateComponent extends Component {
     render() {
         const {
             slug,
-            firstName, lastName, dateOfBirth, gender, description, howHear, tags, tagOptions, howHearOptions, phone, mobile, workEmail, personalEmail,
+            givenName, lastName, dateOfBirth, gender, description, howHear, tags, tagOptions, howHearOptions, phone, mobile, workEmail, personalEmail,
             streetNumber, streetName, streetType, streetTypeOptions, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOptions, postalCode, locality, country, region, emergencyFullName,
             emergencyRelationship, emergencyTelephone, emergencyAlternativeTelephone, additionalComments, accountType, policeCheckDate, isActive, isActiveOptions,
             password, repeatPassword,
@@ -64,11 +64,11 @@ export default class StaffUpdateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.firstName}
+                                error={errors.givenName}
                                 label="First Name (*)"
                                 onChange={onTextChange}
-                                value={firstName}
-                                name="firstName"
+                                value={givenName}
+                                name="givenName"
                                 type="text"
                             />
 

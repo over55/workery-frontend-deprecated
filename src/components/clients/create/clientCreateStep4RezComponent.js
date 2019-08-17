@@ -13,7 +13,7 @@ import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constant
 class ClientCreateStep4RezComponent extends Component {
     render() {
         const {
-            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors,
+            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors,
             onTextChange, onRadioChange, isLoading, onClick
         } = this.props;
         return (
@@ -83,11 +83,11 @@ class ClientCreateStep4RezComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.firstName}
+                                error={errors.givenName}
                                 label="First Name (*)"
                                 onChange={onTextChange}
-                                value={firstName}
-                                name="firstName"
+                                value={givenName}
+                                name="givenName"
                                 type="text"
                             />
 

@@ -15,7 +15,7 @@ import { ORGANIZATION_TYPE_OF_CHOICES } from "../../../constants/api";
 class ClientRezUpgradeOperationComponent extends Component {
     render() {
         const {
-            companyName, organizationTypeOf, typeOf, country, region, locality, postalCode, streetAddress,
+            organizationName, organizationTypeOf, typeOf, country, region, locality, postalCode, streetAddress,
             errors,
             onTextChange,
             onSelectChange,
@@ -61,11 +61,11 @@ class ClientRezUpgradeOperationComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.companyName}
+                                error={errors.organizationName}
                                 label="Company Name (*)"
                                 onChange={onTextChange}
-                                value={companyName}
-                                name="companyName"
+                                value={organizationName}
+                                name="organizationName"
                                 type="text"
                             />
 

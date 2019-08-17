@@ -23,7 +23,7 @@ class ClientRezUpgradeOperationContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyName: "",
+            organizationName: "",
             organizationTypeOf: "",
             country: "",
             region: "",
@@ -55,7 +55,7 @@ class ClientRezUpgradeOperationContainer extends Component {
         let postData = Object.assign({}, this.state);
 
         postData.customer = this.props.clientDetail.id;
-        postData.organizationName = this.state.companyName;
+        postData.organizationName = this.state.organizationName;
         // 'organization_type_of',
         postData.organizationAddressCountry = this.state.country;
         postData.organizationAddressLocality = this.state.locality;
@@ -217,12 +217,12 @@ class ClientRezUpgradeOperationContainer extends Component {
 
     render() {
         const {
-            companyName, organizationTypeOf, country, region, locality, postalCode, streetAddress,
+            organizationName, organizationTypeOf, country, region, locality, postalCode, streetAddress,
             errors
         } = this.state;
         return (
             <ClientRezUpgradeOperationComponent
-                companyName={companyName}
+                organizationName={organizationName}
                 organizationTypeOf={organizationTypeOf}
                 country={country}
                 region={region}

@@ -19,7 +19,7 @@ class ClientCreateStep4RezContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-client-rez-firstName"),
+            givenName: localStorage.getItem("workery-create-client-rez-givenName"),
             lastName: localStorage.getItem("workery-create-client-rez-lastName"),
             primaryPhone: localStorage.getItem("workery-create-client-rez-primaryPhone"),
             secondaryPhone: localStorage.getItem("workery-create-client-rez-secondaryPhone"),
@@ -149,11 +149,11 @@ class ClientCreateStep4RezContainer extends Component {
 
     render() {
         const {
-            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
+            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
         } = this.state;
         return (
             <ClientCreateStep4RezComponent
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}

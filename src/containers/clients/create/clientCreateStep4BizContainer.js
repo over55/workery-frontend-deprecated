@@ -20,10 +20,10 @@ class ClientCreateStep4BizContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyName: localStorage.getItem("workery-create-client-biz-companyName"),
+            organizationName: localStorage.getItem("workery-create-client-biz-organizationName"),
             organizationTypeOf: localStorageGetIntegerItem("workery-create-client-biz-organizationTypeOf"),
-            contactFirstName: localStorage.getItem("workery-create-client-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-client-biz-contactLastName"),
+            givenName: localStorage.getItem("workery-create-client-biz-givenName"),
+            lastName: localStorage.getItem("workery-create-client-biz-lastName"),
             primaryPhone: localStorage.getItem("workery-create-client-biz-primaryPhone"),
             primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-biz-primaryPhoneTypeOf"),
             secondaryPhone: localStorage.getItem("workery-create-client-biz-secondaryPhone"),
@@ -166,14 +166,14 @@ class ClientCreateStep4BizContainer extends Component {
 
     render() {
         const {
-            companyName, organizationTypeOf, contactFirstName, contactLastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
+            organizationName, organizationTypeOf, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, errors
         } = this.state;
         return (
             <ClientCreateStep4BizComponent
-                companyName={companyName}
+                organizationName={organizationName}
                 organizationTypeOf={organizationTypeOf}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
+                givenName={givenName}
+                lastName={lastName}
                 primaryPhone={primaryPhone}
                 primaryPhoneTypeOf={primaryPhoneTypeOf}
                 primaryPhoneTypeOfOptions={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
