@@ -151,15 +151,6 @@ class AssociateUpdateContainer extends Component {
             postData.howHearOther = "";
         }
 
-        // // (5) Password & Password Repeat
-        // if (this.state.password === undefined || this.state.password === null || this.state.password === '' || this.state.password.length == 0) {
-        //     var randomString = Math.random().toString(34).slice(-10);
-        //     randomString += "A";
-        //     randomString += "!";
-        //     postData.password = randomString;
-        //     postData.passwordRepeat = randomString;
-        // }
-
         // (6) Organization Type Of - This field may not be null, therefore make blank.
         if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
             postData.organizationTypeOf = "";
@@ -282,30 +273,51 @@ class AssociateUpdateContainer extends Component {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            skillSets: selectedOptions,
-        });
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let idSkillSets = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let tag = selectedOptions[i];
+                idSkillSets.push(tag.value);
+            }
+        }
+        this.setState({ skillSets: idSkillSets, });
     }
 
     onInsuranceRequirementMultiChange(...args) {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            insuranceRequirements: selectedOptions,
-        });
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let idInsuranceRequirements = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let tag = selectedOptions[i];
+                idInsuranceRequirements.push(tag.value);
+            }
+        }
+        this.setState({ insuranceRequirements: idInsuranceRequirements, });
     }
 
     onVehicleTypeMultiChange(...args) {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            vehicleTypes: selectedOptions,
-        });
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let idVehicleTypes = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let tag = selectedOptions[i];
+                idVehicleTypes.push(tag.value);
+            }
+        }
+        this.setState({ vehicleTypes: idVehicleTypes, });
     }
 
     onTagMultiChange(...args) {
