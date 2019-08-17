@@ -31,6 +31,8 @@ class ClientUpdateContainer extends Component {
         const region = this.props.clientDetail.addressRegion === "ON" ? "Ontario" : this.props.clientDetail.addressRegion;
         const isOkToEmail = this.props.clientDetail.isOkToEmail === true ? 1 : 0;
         const isOkToText = this.props.clientDetail.isOkToText === true ? 1 : 0;
+        const birthdateObj = new Date(this.props.clientDetail.birthdate);
+        const joinDateObj = new Date(this.props.clientDetail.joinDate);
 
         this.state = {
             errors: {},
@@ -67,12 +69,12 @@ class ClientUpdateContainer extends Component {
 
             // STEP 6
             tags: this.props.clientDetail.tags,
-            dateOfBirth: this.props.clientDetail.dateOfBirth,
+            dateOfBirth: birthdateObj,
             gender: this.props.clientDetail.gender,
             howHear: this.props.clientDetail.howHear,
             howHearOption: this.props.clientDetail.howHearOption,
             howHearOther: this.props.clientDetail.howHearOther,
-            joinDate: this.props.clientDetail.joinDate,
+            joinDate: joinDateObj,
             comment: this.props.clientDetail.comment,
         }
 
@@ -224,11 +226,8 @@ class ClientUpdateContainer extends Component {
             country, region, locality, postalCode, streetAddress,
 
             // STEP 6
-            tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, comment,
+            tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, comment, dateOfBirth
         } = this.state;
-
-        const joinDateObj = new Date(joinDate);
-        const dateOfBirth = birthdate
 
         if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             return (
@@ -259,7 +258,7 @@ class ClientUpdateContainer extends Component {
                     howHear={howHear}
                     howHearOption={howHearOption}
                     howHearOther={howHearOther}
-                    joinDate={joinDateObj}
+                    joinDate={joinDate}
                     comment={comment}
 
                     // EVERYTHING ELSE
