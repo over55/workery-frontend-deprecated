@@ -110,7 +110,7 @@ class AssociateCreateStep8Container extends Component {
             // Step 7 - Metrics
             tags: localStorageGetArrayItem("workery-create-associate-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-associate-gender"),
+            gender: localStorage.getItem("workery-create-associate-gender"),
             genderLabel: localStorage.getItem("workery-create-associate-gender-label"),
             howHear: localStorageGetIntegerItem("workery-create-associate-howHear"),
             howHearLabel: localStorage.getItem("workery-create-associate-howHearLabel"),

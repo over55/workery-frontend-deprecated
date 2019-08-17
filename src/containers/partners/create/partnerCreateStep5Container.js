@@ -39,7 +39,7 @@ class PartnerCreateStep5Container extends Component {
             typeOf: typeOf,
             tags: localStorageGetArrayItem("workery-create-partner-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-partner-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-partner-gender"),
+            gender: localStorage.getItem("workery-create-partner-gender"),
             howHear: localStorageGetIntegerItem("workery-create-partner-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-partner-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-partner-howHearOther"),

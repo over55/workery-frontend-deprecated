@@ -92,7 +92,7 @@ class PartnerCreateStep6Container extends Component {
             // Step 6 - Metrics
             tags: localStorageGetArrayItem("workery-create-partner-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-partner-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-partner-gender"),
+            gender: localStorage.getItem("workery-create-partner-gender"),
             genderLabel: localStorage.getItem("workery-create-partner-gender-label"),
             howHear: localStorageGetIntegerItem("workery-create-partner-howHear"),
             howHearLabel: localStorage.getItem("workery-create-partner-howHearLabel"),

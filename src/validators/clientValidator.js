@@ -23,9 +23,9 @@ export function validateInput(data) {
         if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
             errors.telephone = 'This field is required';
         }
-        if (data.otherTelephone === undefined || data.otherTelephone === null || validator.isEmpty(data.otherTelephone) || data.otherTelephone === "") {
-            errors.otherTelephone = 'This field is required';
-        }
+        // if (data.otherTelephone === undefined || data.otherTelephone === null || validator.isEmpty(data.otherTelephone) || data.otherTelephone === "") {
+        //     errors.otherTelephone = 'This field is required';
+        // }
         if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
             errors.email = 'This field is required';
         }
@@ -82,10 +82,10 @@ export function validateInput(data) {
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
     }
-    if (data.gender === undefined || data.gender === null || data.gender === "" || isNaN(data.gender) ) {
+    if (data.gender === undefined || data.gender === null || data.gender === "") {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.gender) ) {
+    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
         errors.howHear = 'This field is required';
     } else {
         if (data.howHear === "Other") {
@@ -212,10 +212,10 @@ export function validateStep6CreateInput(data) {
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
     }
-    if (data.gender === undefined || data.gender === null || data.gender === "" || isNaN(data.gender) ) {
+    if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.gender) ) {
+    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
         errors.howHear = 'This field is required';
     } else {
         if (data.howHear === "Other") {
@@ -238,38 +238,6 @@ export function validateStep6CreateInput(data) {
  */
 export function validateStep7CreateInput(data) {
     return validateInput(data);
-}
-
-
-export function validatePromotionInput(data) {
-    let errors = {};
-
-    if (data.groupId === undefined || data.groupId === null || data.groupId === "") {
-        errors.groupId = 'This field is required';
-    } else {
-        if (data.areaCoordinatorAgreement === undefined || data.areaCoordinatorAgreement === null || data.areaCoordinatorAgreement === "" || data.areaCoordinatorAgreement === false) {
-            errors.areaCoordinatorAgreement = 'This field is required.';
-        }
-        if (data.conflictOfInterestAgreement === undefined || data.conflictOfInterestAgreement === null || data.conflictOfInterestAgreement === "" || data.conflictOfInterestAgreement === false) {
-            errors.conflictOfInterestAgreement = 'This field is required';
-        }
-        if (data.codeOfConductAgreement === undefined || data.codeOfConductAgreement === null || data.codeOfConductAgreement === "" || data.codeOfConductAgreement === false) {
-            errors.codeOfConductAgreement = 'This field is required';
-        }
-        if (data.confidentialityAgreement === undefined || data.confidentialityAgreement === null || data.confidentialityAgreement === "" || data.confidentialityAgreement === false) {
-            errors.confidentialityAgreement = 'This field is required';
-        }
-        if (data.groupId === ASSOCIATE_GROUP_ID) {
-            if (data.associateAgreement === undefined || data.associateAgreement === null || data.associateAgreement === "" || data.associateAgreement === false) {
-                errors.associateAgreement = 'This field is required';
-            }
-        }
-    }
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    }
 }
 
 

@@ -75,7 +75,7 @@ class StaffCreateStep8Container extends Component {
             // Step 7 - Metrics
             tags: localStorageGetArrayItem("workery-create-staff-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-staff-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-staff-gender"),
+            gender: localStorage.getItem("workery-create-staff-gender"),
             genderLabel: localStorage.getItem("workery-create-staff-gender-label"),
             howHear: localStorageGetIntegerItem("workery-create-staff-howHear"),
             howHearLabel: localStorage.getItem("workery-create-staff-howHearLabel"),

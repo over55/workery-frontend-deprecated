@@ -39,7 +39,7 @@ class AssociateCreateStep7Container extends Component {
             typeOf: typeOf,
             tags: localStorageGetArrayItem("workery-create-associate-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-associate-gender"),
+            gender: localStorage.getItem("workery-create-associate-gender"),
             howHear: localStorageGetIntegerItem("workery-create-associate-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-associate-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-associate-howHearOther"),

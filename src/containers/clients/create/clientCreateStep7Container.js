@@ -66,11 +66,16 @@ class ClientCreateStep7Container extends Component {
 
             // Step 4 - Residential & Business
             firstName: localStorage.getItem("workery-create-client-rez-firstName"),
+            givenName: localStorage.getItem("workery-create-client-rez-firstName"),
             lastName: localStorage.getItem("workery-create-client-rez-lastName"),
             primaryPhone: primaryPhone,
+            telephone: primaryPhone,
             primaryPhoneTypeOf: primaryPhoneTypeOf,
+            telephoneTypeOf: primaryPhoneTypeOf,
             secondaryPhone: secondaryPhone,
             secondaryPhoneTypeOf: secondaryPhoneTypeOf,
+            otherTelephone: secondaryPhone,
+            otherTelephoneTypeOf: secondaryPhoneTypeOf,
             email: email,
             isOkToEmail: isOkToEmail,
             isOkToEmailLabel: isOkToEmailLabel,
@@ -90,7 +95,7 @@ class ClientCreateStep7Container extends Component {
             // Step 6 - Metrics
             tags: localStorageGetArrayItem("workery-create-client-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-client-gender"),
+            gender: localStorage.getItem("workery-create-client-gender"),
             genderLabel: localStorage.getItem("workery-create-client-gender-label"),
             howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
             howHearLabel: localStorage.getItem("workery-create-client-howHearLabel"),

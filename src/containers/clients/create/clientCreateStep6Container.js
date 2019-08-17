@@ -39,7 +39,7 @@ class ClientCreateStep6Container extends Component {
             typeOf: typeOf,
             tags: localStorageGetArrayItem("workery-create-client-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-client-gender"),
+            gender: localStorage.getItem("workery-create-client-gender"),
             howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
