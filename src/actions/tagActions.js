@@ -393,3 +393,41 @@ export function getTagReactSelectOptions(tagList=[], selectName="tag") {
     }
     return tagOptions;
 }
+
+
+/**
+ * Utlity function takes an array of `Tag` primary keys and the `Tags` results
+ * from the API and returns the HTML dropdown selections which will be consumed
+ * by the GUI powered by `react-select`.
+ */
+export function getPickedTagReactSelectOptions(tagPKsArray, tagList=[], selectName="tag") {
+    const tagOptions = [];
+    const isAPIResponseNotEmpty = isEmpty(tagList) === false;
+    const isPKsArrayNotEmpty = isEmpty(tagPKsArray) === false;
+    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+        const results = tagList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < tagPKsArray.length; i++) {
+                let tagPK = tagPKsArray[i];
+
+                for (let j = 0; j < results.length; j++) {
+                    let tag = results[j];
+
+                    if (tag.id === tagPK) {
+                        tagOptions.push({
+                            selectName: selectName,
+                            value: tag.id,
+                            label: tag.text
+                        });
+                        // console.log(tag);
+                    } // end IF
+
+                } //end FOR
+
+            } // end FOR
+
+        } // end IF
+    }
+    return tagOptions;
+}

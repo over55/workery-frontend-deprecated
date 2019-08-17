@@ -14,14 +14,17 @@ export function validateInput(data) {
 
     if (data.typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
 
-        if (data.firstName === undefined || data.firstName === null || validator.isEmpty(data.firstName) || data.firstName === "") {
-            errors.firstName = 'This field is required';
+        if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
+            errors.givenName = 'This field is required';
         }
         if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
             errors.lastName = 'This field is required';
         }
-        if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-            errors.primaryPhone = 'This field is required';
+        if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
+            errors.telephone = 'This field is required';
+        }
+        if (data.otherTelephone === undefined || data.otherTelephone === null || validator.isEmpty(data.otherTelephone) || data.otherTelephone === "") {
+            errors.otherTelephone = 'This field is required';
         }
         if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
             errors.email = 'This field is required';
@@ -44,8 +47,11 @@ export function validateInput(data) {
         if (data.contactLastName === undefined || data.contactLastName === null || validator.isEmpty(data.contactLastName) || data.contactLastName === "") {
             errors.contactLastName = 'This field is required';
         }
-        if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-            errors.primaryPhone = 'This field is required';
+        if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
+            errors.telephone = 'This field is required';
+        }
+        if (data.otherTelephone === undefined || data.otherTelephone === null || validator.isEmpty(data.otherTelephone) || data.otherTelephone === "") {
+            errors.otherTelephone = 'This field is required';
         }
         if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
             errors.email = 'This field is required';

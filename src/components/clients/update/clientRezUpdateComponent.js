@@ -32,7 +32,7 @@ class ClientUpdateComponent extends Component {
             country, region, locality, postalCode, streetAddress,
 
             // STEP 6
-            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOption, howHearOther, joinDate, comment,
+            tags, tagOptions, onTagMultiChange, dateOfBirth, gender, howHear, howHearOptions, howHearOption, howHearOther, joinDate, comment,
 
             // EVERYTHING ELSE
             id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
@@ -221,7 +221,7 @@ class ClientUpdateComponent extends Component {
                                 options={tagOptions}
                                 selectedOptions={tags}
                                 error={errors.tags}
-                                onMultiChange={onMultiChange}
+                                onMultiChange={onTagMultiChange}
                             />
 
                             <BootstrapRadio
