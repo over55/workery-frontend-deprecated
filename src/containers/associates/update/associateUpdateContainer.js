@@ -300,7 +300,7 @@ class AssociateUpdateContainer extends Component {
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, skillSets, insuranceRequirements, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
 
             // Step 7
-            tags,
+            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
 
             // Everything else...
             errors, id, fullName,
@@ -363,6 +363,19 @@ class AssociateUpdateContainer extends Component {
                 onWsibInsuranceDateChange={this.onWsibInsuranceDateChange}
                 policeCheck={policeCheck}
                 onPoliceCheckDateChange={this.onPoliceCheckDateChange}
+
+                // Step 7
+                tags={tags}
+                tagOptions={tagOptions}
+                dateOfBirth={dateOfBirth}
+                gender={gender}
+                joinDate={joinDate}
+                errors={errors}
+                onTextChange={this.onTextChange}
+                howHear={howHear}
+                howHearOptions={howHearOptions}
+                howHearOther={howHearOther}
+                comment={comment}
 
                 // Everything else...
                 id={id}
