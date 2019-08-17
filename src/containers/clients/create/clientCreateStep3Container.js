@@ -9,6 +9,10 @@ class ClientCreateStep3Container extends Component {
      *  Initializer & Utility
      *------------------------------------------------------------
      */
+    constructor(props) {
+        super(props);
+        this.onClick = this.onClick.bind(this);
+    }
 
     /**
      *  Component Life-cycle Management
@@ -38,6 +42,15 @@ class ClientCreateStep3Container extends Component {
      *------------------------------------------------------------
      */
 
+    onClick(e, typeOf, typeOfLabel) {
+        e.preventDefault();
+
+        localStorage.setItem("workery-create-client-typeOf", typeOf);
+        localStorage.setItem("workery-create-client-typeOf-label", typeOfLabel);
+
+        this.props.history.push("/clients/add/step-4");
+    }
+
 
     /**
      *  Main render function
@@ -46,7 +59,7 @@ class ClientCreateStep3Container extends Component {
 
     render() {
         return (
-            <ClientCreateStep3Component />
+            <ClientCreateStep3Component onClick={this.onClick}/>
         );
     }
 }

@@ -5,17 +5,21 @@ import { Link } from "react-router-dom";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
+import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
+    ORGANIZATION_TYPE_OF_CHOICES
+} from "../../../constants/api";
 
-
-class ClientCreateStep4RezComponent extends Component {
+class ClientCreateStep4Component extends Component {
     render() {
         const {
-            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors,
-            onTextChange, onRadioChange, isLoading, onClick
+            typeOf, organizationName, organizationTypeOf, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToEmail, isOkToText, errors,
+            onTextChange, onRadioChange, isLoading, onClick, onSelectChange,
         } = this.props;
+        const isCommercial = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -80,11 +84,37 @@ class ClientCreateStep4RezComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
+                            {isCommercial &&
+                                <div>
+                                    <BootstrapInput
+                                        inputClassName="form-control form-control-lg"
+                                        borderColour="border-primary"
+                                        error={errors.organizationName}
+                                        label="Organization Name (*)"
+                                        onChange={onTextChange}
+                                        value={organizationName}
+                                        name="organizationName"
+                                        type="text"
+                                    />
+
+                                    <BootstrapSingleSelect
+                                        borderColour="border-primary"
+                                        label="Organization Type (*)"
+                                        name="organizationTypeOf"
+                                        defaultOptionLabel="Please select a telephone type."
+                                        options={ORGANIZATION_TYPE_OF_CHOICES}
+                                        value={organizationTypeOf}
+                                        error={errors.organizationTypeOf}
+                                        onSelectChange={onSelectChange}
+                                    />
+                                </div>
+                            }
+
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.givenName}
-                                label="First Name (*)"
+                                label="Given Name (*)"
                                 onChange={onTextChange}
                                 value={givenName}
                                 name="givenName"
@@ -114,6 +144,17 @@ class ClientCreateStep4RezComponent extends Component {
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
 
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Primary Telephone type (*)"
+                                name="primaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
+                                value={primaryPhoneTypeOf}
+                                error={errors.primaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
+                            />
+
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
@@ -124,6 +165,17 @@ class ClientCreateStep4RezComponent extends Component {
                                 name="secondaryPhone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-success"
+                                label="Secondary Telephone type"
+                                name="secondaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
+                                value={secondaryPhoneTypeOf}
+                                error={errors.secondaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapInput
@@ -180,4 +232,4 @@ class ClientCreateStep4RezComponent extends Component {
     }
 }
 
-export default ClientCreateStep4RezComponent;
+export default ClientCreateStep4Component;

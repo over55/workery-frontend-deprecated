@@ -37,8 +37,7 @@ import ClientCommentContainer from "./clients/retrieve/clientCommentContainer";
 import ClientCreateStep1Container from "./clients/create/clientCreateStep1Container";
 import ClientCreateStep2Container from "./clients/create/clientCreateStep2Container";
 import ClientCreateStep3Container from "./clients/create/clientCreateStep3Container";
-import ClientCreateStep4BizContainer from "./clients/create/clientCreateStep4BizContainer";
-import ClientCreateStep4RezContainer from "./clients/create/clientCreateStep4RezContainer";
+import ClientCreateStep4Container from "./clients/create/clientCreateStep4Container";
 import ClientCreateStep5Container from "./clients/create/clientCreateStep5Container";
 import ClientCreateStep6Container from "./clients/create/clientCreateStep6Container";
 import ClientCreateStep7Container from "./clients/create/clientCreateStep7Container";
@@ -246,8 +245,7 @@ class AppContainer extends React.Component {
                                 <Route path="/clients/add/step-1" exact component={requiresAuth(ClientCreateStep1Container)} />
                                 <Route path="/clients/add/step-2" exact component={requiresAuth(ClientCreateStep2Container)} />
                                 <Route path="/clients/add/step-3" exact component={requiresAuth(ClientCreateStep3Container)} />
-                                <Route path="/clients/add/step-4-biz" exact component={requiresAuth(ClientCreateStep4BizContainer)} />
-                                <Route path="/clients/add/step-4-rez-or-cc" exact component={requiresAuth(ClientCreateStep4RezContainer)} />
+                                <Route path="/clients/add/step-4" exact component={requiresAuth(ClientCreateStep4Container)} />
                                 <Route path="/clients/add/step-5" exact component={requiresAuth(ClientCreateStep5Container)} />
                                 <Route path="/clients/add/step-6" exact component={requiresAuth(ClientCreateStep6Container)} />
                                 <Route path="/clients/add/step-7" exact component={requiresAuth(ClientCreateStep7Container)} />

@@ -111,9 +111,60 @@ export function validateInput(data) {
 /**
  *  Validator will validate step 4 in the client creation form.
  */
+export function validateStep4CreateInput(data) {
+    let errors = {};
+    
+    if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+        if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
+            errors.organizationName = 'This field is required';
+        }
+        if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "") {
+            errors.organizationTypeOf = 'This field is required';
+        }
+    }
+    if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
+        errors.givenName = 'This field is required';
+    }
+    if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
+        errors.lastName = 'This field is required';
+    }
+    if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
+        errors.primaryPhone = 'This field is required';
+    }
+    if (data.primaryPhoneTypeOf === undefined || data.primaryPhoneTypeOf === null || data.primaryPhoneTypeOf === "" || isNaN(data.primaryPhoneTypeOf) ) {
+        errors.primaryPhoneTypeOf = 'This field is required';
+    }
+    if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
+        errors.email = 'This field is required';
+    }
+    if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
+        errors.isOkToEmail = 'This field is required';
+    }
+    if (data.isOkToText === undefined || data.isOkToText === null || data.isOkToText === "" || isNaN(data.isOkToText) ) {
+        errors.isOkToText = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+/**
+ *  Validator will validate step 4 in the client creation form.
+ */
 export function validateStep4RezCreateInput(data) {
     let errors = {};
 
+    if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+        if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
+            errors.organizationName = 'This field is required';
+        }
+        if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "") {
+            errors.organizationTypeOf = 'This field is required';
+        }
+    }
     if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
         errors.givenName = 'This field is required';
     }

@@ -49,7 +49,6 @@ export default class ClientCreateStep7Component extends Component {
             comment,
 
             // Everything else
-            returnURL,
             errors,
             isLoading,
             onSubmitClick,
@@ -108,7 +107,7 @@ export default class ClientCreateStep7Component extends Component {
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <Link to={returnURL}>
+                            <Link to="/clients/add/step-4">
                                 <span className="num">4.</span><span className="">Contact</span>
                             </Link>
                         </div>

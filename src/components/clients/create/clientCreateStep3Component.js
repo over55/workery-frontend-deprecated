@@ -2,9 +2,12 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
+
 
 export default class ClientCreateStep3Component extends Component {
     render() {
+        const { onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -70,9 +73,9 @@ export default class ClientCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Residential</h3>
                                 <p className="card-text">Add a residential client</p>
-                                <Link to="/clients/add/step-4-rez-or-cc" className="btn btn-primary btn-lg">
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, RESIDENTIAL_CUSTOMER_TYPE_OF_ID, "Residential") } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -84,9 +87,9 @@ export default class ClientCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Business</h3>
                                 <p className="card-text">Add a business client</p>
-                                <Link to="/clients/add/step-4-biz" className="btn btn-primary btn-lg">
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, COMMERCIAL_CUSTOMER_TYPE_OF_ID, "Business") } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>

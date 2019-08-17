@@ -25,7 +25,6 @@ class ClientCreateStep7Container extends Component {
         // Get the type of.
         const typeOf = localStorageGetIntegerItem("workery-create-client-typeOf");
         let givenName
-        let returnURL;
         let primaryPhone;
         let primaryPhoneTypeOf;
         let secondaryPhone;
@@ -36,7 +35,6 @@ class ClientCreateStep7Container extends Component {
         let isOkToEmailLabel;
         let isOkToTextLabel;
         if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/clients/add/step-4-rez-or-cc";
             primaryPhone = localStorage.getItem("workery-create-client-rez-primaryPhone");
             primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-rez-primaryPhoneTypeOf");
             secondaryPhone = localStorage.getItem("workery-create-client-rez-secondaryPhone");
@@ -48,7 +46,6 @@ class ClientCreateStep7Container extends Component {
             isOkToTextLabel = localStorage.getItem("workery-create-client-rez-isOkToText-label");
         }
         else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/clients/add/step-4-biz";
             primaryPhone = localStorage.getItem("workery-create-client-biz-primaryPhone");
             primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-client-biz-primaryPhoneTypeOf");
             secondaryPhone =  localStorage.getItem("workery-create-client-biz-secondaryPhone");
@@ -105,7 +102,6 @@ class ClientCreateStep7Container extends Component {
             comment: localStorage.getItem("workery-create-client-comment"),
 
             // Everything else
-            returnURL: returnURL,
             errors: {},
             isLoading: false,
             password: localStorage.getItem("workery-create-client-password"),
@@ -334,7 +330,6 @@ class ClientCreateStep7Container extends Component {
             comment,
 
             // Everything else
-            returnURL,
             errors,
             isLoading,
         } = this.state;
@@ -379,7 +374,6 @@ class ClientCreateStep7Container extends Component {
                 comment={comment}
 
                 // Everything else
-                returnURL={returnURL}
                 errors={errors}
                 isLoading={isLoading}
                 onSubmitClick={this.onSubmitClick}

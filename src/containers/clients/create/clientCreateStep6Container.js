@@ -24,19 +24,7 @@ class ClientCreateStep6Container extends Component {
     constructor(props) {
         super(props);
 
-        // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("workery-create-client-typeOf"));
-        let returnURL;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/clients/add/step-4-rez-or-cc";
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/clients/add/step-4-biz";
-        }
-
         this.state = {
-            returnURL: returnURL,
-            typeOf: typeOf,
             tags: localStorageGetArrayItem("workery-create-client-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
             gender: localStorage.getItem("workery-create-client-gender"),
@@ -208,7 +196,7 @@ class ClientCreateStep6Container extends Component {
 
     render() {
         const {
-            typeOf, returnURL, tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
+            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
             errors
         } = this.state;
 
@@ -217,8 +205,6 @@ class ClientCreateStep6Container extends Component {
 
         return (
             <ClientCreateStep6Component
-                typeOf={typeOf}
-                returnURL={returnURL}
                 tags={tags}
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
