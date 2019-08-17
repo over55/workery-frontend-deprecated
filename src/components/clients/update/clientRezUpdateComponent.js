@@ -38,7 +38,7 @@ class ClientUpdateComponent extends Component {
             id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
             onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 'Other';
+        const isOtherHowDidYouHearSelected = howHear === 1;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
