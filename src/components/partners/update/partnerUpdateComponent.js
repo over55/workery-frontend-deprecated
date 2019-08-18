@@ -3,45 +3,39 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
-} from '../../../constants/api';
-import PartnerBizUpdateFormComponent from "./partnerBizUpdateFormComponent";
-import PartnerComUpdateFormComponent from "./partnerComUpdateFormComponent";
-import PartnerRezUpdateFormComponent from "./partnerRezUpdateFormComponent";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
+import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
+import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
+import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
+import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, IS_ACTIVE_TYPE_OF_CHOICES, GENDER_RADIO_CHOICES } from "../../../constants/api";
 
 
-class PartnerUpdateComponent extends Component {
+export default class PartnerUpdateComponent extends Component {
     render() {
-        // Common
-        const { urlArgument, slug, typeOf, errors, onTextChange, onSelectChange, onRadioChange, onMultiChange, onDOBDateTimeChange, isLoading, onClick } = this.props;
-
-        // Biz - Contact
-        const { organizationName, givenName, lastName } = this.props;
-
-        // Rez - Contact
-        const { primaryPhone, secondaryPhone, email } = this.props;
-
-        // Address
-        const { streetNumber, streetName, streetType, streetTypeOptions, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOptions, postalCode } = this.props;
-
-        // Watches
-        const { watch, watchOptions } = this.props;
-
-        // Extra
         const {
-            tags, tagOptions, birthYear, gender, howDidYouHear, howDidYouHearOptions, howDidYouHearOther,
-            meaning, expectations, willingToVolunteer, anotherHouseholdPartnerRegistered, totalHouseholdCount, under18YearsHouseholdCount,
-            companyEmployeeCount, companyYearsInOperation, companyType,
+            // STEP 3
+            organizationName, givenName, lastName,
+            primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
+            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email,
+            isOkToEmail, isOkToText, isActive,
+
+            // STEP 4
+            country, region, locality, postalCode, streetAddress,
+
+            // STEP 5
+            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
+            onJoinDateChange, comment,
+
+            // Everything else..
+            onTextChange, onSelectChange, onRadioChange, isLoading, onClick, id, errors,
+            onBillingCountryChange, onBillingRegionChange, typeOf, onDateOfBirthChange, onTagMultiChange
         } = this.props;
-
-        // Check the type of partner this is.
-        const isBiz = typeOf === BUSINESS_TYPE_OF;
-        const isRez = typeOf === RESIDENCE_TYPE_OF;
-        const isCom = typeOf === COMMUNITY_CARES_TYPE_OF;
-
+        const isOtherHowDidYouHearSelected = howHear === 'Other';
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -53,185 +47,299 @@ class PartnerUpdateComponent extends Component {
                             <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/partner/${slug}/full`}><i className="fas fa-user"></i>&nbsp;Argyle</Link>
+                            <Link to={`/partner/${id}/full`}><i className="fas fa-user"></i>&nbsp;Argyle</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Update
                         </li>
                     </ol>
                 </nav>
-
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Update Partner</h1>
+                            <h1>
+                                <i className="fas fa-edit"></i>&nbsp;Update Partner
+                            </h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            {isRez &&
-                                <PartnerRezUpdateFormComponent
-                                    urlArgument={urlArgument}
-                                    slug={slug}
-                                    typeOf={typeOf}
-                                    errors={errors}
-                                    onTextChange={onTextChange}
-                                    onRadioChange={onRadioChange}
-                                    onSelectChange={onSelectChange}
-                                    onMultiChange={onMultiChange}
-                                    onDOBDateTimeChange={onDOBDateTimeChange}
-                                    isLoading={isLoading}
-                                    onClick={onClick}
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-user-shield"></i>&nbsp;Personal Information
+                            </p>
 
-                                    givenName={givenName}
-                                    lastName={lastName}
-                                    primaryPhone={primaryPhone}
-                                    secondaryPhone={secondaryPhone}
-                                    email={email}
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.organizationName}
+                                label="Company Name (*)"
+                                onChange={onTextChange}
+                                value={organizationName}
+                                name="organizationName"
+                                type="text"
+                            />
 
-                                    streetNumber={streetNumber}
-                                    streetName={streetName}
-                                    streetType={streetType}
-                                    streetTypeOptions={streetTypeOptions}
-                                    streetTypeOther={streetTypeOther}
-                                    apartmentUnit={apartmentUnit}
-                                    streetDirection={streetDirection}
-                                    streetDirectionOptions={streetDirectionOptions}
-                                    postalCode={postalCode}
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.givenName}
+                                label="Contact First Name (*)"
+                                onChange={onTextChange}
+                                value={givenName}
+                                name="givenName"
+                                type="text"
+                            />
 
-                                    watch={watch}
-                                    watchOptions={watchOptions}
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.lastName}
+                                label="Contact Last Name (*)"
+                                onChange={onTextChange}
+                                value={lastName}
+                                name="lastName"
+                                type="text"
+                            />
 
-                                    tags={tags}
-                                    tagOptions={tagOptions}
-                                    birthYear={birthYear}
-                                    gender={gender}
-                                    howDidYouHear={howDidYouHear}
-                                    // howDidYouHearOption={howDidYouHearOption}
-                                    howDidYouHearOptions={howDidYouHearOptions}
-                                    howDidYouHearOther={howDidYouHearOther}
-                                    meaning={meaning}
-                                    expectations={expectations}
-                                    willingToVolunteer={willingToVolunteer}
-                                    anotherHouseholdPartnerRegistered={anotherHouseholdPartnerRegistered}
-                                    totalHouseholdCount={totalHouseholdCount}
-                                    under18YearsHouseholdCount={under18YearsHouseholdCount}
+                            <BootstrapTelephoneInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.primaryPhone}
+                                label="Primary Phone (*)"
+                                onChange={onTextChange}
+                                value={primaryPhone}
+                                name="primaryPhone"
+                                type="text"
+                                placeholder="+1 (xxx) xxx-xxxx"
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Primary Telephone type (*)"
+                                name="primaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={primaryPhoneTypeOfOptions}
+                                value={primaryPhoneTypeOf}
+                                error={errors.primaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
+                            />
+
+                            <BootstrapTelephoneInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.secondaryPhone}
+                                label="Secondary Phone"
+                                onChange={onTextChange}
+                                value={secondaryPhone}
+                                name="secondaryPhone"
+                                type="text"
+                                placeholder="+1 (xxx) xxx-xxxx"
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-success"
+                                label="Secondary Telephone type"
+                                name="secondaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={secondaryPhoneTypeOfOptions}
+                                value={secondaryPhoneTypeOf}
+                                error={errors.secondaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.email}
+                                label="Email (*)"
+                                onChange={onTextChange}
+                                value={email}
+                                name="email"
+                                type="text"
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isOkToEmail}
+                                label="Ok to E-Mail? (*)"
+                                name="isOkToEmail"
+                                onChange={onRadioChange}
+                                selectedValue={isOkToEmail}
+                                options={IS_OK_TO_EMAIL_CHOICES}
+                                helpText='Selecting "yes" will result in partner getting emails from our system.'
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isOkToText}
+                                label="Ok to Text? (*)"
+                                name="isOkToText"
+                                onChange={onRadioChange}
+                                selectedValue={isOkToText}
+                                options={IS_OK_TO_TEXT_CHOICES}
+                                helpText='Selecting "yes" will result in partner getting text-messages on their phone from our system.'
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.isActive}
+                                label="Is the account active? (*)"
+                                name="isActive"
+                                onChange={onRadioChange}
+                                selectedValue={isActive}
+                                options={IS_ACTIVE_TYPE_OF_CHOICES}
+                                helpText='Selecting "yes" will grant the parnter login ability.'
+                            />
+
+                            <h2><i className="fas fa-address-book"></i>&nbsp;Address</h2>
+
+                            <BootstrapCountrySelect
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.country}
+                                label="Country (*)"
+                                value={country}
+                                onChange={onBillingCountryChange}
+                                priorityOptions={["CA", "US", "MX"]}
+                                name="country"
+                            />
+                            <BootstrapRegionSelect
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.region}
+                                label="Province / state (*)"
+                                country={country}
+                                value={region}
+                                onChange={onBillingRegionChange}
+                                name="region"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.locality}
+                                label="City (*)"
+                                onChange={onTextChange}
+                                value={locality}
+                                name="locality"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.streetAddress}
+                                label="Street address (*)"
+                                onChange={onTextChange}
+                                value={streetAddress}
+                                name="streetAddress"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.postalCode}
+                                label="Postal / zip (*)"
+                                onChange={onTextChange}
+                                value={postalCode}
+                                name="postalCode"
+                                type="text"
+                            />
+
+                            <h2><i className="fas fa-chart-pie"></i>&nbsp;Metrics</h2>
+
+                            <BootstrapMultipleSelect
+                                borderColour="border-success"
+                                label="Tags"
+                                name="tags"
+                                defaultOptionLabel="Please select the tag."
+                                options={tagOptions}
+                                selectedOptions={tags}
+                                error={errors.tags}
+                                onMultiChange={onTagMultiChange}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.gender}
+                                label="Please select your gender (*)"
+                                name="gender"
+                                onChange={onRadioChange}
+                                selectedValue={gender}
+                                options={GENDER_RADIO_CHOICES}
+                            />
+
+                            <BootstrapDatePicker
+                                label="Date of Birth (*)"
+                                name="dateOfBirth"
+                                dateObj={dateOfBirth}
+                                onTimeChange={onDateOfBirthChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.dateOfBirth}
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="How did you hear about us? (*)"
+                                name="howHear"
+                                defaultOptionLabel="Please select how you heard about us."
+                                options={howHearOptions}
+                                value={howHear}
+                                error={errors.howHear}
+                                onSelectChange={onSelectChange}
+                            />
+
+                            {isOtherHowDidYouHearSelected &&
+                                <BootstrapInput
+                                    inputClassName="form-control form-control-lg"
+                                    borderColour="border-primary"
+                                    error={errors.howHearOther}
+                                    label="Other (*)"
+                                    onChange={onTextChange}
+                                    value={howHearOther}
+                                    name="howHearOther"
+                                    type="text"
                                 />
                             }
 
-                            {isBiz &&
-                                <PartnerBizUpdateFormComponent
-                                    urlArgument={urlArgument}
-                                    slug={slug}
-                                    typeOf={typeOf}
-                                    errors={errors}
-                                    onTextChange={onTextChange}
-                                    onRadioChange={onRadioChange}
-                                    onSelectChange={onSelectChange}
-                                    onMultiChange={onMultiChange}
-                                    onDOBDateTimeChange={onDOBDateTimeChange}
-                                    isLoading={isLoading}
-                                    onClick={onClick}
+                            <BootstrapDatePicker
+                                label="Join date (*)"
+                                name="joinDate"
+                                dateObj={joinDate}
+                                onTimeChange={onJoinDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.joinDate}
+                            />
 
-                                    organizationName={organizationName}
-                                    givenName={givenName}
-                                    lastName={lastName}
-                                    primaryPhone={primaryPhone}
-                                    secondaryPhone={secondaryPhone}
-                                    email={email}
+                            <BootstrapTextarea
+                                name="comment"
+                                borderColour="border-success"
+                                label="Additional Comments"
+                                placeholder="Write any additional comments here."
+                                rows="5"
+                                value={comment}
+                                helpText="This is the comment of the organization."
+                                onChange={onTextChange}
+                                error={errors.comment}
+                            />
 
-                                    streetNumber={streetNumber}
-                                    streetName={streetName}
-                                    streetType={streetType}
-                                    streetTypeOptions={streetTypeOptions}
-                                    streetTypeOther={streetTypeOther}
-                                    apartmentUnit={apartmentUnit}
-                                    streetDirection={streetDirection}
-                                    streetDirectionOptions={streetDirectionOptions}
-                                    postalCode={postalCode}
-
-                                    watch={watch}
-                                    watchOptions={watchOptions}
-
-                                    tags={tags}
-                                    tagOptions={tagOptions}
-                                    birthYear={birthYear}
-                                    gender={gender}
-                                    howDidYouHear={howDidYouHear}
-                                    // howDidYouHearOption={howDidYouHearOption}
-                                    howDidYouHearOptions={howDidYouHearOptions}
-                                    howDidYouHearOther={howDidYouHearOther}
-                                    meaning={meaning}
-                                    expectations={expectations}
-                                    willingToVolunteer={willingToVolunteer}
-                                    anotherHouseholdPartnerRegistered={anotherHouseholdPartnerRegistered}
-                                    totalHouseholdCount={totalHouseholdCount}
-                                    under18YearsHouseholdCount={under18YearsHouseholdCount}
-                                    companyEmployeeCount={companyEmployeeCount}
-                                    companyYearsInOperation={companyYearsInOperation}
-                                    companyType={companyType}
-                                />
-                            }
-
-                            {isCom &&
-                                <PartnerComUpdateFormComponent
-                                    urlArgument={urlArgument}
-                                    slug={slug}
-                                    typeOf={typeOf}
-                                    errors={errors}
-                                    onTextChange={onTextChange}
-                                    onRadioChange={onRadioChange}
-                                    onSelectChange={onSelectChange}
-                                    onMultiChange={onMultiChange}
-                                    onDOBDateTimeChange={onDOBDateTimeChange}
-                                    isLoading={isLoading}
-                                    onClick={onClick}
-
-                                    givenName={givenName}
-                                    lastName={lastName}
-                                    primaryPhone={primaryPhone}
-                                    secondaryPhone={secondaryPhone}
-                                    email={email}
-
-                                    streetNumber={streetNumber}
-                                    streetName={streetName}
-                                    streetType={streetType}
-                                    streetTypeOptions={streetTypeOptions}
-                                    streetTypeOther={streetTypeOther}
-                                    apartmentUnit={apartmentUnit}
-                                    streetDirection={streetDirection}
-                                    streetDirectionOptions={streetDirectionOptions}
-                                    postalCode={postalCode}
-
-                                    watch={watch}
-                                    watchOptions={watchOptions}
-
-                                    tags={tags}
-                                    tagOptions={tagOptions}
-                                    birthYear={birthYear}
-                                    gender={gender}
-                                    howDidYouHear={howDidYouHear}
-                                    // howDidYouHearOption={howDidYouHearOption}
-                                    howDidYouHearOptions={howDidYouHearOptions}
-                                    howDidYouHearOther={howDidYouHearOther}
-                                    meaning={meaning}
-                                    expectations={expectations}
-                                    willingToVolunteer={willingToVolunteer}
-                                    anotherHouseholdPartnerRegistered={anotherHouseholdPartnerRegistered}
-                                    totalHouseholdCount={totalHouseholdCount}
-                                    under18YearsHouseholdCount={under18YearsHouseholdCount}
-                                />
-                            }
-
+                        </form>
+                        <form>
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/partner/${slug}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
-                                    <i className="fas fa-arrow-circle-left"></i> Back
+                                <Link to={`/partner/${id}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -240,5 +348,3 @@ class PartnerUpdateComponent extends Component {
         );
     }
 }
-
-export default PartnerUpdateComponent;
