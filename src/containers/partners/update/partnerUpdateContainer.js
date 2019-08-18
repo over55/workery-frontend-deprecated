@@ -12,6 +12,7 @@ import {
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
+import { putPartnerDetail } from "../../../actions/partnerActions";
 
 
 class PartnerUpdateContainer extends Component {
@@ -71,6 +72,7 @@ class PartnerUpdateContainer extends Component {
             comment: this.props.partnerDetail.comment,
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
@@ -79,6 +81,19 @@ class PartnerUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -142,7 +157,11 @@ class PartnerUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.putPartnerDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -274,7 +293,12 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        putPartnerDetail: (data, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                putPartnerDetail(data, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 
