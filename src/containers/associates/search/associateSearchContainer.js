@@ -18,7 +18,7 @@ class AssociateListContainer extends Component {
         this.state = {
             keyword: "",
             advancedSearchActive: false,
-            firstName: "",
+            givenName: "",
             lastName: "",
             telephone: "",
             email: "",
@@ -129,7 +129,7 @@ class AssociateListContainer extends Component {
         return (
             <AssociateSearchComponent
                 keyword={this.state.keyword}
-                firstName={this.state.firstName}
+                givenName={this.state.givenName}
                 lastName={this.state.lastName}
                 telephone={this.state.telephone}
                 email={this.state.email}

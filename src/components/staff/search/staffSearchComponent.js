@@ -6,7 +6,7 @@ import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 
 
-class PartnerSearchComponent extends Component {
+class StaffSearchComponent extends Component {
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
@@ -18,7 +18,7 @@ class PartnerSearchComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                            <Link to={`/staff`}><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-search"></i>&nbsp;Search
@@ -26,7 +26,7 @@ class PartnerSearchComponent extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-search"></i>&nbsp;Partners Search</h1>
+                <h1><i className="fas fa-search"></i>&nbsp;Staff Search</h1>
 
                 <div id="m-search" className="col-sm-5 mx-auto mt-4 pt-4">
 
@@ -75,7 +75,7 @@ class PartnerSearchComponent extends Component {
                             <i className="fas fa-times"></i> Advanced Search
                         </button>
                         <div className="col-md-12 text-center">
-                            <Link to="/partners" className="btn btn-secondary btn-lg mt-4 pl-4 pr-4">
+                            <Link to="/staff" className="btn btn-secondary btn-lg mt-4 pl-4 pr-4">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>
@@ -153,4 +153,4 @@ class PartnerSearchComponent extends Component {
     }
 }
 
-export default PartnerSearchComponent;
+export default StaffSearchComponent;

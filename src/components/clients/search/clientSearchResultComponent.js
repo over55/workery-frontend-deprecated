@@ -202,8 +202,8 @@ function financialExternalLinkFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/client/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
+        <Link to={`/client/${row.id}`} target="_blank">
+            View Client&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }

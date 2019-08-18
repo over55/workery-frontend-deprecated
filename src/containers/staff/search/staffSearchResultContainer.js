@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import OrderSearchResultComponent from "../../../components/orders/search/orderSearchResultComponent";
+import StaffSearchResultComponent from "../../../components/staff/search/staffSearchResultComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullOrderList } from "../../../actions/orderActions";
+import { pullStaffList } from "../../../actions/staffActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 import { localStorageGetObjectItem } from '../../../helpers/localStorageUtility';
 
 
-class OrderSearchResultContainer extends Component {
+class StaffSearchResultContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -17,7 +17,7 @@ class OrderSearchResultContainer extends Component {
 
     constructor(props) {
         super(props);
-        const search = localStorageGetObjectItem('workery-search-order-details');
+        const search = localStorageGetObjectItem('workery-search-staff-details');
         const parametersMap = new Map();
         if (search.keyword !== undefined && search.keyword !== "") {
             parametersMap.set("search", search.keyword);
@@ -128,7 +128,7 @@ class OrderSearchResultContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullStaffList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -138,7 +138,7 @@ class OrderSearchResultContainer extends Component {
             this.setState(
                 { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullStaffList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -155,7 +155,7 @@ class OrderSearchResultContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullStaffList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -171,11 +171,11 @@ class OrderSearchResultContainer extends Component {
     render() {
         const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
-            <OrderSearchResultComponent
+            <StaffSearchResultComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-                orderList={this.props.orderList}
+                staffList={this.props.staffList}
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
@@ -188,7 +188,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        orderList: store.orderListState,
+        staffList: store.staffListState,
     };
 }
 
@@ -197,9 +197,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullStaffList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullStaffList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
@@ -209,4 +209,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderSearchResultContainer);
+)(StaffSearchResultContainer);

@@ -34,9 +34,9 @@ class RegisterStep7Container extends Component {
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
-            bizCompanyName: localStorage.getItem("nwapp-register-biz-companyName"),
-            bizContactFirstName: localStorage.getItem("nwapp-register-biz-contactFirstName"),
-            bizContactLastName: localStorage.getItem("nwapp-register-biz-contactLastName"),
+            bizCompanyName: localStorage.getItem("nwapp-register-biz-organizationName"),
+            bizContactFirstName: localStorage.getItem("nwapp-register-biz-firstName"),
+            bizContactLastName: localStorage.getItem("nwapp-register-biz-lastName"),
             bizPrimaryPhone: localStorage.getItem("nwapp-register-biz-primaryPhone"),
             bizSecondaryPhone: localStorage.getItem("nwapp-register-biz-secondaryPhone"),
             bizEmail: localStorage.getItem("nwapp-register-biz-email"),

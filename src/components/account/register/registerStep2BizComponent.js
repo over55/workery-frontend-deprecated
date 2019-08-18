@@ -10,7 +10,7 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 
 export default class RegisterStep2BizComponent extends Component {
     render() {
-        const { companyName, contactFirstName, contactLastName, primaryPhone, secondaryPhone, email, errors, onTextChange, isLoading, onClick } = this.props;
+        const { organizationName, givenName, lastName, primaryPhone, secondaryPhone, email, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <h1>
@@ -60,33 +60,33 @@ export default class RegisterStep2BizComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.companyName}
+                                error={errors.organizationName}
                                 label="Company Name (*)"
                                 onChange={onTextChange}
-                                value={companyName}
-                                name="companyName"
+                                value={organizationName}
+                                name="organizationName"
                                 type="text"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.contactFirstName}
+                                error={errors.givenName}
                                 label="Contact First Name (*)"
                                 onChange={onTextChange}
-                                value={contactFirstName}
-                                name="contactFirstName"
+                                value={givenName}
+                                name="givenName"
                                 type="text"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.contactLastName}
+                                error={errors.lastName}
                                 label="Contact Last Name (*)"
                                 onChange={onTextChange}
-                                value={contactLastName}
-                                name="contactLastName"
+                                value={lastName}
+                                name="lastName"
                                 type="text"
                             />
 

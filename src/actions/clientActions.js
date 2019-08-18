@@ -262,7 +262,7 @@ export function pullClientDetail(id, onSuccessCallback, onFailureCallback) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putClientDetail(user, data, onSuccessCallback, onFailureCallback) {
+export function putClientDetail(data, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -280,7 +280,7 @@ export function putClientDetail(user, data, onSuccessCallback, onFailureCallback
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_CLIENT_DETAIL_API_ENDPOINT+data.id, buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_CLIENT_DETAIL_API_ENDPOINT+data.id+"/", buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             let client = camelizeKeys(responseData);

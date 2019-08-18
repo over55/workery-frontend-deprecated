@@ -65,7 +65,7 @@ class AssociateCreateStep8Container extends Component {
             typeOfLabel: localStorage.getItem("workery-create-associate-typeOf-label"),
 
             // Step 4 - Residential & Business
-            firstName: localStorage.getItem("workery-create-associate-rez-firstName"),
+            givenName: localStorage.getItem("workery-create-associate-rez-givenName"),
             lastName: localStorage.getItem("workery-create-associate-rez-lastName"),
             primaryPhone: primaryPhone,
             primaryPhoneTypeOf: primaryPhoneTypeOf,
@@ -76,9 +76,9 @@ class AssociateCreateStep8Container extends Component {
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
-            companyName: localStorage.getItem("workery-create-associate-biz-companyName"),
-            contactFirstName: localStorage.getItem("workery-create-associate-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-associate-biz-contactLastName"),
+            organizationName: localStorage.getItem("workery-create-associate-biz-organizationName"),
+            givenName: localStorage.getItem("workery-create-associate-biz-givenName"),
+            lastName: localStorage.getItem("workery-create-associate-biz-lastName"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-associate-country"),
@@ -110,7 +110,7 @@ class AssociateCreateStep8Container extends Component {
             // Step 7 - Metrics
             tags: localStorageGetArrayItem("workery-create-associate-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-associate-gender"),
+            gender: localStorage.getItem("workery-create-associate-gender"),
             genderLabel: localStorage.getItem("workery-create-associate-gender-label"),
             howHear: localStorageGetIntegerItem("workery-create-associate-howHear"),
             howHearLabel: localStorage.getItem("workery-create-associate-howHearLabel"),
@@ -142,7 +142,7 @@ class AssociateCreateStep8Container extends Component {
         let postData = Object.assign({}, this.state);
 
         // (1) Given name - We need t refactor name for API field match.
-        postData.givenName = this.state.firstName;
+        postData.givenName = this.state.givenName;
 
         // (2) Middle name (API ISSUE)
         postData.middleName = this.state.middleName;
@@ -251,9 +251,9 @@ class AssociateCreateStep8Container extends Component {
 
         // () First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.firstName = this.state.contactFirstName;
-            postData.givenName = this.state.contactFirstName;
-            postData.lastName = this.state.contactLastName;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.lastName = this.state.lastName;
         }
 
         // Finally: Return our new modified data.
@@ -354,7 +354,7 @@ class AssociateCreateStep8Container extends Component {
             typeOfLabel,
 
             // Step 4 - Residential & Business
-            firstName,
+            givenName,
             lastName,
             primaryPhone,
             secondaryPhone,
@@ -363,9 +363,7 @@ class AssociateCreateStep8Container extends Component {
             isOkToEmailLabel,
             isOkToText,
             isOkToTextLabel,
-            companyName,
-            contactFirstName,
-            contactLastName,
+            organizationName,
 
             // Step 5 - Address
             country,
@@ -419,7 +417,7 @@ class AssociateCreateStep8Container extends Component {
                 typeOfLabel={typeOfLabel}
 
                 // Step 4 - Residential & Business
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
@@ -428,9 +426,9 @@ class AssociateCreateStep8Container extends Component {
                 isOkToEmailLabel={isOkToEmailLabel}
                 isOkToText={isOkToText}
                 isOkToTextLabel={isOkToTextLabel}
-                companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
+                organizationName={organizationName}
+                givenName={givenName}
+                lastName={lastName}
 
                 // Step 5 - Address
                 country={country}

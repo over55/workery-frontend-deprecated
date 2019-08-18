@@ -11,6 +11,10 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+} from '../../../constants/api';
 
 
 const customTotal = (from, to, size) => (
@@ -25,7 +29,7 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            partners,
+            staff,
 
             // Everything else.
             onTableChange, isLoading
@@ -33,7 +37,7 @@ class RemoteListComponent extends Component {
 
         const selectOptions = {
             1: 'Active',
-            0: 'Inactive',
+            2: 'Inactive',
         };
 
         const columns = [{
@@ -64,6 +68,11 @@ class RemoteListComponent extends Component {
                 withoutEmptyOption: true
             }),
             formatter: statusFormatter
+        },{
+            dataField: 'slug',
+            text: 'Financials',
+            sort: false,
+            formatter: financialExternalLinkFormatter
         },{
             dataField: 'id',
             text: 'Details',
@@ -107,12 +116,12 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ partners }
+                data={ staff }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no partners at the moment"
+                noDataIndication="There are no staff at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -127,10 +136,10 @@ class RemoteListComponent extends Component {
 
 function statusFormatter(cell, row){
     switch(row.state) {
-        case 1:
+        case "active":
             return <i className="fas fa-check-circle"></i>;
             break;
-        case 0:
+        case "inactive":
             return <i className="fas fa-times-circle"></i>;
             break;
         default:
@@ -162,29 +171,38 @@ function emailFormatter(cell, row){
 }
 
 
+function financialExternalLinkFormatter(cell, row){
+    return (
+        <a target="_blank" href={`/financial/${row.id}`}>
+            View&nbsp;<i className="fas fa-external-link-alt"></i>
+        </a>
+    )
+}
+
+
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/partner/${row.id}`} target="_blank">
-            View Partner&nbsp;<i className="fas fa-external-link-alt"></i>
+        <Link to={`/staff/${row.id}`} target="_blank">
+            View Staff&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
 
 
-class PartnerSearchResultComponent extends Component {
+export default class StaffSearchResultComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            partnerList,
+            staffList,
 
             // Everything else...
             flashMessage, onTableChange, isLoading
         } = this.props;
 
-        const partners = partnerList.results ? partnerList.results : [];
+        const staff = staffList.results ? staffList.results : [];
 
         return (
             <div>
@@ -195,10 +213,10 @@ class PartnerSearchResultComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item">
-                           <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                           <Link to={`/staff`}><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item">
-                           <Link to={`/partners/search`}><i className="fas fa-search"></i>&nbsp;Search</Link>
+                           <Link to={`/staff/search`}><i className="fas fa-search"></i>&nbsp;Search</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-list"></i>&nbsp;Search Results
@@ -208,7 +226,7 @@ class PartnerSearchResultComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-search"></i>&nbsp;Partners Search</h1>
+                <h1><i className="fas fa-search"></i>&nbsp;Staff Search</h1>
 
                 <div className="row">
                     <div className="col-md-12">
@@ -219,7 +237,7 @@ class PartnerSearchResultComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            partners={partners}
+                            staff={staff}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
@@ -229,5 +247,3 @@ class PartnerSearchResultComponent extends Component {
         );
     }
 }
-
-export default PartnerSearchResultComponent;

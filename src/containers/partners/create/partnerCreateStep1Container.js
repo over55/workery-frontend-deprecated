@@ -14,7 +14,7 @@ class PartnerCreateStep1Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-partner-firstName"),
+            givenName: localStorage.getItem("workery-create-partner-givenName"),
             lastName: localStorage.getItem("workery-create-partner-lastName"),
             email: localStorage.getItem("workery-create-partner-email"),
             phone: localStorage.getItem("workery-create-partner-phone"),
@@ -95,10 +95,10 @@ class PartnerCreateStep1Container extends Component {
      */
 
     render() {
-        const { firstName, lastName, email, phone, errors, isLoading } = this.state
+        const { givenName, lastName, email, phone, errors, isLoading } = this.state
         return (
             <PartnerCreateStep1Component
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 email={email}
                 phone={phone}

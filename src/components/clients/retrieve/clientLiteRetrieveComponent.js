@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
-
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 
 export default class ClientLiteRetrieveComponent extends Component {
     render() {
         const { id, client, flashMessage } = this.props;
+        const isCompany = client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -59,7 +60,12 @@ export default class ClientLiteRetrieveComponent extends Component {
                                 <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" />
                             </div>
                             <div className="col-sm-7 px-4 py-3">
-                                <h3>{client && client.fullName}</h3>
+                                {isCompany &&
+                                    <h1>{client.organizationName}</h1>
+                                }
+                                <h3>
+                                    {client && client.fullName}
+                                </h3>
                                 {client && client.address &&
                                     <p className="text-muted">
                                         <a href={client.addressUrl}>{client.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>

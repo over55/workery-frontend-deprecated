@@ -6,10 +6,13 @@ import PartnerUpdateComponent from "../../../components/partners/update/partnerU
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateInput } from "../../../validators/partnerValidator";
 import {
-    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
+    SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
+import { putPartnerDetail } from "../../../actions/partnerActions";
 
 
 class PartnerUpdateContainer extends Component {
@@ -23,15 +26,53 @@ class PartnerUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { urlArgument, slug } = this.props.match.params;
+        const { id } = this.props.match.params;
+
+        // Map the API fields to our fields.
+        const country = this.props.partnerDetail.addressCountry === "CA" ? "Canada" : this.props.partnerDetail.addressCountry;
+        const region = this.props.partnerDetail.addressRegion === "ON" ? "Ontario" : this.props.partnerDetail.addressRegion;
+        const isOkToEmail = this.props.partnerDetail.isOkToEmail === true ? 1 : 0;
+        const isOkToText = this.props.partnerDetail.isOkToText === true ? 1 : 0;
+        const birthdateObj = new Date(this.props.partnerDetail.birthdate);
+        const joinDateObj = new Date(this.props.partnerDetail.joinDate);
 
         this.state = {
+            // Everything else...
+            id: id,
             errors: {},
             isLoading: false,
-            urlArgument: urlArgument,
-            slug: slug,
+
+            // STEP 3
+            organizationName: this.props.partnerDetail.organizationName,
+            givenName: this.props.partnerDetail.givenName,
+            lastName: this.props.partnerDetail.lastName,
+            primaryPhone: this.props.partnerDetail.telephone,
+            primaryPhoneTypeOf: this.props.partnerDetail. telephoneTypeOf,
+            secondaryPhone: this.props.partnerDetail.otherTelephone,
+            secondaryPhoneTypeOf: this.props.partnerDetail.otherTelephoneTypeOf,
+            email: this.props.partnerDetail.email,
+            isOkToText: isOkToText,
+            isOkToEmail: isOkToEmail,
+
+            // STEP 4
+            country: country,
+            region: region,
+            locality: this.props.partnerDetail.addressLocality,
+            postalCode: this.props.partnerDetail.postalCode,
+            streetAddress: this.props.partnerDetail.streetAddress,
+
+            // STEP 5
+            tags: this.props.partnerDetail.tags,
+            dateOfBirth: birthdateObj,
+            gender: this.props.partnerDetail.gender,
+            howHear: this.props.partnerDetail.howHear,
+            howHearOption: this.props.partnerDetail.howHearOption,
+            howHearOther: this.props.partnerDetail.howHearOther,
+            joinDate: joinDateObj,
+            comment: this.props.partnerDetail.comment,
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
@@ -43,132 +84,25 @@ class PartnerUpdateContainer extends Component {
     }
 
     /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
+    }
+
+    /**
      *  Component Life-cycle Management
      *------------------------------------------------------------
      */
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        //TODO: REPLACE THE FOLLOWING CODE WITH API LOADING CODE.
-        if (this.state.slug === 'argyle') {
-            this.setState({
-                typeOf: RESIDENCE_TYPE_OF,
-                slug: 'argyle',
-                number: 1,
-                name: 'Argyle',
-                absoluteUrl: '/partner/argyle',
-                firstName: "Shinji",
-                lastName: "Ikari",
-                primaryPhone:  "(111) 111-1111",
-                secondaryPhone: "(222) 222-2222",
-                email: "shinji.ikari@nerv.worldgov",
-                streetNumber: 123,
-                streetName: "Somewhere",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                apartmentUnit: "Upper",
-                streetDirection: "North",
-                streetDirectionOption: "",
-                postalCode: "N6J4X4",
-                watchSlug: "argyle-watch",
-                watchIcon: "home",
-                watchName: "Argyle",
-                watch: "argyle-watch",
-                tags: [],
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        } else if (this.state.slug === 'byron') {
-            this.setState({
-                typeOf: BUSINESS_TYPE_OF,
-                slug: 'byron',
-                number: 1,
-                name: 'Byron',
-                absoluteUrl: '/partner/byron',
-                companyName: "City Pop Music",
-                contactFirstName: "Mariya",
-                contactLastName: "Takeuchi",
-                primaryPhone: "(321) 321-3210",
-                secondaryPhone: "",
-                email: "plastic_lover@gmail.com",
-                streetNumber: 666999,
-                streetName: "Shinjuku",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                postalCode: "N6J4X4",
-                apartmentUnit: null,
-                streetDirection: "",
-                streetDirectionOption: "",
-                watchSlug: "byron-watch",
-                watchIcon: "building",
-                watchName: "Byron",
-                watch: "byron-watch",
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        } else if (this.state.slug === 'carling') {
-            this.setState({
-                typeOf: COMMUNITY_CARES_TYPE_OF,
-                slug: 'carling',
-                number: 1,
-                name: 'Carling',
-                absoluteUrl: '/partner/carling',
-                firstName: "Rei",
-                lastName: "Ayanami",
-                primaryPhone:  "(123) 123-12345",
-                secondaryPhone: "(987) 987-0987",
-                email: "rei.ayanami@nerv.worldgov",
-                streetNumber: 451,
-                streetName: "Centre",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                apartmentUnit: null,
-                streetDirection: "",
-                streetDirectionOption: "",
-                postalCode: "N6J4X4",
-                watchSlug: "carling-watch",
-                watchIcon: "university",
-                watchName: "Carling",
-                watch: "carling-watch",
-                dateOfBirth: new Date(),
-                howDidYouHear: "Internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-            });
-        }
-
-        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
-        this.setState({
-            howDidYouHearData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Word of mouth',
-                    slug: 'word-of-mouth'
-                },{
-                    name: 'Internet',
-                    slug: 'internet'
-                }]
-            },
-            tagsData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Health',
-                    slug: 'health'
-                },{
-                    name: 'Security',
-                    slug: 'security'
-                },{
-                    name: 'Fitness',
-                    slug: 'fitness'
-                }]
-            }
-        });
     }
 
     componentWillUnmount() {
@@ -188,7 +122,7 @@ class PartnerUpdateContainer extends Component {
     onSuccessfulSubmissionCallback(partner) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Partner has been successfully updated.");
-        this.props.history.push("/partner/"+this.state.slug+"/full");
+        this.props.history.push("/partner/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -223,7 +157,11 @@ class PartnerUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.putPartnerDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -285,90 +223,60 @@ class PartnerUpdateContainer extends Component {
      */
 
     render() {
-        const { typeOf, errors, urlArgument, slug } = this.state;
+        const { isLoading, typeOf, errors, id } = this.state;
         const {
-            name, companyName, email, firstName, contactFirstName, lastName, contactLastName, primaryPhone, secondaryPhone, streetNumber,
-            streetName, streetType, streetTypeOption, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOption, postalCode,
-            watchSlug, watchIcon, watchName, watch,
-            tags, birthYear, gender, howDidYouHear, howDidYouHearOption, howDidYouHearOther, meaning, expectations, companyEmployeeCount, companyYearsInOperation, companyType,
-            willingToVolunteer, anotherHouseholdPartnerRegistered, totalHouseholdCount, under18YearsHouseholdCount,
+            // STEP 3
+            organizationName, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail,
+
+            // STEP 4
+            country, region, locality, postalCode, streetAddress,
+
+            // STEP 5
+            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
         } = this.state;
-
-        // REPLACE THIS CODE WITH API CODE.
-        const watchOptions = [
-            {
-                selectName: 'watch',
-                value: "argyle-watch",
-                label: "Argyle Community Watch"
-            },{
-                selectName: 'watch',
-                value: "byron-watch",
-                label: "Byron Business Watch"
-            },{
-                selectName: 'watch',
-                value: "carling-watch",
-                label: "Carling Retirement Centre Watch"
-            }
-        ];
-
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
-        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
-
         return (
             <PartnerUpdateComponent
-                urlArgument={urlArgument}
-                slug={slug}
-                typeOf={typeOf}
-
-                name={name}
-                companyName={companyName}
-                firstName={firstName}
-                contactFirstName={contactFirstName}
-                lastName={lastName}
-                contactLastName={contactLastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                streetNumber={streetNumber}
-                streetName={streetName}
-                streetType={streetType}
-                streetTypeOption={streetTypeOption}
-                streetTypeOptions={BASIC_STREET_TYPE_CHOICES}
-                streetTypeOther={streetTypeOther}
-                apartmentUnit={apartmentUnit}
-                streetDirection={streetDirection}
-                streetDirectionOptions={STREET_DIRECTION_CHOICES}
-                streetDirectionOption={streetDirectionOption}
-                postalCode={postalCode}
-                watchSlug={watchSlug}
-                watchIcon={watchIcon}
-                watchName={watchName}
-                watchOptions={watchOptions}
-                watch={watch}
-                tags={tags}
-                tagOptions={tagOptions}
-                birthYear={birthYear}
-                gender={gender}
-                howDidYouHear={howDidYouHear}
-                howDidYouHearOption={howDidYouHearOption}
-                howDidYouHearOptions={howDidYouHearOptions}
-                howDidYouHearOther={howDidYouHearOther}
-                meaning={meaning}
-                expectations={expectations}
-                willingToVolunteer={willingToVolunteer}
-                anotherHouseholdPartnerRegistered={anotherHouseholdPartnerRegistered}
-                totalHouseholdCount={totalHouseholdCount}
-                under18YearsHouseholdCount={under18YearsHouseholdCount}
-                companyEmployeeCount={companyEmployeeCount}
-                companyYearsInOperation={companyYearsInOperation}
-                companyType={companyType}
+                // Everything else...
+                id={id}
                 errors={errors}
+                isLoading={isLoading}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
-                onDOBDateTimeChange={this.onDOBDateTimeChange}
                 onClick={this.onClick}
+
+                // STEP 3
+                organizationName={organizationName}
+                givenName={givenName}
+                lastName={lastName}
+                primaryPhone={primaryPhone}
+                primaryPhoneTypeOf={primaryPhoneTypeOf}
+                primaryPhoneTypeOfOptions={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
+                secondaryPhone={secondaryPhone}
+                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
+                secondaryPhoneTypeOfOptions={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
+                email={email}
+                isOkToEmail={isOkToEmail}
+                isOkToText={isOkToText}
+
+                // STEP 4
+                country={country}
+                region={region}
+                locality={locality}
+                streetAddress={streetAddress}
+                postalCode={postalCode}
+
+                // STEP 5
+                // tags={tags}
+                // tagOptions={tagOptions}
+                dateOfBirth={dateOfBirth}
+                gender={gender}
+                // joinDate={joinDate}
+                errors={errors}
+                howHear={howHear}
+                // howHearOptions={howHearOptions}
+                howHearOther={howHearOther}
+                comment={comment}
             />
         );
     }
@@ -377,6 +285,7 @@ class PartnerUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        partnerDetail: store.partnerDetailState,
     };
 }
 
@@ -384,7 +293,12 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        putPartnerDetail: (data, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                putPartnerDetail(data, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

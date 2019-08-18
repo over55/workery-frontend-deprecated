@@ -19,10 +19,10 @@ class OrderUpdateComponent extends Component {
         const { urlArgument, slug, typeOf, errors, onTextChange, onSelectChange, onRadioChange, onMultiChange, onDOBDateTimeChange, isLoading, onClick } = this.props;
 
         // Biz - Contact
-        const { companyName, contactFirstName, contactLastName } = this.props;
+        const { organizationName, givenName, lastName } = this.props;
 
         // Rez - Contact
-        const { firstName, lastName, primaryPhone, secondaryPhone, email } = this.props;
+        const { primaryPhone, secondaryPhone, email } = this.props;
 
         // Address
         const { streetNumber, streetName, streetType, streetTypeOptions, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOptions, postalCode } = this.props;
@@ -83,7 +83,7 @@ class OrderUpdateComponent extends Component {
                                     isLoading={isLoading}
                                     onClick={onClick}
 
-                                    firstName={firstName}
+                                    givenName={givenName}
                                     lastName={lastName}
                                     primaryPhone={primaryPhone}
                                     secondaryPhone={secondaryPhone}
@@ -133,9 +133,9 @@ class OrderUpdateComponent extends Component {
                                     isLoading={isLoading}
                                     onClick={onClick}
 
-                                    companyName={companyName}
-                                    contactFirstName={contactFirstName}
-                                    contactLastName={contactLastName}
+                                    organizationName={organizationName}
+                                    givenName={givenName}
+                                    lastName={lastName}
                                     primaryPhone={primaryPhone}
                                     secondaryPhone={secondaryPhone}
                                     email={email}
@@ -187,7 +187,7 @@ class OrderUpdateComponent extends Component {
                                     isLoading={isLoading}
                                     onClick={onClick}
 
-                                    firstName={firstName}
+                                    givenName={givenName}
                                     lastName={lastName}
                                     primaryPhone={primaryPhone}
                                     secondaryPhone={secondaryPhone}

@@ -13,8 +13,8 @@ export const WORKERY_PROFILE_API_ENDPOINT = '/profile';
 export const WORKERY_TENANT_LIST_API_ENDPOINT = '/franchises';
 export const WORKERY_TENANT_DETAIL_API_ENDPOINT = '/franchise/';
 export const WORKERY_DASHBOARD_API_ENDPOINT = '/dashboard';
-export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/customers';
-export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/customer/';
+export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/v2/customers';
+export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/v2/customer/';
 export const WORKERY_CLIENT_DEACTIVATE_API_ENDPOINT = '/customers/operation/deactivation';
 export const WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT = '/customers/operation/upgrade-residential';
 export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
@@ -51,8 +51,8 @@ export const WORKERY_SERVICE_FEE_DETAIL_API_ENDPOINT = '/order_service_fee/';
 export const WORKERY_DEACTIVATED_CLIENT_LIST_API_ENDPOINT = '/deactivated-customers';
 export const WORKERY_VEHICLE_TYPE_LIST_API_ENDPOINT = '/vehicle_types';
 export const WORKERY_VEHICLE_TYPE_DETAIL_API_ENDPOINT = '/vehicle_type/';
-export const WORKERY_PARTNER_LIST_API_ENDPOINT = '/partners';
-export const WORKERY_PARTNER_DETAIL_API_ENDPOINT = '/partner/';
+export const WORKERY_PARTNER_LIST_API_ENDPOINT = '/v2/partners';
+export const WORKERY_PARTNER_DETAIL_API_ENDPOINT = '/v2/partner/';
 export const WORKERY_PARTNER_COMMENT_LIST_API_ENDPOINT = '/partner-comments';
 export const WORKERY_CLIENT_COMMENT_LIST_API_ENDPOINT = '/customer-comments';
 export const WORKERY_ASSOCIATE_COMMENT_LIST_API_ENDPOINT = '/associate-comments';
@@ -451,10 +451,10 @@ export const ASSOCIATE_DEMOTION_ROLE_CHOICES = [
 /**
  *  The associate demotion roles.
  */
-export const MALE_GENDER = 2;
-export const FEMALE_GENDER = 3;
-export const PREFER_NOT_TO_SAY_GENDER = 4;
-export const OTHER_GENDER = 1;
+export const MALE_GENDER = 'male';
+export const FEMALE_GENDER = 'female';
+export const PREFER_NOT_TO_SAY_GENDER = 'prefer not say';
+export const OTHER_GENDER = 'other';
 export const GENDER_CHOICES = [
     {
         selectName: "gender",

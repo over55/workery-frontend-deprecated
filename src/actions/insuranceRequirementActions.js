@@ -372,23 +372,61 @@ export const setInsuranceRequirementDetailFailure = insuranceRequirementDetail =
  * Utility function takes the API data and converts it to HTML dropdown
  * options which will be consumed by the `react-select` library elements.
  */
-export function getInsuranceRequirementReactSelectOptions(tagList=[], selectName="insuranceRequirements") {
-    const tagOptions = [];
-    const isNotProductionsEmpty = isEmpty(tagList) === false;
+export function getInsuranceRequirementReactSelectOptions(insuranceRequirementList=[], selectName="insuranceRequirements") {
+    const insuranceRequirementOptions = [];
+    const isNotProductionsEmpty = isEmpty(insuranceRequirementList) === false;
     if (isNotProductionsEmpty) {
-        const results = tagList.results;
+        const results = insuranceRequirementList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
             for (let i = 0; i < results.length; i++) {
-                let tag = results[i];
-                tagOptions.push({
+                let insuranceRequirement = results[i];
+                insuranceRequirementOptions.push({
                     selectName: selectName,
-                    value: tag.id,
-                    label: tag.text
+                    value: insuranceRequirement.id,
+                    label: insuranceRequirement.text
                 });
-                // console.log(tag);
+                // console.log(insuranceRequirement);
             }
         }
     }
-    return tagOptions;
+    return insuranceRequirementOptions;
+}
+
+
+/**
+ * Utlity function takes an array of `InsuranceRequirement` primary keys and the `InsuranceRequirements` results
+ * from the API and returns the HTML dropdown selections which will be consumed
+ * by the GUI powered by `react-select`.
+ */
+export function getPickedInsuranceRequirementReactSelectOptions(insuranceRequirementPKsArray, insuranceRequirementList=[], selectName="insuranceRequirement") {
+    const insuranceRequirementOptions = [];
+    const isAPIResponseNotEmpty = isEmpty(insuranceRequirementList) === false;
+    const isPKsArrayNotEmpty = isEmpty(insuranceRequirementPKsArray) === false;
+    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+        const results = insuranceRequirementList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < insuranceRequirementPKsArray.length; i++) {
+                let insuranceRequirementPK = insuranceRequirementPKsArray[i];
+
+                for (let j = 0; j < results.length; j++) {
+                    let insuranceRequirement = results[j];
+
+                    if (insuranceRequirement.id === insuranceRequirementPK) {
+                        insuranceRequirementOptions.push({
+                            selectName: selectName,
+                            value: insuranceRequirement.id,
+                            label: insuranceRequirement.text
+                        });
+                        // console.log(insuranceRequirement);
+                    } // end IF
+
+                } //end FOR
+
+            } // end FOR
+
+        } // end IF
+    }
+    return insuranceRequirementOptions;
 }

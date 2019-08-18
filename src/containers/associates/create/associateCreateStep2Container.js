@@ -15,7 +15,7 @@ class AssociateCreateStep2Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-associate-firstName"),
+            givenName: localStorage.getItem("workery-create-associate-givenName"),
             lastName: localStorage.getItem("workery-create-associate-lastName"),
             email: localStorage.getItem("workery-create-associate-email"),
             phone: localStorage.getItem("workery-create-associate-phone"),
@@ -34,8 +34,8 @@ class AssociateCreateStep2Container extends Component {
 
     getParametersMapFromState() {
         const parametersMap = new Map();
-        if (this.state.firstName !== undefined && this.state.firstName !== null) {
-            parametersMap.set('givenName', this.state.firstName);
+        if (this.state.givenName !== undefined && this.state.givenName !== null) {
+            parametersMap.set('givenName', this.state.givenName);
         }
         if (this.state.lastName !== undefined && this.state.lastName !== null) {
             parametersMap.set('lastName', this.state.lastName);

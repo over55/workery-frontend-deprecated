@@ -3,39 +3,46 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
 import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
-import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES } from "../../../constants/api";
+import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
+import {
+    IS_OK_TO_EMAIL_CHOICES,
+    IS_OK_TO_TEXT_CHOICES,
+    GENDER_RADIO_CHOICES,
+    ORGANIZATION_TYPE_OF_CHOICES
+} from "../../../constants/api";
 
 
-export default class PartnerUpdateComponent extends Component {
+export default class ClientBizUpdateComponent extends Component {
     render() {
         const {
             // STEP 3
-            organizationName, givenName, lastName,
-            primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
-            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email,
+            typeOf,
+
+            // STEP 4 - Biz
+            organizationName, organizationTypeOf, givenName, lastName,
+            telephone, telephoneTypeOf, otherTelephone, otherTypeOf, email,
             isOkToEmail, isOkToText,
 
-            // STEP 4
+            // STEP 5
             country, region, locality, postalCode, streetAddress,
 
-            // STEP 5
-            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
-            onJoinDateChange, comment,
+            // STEP 6
+            tags, tagOptions, onTagMultiChange, dateOfBirth, gender, howHear, howHearOptions, howHearOption, howHearOther, joinDate, comment,
 
-            // Everything else..
-            onTextChange, onSelectChange, onRadioChange, isLoading, onClick, id, errors,
-            onBillingCountryChange, onBillingRegionChange, typeOf, onDateOfBirthChange, onTagMultiChange
+            // EVERYTHING ELSE
+            id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
+            onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 'Other';
+        const isOtherHowDidYouHearSelected = howHear === 1;
+        console.log(organizationName, organizationTypeOf, givenName, lastName,);
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -44,29 +51,28 @@ export default class PartnerUpdateComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                            <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/partner/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName}&nbsp;{lastName}</Link>
+                            <Link to={`/client/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName}&nbsp;{lastName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Update
                         </li>
                     </ol>
                 </nav>
+
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>
-                                <i className="fas fa-edit"></i>&nbsp;Update Partner
-                            </h1>
+                            <h1>Update Business Client</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-user-shield"></i>&nbsp;Personal Information
-                            </p>
+                            { /* -------------------------------------------------------------------------------------- */}
+                            <h4><i className="fas fa-id-card"></i>&nbsp;Personal Information</h4>
+                            { /* -------------------------------------------------------------------------------------- */}
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
@@ -77,6 +83,17 @@ export default class PartnerUpdateComponent extends Component {
                                 value={organizationName}
                                 name="organizationName"
                                 type="text"
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Type (*)"
+                                name="organizationTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={ORGANIZATION_TYPE_OF_CHOICES}
+                                value={organizationTypeOf}
+                                error={errors.organizationTypeOf}
+                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapInput
@@ -104,47 +121,25 @@ export default class PartnerUpdateComponent extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.primaryPhone}
-                                label="Primary Phone (*)"
+                                error={errors.telephone}
+                                label="Telephone (*)"
                                 onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
+                                value={telephone}
+                                name="telephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Primary Telephone type (*)"
-                                name="primaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={primaryPhoneTypeOfOptions}
-                                value={primaryPhoneTypeOf}
-                                error={errors.primaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
-                                error={errors.secondaryPhone}
-                                label="Secondary Phone"
+                                error={errors.otherTelephone}
+                                label="Other Telephone"
                                 onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
+                                value={otherTelephone}
+                                name="otherTelephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-success"
-                                label="Secondary Telephone type"
-                                name="secondaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={secondaryPhoneTypeOfOptions}
-                                value={secondaryPhoneTypeOf}
-                                error={errors.secondaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapInput
@@ -167,7 +162,7 @@ export default class PartnerUpdateComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToEmail}
                                 options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting "yes" will result in partner getting emails from our system.'
+                                helpText='Selecting "yes" will result in client getting emails from our system.'
                             />
 
                             <BootstrapRadio
@@ -179,10 +174,12 @@ export default class PartnerUpdateComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isOkToText}
                                 options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting "yes" will result in partner getting text-messages on their phone from our system.'
+                                helpText='Selecting "yes" will result in client getting text-messages on their phone from our system.'
                             />
 
-                            <h2><i className="fas fa-address-book"></i>&nbsp;Address</h2>
+                            { /* -------------------------------------------------------------------------------------- */}
+                            <h4><i className="fas fa-address-book"></i>&nbsp;Address</h4>
+                            { /* -------------------------------------------------------------------------------------- */}
 
                             <BootstrapCountrySelect
                                 inputClassName="form-control"
@@ -238,7 +235,9 @@ export default class PartnerUpdateComponent extends Component {
                                 type="text"
                             />
 
-                            <h2><i className="fas fa-chart-pie"></i>&nbsp;Metrics</h2>
+                            { /* -------------------------------------------------------------------------------------- */}
+                            <h4><i className="fas fa-chart-pie"></i>&nbsp;Metrics</h4>
+                            { /* -------------------------------------------------------------------------------------- */}
 
                             <BootstrapMultipleSelect
                                 borderColour="border-success"
@@ -295,7 +294,6 @@ export default class PartnerUpdateComponent extends Component {
                                     type="text"
                                 />
                             }
-
                             <BootstrapDatePicker
                                 label="Join date (*)"
                                 name="joinDate"
@@ -305,7 +303,6 @@ export default class PartnerUpdateComponent extends Component {
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.joinDate}
                             />
-
                             <BootstrapTextarea
                                 name="comment"
                                 borderColour="border-success"
@@ -318,16 +315,15 @@ export default class PartnerUpdateComponent extends Component {
                                 error={errors.comment}
                             />
 
-                        </form>
-                        <form>
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/partner/${id}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
-                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                <Link to={`/client/${id}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
+
                         </form>
                     </div>
                 </div>

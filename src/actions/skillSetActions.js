@@ -392,3 +392,43 @@ export function getSkillSetReactSelectOptions(skillSetList=[], selectName="skill
     }
     return skillSetOptions;
 }
+
+
+
+
+/**
+ * Utlity function takes an array of `SkillSet` primary keys and the `SkillSets` results
+ * from the API and returns the HTML dropdown selections which will be consumed
+ * by the GUI powered by `react-select`.
+ */
+export function getPickedSkillSetReactSelectOptions(skillSetPKsArray, skillSetList=[], selectName="skillSet") {
+    const skillSetOptions = [];
+    const isAPIResponseNotEmpty = isEmpty(skillSetList) === false;
+    const isPKsArrayNotEmpty = isEmpty(skillSetPKsArray) === false;
+    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+        const results = skillSetList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < skillSetPKsArray.length; i++) {
+                let skillSetPK = skillSetPKsArray[i];
+
+                for (let j = 0; j < results.length; j++) {
+                    let skillSet = results[j];
+
+                    if (skillSet.id === skillSetPK) {
+                        skillSetOptions.push({
+                            selectName: selectName,
+                            value: skillSet.id,
+                            label: skillSet.subCategory
+                        });
+                        // console.log(skillSet);
+                    } // end IF
+
+                } //end FOR
+
+            } // end FOR
+
+        } // end IF
+    }
+    return skillSetOptions;
+}

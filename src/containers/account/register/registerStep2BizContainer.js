@@ -16,9 +16,9 @@ class RegisterStep2BizContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyName: localStorage.getItem("nwapp-register-biz-companyName"),
-            contactFirstName: localStorage.getItem("nwapp-register-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("nwapp-register-biz-contactLastName"),
+            organizationName: localStorage.getItem("nwapp-register-biz-organizationName"),
+            firstName: localStorage.getItem("nwapp-register-biz-firstName"),
+            lastName: localStorage.getItem("nwapp-register-biz-lastName"),
             primaryPhone: localStorage.getItem("nwapp-register-biz-primaryPhone"),
             secondaryPhone: localStorage.getItem("nwapp-register-biz-secondaryPhone"),
             email: localStorage.getItem("nwapp-register-biz-email"),
@@ -113,12 +113,12 @@ class RegisterStep2BizContainer extends Component {
      */
 
     render() {
-        const { companyName, contactFirstName, contactLastName, primaryPhone, secondaryPhone, email, errors } = this.state;
+        const { organizationName, firstName, lastName, primaryPhone, secondaryPhone, email, errors } = this.state;
         return (
             <RegisterStep2BizComponent
-                companyName={companyName}
-                contactFirstName={contactFirstName}
-                contactLastName={contactLastName}
+                organizationName={organizationName}
+                firstName={firstName}
+                lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
                 email={email}

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderSearchComponent from "../../../components/orders/search/orderSearchComponent";
-import { validateSearchInput } from "../../../validators/orderValidator";
+import StaffSearchComponent from "../../../components/staff/search/staffSearchComponent";
+import { validateSearchInput } from "../../../validators/staffValidator";
 import { localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
 
 
-class OrderListContainer extends Component {
+class StaffListContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -70,14 +70,14 @@ class OrderListContainer extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
         this.setState({ advancedSearchActive: false, }, ()=> {
-            // Perform order-side validation.
+            // Perform staff-side validation.
             const { errors, isValid } = validateSearchInput(this.state);
 
             // CASE 1 OF 2: Validation passed successfully.
             if (isValid) {
 
-                    localStorageSetObjectOrArrayItem('workery-search-order-details', this.state);
-                    this.props.history.push("/orders/search-results");
+                    localStorageSetObjectOrArrayItem('workery-search-staff-details', this.state);
+                    this.props.history.push("/staff/search-results");
 
 
             // CASE 2 OF 2: Validation was a failure.
@@ -97,14 +97,14 @@ class OrderListContainer extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
         this.setState({ advancedSearchActive: true, }, ()=> {
-            // Perform order-side validation.
+            // Perform staff-side validation.
             const { errors, isValid } = validateSearchInput(this.state);
 
             // CASE 1 OF 2: Validation passed successfully.
             if (isValid) {
 
-                    localStorageSetObjectOrArrayItem('workery-search-order-details', this.state);
-                    this.props.history.push("/orders/search-results");
+                    localStorageSetObjectOrArrayItem('workery-search-staff-details', this.state);
+                    this.props.history.push("/staff/search-results");
 
 
             // CASE 2 OF 2: Validation was a failure.
@@ -127,7 +127,7 @@ class OrderListContainer extends Component {
 
     render() {
         return (
-            <OrderSearchComponent
+            <StaffSearchComponent
                 keyword={this.state.keyword}
                 firstName={this.state.firstName}
                 lastName={this.state.lastName}
@@ -159,4 +159,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderListContainer);
+)(StaffListContainer);

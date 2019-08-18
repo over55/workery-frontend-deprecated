@@ -50,9 +50,9 @@ class StaffCreateStep8Container extends Component {
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
-            companyName: localStorage.getItem("workery-create-staff-biz-companyName"),
-            contactFirstName: localStorage.getItem("workery-create-staff-biz-contactFirstName"),
-            contactLastName: localStorage.getItem("workery-create-staff-biz-contactLastName"),
+            organizationName: localStorage.getItem("workery-create-staff-biz-organizationName"),
+            firstName: localStorage.getItem("workery-create-staff-biz-firstName"),
+            lastName: localStorage.getItem("workery-create-staff-biz-lastName"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-staff-country"),
@@ -75,7 +75,7 @@ class StaffCreateStep8Container extends Component {
             // Step 7 - Metrics
             tags: localStorageGetArrayItem("workery-create-staff-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-staff-dateOfBirth"),
-            gender: localStorageGetIntegerItem("workery-create-staff-gender"),
+            gender: localStorage.getItem("workery-create-staff-gender"),
             genderLabel: localStorage.getItem("workery-create-staff-gender-label"),
             howHear: localStorageGetIntegerItem("workery-create-staff-howHear"),
             howHearLabel: localStorage.getItem("workery-create-staff-howHearLabel"),

@@ -75,6 +75,10 @@ export default class PartnerFullRetrieveComponent extends Component {
                                     </th>
                                 </tr>
                                 <tr>
+                                    <th scope="row" className="bg-light">Organization</th>
+                                    <td>{partner.organizationName}</td>
+                                </tr>
+                                <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{partner.fullName}</td>
                                 </tr>

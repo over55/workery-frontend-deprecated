@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientCreateStep4RezComponent from "../../../components/clients/create/clientCreateStep4RezComponent";
-import { validateStep4RezCreateInput } from "../../../validators/clientValidator";
+import ClientCreateStep4Component from "../../../components/clients/create/clientCreateStep4Component";
+import { validateStep4CreateInput } from "../../../validators/clientValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     TELEPHONE_CONTACT_POINT_TYPE_OF_ID
 } from '../../../constants/api';
-import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+import { localStorageSetObjectOrArrayItem, localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
-class ClientCreateStep4RezContainer extends Component {
+class ClientCreateStep4Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -19,19 +19,25 @@ class ClientCreateStep4RezContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-client-rez-firstName"),
-            lastName: localStorage.getItem("workery-create-client-rez-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-client-rez-primaryPhone"),
-            secondaryPhone: localStorage.getItem("workery-create-client-rez-secondaryPhone"),
-            email: localStorage.getItem("workery-create-client-rez-email"),
-            isOkToEmail: localStorageGetIntegerItem("workery-create-client-rez-isOkToEmail"),
-            isOkToText: localStorageGetIntegerItem("workery-create-client-rez-isOkToText"),
+            typeOf: localStorageGetIntegerItem("workery-create-client-typeOf"),
+            organizationName: localStorage.getItem("workery-create-client-organizationName"),
+            organizationTypeOf: localStorageGetIntegerItem("workery-create-client-organizationTypeOf"),
+            givenName: localStorage.getItem("workery-create-client-givenName"),
+            lastName: localStorage.getItem("workery-create-client-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-client-primaryPhone"),
+            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-primaryPhoneTypeOf"),
+            secondaryPhone: localStorage.getItem("workery-create-client-secondaryPhone"),
+            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-secondaryPhoneTypeOf"),
+            email: localStorage.getItem("workery-create-client-email"),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-client-isOkToEmail"),
+            isOkToText: localStorageGetIntegerItem("workery-create-client-isOkToText"),
             errors: {},
             isLoading: false
         }
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -44,15 +50,6 @@ class ClientCreateStep4RezContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // DEVELOPERS NOTE:
-        // Since we are in this page, we need to assign the user to be
-        // a residential type user. If the user is community cares type
-        // then this variable will be set then in page 4.
-        localStorage.setItem("workery-create-client-typeOf", RESIDENTIAL_CUSTOMER_TYPE_OF_ID);
-        localStorage.setItem("workery-create-client-typeOf-label", "Residential");
-        localStorage.setItem("workery-create-client-rez-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
-        localStorage.setItem("workery-create-client-rez-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
     }
 
     componentWillUnmount() {
@@ -94,14 +91,14 @@ class ClientCreateStep4RezContainer extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        const key = "workery-create-client-rez-"+[e.target.name];
+        const key = "workery-create-client-"+[e.target.name];
         localStorage.setItem(key, e.target.value);
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-client-rez-"+[e.target.name];
-        const storageLabelKey =  "workery-create-client-rez-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-create-client-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -124,12 +121,26 @@ class ClientCreateStep4RezContainer extends Component {
         });
     }
 
+    onSelectChange(option) {
+        console.log(option);
+        const optionKey = [option.selectName]+"Option";
+        this.setState(
+            { [option.selectName]: option.value, [optionKey]: option, },
+            ()=>{
+                localStorage.setItem('workery-create-client-'+[option.selectName].toString(), option.value);
+                localStorage.setItem('workery-create-client-'+[option.selectName].toString()+"Label", option.label);
+                localStorageSetObjectOrArrayItem('workery-create-client-'+optionKey, option);
+                console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+            }
+        );
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateStep4RezCreateInput(this.state);
+        const { errors, isValid } = validateStep4CreateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -149,14 +160,19 @@ class ClientCreateStep4RezContainer extends Component {
 
     render() {
         const {
-            firstName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
+            typeOf, organizationName, organizationTypeOf, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToEmail, isOkToText, errors
         } = this.state;
         return (
-            <ClientCreateStep4RezComponent
-                firstName={firstName}
+            <ClientCreateStep4Component
+                typeOf={typeOf}
+                organizationName={organizationName}
+                organizationTypeOf={organizationTypeOf}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
+                primaryPhoneTypeOf={primaryPhoneTypeOf}
                 secondaryPhone={secondaryPhone}
+                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
                 email={email}
                 isOkToEmail={isOkToEmail}
                 isOkToText={isOkToText}
@@ -164,6 +180,7 @@ class ClientCreateStep4RezContainer extends Component {
                 onTextChange={this.onTextChange}
                 onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
+                onSelectChange={this.onSelectChange}
             />
         );
     }
@@ -183,4 +200,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientCreateStep4RezContainer);
+)(ClientCreateStep4Container);
