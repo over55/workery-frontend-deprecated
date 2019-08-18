@@ -20,17 +20,18 @@ class PartnerCreateStep3BizContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            organizationName: localStorage.getItem("workery-create-partner-biz-organizationName"),
-            firstName: localStorage.getItem("workery-create-partner-biz-firstName"),
-            lastName: localStorage.getItem("workery-create-partner-biz-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-partner-biz-primaryPhone"),
-            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-partner-biz-primaryPhoneTypeOf"),
-            secondaryPhone: localStorage.getItem("workery-create-partner-biz-secondaryPhone"),
-            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-partner-biz-secondaryPhoneTypeOf"),
-            email: localStorage.getItem("workery-create-partner-biz-email"),
-            isOkToEmail: localStorageGetIntegerItem("workery-create-partner-biz-isOkToEmail"),
-            isOkToText: localStorageGetIntegerItem("workery-create-partner-biz-isOkToText"),
-            isActive: localStorageGetIntegerItem("workery-create-partner-biz-isActive"),
+            organizationName: localStorage.getItem("workery-create-partner-organizationName"),
+            organizationTypeOf: localStorageGetIntegerItem("workery-create-partner-organizationTypeOf"),
+            givenName: localStorage.getItem("workery-create-partner-givenName"),
+            lastName: localStorage.getItem("workery-create-partner-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-partner-primaryPhone"),
+            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-partner-primaryPhoneTypeOf"),
+            secondaryPhone: localStorage.getItem("workery-create-partner-secondaryPhone"),
+            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-partner-secondaryPhoneTypeOf"),
+            email: localStorage.getItem("workery-create-partner-email"),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-partner-isOkToEmail"),
+            isOkToText: localStorageGetIntegerItem("workery-create-partner-isOkToText"),
+            isActive: localStorageGetIntegerItem("workery-create-partner-isActive"),
             errors: {},
             isLoading: false
         }
@@ -97,7 +98,7 @@ class PartnerCreateStep3BizContainer extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        const key = "workery-create-partner-biz-"+[e.target.name];
+        const key = "workery-create-partner-"+[e.target.name];
         localStorage.setItem(key, e.target.value);
     }
 
@@ -107,9 +108,9 @@ class PartnerCreateStep3BizContainer extends Component {
         this.setState(
             { [option.selectName]: option.value, [optionKey]: option, },
             ()=>{
-                localStorage.setItem('workery-create-partner-biz-'+[option.selectName].toString(), option.value);
-                localStorage.setItem('workery-create-partner-biz-'+[option.selectName].toString()+"Label", option.label);
-                localStorageSetObjectOrArrayItem('workery-create-partner-biz-'+optionKey, option);
+                localStorage.setItem('workery-create-partner-'+[option.selectName].toString(), option.value);
+                localStorage.setItem('workery-create-partner-'+[option.selectName].toString()+"Label", option.label);
+                localStorageSetObjectOrArrayItem('workery-create-partner-'+optionKey, option);
                 console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
             }
         );
@@ -117,8 +118,8 @@ class PartnerCreateStep3BizContainer extends Component {
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-partner-biz-"+[e.target.name];
-        const storageLabelKey =  "workery-create-partner-biz-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-create-partner-"+[e.target.name];
+        const storageLabelKey =  "workery-create-partner-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -166,12 +167,13 @@ class PartnerCreateStep3BizContainer extends Component {
 
     render() {
         const {
-            organizationName, firstName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, isActive, errors
+            organizationName, organizationTypeOf, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail, isActive, errors
         } = this.state;
         return (
             <PartnerCreateStep3BizComponent
                 organizationName={organizationName}
-                firstName={firstName}
+                organizationTypeOf={organizationTypeOf}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 primaryPhoneTypeOf={primaryPhoneTypeOf}

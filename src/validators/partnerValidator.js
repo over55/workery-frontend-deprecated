@@ -12,45 +12,26 @@ export function validateInput(data) {
 
     // --- CONTACT --- //
 
-    if (data.typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-
-        if (data.firstName === undefined || data.firstName === null || validator.isEmpty(data.firstName) || data.firstName === "") {
-            errors.firstName = 'This field is required';
-        }
-        if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
-            errors.lastName = 'This field is required';
-        }
-        if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-            errors.primaryPhone = 'This field is required';
-        }
-        if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
-            errors.email = 'This field is required';
-        }
-        if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
-            errors.isOkToEmail = 'This field is required';
-        }
-        if (data.isOkToText === undefined || data.isOkToText === null || data.isOkToText === "" || isNaN(data.isOkToText) ) {
-            errors.isOkToText = 'This field is required';
-        }
-
-    } else if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-
-        if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
-            errors.organizationName = 'This field is required';
-        }
-        if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
-            errors.givenName = 'This field is required';
-        }
-        if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
-            errors.lastName = 'This field is required';
-        }
-        if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-            errors.primaryPhone = 'This field is required';
-        }
-        if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
-            errors.email = 'This field is required';
-        }
-
+    if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
+        errors.organizationName = 'This field is required';
+    }
+    if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
+        errors.givenName = 'This field is required';
+    }
+    if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
+        errors.lastName = 'This field is required';
+    }
+    if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
+        errors.primaryPhone = 'This field is required';
+    }
+    if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
+        errors.email = 'This field is required';
+    }
+    if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
+        errors.isOkToEmail = 'This field is required';
+    }
+    if (data.isOkToText === undefined || data.isOkToText === null || data.isOkToText === "" || isNaN(data.isOkToText) ) {
+        errors.isOkToText = 'This field is required';
     }
 
     // --- ADDRESS --- //
@@ -76,10 +57,10 @@ export function validateInput(data) {
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
     }
-    if (data.gender === undefined || data.gender === null || data.gender === "" || isNaN(data.gender) ) {
+    if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.gender) ) {
+    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
         errors.howHear = 'This field is required';
     } else {
         if (data.howHear === "Other") {
@@ -107,6 +88,9 @@ export function validateStep3CreateInput(data) {
 
     if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
         errors.organizationName = 'This field is required';
+    }
+    if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "" || isNaN(data.organizationTypeOf) ) {
+        errors.organizationTypeOf = 'This field is required';
     }
     if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
         errors.givenName = 'This field is required';
@@ -177,10 +161,10 @@ export function validateStep5CreateInput(data) {
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
     }
-    if (data.gender === undefined || data.gender === null || data.gender === "" || isNaN(data.gender) ) {
+    if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.gender) ) {
+    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
         errors.howHear = 'This field is required';
     } else {
         if (data.howHear === "Other") {
@@ -247,7 +231,7 @@ export function validateSearchInput(data) {
         }
     } else {
         let hasEmptyField = 0;
-        if (data.firstName === undefined || data.firstName === null || data.firstName === "") {
+        if (data.givenName === undefined || data.givenName === null || data.givenName === "") {
             hasEmptyField += 1;
         }
         if (data.lastName === undefined || data.lastName === null || data.lastName === "") {
@@ -261,7 +245,7 @@ export function validateSearchInput(data) {
         }
 
         if (hasEmptyField === 4) {
-            // errors.firstName = '';
+            // errors.givenName = '';
             // errors.lastName = '';
             // errors.phone = '';
             // errors.email = '';

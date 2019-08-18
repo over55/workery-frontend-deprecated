@@ -48,15 +48,15 @@ class PartnerCreateStep6Container extends Component {
         }
         else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/partners/add/step-4-biz";
-            primaryPhone = localStorage.getItem("workery-create-partner-biz-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-biz-primaryPhoneTypeOf");
-            secondaryPhone =  localStorage.getItem("workery-create-partner-biz-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-biz-secondaryPhoneTypeOf");
-            email = localStorage.getItem("workery-create-partner-biz-email");
-            isOkToEmail = localStorageGetIntegerItem("workery-create-partner-biz-isOkToEmail");
-            isOkToText = localStorageGetIntegerItem("workery-create-partner-biz-isOkToText");
-            isOkToEmailLabel = localStorage.getItem("workery-create-partner-biz-isOkToEmail-label");
-            isOkToTextLabel = localStorage.getItem("workery-create-partner-biz-isOkToText-label");
+            primaryPhone = localStorage.getItem("workery-create-partner-primaryPhone");
+            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-primaryPhoneTypeOf");
+            secondaryPhone =  localStorage.getItem("workery-create-partner-secondaryPhone");
+            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-secondaryPhoneTypeOf");
+            email = localStorage.getItem("workery-create-partner-email");
+            isOkToEmail = localStorageGetIntegerItem("workery-create-partner-isOkToEmail");
+            isOkToText = localStorageGetIntegerItem("workery-create-partner-isOkToText");
+            isOkToEmailLabel = localStorage.getItem("workery-create-partner-isOkToEmail-label");
+            isOkToTextLabel = localStorage.getItem("workery-create-partner-isOkToText-label");
         }
 
         this.state = {
@@ -65,7 +65,7 @@ class PartnerCreateStep6Container extends Component {
             typeOfLabel: localStorage.getItem("workery-create-partner-typeOf-label"),
 
             // Step 4 - Residential & Business
-            firstName: localStorage.getItem("workery-create-partner-rez-firstName"),
+            givenName: localStorage.getItem("workery-create-partner-rez-givenName"),
             lastName: localStorage.getItem("workery-create-partner-rez-lastName"),
             primaryPhone: primaryPhone,
             primaryPhoneTypeOf: primaryPhoneTypeOf,
@@ -76,11 +76,11 @@ class PartnerCreateStep6Container extends Component {
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
-            organizationName: localStorage.getItem("workery-create-partner-biz-organizationName"),
-            organizationName: localStorage.getItem("workery-create-partner-biz-organizationName"),
-            firstName: localStorage.getItem("workery-create-partner-biz-firstName"),
-            lastName: localStorage.getItem("workery-create-partner-biz-lastName"),
-            isActive: localStorageGetIntegerItem("workery-create-partner-biz-isActive"),
+            organizationName: localStorage.getItem("workery-create-partner-organizationName"),
+            organizationTypeOf: localStorageGetIntegerItem("workery-create-partner-organizationTypeOf"),
+            givenName: localStorage.getItem("workery-create-partner-givenName"),
+            lastName: localStorage.getItem("workery-create-partner-lastName"),
+            isActive: localStorageGetIntegerItem("workery-create-partner-isActive"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-partner-country"),
@@ -124,7 +124,7 @@ class PartnerCreateStep6Container extends Component {
         let postData = Object.assign({}, this.state);
 
         // (1) Given name - We need t refactor name for API field match.
-        postData.givenName = this.state.firstName;
+        postData.givenName = this.state.givenName;
 
         // (2) Middle name (API ISSUE)
         postData.middleName = this.state.middleName;
@@ -189,8 +189,8 @@ class PartnerCreateStep6Container extends Component {
 
         // () First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.firstName = this.state.firstName;
-            postData.givenName = this.state.firstName;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
             postData.lastName = this.state.lastName;
         }
 
@@ -300,7 +300,7 @@ class PartnerCreateStep6Container extends Component {
             typeOfLabel,
 
             // Step 4 - Residential & Business
-            firstName,
+            givenName,
             lastName,
             primaryPhone,
             secondaryPhone,
@@ -343,7 +343,7 @@ class PartnerCreateStep6Container extends Component {
                 typeOfLabel={typeOfLabel}
 
                 // Step 4 - Residential & Business
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}
@@ -353,7 +353,7 @@ class PartnerCreateStep6Container extends Component {
                 isOkToText={isOkToText}
                 isOkToTextLabel={isOkToTextLabel}
                 organizationName={organizationName}
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
 
                 // Step 5 - Address

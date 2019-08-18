@@ -7,13 +7,15 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, IS_ACTIVE_TYPE_OF_CHOICES } from "../../../constants/api";
+import {
+    IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, IS_ACTIVE_TYPE_OF_CHOICES, ORGANIZATION_TYPE_OF_CHOICES
+} from "../../../constants/api";
 
 
 class PartnerCreateStep3BizComponent extends Component {
     render() {
         const {
-            organizationName, givenName, lastName,
+            organizationName, organizationTypeOf, givenName, lastName,
             primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
             secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email, errors,
             isOkToEmail, isOkToText, isActive,
@@ -87,6 +89,17 @@ class PartnerCreateStep3BizComponent extends Component {
                                 value={organizationName}
                                 name="organizationName"
                                 type="text"
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Organization Type (*)"
+                                name="organizationTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={ORGANIZATION_TYPE_OF_CHOICES}
+                                value={organizationTypeOf}
+                                error={errors.organizationTypeOf}
+                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapInput

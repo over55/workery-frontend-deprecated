@@ -110,9 +110,7 @@ class PartnerCreateStep5Container extends Component {
      */
 
     onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
+        this.setState({ [e.target.name]: e.target.value, });
         localStorage.setItem('workery-create-partner-'+[e.target.name], e.target.value);
     }
 

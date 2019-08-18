@@ -37,6 +37,10 @@ class RemoteListComponent extends Component {
         };
 
         const columns = [{
+            dataField: 'organizationName',
+            text: 'Organization',
+            sort: false
+        },{
             dataField: 'givenName',
             text: 'First Name',
             sort: true

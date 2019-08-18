@@ -12,7 +12,7 @@ import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, IS_ACTIVE_TYPE_OF_CHOICES, GENDER_RADIO_CHOICES } from "../../../constants/api";
+import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES } from "../../../constants/api";
 
 
 export default class PartnerUpdateComponent extends Component {
@@ -22,7 +22,7 @@ export default class PartnerUpdateComponent extends Component {
             organizationName, givenName, lastName,
             primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
             secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email,
-            isOkToEmail, isOkToText, isActive,
+            isOkToEmail, isOkToText,
 
             // STEP 4
             country, region, locality, postalCode, streetAddress,
@@ -47,7 +47,7 @@ export default class PartnerUpdateComponent extends Component {
                             <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/partner/${id}/full`}><i className="fas fa-user"></i>&nbsp;Argyle</Link>
+                            <Link to={`/partner/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName}&nbsp;{lastName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Update
@@ -180,18 +180,6 @@ export default class PartnerUpdateComponent extends Component {
                                 selectedValue={isOkToText}
                                 options={IS_OK_TO_TEXT_CHOICES}
                                 helpText='Selecting "yes" will result in partner getting text-messages on their phone from our system.'
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isActive}
-                                label="Is the account active? (*)"
-                                name="isActive"
-                                onChange={onRadioChange}
-                                selectedValue={isActive}
-                                options={IS_ACTIVE_TYPE_OF_CHOICES}
-                                helpText='Selecting "yes" will grant the parnter login ability.'
                             />
 
                             <h2><i className="fas fa-address-book"></i>&nbsp;Address</h2>
