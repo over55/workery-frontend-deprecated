@@ -46,6 +46,11 @@ class RemoteListComponent extends Component {
             sort: false,
             formatter: iconFormatter
         },{
+            dataField: 'state',
+            text: 'Status',
+            sort: true,
+            formatter: statusFormatter
+        },{
             dataField: 'givenName',
             text: 'First Name',
             sort: true
@@ -63,16 +68,6 @@ class RemoteListComponent extends Component {
             text: 'Email',
             sort: true,
             formatter: emailFormatter,
-        },{
-            dataField: 'state',
-            text: 'Status',
-            sort: false,
-            filter: selectFilter({
-                options: selectOptions,
-                defaultValue: 'active',
-                withoutEmptyOption: true
-            }),
-            formatter: statusFormatter
         },{
             dataField: 'slug',
             text: 'Financials',

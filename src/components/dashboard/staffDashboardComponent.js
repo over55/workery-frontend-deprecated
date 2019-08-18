@@ -23,7 +23,7 @@ export default class StaffDashboardComponent extends Component {
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
                                     <Link to="/clients" className="d-block link-ndecor" title="Clients">
-                                        <h1 className="circle-title">{customerCount}</h1>
+                                        <h1 className="circle-title">{customerCount.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</h1>
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-user-circle"></i>&nbsp;Clients</h4>
@@ -32,7 +32,7 @@ export default class StaffDashboardComponent extends Component {
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
                                     <Link to="/orders" className="d-block link-ndecor" title="Jobs">
-                                        <h1 className="circle-title">{jobCount}</h1>
+                                        <h1 className="circle-title">{jobCount.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</h1>
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-wrench"></i>&nbsp;Jobs</h4>
@@ -41,7 +41,7 @@ export default class StaffDashboardComponent extends Component {
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dblue">
                                     <Link to="/associates" className="d-block link-ndecor" title="Associates">
-                                        <h1 className="circle-title">{memberCount}</h1>
+                                        <h1 className="circle-title">{memberCount.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</h1>
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-crown"></i>&nbsp;Associates</h4>
@@ -50,7 +50,7 @@ export default class StaffDashboardComponent extends Component {
                             <div className="col-sm-3 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-orange">
                                     <Link to="/tasks" className="d-block link-ndecor" title="Items">
-                                        <h1 className="circle-title">{tasksCount}</h1>
+                                        <h1 className="circle-title">{tasksCount.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</h1>
                                     </Link>
                                 </div>
                                 <h4><i className="fas fa-tasks"></i>&nbsp;Tasks</h4>
@@ -109,7 +109,7 @@ class BulletinBoardComponent extends Component {
                             noDataIndication="There are no recent tasks at the moment"
                         />
                         <p class="lead">
-                            <Link className="btn btn-primary btn-lg px-4" to="#" role="button">
+                            <Link className="btn btn-success btn-lg px-4" to="#" role="button">
                                 <i className="fas fa-plus"></i>&nbsp;Add
                             </Link>
                         </p>
@@ -193,7 +193,7 @@ class JobHistoryComponent extends Component {
 function jobHistoryIDFormatter(cell, row){
     return (
         <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
-            {row.id}
+            {row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
         </Link>
     )
 }
@@ -269,7 +269,7 @@ class AwayLogComponent extends Component {
                             noDataIndication="There are no recent tasks at the moment"
                         />
                         <p class="lead">
-                            <Link className="btn btn-primary btn-lg px-4" to="#" role="button">
+                            <Link className="btn btn-success btn-lg px-4" to="#" role="button">
                                 <i className="fas fa-plus"></i>&nbsp;Add
                             </Link>
                         </p>

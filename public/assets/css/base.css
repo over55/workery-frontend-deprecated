@@ -200,6 +200,7 @@ a.plain-link{
 
   padding-left: .95rem;
   padding-right: .95rem;
+  font-size: 2rem;
 }
 .nav-divider {
     margin: 0.8rem;
@@ -583,6 +584,35 @@ table.custom-cell-w tr th{width:35% !important;}
 	display: block;
 	margin: 5px auto 10px;
 }
+.display-4 {
+    font-size: 1.99rem !important;
+}
+}
+@media (min-width: 576px) and (max-width: 667px) {
+.display-4 {
+    font-size: 3.2rem !important;
+}	
+}
+.custom-select {
+	height: calc(1.5em + 1rem + 2px) !important;
+	font-size: 1.25rem !important;
+	border-radius: .3rem !important;
+}
+.react-bootstrap-table table thead tr th:first-child,
+.react-bootstrap-table table tbody tr td:first-child {
+	max-width: 6rem;
+}
+.react-bootstrap-table table {
+    table-layout: auto !important;
+}
+.react-bootstrap-table {
+	display: block;
+	width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+.react-bootstrap-table-pagination ,.react-bootstrap-table-pagination-list {
+	margin-top: 10px;
 }
 .img-head {
 	width: 64px;
@@ -1017,12 +1047,15 @@ ul.list-unstyled > li {
   position: absolute;
   top: 10px;
   right: 0;
-  padding: 2px 5px;
+  padding: 2px 5px 3px;
 
-  font-size: .75rem;
+  font-size: 1rem;
   border-radius: .625rem;
 }
-
+.badge-orange {
+	color: #ffffff;
+	background-color: #F26523;
+}
 .search-form {
   display: flex;
   flex-wrap: nowrap !important;
@@ -1128,18 +1161,6 @@ aside.ScrollUpButton__Container:focus {
   }
 
   main#main {
-    padding-top: 130px;
+    padding-top: 50px !important;
   }
-}
-
-@media only screen and (max-width: 666px) {
-    #sidebar {
-      width: 100%;
-      margin-right: -100%;
-      padding-top: 160px;
-    }
-
-    main#main {
-      padding-top: 180px;
-    }
 }
