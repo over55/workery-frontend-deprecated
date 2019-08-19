@@ -256,7 +256,7 @@ export function pullStaffDetail(id, onSuccessCallback, onFailureCallback) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putStaffDetail(user, data, onSuccessCallback, onFailureCallback) {
+export function putStaffDetail(data, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -309,10 +309,7 @@ export function putStaffDetail(user, data, onSuccessCallback, onFailureCallback)
 
                 // Send our failure to the redux.
                 store.dispatch(
-                    setStaffDetailFailure({
-                        isAPIRequestRunning: false,
-                        errors: errors
-                    })
+                    setStaffDetailFailure({ isAPIRequestRunning: false, errors: errors, })
                 );
 
                 // DEVELOPERS NOTE:

@@ -25,55 +25,51 @@ class StaffUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
+
+        // Map the API fields to our fields.
+        const country = this.props.staffDetail.addressCountry === "CA" ? "Canada" : this.props.staffDetail.addressCountry;
+        const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
+        const isOkToEmail = this.props.staffDetail.isOkToEmail === true ? 1 : 0;
+        const isOkToText = this.props.staffDetail.isOkToText === true ? 1 : 0;
+        const policeCheckObj = new Date(this.props.staffDetail.policeCheck);
+        const isActive = this.props.staffDetail.isActive === true ? 1 : 0;
+        const birthdateObj = new Date(this.props.staffDetail.birthdate);
+        const joinDateObj = new Date(this.props.staffDetail.joinDate);
+
+        console.log(isActive, this.props.staffDetail);
 
         this.state = {
-            slug: slug,
-            firstName: localStorage.getItem("nwapp-staff-create-firstName"),
-            lastName: localStorage.getItem("nwapp-staff-create-lastName"),
-            dateOfBirth: localStorageGetDateItem("nwapp-staff-create-dateOfBirth"),
-            gender: parseInt(localStorage.getItem("nwapp-staff-create-gender")),
-            description: localStorage.getItem("nwapp-staff-create-description"),
-            tags: localStorageGetArrayItem("nwapp-staff-create-tags"),
-            howHear: localStorage.getItem("nwapp-staff-create-howHear"),
-            phone: localStorage.getItem("nwapp-staff-create-phone"),
-            mobile: localStorage.getItem("nwapp-staff-create-mobile"),
-            workEmail: localStorage.getItem("nwapp-staff-create-workEmail"),
-            personalEmail: localStorage.getItem("nwapp-staff-create-personalEmail"),
-            streetNumber: localStorage.getItem("nwapp-staff-create-streetNumber"),
-            streetName: localStorage.getItem("nwapp-staff-create-streetName"),
-            streetType: localStorage.getItem("nwapp-staff-create-streetType"),
-            streetTypeOptions: BASIC_STREET_TYPE_CHOICES,
-            streetTypeOther: localStorage.getItem("nwapp-staff-create-streetTypeOther"),
-            apartmentUnit: localStorage.getItem("nwapp-staff-create-apartmentUnit"),
-            streetDirection: localStorage.getItem("nwapp-staff-create-streetDirection"),
-            streetDirectionOptions: STREET_DIRECTION_CHOICES,
-            postalCode: localStorage.getItem("nwapp-staff-create-postalCode"),
-            locality: localStorage.getItem("nwapp-staff-create-locality"),
-            region: localStorage.getItem("nwapp-staff-create-region"),
-            country: localStorage.getItem("nwapp-staff-create-country"),
-            emergencyFullName: localStorage.getItem("nwapp-staff-create-emergencyFullName"),
-            emergencyRelationship: localStorage.getItem("nwapp-staff-create-emergencyRelationship"),
-            emergencyTelephone: localStorage.getItem("nwapp-staff-create-emergencyTelephone"),
-            emergencyAlternativeTelephone: localStorage.getItem("nwapp-staff-create-emergencyAlternativeTelephone"),
-            additionalComments: localStorage.getItem("nwapp-staff-create-additionalComments"),
-            accountType: parseInt(localStorage.getItem("nwapp-staff-create-accountType")),
-            policeCheckDate: localStorageGetDateItem("nwapp-staff-create-policeCheckDate"),
-            password: localStorage.getItem("nwapp-staff-create-password"),
-            repeatPassword: localStorage.getItem("nwapp-staff-create-repeatPassword"),
-            isActive: localStorage.getItem("nwapp-staff-create-isActive"),
-            isActiveOption: {},
-            isActiveOptions: [{
-                id: 'isActive-true-choice',
-                name: 'isActive',
-                value: true,
-                label: 'Yes',
-            },{
-                id: 'isActive-false-choice',
-                name: 'isActive',
-                value: false,
-                label: 'No',
-            }],
+            // Step 4
+            givenName: this.props.staffDetail.givenName,
+            lastName: this.props.staffDetail.lastName,
+            primaryPhone: this.props.staffDetail.telephone,
+            secondaryPhone: this.props.staffDetail.otherTelephone,
+            email: this.props.staffDetail.email,
+            personalEmail: this.props.staffDetail.personalEmail,
+            isOkToEmail: isOkToEmail,
+            isOkToText: isOkToText,
+
+            // Step 5
+            country: this.props.staffDetail.addressCountry,
+            region: this.props.staffDetail.addressRegion,
+            locality: this.props.staffDetail.addressLocality,
+            postalCode: this.props.staffDetail.postalCode,
+            streetAddress: this.props.staffDetail.streetAddress,
+
+            // Step 6
+            description: this.props.staffDetail.description,
+            policeCheck: policeCheckObj,
+            emergencyContactName: this.props.staffDetail.emergencyContactRelationship,
+            emergencyContactRelationship: this.props.staffDetail.emergencyContactRelationship,
+            emergencyContactTelephone: this.props.staffDetail.emergencyContactTelephone,
+            emergencyContactAlternativeTelephone: this.props.staffDetail.emergencyContactAlternativeTelephone,
+            password: this.props.staffDetail.password,
+            passwordRepeat: this.props.staffDetail.passwordRepeat,
+            isActive: isActive,
+
+            // Everything else...
+            id: id,
             errors: {},
             isLoading: false
         }
@@ -98,31 +94,6 @@ class StaffUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // TODO: REPLACE THE FOLLOWING CODE WITH API ENDPOINT CALLING.
-        this.setState({
-            howHearData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Word of mouth',
-                    slug: 'word-of-mouth'
-                },{
-                    name: 'Internet',
-                    slug: 'internet'
-                }]
-            },
-            tagsData: {
-                results: [{ //TODO: REPLACE WITH API ENDPOINT DATA.
-                    name: 'Health',
-                    slug: 'health'
-                },{
-                    name: 'Security',
-                    slug: 'security'
-                },{
-                    name: 'Fitness',
-                    slug: 'fitness'
-                }]
-            }
-        });
     }
 
     componentWillUnmount() {
@@ -168,24 +139,15 @@ class StaffUpdateContainer extends Component {
      */
 
     onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-        const key = "nwapp-staff-create-"+[e.target.name];
-        localStorage.setItem(key, e.target.value)
+        this.setState({ [e.target.name]: e.target.value, });
     }
 
     onSelectChange(option) {
         const optionKey = [option.selectName]+"Option";
         this.setState({
             [option.selectName]: option.value,
-            optionKey: option,
+            [optionKey]: option,
         });
-        localStorage.setItem('nwapp-staff-create-'+[option.selectName], option.value);
-        localStorageSetObjectOrArrayItem('nwapp-staff-create-'+optionKey, option);
-        // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-        // console.log(this.state);
-        console.log(option);
     }
 
     onMultiChange(...args) {
@@ -193,9 +155,7 @@ class StaffUpdateContainer extends Component {
         const selectedOptions = args[0];
 
         // Set all the tags we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
-        });
+        this.setState({ tags: selectedOptions, });
 
         // // Set all the tags we have selected to the STORAGE.
         const key = 'nwapp-staff-create-' + args[1].name;
@@ -206,14 +166,12 @@ class StaffUpdateContainer extends Component {
         this.setState({
             dateOfBirth: dateObj,
         })
-        localStorageSetObjectOrArrayItem('nwapp-staff-create-dateOfBirth', dateObj);
     }
 
     onPoliceCheckDateChange(dateObj) {
         this.setState({
             policeCheckDate: dateObj,
         })
-        localStorageSetObjectOrArrayItem('nwapp-staff-create-policeCheckDate', dateObj);
     }
 
     onCountryChange(value) {
@@ -222,12 +180,10 @@ class StaffUpdateContainer extends Component {
         } else {
             this.setState({ country: value, region: null })
         }
-        localStorage.setItem('nwapp-staff-create-country', value);
     }
 
     onRegionChange(value) {
         this.setState({ region: value })
-        localStorage.setItem('nwapp-staff-create-region', value);
     }
 
     onClick(e) {
@@ -257,17 +213,6 @@ class StaffUpdateContainer extends Component {
 
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
     }
 
     /**
@@ -277,12 +222,17 @@ class StaffUpdateContainer extends Component {
 
     render() {
         const {
-            slug,
-            firstName, lastName, dateOfBirth, gender, description, howHear, tags, phone, mobile, workEmail, personalEmail,
-            streetNumber, streetName, streetType, streetTypeOptions, streetTypeOther, apartmentUnit, streetDirection, streetDirectionOptions, locality, region, country, postalCode, emergencyFullName,
-            emergencyRelationship, emergencyTelephone, emergencyAlternativeTelephone, additionalComments, accountType, policeCheckDate,
-            password, repeatPassword, isActive, isActiveOptions,
-            errors, isLoading
+            // Step 4
+            givenName, lastName, primaryPhone, secondaryPhone, email, personalEmail, isOkToEmail, isOkToText,
+
+            // Step 5
+            country, region, locality, postalCode, streetAddress,
+
+            // Step 6
+            description, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, isActive, password, passwordRepeat,
+
+            // Everything else...
+            id, errors, isLoading
         } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.state.howHearData, "howHear");
@@ -290,54 +240,46 @@ class StaffUpdateContainer extends Component {
 
         return (
             <StaffUpdateComponent
-                slug={slug}
-                firstName={firstName}
+                // Step 4
+                givenName={givenName}
                 lastName={lastName}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                description={description}
-                howHear={howHear}
-                howHearOptions={howHearOptions}
-                tags={tags}
-                tagOptions={tagOptions}
-                phone={phone}
-                mobile={mobile}
-                workEmail={workEmail}
+                primaryPhone={primaryPhone}
+                secondaryPhone={secondaryPhone}
+                email={email}
                 personalEmail={personalEmail}
-                streetNumber={streetNumber}
-                streetName={streetName}
-                streetType={streetType}
-                streetTypeOptions={streetTypeOptions}
-                streetTypeOther={streetTypeOther}
-                streetDirection={streetDirection}
-                streetDirectionOptions={streetDirectionOptions}
-                locality={locality}
-                region={region}
+                isOkToEmail={isOkToEmail}
+                isOkToText={isOkToText}
+
+                // Step 5
                 country={country}
+                region={region}
+                locality={locality}
+                streetAddress={streetAddress}
                 postalCode={postalCode}
-                emergencyFullName={emergencyFullName}
-                emergencyRelationship={emergencyRelationship}
-                emergencyTelephone={emergencyTelephone}
-                emergencyAlternativeTelephone={emergencyAlternativeTelephone}
-                additionalComments={additionalComments}
-                accountType={accountType}
-                policeCheckDate={policeCheckDate}
-                password={password}
-                repeatPassword={repeatPassword}
+
+                // Step 6
+                description={description}
+                emergencyContactName={emergencyContactName}
+                emergencyContactRelationship={emergencyContactRelationship}
+                emergencyContactTelephone={emergencyContactTelephone}
+                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
                 isActive={isActive}
-                isActiveOptions={isActiveOptions}
-                isLoading={isLoading}
+                password={password}
+                passwordRepeat={passwordRepeat}
+
+                // Everything else
+                id={id}
                 errors={errors}
+                isLoading={isLoading}
+
+                // Functions
                 onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onMultiChange={this.onMultiChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
-                onCountryChange={this.onCountryChange}
-                onRegionChange={this.onRegionChange}
                 onRadioChange={this.onRadioChange}
+                onSelectChange={this.onSelectChange}
+                onBillingCountryChange={this.onBillingCountryChange}
+                onBillingRegionChange={this.onBillingRegionChange}
+                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
                 onClick={this.onClick}
-                flashMessage={this.props.flashMessage}
             />
         );
     }
@@ -346,7 +288,7 @@ class StaffUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        flashMessage: store.flashMessageState,
+        staffDetail: store.staffDetailState,
     };
 }
 
