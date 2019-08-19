@@ -50,8 +50,8 @@ class StaffUpdateContainer extends Component {
             isOkToText: isOkToText,
 
             // Step 5
-            country: this.props.staffDetail.addressCountry,
-            region: this.props.staffDetail.addressRegion,
+            country: country,
+            region: region,
             locality: this.props.staffDetail.addressLocality,
             postalCode: this.props.staffDetail.postalCode,
             streetAddress: this.props.staffDetail.streetAddress,
@@ -398,8 +398,8 @@ class StaffUpdateContainer extends Component {
                 onTextChange={this.onTextChange}
                 onRadioChange={this.onRadioChange}
                 onSelectChange={this.onSelectChange}
-                onBillingCountryChange={this.onBillingCountryChange}
-                onBillingRegionChange={this.onBillingRegionChange}
+                onCountryChange={this.onCountryChange}
+                onRegionChange={this.onRegionChange}
                 onPoliceCheckDateChange={this.onPoliceCheckDateChange}
                 onClick={this.onClick}
                 onTagMultiChange={this.onTagMultiChange}

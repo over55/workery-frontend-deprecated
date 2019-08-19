@@ -38,7 +38,7 @@ export default class StaffUpdateComponent extends Component {
             id, errors, isLoading,
 
             // Functions
-            onTextChange, onRadioChange, onClick, onSelectChange, onBillingCountryChange, onBillingRegionChange, onPoliceCheckDateChange, onTagMultiChange, onDateOfBirthChange, onJoinDateChange,
+            onTextChange, onRadioChange, onClick, onSelectChange, onCountryChange, onRegionChange, onPoliceCheckDateChange, onTagMultiChange, onDateOfBirthChange, onJoinDateChange,
         } = this.props;
         const isOtherHowDidYouHearSelected = howHear === 'Other';
         return (
@@ -173,7 +173,7 @@ export default class StaffUpdateComponent extends Component {
                                 error={errors.country}
                                 label="Country (*)"
                                 value={country}
-                                onChange={onBillingCountryChange}
+                                onChange={onCountryChange}
                                 priorityOptions={["CA", "US", "MX"]}
                                 name="country"
                             />
@@ -184,7 +184,7 @@ export default class StaffUpdateComponent extends Component {
                                 label="Province / state (*)"
                                 country={country}
                                 value={region}
-                                onChange={onBillingRegionChange}
+                                onChange={onRegionChange}
                                 name="region"
                             />
 
