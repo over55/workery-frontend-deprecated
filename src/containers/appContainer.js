@@ -104,7 +104,10 @@ import AssignWatchAreaCoordinatorTaskStep3Container from "./tasks/assignWatchAre
 import StaffListContainer from "./staff/list/staffListContainer";
 import StaffSearchContainer from "./staff/search/staffSearchContainer";
 import StaffSearchResultContainer from "./staff/search/staffSearchResultContainer";
-import StaffUpdateContainer from "./staff/update/staffUpdateContainer";
+import StaffContactUpdateContainer from "./staff/update/staffContactUpdateContainer";
+import StaffAddressUpdateContainer from "./staff/update/staffAddressUpdateContainer";
+import StaffAccountUpdateContainer from "./staff/update/staffAccountUpdateContainer";
+import StaffMetricsUpdateContainer from "./staff/update/staffMetricsUpdateContainer";
 import StaffFullRetrieveContainer from "./staff/retrieve/staffFullRetrieveContainer";
 import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContainer";
 import StaffCommentContainer from "./staff/retrieve/staffCommentContainer";
@@ -330,7 +333,10 @@ class AppContainer extends React.Component {
                                 <Route path="/staff/:id" exact component={requiresAuth(StaffLiteRetrieveContainer)} />
                                 <Route path="/staff/:id/full" exact component={requiresAuth(StaffFullRetrieveContainer)} />
                                 <Route path="/staff/:id/comments" exact component={requiresAuth(StaffCommentContainer)} />
-                                <Route path="/staff/:id/update" exact component={requiresAuth(StaffUpdateContainer)} />
+                                <Route path="/staff/:id/update/contact" exact component={requiresAuth(StaffContactUpdateContainer)} />
+                                <Route path="/staff/:id/update/address" exact component={requiresAuth(StaffAddressUpdateContainer)} />
+                                <Route path="/staff/:id/update/account" exact component={requiresAuth(StaffAccountUpdateContainer)} />
+                                <Route path="/staff/:id/update/metrics" exact component={requiresAuth(StaffMetricsUpdateContainer)} />
 
                                 { /* REPORTS */ }
                                 <Route path="/reports" exact component={requiresAuth(ReportListContainer)} />
