@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import StaffUpdateComponent from "../../../components/staff/update/staffUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
@@ -11,7 +12,7 @@ import {
 } from '../../../helpers/localStorageUtility';
 import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
-import { BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES } from "../../../constants/api";
+import { putStaffDetail } from '../../../actions/staffActions';
 
 
 class StaffUpdateContainer extends Component {
@@ -36,8 +37,6 @@ class StaffUpdateContainer extends Component {
         const isActive = this.props.staffDetail.isActive === true ? 1 : 0;
         const birthdateObj = new Date(this.props.staffDetail.birthdate);
         const joinDateObj = new Date(this.props.staffDetail.joinDate);
-
-        console.log(isActive, this.props.staffDetail);
 
         this.state = {
             // Step 4
@@ -96,6 +95,79 @@ class StaffUpdateContainer extends Component {
         this.onRegionChange = this.onRegionChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // (2) Middle name (API ISSUE)
+        postData.middleName = this.state.middleName;
+
+        // (2) Join date - We need to format as per required API format.
+        const joinDateMoment = moment(this.state.joinDate);
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
+
+        const duesDateMoment = moment(this.state.duesDate);
+        postData.duesDate = duesDateMoment.format("YYYY-MM-DD");
+        //
+        // const commercialInsuranceExpiryDateMoment = moment(this.state.commercialInsuranceExpiryDate);
+        // postData.commercialInsuranceExpiryDate = commercialInsuranceExpiryDateMoment.format("YYYY-MM-DD");
+        //
+        // const autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
+        // postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD");
+        //
+        // const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDatej);
+        // postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD");
+        //
+        // const policeCheckMoment = moment(this.state.policeCheckj);
+        // postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD");
+        //
+        // // (4) How Hear Other - This field may not be null, therefore make blank.
+        // if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
+        //     postData.howHearOther = "";
+        // }
+        //
+        // // (6) Organization Type Of - This field may not be null, therefore make blank.
+        // if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+        //     postData.organizationTypeOf = "";
+        // }
+        //
+        // // (7) Extra Comment: This field is required.
+        // if (this.state.comment === undefined || this.state.comment === null) {
+        //     postData.extraComment = "";
+        // } else {
+        //     postData.extraComment = this.state.comment;
+        // }
+        //
+        // // (8) Telephone type: This field is required.;
+        // postData.telephone = this.state.primaryPhone;
+        // if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
+        //     postData.telephoneTypeOf = 1;
+        // }
+        // postData.otherTelephone = this.state.secondaryPhone;
+        // if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
+        //     postData.otherTelephoneTypeOf = 1;
+        // }
+        //
+        // // (9) Address Country: This field is required.
+        // postData.addressCountry = this.state.country;
+        //
+        // // (10) Address Locality: This field is required.
+        // postData.addressLocality = this.state.locality;
+        //
+        // // (11) Address Region: This field is required.
+        // postData.addressRegion = this.state.region
+        //
+        // postData.isActive = true;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -206,7 +278,11 @@ class StaffUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.putStaffDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            )
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -345,7 +421,10 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        putStaffDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        },
     }
 }
 
