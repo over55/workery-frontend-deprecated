@@ -30,7 +30,7 @@ class OrderTaskListContainer extends Component {
 
             // Everything else,
             isLoading: true,
-            id: id,
+            id: parseInt(id),
         }
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);

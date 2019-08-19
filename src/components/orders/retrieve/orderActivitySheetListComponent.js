@@ -111,7 +111,7 @@ function jobFormatter(cell, row){
     if (row.job === null || row.job === undefined || row.job === "None") { return "-"; }
     return (
         <Link to={`/order/${row.job}`} target="_blank">
-            {row.job}&nbsp;<i className="fas fa-external-link-alt"></i>
+            {row.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
@@ -175,7 +175,7 @@ export default class OrderActivitySheetListComponent extends Component {
                             <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Order # {order.id}
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>

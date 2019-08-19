@@ -26,7 +26,7 @@ class OrderFullRetrieveContainer extends Component {
 
         // Update state.
         this.state = {
-            id: id,
+            id: parseInt(id),
             order: {}
         }
 

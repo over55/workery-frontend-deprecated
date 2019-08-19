@@ -34,7 +34,7 @@ class OrderCommentContainer extends Component {
             isLoading: true,
 
             // Everything else...
-            id: id,
+            id: parseInt(id),
             text: "",
             errors: {},
         }

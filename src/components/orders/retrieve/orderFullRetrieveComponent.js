@@ -29,7 +29,7 @@ export default class OrderFullRetrieveComponent extends Component {
                             <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Order # {id}
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
@@ -84,7 +84,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Order #</th>
-                                    <td>{order.id}</td>
+                                    <td>{order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Full Name</th>
