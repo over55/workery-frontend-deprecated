@@ -14,7 +14,7 @@ import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect';
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import {
     IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_CHOICES,
-    TENANT_STAFF_GROUP_MEMBERSHIP_CHOICES
+    TENANT_STAFF_GROUP_MEMBERSHIP_CHOICES, GENDER_RADIO_CHOICES
 } from "../../../constants/api";
 
 
@@ -30,13 +30,17 @@ export default class StaffUpdateComponent extends Component {
             // Step 6
             password, passwordRepeat, description, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, isActive, policeCheck,
 
+            // Step 7
+            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
+            tagOptions, howHearOptions,
+
             // Everything else...
             id, errors, isLoading,
 
             // Functions
-            onTextChange, onRadioChange, onClick, onSelectChange, onBillingCountryChange, onBillingRegionChange, onPoliceCheckDateChange,
+            onTextChange, onRadioChange, onClick, onSelectChange, onBillingCountryChange, onBillingRegionChange, onPoliceCheckDateChange, onTagMultiChange, onDateOfBirthChange, onJoinDateChange,
         } = this.props;
-
+        const isOtherHowDidYouHearSelected = howHear === 'Other';
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -334,8 +338,85 @@ export default class StaffUpdateComponent extends Component {
                             />
 
 
-                            <h4><i className="fas fa-user-shield"></i>&nbsp;Policy</h4>
+                            <h4><i className="fas fa-user-shield"></i>&nbsp;Metrics</h4>
 
+                            <BootstrapMultipleSelect
+                                borderColour="border-success"
+                                label="Tags"
+                                name="tags"
+                                defaultOptionLabel="Please select the tag."
+                                options={tagOptions}
+                                selectedOptions={tags}
+                                error={errors.tags}
+                                onMultiChange={onTagMultiChange}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.gender}
+                                label="Please select your gender (*)"
+                                name="gender"
+                                onChange={onRadioChange}
+                                selectedValue={gender}
+                                options={GENDER_RADIO_CHOICES}
+                            />
+
+                            <BootstrapDatePicker
+                                label="Date of Birth (*)"
+                                name="dateOfBirth"
+                                dateObj={dateOfBirth}
+                                onTimeChange={onDateOfBirthChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.dateOfBirth}
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="How did you hear about us? (*)"
+                                name="howHear"
+                                defaultOptionLabel="Please select how you heard about us."
+                                options={howHearOptions}
+                                value={howHear}
+                                error={errors.howHear}
+                                onSelectChange={onSelectChange}
+                            />
+
+                            {isOtherHowDidYouHearSelected &&
+                                <BootstrapInput
+                                    inputClassName="form-control form-control-lg"
+                                    borderColour="border-primary"
+                                    error={errors.howHearOther}
+                                    label="Other (*)"
+                                    onChange={onTextChange}
+                                    value={howHearOther}
+                                    name="howHearOther"
+                                    type="text"
+                                />
+                            }
+
+                            <BootstrapDatePicker
+                                label="Join date (*)"
+                                name="joinDate"
+                                dateObj={joinDate}
+                                onTimeChange={onJoinDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.joinDate}
+                            />
+
+                            <BootstrapTextarea
+                                name="comment"
+                                borderColour="border-success"
+                                label="Additional Comments"
+                                placeholder="Write any additional comments here."
+                                rows="5"
+                                value={comment}
+                                helpText="This is the comment of the organization."
+                                onChange={onTextChange}
+                                error={errors.comment}
+                            />
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>

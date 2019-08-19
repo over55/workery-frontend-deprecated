@@ -68,6 +68,15 @@ class StaffUpdateContainer extends Component {
             passwordRepeat: this.props.staffDetail.passwordRepeat,
             isActive: isActive,
 
+            // Step 7
+            tags: this.props.staffDetail.tags,
+            dateOfBirth: birthdateObj,
+            gender: this.props.staffDetail.gender,
+            howHear: this.props.staffDetail.howHear,
+            howHearOther: this.props.staffDetail.howHearOther,
+            joinDate: this.props.staffDetail.joinDate,
+            comment: this.props.staffDetail.comment,
+
             // Everything else...
             id: id,
             errors: {},
@@ -79,6 +88,8 @@ class StaffUpdateContainer extends Component {
         this.onMultiChange = this.onMultiChange.bind(this);
         this.onDateOfBirthChange = this.onDateOfBirthChange.bind(this);
         this.onPoliceCheckDateChange = this.onPoliceCheckDateChange.bind(this);
+        this.onTagMultiChange = this.onTagMultiChange.bind(this);
+        this.onJoinDateChange = this.onJoinDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onCountryChange = this.onCountryChange.bind(this);
@@ -215,6 +226,27 @@ class StaffUpdateContainer extends Component {
         this.setState({ [e.target.name]: value, }); // Save to store.
     }
 
+    onTagMultiChange(...args) {
+        // Extract the select options from the parameter.
+        const selectedOptions = args[0];
+
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let idTags = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let tag = selectedOptions[i];
+                idTags.push(tag.value);
+            }
+        }
+        this.setState({ tags: idTags, });
+    }
+
+    onJoinDateChange(dateObj) {
+        this.setState({ joinDate: dateObj, });
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -230,6 +262,9 @@ class StaffUpdateContainer extends Component {
 
             // Step 6
             description, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, isActive, password, passwordRepeat,
+
+            // Step 7
+            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
 
             // Everything else...
             id, errors, isLoading
@@ -267,6 +302,17 @@ class StaffUpdateContainer extends Component {
                 password={password}
                 passwordRepeat={passwordRepeat}
 
+                // Step 7
+                tags={tags}
+                tagOptions={tagOptions}
+                dateOfBirth={dateOfBirth}
+                gender={gender}
+                howHear={howHear}
+                howHearOptions={howHearOptions}
+                howHearOther={howHearOther}
+                joinDate={joinDate}
+                comment={comment}
+
                 // Everything else
                 id={id}
                 errors={errors}
@@ -280,6 +326,9 @@ class StaffUpdateContainer extends Component {
                 onBillingRegionChange={this.onBillingRegionChange}
                 onPoliceCheckDateChange={this.onPoliceCheckDateChange}
                 onClick={this.onClick}
+                onTagMultiChange={this.onTagMultiChange}
+                onDateOfBirthChange={this.onDateOfBirthChange}
+                onJoinDateChange={this.onJoinDateChange}
             />
         );
     }
