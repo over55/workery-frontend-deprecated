@@ -41,7 +41,9 @@ import ClientCreateStep4Container from "./clients/create/clientCreateStep4Contai
 import ClientCreateStep5Container from "./clients/create/clientCreateStep5Container";
 import ClientCreateStep6Container from "./clients/create/clientCreateStep6Container";
 import ClientCreateStep7Container from "./clients/create/clientCreateStep7Container";
-import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
+import ClientContactUpdateContainer from "./clients/update/clientContactUpdateContainer";
+import ClientAddressUpdateContainer from "./clients/update/clientAddressUpdateContainer";
+import ClientMetricsUpdateContainer from "./clients/update/clientMetricsUpdateContainer";
 import ClientActivateOperationContainer from "./clients/operations/clientActivateOperationContainer";
 import ClientDeactivateOperationContainer from "./clients/operations/clientDeactivateOperationContainer";
 import ClientRezUpgradeOperationContainer from "./clients/operations/clientRezUpgradeOperationContainer";
@@ -259,7 +261,10 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id/full" exact component={requiresAuth(ClientFullRetrieveContainer)} />
                                 <Route path="/client/:id/orders" exact component={requiresAuth(ClientOrderListContainer)} />
                                 <Route path="/client/:id/comments" exact component={requiresAuth(ClientCommentContainer)} />
-                                <Route path="/client/:id/update" exact component={requiresAuth(ClientUpdateContainer)} />
+                                <Route path="/client/:id/update/contact" exact component={requiresAuth(ClientContactUpdateContainer)} />
+                                <Route path="/client/:id/update/address" exact component={requiresAuth(ClientAddressUpdateContainer)} />
+                                <Route path="/client/:id/update/metrics" exact component={requiresAuth(ClientMetricsUpdateContainer)} />
+
                                 <Route path="/client/:id/activation" exact component={requiresAuth(ClientActivateOperationContainer)} />
                                 <Route path="/client/:id/deactivation" exact component={requiresAuth(ClientDeactivateOperationContainer)} />
                                 <Route path="/client/:id/delete" exact component={requiresAuth(ClientPermanentDeleteOperationContainer)} />
