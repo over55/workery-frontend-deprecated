@@ -20,11 +20,11 @@ export function validateContactInput(data) {
         if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
             errors.lastName = 'This field is required';
         }
-        if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
-            errors.telephone = 'This field is required';
+        if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
+            errors.primaryPhone = 'This field is required';
         }
-        // if (data.otherTelephone === undefined || data.otherTelephone === null || validator.isEmpty(data.otherTelephone) || data.otherTelephone === "") {
-        //     errors.otherTelephone = 'This field is required';
+        // if (data.secondaryPhone === undefined || data.secondaryPhone === null || validator.isEmpty(data.secondaryPhone) || data.secondaryPhone === "") {
+        //     errors.secondaryPhone = 'This field is required';
         // }
         if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
             errors.email = 'This field is required';
@@ -50,17 +50,19 @@ export function validateContactInput(data) {
         if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
             errors.lastName = 'This field is required';
         }
-        if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
-            errors.telephone = 'This field is required';
+        if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
+            errors.primaryPhone = 'This field is required';
         }
-        // if (data.otherTelephone === undefined || data.otherTelephone === null || validator.isEmpty(data.otherTelephone) || data.otherTelephone === "") {
-        //     errors.otherTelephone = 'This field is required';
+        // if (data.secondaryPhone === undefined || data.secondaryPhone === null || validator.isEmpty(data.secondaryPhone) || data.secondaryPhone === "") {
+        //     errors.secondaryPhone = 'This field is required';
         // }
         if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
             errors.email = 'This field is required';
         }
-
     }
+
+    // For debugging purposes only.
+    console.log("validateContactInput | post-validation", data);
 
     return {
         errors,

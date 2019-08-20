@@ -16,7 +16,9 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 import {
     IS_OK_TO_EMAIL_CHOICES,
     IS_OK_TO_TEXT_CHOICES,
-    GENDER_RADIO_CHOICES
+    GENDER_RADIO_CHOICES,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    ORGANIZATION_TYPE_OF_CHOICES
 } from "../../../constants/api";
 
 
@@ -26,13 +28,14 @@ export default class ClientContactUpdateComponent extends Component {
             // STEP 3
             typeOf,
 
-            // STEP 4 - REZ
-            givenName, lastName, telephone, otherTelephone, email, isOkToText, isOkToEmail,
+            // STEP 4
+            organizationName, organizationTypeOf, givenName, lastName, primaryPhone, secondaryPhone, email, isOkToText, isOkToEmail,
 
             // EVERYTHING ELSE
             id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
             onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
+        const isCommercial = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -48,7 +51,7 @@ export default class ClientContactUpdateComponent extends Component {
                             <Link to={`/client/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName} {lastName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-edit"></i>&nbsp;Update
+                            <i className="fas fa-edit"></i>&nbsp;Update (Contact)
                         </li>
                     </ol>
                 </nav>
@@ -56,14 +59,35 @@ export default class ClientContactUpdateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Update Residential Client</h1>
+                            <h1><i className="fas fa-edit"></i>&nbsp;Client Contact Form</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-id-card"></i>&nbsp;Personal Information</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
+                            {isCommercial &&
+                                <div>
+                                    <BootstrapInput
+                                        inputClassName="form-control form-control-lg"
+                                        borderColour="border-primary"
+                                        error={errors.organizationName}
+                                        label="Organization Name (*)"
+                                        onChange={onTextChange}
+                                        value={organizationName}
+                                        name="organizationName"
+                                        type="text"
+                                    />
+                                    <BootstrapSingleSelect
+                                        borderColour="border-primary"
+                                        label="Organization Type (*)"
+                                        name="organizationTypeOf"
+                                        defaultOptionLabel="Please select the organization."
+                                        options={ORGANIZATION_TYPE_OF_CHOICES}
+                                        value={organizationTypeOf}
+                                        error={errors.organizationTypeOf}
+                                        onSelectChange={onSelectChange}
+                                    />
+                                </div>
+                            }
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
@@ -90,11 +114,11 @@ export default class ClientContactUpdateComponent extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.telephone}
+                                error={errors.primaryPhone}
                                 label="Telephone (*)"
                                 onChange={onTextChange}
-                                value={telephone}
-                                name="telephone"
+                                value={primaryPhone}
+                                name="primaryPhone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
@@ -102,11 +126,11 @@ export default class ClientContactUpdateComponent extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
-                                error={errors.otherTelephone}
+                                error={errors.secondaryPhone}
                                 label="Other Telephone"
                                 onChange={onTextChange}
-                                value={otherTelephone}
-                                name="otherTelephone"
+                                value={secondaryPhone}
+                                name="secondaryPhone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />

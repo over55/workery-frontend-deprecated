@@ -40,16 +40,18 @@ class ClientUpdateContainer extends Component {
             typeOf: this.props.clientDetail.typeOf,
 
             // STEP 4
+            organizationName: this.props.clientDetail.organizationName,
+            organizationTypeOf: this.props.clientDetail.organizationTypeOf,
             givenName: this.props.clientDetail.givenName,
             lastName: this.props.clientDetail.lastName,
             organizationName: this.props.clientDetail.organizationName,
             organizationTypeOf: this.props.clientDetail.organizationTypeOf,
             givenName: this.props.clientDetail.givenName,
             lastName: this.props.clientDetail.lastName,
-            telephone: this.props.clientDetail.telephone,
-            telephoneTypeOf: this.props.clientDetail.telephoneTypeOf,
-            otherTelephone: this.props.clientDetail.otherTelephone,
-            otherTelephoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
+            primaryPhone: this.props.clientDetail.telephone,
+            primaryPhoneTypeOf: this.props.clientDetail.telephoneTypeOf,
+            secondaryPhone: this.props.clientDetail.otherTelephone,
+            secondaryPhoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
             email: this.props.clientDetail.email,
             isOkToEmail: isOkToEmail,
             isOkToText: isOkToText,
@@ -72,64 +74,21 @@ class ClientUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // (2) Middle name (API ISSUE)
-        postData.middleName = this.state.middleName;
-
-        // (2) Join date - We need to format as per required API format.
-        const joinDateMoment = moment(this.state.joinDate);
-        postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
-
-        // (4) How Hear Other - This field may not be null, therefore make blank.
-        if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
-            postData.howHearOther = "";
-        }
-
-        // // (5) Password & Password Repeat
-        // if (this.state.password === undefined || this.state.password === null || this.state.password === '' || this.state.password.length == 0) {
-        //     var randomString = Math.random().toString(34).slice(-10);
-        //     randomString += "A";
-        //     randomString += "!";
-        //     postData.password = randomString;
-        //     postData.passwordRepeat = randomString;
-        // }
-
         // (6) Organization Type Of - This field may not be null, therefore make blank.
         if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
             postData.organizationTypeOf = "";
         }
 
-        // (7) Extra Comment: This field is required.
-        if (this.state.comment === undefined || this.state.comment === null) {
-            postData.extraComment = "";
-        } else {
-            postData.extraComment = this.state.comment;
+        if (this.state.organizationName === undefined || this.state.organizationName === null) {
+            postData.organizationName = "";
         }
 
         // (8) Telephone type: This field is required.;
-        if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
-            postData.telephoneTypeOf = 1;
+        if (this.state.primaryPhoneTypeOf === undefined || this.state.primaryPhoneTypeOf === null || this.state.primaryPhoneTypeOf === "") {
+            postData.primaryPhoneTypeOf = 1;
         }
-        if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
-            postData.otherTelephoneTypeOf = 1;
-        }
-
-        // (9) Address Country: This field is required.
-        postData.addressCountry = this.state.country;
-
-        // (10) Address Locality: This field is required.
-        postData.addressLocality = this.state.locality;
-
-        // (11) Address Region: This field is required.
-        postData.addressRegion = this.state.region
-
-        // () First Name and Last Name if biz
-        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            postData.givenName = this.state.givenName;
-            postData.givenName = this.state.givenName;
-            postData.givenName = this.state.givenName;
-            postData.lastName = this.state.lastName;
-        } else {
-
+        if (this.state.secondaryPhoneTypeOf === undefined || this.state.secondaryPhoneTypeOf === null || this.state.secondaryPhoneTypeOf === "") {
+            postData.secondaryPhoneTypeOf = 1;
         }
 
         // Finally: Return our new modified data.
@@ -249,7 +208,7 @@ class ClientUpdateContainer extends Component {
             typeOf,
 
             // STEP 4 - REZ
-            givenName, lastName, telephone, telephoneTypeOf, otherTelephone, otherTelephoneTypeOf, email, isOkToText, isOkToEmail,
+            givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail,
 
             // STEP 4 - BIZ
             organizationName, organizationTypeOf,
@@ -260,13 +219,15 @@ class ClientUpdateContainer extends Component {
                 // STEP 3
                 typeOf={typeOf}
 
-                // STEP 4 - REZ
+                // STEP 4
+                organizationName={organizationName}
+                organizationTypeOf={organizationTypeOf}
                 givenName={givenName}
                 lastName={lastName}
-                telephone={telephone}
-                telephoneTypeOf={telephoneTypeOf}
-                otherTelephone={otherTelephone}
-                otherTelephoneTypeOf={otherTelephoneTypeOf}
+                primaryPhone={primaryPhone}
+                primaryPhoneTypeOf={primaryPhoneTypeOf}
+                secondaryPhone={secondaryPhone}
+                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
                 email={email}
                 isOkToText={isOkToText}
                 isOkToEmail={isOkToEmail}
