@@ -298,3 +298,24 @@ export function validateSearchInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+/**
+ *  Validator will validate step 6 in the staff creation form.
+ */
+export function validateAddressUpdateInput(data) {
+    let errors = {};
+
+    if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
+        errors.isActive = 'This field is required';
+    }
+    if (data.password !== data.passwordRepeat) {
+        errors.password = 'Password does not match!';
+        errors.passwordRepeat = 'Password does not match!';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

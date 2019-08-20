@@ -16,7 +16,7 @@ import { IS_ACTIVE_TYPE_OF_CHOICES } from "../../../constants/api";
 class StaffAccountAddressComponent extends Component {
     render() {
         const {
-            errors, isLoading, onNextClick, onSelectChange,
+            id, givenName, lastName, errors, isLoading, onNextClick, onSelectChange,
             password, passwordRepeat, description, emergencyContactName,
             emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
             isActive, onRadioChange,
@@ -33,8 +33,11 @@ class StaffAccountAddressComponent extends Component {
                         <li className="breadcrumb-item" aria-current="page">
                             <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
+                        <li className="breadcrumb-item" aria-current="page">
+                            <Link to={`/staff/${id}/full`}><i className="fas fa-user-tie"></i>&nbsp;{givenName} {lastName}</Link>
+                        </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-plus"></i>&nbsp;Add
+                            <i className="fas fa-edit"></i>&nbsp;Edit Staff (Account)
                         </li>
                     </ol>
                 </nav>
@@ -42,47 +45,6 @@ class StaffAccountAddressComponent extends Component {
                 <h1>
                     <i className="fas fa-plus"></i>&nbsp;Add Staff
                 </h1>
-
-                <div className="row">
-                    <div className="step-navigation">
-                        <div id="step-1" className="st-grey">
-                            <Link to="/staff/add/step-1">
-                                <span className="num">1.</span><span className="">Search</span>
-                            </Link>
-                        </div>
-                        <div id="step-2" className="st-grey">
-                            <Link to="/staff/add/step-2">
-                                <span className="num">2.</span><span className="">Results</span>
-                            </Link>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to="/staff/add/step-3">
-                                <span className="num">3.</span><span className="">Group</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to="/staff/add/step-4">
-                                <span className="num">4.</span><span className="">Contact</span>
-                            </Link>
-                        </div>
-                        <div id="step-5" className="st-grey">
-                            <Link to="/staff/add/step-5">
-                                <span className="num">5.</span><span className="">Address</span>
-                            </Link>
-                        </div>
-                        <div id="step-6" className="st-grey active">
-                            <strong>
-                                <span className="num">6.</span><span className="">Account</span>
-                            </strong>
-                        </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Metrics</span>
-                        </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
-                        </div>
-                    </div>
-                </div>
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
@@ -93,20 +55,6 @@ class StaffAccountAddressComponent extends Component {
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-user-shield"></i>&nbsp;Policy
-                            </p>
-
-                            <BootstrapDatePicker
-                                label="Police Check Expiry (*)"
-                                name="policeCheck"
-                                dateObj={policeCheck}
-                                onTimeChange={onPoliceCheckDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.policeCheck}
-                            />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
                                 <i className="fas fa-user-friends"></i>&nbsp;Emergency Contact
@@ -209,10 +157,10 @@ class StaffAccountAddressComponent extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
-                                    Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/staff/add/step-5" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/staff/${id}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

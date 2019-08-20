@@ -3,21 +3,9 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import StaffAccountUpdateComponent from "../../../components/staff/update/staffAccountUpdateComponent";
-import {
-    localStorageGetObjectItem,
-    localStorageSetObjectOrArrayItem,
-    localStorageGetArrayItem,
-    localStorageGetIntegerItem,
-    localStorageGetDateItem
-} from '../../../helpers/localStorageUtility';
-import { validateStep6CreateInput } from "../../../validators/staffValidator";
-import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID
-} from '../../../constants/api';
-import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
-import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
-import { getVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../actions/vehicleTypeActions";
+import { validateAddressUpdateInput } from "../../../validators/staffValidator";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { putStaffAccountDetail } from '../../../actions/staffActions';
 
 
 class StaffAccountUpdateContainer extends Component {
@@ -29,20 +17,32 @@ class StaffAccountUpdateContainer extends Component {
     constructor(props) {
         super(props);
 
+        // Since we are using the ``react-routes-dom`` library then we
+        // fetch the URL argument as follows.
+        const { id } = this.props.match.params;
+
+        // Map the API fields to our fields.
+        const country = this.props.staffDetail.addressCountry === "CA" ? "Canada" : this.props.staffDetail.addressCountry;
+        const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
+        const isActive = this.props.staffDetail.isActive === true ? 1 : 0;
+
         this.state = {
-            description: localStorage.getItem("workery-create-staff-description"),
-            policeCheck: localStorageGetDateItem("workery-create-staff-policeCheck"),
-            emergencyContactName: localStorage.getItem("workery-create-staff-emergencyContactName"),
-            emergencyContactRelationship: localStorage.getItem("workery-create-staff-emergencyContactRelationship"),
-            emergencyContactTelephone: localStorage.getItem("workery-create-staff-emergencyContactTelephone"),
-            emergencyContactAlternativeTelephone: localStorage.getItem("workery-create-staff-emergencyContactAlternativeTelephone"),
-            password: localStorage.getItem("workery-create-staff-password"),
-            passwordRepeat: localStorage.getItem("workery-create-staff-passwordRepeat"),
-            isActive: localStorageGetIntegerItem("workery-create-staff-isActive"),
+            id: id,
+            givenName: this.props.staffDetail.givenName,
+            lastName: this.props.staffDetail.lastName,
+            description: this.props.staffDetail.emergencyContactRelationship,
+            emergencyContactName: this.props.staffDetail.emergencyContactRelationship,
+            emergencyContactRelationship: this.props.staffDetail.emergencyContactRelationship,
+            emergencyContactTelephone: this.props.staffDetail.emergencyContactTelephone,
+            emergencyContactAlternativeTelephone: this.props.staffDetail.emergencyContactAlternativeTelephone,
+            password: "",
+            passwordRepeat: "",
+            isActive: isActive,
             errors: {},
             isLoading: false
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onPoliceCheckDateChange = this.onPoliceCheckDateChange.bind(this);
@@ -53,17 +53,25 @@ class StaffAccountUpdateContainer extends Component {
     }
 
     /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
+    }
+
+    /**
      *  Component Life-cycle Management
      *------------------------------------------------------------
      */
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullSkillSetList(1, 1000);
-        this.props.pullInsuranceRequirementList(1, 1000);
-        this.props.pullVehicleTypeList(1, 1000);
     }
 
     componentWillUnmount() {
@@ -82,7 +90,8 @@ class StaffAccountUpdateContainer extends Component {
 
     onSuccessfulSubmissionCallback(staff) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/staff/add/step-7");
+        this.props.setFlashMessage("success", "Staff has been successfully updated.");
+        this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -119,10 +128,6 @@ class StaffAccountUpdateContainer extends Component {
             [option.selectName]: option.value,
             [optionKey]: option,
         });
-        localStorage.setItem('workery-create-staff-'+[option.selectName], option.value);
-        localStorageSetObjectOrArrayItem('workery-create-staff-'+optionKey, option);
-        // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-        // console.log(this.state);
     }
 
     onRadioChange(e) {
@@ -137,24 +142,12 @@ class StaffAccountUpdateContainer extends Component {
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
         this.setState({ [storeLabelKey]: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
     }
 
     onPoliceCheckDateChange(dateObj) {
         this.setState(
             { policeCheck: dateObj },
-            ()=>{ localStorageSetObjectOrArrayItem('workery-create-staff-policeCheck', dateObj); }
+            ()=>{  }
         );
     }
 
@@ -163,11 +156,15 @@ class StaffAccountUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform staff-side validation.
-        const { errors, isValid } = validateStep6CreateInput(this.state);
+        const { errors, isValid } = validateAddressUpdateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.putStaffAccountDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -183,7 +180,7 @@ class StaffAccountUpdateContainer extends Component {
 
     render() {
         const {
-            description, policeCheck,
+            id, givenName, lastName, description, policeCheck,
             emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
             isActive, password, passwordRepeat,
             errors, isLoading, returnURL
@@ -192,6 +189,10 @@ class StaffAccountUpdateContainer extends Component {
         const { user } = this.props;
         return (
             <StaffAccountUpdateComponent
+                id={id}
+                givenName={givenName}
+                lastName={lastName}
+
                 description={description}
                 emergencyContactName={emergencyContactName}
                 emergencyContactRelationship={emergencyContactRelationship}
@@ -221,28 +222,14 @@ class StaffAccountUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        skillSetList: store.skillSetListState,
-        insuranceRequirementList: store.insuranceRequirementListState,
-        vehicleTypeList: store.vehicleTypeListState,
+        staffDetail: store.staffDetailState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullSkillSetList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullSkillSetList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
-        },
-        pullInsuranceRequirementList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullInsuranceRequirementList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
-        },
-        pullVehicleTypeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullVehicleTypeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
+        putStaffAccountDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffAccountDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
     }
 }
