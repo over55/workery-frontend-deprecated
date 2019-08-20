@@ -23,20 +23,11 @@ import {
 export default class ClientRezUpdateComponent extends Component {
     render() {
         const {
-            // STEP 3
-            typeOf,
-
-            // STEP 4 - REZ
-            givenName, lastName, telephone, otherTelephone, email, isOkToText, isOkToEmail,
-
-            // STEP 5
-            country, region, locality, postalCode, streetAddress,
-
             // STEP 6
             tags, tagOptions, onTagMultiChange, dateOfBirth, gender, howHear, howHearOptions, howHearOption, howHearOther, joinDate, comment,
 
             // EVERYTHING ELSE
-            id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
+            givenName, lastName, id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
             onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
         const isOtherHowDidYouHearSelected = howHear === 1;
@@ -67,149 +58,6 @@ export default class ClientRezUpdateComponent extends Component {
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-id-card"></i>&nbsp;Personal Information</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.givenName}
-                                label="Given Name (*)"
-                                onChange={onTextChange}
-                                value={givenName}
-                                name="givenName"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.lastName}
-                                label="Last Name (*)"
-                                onChange={onTextChange}
-                                value={lastName}
-                                name="lastName"
-                                type="text"
-                            />
-
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.telephone}
-                                label="Telephone (*)"
-                                onChange={onTextChange}
-                                value={telephone}
-                                name="telephone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                error={errors.otherTelephone}
-                                label="Other Telephone"
-                                onChange={onTextChange}
-                                value={otherTelephone}
-                                name="otherTelephone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.email}
-                                label="Email (*)"
-                                onChange={onTextChange}
-                                value={email}
-                                name="email"
-                                type="text"
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isOkToEmail}
-                                label="Ok to E-Mail? (*)"
-                                name="isOkToEmail"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToEmail}
-                                options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting "yes" will result in client getting emails from our system.'
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isOkToText}
-                                label="Ok to Text? (*)"
-                                name="isOkToText"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToText}
-                                options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting "yes" will result in client getting text-messages on their phone from our system.'
-                            />
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-address-book"></i>&nbsp;Address</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
-
-                            <BootstrapCountrySelect
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.country}
-                                label="Country (*)"
-                                value={country}
-                                onChange={onBillingCountryChange}
-                                priorityOptions={["CA", "US", "MX"]}
-                                name="country"
-                            />
-                            <BootstrapRegionSelect
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.region}
-                                label="Province / state (*)"
-                                country={country}
-                                value={region}
-                                onChange={onBillingRegionChange}
-                                name="region"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.locality}
-                                label="City (*)"
-                                onChange={onTextChange}
-                                value={locality}
-                                name="locality"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.streetAddress}
-                                label="Street address (*)"
-                                onChange={onTextChange}
-                                value={streetAddress}
-                                name="streetAddress"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.postalCode}
-                                label="Postal / zip (*)"
-                                onChange={onTextChange}
-                                value={postalCode}
-                                name="postalCode"
-                                type="text"
-                            />
 
                             { /* -------------------------------------------------------------------------------------- */}
                             <h4><i className="fas fa-chart-pie"></i>&nbsp;Metrics</h4>

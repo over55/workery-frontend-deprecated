@@ -29,17 +29,10 @@ export default class ClientContactUpdateComponent extends Component {
             // STEP 4 - REZ
             givenName, lastName, telephone, otherTelephone, email, isOkToText, isOkToEmail,
 
-            // STEP 5
-            country, region, locality, postalCode, streetAddress,
-
-            // STEP 6
-            tags, tagOptions, onTagMultiChange, dateOfBirth, gender, howHear, howHearOptions, howHearOption, howHearOther, joinDate, comment,
-
             // EVERYTHING ELSE
             id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
             onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 1;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -151,144 +144,6 @@ export default class ClientContactUpdateComponent extends Component {
                                 selectedValue={isOkToText}
                                 options={IS_OK_TO_TEXT_CHOICES}
                                 helpText='Selecting "yes" will result in client getting text-messages on their phone from our system.'
-                            />
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-address-book"></i>&nbsp;Address</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
-
-                            <BootstrapCountrySelect
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.country}
-                                label="Country (*)"
-                                value={country}
-                                onChange={onBillingCountryChange}
-                                priorityOptions={["CA", "US", "MX"]}
-                                name="country"
-                            />
-                            <BootstrapRegionSelect
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.region}
-                                label="Province / state (*)"
-                                country={country}
-                                value={region}
-                                onChange={onBillingRegionChange}
-                                name="region"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.locality}
-                                label="City (*)"
-                                onChange={onTextChange}
-                                value={locality}
-                                name="locality"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.streetAddress}
-                                label="Street address (*)"
-                                onChange={onTextChange}
-                                value={streetAddress}
-                                name="streetAddress"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.postalCode}
-                                label="Postal / zip (*)"
-                                onChange={onTextChange}
-                                value={postalCode}
-                                name="postalCode"
-                                type="text"
-                            />
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-chart-pie"></i>&nbsp;Metrics</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-success"
-                                label="Tags"
-                                name="tags"
-                                defaultOptionLabel="Please select the tag."
-                                options={tagOptions}
-                                selectedOptions={tags}
-                                error={errors.tags}
-                                onMultiChange={onTagMultiChange}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.gender}
-                                label="Please select your gender (*)"
-                                name="gender"
-                                onChange={onRadioChange}
-                                selectedValue={gender}
-                                options={GENDER_RADIO_CHOICES}
-                            />
-
-                            <BootstrapDatePicker
-                                label="Date of Birth (*)"
-                                name="dateOfBirth"
-                                dateObj={dateOfBirth}
-                                onTimeChange={onDateOfBirthChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.dateOfBirth}
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="How did you hear about us? (*)"
-                                name="howHear"
-                                defaultOptionLabel="Please select how you heard about us."
-                                options={howHearOptions}
-                                value={howHear}
-                                error={errors.howHear}
-                                onSelectChange={onSelectChange}
-                            />
-
-                            {isOtherHowDidYouHearSelected &&
-                                <BootstrapInput
-                                    inputClassName="form-control form-control-lg"
-                                    borderColour="border-primary"
-                                    error={errors.howHearOther}
-                                    label="Other (*)"
-                                    onChange={onTextChange}
-                                    value={howHearOther}
-                                    name="howHearOther"
-                                    type="text"
-                                />
-                            }
-                            <BootstrapDatePicker
-                                label="Join date (*)"
-                                name="joinDate"
-                                dateObj={joinDate}
-                                onTimeChange={onJoinDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.joinDate}
-                            />
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-success"
-                                label="Additional Comments"
-                                placeholder="Write any additional comments here."
-                                rows="5"
-                                value={comment}
-                                helpText="This is the comment of the organization."
-                                onChange={onTextChange}
-                                error={errors.comment}
                             />
 
                             <div className="form-group">
