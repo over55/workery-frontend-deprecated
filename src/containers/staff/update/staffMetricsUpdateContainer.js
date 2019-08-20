@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import StaffMetricsUpdateComponent from "../../../components/staff/update/staffMetricsUpdateComponent";
 import { validateStep7CreateInput } from "../../../validators/staffValidator";
-import {
-    localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
-} from '../../../helpers/localStorageUtility';
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID
-} from '../../../constants/api';
+import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { putStaffMetricsDetail } from '../../../actions/staffActions';
 
 
 class StaffMetricsUpdateContainer extends Component {
@@ -24,28 +20,66 @@ class StaffMetricsUpdateContainer extends Component {
     constructor(props) {
         super(props);
 
+        // Since we are using the ``react-routes-dom`` library then we
+        // fetch the URL argument as follows.
+        const { id } = this.props.match.params;
+
+        const birthdateObj = new Date(this.props.staffDetail.birthdate);
+        const joinDateObj = new Date(this.props.staffDetail.joinDate);
+
         this.state = {
-            tags: localStorageGetArrayItem("workery-create-staff-tags"),
-            dateOfBirth: localStorageGetDateItem("workery-create-staff-dateOfBirth"),
-            gender: localStorage.getItem("workery-create-staff-gender"),
-            howHear: localStorageGetIntegerItem("workery-create-staff-howHear"),
-            howHearOption: localStorageGetObjectItem('workery-create-staff-howHearOption'),
-            howHearOther: localStorage.getItem("workery-create-staff-howHearOther"),
-            joinDate: localStorageGetDateItem("workery-create-staff-joinDate"),
-            comment: localStorage.getItem("workery-create-staff-comment"),
+            id: id,
+            givenName: this.props.staffDetail.givenName,
+            lastName: this.props.staffDetail.lastName,
+            tags: this.props.staffDetail.tags,
+            dateOfBirth: birthdateObj,
+            gender: this.props.staffDetail.gender,
+            howHear: this.props.staffDetail.howHear,
+            howHearOther: this.props.staffDetail.howHearOther,
+            joinDate: joinDateObj,
             errors: {},
             isLoading: false
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onDateOfBirthChange = this.onDateOfBirthChange.bind(this);
         this.onJoinDateChange = this.onJoinDateChange.bind(this);
-        this.onMultiChange = this.onMultiChange.bind(this);
+        this.onTagMultiChange = this.onTagMultiChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // (1) birthdate - We need to format as per required API format.
+        const birthdateMoment = moment(this.state.dateOfBirth);
+        postData.birthdate = birthdateMoment.format("YYYY-MM-DD");
+
+        // (2) Join date - We need to format as per required API format.
+        const joinDateMoment = moment(this.state.joinDate);
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
+
+        // // (3) Tags - We need to only return our `id` values.
+        // let idTags = [];
+        // for (let i = 0; i < this.state.tags.length; i++) {
+        //     let tag = this.state.tags[i];
+        //     idTags.push(tag.value);
+        // }
+        // postData.tags = idTags;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -76,8 +110,8 @@ class StaffMetricsUpdateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(staff) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/staff/add/step-8");
+        this.props.setFlashMessage("success", "Staff has been successfully updated.");
+        this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -108,12 +142,8 @@ class StaffMetricsUpdateContainer extends Component {
         const optionKey = [option.selectName]+"Option";
         this.setState({
             [option.selectName]: option.value,
-            optionKey: option,
+            [optionKey]: option,
         });
-        localStorage.setItem('workery-create-staff-'+[option.selectName].toString(), option.value);
-        localStorage.setItem('workery-create-staff-'+[option.selectName].toString()+"Label", option.label);
-        localStorageSetObjectOrArrayItem('workery-create-staff-'+optionKey, option);
-        // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
     }
 
     onRadioChange(e) {
@@ -142,32 +172,29 @@ class StaffMetricsUpdateContainer extends Component {
         });
     }
 
-    onMultiChange(...args) {
+    onTagMultiChange(...args) {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the tags we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
-        });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-create-staff-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let idTags = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let tag = selectedOptions[i];
+                idTags.push(tag.value);
+            }
+        }
+        this.setState({ tags: idTags, });
     }
 
     onDateOfBirthChange(dateObj) {
-        this.setState({
-            dateOfBirth: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-staff-dateOfBirth', dateObj);
+        this.setState({ dateOfBirth: dateObj, });
     }
 
     onJoinDateChange(dateObj) {
-        this.setState({
-            joinDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-staff-joinDate', dateObj);
+        this.setState({ joinDate: dateObj, });
     }
 
     onClick(e) {
@@ -181,7 +208,11 @@ class StaffMetricsUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.putStaffMetricsDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -196,18 +227,22 @@ class StaffMetricsUpdateContainer extends Component {
 
     render() {
         const {
-            typeOf, returnURL, tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
+            id, givenName, lastName,
+            typeOf, tags, dateOfBirth, gender, howHear, howHearOther, joinDate,
             errors
         } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
+        const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
 
         return (
             <StaffMetricsUpdateComponent
+                id={id}
+                givenName={givenName}
+                lastName={lastName}
                 typeOf={typeOf}
-                returnURL={returnURL}
-                tags={tags}
+                tags={transcodedTags}
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
                 gender={gender}
@@ -217,10 +252,9 @@ class StaffMetricsUpdateContainer extends Component {
                 howHear={howHear}
                 howHearOptions={howHearOptions}
                 howHearOther={howHearOther}
-                comment={comment}
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
+                onTagMultiChange={this.onTagMultiChange}
                 onDateOfBirthChange={this.onDateOfBirthChange}
                 onJoinDateChange={this.onJoinDateChange}
                 onClick={this.onClick}
@@ -234,6 +268,7 @@ const mapStateToProps = function(store) {
         user: store.userState,
         tagList: store.tagListState,
         howHearList: store.howHearListState,
+        staffDetail: store.staffDetailState,
     };
 }
 
@@ -248,6 +283,12 @@ const mapDispatchToProps = dispatch => {
             dispatch(
                 pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
+        },
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
+        putStaffMetricsDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffMetricsDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
     }
 }

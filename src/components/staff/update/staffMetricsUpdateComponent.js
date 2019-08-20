@@ -8,15 +8,15 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
 
 
 export default class StaffMetricsUpdateComponent extends Component {
     render() {
         const {
+            id, givenName, lastName,
             typeOf, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
-            onRadioChange,  onMultiChange, onJoinDateChange, comment,
+            onRadioChange,  onTagMultiChange, onJoinDateChange,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
         const isOtherHowDidYouHearSelected = howHear === 'Other';
@@ -33,58 +33,19 @@ export default class StaffMetricsUpdateComponent extends Component {
                         <li className="breadcrumb-item" aria-current="page">
                             <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
+                        <li className="breadcrumb-item" aria-current="page">
+                            <Link to={`/staff/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName} {lastName}</Link>
+                        </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-plus"></i>&nbsp;Add
+                            <i className="fas fa-edit"></i>&nbsp;Edit (Metrics)
                         </li>
                     </ol>
                 </nav>
 
                 <h1>
-                    <i className="fas fa-plus"></i>&nbsp;Add Staff
+                    <i className="fas fa-edit"></i>&nbsp;Edit Staff (Metrics)
                 </h1>
 
-                <div className="row">
-                    <div className="step-navigation">
-                        <div id="step-1" className="st-grey">
-                            <Link to="/staff/add/step-1">
-                                <span className="num">1.</span><span className="">Search</span>
-                            </Link>
-                        </div>
-                        <div id="step-2" className="st-grey">
-                            <Link to="/staff/add/step-2">
-                                <span className="num">2.</span><span className="">Results</span>
-                            </Link>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to="/staff/add/step-3">
-                                <span className="num">3.</span><span className="">Group</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to="/staff/add/step-4">
-                                <span className="num">4.</span><span className="">Contact</span>
-                            </Link>
-                        </div>
-                        <div id="step-5" className="st-grey">
-                            <Link to="/staff/add/step-5">
-                                <span className="num">5.</span><span className="">Address</span>
-                            </Link>
-                        </div>
-                        <div id="step-6" className="st-grey">
-                            <Link to="/staff/add/step-6">
-                                <span className="num">6.</span><span className="">Account</span>
-                            </Link>
-                        </div>
-                        <div id="step-7" className="st-grey active">
-                            <strong>
-                                <span className="num">7.</span><span className="">Metrics</span>
-                            </strong>
-                        </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
-                        </div>
-                    </div>
-                </div>
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
@@ -108,7 +69,7 @@ export default class StaffMetricsUpdateComponent extends Component {
                                 options={tagOptions}
                                 selectedOptions={tags}
                                 error={errors.tags}
-                                onMultiChange={onMultiChange}
+                                onMultiChange={onTagMultiChange}
                             />
 
                             <BootstrapRadio
@@ -166,21 +127,9 @@ export default class StaffMetricsUpdateComponent extends Component {
                                 error={errors.joinDate}
                             />
 
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-success"
-                                label="Additional Comments"
-                                placeholder="Write any additional comments here."
-                                rows="5"
-                                value={comment}
-                                helpText="This is the comment of the organization."
-                                onChange={onTextChange}
-                                error={errors.comment}
-                            />
-
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
                                 <Link to="/staff/add/step-6" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
