@@ -202,7 +202,7 @@ class ClientUpdateContainer extends Component {
 
     render() {
         const {
-            errors, id,
+            errors, id, isLoading,
 
             // STEP 3
             typeOf,
@@ -233,6 +233,7 @@ class ClientUpdateContainer extends Component {
                 isOkToEmail={isOkToEmail}
 
                 // EVERYTHING ELSE
+                isLoading={isLoading}
                 id={id}
                 errors={errors}
                 onTextChange={this.onTextChange}

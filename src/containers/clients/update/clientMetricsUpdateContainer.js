@@ -277,7 +277,7 @@ class ClientMetricsUpdateContainer extends Component {
 
     render() {
         const {
-            errors, id, typeOf, givenName, lastName,
+            errors, id, typeOf, givenName, lastName, isLoading,
 
             // STEP 6
             tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, comment, dateOfBirth
@@ -310,6 +310,7 @@ class ClientMetricsUpdateContainer extends Component {
                 comment={comment}
 
                 // EVERYTHING ELSE
+                isLoading={isLoading}
                 givenName={givenName}
                 lastName={lastName}
                 id={id}

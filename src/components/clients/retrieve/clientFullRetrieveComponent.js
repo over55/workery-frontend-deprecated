@@ -183,7 +183,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {client.tags && client.tags.map(
+                                        {client.prettyTags && client.prettyTags.map(
                                             (tag) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </td>
@@ -298,9 +298,9 @@ export default class ClientFullRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { id, text } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }

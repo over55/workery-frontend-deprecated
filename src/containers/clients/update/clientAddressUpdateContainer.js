@@ -264,7 +264,7 @@ class ClientAddressUpdateContainer extends Component {
 
     render() {
         const {
-            errors, id,
+            errors, id, isLoading,
 
             // STEP 3
             typeOf,
@@ -293,6 +293,7 @@ class ClientAddressUpdateContainer extends Component {
                 streetAddress={streetAddress}
 
                 // EVERYTHING ELSE
+                isLoading={isLoading}
                 id={id}
                 errors={errors}
                 onTextChange={this.onTextChange}
