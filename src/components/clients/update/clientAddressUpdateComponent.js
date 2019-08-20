@@ -45,7 +45,7 @@ export default class ClientAddressUpdateComponent extends Component {
                             <Link to={`/client/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName} {lastName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-edit"></i>&nbsp;Update
+                            <i className="fas fa-edit"></i>&nbsp;Update (Address)
                         </li>
                     </ol>
                 </nav>
@@ -53,14 +53,10 @@ export default class ClientAddressUpdateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Update Residential Client</h1>
+                            <h1><i className="fas fa-edit"></i>&nbsp;Client Address Form</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-address-book"></i>&nbsp;Address</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
 
                             <BootstrapCountrySelect
                                 inputClassName="form-control"
