@@ -132,10 +132,7 @@ class StaffMetricsUpdateContainer extends Component {
      */
 
     onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-        localStorage.setItem('workery-create-staff-'+[e.target.name], e.target.value);
+        this.setState({ [e.target.name]: e.target.value, });
     }
 
     onSelectChange(option) {
@@ -158,18 +155,6 @@ class StaffMetricsUpdateContainer extends Component {
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
         this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
     }
 
     onTagMultiChange(...args) {
