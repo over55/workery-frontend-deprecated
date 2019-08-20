@@ -11,7 +11,7 @@ import {
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { putClientDetail } from "../../../actions/clientActions";
+import { putClientContactDetail } from "../../../actions/clientActions";
 
 
 class ClientUpdateContainer extends Component {
@@ -201,7 +201,7 @@ class ClientUpdateContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true, }, ()=>{
-                this.props.putClientDetail(
+                this.props.putClientContactDetail(
                     this.getPostData(),
                     this.onSuccessCallback,
                     this.onFailedCallback
@@ -307,9 +307,9 @@ const mapDispatchToProps = dispatch => {
                 pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
-        putClientDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putClientContactDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putClientDetail(data, onSuccessCallback, onFailureCallback)
+                putClientContactDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }

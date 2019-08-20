@@ -11,7 +11,7 @@ import {
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { putClientDetail } from "../../../actions/clientActions";
+import { putClientAddressDetail } from "../../../actions/clientActions";
 
 
 class ClientAddressUpdateContainer extends Component {
@@ -58,6 +58,8 @@ class ClientAddressUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailedCallback = this.onFailedCallback.bind(this);
+        this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
+        this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
     }
 
     /**
@@ -187,6 +189,19 @@ class ClientAddressUpdateContainer extends Component {
         })
     }
 
+    onBillingCountryChange(value) {
+        // Update state.
+        if (value === null || value === undefined || value === '') {
+            this.setState({ country: null, region: null });
+        } else {
+            this.setState({ country: value, region: null });
+        }
+    }
+
+    onBillingRegionChange(value) {
+        this.setState({ region: value }); // Update state.
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -197,7 +212,7 @@ class ClientAddressUpdateContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true, }, ()=>{
-                this.props.putClientDetail(
+                this.props.putClientAddressDetail(
                     this.getPostData(),
                     this.onSuccessCallback,
                     this.onFailedCallback
@@ -282,7 +297,8 @@ class ClientAddressUpdateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
+                onBillingCountryChange={this.onBillingCountryChange}
+                onBillingRegionChange={this.onBillingRegionChange}
                 onClick={this.onClick}
             />
         );
@@ -313,9 +329,9 @@ const mapDispatchToProps = dispatch => {
                 pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
-        putClientDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putClientAddressDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putClientDetail(data, onSuccessCallback, onFailureCallback)
+                putClientAddressDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }

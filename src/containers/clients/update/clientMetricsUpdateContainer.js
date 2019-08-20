@@ -5,13 +5,13 @@ import * as moment from 'moment';
 
 import ClientMetricsUpdateComponent from "../../../components/clients/update/clientMetricsUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/clientValidator";
+import { validateMetricsInput } from "../../../validators/clientValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { putClientDetail } from "../../../actions/clientActions";
+import { putClientMetricsDetail } from "../../../actions/clientActions";
 
 
 class ClientMetricsUpdateContainer extends Component {
@@ -197,12 +197,12 @@ class ClientMetricsUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateMetricsInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true, }, ()=>{
-                this.props.putClientDetail(
+                this.props.putClientMetricsDetail(
                     this.getPostData(),
                     this.onSuccessCallback,
                     this.onFailedCallback
@@ -347,9 +347,9 @@ const mapDispatchToProps = dispatch => {
                 pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
-        putClientDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putClientMetricsDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putClientDetail(data, onSuccessCallback, onFailureCallback)
+                putClientMetricsDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }
