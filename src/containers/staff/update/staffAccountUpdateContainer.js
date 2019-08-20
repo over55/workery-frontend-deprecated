@@ -24,17 +24,18 @@ class StaffAccountUpdateContainer extends Component {
         // Map the API fields to our fields.
         const country = this.props.staffDetail.addressCountry === "CA" ? "Canada" : this.props.staffDetail.addressCountry;
         const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
-        const isActive = this.props.staffDetail.isActive === true ? 1 : 0;
+        const isActive = this.props.staffDetail.isActive === true ? 1 : 2;
 
         this.state = {
             id: id,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
-            description: this.props.staffDetail.emergencyContactRelationship,
-            emergencyContactName: this.props.staffDetail.emergencyContactRelationship,
+            description: this.props.staffDetail.description,
+            emergencyContactName: this.props.staffDetail.emergencyContactName,
             emergencyContactRelationship: this.props.staffDetail.emergencyContactRelationship,
             emergencyContactTelephone: this.props.staffDetail.emergencyContactTelephone,
             emergencyContactAlternativeTelephone: this.props.staffDetail.emergencyContactAlternativeTelephone,
+            description: this.props.staffDetail.description,
             password: "",
             passwordRepeat: "",
             isActive: isActive,
@@ -59,6 +60,13 @@ class StaffAccountUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        if (parseInt(this.state.isActive) === 3) {
+            postData.isActive = true;
+        }
+        if (parseInt(this.state.isActive) === 2) {
+            postData.isActive = false;
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -228,6 +236,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
         putStaffAccountDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
             dispatch(putStaffAccountDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
