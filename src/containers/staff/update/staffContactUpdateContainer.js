@@ -143,7 +143,7 @@ class StaffContactUpdateContainer extends Component {
                 this.getPostData(),
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
-            )
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {

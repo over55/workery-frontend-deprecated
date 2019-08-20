@@ -13,8 +13,8 @@ import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
 class StaffAddressUpdateComponent extends Component {
     render() {
         const {
-            country,
-            region, locality, postalCode, streetAddress,
+            id, givenName, lastName,
+            country, region, locality, postalCode, streetAddress,
 
             errors,
             onTextChange,
@@ -35,54 +35,18 @@ class StaffAddressUpdateComponent extends Component {
                         <li className="breadcrumb-item" aria-current="page">
                             <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
+                        <li className="breadcrumb-item" aria-current="page">
+                            <Link to={`/staff/${id}/full`}><i className="fas fa-user-tie"></i>&nbsp;{givenName} {lastName}</Link>
+                        </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-plus"></i>&nbsp;Add
+                            <i className="fas fa-edit"></i>&nbsp;Edit Staff (Address)
                         </li>
                     </ol>
                 </nav>
 
                 <h1>
-                    <i className="fas fa-plus"></i>&nbsp;Add Staff
+                    <i className="fas fa-edit"></i>&nbsp;Edit Staff (Address)
                 </h1>
-
-                <div className="row">
-                    <div className="step-navigation">
-                        <div id="step-1" className="st-grey">
-                            <Link to="/staff/add/step-1">
-                                <span className="num">1.</span><span className="">Search</span>
-                            </Link>
-                        </div>
-                        <div id="step-2" className="st-grey">
-                            <Link to="/staff/add/step-2">
-                                <span className="num">2.</span><span className="">Results</span>
-                            </Link>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to="/staff/add/step-3">
-                                <span className="num">3.</span><span className="">Group</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to="/staff/add/step-4">
-                                <span className="num">4.</span><span className="">Contact</span>
-                            </Link>
-                        </div>
-                        <div id="step-5" className="st-grey active">
-                            <strong>
-                                <span className="num">5.</span><span className="">Address</span>
-                            </strong>
-                        </div>
-                        <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Account</span>
-                        </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Metrics</span>
-                        </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
-                        </div>
-                    </div>
-                </div>
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
@@ -149,10 +113,10 @@ class StaffAddressUpdateComponent extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
-                                    Proceed to Account&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/staff/add/step-4" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/staff/${id}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

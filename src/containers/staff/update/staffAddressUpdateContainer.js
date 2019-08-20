@@ -3,16 +3,14 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import StaffAddressUpdateComponent from "../../../components/staff/update/staffAddressUpdateComponent";
-import {
-    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
-} from '../../../helpers/localStorageUtility';
 import { validateStep5CreateInput } from "../../../validators/staffValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
 import { BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES } from "../../../constants/api";
-
+import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { putStaffAddressDetail } from '../../../actions/staffActions';
 
 
 class StaffAddressUpdateContainer extends Component {
@@ -24,17 +22,28 @@ class StaffAddressUpdateContainer extends Component {
     constructor(props) {
         super(props);
 
+        // Since we are using the ``react-routes-dom`` library then we
+        // fetch the URL argument as follows.
+        const { id } = this.props.match.params;
+
+        // Map the API fields to our fields.
+        const country = this.props.staffDetail.addressCountry === "CA" ? "Canada" : this.props.staffDetail.addressCountry;
+        const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
 
         this.state = {
-            country: localStorage.getItem("workery-create-staff-country"),
-            region: localStorage.getItem("workery-create-staff-region"),
-            locality: localStorage.getItem("workery-create-staff-locality"),
-            postalCode: localStorage.getItem("workery-create-staff-postalCode"),
-            streetAddress: localStorage.getItem("workery-create-staff-streetAddress"),
+            id: id,
+            givenName: this.props.staffDetail.givenName,
+            lastName: this.props.staffDetail.lastName,
+            country: country,
+            region: region,
+            locality: this.props.staffDetail.addressLocality,
+            postalCode: this.props.staffDetail.postalCode,
+            streetAddress: this.props.staffDetail.streetAddress,
             errors: {},
             isLoading: false
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
@@ -42,6 +51,19 @@ class StaffAddressUpdateContainer extends Component {
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
         this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
         this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -68,8 +90,8 @@ class StaffAddressUpdateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(staff) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/staff/add/step-6");
+        this.props.setFlashMessage("success", "Staff has been successfully updated.");
+        this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -104,12 +126,8 @@ class StaffAddressUpdateContainer extends Component {
          const optionKey = [option.selectName]+"Option";
          this.setState({
              [option.selectName]: option.value,
-             optionKey: option,
+             [optionKey]: option,
          });
-         localStorage.setItem('workery-create-staff-'+[option.selectName], option.value);
-         localStorageSetObjectOrArrayItem('workery-create-staff-'+optionKey, option);
-         // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-         // console.log(this.state);
      }
 
     onBillingCountryChange(value) {
@@ -139,7 +157,11 @@ class StaffAddressUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.putStaffAddressDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -154,7 +176,7 @@ class StaffAddressUpdateContainer extends Component {
      */
 
     render() {
-        const { referrer, errors, isLoading, returnURL } = this.state;
+        const { id, givenName, lastName, errors, isLoading, returnURL } = this.state;
         const {
             country, region, locality,
             postalCode, streetAddress,
@@ -162,6 +184,9 @@ class StaffAddressUpdateContainer extends Component {
         const { user } = this.props;
         return (
             <StaffAddressUpdateComponent
+                id={id}
+                givenName={givenName}
+                lastName={lastName}
                 country={country}
                 region={region}
                 locality={locality}
@@ -183,11 +208,19 @@ class StaffAddressUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        staffDetail: store.staffDetailState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
+        putStaffAddressDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffAddressDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        },
+    }
 }
 
 
