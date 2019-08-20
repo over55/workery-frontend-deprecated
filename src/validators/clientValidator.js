@@ -7,7 +7,7 @@ import {
 } from '../constants/api';
 
 
-export function validateContactUpdateInput(data) {
+export function validateContactInput(data) {
     let errors = {};
 
     // --- CONTACT --- //
@@ -60,6 +60,32 @@ export function validateContactUpdateInput(data) {
             errors.email = 'This field is required';
         }
 
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+export function validateAddressInput(data) {
+    let errors = {};
+
+    if (data.streetAddress === undefined || data.streetAddress === null || validator.isEmpty(data.streetAddress) || data.streetAddress === "") {
+        errors.streetAddress = 'This field is required';
+    }
+    if (data.region === undefined || data.region === null || validator.isEmpty(data.region) || data.region === "") {
+        errors.region = 'This field is required';
+    }
+    if (data.locality === undefined || data.locality === null || validator.isEmpty(data.locality) || data.locality === "") {
+        errors.locality = 'This field is required';
+    }
+    if (data.country === undefined || data.country === null || validator.isEmpty(data.country) || data.country === "") {
+        errors.country = 'This field is required';
+    }
+    if (data.postalCode === undefined || data.postalCode === null || validator.isEmpty(data.postalCode) || data.postalCode === "") {
+        errors.postalCode = 'This field is required';
     }
 
     return {

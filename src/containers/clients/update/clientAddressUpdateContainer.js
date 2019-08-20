@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 import ClientAddressUpdateComponent from "../../../components/clients/update/clientAddressUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/clientValidator";
+import { validateAddressInput } from "../../../validators/clientValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
@@ -30,10 +30,6 @@ class ClientAddressUpdateContainer extends Component {
         // Map the API fields to our fields.
         const country = this.props.clientDetail.addressCountry === "CA" ? "Canada" : this.props.clientDetail.addressCountry;
         const region = this.props.clientDetail.addressRegion === "ON" ? "Ontario" : this.props.clientDetail.addressRegion;
-        const isOkToEmail = this.props.clientDetail.isOkToEmail === true ? 1 : 0;
-        const isOkToText = this.props.clientDetail.isOkToText === true ? 1 : 0;
-        const birthdateObj = new Date(this.props.clientDetail.birthdate);
-        const joinDateObj = new Date(this.props.clientDetail.joinDate);
 
         this.state = {
             errors: {},
@@ -43,45 +39,18 @@ class ClientAddressUpdateContainer extends Component {
             // STEP 3
             typeOf: this.props.clientDetail.typeOf,
 
-            // STEP 4
-            givenName: this.props.clientDetail.givenName,
-            lastName: this.props.clientDetail.lastName,
-            organizationName: this.props.clientDetail.organizationName,
-            organizationTypeOf: this.props.clientDetail.organizationTypeOf,
-            givenName: this.props.clientDetail.givenName,
-            lastName: this.props.clientDetail.lastName,
-            telephone: this.props.clientDetail.telephone,
-            telephoneTypeOf: this.props.clientDetail.telephoneTypeOf,
-            otherTelephone: this.props.clientDetail.otherTelephone,
-            otherTelephoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
-            email: this.props.clientDetail.email,
-            isOkToEmail: isOkToEmail,
-            isOkToText: isOkToText,
-
             // STEP 5
             country: country,
             region: region,
             locality: this.props.clientDetail.addressLocality,
             postalCode: this.props.clientDetail.postalCode,
             streetAddress: this.props.clientDetail.streetAddress,
-
-            // STEP 6
-            tags: this.props.clientDetail.tags,
-            dateOfBirth: birthdateObj,
-            gender: this.props.clientDetail.gender,
-            howHear: this.props.clientDetail.howHear,
-            howHearOption: this.props.clientDetail.howHearOption,
-            howHearOther: this.props.clientDetail.howHearOther,
-            joinDate: joinDateObj,
-            comment: this.props.clientDetail.comment,
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
-        this.onTagMultiChange = this.onTagMultiChange.bind(this);
-        this.onDOBDateTimeChange = this.onDOBDateTimeChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailedCallback = this.onFailedCallback.bind(this);
@@ -219,7 +188,7 @@ class ClientAddressUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateAddressInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -269,29 +238,6 @@ class ClientAddressUpdateContainer extends Component {
         });
     }
 
-    onTagMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // We need to only return our `id` values, therefore strip out the
-        // `react-select` options format of the data and convert it into an
-        // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
-        if (selectedOptions !== null && selectedOptions !== undefined) {
-            for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
-            }
-        }
-        this.setState({ tags: idTags, });
-    }
-
-    onDOBDateTimeChange(dateOfBirth) {
-        this.setState({
-            dateOfBirth: dateOfBirth,
-        });
-    }
-
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -304,123 +250,31 @@ class ClientAddressUpdateContainer extends Component {
             // STEP 3
             typeOf,
 
-            // STEP 4 - REZ
-            givenName, lastName, telephone, telephoneTypeOf, otherTelephone, otherTelephoneTypeOf, email, isOkToText, isOkToEmail,
-
-            // STEP 4 - BIZ
-            organizationName, organizationTypeOf,
-
             // STEP 5
             country, region, locality, postalCode, streetAddress,
-
-            // STEP 6
-            tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, comment, dateOfBirth
         } = this.state;
 
-        const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
-        const tagOptions = getTagReactSelectOptions(this.props.tagList);
-        const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
+        return (
+            <ClientAddressUpdateComponent
+                // STEP 3
+                typeOf={typeOf}
 
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            return (
-                <ClientAddressUpdateComponent
-                    // STEP 3
-                    typeOf={typeOf}
+                // STEP 5
+                country={country}
+                region={region}
+                locality={locality}
+                postalCode={postalCode}
+                streetAddress={streetAddress}
 
-                    // STEP 4 - REZ
-                    givenName={givenName}
-                    lastName={lastName}
-                    telephone={telephone}
-                    telephoneTypeOf={telephoneTypeOf}
-                    otherTelephone={otherTelephone}
-                    otherTelephoneTypeOf={otherTelephoneTypeOf}
-                    email={email}
-                    isOkToText={isOkToText}
-                    isOkToEmail={isOkToEmail}
-
-                    // STEP 5
-                    country={country}
-                    region={region}
-                    locality={locality}
-                    postalCode={postalCode}
-                    streetAddress={streetAddress}
-
-                    // STEP 6
-                    tags={transcodedTags}
-                    tagOptions={tagOptions}
-                    onTagMultiChange={this.onTagMultiChange}
-                    dateOfBirth={dateOfBirth}
-                    gender={gender}
-                    howHear={howHear}
-                    howHearOptions={howHearOptions}
-                    howHearOption={howHearOption}
-                    howHearOther={howHearOther}
-                    joinDate={joinDate}
-                    comment={comment}
-
-                    // EVERYTHING ELSE
-                    id={id}
-                    errors={errors}
-                    onTextChange={this.onTextChange}
-                    onSelectChange={this.onSelectChange}
-                    onRadioChange={this.onRadioChange}
-                    onClick={this.onClick}
-                />
-            );
-        }
-        if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            return (
-                <ClientAddressUpdateComponent
-                    // STEP 3
-                    typeOf={typeOf}
-
-                    // STEP 4
-                    organizationName={organizationName}
-                    organizationTypeOf={organizationTypeOf}
-                    givenName={givenName}
-                    lastName={lastName}
-                    telephone={telephone}
-                    telephoneTypeOf={telephoneTypeOf}
-                    otherTelephone={otherTelephone}
-                    otherTelephoneTypeOf={otherTelephoneTypeOf}
-                    email={email}
-                    isOkToEmail={isOkToEmail}
-                    isOkToText={isOkToText}
-
-                    // STEP 5
-                    country={country}
-                    region={region}
-                    locality={locality}
-                    postalCode={postalCode}
-                    streetAddress={streetAddress}
-
-                    // STEP 6
-                    tags={transcodedTags}
-                    tagOptions={tagOptions}
-                    onTagMultiChange={this.onTagMultiChange}
-                    dateOfBirth={dateOfBirth}
-                    gender={gender}
-                    howHear={howHear}
-                    howHearOptions={howHearOptions}
-                    howHearOption={howHearOption}
-                    howHearOther={howHearOther}
-                    joinDate={joinDate}
-                    comment={comment}
-
-                    // EVERYTHING ELSE
-                    id={id}
-                    errors={errors}
-                    onTextChange={this.onTextChange}
-                    onSelectChange={this.onSelectChange}
-                    onRadioChange={this.onRadioChange}
-                    onClick={this.onClick}
-                />
-            );
-        }
-
-        return (null);
-
-
+                // EVERYTHING ELSE
+                id={id}
+                errors={errors}
+                onTextChange={this.onTextChange}
+                onSelectChange={this.onSelectChange}
+                onRadioChange={this.onRadioChange}
+                onClick={this.onClick}
+            />
+        );
     }
 }
 

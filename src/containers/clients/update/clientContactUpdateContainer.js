@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 import ClientContactUpdateComponent from "../../../components/clients/update/clientContactUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateContactUpdateInput } from "../../../validators/clientValidator";
+import { validateContactInput } from "../../../validators/clientValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
@@ -196,7 +196,7 @@ class ClientUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateContactUpdateInput(this.state);
+        const { errors, isValid } = validateContactInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
