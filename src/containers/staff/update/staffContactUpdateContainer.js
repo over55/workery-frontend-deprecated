@@ -8,7 +8,9 @@ import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     TELEPHONE_CONTACT_POINT_TYPE_OF_ID
 } from '../../../constants/api';
-import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { putStaffContactDetail } from '../../../actions/staffActions';
+
 
 class StaffContactUpdateContainer extends Component {
     /**
@@ -18,26 +20,45 @@ class StaffContactUpdateContainer extends Component {
 
     constructor(props) {
         super(props);
-        const isOkToEmail = this.props.staffDetail.isOkToEmail === true ? 1 : 0;
-        const isOkToText = this.props.staffDetail.isOkToText === true ? 1 : 0;
+
+        // Since we are using the ``react-routes-dom`` library then we
+        // fetch the URL argument as follows.
+        const { id } = this.props.match.params;
+
         this.state = {
+            id: id,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
             primaryPhone: this.props.staffDetail.telephone,
+            primaryPhoneTypeOf: this.props.staffDetail.telephoneTypeOf,
             secondaryPhone: this.props.staffDetail.otherTelephone,
-            email: this.props.staffDetail.email,
+            secondaryPhoneTypeOf: this.props.staffDetail.otherTelephoneTypeOf,
+            workEmail: this.props.staffDetail.email,
             personalEmail: this.props.staffDetail.personalEmail,
-            isOkToEmail: isOkToEmail,
-            isOkToText: isOkToText,
             errors: {},
             isLoading: false
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -47,10 +68,6 @@ class StaffContactUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        localStorage.setItem("workery-create-staff-typeOf", RESIDENTIAL_CUSTOMER_TYPE_OF_ID);
-        localStorage.setItem("workery-create-staff-typeOf-label", "Residential");
-        localStorage.setItem("workery-create-staff-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
-        localStorage.setItem("workery-create-staff-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
     }
 
     componentWillUnmount() {
@@ -68,13 +85,12 @@ class StaffContactUpdateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(staff) {
-        this.props.history.push("/staff/add/step-5");
+        this.props.setFlashMessage("success", "Staff has been successfully updated.");
+        this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+        this.setState({ errors: errors, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -89,11 +105,15 @@ class StaffContactUpdateContainer extends Component {
      */
 
     onTextChange(e) {
+        this.setState({ [e.target.name]: e.target.value, });
+    }
+
+    onSelectChange(option) {
+        const optionKey = [option.selectName]+"Option";
         this.setState({
-            [e.target.name]: e.target.value,
-        })
-        const key = "workery-create-staff-"+[e.target.name];
-        localStorage.setItem(key, e.target.value);
+            [option.selectName]: option.value,
+            [optionKey]: option,
+        });
     }
 
     onRadioChange(e) {
@@ -108,18 +128,6 @@ class StaffContactUpdateContainer extends Component {
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
         this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
     }
 
     onClick(e) {
@@ -131,7 +139,11 @@ class StaffContactUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.props.putStaffContactDetail(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            )
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -147,21 +159,23 @@ class StaffContactUpdateContainer extends Component {
 
     render() {
         const {
-            givenName, lastName, primaryPhone, secondaryPhone, email, personalEmail, isOkToEmail, isOkToText, errors
+            id, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, workEmail, personalEmail, errors
         } = this.state;
         return (
             <StaffContactUpdateComponent
+                id={id}
                 givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
+                primaryPhoneTypeOf={primaryPhoneTypeOf}
                 secondaryPhone={secondaryPhone}
-                email={email}
+                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
+                workEmail={workEmail}
                 personalEmail={personalEmail}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onRadioChange={this.onRadioChange}
+                onSelectChange={this.onSelectChange}
                 onClick={this.onClick}
             />
         );
@@ -176,7 +190,14 @@ const mapStateToProps = function(store) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
+        putStaffContactDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffContactDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        },
+    }
 }
 
 

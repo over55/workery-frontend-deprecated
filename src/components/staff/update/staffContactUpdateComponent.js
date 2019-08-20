@@ -5,16 +5,20 @@ import { Link } from "react-router-dom";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES } from "../../../constants/api";
+import {
+    IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES,
+    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
+} from "../../../constants/api";
 
 
 class StaffContactUpdateComponent extends Component {
     render() {
         const {
-            id, givenName, lastName, primaryPhone, secondaryPhone, email, personalEmail, isOkToEmail, isOkToText, errors,
-            onTextChange, onRadioChange, isLoading, onClick
+            id, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, workEmail, personalEmail, errors,
+            onTextChange, onRadioChange, isLoading, onClick, onSelectChange
         } = this.props;
         return (
             <main id="main" role="main">
@@ -85,6 +89,17 @@ class StaffContactUpdateComponent extends Component {
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
 
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Primary Telephone type (*)"
+                                name="primaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
+                                value={primaryPhoneTypeOf}
+                                error={errors.primaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
+                            />
+
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
@@ -97,14 +112,25 @@ class StaffContactUpdateComponent extends Component {
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
 
+                            <BootstrapSingleSelect
+                                borderColour="border-success"
+                                label="Secondary Telephone type"
+                                name="secondaryPhoneTypeOf"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
+                                value={secondaryPhoneTypeOf}
+                                error={errors.secondaryPhoneTypeOf}
+                                onSelectChange={onSelectChange}
+                            />
+
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.email}
+                                error={errors.workEmail}
                                 label="Work Email (*)"
                                 onChange={onTextChange}
-                                value={email}
-                                name="email"
+                                value={workEmail}
+                                name="workEmail"
                                 type="text"
                             />
 
@@ -118,31 +144,6 @@ class StaffContactUpdateComponent extends Component {
                                 name="personalEmail"
                                 type="text"
                             />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isOkToEmail}
-                                label="Ok to E-Mail? (*)"
-                                name="isOkToEmail"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToEmail}
-                                options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting "yes" will result in staff getting emails from our system.'
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isOkToText}
-                                label="Ok to Text? (*)"
-                                name="isOkToText"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToText}
-                                options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting "yes" will result in staff getting text-messages on their phone from our system.'
-                            />
-
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
