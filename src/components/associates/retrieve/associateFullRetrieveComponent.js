@@ -88,30 +88,17 @@ export default class AssociateFullRetrieveComponent extends Component {
                                     <td>{typeOfLabel}</td>
                                 </tr>
 
-
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-id-card"></i>&nbsp;Identification
+                                        <i className="fas fa-phone"></i>&nbsp;Contact
+                                        <Link to={`/associate/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{associate.fullName}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Skill sets</th>
-                                    <td>
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-phone"></i>&nbsp;Contact
-                                    </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Telephone</th>
@@ -149,6 +136,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
+                                        <Link to={`/associate/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
@@ -163,7 +153,18 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-user-circle"></i>&nbsp;Account
+                                        <Link to={`/associate/${id}/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill sets</th>
+                                    <td>
+                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Insurance Requirement(s)</th>
@@ -231,6 +232,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                        <Link to={`/associate/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>

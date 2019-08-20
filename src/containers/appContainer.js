@@ -67,7 +67,10 @@ import AssociateCreateStep5Container from "./associates/create/associateCreateSt
 import AssociateCreateStep6Container from "./associates/create/associateCreateStep6Container";
 import AssociateCreateStep7Container from "./associates/create/associateCreateStep7Container";
 import AssociateCreateStep8Container from "./associates/create/associateCreateStep8Container";
-import AssociateUpdateContainer from "./associates/update/associateUpdateContainer";
+import AssociateAccountUpdateContainer from "./associates/update/associateAccountUpdateContainer";
+import AssociateAddressUpdateContainer from "./associates/update/associateAddressUpdateContainer";
+import AssociateContactUpdateContainer from "./associates/update/associateContactUpdateContainer";
+import AssociateMetricsUpdateContainer from "./associates/update/associateMetricsUpdateContainer";
 
 // Work Order
 import OrderListContainer from "./orders/list/orderListContainer";
@@ -288,7 +291,10 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/orders" exact component={requiresAuth(AssociateOrderListContainer)} />
                                 <Route path="/associate/:id/comments" exact component={requiresAuth(AssociateCommentContainer)} />
                                 <Route path="/associate/:id/activity-sheets" exact component={requiresAuth(AssociateActivitySheetListContainer)} />
-                                <Route path="/associate/:id/update" exact component={requiresAuth(AssociateUpdateContainer)} />
+                                <Route path="/associate/:id/update/account" exact component={requiresAuth(AssociateAccountUpdateContainer)} />
+                                <Route path="/associate/:id/update/address" exact component={requiresAuth(AssociateAddressUpdateContainer)} />
+                                <Route path="/associate/:id/update/contact" exact component={requiresAuth(AssociateContactUpdateContainer)} />
+                                <Route path="/associate/:id/update/metrics" exact component={requiresAuth(AssociateMetricsUpdateContainer)} />
 
                                 { /* WORK ORDER */}
                                 <Route path="/orders/add/step-1" exact component={requiresAuth(OrderCreateStep1Container)} />
