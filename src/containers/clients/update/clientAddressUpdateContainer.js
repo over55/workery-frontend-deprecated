@@ -39,6 +39,10 @@ class ClientAddressUpdateContainer extends Component {
             // STEP 3
             typeOf: this.props.clientDetail.typeOf,
 
+            // STEP 4
+            givenName: this.props.clientDetail.givenName,
+            lastName: this.props.clientDetail.lastName,
+
             // STEP 5
             country: country,
             region: region,
@@ -250,6 +254,9 @@ class ClientAddressUpdateContainer extends Component {
             // STEP 3
             typeOf,
 
+            // STEP 4
+            givenName, lastName,
+
             // STEP 5
             country, region, locality, postalCode, streetAddress,
         } = this.state;
@@ -258,6 +265,10 @@ class ClientAddressUpdateContainer extends Component {
             <ClientAddressUpdateComponent
                 // STEP 3
                 typeOf={typeOf}
+
+                // STEP 4
+                givenName={givenName}
+                lastName={lastName}
 
                 // STEP 5
                 country={country}

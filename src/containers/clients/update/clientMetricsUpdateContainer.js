@@ -28,10 +28,6 @@ class ClientMetricsUpdateContainer extends Component {
         const { id } = this.props.match.params;
 
         // Map the API fields to our fields.
-        const country = this.props.clientDetail.addressCountry === "CA" ? "Canada" : this.props.clientDetail.addressCountry;
-        const region = this.props.clientDetail.addressRegion === "ON" ? "Ontario" : this.props.clientDetail.addressRegion;
-        const isOkToEmail = this.props.clientDetail.isOkToEmail === true ? 1 : 0;
-        const isOkToText = this.props.clientDetail.isOkToText === true ? 1 : 0;
         const birthdateObj = new Date(this.props.clientDetail.birthdate);
         const joinDateObj = new Date(this.props.clientDetail.joinDate);
 
@@ -46,24 +42,6 @@ class ClientMetricsUpdateContainer extends Component {
             // STEP 4
             givenName: this.props.clientDetail.givenName,
             lastName: this.props.clientDetail.lastName,
-            organizationName: this.props.clientDetail.organizationName,
-            organizationTypeOf: this.props.clientDetail.organizationTypeOf,
-            givenName: this.props.clientDetail.givenName,
-            lastName: this.props.clientDetail.lastName,
-            telephone: this.props.clientDetail.telephone,
-            telephoneTypeOf: this.props.clientDetail.telephoneTypeOf,
-            otherTelephone: this.props.clientDetail.otherTelephone,
-            otherTelephoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
-            email: this.props.clientDetail.email,
-            isOkToEmail: isOkToEmail,
-            isOkToText: isOkToText,
-
-            // STEP 5
-            country: country,
-            region: region,
-            locality: this.props.clientDetail.addressLocality,
-            postalCode: this.props.clientDetail.postalCode,
-            streetAddress: this.props.clientDetail.streetAddress,
 
             // STEP 6
             tags: this.props.clientDetail.tags,
@@ -299,19 +277,7 @@ class ClientMetricsUpdateContainer extends Component {
 
     render() {
         const {
-            errors, id,
-
-            // STEP 3
-            typeOf,
-
-            // STEP 4 - REZ
-            givenName, lastName, telephone, telephoneTypeOf, otherTelephone, otherTelephoneTypeOf, email, isOkToText, isOkToEmail,
-
-            // STEP 4 - BIZ
-            organizationName, organizationTypeOf,
-
-            // STEP 5
-            country, region, locality, postalCode, streetAddress,
+            errors, id, typeOf, givenName, lastName,
 
             // STEP 6
             tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, comment, dateOfBirth
@@ -321,106 +287,39 @@ class ClientMetricsUpdateContainer extends Component {
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
 
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            return (
-                <ClientMetricsUpdateComponent
-                    // STEP 3
-                    typeOf={typeOf}
+        return (
+            <ClientMetricsUpdateComponent
+                // STEP 3
+                typeOf={typeOf}
 
-                    // STEP 4 - REZ
-                    givenName={givenName}
-                    lastName={lastName}
-                    telephone={telephone}
-                    telephoneTypeOf={telephoneTypeOf}
-                    otherTelephone={otherTelephone}
-                    otherTelephoneTypeOf={otherTelephoneTypeOf}
-                    email={email}
-                    isOkToText={isOkToText}
-                    isOkToEmail={isOkToEmail}
+                // STEP 4
+                givenName={givenName}
+                lastName={lastName}
 
-                    // STEP 5
-                    country={country}
-                    region={region}
-                    locality={locality}
-                    postalCode={postalCode}
-                    streetAddress={streetAddress}
+                // STEP 6
+                tags={transcodedTags}
+                tagOptions={tagOptions}
+                onTagMultiChange={this.onTagMultiChange}
+                dateOfBirth={dateOfBirth}
+                gender={gender}
+                howHear={howHear}
+                howHearOptions={howHearOptions}
+                howHearOption={howHearOption}
+                howHearOther={howHearOther}
+                joinDate={joinDate}
+                comment={comment}
 
-                    // STEP 6
-                    tags={transcodedTags}
-                    tagOptions={tagOptions}
-                    onTagMultiChange={this.onTagMultiChange}
-                    dateOfBirth={dateOfBirth}
-                    gender={gender}
-                    howHear={howHear}
-                    howHearOptions={howHearOptions}
-                    howHearOption={howHearOption}
-                    howHearOther={howHearOther}
-                    joinDate={joinDate}
-                    comment={comment}
-
-                    // EVERYTHING ELSE
-                    id={id}
-                    errors={errors}
-                    onTextChange={this.onTextChange}
-                    onSelectChange={this.onSelectChange}
-                    onRadioChange={this.onRadioChange}
-                    onClick={this.onClick}
-                />
-            );
-        }
-        if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            return (
-                <ClientMetricsUpdateComponent
-                    // STEP 3
-                    typeOf={typeOf}
-
-                    // STEP 4
-                    organizationName={organizationName}
-                    organizationTypeOf={organizationTypeOf}
-                    givenName={givenName}
-                    lastName={lastName}
-                    telephone={telephone}
-                    telephoneTypeOf={telephoneTypeOf}
-                    otherTelephone={otherTelephone}
-                    otherTelephoneTypeOf={otherTelephoneTypeOf}
-                    email={email}
-                    isOkToEmail={isOkToEmail}
-                    isOkToText={isOkToText}
-
-                    // STEP 5
-                    country={country}
-                    region={region}
-                    locality={locality}
-                    postalCode={postalCode}
-                    streetAddress={streetAddress}
-
-                    // STEP 6
-                    tags={transcodedTags}
-                    tagOptions={tagOptions}
-                    onTagMultiChange={this.onTagMultiChange}
-                    dateOfBirth={dateOfBirth}
-                    gender={gender}
-                    howHear={howHear}
-                    howHearOptions={howHearOptions}
-                    howHearOption={howHearOption}
-                    howHearOther={howHearOther}
-                    joinDate={joinDate}
-                    comment={comment}
-
-                    // EVERYTHING ELSE
-                    id={id}
-                    errors={errors}
-                    onTextChange={this.onTextChange}
-                    onSelectChange={this.onSelectChange}
-                    onRadioChange={this.onRadioChange}
-                    onClick={this.onClick}
-                />
-            );
-        }
-
-        return (null);
-
-
+                // EVERYTHING ELSE
+                givenName={givenName}
+                lastName={lastName}
+                id={id}
+                errors={errors}
+                onTextChange={this.onTextChange}
+                onSelectChange={this.onSelectChange}
+                onRadioChange={this.onRadioChange}
+                onClick={this.onClick}
+            />
+        );
     }
 }
 
