@@ -19,6 +19,7 @@ export const WORKERY_CLIENT_DEACTIVATE_API_ENDPOINT = '/customers/operation/deac
 export const WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT = '/customers/operation/upgrade-residential';
 export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
 export const WORKERY_ORDER_DETAIL_API_ENDPOINT = '/order/';
+export const WORKERY_ORDER_LITE_UPDATE_API_ENDPOINT = '/order/XXX/lite';
 export const WORKERY_ORDER_COMMENT_LIST_API_ENDPOINT = '/order-comments';
 export const WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT = '/orders/operation/transfer';
 export const WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT = '/orders/operation/unassign';

@@ -8,7 +8,7 @@ import {
 } from '../constants/api';
 
 
-export function validateInput(data) {
+export function validateLiteUpdateInput(data) {
     let errors = {};
 
     return {

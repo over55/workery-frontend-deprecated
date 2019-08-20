@@ -11,7 +11,8 @@ import {
 import {
     WORKERY_ORDER_LIST_API_ENDPOINT, WORKERY_ORDER_DETAIL_API_ENDPOINT, WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT,
     WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT, WORKERY_ORDER_CLOSE_OPERATION_API_ENDPOINT,
-    WORKERY_ORDER_REOPEN_OPERATION_API_ENDPOINT, WORKERY_ORDER_POSTPONE_OPERATION_API_ENDPOINT
+    WORKERY_ORDER_REOPEN_OPERATION_API_ENDPOINT, WORKERY_ORDER_POSTPONE_OPERATION_API_ENDPOINT,
+    WORKERY_ORDER_LITE_UPDATE_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -256,7 +257,7 @@ export function pullOrderDetail(id, onSuccessCallback, onFailureCallback) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putOrderDetail(user, data, onSuccessCallback, onFailureCallback) {
+export function putOrderLiteDetail(data, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -274,7 +275,7 @@ export function putOrderDetail(user, data, onSuccessCallback, onFailureCallback)
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ORDER_DETAIL_API_ENDPOINT+data.slug, buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_ORDER_LITE_UPDATE_API_ENDPOINT.replace("XXX", data.id), buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             let device = camelizeKeys(responseData);
