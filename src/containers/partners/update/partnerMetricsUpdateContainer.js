@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import PartnerMetricsUpdateComponent from "../../../components/partners/update/partnerMetricsUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/partnerValidator";
+import { validateMetricsInput } from "../../../validators/partnerValidator";
 import {
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
@@ -12,7 +12,7 @@ import {
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
-import { putPartnerDetail } from "../../../actions/partnerActions";
+import { putPartnerMetricsDetail } from "../../../actions/partnerActions";
 
 
 class PartnerMetricsUpdateContainer extends Component {
@@ -132,11 +132,11 @@ class PartnerMetricsUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform partner-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateMetricsInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putPartnerDetail(
+            this.props.putPartnerMetricsDetail(
                 this.getPostData(),
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
@@ -250,9 +250,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putPartnerDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putPartnerMetricsDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putPartnerDetail(data, onSuccessCallback, onFailureCallback)
+                putPartnerMetricsDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }

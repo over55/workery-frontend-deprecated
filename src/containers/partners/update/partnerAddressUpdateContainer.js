@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import PartnerAddressUpdateComponent from "../../../components/partners/update/partnerAddressUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/partnerValidator";
+import { validateAddressInput } from "../../../validators/partnerValidator";
 import {
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
@@ -12,7 +12,7 @@ import {
 } from '../../../constants/api';
 import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions } from "../../../actions/tagActions";
-import { putPartnerDetail } from "../../../actions/partnerActions";
+import { putPartnerAddressDetail } from "../../../actions/partnerActions";
 
 
 class PartnerAddressUpdateContainer extends Component {
@@ -132,11 +132,11 @@ class PartnerAddressUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform partner-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateAddressInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putPartnerDetail(
+            this.props.putPartnerAddressDetail(
                 this.getPostData(),
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
@@ -249,9 +249,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putPartnerDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putPartnerAddressDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putPartnerDetail(data, onSuccessCallback, onFailureCallback)
+                putPartnerAddressDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }
