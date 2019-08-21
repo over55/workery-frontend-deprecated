@@ -26,7 +26,7 @@ class AssociateAccountUpdateComponent extends Component {
             // Step 6
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
             skillSets, skillSetOptions, insuranceRequirements, insuranceRequirementOptions,
-            vehicleTypes, vehicleTypeOptions, duesDate,
+            vehicleTypes, vehicleTypeOptions, duesDate, wsibNumber,
             commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
 
             // Everything else...
@@ -148,6 +148,17 @@ class AssociateAccountUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.autoInsuranceExpiryDate}
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.wsibNumber}
+                                label="WSIB #"
+                                onChange={onTextChange}
+                                value={wsibNumber}
+                                name="wsibNumber"
+                                type="number"
                             />
 
                             <BootstrapDatePicker

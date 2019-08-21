@@ -44,6 +44,7 @@ class AssociateAccountUpdateContainer extends Component {
             duesDate: duesDateObj,
             commercialInsuranceExpiryDate: commercialInsuranceExpiryDateObj,
             autoInsuranceExpiryDate: autoInsuranceExpiryDateObj,
+            wsibNumber: this.props.associateDetail.wsibNumber,
             wsibInsuranceDate: wsibInsuranceDateObj,
             policeCheck: policeCheckObj,
             taxId: this.props.associateDetail.taxId,
@@ -365,7 +366,7 @@ class AssociateAccountUpdateContainer extends Component {
             country, region, locality, postalCode, streetAddress,
 
             // Step 6
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, skillSets, insuranceRequirements, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, skillSets, insuranceRequirements, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
 
             // Step 7
             tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
@@ -411,6 +412,7 @@ class AssociateAccountUpdateContainer extends Component {
                 onCommercialInsuranceExpiryDate={this.onCommercialInsuranceExpiryDate}
                 autoInsuranceExpiryDate={autoInsuranceExpiryDate}
                 onAutoInsuranceExpiryDateChange={this.onAutoInsuranceExpiryDateChange}
+                wsibNumber={wsibNumber}
                 wsibInsuranceDate={wsibInsuranceDate}
                 onWsibInsuranceDateChange={this.onWsibInsuranceDateChange}
                 policeCheck={policeCheck}
