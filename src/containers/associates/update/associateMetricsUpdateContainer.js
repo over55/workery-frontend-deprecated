@@ -24,7 +24,7 @@ class AssociateMetricsUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        const birthdateObj = new Date(this.props.associateDetail.birthdate);
+        const birthdateObj = this.props.associateDetail.birthdate ? new Date(this.props.associateDetail.birthdate) : null;
         const joinDateObj = new Date(this.props.associateDetail.joinDate);
 
         this.state = {
@@ -71,12 +71,13 @@ class AssociateMetricsUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // (2) Middle name (API ISSUE)
-        postData.middleName = this.state.middleName;
-
-        // (2) Join date - We need to format as per required API format.
+        // (1) Join date - We need to format as per required API format.
         const joinDateMoment = moment(this.state.joinDate);
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
+
+        // (2) Birthdate date - We need to format as per required API format.
+        const birthDateMoment = moment(this.state.dateOfBirth);
+        postData.birthdate = birthDateMoment.format("YYYY-MM-DD");
 
         // (4) How Hear Other - This field may not be null, therefore make blank.
         if (this.state.howHearOther === undefined || this.state.howHearOther === null) {

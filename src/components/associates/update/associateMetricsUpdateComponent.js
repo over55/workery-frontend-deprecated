@@ -22,8 +22,9 @@ class AssociateMetricsUpdateComponent extends Component {
         const {
             // Step 4
             givenName, lastName,
+
             // Step 7
-            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
+            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate, description,
 
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
@@ -125,6 +126,18 @@ class AssociateMetricsUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.joinDate}
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-success"
+                                label="Description"
+                                placeholder="Please a description of the associate."
+                                rows="5"
+                                value={description}
+                                helpText=""
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">
