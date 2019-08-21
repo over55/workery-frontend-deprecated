@@ -146,7 +146,7 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={associate.addressUrl}>{associate.fullAddress}</a>
+                                        <a href={associate.addressUrl} target="_blank">{associate.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
 
