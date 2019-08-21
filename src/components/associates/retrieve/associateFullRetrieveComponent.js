@@ -216,12 +216,10 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Vehicle(s)</th>
-                                    <td>TODO
-                                    {/*
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                    <td>
+                                        {associate.prettyVehicleTypes && associate.prettyVehicleTypes.map(
+                                            (vt) => <VehicleTypeItem vt={vt} key={`vt-${vt.id}`} />)
                                         }
-                                        */}
                                     </td>
                                 </tr>
                                 <tr>
@@ -252,8 +250,8 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {associate.tags && associate.tags.map(
-                                            (tag) => <TagItem tag={tag} key={tag.id} />)
+                                        {associate.prettyTags && associate.prettyTags.map(
+                                            (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                                         }
                                     </td>
                                 </tr>
@@ -317,9 +315,9 @@ export default class AssociateFullRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { text, id } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }
@@ -338,6 +336,16 @@ class SkillSetItem extends Component {
 class InsuranceRequirementItem extends Component {
     render() {
         const { id, text } = this.props.ir;
+        return (
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
+        );
+    };
+}
+
+
+class VehicleTypeItem extends Component {
+    render() {
+        const { id, text } = this.props.vt;
         return (
             <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );

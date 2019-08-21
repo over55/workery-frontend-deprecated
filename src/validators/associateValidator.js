@@ -8,6 +8,35 @@ import {
 } from '../constants/api';
 
 
+export function validateMetricsInput(data) {
+    let errors = {};
+
+    if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
+        errors.dateOfBirth = 'This field is required';
+    }
+    if (data.gender === undefined || data.gender === null || data.gender === "" ) {
+        errors.gender = 'This field is required';
+    }
+    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
+        errors.howHear = 'This field is required';
+    } else {
+        if (data.howHear === "Other") {
+            if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
+                errors.howHearOther = 'This field is required';
+            }
+        }
+    }
+    if (data.joinDate === undefined || data.joinDate === null || data.joinDate === "" || isNaN(data.joinDate) ) {
+        errors.joinDate = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
 export function validateAddressInput(data) {
     let errors = {};
     if (data.streetAddress === undefined || data.streetAddress === null || validator.isEmpty(data.streetAddress) || data.streetAddress === "") {
