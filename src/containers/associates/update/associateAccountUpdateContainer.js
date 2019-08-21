@@ -9,7 +9,7 @@ import { validateAccountInput } from "../../../validators/associateValidator";
 import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
 import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
 import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../actions/vehicleTypeActions";
-import { putAssociateDetail } from "../../../actions/associateActions";
+import { putAssociateAccountDetail } from "../../../actions/associateActions";
 
 
 class AssociateAccountUpdateContainer extends Component {
@@ -337,7 +337,7 @@ class AssociateAccountUpdateContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true}, ()=>{
-                this.props.putAssociateDetail(
+                this.props.putAssociateAccountDetail(
                     this.getPostData(),
                     this.onSuccessfulSubmissionCallback,
                     this.onFailedSubmissionCallback
@@ -464,9 +464,9 @@ const mapDispatchToProps = dispatch => {
                 pullVehicleTypeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
-        putAssociateDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putAssociateAccountDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putAssociateDetail(data, onSuccessCallback, onFailureCallback)
+                putAssociateAccountDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }

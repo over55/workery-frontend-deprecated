@@ -25,7 +25,7 @@ class AssociateContactUpdateComponent extends Component {
 
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
-            onSelectChange, 
+            onSelectChange,
         } = this.props;
         return (
             <main id="main" role="main">
@@ -42,7 +42,7 @@ class AssociateContactUpdateComponent extends Component {
                             <Link to={`/associate/${id}/full`}><i className="fas fa-crown"></i>&nbsp;{fullName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-edit"></i>&nbsp;ContactUpdate
+                            <i className="fas fa-edit"></i>&nbsp;Edit Associate (Contact)
                         </li>
                     </ol>
                 </nav>
@@ -51,7 +51,7 @@ class AssociateContactUpdateComponent extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h1>
-                                <i className="fas fa-edit"></i>&nbsp;ContactUpdate Associate
+                                <i className="fas fa-edit"></i>&nbsp;Edit Associate (Contact)
                             </h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 

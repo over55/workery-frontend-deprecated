@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import AssociateAddressUpdateComponent from "../../../components/associates/update/associateAddressUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateAddressInput } from "../../../validators/associateValidator";
-import { putAssociateDetail } from "../../../actions/associateActions";
+import { putAssociateAddressDetail } from "../../../actions/associateActions";
 
 
 class AssociateAddressUpdateContainer extends Component {
@@ -194,7 +194,7 @@ class AssociateAddressUpdateContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true}, ()=>{
-                this.props.putAssociateDetail(
+                this.props.putAssociateAddressDetail(
                     this.getPostData(),
                     this.onSuccessfulSubmissionCallback,
                     this.onFailedSubmissionCallback
@@ -262,9 +262,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putAssociateDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putAssociateAddressDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putAssociateDetail(data, onSuccessCallback, onFailureCallback)
+                putAssociateAddressDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }

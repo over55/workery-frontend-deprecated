@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import AssociateContactUpdateComponent from "../../../components/associates/update/associateContactUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateContactInput } from "../../../validators/associateValidator";
-import { putAssociateDetail } from "../../../actions/associateActions";
+import { putAssociateContactDetail } from "../../../actions/associateActions";
 
 
 class AssociateContactUpdateContainer extends Component {
@@ -213,7 +213,7 @@ class AssociateContactUpdateContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true}, ()=>{
-                this.props.putAssociateDetail(
+                this.props.putAssociateContactDetail(
                     this.getPostData(),
                     this.onSuccessfulSubmissionCallback,
                     this.onFailedSubmissionCallback
@@ -281,9 +281,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putAssociateDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putAssociateContactDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putAssociateDetail(data, onSuccessCallback, onFailureCallback)
+                putAssociateContactDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }

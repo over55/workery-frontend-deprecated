@@ -8,7 +8,7 @@ import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateMetricsInput } from "../../../validators/associateValidator";
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { putAssociateDetail } from "../../../actions/associateActions";
+import { putAssociateMetricsDetail } from "../../../actions/associateActions";
 
 
 class AssociateMetricsUpdateContainer extends Component {
@@ -202,7 +202,7 @@ class AssociateMetricsUpdateContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true}, ()=>{
-                this.props.putAssociateDetail(
+                this.props.putAssociateMetricsDetail(
                     this.getPostData(),
                     this.onSuccessfulSubmissionCallback,
                     this.onFailedSubmissionCallback
@@ -299,9 +299,9 @@ const mapDispatchToProps = dispatch => {
                 pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
-        putAssociateDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putAssociateMetricsDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putAssociateDetail(data, onSuccessCallback, onFailureCallback)
+                putAssociateMetricsDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }
