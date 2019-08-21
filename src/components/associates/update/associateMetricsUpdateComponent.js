@@ -23,7 +23,7 @@ class AssociateMetricsUpdateComponent extends Component {
             // Step 4
             givenName, lastName,
             // Step 7
-            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate, comment,
+            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
 
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
@@ -125,18 +125,6 @@ class AssociateMetricsUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.joinDate}
-                            />
-
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-success"
-                                label="Additional Comments"
-                                placeholder="Write any additional comments here."
-                                rows="5"
-                                value={comment}
-                                helpText="This is the comment of the organization."
-                                onChange={onTextChange}
-                                error={errors.comment}
                             />
 
                             <div className="form-group">

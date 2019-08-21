@@ -251,7 +251,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
-                                    <td>{associate.birthdate}</td>
+                                    <td>
+                                        {associate && associate.birthdate && <Moment format="YYYY/MM/DD">{associate.birthdate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>

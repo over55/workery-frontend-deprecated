@@ -43,7 +43,6 @@ class AssociateMetricsUpdateContainer extends Component {
             howHearOther: this.props.associateDetail.howHearOther,
             dateOfBirth: birthdateObj,
             joinDate: joinDateObj,
-            comment: this.props.associateDetail.comment,
 
             // Everything else...
             errors: {},
@@ -228,7 +227,7 @@ class AssociateMetricsUpdateContainer extends Component {
             givenName, lastName,
 
             // Step 7
-            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
+            tags, dateOfBirth, gender, howHear, howHearOther, joinDate,
 
             // Everything else...
             errors, id, fullName, isLoading,
@@ -236,7 +235,7 @@ class AssociateMetricsUpdateContainer extends Component {
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
-        const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
+        const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList);
 
         return (
             <AssociateMetricsUpdateComponent
@@ -245,7 +244,7 @@ class AssociateMetricsUpdateContainer extends Component {
                 lastName={lastName}
 
                 // Step 7
-                tags={tags}
+                tags={transcodedTags}
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
                 gender={gender}
@@ -255,7 +254,6 @@ class AssociateMetricsUpdateContainer extends Component {
                 howHear={howHear}
                 howHearOptions={howHearOptions}
                 howHearOther={howHearOther}
-                comment={comment}
 
                 // Everything else...
                 id={id}
