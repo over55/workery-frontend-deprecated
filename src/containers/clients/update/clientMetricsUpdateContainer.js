@@ -44,9 +44,11 @@ class ClientMetricsUpdateContainer extends Component {
             lastName: this.props.clientDetail.lastName,
 
             // STEP 6
+            isTagsLoading: true,
             tags: this.props.clientDetail.tags,
             dateOfBirth: birthdateObj,
             gender: this.props.clientDetail.gender,
+            isHowHearLoading: true,
             howHear: this.props.clientDetail.howHear,
             howHearOption: this.props.clientDetail.howHearOption,
             howHearOther: this.props.clientDetail.howHearOther,
@@ -64,6 +66,8 @@ class ClientMetricsUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailedCallback = this.onFailedCallback.bind(this);
+        this.onTagsSuccessFetch = this.onTagsSuccessFetch.bind(this);
+        this.onHowHearSuccessFetch = this.onHowHearSuccessFetch.bind(this);
     }
 
     /**
@@ -144,8 +148,8 @@ class ClientMetricsUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
+        this.props.pullHowHearList(1,1000, new Map(), this.onHowHearSuccessFetch);
+        this.props.pullTagList(1, 1000, new Map(), this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -176,6 +180,14 @@ class ClientMetricsUpdateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onTagsSuccessFetch(tags) {
+        this.setState({ isTagsLoading: false, });
+    }
+
+    onHowHearSuccessFetch(howHearList) {
+        this.setState({ isHowHearLoading: false, });
     }
 
     /**
@@ -283,7 +295,7 @@ class ClientMetricsUpdateContainer extends Component {
             errors, id, typeOf, givenName, lastName, isLoading,
 
             // STEP 6
-            tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, description, dateOfBirth
+            isTagsLoading, tags, birthdate, gender, isHowHearLoading, howHear, howHearOption, howHearOther, joinDate, description, dateOfBirth
         } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
@@ -300,11 +312,13 @@ class ClientMetricsUpdateContainer extends Component {
                 lastName={lastName}
 
                 // STEP 6
+                isTagsLoading={isTagsLoading}
                 tags={transcodedTags}
                 tagOptions={tagOptions}
                 onTagMultiChange={this.onTagMultiChange}
                 dateOfBirth={dateOfBirth}
                 gender={gender}
+                isHowHearLoading={isHowHearLoading}
                 howHear={howHear}
                 howHearOptions={howHearOptions}
                 howHearOption={howHearOption}

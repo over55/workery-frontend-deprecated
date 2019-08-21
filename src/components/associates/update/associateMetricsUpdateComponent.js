@@ -24,7 +24,7 @@ class AssociateMetricsUpdateComponent extends Component {
             givenName, lastName,
 
             // Step 7
-            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate, description,
+            isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOther, joinDate, description,
 
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
@@ -71,6 +71,7 @@ class AssociateMetricsUpdateComponent extends Component {
                                 selectedOptions={tags}
                                 error={errors.tags}
                                 onMultiChange={onTagMultiChange}
+                                isLoading={isTagsLoading}
                             />
 
                             <BootstrapRadio
@@ -103,6 +104,7 @@ class AssociateMetricsUpdateComponent extends Component {
                                 value={howHear}
                                 error={errors.howHear}
                                 onSelectChange={onSelectChange}
+                                isLoading={isHowHearLoading}
                             />
 
                             {isOtherHowDidYouHearSelected &&

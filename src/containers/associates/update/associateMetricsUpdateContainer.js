@@ -36,8 +36,10 @@ class AssociateMetricsUpdateContainer extends Component {
             lastName: this.props.associateDetail.lastName,
 
             // STEP 7
+            isTagsLoading: true,
             tags: this.props.associateDetail.tags,
             gender: this.props.associateDetail.gender,
+            isHowHearLoading: true,
             howHear: this.props.associateDetail.howHear,
             howHearOption: this.props.associateDetail.howHearOption,
             howHearOther: this.props.associateDetail.howHearOther,
@@ -61,6 +63,8 @@ class AssociateMetricsUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onTagsSuccessFetch = this.onTagsSuccessFetch.bind(this);
+        this.onHowHearSuccessFetch = this.onHowHearSuccessFetch.bind(this);
     }
 
     /**
@@ -98,8 +102,8 @@ class AssociateMetricsUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
+        this.props.pullHowHearList(1,1000, new Map(), this.onHowHearSuccessFetch);
+        this.props.pullTagList(1, 1000, new Map(), this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -130,6 +134,14 @@ class AssociateMetricsUpdateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onTagsSuccessFetch(tags) {
+        this.setState({ isTagsLoading: false, });
+    }
+
+    onHowHearSuccessFetch(howHearList) {
+        this.setState({ isHowHearLoading: false, });
     }
 
     /**
@@ -228,7 +240,7 @@ class AssociateMetricsUpdateContainer extends Component {
             givenName, lastName,
 
             // Step 7
-            tags, dateOfBirth, gender, howHear, howHearOther, joinDate,
+            isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate,
 
             // Everything else...
             errors, id, fullName, isLoading,
@@ -245,6 +257,7 @@ class AssociateMetricsUpdateContainer extends Component {
                 lastName={lastName}
 
                 // Step 7
+                isTagsLoading={isTagsLoading}
                 tags={transcodedTags}
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
@@ -252,6 +265,7 @@ class AssociateMetricsUpdateContainer extends Component {
                 joinDate={joinDate}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                isHowHearLoading={isHowHearLoading}
                 howHear={howHear}
                 howHearOptions={howHearOptions}
                 howHearOther={howHearOther}

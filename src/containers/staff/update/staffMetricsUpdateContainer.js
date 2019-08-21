@@ -31,9 +31,11 @@ class StaffMetricsUpdateContainer extends Component {
             id: id,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
+            isTagsLoading: true,
             tags: this.props.staffDetail.tags,
             dateOfBirth: birthdateObj,
             gender: this.props.staffDetail.gender,
+            isHowHearLoading: true,
             howHear: this.props.staffDetail.howHear,
             howHearOther: this.props.staffDetail.howHearOther,
             joinDate: joinDateObj,
@@ -51,6 +53,8 @@ class StaffMetricsUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onTagsSuccessFetch = this.onTagsSuccessFetch.bind(this);
+        this.onHowHearSuccessFetch = this.onHowHearSuccessFetch.bind(this);
     }
 
     /**
@@ -91,8 +95,8 @@ class StaffMetricsUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
          // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
+        this.props.pullHowHearList(1,1000, new Map(), this.onHowHearSuccessFetch);
+        this.props.pullTagList(1, 1000, new Map(), this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -124,6 +128,14 @@ class StaffMetricsUpdateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onTagsSuccessFetch(tags) {
+        this.setState({ isTagsLoading: false, });
+    }
+
+    onHowHearSuccessFetch(howHearList) {
+        this.setState({ isHowHearLoading: false, });
     }
 
     /**
@@ -213,7 +225,7 @@ class StaffMetricsUpdateContainer extends Component {
     render() {
         const {
             id, givenName, lastName,
-            typeOf, tags, dateOfBirth, gender, howHear, howHearOther, joinDate,
+            typeOf, isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate,
             errors
         } = this.state;
 
@@ -227,6 +239,7 @@ class StaffMetricsUpdateContainer extends Component {
                 givenName={givenName}
                 lastName={lastName}
                 typeOf={typeOf}
+                isTagsLoading={isTagsLoading}
                 tags={transcodedTags}
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
@@ -234,6 +247,7 @@ class StaffMetricsUpdateContainer extends Component {
                 joinDate={joinDate}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                isHowHearLoading={isHowHearLoading}
                 howHear={howHear}
                 howHearOptions={howHearOptions}
                 howHearOther={howHearOther}

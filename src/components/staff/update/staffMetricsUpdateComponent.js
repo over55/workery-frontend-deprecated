@@ -8,6 +8,7 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
 
 
@@ -15,7 +16,7 @@ export default class StaffMetricsUpdateComponent extends Component {
     render() {
         const {
             id, givenName, lastName,
-            typeOf, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
+            typeOf, isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOther, joinDate, description,
             onRadioChange,  onTagMultiChange, onJoinDateChange,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
@@ -70,6 +71,7 @@ export default class StaffMetricsUpdateComponent extends Component {
                                 selectedOptions={tags}
                                 error={errors.tags}
                                 onMultiChange={onTagMultiChange}
+                                isLoading={isTagsLoading}
                             />
 
                             <BootstrapRadio
@@ -102,6 +104,7 @@ export default class StaffMetricsUpdateComponent extends Component {
                                 value={howHear}
                                 error={errors.howHear}
                                 onSelectChange={onSelectChange}
+                                isLoading={isHowHearLoading}
                             />
 
                             {isOtherHowDidYouHearSelected &&
@@ -125,6 +128,18 @@ export default class StaffMetricsUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.joinDate}
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-success"
+                                label="Description"
+                                placeholder="Please a description of the customer."
+                                rows="5"
+                                value={description}
+                                helpText=""
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">

@@ -24,7 +24,7 @@ export default class ClientRezUpdateComponent extends Component {
     render() {
         const {
             // STEP 6
-            tags, tagOptions, onTagMultiChange, dateOfBirth, gender, howHear, howHearOptions, howHearOption, howHearOther, joinDate, description,
+            isTagsLoading, tags, tagOptions, onTagMultiChange, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOption, howHearOther, joinDate, description,
 
             // EVERYTHING ELSE
             givenName, lastName, id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
@@ -68,6 +68,7 @@ export default class ClientRezUpdateComponent extends Component {
                                 selectedOptions={tags}
                                 error={errors.tags}
                                 onMultiChange={onTagMultiChange}
+                                isLoading={isTagsLoading}
                             />
 
                             <BootstrapRadio
@@ -100,6 +101,7 @@ export default class ClientRezUpdateComponent extends Component {
                                 value={howHear}
                                 error={errors.howHear}
                                 onSelectChange={onSelectChange}
+                                isLoading={isHowHearLoading}
                             />
 
                             {isOtherHowDidYouHearSelected &&
