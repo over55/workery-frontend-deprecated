@@ -217,7 +217,9 @@ import PartnerCreateStep3Container from "./partners/create/partnerCreateStep3Con
 import PartnerCreateStep4Container from "./partners/create/partnerCreateStep4Container";
 import PartnerCreateStep5Container from "./partners/create/partnerCreateStep5Container";
 import PartnerCreateStep6Container from "./partners/create/partnerCreateStep6Container";
-import PartnerUpdateContainer from "./partners/update/partnerUpdateContainer";
+import PartnerContactUpdateContainer from "./partners/update/partnerContactUpdateContainer";
+import PartnerAddressUpdateContainer from "./partners/update/partnerAddressUpdateContainer";
+import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdateContainer";
 
 
 class AppContainer extends React.Component {
@@ -430,7 +432,9 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id" exact component={requiresAuth(PartnerLiteRetrieveContainer)} />
                                 <Route path="/partner/:id/full" exact component={requiresAuth(PartnerFullRetrieveContainer)} />
                                 <Route path="/partner/:id/comments" exact component={requiresAuth(PartnerCommentContainer)} />
-                                <Route path="/partner/:id/update" exact component={requiresAuth(PartnerUpdateContainer)} />
+                                <Route path="/partner/:id/update/contact" exact component={requiresAuth(PartnerContactUpdateContainer)} />
+                                <Route path="/partner/:id/update/address" exact component={requiresAuth(PartnerAddressUpdateContainer)} />
+                                <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
 
                                 { /* EVERYTHING ELSE... */ }
                                 <Route component={NotFound404Container} />
