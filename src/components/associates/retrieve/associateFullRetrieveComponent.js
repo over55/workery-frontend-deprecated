@@ -1,6 +1,8 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
@@ -184,27 +186,39 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Member Dues Expiry</th>
-                                    <td>{associate.duesDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.duesDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Commercial insurance expiry date</th>
-                                    <td>{associate.commercialInsuranceExpiryDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.commercialInsuranceExpiryDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Auto Insurance Expiry Date</th>
-                                    <td>{associate.autoInsuranceExpiryDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.autoInsuranceExpiryDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB #</th>
-                                    <td>{associate.wsibNumber}</td>
+                                    <td>
+                                        {associate.wsibNumber}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB Insurance Date</th>
-                                    <td>{associate.wsibInsuranceDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.wsibInsuranceDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Police check date</th>
-                                    <td>{associate.policeCheck}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.policeCheck}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">HST #</th>
@@ -257,7 +271,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td>{associate.joinDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.joinDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
@@ -277,7 +293,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
-                                    <td>{associate.created}</td>
+                                    <td>
+                                         {associate && <Moment format="YYYY/MM/DD hh:mm:ss a">{associate.created}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
@@ -285,7 +303,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
-                                    <td>{associate.lastModified}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD hh:mm:ss a">{associate.lastModified}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>
