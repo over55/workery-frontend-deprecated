@@ -21,19 +21,13 @@ class AssociateAccountUpdateComponent extends Component {
     render() {
         const {
             // Step 4
-            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
-
-            // Step 5
-            country, region, locality, postalCode, streetAddress,
+            givenName, lastName,
 
             // Step 6
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
             skillSets, skillSetOptions, insuranceRequirements, insuranceRequirementOptions,
             vehicleTypes, vehicleTypeOptions, duesDate,
             commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-
-            // Step 7
-            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate, comment,
 
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
@@ -43,7 +37,6 @@ class AssociateAccountUpdateComponent extends Component {
             onVehicleTypeMultiChange, onInsuranceRequirementMultiChange, onTagMultiChange, onJoinDateChange,
             onDateOfBirthChange,
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 'Other';
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -59,7 +52,7 @@ class AssociateAccountUpdateComponent extends Component {
                             <Link to={`/associate/${id}/full`}><i className="fas fa-crown"></i>&nbsp;{fullName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-edit"></i>&nbsp;AccountUpdate
+                            <i className="fas fa-edit"></i>&nbsp;Edit Associate (Account)
                         </li>
                     </ol>
                 </nav>
@@ -68,158 +61,11 @@ class AssociateAccountUpdateComponent extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h1>
-                                <i className="fas fa-edit"></i>&nbsp;AccountUpdate Associate
+                                <i className="fas fa-edit"></i>&nbsp;Edit Associate
                             </h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-id-card"></i>&nbsp;Personal Information</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.givenName}
-                                label="Given Name (*)"
-                                onChange={onTextChange}
-                                value={givenName}
-                                name="givenName"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.lastName}
-                                label="Last Name (*)"
-                                onChange={onTextChange}
-                                value={lastName}
-                                name="lastName"
-                                type="text"
-                            />
-
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.primaryPhone}
-                                label="Primary Phone (*)"
-                                onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                error={errors.secondaryPhone}
-                                label="Secondary Phone"
-                                onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.email}
-                                label="Email (*)"
-                                onChange={onTextChange}
-                                value={email}
-                                name="email"
-                                type="text"
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isOkToEmail}
-                                label="Ok to E-Mail? (*)"
-                                name="isOkToEmail"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToEmail}
-                                options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting "yes" will result in associate getting emails from our system.'
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isOkToText}
-                                label="Ok to Text? (*)"
-                                name="isOkToText"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToText}
-                                options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting "yes" will result in associate getting text-messages on their phone from our system.'
-                            />
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-address-book"></i>&nbsp;Address</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
-
-                            <BootstrapCountrySelect
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.country}
-                                label="Country (*)"
-                                value={country}
-                                onChange={onBillingCountryChange}
-                                priorityOptions={["CA", "US", "MX"]}
-                                name="country"
-                            />
-                            <BootstrapRegionSelect
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.region}
-                                label="Province / state (*)"
-                                country={country}
-                                value={region}
-                                onChange={onBillingRegionChange}
-                                name="region"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.locality}
-                                label="City (*)"
-                                onChange={onTextChange}
-                                value={locality}
-                                name="locality"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.streetAddress}
-                                label="Street address (*)"
-                                onChange={onTextChange}
-                                value={streetAddress}
-                                name="streetAddress"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.postalCode}
-                                label="Postal / zip (*)"
-                                onChange={onTextChange}
-                                value={postalCode}
-                                name="postalCode"
-                                type="text"
-                            />
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-crown"></i>&nbsp;Account</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
                                 <i className="fas fa-graduation-cap"></i>&nbsp;Skills
@@ -405,105 +251,6 @@ class AssociateAccountUpdateComponent extends Component {
                                 name="emergencyContactAlternativeTelephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-server"></i>&nbsp;System
-                            </p>
-
-                            <BootstrapTextarea
-                                name="description"
-                                borderColour="border-success"
-                                label="Description"
-                                placeholder="Write any additional details here."
-                                rows="5"
-                                value={description}
-                                helpText="This is the description of the associate."
-                                onChange={onTextChange}
-                                error={errors.description}
-                            />
-
-
-                            { /* -------------------------------------------------------------------------------------- */}
-                            <h4><i className="fas fa-chart-pie"></i>&nbsp;Metrics</h4>
-                            { /* -------------------------------------------------------------------------------------- */}
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-success"
-                                label="Tags"
-                                name="tags"
-                                defaultOptionLabel="Please select the tag."
-                                options={tagOptions}
-                                selectedOptions={tags}
-                                error={errors.tags}
-                                onMultiChange={onTagMultiChange}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.gender}
-                                label="Please select your gender (*)"
-                                name="gender"
-                                onChange={onRadioChange}
-                                selectedValue={gender}
-                                options={GENDER_RADIO_CHOICES}
-                            />
-
-                            <BootstrapDatePicker
-                                label="Date of Birth (*)"
-                                name="dateOfBirth"
-                                dateObj={dateOfBirth}
-                                onTimeChange={onDateOfBirthChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.dateOfBirth}
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="How did you hear about us? (*)"
-                                name="howHear"
-                                defaultOptionLabel="Please select how you heard about us."
-                                options={howHearOptions}
-                                value={howHear}
-                                error={errors.howHear}
-                                onSelectChange={onSelectChange}
-                            />
-
-                            {isOtherHowDidYouHearSelected &&
-                                <BootstrapInput
-                                    inputClassName="form-control form-control-lg"
-                                    borderColour="border-primary"
-                                    error={errors.howHearOther}
-                                    label="Other (*)"
-                                    onChange={onTextChange}
-                                    value={howHearOther}
-                                    name="howHearOther"
-                                    type="text"
-                                />
-                            }
-
-                            <BootstrapDatePicker
-                                label="Join date (*)"
-                                name="joinDate"
-                                dateObj={joinDate}
-                                onTimeChange={onJoinDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.joinDate}
-                            />
-
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-success"
-                                label="Additional Comments"
-                                placeholder="Write any additional comments here."
-                                rows="5"
-                                value={comment}
-                                helpText="This is the comment of the organization."
-                                onChange={onTextChange}
-                                error={errors.comment}
                             />
 
                             <div className="form-group">

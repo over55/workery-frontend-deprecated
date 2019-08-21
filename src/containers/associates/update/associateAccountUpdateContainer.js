@@ -5,12 +5,10 @@ import * as moment from 'moment';
 
 import AssociateAccountUpdateComponent from "../../../components/associates/update/associateAccountUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/associateValidator";
-import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
+import { validateAccountInput } from "../../../validators/associateValidator";
 import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
 import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
 import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../actions/vehicleTypeActions";
-import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import { putAssociateDetail } from "../../../actions/associateActions";
 
 
@@ -27,13 +25,6 @@ class AssociateAccountUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        // Map the API fields to our fields.
-        const country = this.props.associateDetail.addressCountry === "CA" ? "Canada" : this.props.associateDetail.addressCountry;
-        const region = this.props.associateDetail.addressRegion === "ON" ? "Ontario" : this.props.associateDetail.addressRegion;
-        const isOkToEmail = this.props.associateDetail.isOkToEmail === true ? 1 : 0;
-        const isOkToText = this.props.associateDetail.isOkToText === true ? 1 : 0;
-        const birthdateObj = new Date(this.props.associateDetail.birthdate);
-        const joinDateObj = new Date(this.props.associateDetail.joinDate);
         const duesDateObj = new Date(this.props.associateDetail.duesDate);
         const commercialInsuranceExpiryDateObj = new Date(this.props.associateDetail.commercialInsuranceExpiryDate);
         const autoInsuranceExpiryDateObj = new Date(this.props.associateDetail.autoInsuranceExpiryDate);
@@ -43,24 +34,6 @@ class AssociateAccountUpdateContainer extends Component {
         this.state = {
             // STEP 3
             // typeOf: typeOf,
-
-            // STEP 4
-            givenName: this.props.associateDetail.givenName,
-            lastName: this.props.associateDetail.lastName,
-            primaryPhone: this.props.associateDetail.telephone,
-            primaryPhoneTypeOf: this.props.associateDetail.telephoneTypeOf,
-            secondaryPhone: this.props.associateDetail.otherTelephone,
-            secondaryPhoneTypeOf: this.props.associateDetail.otherTelephoneTypeOf,
-            email: this.props.associateDetail.email,
-            isOkToEmail: isOkToEmail,
-            isOkToText: isOkToText,
-
-            // STEP 5
-            country: country,
-            region: region,
-            locality: this.props.associateDetail.addressLocality,
-            postalCode: this.props.associateDetail.postalCode,
-            streetAddress: this.props.associateDetail.streetAddress,
 
             // STEP 6
             skillSets: this.props.associateDetail.skillSets,
@@ -81,16 +54,6 @@ class AssociateAccountUpdateContainer extends Component {
             emergencyContactTelephone: this.props.associateDetail.emergencyContactTelephone,
             emergencyContactAlternativeTelephone: this.props.associateDetail.emergencyContactAlternativeTelephone,
 
-            // STEP 7
-            tags: this.props.associateDetail.tags,
-            gender: this.props.associateDetail.gender,
-            howHear: this.props.associateDetail.howHear,
-            howHearOption: this.props.associateDetail.howHearOption,
-            howHearOther: this.props.associateDetail.howHearOther,
-            dateOfBirth: birthdateObj,
-            joinDate: joinDateObj,
-            comment: this.props.associateDetail.comment,
-
             // Everything else...
             errors: {},
             isLoading: false,
@@ -104,7 +67,6 @@ class AssociateAccountUpdateContainer extends Component {
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
         this.onInsuranceRequirementMultiChange = this.onInsuranceRequirementMultiChange.bind(this);
         this.onVehicleTypeMultiChange = this.onVehicleTypeMultiChange.bind(this);
-        this.onTagMultiChange = this.onTagMultiChange.bind(this);
         this.onDuesDateChange = this.onDuesDateChange.bind(this);
         this.onCommercialInsuranceExpiryDate = this.onCommercialInsuranceExpiryDate.bind(this);
         this.onAutoInsuranceExpiryDateChange = this.onAutoInsuranceExpiryDateChange.bind(this);
@@ -198,8 +160,6 @@ class AssociateAccountUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
         this.props.pullSkillSetList(1, 1000);
         this.props.pullInsuranceRequirementList(1, 1000);
         this.props.pullVehicleTypeList(1, 1000);
@@ -372,7 +332,7 @@ class AssociateAccountUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateAccountInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -414,10 +374,6 @@ class AssociateAccountUpdateContainer extends Component {
             errors, id, fullName, isLoading,
         } = this.state;
 
-        const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
-        const tagOptions = getTagReactSelectOptions(this.props.tagList);
-        const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
-
         const skillSetOptions = getSkillSetReactSelectOptions(this.props.skillSetList);
         const transcodedSkillSets = getPickedSkillSetReactSelectOptions(skillSets, this.props.skillSetList)
 
@@ -432,18 +388,6 @@ class AssociateAccountUpdateContainer extends Component {
                 // Step 4
                 givenName={givenName}
                 lastName={lastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
-
-                // Step 5
-                country={country}
-                region={region}
-                locality={locality}
-                postalCode={postalCode}
-                streetAddress={streetAddress}
 
                 // Step 6
                 description={description}
@@ -472,19 +416,6 @@ class AssociateAccountUpdateContainer extends Component {
                 policeCheck={policeCheck}
                 onPoliceCheckDateChange={this.onPoliceCheckDateChange}
 
-                // Step 7
-                tags={tags}
-                tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                howHear={howHear}
-                howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                comment={comment}
-
                 // Everything else...
                 id={id}
                 errors={errors}
@@ -510,8 +441,6 @@ const mapStateToProps = function(store) {
         skillSetList: store.skillSetListState,
         insuranceRequirementList: store.insuranceRequirementListState,
         vehicleTypeList: store.vehicleTypeListState,
-        howHearList: store.howHearListState,
-        tagList: store.tagListState,
     };
 }
 
@@ -519,16 +448,6 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        },
-        pullHowHearList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullHowHearList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
-        },
-        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
         },
         pullSkillSetList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(

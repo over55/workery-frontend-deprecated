@@ -169,8 +169,8 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Insurance Requirement(s)</th>
                                     <td>
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        {associate.prettyInsuranceRequirements && associate.prettyInsuranceRequirements.map(
+                                            (ir) => <InsuranceRequirementItem ir={ir} key={`ir-${ir.id}`} />)
                                         }
                                     </td>
                                 </tr>
@@ -330,6 +330,16 @@ class SkillSetItem extends Component {
         const { subCategory, value } = this.props.skillSet;
         return (
             <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
+        );
+    };
+}
+
+
+class InsuranceRequirementItem extends Component {
+    render() {
+        const { id, text } = this.props.ir;
+        return (
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }
