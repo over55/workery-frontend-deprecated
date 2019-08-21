@@ -36,8 +36,10 @@ class AssociateAccountUpdateContainer extends Component {
             // typeOf: typeOf,
 
             // STEP 6
+            isSkillSetsLoading: true,
             skillSets: this.props.associateDetail.skillSets,
             insuranceRequirements: this.props.associateDetail.insuranceRequirements,
+            isInsuranceRequirementsLoading: true,
             description: this.props.associateDetail.description,
             hourlySalaryDesired: this.props.associateDetail.hourlySalaryDesired,
             limitSpecial: this.props.associateDetail.limitSpecial,
@@ -49,6 +51,7 @@ class AssociateAccountUpdateContainer extends Component {
             policeCheck: policeCheckObj,
             taxId: this.props.associateDetail.taxId,
             driversLicenseClass: this.props.associateDetail.driversLicenseClass,
+            isVehicleTypesLoading: true,
             vehicleTypes: this.props.associateDetail.vehicleTypes,
             emergencyContactName: this.props.associateDetail.emergencyContactName,
             emergencyContactRelationship: this.props.associateDetail.emergencyContactRelationship,
@@ -77,6 +80,9 @@ class AssociateAccountUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onFetchedSkillSetsCallback = this.onFetchedSkillSetsCallback.bind(this);
+        this.onFetchedInsuranceRequirementsCallback = this.onFetchedInsuranceRequirementsCallback.bind(this);
+        this.onFetchedVehicleTypesCallback = this.onFetchedVehicleTypesCallback.bind(this);
     }
 
     /**
@@ -161,9 +167,9 @@ class AssociateAccountUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullSkillSetList(1, 1000);
-        this.props.pullInsuranceRequirementList(1, 1000);
-        this.props.pullVehicleTypeList(1, 1000);
+        this.props.pullSkillSetList(1, 1000, new Map(), this.onFetchedSkillSetsCallback);
+        this.props.pullInsuranceRequirementList(1, 1000, new Map(), this.onFetchedInsuranceRequirementsCallback);
+        this.props.pullVehicleTypeList(1, 1000, new Map(), this.onFetchedVehicleTypesCallback);
     }
 
     componentWillUnmount() {
@@ -194,6 +200,18 @@ class AssociateAccountUpdateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onFetchedSkillSetsCallback(response) {
+        this.setState({ isSkillSetsLoading: false, });
+    }
+
+    onFetchedInsuranceRequirementsCallback(response) {
+        this.setState({ isInsuranceRequirementsLoading: false, });
+    }
+
+    onFetchedVehicleTypesCallback(response) {
+        this.setState({ isVehicleTypesLoading: false, });
     }
 
     /**
@@ -366,7 +384,7 @@ class AssociateAccountUpdateContainer extends Component {
             country, region, locality, postalCode, streetAddress,
 
             // Step 6
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, skillSets, insuranceRequirements, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, isSkillSetsLoading, skillSets, isInsuranceRequirementsLoading, insuranceRequirements, isVehicleTypesLoading, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
 
             // Step 7
             tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
@@ -400,10 +418,13 @@ class AssociateAccountUpdateContainer extends Component {
                 emergencyContactRelationship={emergencyContactRelationship}
                 emergencyContactTelephone={emergencyContactTelephone}
                 emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
+                isSkillSetsLoading={isSkillSetsLoading}
                 skillSets={transcodedSkillSets}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
+                isInsuranceRequirementsLoading={isInsuranceRequirementsLoading}
                 insuranceRequirements={transcodedInsuranceRequirements}
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
+                isVehicleTypesLoading={isVehicleTypesLoading}
                 vehicleTypes={transcodedVehicleTypes}
                 vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
                 duesDate={duesDate}

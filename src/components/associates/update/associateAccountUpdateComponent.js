@@ -28,6 +28,7 @@ class AssociateAccountUpdateComponent extends Component {
             skillSets, skillSetOptions, insuranceRequirements, insuranceRequirementOptions,
             vehicleTypes, vehicleTypeOptions, duesDate, wsibNumber,
             commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
+            isVehicleTypesLoading, isSkillSetsLoading, isInsuranceRequirementsLoading,
 
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
@@ -80,6 +81,7 @@ class AssociateAccountUpdateComponent extends Component {
                                 selectedOptions={skillSets}
                                 error={errors.skillSets}
                                 onMultiChange={onSkillSetMultiChange}
+                                isLoading={isSkillSetsLoading}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -95,6 +97,7 @@ class AssociateAccountUpdateComponent extends Component {
                                 selectedOptions={insuranceRequirements}
                                 error={errors.insuranceRequirements}
                                 onMultiChange={onInsuranceRequirementMultiChange}
+                                isLoading={isInsuranceRequirementsLoading}
                             />
 
                             <BootstrapInput
@@ -212,6 +215,7 @@ class AssociateAccountUpdateComponent extends Component {
                                 selectedOptions={vehicleTypes}
                                 error={errors.vehicleTypes}
                                 onMultiChange={onVehicleTypeMultiChange}
+                                isLoading={isVehicleTypesLoading}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
