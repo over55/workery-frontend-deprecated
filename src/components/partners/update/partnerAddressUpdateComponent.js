@@ -18,24 +18,13 @@ import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES } f
 export default class PartnerAddressUpdateComponent extends Component {
     render() {
         const {
-            // STEP 3
-            organizationName, givenName, lastName,
-            primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
-            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email,
-            isOkToEmail, isOkToText,
-
-            // STEP 4
+            givenName, lastName,
             country, region, locality, postalCode, streetAddress,
-
-            // STEP 5
-            tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
-            onJoinDateChange, comment,
 
             // Everything else..
             onTextChange, onSelectChange, onRadioChange, isLoading, onClick, id, errors,
             onBillingCountryChange, onBillingRegionChange, typeOf, onDateOfBirthChange, onTagMultiChange
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 'Other';
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -63,124 +52,6 @@ export default class PartnerAddressUpdateComponent extends Component {
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-user-shield"></i>&nbsp;Personal Information
-                            </p>
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.organizationName}
-                                label="Company Name (*)"
-                                onChange={onTextChange}
-                                value={organizationName}
-                                name="organizationName"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.givenName}
-                                label="Contact First Name (*)"
-                                onChange={onTextChange}
-                                value={givenName}
-                                name="givenName"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.lastName}
-                                label="Contact Last Name (*)"
-                                onChange={onTextChange}
-                                value={lastName}
-                                name="lastName"
-                                type="text"
-                            />
-
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.primaryPhone}
-                                label="Primary Phone (*)"
-                                onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Primary Telephone type (*)"
-                                name="primaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={primaryPhoneTypeOfOptions}
-                                value={primaryPhoneTypeOf}
-                                error={errors.primaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
-                            />
-
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                error={errors.secondaryPhone}
-                                label="Secondary Phone"
-                                onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-success"
-                                label="Secondary Telephone type"
-                                name="secondaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={secondaryPhoneTypeOfOptions}
-                                value={secondaryPhoneTypeOf}
-                                error={errors.secondaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.email}
-                                label="Email (*)"
-                                onChange={onTextChange}
-                                value={email}
-                                name="email"
-                                type="text"
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isOkToEmail}
-                                label="Ok to E-Mail? (*)"
-                                name="isOkToEmail"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToEmail}
-                                options={IS_OK_TO_EMAIL_CHOICES}
-                                helpText='Selecting "yes" will result in partner getting emails from our system.'
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.isOkToText}
-                                label="Ok to Text? (*)"
-                                name="isOkToText"
-                                onChange={onRadioChange}
-                                selectedValue={isOkToText}
-                                options={IS_OK_TO_TEXT_CHOICES}
-                                helpText='Selecting "yes" will result in partner getting text-messages on their phone from our system.'
-                            />
 
                             <h2><i className="fas fa-address-book"></i>&nbsp;Address</h2>
 
@@ -236,86 +107,6 @@ export default class PartnerAddressUpdateComponent extends Component {
                                 value={postalCode}
                                 name="postalCode"
                                 type="text"
-                            />
-
-                            <h2><i className="fas fa-chart-pie"></i>&nbsp;Metrics</h2>
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-success"
-                                label="Tags"
-                                name="tags"
-                                defaultOptionLabel="Please select the tag."
-                                options={tagOptions}
-                                selectedOptions={tags}
-                                error={errors.tags}
-                                onMultiChange={onTagMultiChange}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-primary"
-                                error={errors.gender}
-                                label="Please select your gender (*)"
-                                name="gender"
-                                onChange={onRadioChange}
-                                selectedValue={gender}
-                                options={GENDER_RADIO_CHOICES}
-                            />
-
-                            <BootstrapDatePicker
-                                label="Date of Birth (*)"
-                                name="dateOfBirth"
-                                dateObj={dateOfBirth}
-                                onTimeChange={onDateOfBirthChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.dateOfBirth}
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="How did you hear about us? (*)"
-                                name="howHear"
-                                defaultOptionLabel="Please select how you heard about us."
-                                options={howHearOptions}
-                                value={howHear}
-                                error={errors.howHear}
-                                onSelectChange={onSelectChange}
-                            />
-
-                            {isOtherHowDidYouHearSelected &&
-                                <BootstrapInput
-                                    inputClassName="form-control form-control-lg"
-                                    borderColour="border-primary"
-                                    error={errors.howHearOther}
-                                    label="Other (*)"
-                                    onChange={onTextChange}
-                                    value={howHearOther}
-                                    name="howHearOther"
-                                    type="text"
-                                />
-                            }
-
-                            <BootstrapDatePicker
-                                label="Join date (*)"
-                                name="joinDate"
-                                dateObj={joinDate}
-                                onTimeChange={onJoinDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.joinDate}
-                            />
-
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-success"
-                                label="Additional Comments"
-                                placeholder="Write any additional comments here."
-                                rows="5"
-                                value={comment}
-                                helpText="This is the comment of the organization."
-                                onChange={onTextChange}
-                                error={errors.comment}
                             />
 
                         </form>

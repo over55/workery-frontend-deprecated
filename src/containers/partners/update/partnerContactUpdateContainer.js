@@ -28,13 +28,8 @@ class PartnerContactUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        // Map the API fields to our fields.
-        const country = this.props.partnerDetail.addressCountry === "CA" ? "Canada" : this.props.partnerDetail.addressCountry;
-        const region = this.props.partnerDetail.addressRegion === "ON" ? "Ontario" : this.props.partnerDetail.addressRegion;
         const isOkToEmail = this.props.partnerDetail.isOkToEmail === true ? 1 : 0;
         const isOkToText = this.props.partnerDetail.isOkToText === true ? 1 : 0;
-        const birthdateObj = new Date(this.props.partnerDetail.birthdate);
-        const joinDateObj = new Date(this.props.partnerDetail.joinDate);
 
         this.state = {
             // Everything else...
@@ -53,23 +48,6 @@ class PartnerContactUpdateContainer extends Component {
             email: this.props.partnerDetail.email,
             isOkToText: isOkToText,
             isOkToEmail: isOkToEmail,
-
-            // STEP 4
-            country: country,
-            region: region,
-            locality: this.props.partnerDetail.addressLocality,
-            postalCode: this.props.partnerDetail.postalCode,
-            streetAddress: this.props.partnerDetail.streetAddress,
-
-            // STEP 5
-            tags: this.props.partnerDetail.tags,
-            dateOfBirth: birthdateObj,
-            gender: this.props.partnerDetail.gender,
-            howHear: this.props.partnerDetail.howHear,
-            howHearOption: this.props.partnerDetail.howHearOption,
-            howHearOther: this.props.partnerDetail.howHearOther,
-            joinDate: joinDateObj,
-            comment: this.props.partnerDetail.comment,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -227,12 +205,6 @@ class PartnerContactUpdateContainer extends Component {
         const {
             // STEP 3
             organizationName, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail,
-
-            // STEP 4
-            country, region, locality, postalCode, streetAddress,
-
-            // STEP 5
-            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
         } = this.state;
         return (
             <PartnerContactUpdateComponent
@@ -258,25 +230,6 @@ class PartnerContactUpdateContainer extends Component {
                 email={email}
                 isOkToEmail={isOkToEmail}
                 isOkToText={isOkToText}
-
-                // STEP 4
-                country={country}
-                region={region}
-                locality={locality}
-                streetAddress={streetAddress}
-                postalCode={postalCode}
-
-                // STEP 5
-                // tags={tags}
-                // tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                // joinDate={joinDate}
-                errors={errors}
-                howHear={howHear}
-                // howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                comment={comment}
             />
         );
     }

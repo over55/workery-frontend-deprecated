@@ -31,10 +31,6 @@ class PartnerAddressUpdateContainer extends Component {
         // Map the API fields to our fields.
         const country = this.props.partnerDetail.addressCountry === "CA" ? "Canada" : this.props.partnerDetail.addressCountry;
         const region = this.props.partnerDetail.addressRegion === "ON" ? "Ontario" : this.props.partnerDetail.addressRegion;
-        const isOkToEmail = this.props.partnerDetail.isOkToEmail === true ? 1 : 0;
-        const isOkToText = this.props.partnerDetail.isOkToText === true ? 1 : 0;
-        const birthdateObj = new Date(this.props.partnerDetail.birthdate);
-        const joinDateObj = new Date(this.props.partnerDetail.joinDate);
 
         this.state = {
             // Everything else...
@@ -46,13 +42,6 @@ class PartnerAddressUpdateContainer extends Component {
             organizationName: this.props.partnerDetail.organizationName,
             givenName: this.props.partnerDetail.givenName,
             lastName: this.props.partnerDetail.lastName,
-            primaryPhone: this.props.partnerDetail.telephone,
-            primaryPhoneTypeOf: this.props.partnerDetail. telephoneTypeOf,
-            secondaryPhone: this.props.partnerDetail.otherTelephone,
-            secondaryPhoneTypeOf: this.props.partnerDetail.otherTelephoneTypeOf,
-            email: this.props.partnerDetail.email,
-            isOkToText: isOkToText,
-            isOkToEmail: isOkToEmail,
 
             // STEP 4
             country: country,
@@ -60,16 +49,6 @@ class PartnerAddressUpdateContainer extends Component {
             locality: this.props.partnerDetail.addressLocality,
             postalCode: this.props.partnerDetail.postalCode,
             streetAddress: this.props.partnerDetail.streetAddress,
-
-            // STEP 5
-            tags: this.props.partnerDetail.tags,
-            dateOfBirth: birthdateObj,
-            gender: this.props.partnerDetail.gender,
-            howHear: this.props.partnerDetail.howHear,
-            howHearOption: this.props.partnerDetail.howHearOption,
-            howHearOther: this.props.partnerDetail.howHearOther,
-            joinDate: joinDateObj,
-            comment: this.props.partnerDetail.comment,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -226,13 +205,10 @@ class PartnerAddressUpdateContainer extends Component {
         const { isLoading, typeOf, errors, id } = this.state;
         const {
             // STEP 3
-            organizationName, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail,
+            organizationName, givenName, lastName,
 
             // STEP 4
             country, region, locality, postalCode, streetAddress,
-
-            // STEP 5
-            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
         } = this.state;
         return (
             <PartnerAddressUpdateComponent
@@ -249,15 +225,6 @@ class PartnerAddressUpdateContainer extends Component {
                 organizationName={organizationName}
                 givenName={givenName}
                 lastName={lastName}
-                primaryPhone={primaryPhone}
-                primaryPhoneTypeOf={primaryPhoneTypeOf}
-                primaryPhoneTypeOfOptions={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                secondaryPhone={secondaryPhone}
-                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
-                secondaryPhoneTypeOfOptions={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
 
                 // STEP 4
                 country={country}
@@ -265,18 +232,6 @@ class PartnerAddressUpdateContainer extends Component {
                 locality={locality}
                 streetAddress={streetAddress}
                 postalCode={postalCode}
-
-                // STEP 5
-                // tags={tags}
-                // tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                // joinDate={joinDate}
-                errors={errors}
-                howHear={howHear}
-                // howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                comment={comment}
             />
         );
     }
