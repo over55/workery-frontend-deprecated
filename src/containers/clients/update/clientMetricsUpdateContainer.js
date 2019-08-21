@@ -51,7 +51,7 @@ class ClientMetricsUpdateContainer extends Component {
             howHearOption: this.props.clientDetail.howHearOption,
             howHearOther: this.props.clientDetail.howHearOther,
             joinDate: joinDateObj,
-            comment: this.props.clientDetail.comment,
+            description: this.props.clientDetail.description,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -59,7 +59,8 @@ class ClientMetricsUpdateContainer extends Component {
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onTagMultiChange = this.onTagMultiChange.bind(this);
-        this.onDOBDateTimeChange = this.onDOBDateTimeChange.bind(this);
+        this.onDateOfBirthChange = this.onDateOfBirthChange.bind(this);
+        this.onJoinDateChange = this.onJoinDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailedCallback = this.onFailedCallback.bind(this);
@@ -78,7 +79,10 @@ class ClientMetricsUpdateContainer extends Component {
 
         // (2) Join date - We need to format as per required API format.
         const joinDateMoment = moment(this.state.joinDate);
-        postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
+
+        const dateOfBirthMoment = moment(this.state.dateOfBirth);
+        postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD")
 
         // (4) How Hear Other - This field may not be null, therefore make blank.
         if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
@@ -97,13 +101,6 @@ class ClientMetricsUpdateContainer extends Component {
         // (6) Organization Type Of - This field may not be null, therefore make blank.
         if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
             postData.organizationTypeOf = "";
-        }
-
-        // (7) Extra Comment: This field is required.
-        if (this.state.comment === undefined || this.state.comment === null) {
-            postData.extraComment = "";
-        } else {
-            postData.extraComment = this.state.comment;
         }
 
         // (8) Telephone type: This field is required.;
@@ -264,9 +261,15 @@ class ClientMetricsUpdateContainer extends Component {
         this.setState({ tags: idTags, });
     }
 
-    onDOBDateTimeChange(dateOfBirth) {
+    onDateOfBirthChange(dateOfBirth) {
         this.setState({
             dateOfBirth: dateOfBirth,
+        });
+    }
+
+    onJoinDateChange(joinDate) {
+        this.setState({
+            joinDate: joinDate,
         });
     }
 
@@ -280,7 +283,7 @@ class ClientMetricsUpdateContainer extends Component {
             errors, id, typeOf, givenName, lastName, isLoading,
 
             // STEP 6
-            tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, comment, dateOfBirth
+            tags, birthdate, gender, howHear, howHearOption, howHearOther, joinDate, description, dateOfBirth
         } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
@@ -307,7 +310,7 @@ class ClientMetricsUpdateContainer extends Component {
                 howHearOption={howHearOption}
                 howHearOther={howHearOther}
                 joinDate={joinDate}
-                comment={comment}
+                description={description}
 
                 // EVERYTHING ELSE
                 isLoading={isLoading}
@@ -319,6 +322,8 @@ class ClientMetricsUpdateContainer extends Component {
                 onSelectChange={this.onSelectChange}
                 onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
+                onDateOfBirthChange={this.onDateOfBirthChange}
+                onJoinDateChange={this.onJoinDateChange}
             />
         );
     }

@@ -24,7 +24,7 @@ export default class ClientRezUpdateComponent extends Component {
     render() {
         const {
             // STEP 6
-            tags, tagOptions, onTagMultiChange, dateOfBirth, gender, howHear, howHearOptions, howHearOption, howHearOther, joinDate, comment,
+            tags, tagOptions, onTagMultiChange, dateOfBirth, gender, howHear, howHearOptions, howHearOption, howHearOther, joinDate, description,
 
             // EVERYTHING ELSE
             givenName, lastName, id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
@@ -58,7 +58,7 @@ export default class ClientRezUpdateComponent extends Component {
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-                            
+
                             <BootstrapMultipleSelect
                                 borderColour="border-success"
                                 label="Tags"
@@ -124,15 +124,15 @@ export default class ClientRezUpdateComponent extends Component {
                                 error={errors.joinDate}
                             />
                             <BootstrapTextarea
-                                name="comment"
+                                name="description"
                                 borderColour="border-success"
-                                label="Additional Comments"
-                                placeholder="Write any additional comments here."
+                                label="Description"
+                                placeholder="Please a description of the customer."
                                 rows="5"
-                                value={comment}
-                                helpText="This is the comment of the organization."
+                                value={description}
+                                helpText=""
                                 onChange={onTextChange}
-                                error={errors.comment}
+                                error={errors.description}
                             />
 
                             <div className="form-group">
