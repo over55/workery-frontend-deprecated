@@ -27,11 +27,14 @@ class FinancialUpdateContainer extends Component {
             isLoading: false,
             id: parseInt(id),
             paymentStatus: this.props.orderDetail.state,
+            invoiceDate: this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null,
+            invoiceIds: this.props.orderDetail.invoiceIds,
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
+        this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -161,6 +164,10 @@ class FinancialUpdateContainer extends Component {
         });
     }
 
+    onInvoiceDateChange(dateObj) {
+        this.setState({ invoiceDate: dateObj, });
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -190,14 +197,24 @@ class FinancialUpdateContainer extends Component {
     render() {
         const {
             id, errors, isLoading,
-            paymentStatus,
+            paymentStatus, invoiceDate, invoiceIds,
         } = this.state;
 
         return (
             <FinancialUpdateComponent
+                // Text
+                invoiceIds={invoiceIds}
+                onTextChange={this.onTextChange}
+
+                // Radio GUI
                 paymentStatus={paymentStatus}
                 onRadioChange={this.onRadioChange}
 
+                // Date GUI
+                invoiceDate={invoiceDate}
+                onInvoiceDateChange={this.onInvoiceDateChange}
+
+                // Other GUI
                 id={id}
                 isLoading={isLoading}
                 errors={errors}

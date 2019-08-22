@@ -2,10 +2,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
+
+import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { BootstrapDatePicker } from "../../bootstrap/bootstrapDatePicker";
 import {
     WORK_ORDER_COMPLETED_AND_PAID_STATE,
     WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
@@ -18,10 +22,16 @@ export default class FinancialUpdateComponent extends Component {
         const {
             id, isLoading, errors,
 
+            invoiceIds,
+            onTextChange,
+
             paymentStatus,
             onRadioChange,
 
-            onClick, onTextChange,
+            invoiceDate,
+            onInvoiceDateChange,
+
+            onClick,
         } = this.props;
 
         return (
@@ -67,6 +77,28 @@ export default class FinancialUpdateComponent extends Component {
                                 selectedValue={paymentStatus}
                                 options={PAYMENT_STATUS_CHOICES}
                                 helpText='Selecting "yes" will result in job being paid.'
+                            />
+
+                            <BootstrapDatePicker
+                                label="Invoice date (*)"
+                                name="invoiceDate"
+                                dateObj={invoiceDate}
+                                onTimeChange={onInvoiceDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.invoiceDate}
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceIds}
+                                label="Invoice ID(s)"
+                                onChange={onTextChange}
+                                value={invoiceIds}
+                                name="invoiceIds"
+                                type="text"
+                                helpText="Please note, you are able to input multiple invoice ID values if you want, just separate them by commas. Ex.: 123, 456."
                             />
 
                             <div className="form-group">
