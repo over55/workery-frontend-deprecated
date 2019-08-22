@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 // import 'moment-timezone';
+import NumberFormat from 'react-number-format';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
@@ -83,35 +84,75 @@ export default class FinancialRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Quoted Labour</th>
-                                    <td>${order.invoiceQuotedLabourAmount}</td>
+                                    <td>
+                                        {order.invoiceQuotedLabourAmount
+                                            ?<NumberFormat value={order.invoiceQuotedLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Quoted Materials</th>
-                                    <td>${order.invoiceQuotedMaterialAmount}</td>
+                                    <td>
+                                        {order.invoiceQuotedMaterialAmount
+                                            ?<NumberFormat value={order.invoiceQuotedMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Total Quote</th>
-                                    <td>${order.invoiceTotalQuoteAmount}</td>
+                                    <td>
+                                        {order.invoiceTotalQuoteAmount
+                                            ?<NumberFormat value={order.invoiceTotalQuoteAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Actual Labour</th>
-                                    <td>${order.invoiceLabourAmount}</td>
+                                    <td>
+                                        {order.invoiceLabourAmount
+                                            ?<NumberFormat value={order.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Actual Materials</th>
-                                    <td>${order.invoiceMaterialAmount}</td>
+                                    <td>
+                                        {order.invoiceMaterialAmount
+                                            ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Total Tax</th>
-                                    <td>${order.invoiceTaxAmount}</td>
+                                    <td>
+                                        {order.invoiceTaxAmount
+                                            ?<NumberFormat value={order.invoiceTaxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Total</th>
-                                    <td>${order.invoiceTotalAmount}</td>
+                                    <td>
+                                        {order.invoiceTotalAmount
+                                            ?<NumberFormat value={order.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Service Fee</th>
-                                    <td>${order.invoiceServiceFeeAmount}</td>
+                                    <td>
+                                        {order.invoiceServiceFeeAmount
+                                            ?<NumberFormat value={order.invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Service Fee Payment Date</th>
@@ -126,8 +167,8 @@ export default class FinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Actual Service Fee Paid</th>
                                     <td>
                                         {order.invoiceActualServiceFeeAmountPaid
-                                            ? <div>${order.invoiceActualServiceFeeAmountPaid}</div>
-                                            : "-"
+                                            ?<NumberFormat value={order.invoiceActualServiceFeeAmountPaid} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
                                         }
                                     </td>
                                 </tr>
@@ -135,8 +176,8 @@ export default class FinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Account Balance</th>
                                     <td>
                                         {order.invoiceBalanceOwingAmount
-                                            ? <div>${order.invoiceBalanceOwingAmount}</div>
-                                            : "-"
+                                            ?<NumberFormat value={order.invoiceBalanceOwingAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
                                         }
                                     </td>
                                 </tr>
