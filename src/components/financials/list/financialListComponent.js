@@ -101,12 +101,18 @@ class RemoteListComponent extends Component {
             lastPageTitle: 'Last page',
         };
 
+        const defaultSorted = [{
+            dataField: 'id',
+            order: 'desc'
+        }];
+
         return (
             <BootstrapTable
                 bootstrap4
                 keyField='id'
                 data={ orders }
                 columns={ columns }
+                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There are no orders at the moment"
@@ -175,14 +181,14 @@ class FinancialListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Financials
+                            <i className="fas fa-credit-card"></i>&nbsp;Financials
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;Financials</h1>
+                <h1><i className="fas fa-credit-card"></i>&nbsp;Financials</h1>
 
                 <div className="row">
                     <div className="col-md-12">

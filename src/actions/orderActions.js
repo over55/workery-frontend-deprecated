@@ -198,26 +198,33 @@ export function pullOrderDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ORDER_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_ORDER_DETAIL_API_ENDPOINT+id+"/";
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             // console.log(successResult); // For debugging purposes.
 
-            let profile = camelizeKeys(responseData);
+            let order = camelizeKeys(responseData);
 
             // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
+            order['isAPIRequestRunning'] = false;
+            order['errors'] = {};
 
-            console.log("pullOrderDetail | Success:", profile); // For debugging purposes.
+            console.log("pullOrderDetail | Success:", order); // For debugging purposes.
 
             // Update the global state of the application to store our
-            // user profile for the application.
+            // user order for the application.
             store.dispatch(
-                setOrderDetailSuccess(profile)
+                setOrderDetailSuccess(order)
             );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(order);
+            }
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
