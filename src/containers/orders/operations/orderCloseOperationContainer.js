@@ -25,7 +25,7 @@ class OrderCloseOperationContainer extends Component {
         const { id } = this.props.match.params;
 
         this.state = {
-            id: id,
+            id: parseInt(id),
             errors: {},
             isLoading: false,
             reason: "",
