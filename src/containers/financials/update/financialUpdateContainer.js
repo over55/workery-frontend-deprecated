@@ -6,7 +6,6 @@ import FinancialUpdateComponent from "../../../components/financials/update/fina
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateLiteUpdateInput } from "../../../validators/orderValidator";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
 import { putOrderLiteDetail } from '../../../actions/orderActions';
 
 
@@ -27,10 +26,12 @@ class FinancialUpdateContainer extends Component {
             errors: {},
             isLoading: false,
             id: parseInt(id),
+            paymentStatus: this.props.orderDetail.state,
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -46,6 +47,31 @@ class FinancialUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
+        // update_job_api(
+        //     {{ job_item.id }},
+        //     {
+        //         'customer': customer_id,
+        //         'associate': associate_id,
+        //         'extra_comment': null,
+        //         'visits': visits,
+        //         'invoice_date': invoice_date,
+        //         'invoice_ids': invoice_ids,
+        //         'invoice_quote_amount': invoice_quote_amount,
+        //         'invoice_quoted_labour_amount': invoice_quoted_labour_amount,
+        //         'invoice_labour_amount': invoice_labour_amount,
+        //         'invoice_quoted_material_amount': invoice_quoted_material_amount,
+        //         'invoice_material_amount': invoice_material_amount,
+        //         'invoice_total_quote_amount': invoice_total_quote_amount,
+        //         'invoice_tax_amount': invoice_tax_amount,
+        //         'invoice_total_amount': invoice_total_amount,
+        //         'invoice_service_fee_amount': invoice_service_fee_amount,
+        //         'invoice_service_fee': invoice_service_fee_id,
+        //         'invoice_actual_service_fee_amount_paid': invoice_actual_service_fee_amount_paid,
+        //         'invoice_service_fee_payment_date': invoice_service_fee_payment_date,
+        //         'state': payment_job_status,
+        //         'invoice_balance_owing_amount': invoice_balance_owing_amount,
+        //     },
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
@@ -58,10 +84,6 @@ class FinancialUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullSkillSetList(1, 1000, new Map(), this.onSuccessfulSkillSetsFetchCallback);
-        this.props.pullTagList(1,1000, new Map(), this.onSuccessfulTagsFetchCallback);
     }
 
     componentWillUnmount() {
@@ -113,6 +135,32 @@ class FinancialUpdateContainer extends Component {
         this.setState({ [e.target.name]: e.target.value, });
     }
 
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-client-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+        localStorage.setItem(storageValueKey, value) // Save to storage.
+        localStorage.setItem(storageLabelKey, label) // Save to storage.
+
+        // For the debugging purposes only.
+        console.log({
+            "STORE-VALUE-KEY": storageValueKey,
+            "STORE-VALUE": value,
+            "STORAGE-VALUE-KEY": storeValueKey,
+            "STORAGE-VALUE": value,
+            "STORAGE-LABEL-KEY": storeLabelKey,
+            "STORAGE-LABEL": label,
+        });
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -140,10 +188,16 @@ class FinancialUpdateContainer extends Component {
      */
 
     render() {
-        const { id, errors, isLoading, } = this.state;
+        const {
+            id, errors, isLoading,
+            paymentStatus,
+        } = this.state;
 
         return (
             <FinancialUpdateComponent
+                paymentStatus={paymentStatus}
+                onRadioChange={this.onRadioChange}
+
                 id={id}
                 isLoading={isLoading}
                 errors={errors}
@@ -166,16 +220,6 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        },
-        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
-        },
-        pullSkillSetList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullSkillSetList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
         },
         putOrderLiteDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(

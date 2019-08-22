@@ -988,3 +988,14 @@ export const WORK_ORDER_POSTPONE_REASON_CHOICES = [
         label: "Other"
     }
 ];
+
+
+export const WORK_ORDER_NEW_STATE = 'new'
+export const WORK_ORDER_DECLINED_STATE = 'declined'
+export const WORK_ORDER_PENDING_STATE = 'pending'
+export const WORK_ORDER_CANCELLED_STATE = 'cancelled'
+export const WORK_ORDER_ONGOING_STATE = 'ongoing'
+export const WORK_ORDER_IN_PROGRESS_STATE = 'in_progress'
+export const WORK_ORDER_COMPLETED_BUT_UNPAID_STATE = 'completed_and_unpaid'
+export const WORK_ORDER_COMPLETED_AND_PAID_STATE = 'completed_and_paid'
+export const WORK_ORDER_ARCHIVED_STATE = 'archived'

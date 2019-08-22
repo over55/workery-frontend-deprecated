@@ -5,12 +5,22 @@ import { Link } from "react-router-dom";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
+import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import {
+    WORK_ORDER_COMPLETED_AND_PAID_STATE,
+    WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
+    IS_OK_TO_EMAIL_CHOICES
+} from "../../../constants/api";
 
 
 export default class FinancialUpdateComponent extends Component {
     render() {
         const {
             id, isLoading, errors,
+
+            paymentStatus,
+            onRadioChange,
+
             onClick, onTextChange,
         } = this.props;
 
@@ -47,9 +57,17 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-graduation-cap"></i>&nbsp;Skills and Description
-                            </p>
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.paymentStatus}
+                                label="What is the payment status of this job? (*)"
+                                name="paymentStatus"
+                                onChange={onRadioChange}
+                                selectedValue={paymentStatus}
+                                options={PAYMENT_STATUS_CHOICES}
+                                helpText='Selecting "yes" will result in job being paid.'
+                            />
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
@@ -70,3 +88,18 @@ export default class FinancialUpdateComponent extends Component {
         );
     }
 }
+
+
+export const PAYMENT_STATUS_CHOICES = [
+    {
+        id: 'paymentStatus-t-choice',
+        name: "paymentStatus",
+        value: WORK_ORDER_COMPLETED_AND_PAID_STATE,
+        label: "Paid"
+    },{
+        id: 'paymentStatus-f-choice',
+        name: "paymentStatus",
+        value: WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
+        label: "Unpaid"
+    }
+];
