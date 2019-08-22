@@ -201,8 +201,13 @@ export default class FinancialRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to={`/`}>
-                                                    Promote&nbsp;<i className="fas fa-chevron-right"></i>
+                                                <Link to={`/financial/${order.id}/cancel`}>
+                                                    Cancel&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to={`/financial/${order.id}/unassign`}>
+                                                    Unassign&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                         </ul>
@@ -213,7 +218,7 @@ export default class FinancialRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
-                                <Link to={`/`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
+                                <Link to={`/financial/${order.id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
                                 </Link>
                                 <Link to={`/financials`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
