@@ -16,7 +16,7 @@ export default class PartnerMetricsUpdateComponent extends Component {
     render() {
         const {
             id, givenName, lastName,
-            typeOf, isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOther, joinDate, description,
+            typeOf, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOther, joinDate, description,
             onRadioChange,  onTagMultiChange, onJoinDateChange,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
@@ -61,18 +61,6 @@ export default class PartnerMetricsUpdateComponent extends Component {
                             <p className="border-bottom mb-3 pb-1 text-secondary">
                                 <i className="fas fa-user-shield"></i>&nbsp;Personal Information
                             </p>
-
-                            <BootstrapMultipleSelect
-                                borderColour="border-success"
-                                label="Tags"
-                                name="tags"
-                                defaultOptionLabel="Please select the tag."
-                                options={tagOptions}
-                                selectedOptions={tags}
-                                error={errors.tags}
-                                onMultiChange={onTagMultiChange}
-                                isLoading={isTagsLoading}
-                            />
 
                             <BootstrapRadio
                                 inputClassName="form-check-input form-check-input-lg"

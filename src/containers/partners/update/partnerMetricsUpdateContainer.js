@@ -6,7 +6,6 @@ import * as moment from 'moment';
 import PartnerMetricsUpdateComponent from "../../../components/partners/update/partnerMetricsUpdateComponent";
 import { validateMetricsInput } from "../../../validators/partnerValidator";
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { putPartnerMetricsDetail } from '../../../actions/partnerActions';
 
@@ -31,8 +30,6 @@ class PartnerMetricsUpdateContainer extends Component {
             id: id,
             givenName: this.props.partnerDetail.givenName,
             lastName: this.props.partnerDetail.lastName,
-            isTagsLoading: true,
-            tags: this.props.partnerDetail.tags,
             dateOfBirth: birthdateObj,
             gender: this.props.partnerDetail.gender,
             isHowHearLoading: true,
@@ -48,12 +45,10 @@ class PartnerMetricsUpdateContainer extends Component {
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onDateOfBirthChange = this.onDateOfBirthChange.bind(this);
         this.onJoinDateChange = this.onJoinDateChange.bind(this);
-        this.onTagMultiChange = this.onTagMultiChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
-        this.onTagsSuccessFetch = this.onTagsSuccessFetch.bind(this);
         this.onHowHearSuccessFetch = this.onHowHearSuccessFetch.bind(this);
     }
 
@@ -73,14 +68,6 @@ class PartnerMetricsUpdateContainer extends Component {
         const joinDateMoment = moment(this.state.joinDate);
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
 
-        // // (3) Tags - We need to only return our `id` values.
-        // let idTags = [];
-        // for (let i = 0; i < this.state.tags.length; i++) {
-        //     let tag = this.state.tags[i];
-        //     idTags.push(tag.value);
-        // }
-        // postData.tags = idTags;
-
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
@@ -96,7 +83,6 @@ class PartnerMetricsUpdateContainer extends Component {
 
          // Fetch all our GUI drop-down options which are populated by the API.
         this.props.pullHowHearList(1,1000, new Map(), this.onHowHearSuccessFetch);
-        this.props.pullTagList(1, 1000, new Map(), this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -128,10 +114,6 @@ class PartnerMetricsUpdateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
-    }
-
-    onTagsSuccessFetch(tags) {
-        this.setState({ isTagsLoading: false, });
     }
 
     onHowHearSuccessFetch(howHearList) {
@@ -167,23 +149,6 @@ class PartnerMetricsUpdateContainer extends Component {
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
         this.setState({ storeLabelKey: label, }); // Save to store.
-    }
-
-    onTagMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // We need to only return our `id` values, therefore strip out the
-        // `react-select` options format of the data and convert it into an
-        // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
-        if (selectedOptions !== null && selectedOptions !== undefined) {
-            for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
-            }
-        }
-        this.setState({ tags: idTags, });
     }
 
     onDateOfBirthChange(dateObj) {
@@ -225,13 +190,11 @@ class PartnerMetricsUpdateContainer extends Component {
     render() {
         const {
             id, givenName, lastName,
-            typeOf, isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate,
+            typeOf, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate,
             errors
         } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
-        const tagOptions = getTagReactSelectOptions(this.props.tagList);
-        const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
 
         return (
             <PartnerMetricsUpdateComponent
@@ -239,9 +202,6 @@ class PartnerMetricsUpdateContainer extends Component {
                 givenName={givenName}
                 lastName={lastName}
                 typeOf={typeOf}
-                isTagsLoading={isTagsLoading}
-                tags={transcodedTags}
-                tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
                 gender={gender}
                 joinDate={joinDate}
@@ -265,7 +225,6 @@ class PartnerMetricsUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        tagList: store.tagListState,
         howHearList: store.howHearListState,
         partnerDetail: store.partnerDetailState,
     };
@@ -276,11 +235,6 @@ const mapDispatchToProps = dispatch => {
         pullHowHearList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullHowHearList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
-            )
-        },
-        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
         setFlashMessage: (typeOf, text) => {
