@@ -29,6 +29,8 @@ class FinancialUpdateContainer extends Component {
             paymentStatus: this.props.orderDetail.state,
             invoiceDate: this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null,
             invoiceIds: this.props.orderDetail.invoiceIds,
+            invoiceQuotedLabourAmount: this.props.orderDetail.invoiceQuotedLabourAmount,
+            invoiceQuotedMaterialAmount: this.props.orderDetail.invoiceQuotedMaterialAmount,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -197,13 +199,15 @@ class FinancialUpdateContainer extends Component {
     render() {
         const {
             id, errors, isLoading,
-            paymentStatus, invoiceDate, invoiceIds,
+            paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
         } = this.state;
 
         return (
             <FinancialUpdateComponent
                 // Text
                 invoiceIds={invoiceIds}
+                invoiceQuotedLabourAmount={invoiceQuotedLabourAmount}
+                invoiceQuotedMaterialAmount={invoiceQuotedMaterialAmount}
                 onTextChange={this.onTextChange}
 
                 // Radio GUI

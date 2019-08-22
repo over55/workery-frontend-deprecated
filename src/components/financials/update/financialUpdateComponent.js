@@ -10,6 +10,7 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from "../../bootstrap/bootstrapDatePicker";
+import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
 import {
     WORK_ORDER_COMPLETED_AND_PAID_STATE,
     WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
@@ -23,6 +24,8 @@ export default class FinancialUpdateComponent extends Component {
             id, isLoading, errors,
 
             invoiceIds,
+            invoiceQuotedLabourAmount,
+            invoiceQuotedMaterialAmount,
             onTextChange,
 
             paymentStatus,
@@ -99,6 +102,28 @@ export default class FinancialUpdateComponent extends Component {
                                 name="invoiceIds"
                                 type="text"
                                 helpText="Please note, you are able to input multiple invoice ID values if you want, just separate them by commas. Ex.: 123, 456."
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceQuotedLabourAmount}
+                                label="Quoted Labour"
+                                onChange={onTextChange}
+                                value={invoiceQuotedLabourAmount}
+                                name="invoiceQuotedLabourAmount"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceQuotedMaterialAmount}
+                                label="Quoted Materials"
+                                onChange={onTextChange}
+                                value={invoiceQuotedMaterialAmount}
+                                name="invoiceQuotedMaterialAmount"
+                                helpText=""
                             />
 
                             <div className="form-group">
