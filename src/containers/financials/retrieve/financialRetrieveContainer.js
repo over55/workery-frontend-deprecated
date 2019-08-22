@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import FinancialRetrieveComponent from "../../../components/financials/retrieve/financialRetrieveComponent";
 import { pullOrderDetail } from "../../../actions/orderActions";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
 import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
@@ -27,7 +25,7 @@ class FinancialRetrieveContainer extends Component {
         // Update state.
         this.state = {
             id: parseInt(id),
-            isLoading: true,
+            isLoading: false,
             order: {}
         }
 

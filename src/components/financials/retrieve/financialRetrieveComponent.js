@@ -1,6 +1,8 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
@@ -22,17 +24,14 @@ export default class FinancialRetrieveComponent extends Component {
                             <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                        { /*
-                            <i className="fas fa-wrench"></i>&nbsp;Order #{order && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
-                            */}
-                            <i className="fas fa-wrench"></i>&nbsp;Order #{order.id}
+                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{order && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;View Financial Details</h1>
+                <h1><i className="fas fa-money-check-alt"></i>&nbsp;View Financial Details</h1>
 
                 <div className="row pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
@@ -47,17 +46,109 @@ export default class FinancialRetrieveComponent extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-sitemap"></i>&nbsp;Type
+                                        <i className="fas fa-wrench"></i>&nbsp;Order
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Financialship Class</th>
-                                    <td>test 1 2 </td>
+                                    <th scope="row" className="bg-light">Order #</th>
+                                    <td>
+                                        <Link to={`/order/${order.id}`} target="_blank">
+                                            {order && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
                                 </tr>
-
-
-
-
+                                <tr>
+                                    <th scope="row" className="bg-light">Order Start Date</th>
+                                    <td>{order.startDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Order Completion Date</th>
+                                    <td>{order.completionDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Order #</th>
+                                    <td>
+                                        <Link to={`/associate/${order.associate}`} target="_blank">
+                                            {order && order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Date</th>
+                                    <td><Moment format="YYYY/MM/DD">{order.invoiceDate}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice ID(s) #</th>
+                                    <td>{order.invoiceIds}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Quoted Labour</th>
+                                    <td>${order.invoiceQuotedLabourAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Quoted Materials</th>
+                                    <td>${order.invoiceQuotedMaterialAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Total Quote</th>
+                                    <td>${order.invoiceTotalQuoteAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Labour</th>
+                                    <td>${order.invoiceLabourAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Materials</th>
+                                    <td>${order.invoiceMaterialAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Total Tax</th>
+                                    <td>${order.invoiceTaxAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Total</th>
+                                    <td>${order.invoiceTotalAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Service Fee</th>
+                                    <td>${order.invoiceServiceFeeAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Service Fee Payment Date</th>
+                                    <td>
+                                        {order.invoiceServiceFeePaymentDate
+                                            ?<Moment format="YYYY/MM/DD">{order.invoiceServiceFeePaymentDate}</Moment>
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Service Fee Paid</th>
+                                    <td>
+                                        {order.invoiceActualServiceFeeAmountPaid
+                                            ? <div>${order.invoiceActualServiceFeeAmountPaid}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Account Balance</th>
+                                    <td>
+                                        {order.invoiceBalanceOwingAmount
+                                            ? <div>${order.invoiceBalanceOwingAmount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light"># of Visits</th>
+                                    <td>
+                                        {order.visits
+                                            ? order.visits.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
