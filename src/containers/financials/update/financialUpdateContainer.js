@@ -4,10 +4,10 @@ import Scroll from 'react-scroll';
 
 import FinancialUpdateComponent from "../../../components/financials/update/financialUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateLiteUpdateInput } from "../../../validators/orderValidator";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import { putOrderLiteDetail } from '../../../actions/orderActions';
 import { pullServiceFeeList, getServiceFeeReactSelectOptions } from '../../../actions/serviceFeeActions';
+import { validateInput } from '../../../validators/financialValidator';
 
 
 class FinancialUpdateContainer extends Component {
@@ -195,7 +195,7 @@ class FinancialUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateLiteUpdateInput(this.state);
+        const { errors, isValid } = validateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
