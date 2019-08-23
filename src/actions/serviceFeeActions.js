@@ -385,7 +385,7 @@ export function getServiceFeeReactSelectOptions(serviceFeeList=[], selectName="s
                 serviceFeeOptions.push({
                     selectName: selectName,
                     value: serviceFee.id,
-                    label: serviceFee.text
+                    label: serviceFee.title
                 });
                 // console.log(serviceFee);
             }
@@ -418,7 +418,7 @@ export function getPickedServiceFeeReactSelectOptions(serviceFeePKsArray, servic
                         serviceFeeOptions.push({
                             selectName: selectName,
                             value: serviceFee.id,
-                            label: serviceFee.text
+                            label: serviceFee.title
                         });
                         // console.log(serviceFee);
                     } // end IF

@@ -7,7 +7,7 @@ import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateLiteUpdateInput } from "../../../validators/orderValidator";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import { putOrderLiteDetail } from '../../../actions/orderActions';
-import { pullServiceFeeList, getPickedServiceFeeReactSelectOptions } from '../../../actions/serviceFeeActions';
+import { pullServiceFeeList, getServiceFeeReactSelectOptions } from '../../../actions/serviceFeeActions';
 
 
 class FinancialUpdateContainer extends Component {
@@ -221,7 +221,7 @@ class FinancialUpdateContainer extends Component {
             invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee
         } = this.state;
 
-        const invoiceServiceFeeOptions = getPickedServiceFeeReactSelectOptions(this.props.serviceFeeList);
+        const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList);
 
         /*
          *  Compute the total quoted amount.
