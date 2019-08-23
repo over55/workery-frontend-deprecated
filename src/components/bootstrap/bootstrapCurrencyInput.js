@@ -33,6 +33,8 @@ export const BootstrapCurrencyInput = ({
                 value={value}
                 onChange={onChange}
                 disabled={disabled}
+                fixedDecimalScale={true}
+                decimalScale={2}
             />
             <small id={helpID} className="form-text text-muted">{helpText}</small>
             {error && <div className="invalid-feedback">{error}</div>}
