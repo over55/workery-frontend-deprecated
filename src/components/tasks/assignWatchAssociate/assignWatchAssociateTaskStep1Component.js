@@ -16,7 +16,7 @@ class AssignWatchAssociateTaskStep1Component extends Component {
                             <Link to={`/tasks`}><i className="fas fa-tasks"></i>&nbsp;Tasks</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-thumbtack"></i>&nbsp;Task #1
+                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
@@ -43,15 +43,43 @@ class AssignWatchAssociateTaskStep1Component extends Component {
                     <div className="col-md-10 mx-auto p-2">
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
-                            <tr className="bg-dark">
-                                <th scope="row" colSpan="2" className="text-light">
-                                    <i className="fas fa-table"></i>&nbsp;Task Details
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope="row" className="bg-light">Description</th>
-                                <td>A new watch has been created and requires an associate to be assigned. Please assign an associate to the watch.</td>
-                            </tr>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-table"></i>&nbsp;Task Details
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{task && task.description}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Job #</th>
+                                    <td>{task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Job Start Date</th>
+                                    <td>{task && task.jobStartDate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Name</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Phone Number</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Job Description</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill Set(s)</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill Set(s)</th>
+                                    <td>View comments</td>
+                                </tr>
                             </tbody>
                         </table>
 

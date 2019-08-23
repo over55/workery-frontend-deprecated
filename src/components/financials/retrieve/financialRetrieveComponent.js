@@ -25,7 +25,7 @@ export default class FinancialRetrieveComponent extends Component {
                             <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{order && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{order && order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
@@ -54,7 +54,7 @@ export default class FinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Order #</th>
                                     <td>
                                         <Link to={`/order/${order.id}`} target="_blank">
-                                            {order && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            {order && order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
@@ -184,7 +184,7 @@ export default class FinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light"># of Visits</th>
                                     <td>
-                                        {order.visits
+                                        {order && order.visits
                                             ? order.visits.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
                                             : "-"
                                         }
