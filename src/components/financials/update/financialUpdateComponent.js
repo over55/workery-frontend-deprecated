@@ -34,6 +34,8 @@ export default class FinancialUpdateComponent extends Component {
             invoiceMaterialAmount,
             invoiceTaxAmount,
             invoiceTotalAmount,
+            invoiceServiceFeeAmount,
+            invoiceBalanceOwingAmount,
             onAmountChange,
 
             // SELECT
@@ -48,6 +50,9 @@ export default class FinancialUpdateComponent extends Component {
             // DATE
             invoiceDate,
             onInvoiceDateChange,
+            invoiceServiceFeePaymentDate,
+            onInvoiceServiceFeePaymentDate,
+            invoiceActualServiceFeeAmountPaid,
 
             // EVERYTHING ELSE
             onClick, id, isLoading, errors,
@@ -224,6 +229,51 @@ export default class FinancialUpdateComponent extends Component {
                                 value={invoiceServiceFee}
                                 error={errors.invoiceServiceFee}
                                 onSelectChange={onSelectChange}
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceServiceFeeAmount}
+                                label="Required Service Fee"
+                                onChange={onAmountChange}
+                                value={invoiceServiceFeeAmount}
+                                name="invoiceServiceFeeAmount"
+                                helpText="The service fee amount owed by the associate."
+                                disabled={true}
+                            />
+
+                            <BootstrapDatePicker
+                                label="Invoice service fee payment date (*)"
+                                name="invoiceServiceFeePaymentDate"
+                                dateObj={invoiceServiceFeePaymentDate}
+                                onTimeChange={onInvoiceServiceFeePaymentDate}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.invoiceServiceFeePaymentDate}
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceActualServiceFeeAmountPaid}
+                                label="Actual Service Fee Paid"
+                                onChange={onAmountChange}
+                                value={invoiceActualServiceFeeAmountPaid}
+                                name="invoiceActualServiceFeeAmountPaid"
+                                helpText="Please fill in the actual service fee amount paid by the associate and received by your organization."
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceBalanceOwingAmount}
+                                label="Required Service Fee"
+                                onChange={onAmountChange}
+                                value={invoiceBalanceOwingAmount}
+                                name="invoiceBalanceOwingAmount"
+                                helpText="The service fee amount owed by the associate."
+                                disabled={true}
                             />
 
                             <div className="form-group">

@@ -39,6 +39,10 @@ class FinancialUpdateContainer extends Component {
             invoiceMaterialAmount: parseFloat(this.props.orderDetail.invoiceMaterialAmount),
             invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
             invoiceServiceFee: parseInt(this.props.orderDetail.invoiceServiceFee),
+            invoiceServiceFeeAmount: parseFloat(this.props.orderDetail.invoiceServiceFeeAmount),
+            invoiceServiceFeePaymentDate: this.props.orderDetail.invoiceServiceFeePaymentDate ? new Date(this.props.orderDetail.invoiceServiceFeePaymentDate) : null,
+            invoiceActualServiceFeeAmountPaid: parseFloat(this.props.orderDetail.invoiceActualServiceFeeAmountPaid),
+            invoiceBalanceOwingAmount: parseFloat(this.props.orderDetail.invoiceBalanceOwingAmount),
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -188,6 +192,10 @@ class FinancialUpdateContainer extends Component {
         this.setState({ invoiceDate: dateObj, });
     }
 
+    onInvoiceServiceFeePaymentDate(dateObj) {
+        this.setState({ invoiceServiceFeePaymentDate: dateObj, });
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -218,7 +226,9 @@ class FinancialUpdateContainer extends Component {
         const {
             id, errors, isLoading,
             paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
-            invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee
+            invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee,
+            invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
+            invoiceBalanceOwingAmount
         } = this.state;
 
         const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList);
@@ -247,6 +257,8 @@ class FinancialUpdateContainer extends Component {
                 invoiceMaterialAmount={invoiceMaterialAmount}
                 invoiceTaxAmount={invoiceTaxAmount}
                 invoiceTotalAmount={invoiceTotalAmount}
+                invoiceServiceFeeAmount={invoiceServiceFeeAmount}
+                invoiceBalanceOwingAmount={invoiceBalanceOwingAmount}
                 onAmountChange={this.onAmountChange}
 
                 // Select
@@ -260,6 +272,9 @@ class FinancialUpdateContainer extends Component {
                 // Date GUI
                 invoiceDate={invoiceDate}
                 onInvoiceDateChange={this.onInvoiceDateChange}
+                invoiceServiceFeePaymentDate={invoiceServiceFeePaymentDate}
+                onInvoiceServiceFeePaymentDate={this.onInvoiceServiceFeePaymentDate}
+                invoiceActualServiceFeeAmountPaid={invoiceActualServiceFeeAmountPaid}
 
                 // Other GUI
                 id={id}
