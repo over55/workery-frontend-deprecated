@@ -22,6 +22,8 @@ class FinancialUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+
+
         this.state = {
             errors: {},
             isLoading: false,
@@ -29,12 +31,17 @@ class FinancialUpdateContainer extends Component {
             paymentStatus: this.props.orderDetail.state,
             invoiceDate: this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null,
             invoiceIds: this.props.orderDetail.invoiceIds,
-            invoiceQuotedLabourAmount: this.props.orderDetail.invoiceQuotedLabourAmount,
-            invoiceQuotedMaterialAmount: this.props.orderDetail.invoiceQuotedMaterialAmount,
+            invoiceQuotedLabourAmount: parseFloat(this.props.orderDetail.invoiceQuotedLabourAmount),
+            invoiceQuotedMaterialAmount: parseFloat(this.props.orderDetail.invoiceQuotedMaterialAmount),
+            invoiceTotalQuoteAmount: parseFloat(this.props.orderDetail.invoiceTotalQuoteAmount),
+            invoiceLabourAmount: parseFloat(this.props.orderDetail.invoiceLabourAmount),
+            invoiceMaterialAmount: parseFloat(this.props.orderDetail.invoiceMaterialAmount),
+            invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onAmountChange = this.onAmountChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -52,28 +59,25 @@ class FinancialUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
+        postData.state = this.state.paymentStatus;
+
+        /*
+         *  Compute the total quoted amount.
+         */
+        postData.invoiceTotalQuoteAmount = this.state.invoiceQuotedMaterialAmount + this.state.invoiceQuotedLabourAmount;
+
+        /*
+         *  Compute the total amount.
+         */
+        // postData.invoiceTotalAmount =
+
         // update_job_api(
-        //     {{ job_item.id }},
-        //     {
-        //         'customer': customer_id,
-        //         'associate': associate_id,
-        //         'extra_comment': null,
-        //         'visits': visits,
-        //         'invoice_date': invoice_date,
-        //         'invoice_ids': invoice_ids,
-        //         'invoice_quote_amount': invoice_quote_amount,
-        //         'invoice_quoted_labour_amount': invoice_quoted_labour_amount,
-        //         'invoice_labour_amount': invoice_labour_amount,
-        //         'invoice_quoted_material_amount': invoice_quoted_material_amount,
-        //         'invoice_material_amount': invoice_material_amount,
-        //         'invoice_total_quote_amount': invoice_total_quote_amount,
-        //         'invoice_tax_amount': invoice_tax_amount,
+        //         visits
         //         'invoice_total_amount': invoice_total_amount,
         //         'invoice_service_fee_amount': invoice_service_fee_amount,
         //         'invoice_service_fee': invoice_service_fee_id,
         //         'invoice_actual_service_fee_amount_paid': invoice_actual_service_fee_amount_paid,
         //         'invoice_service_fee_payment_date': invoice_service_fee_payment_date,
-        //         'state': payment_job_status,
         //         'invoice_balance_owing_amount': invoice_balance_owing_amount,
         //     },
 
@@ -140,6 +144,17 @@ class FinancialUpdateContainer extends Component {
         this.setState({ [e.target.name]: e.target.value, });
     }
 
+    /**
+     *  Function will take the currency string and save it as a float value in
+     *  the state for the field.
+     */
+    onAmountChange(e) {
+        const amount = e.target.value.replace("$","").replace(",", "");
+        this.setState({
+            [e.target.name]: parseFloat(amount),
+        });
+    }
+
     onRadioChange(e) {
         // Get the values.
         const storageValueKey = "workery-create-client-"+[e.target.name];
@@ -200,15 +215,34 @@ class FinancialUpdateContainer extends Component {
         const {
             id, errors, isLoading,
             paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
+            invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount,
         } = this.state;
+
+        /*
+         *  Compute the total quoted amount.
+         */
+        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount;
+
+        /*
+         *  Compute the total amount.
+         */
+        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
 
         return (
             <FinancialUpdateComponent
                 // Text
                 invoiceIds={invoiceIds}
+                onTextChange={this.onTextChange}
+
+                // Amount
                 invoiceQuotedLabourAmount={invoiceQuotedLabourAmount}
                 invoiceQuotedMaterialAmount={invoiceQuotedMaterialAmount}
-                onTextChange={this.onTextChange}
+                invoiceTotalQuoteAmount={invoiceTotalQuoteAmount}
+                invoiceLabourAmount={invoiceLabourAmount}
+                invoiceMaterialAmount={invoiceMaterialAmount}
+                invoiceTaxAmount={invoiceTaxAmount}
+                invoiceTotalAmount={invoiceTotalAmount}
+                onAmountChange={this.onAmountChange}
 
                 // Radio GUI
                 paymentStatus={paymentStatus}

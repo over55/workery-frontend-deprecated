@@ -21,20 +21,30 @@ import {
 export default class FinancialUpdateComponent extends Component {
     render() {
         const {
-            id, isLoading, errors,
-
+            // TEXT
             invoiceIds,
-            invoiceQuotedLabourAmount,
-            invoiceQuotedMaterialAmount,
             onTextChange,
 
+            // AMOUNT
+            invoiceQuotedLabourAmount,
+            invoiceQuotedMaterialAmount,
+            invoiceLabourAmount,
+            invoiceTotalQuoteAmount,
+            invoiceMaterialAmount,
+            invoiceTaxAmount,
+            invoiceTotalAmount,
+            onAmountChange,
+
+            // RADIO
             paymentStatus,
             onRadioChange,
 
+            // DATE
             invoiceDate,
             onInvoiceDateChange,
 
-            onClick,
+            // EVERYTHING ELSE
+            onClick, id, isLoading, errors,
         } = this.props;
 
         return (
@@ -70,6 +80,10 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-cogs"></i>&nbsp;Status
+                            </p>
+
                             <BootstrapRadio
                                 inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
@@ -104,12 +118,16 @@ export default class FinancialUpdateComponent extends Component {
                                 helpText="Please note, you are able to input multiple invoice ID values if you want, just separate them by commas. Ex.: 123, 456."
                             />
 
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-clipboard"></i>&nbsp;Quote
+                            </p>
+
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
                                 borderColour="border-success"
                                 error={errors.invoiceQuotedLabourAmount}
                                 label="Quoted Labour"
-                                onChange={onTextChange}
+                                onChange={onAmountChange}
                                 value={invoiceQuotedLabourAmount}
                                 name="invoiceQuotedLabourAmount"
                                 helpText=""
@@ -120,11 +138,76 @@ export default class FinancialUpdateComponent extends Component {
                                 borderColour="border-success"
                                 error={errors.invoiceQuotedMaterialAmount}
                                 label="Quoted Materials"
-                                onChange={onTextChange}
+                                onChange={onAmountChange}
                                 value={invoiceQuotedMaterialAmount}
                                 name="invoiceQuotedMaterialAmount"
                                 helpText=""
                             />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceTotalQuoteAmount}
+                                label="Total Quoted"
+                                onChange={onAmountChange}
+                                value={invoiceTotalQuoteAmount}
+                                name="invoiceTotalQuoteAmount"
+                                helpText=""
+                                disabled={true}
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-clipboard-check"></i>&nbsp;Actual
+                            </p>
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceLabourAmount}
+                                label="Actual Labour"
+                                onChange={onAmountChange}
+                                value={invoiceLabourAmount}
+                                name="invoiceLabourAmount"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceMaterialAmount}
+                                label="Actual Materials"
+                                onChange={onAmountChange}
+                                value={invoiceMaterialAmount}
+                                name="invoiceMaterialAmount"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceTaxAmount}
+                                label="Tax"
+                                onChange={onAmountChange}
+                                value={invoiceTaxAmount}
+                                name="invoiceTaxAmount"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceTotalAmount}
+                                label="Total"
+                                onChange={onAmountChange}
+                                value={invoiceTotalAmount}
+                                name="invoiceTotalAmount"
+                                helpText=""
+                                disabled={true}
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-hand-holding-usd"></i>&nbsp;Service Fee
+                            </p>
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
