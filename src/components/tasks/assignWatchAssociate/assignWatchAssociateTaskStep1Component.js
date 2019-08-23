@@ -39,7 +39,7 @@ export default class AssignWatchAssociateTaskStep1Component extends Component {
                     </div>
                 </div>
 
-                <div className="ow">
+                <div className="row">
                     <div className="col-md-10 mx-auto p-2">
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
@@ -96,6 +96,30 @@ export default class AssignWatchAssociateTaskStep1Component extends Component {
                                         </Link>
                                     </td>
                                 </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <td>
+                                        <ul>
+                                            <li>
+                                                <Link to={`/order/${task.job}/postpone`}>
+                                                    Postpone Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                                </li>
+                                            <li>
+                                                <Link to={`/order/${task.job}/close`}>
+                                                    Close Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+
                             </tbody>
                         </table>
 
