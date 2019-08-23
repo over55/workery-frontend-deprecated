@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 
-class AssignWatchAssociateTaskStep3Component extends Component {
+class AssignAssociateTaskStep3Component extends Component {
     render() {
         const { associateLabel, onClick, onBack, slug } = this.props;
         return (
@@ -57,8 +57,8 @@ class AssignWatchAssociateTaskStep3Component extends Component {
                                 <td>A new watch has been created and requires an associate to be assigned. Please assign an associate to the watch.</td>
                             </tr>
                             <tr>
-                                <th scope="row" className="bg-light">Watch</th>
-                                <td>Argyle Community Watch</td>
+                                <th scope="row" className="bg-light"></th>
+                                <td>Argyle Community </td>
                             </tr>
 
                             <tr>
@@ -87,4 +87,4 @@ class AssignWatchAssociateTaskStep3Component extends Component {
     }
 }
 
-export default AssignWatchAssociateTaskStep3Component;
+export default AssignAssociateTaskStep3Component;

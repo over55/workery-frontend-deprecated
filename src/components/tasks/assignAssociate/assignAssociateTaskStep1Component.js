@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 
-export default class AssignWatchAssociateTaskStep1Component extends Component {
+export default class AssignAssociateTaskStep1Component extends Component {
     render() {
         const { id, task, onBack, onClick } = this.props;
         return (

@@ -7,7 +7,7 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 
 
-class AssignWatchAssociateTaskStep1Component extends Component {
+class AssignAssociateTaskStep1Component extends Component {
     render() {
         const { id, errors, isLoading, onClick } = this.props;
         return (
@@ -72,4 +72,4 @@ class AssignWatchAssociateTaskStep1Component extends Component {
     }
 }
 
-export default AssignWatchAssociateTaskStep1Component;
+export default AssignAssociateTaskStep1Component;

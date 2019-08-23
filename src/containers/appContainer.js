@@ -98,12 +98,9 @@ import OrderLiteUpdateContainer from "./orders/update/orderLiteUpdateContainer";
 import TaskListContainer from "./tasks/list/taskListContainer";
 import TaskSearchContainer from "./tasks/search/taskSearchContainer";
 import TaskSearchResultContainer from "./tasks/search/taskSearchResultContainer";
-import AssignWatchAssociateTaskStep1Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep1Container";
-import AssignWatchAssociateTaskStep2Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep2Container";
-import AssignWatchAssociateTaskStep3Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep3Container";
-import AssignWatchAreaCoordinatorTaskStep1Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep1Container";
-import AssignWatchAreaCoordinatorTaskStep2Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep2Container";
-import AssignWatchAreaCoordinatorTaskStep3Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep3Container";
+import AssignAssociateTaskStep1Container from "./tasks/assignAssociate/assignAssociateTaskStep1Container";
+import AssignAssociateTaskStep2Container from "./tasks/assignAssociate/assignAssociateTaskStep2Container";
+import AssignAssociateTaskStep3Container from "./tasks/assignAssociate/assignAssociateTaskStep3Container";
 
 // Staff
 import StaffListContainer from "./staff/list/staffListContainer";
@@ -325,12 +322,9 @@ class AppContainer extends React.Component {
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />
                                 <Route path="/tasks/search" exact component={requiresAuth(TaskSearchContainer)} />
                                 <Route path="/tasks/search-results" exact component={requiresAuth(TaskSearchResultContainer)} />
-                                <Route path="/task/1/:id/step-1" exact component={requiresAuth(AssignWatchAssociateTaskStep1Container)} />
-                                <Route path="/task/1/:id/step-2" exact component={requiresAuth(AssignWatchAssociateTaskStep2Container)} />
-                                <Route path="/task/1/:id/step-3" exact component={requiresAuth(AssignWatchAssociateTaskStep3Container)} />
-                                <Route path="/task/2/:id/step-1" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep1Container)} />
-                                <Route path="/task/2/:id/step-2" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep2Container)} />
-                                <Route path="/task/2/:id/step-3" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep3Container)} />
+                                <Route path="/task/1/:id/step-1" exact component={requiresAuth(AssignAssociateTaskStep1Container)} />
+                                <Route path="/task/1/:id/step-2" exact component={requiresAuth(AssignAssociateTaskStep2Container)} />
+                                <Route path="/task/1/:id/step-3" exact component={requiresAuth(AssignAssociateTaskStep3Container)} />
 
                                 { /* STAFF */ }
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />

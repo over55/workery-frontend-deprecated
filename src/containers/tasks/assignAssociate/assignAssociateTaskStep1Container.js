@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AssignWatchAssociateTaskStep1Component from "../../../components/tasks/assignWatchAssociate/assignWatchAssociateTaskStep1Component";
+import AssignAssociateTaskStep1Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep1Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 
 
-class AssignWatchAssociateTaskStep1Container extends Component {
+class AssignAssociateTaskStep1Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -76,7 +76,7 @@ class AssignWatchAssociateTaskStep1Container extends Component {
 
     render() {
         return (
-            <AssignWatchAssociateTaskStep1Component
+            <AssignAssociateTaskStep1Component
                 id={this.state.id}
                 task={this.props.taskDetail}
                 onBack={this.onBack}
@@ -107,4 +107,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssignWatchAssociateTaskStep1Container);
+)(AssignAssociateTaskStep1Container);

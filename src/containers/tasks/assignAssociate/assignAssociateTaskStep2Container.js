@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssignWatchAssociateTaskStep2Component from "../../../components/tasks/assignWatchAssociate/assignWatchAssociateTaskStep2Component";
+import AssignAssociateTaskStep2Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep2Component";
 import { validateTask1Step2Input } from "../../../validators/taskValidator";
 import { getAssociateReactSelectOptions } from '../../../actions/watchAction';
 import {
@@ -106,7 +106,7 @@ class TaskUpdateContainer extends Component {
     render() {
         const { isLoading, errors, id, } = this.state;
         return (
-            <AssignWatchAssociateTaskStep2Component
+            <AssignAssociateTaskStep2Component
                 id={id}
                 isLoading={isLoading}
                 errors={errors}
