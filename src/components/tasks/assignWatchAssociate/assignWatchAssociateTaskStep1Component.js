@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 
-class AssignWatchAssociateTaskStep1Component extends Component {
+export default class AssignWatchAssociateTaskStep1Component extends Component {
     render() {
         const { id, task, onBack, onClick } = this.props;
         return (
@@ -62,23 +62,39 @@ class AssignWatchAssociateTaskStep1Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
-                                    <td></td>
+                                    <td>{task && task.jobCustomerFullName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Phone Number</th>
-                                    <td></td>
+                                    <td>{task && task.jobCustomerFullName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Description</th>
-                                    <td></td>
+                                    <td>{task && task.jobDescription}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Skill Set(s)</th>
-                                    <td></td>
+                                    <td>
+                                        {task.jobPrettySkillSets && task.jobPrettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Tag(s)</th>
+                                    <td>
+                                        {task.jobPrettyTags && task.jobPrettyTags.map(
+                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Skill Set(s)</th>
-                                    <td>View comments</td>
+                                    <td>
+                                        <Link to={`/order/${task.job}/comments`} target="_blank">
+                                            View comments&nbsp;({task.jobCommentsCount})&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -102,4 +118,22 @@ class AssignWatchAssociateTaskStep1Component extends Component {
     }
 }
 
-export default AssignWatchAssociateTaskStep1Component;
+
+class TagItem extends Component {
+    render() {
+        const { id, text } = this.props.tag;
+        return (
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
+        );
+    };
+}
+
+
+class SkillSetItem extends Component {
+    render() {
+        const { subCategory, value } = this.props.skillSet;
+        return (
+            <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
+        );
+    };
+}
