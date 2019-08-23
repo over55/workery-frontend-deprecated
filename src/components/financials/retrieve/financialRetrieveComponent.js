@@ -201,13 +201,13 @@ export default class FinancialRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to={`/financial/${order.id}/cancel`}>
-                                                    Cancel&nbsp;<i className="fas fa-chevron-right"></i>
+                                                <Link to={`/order/${order.id}/close`} target="_blank">
+                                                    Cancel&nbsp;<i className="fas fa-external-link-alt"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`/financial/${order.id}/unassign`}>
-                                                    Unassign&nbsp;<i className="fas fa-chevron-right"></i>
+                                                <Link to={`/order/${order.id}/unassign-associate`} target="_blank">
+                                                    Unassign&nbsp;<i className="fas fa-external-link-alt"></i>
                                                 </Link>
                                             </li>
                                         </ul>
