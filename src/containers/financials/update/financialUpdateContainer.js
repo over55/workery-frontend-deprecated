@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import FinancialUpdateComponent from "../../../components/financials/update/financialUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { putOrderLiteDetail } from '../../../actions/orderActions';
+import { putOrderFinancialDetail } from '../../../actions/orderActions';
 import { pullServiceFeeList, getServiceFeeReactSelectOptions } from '../../../actions/serviceFeeActions';
-import { validateInput } from '../../../validators/financialValidator';
+import { validateFinancialUpdateInput } from '../../../validators/orderValidator';
 
 
 class FinancialUpdateContainer extends Component {
@@ -49,6 +50,7 @@ class FinancialUpdateContainer extends Component {
         this.onAmountChange = this.onAmountChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
+        this.onInvoiceServiceFeePaymentDate = this.onInvoiceServiceFeePaymentDate.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -64,7 +66,14 @@ class FinancialUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
+        // Map the fields
         postData.state = this.state.paymentStatus;
+
+        const invoiceDateMoment = moment(this.state.invoiceDate);
+        postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD");
+
+        const invoiceServiceFeePaymentDateMoment = moment(this.state.invoiceServiceFeePaymentDate);
+        postData.invoiceServiceFeePaymentDate = invoiceServiceFeePaymentDateMoment.format("YYYY-MM-DD");
 
         /*
          *  Compute the total quoted amount.
@@ -113,7 +122,7 @@ class FinancialUpdateContainer extends Component {
     onSuccessfulSubmissionCallback(order) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Order has been successfully updated.");
-        this.props.history.push("/order/"+this.state.id+"/full");
+        this.props.history.push("/financial/"+this.state.id);
     }
 
     onFailedSubmissionCallback(errors) {
@@ -195,11 +204,11 @@ class FinancialUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateInput(this.state);
+        const { errors, isValid } = validateFinancialUpdateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putOrderLiteDetail(
+            this.props.putOrderFinancialDetail(
                 this.getPostData(),
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
@@ -301,9 +310,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putOrderLiteDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putOrderFinancialDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putOrderLiteDetail(data, onSuccessCallback, onFailureCallback)
+                putOrderFinancialDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
         pullServiceFeeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
