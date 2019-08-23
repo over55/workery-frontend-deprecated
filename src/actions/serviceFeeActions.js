@@ -393,3 +393,41 @@ export function getServiceFeeReactSelectOptions(serviceFeeList=[], selectName="s
     }
     return serviceFeeOptions;
 }
+
+
+/**
+ * Utlity function takes an array of `ServiceFee` primary keys and the `ServiceFees` results
+ * from the API and returns the HTML dropdown selections which will be consumed
+ * by the GUI powered by `react-select`.
+ */
+export function getPickedServiceFeeReactSelectOptions(serviceFeePKsArray, serviceFeeList=[], selectName="serviceFee") {
+    const serviceFeeOptions = [];
+    const isAPIResponseNotEmpty = isEmpty(serviceFeeList) === false;
+    const isPKsArrayNotEmpty = isEmpty(serviceFeePKsArray) === false;
+    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+        const results = serviceFeeList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < serviceFeePKsArray.length; i++) {
+                let serviceFeePK = serviceFeePKsArray[i];
+
+                for (let j = 0; j < results.length; j++) {
+                    let serviceFee = results[j];
+
+                    if (serviceFee.id === serviceFeePK) {
+                        serviceFeeOptions.push({
+                            selectName: selectName,
+                            value: serviceFee.id,
+                            label: serviceFee.text
+                        });
+                        // console.log(serviceFee);
+                    } // end IF
+
+                } //end FOR
+
+            } // end FOR
+
+        } // end IF
+    }
+    return serviceFeeOptions;
+}

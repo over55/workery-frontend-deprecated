@@ -7,6 +7,7 @@ import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateLiteUpdateInput } from "../../../validators/orderValidator";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import { putOrderLiteDetail } from '../../../actions/orderActions';
+import { pullServiceFeeList, getPickedServiceFeeReactSelectOptions } from '../../../actions/serviceFeeActions';
 
 
 class FinancialUpdateContainer extends Component {
@@ -37,6 +38,7 @@ class FinancialUpdateContainer extends Component {
             invoiceLabourAmount: parseFloat(this.props.orderDetail.invoiceLabourAmount),
             invoiceMaterialAmount: parseFloat(this.props.orderDetail.invoiceMaterialAmount),
             invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
+            invoiceServiceFee: parseInt(this.props.orderDetail.invoiceServiceFee),
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -93,6 +95,7 @@ class FinancialUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullServiceFeeList(1, 1000);
     }
 
     componentWillUnmount() {
@@ -215,8 +218,10 @@ class FinancialUpdateContainer extends Component {
         const {
             id, errors, isLoading,
             paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
-            invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount,
+            invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee
         } = this.state;
+
+        const invoiceServiceFeeOptions = getPickedServiceFeeReactSelectOptions(this.props.serviceFeeList);
 
         /*
          *  Compute the total quoted amount.
@@ -244,6 +249,10 @@ class FinancialUpdateContainer extends Component {
                 invoiceTotalAmount={invoiceTotalAmount}
                 onAmountChange={this.onAmountChange}
 
+                // Select
+                invoiceServiceFee={invoiceServiceFee}
+                invoiceServiceFeeOptions={invoiceServiceFeeOptions}
+
                 // Radio GUI
                 paymentStatus={paymentStatus}
                 onRadioChange={this.onRadioChange}
@@ -268,6 +277,7 @@ const mapStateToProps = function(store) {
         skillSetList: store.skillSetListState,
         tagList: store.tagListState,
         orderDetail: store.orderDetailState,
+        serviceFeeList: store.serviceFeeListState,
     };
 }
 
@@ -279,6 +289,11 @@ const mapDispatchToProps = dispatch => {
         putOrderLiteDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 putOrderLiteDetail(data, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullServiceFeeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullServiceFeeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

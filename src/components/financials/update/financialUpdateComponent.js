@@ -8,6 +8,7 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from "../../bootstrap/bootstrapDatePicker";
 import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
@@ -34,6 +35,11 @@ export default class FinancialUpdateComponent extends Component {
             invoiceTaxAmount,
             invoiceTotalAmount,
             onAmountChange,
+
+            // SELECT
+            invoiceServiceFee,
+            invoiceServiceFeeOptions,
+            onSelectChange,
 
             // RADIO
             paymentStatus,
@@ -208,6 +214,17 @@ export default class FinancialUpdateComponent extends Component {
                             <p className="border-bottom mb-3 pb-1 text-secondary">
                                 <i className="fas fa-hand-holding-usd"></i>&nbsp;Service Fee
                             </p>
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Service Fee (*)"
+                                name="invoiceServiceFee"
+                                defaultOptionLabel="Please select the service fee."
+                                options={invoiceServiceFeeOptions}
+                                value={invoiceServiceFee}
+                                error={errors.invoiceServiceFee}
+                                onSelectChange={onSelectChange}
+                            />
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
