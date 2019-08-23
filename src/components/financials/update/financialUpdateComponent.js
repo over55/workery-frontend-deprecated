@@ -24,6 +24,7 @@ export default class FinancialUpdateComponent extends Component {
         const {
             // TEXT
             invoiceIds,
+            visits,
             onTextChange,
 
             // AMOUNT
@@ -127,6 +128,18 @@ export default class FinancialUpdateComponent extends Component {
                                 name="invoiceIds"
                                 type="text"
                                 helpText="Please note, you are able to input multiple invoice ID values if you want, just separate them by commas. Ex.: 123, 456."
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.visits}
+                                label="# of Visit(s)"
+                                onChange={onTextChange}
+                                value={visits}
+                                name="visits"
+                                type="text"
+                                helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 100."
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -268,11 +281,11 @@ export default class FinancialUpdateComponent extends Component {
                                 inputClassName="form-control"
                                 borderColour="border-success"
                                 error={errors.invoiceBalanceOwingAmount}
-                                label="Required Service Fee"
+                                label="Balance Owing"
                                 onChange={onAmountChange}
                                 value={invoiceBalanceOwingAmount}
                                 name="invoiceBalanceOwingAmount"
-                                helpText="The service fee amount owed by the associate."
+                                helpText="This is remaining balance to be paid by the associate to your organization."
                                 disabled={true}
                             />
 

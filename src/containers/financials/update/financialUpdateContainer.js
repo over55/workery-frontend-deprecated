@@ -23,8 +23,6 @@ class FinancialUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-
-
         this.state = {
             errors: {},
             isLoading: false,
@@ -43,6 +41,7 @@ class FinancialUpdateContainer extends Component {
             invoiceServiceFeePaymentDate: this.props.orderDetail.invoiceServiceFeePaymentDate ? new Date(this.props.orderDetail.invoiceServiceFeePaymentDate) : null,
             invoiceActualServiceFeeAmountPaid: parseFloat(this.props.orderDetail.invoiceActualServiceFeeAmountPaid),
             invoiceBalanceOwingAmount: parseFloat(this.props.orderDetail.invoiceBalanceOwingAmount),
+            visits: parseInt(this.props.orderDetail.visits),
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -75,17 +74,12 @@ class FinancialUpdateContainer extends Component {
         /*
          *  Compute the total amount.
          */
-        // postData.invoiceTotalAmount =
+        postData.invoiceTotalAmount = this.state.invoiceLabourAmount + this.state.invoiceMaterialAmount + this.state.invoiceTaxAmount;
 
-        // update_job_api(
-        //         visits
-        //         'invoice_total_amount': invoice_total_amount,
-        //         'invoice_service_fee_amount': invoice_service_fee_amount,
-        //         'invoice_service_fee': invoice_service_fee_id,
-        //         'invoice_actual_service_fee_amount_paid': invoice_actual_service_fee_amount_paid,
-        //         'invoice_service_fee_payment_date': invoice_service_fee_payment_date,
-        //         'invoice_balance_owing_amount': invoice_balance_owing_amount,
-        //     },
+        /*
+         *  Compute balance owing.
+         */
+        postData.invoiceBalanceOwingAmount = this.state.invoiceServiceFeeAmount - this.state.invoiceActualServiceFeeAmountPaid;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -228,7 +222,7 @@ class FinancialUpdateContainer extends Component {
             paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
             invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
-            invoiceBalanceOwingAmount
+            visits,
         } = this.state;
 
         const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList);
@@ -243,10 +237,16 @@ class FinancialUpdateContainer extends Component {
          */
         const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
 
+        /*
+         *  Compute balance owing.
+         */
+        const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
+
         return (
             <FinancialUpdateComponent
                 // Text
                 invoiceIds={invoiceIds}
+                visits={visits}
                 onTextChange={this.onTextChange}
 
                 // Amount
