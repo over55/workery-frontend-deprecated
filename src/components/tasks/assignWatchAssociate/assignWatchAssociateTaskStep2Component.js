@@ -9,7 +9,7 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 
 class AssignWatchAssociateTaskStep1Component extends Component {
     render() {
-        const { associate, associateOptions, slug, errors, onSelectChange, isLoading, onClick } = this.props;
+        const { id, errors, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -31,7 +31,7 @@ class AssignWatchAssociateTaskStep1Component extends Component {
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/task/1/${slug}/step-1`}>
+                            <Link to={`/task/1/${id}/step-1`}>
                                 <span className="num">1.</span><span className="">Info</span>
                             </Link>
                         </div>
@@ -52,23 +52,13 @@ class AssignWatchAssociateTaskStep1Component extends Component {
                             <h1><i className="fas fa-vote-yea"></i>&nbsp;Selection Form</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
-                            <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapSingleSelect
-                                label="Associate (*)"
-                                name="associate"
-                                defaultOptionLabel="Please select the associate."
-                                options={associateOptions}
-                                value={associate}
-                                error={errors.associate}
-                                onSelectChange={onSelectChange}
-                            />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                {/*<button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                </button>
-                                <Link to={`/task/1/${slug}/step-1`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                </button> */}
+                                <Link to={`/task/1/${id}/step-1`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
