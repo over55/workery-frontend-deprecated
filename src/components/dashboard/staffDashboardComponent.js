@@ -93,6 +93,16 @@ class BulletinBoardComponent extends Component {
                 dataField: 'text',
                 text: 'Messages',
                 sort: false
+            },{
+                dataField: 'id',
+                text: '',
+                sort: false,
+                formatter: newsEditLinkFormatter
+            },{
+                dataField: 'id',
+                text: '',
+                sort: false,
+                formatter: newsDeleteLinkFormatter
             }];
 
             return (
@@ -121,7 +131,21 @@ class BulletinBoardComponent extends Component {
     }
 }
 
+function newsEditLinkFormatter(cell, row){
+    return (
+        <Link to="#">
+            <i class="fas fa-pencil-alt"></i>
+        </Link>
+    )
+}
 
+function newsDeleteLinkFormatter(cell, row){
+    return (
+        <Link to="#">
+            <i class="fas fa-times"></i>
+        </Link>
+    )
+}
 
 /**
  *  LATEST ORDERS BY YOU
@@ -235,7 +259,7 @@ class AwayLogComponent extends Component {
         } else {
             const columns = [{
                 dataField: 'associateName',
-                text: 'Assocate Name',
+                text: 'Associate Name',
                 sort: false,
                 formatter: associateLinkFormatter
             },{
@@ -253,6 +277,16 @@ class AwayLogComponent extends Component {
                 text: 'Away Until',
                 sort: false,
                 formatter: associateUntilDateFormatter,
+            },{
+                dataField: 'id',
+                text: '',
+                sort: false,
+                formatter: associateEditLinkFormatter,
+            },{
+                dataField: 'id',
+                text: '',
+                sort: false,
+                formatter: associateDeleteLinkFormatter,
             }];
 
             return (
@@ -281,6 +315,21 @@ class AwayLogComponent extends Component {
     }
 }
 
+function associateEditLinkFormatter(cell, row){
+    return (
+        <Link to="#">
+            <i class="fas fa-pencil-alt"></i>
+        </Link>
+    )
+}
+
+function associateDeleteLinkFormatter(cell, row){
+    return (
+        <Link to="#">
+            <i class="fas fa-times"></i>
+        </Link>
+    )
+}
 
 function associateReasonFormatter(cell, row){
     switch (row.reason) {

@@ -251,6 +251,27 @@ class TaskListComponent extends Component {
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-tasks"></i>&nbsp;Tasks</h1>
+				
+				<div className="row">
+					<div className="step-navigation">
+						<div className="st-grey" id="step-1">
+							<a href="#">
+								<i className="fas fa-tasks"></i>
+								<span className="">All Tasks (110)</span>
+							</a>
+						</div>
+						<div className="st-grey active" id="step-2">
+							<i className="fas fa-clock"></i>
+							<span className="">Pending Tasks (110)</span>
+						</div>
+						<div className="st-grey" id="step-3">
+							<a href="/en/closed-tasks/">
+								<i className="fas fa-check-circle"></i>
+								<span className="">Closed Tasks (110)</span>
+							</a>
+						</div>
+					</div>
+				</div>
 
                 <div className="row">
                     <div className="col-md-12">

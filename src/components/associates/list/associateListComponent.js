@@ -37,6 +37,16 @@ class RemoteListComponent extends Component {
         };
 
         const columns = [{
+            dataField: 'icon',
+            text: '',
+            sort: false,
+            formatter: iconFormatter
+        },{
+            dataField: 'state',
+            text: 'Status',
+            sort: true,
+            formatter: statusFormatter
+        },{
             dataField: 'givenName',
             text: 'First Name',
             sort: true
@@ -54,16 +64,6 @@ class RemoteListComponent extends Component {
             text: 'Email',
             sort: true,
             formatter: emailFormatter,
-        },{
-            dataField: 'state',
-            text: 'Status',
-            sort: false,
-            filter: selectFilter({
-                options: selectOptions,
-                defaultValue: 1,
-                withoutEmptyOption: true
-            }),
-            formatter: statusFormatter
         },{
             dataField: 'id',
             text: 'Details',
@@ -124,6 +124,11 @@ class RemoteListComponent extends Component {
     }
 }
 
+function iconFormatter(cell, row){
+    return (
+        <i className="fas fa-home"></i>
+    )
+}
 
 function statusFormatter(cell, row){
     switch(row.state) {
