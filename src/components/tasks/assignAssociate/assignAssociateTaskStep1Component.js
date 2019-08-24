@@ -54,7 +54,11 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job #</th>
-                                    <td>{task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
+                                    <td>
+                                        <Link to={`/order/${task.job}`} target="_blank">
+                                            {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Start Date</th>
@@ -62,11 +66,31 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
-                                    <td>{task && task.jobCustomerFullName}</td>
+                                    <td>
+                                        <Link to={`/client/${task.jobCustomer}`} target="_blank">
+                                            {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Client Phone Number</th>
-                                    <td>{task && task.jobCustomerFullName}</td>
+                                    <th scope="row" className="bg-light">Client Phone #</th>
+                                    <td>
+                                        {task &&
+                                            <a href={`tel:${task.jobCustomerE164Telephone}`}>
+                                                {task.jobCustomerTelephone}
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Location</th>
+                                    <td>
+                                        {task &&
+                                            <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
+                                                {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </a>
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Description</th>
@@ -89,7 +113,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Skill Set(s)</th>
+                                    <th scope="row" className="bg-light">Comments</th>
                                     <td>
                                         <Link to={`/order/${task.job}/comments`} target="_blank">
                                             View comments&nbsp;({task.jobCommentsCount})&nbsp;<i className="fas fa-external-link-alt"></i>
