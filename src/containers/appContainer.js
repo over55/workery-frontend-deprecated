@@ -41,7 +41,9 @@ import ClientCreateStep4Container from "./clients/create/clientCreateStep4Contai
 import ClientCreateStep5Container from "./clients/create/clientCreateStep5Container";
 import ClientCreateStep6Container from "./clients/create/clientCreateStep6Container";
 import ClientCreateStep7Container from "./clients/create/clientCreateStep7Container";
-import ClientUpdateContainer from "./clients/update/clientUpdateContainer";
+import ClientContactUpdateContainer from "./clients/update/clientContactUpdateContainer";
+import ClientAddressUpdateContainer from "./clients/update/clientAddressUpdateContainer";
+import ClientMetricsUpdateContainer from "./clients/update/clientMetricsUpdateContainer";
 import ClientActivateOperationContainer from "./clients/operations/clientActivateOperationContainer";
 import ClientDeactivateOperationContainer from "./clients/operations/clientDeactivateOperationContainer";
 import ClientRezUpgradeOperationContainer from "./clients/operations/clientRezUpgradeOperationContainer";
@@ -65,7 +67,10 @@ import AssociateCreateStep5Container from "./associates/create/associateCreateSt
 import AssociateCreateStep6Container from "./associates/create/associateCreateStep6Container";
 import AssociateCreateStep7Container from "./associates/create/associateCreateStep7Container";
 import AssociateCreateStep8Container from "./associates/create/associateCreateStep8Container";
-import AssociateUpdateContainer from "./associates/update/associateUpdateContainer";
+import AssociateAccountUpdateContainer from "./associates/update/associateAccountUpdateContainer";
+import AssociateAddressUpdateContainer from "./associates/update/associateAddressUpdateContainer";
+import AssociateContactUpdateContainer from "./associates/update/associateContactUpdateContainer";
+import AssociateMetricsUpdateContainer from "./associates/update/associateMetricsUpdateContainer";
 
 // Work Order
 import OrderListContainer from "./orders/list/orderListContainer";
@@ -87,24 +92,24 @@ import OrderCreateStep3Container from "./orders/create/orderCreateStep3Container
 import OrderCreateStep4Container from "./orders/create/orderCreateStep4Container";
 import OrderCreateStep5Container from "./orders/create/orderCreateStep5Container";
 import OrderCreateStep6Container from "./orders/create/orderCreateStep6Container";
-import OrderUpdateContainer from "./orders/update/orderUpdateContainer";
+import OrderLiteUpdateContainer from "./orders/update/orderLiteUpdateContainer";
 
 // Tasks
 import TaskListContainer from "./tasks/list/taskListContainer";
 import TaskSearchContainer from "./tasks/search/taskSearchContainer";
 import TaskSearchResultContainer from "./tasks/search/taskSearchResultContainer";
-import AssignWatchAssociateTaskStep1Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep1Container";
-import AssignWatchAssociateTaskStep2Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep2Container";
-import AssignWatchAssociateTaskStep3Container from "./tasks/assignWatchAssociate/assignWatchAssociateTaskStep3Container";
-import AssignWatchAreaCoordinatorTaskStep1Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep1Container";
-import AssignWatchAreaCoordinatorTaskStep2Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep2Container";
-import AssignWatchAreaCoordinatorTaskStep3Container from "./tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep3Container";
+import AssignAssociateTaskStep1Container from "./tasks/assignAssociate/assignAssociateTaskStep1Container";
+import AssignAssociateTaskStep2Container from "./tasks/assignAssociate/assignAssociateTaskStep2Container";
+import AssignAssociateTaskStep3Container from "./tasks/assignAssociate/assignAssociateTaskStep3Container";
 
 // Staff
 import StaffListContainer from "./staff/list/staffListContainer";
 import StaffSearchContainer from "./staff/search/staffSearchContainer";
 import StaffSearchResultContainer from "./staff/search/staffSearchResultContainer";
-import StaffUpdateContainer from "./staff/update/staffUpdateContainer";
+import StaffContactUpdateContainer from "./staff/update/staffContactUpdateContainer";
+import StaffAddressUpdateContainer from "./staff/update/staffAddressUpdateContainer";
+import StaffAccountUpdateContainer from "./staff/update/staffAccountUpdateContainer";
+import StaffMetricsUpdateContainer from "./staff/update/staffMetricsUpdateContainer";
 import StaffFullRetrieveContainer from "./staff/retrieve/staffFullRetrieveContainer";
 import StaffLiteRetrieveContainer from "./staff/retrieve/staffLiteRetrieveContainer";
 import StaffCommentContainer from "./staff/retrieve/staffCommentContainer";
@@ -144,6 +149,7 @@ import SkillsetSearchResultsContainer from "./skillsets/skillsetSearchResultsCon
 // Financials
 import FinancialListContainer from "./financials/list/financialListContainer";
 import FinancialRetrieveContainer from "./financials/retrieve/financialRetrieveContainer";
+import FinancialUpdateContainer from "./financials/update/financialUpdateContainer";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -209,7 +215,9 @@ import PartnerCreateStep3Container from "./partners/create/partnerCreateStep3Con
 import PartnerCreateStep4Container from "./partners/create/partnerCreateStep4Container";
 import PartnerCreateStep5Container from "./partners/create/partnerCreateStep5Container";
 import PartnerCreateStep6Container from "./partners/create/partnerCreateStep6Container";
-import PartnerUpdateContainer from "./partners/update/partnerUpdateContainer";
+import PartnerContactUpdateContainer from "./partners/update/partnerContactUpdateContainer";
+import PartnerAddressUpdateContainer from "./partners/update/partnerAddressUpdateContainer";
+import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdateContainer";
 
 
 class AppContainer extends React.Component {
@@ -258,7 +266,10 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id/full" exact component={requiresAuth(ClientFullRetrieveContainer)} />
                                 <Route path="/client/:id/orders" exact component={requiresAuth(ClientOrderListContainer)} />
                                 <Route path="/client/:id/comments" exact component={requiresAuth(ClientCommentContainer)} />
-                                <Route path="/client/:id/update" exact component={requiresAuth(ClientUpdateContainer)} />
+                                <Route path="/client/:id/update/contact" exact component={requiresAuth(ClientContactUpdateContainer)} />
+                                <Route path="/client/:id/update/address" exact component={requiresAuth(ClientAddressUpdateContainer)} />
+                                <Route path="/client/:id/update/metrics" exact component={requiresAuth(ClientMetricsUpdateContainer)} />
+
                                 <Route path="/client/:id/activation" exact component={requiresAuth(ClientActivateOperationContainer)} />
                                 <Route path="/client/:id/deactivation" exact component={requiresAuth(ClientDeactivateOperationContainer)} />
                                 <Route path="/client/:id/delete" exact component={requiresAuth(ClientPermanentDeleteOperationContainer)} />
@@ -282,7 +293,10 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/orders" exact component={requiresAuth(AssociateOrderListContainer)} />
                                 <Route path="/associate/:id/comments" exact component={requiresAuth(AssociateCommentContainer)} />
                                 <Route path="/associate/:id/activity-sheets" exact component={requiresAuth(AssociateActivitySheetListContainer)} />
-                                <Route path="/associate/:id/update" exact component={requiresAuth(AssociateUpdateContainer)} />
+                                <Route path="/associate/:id/update/account" exact component={requiresAuth(AssociateAccountUpdateContainer)} />
+                                <Route path="/associate/:id/update/address" exact component={requiresAuth(AssociateAddressUpdateContainer)} />
+                                <Route path="/associate/:id/update/contact" exact component={requiresAuth(AssociateContactUpdateContainer)} />
+                                <Route path="/associate/:id/update/metrics" exact component={requiresAuth(AssociateMetricsUpdateContainer)} />
 
                                 { /* WORK ORDER */}
                                 <Route path="/orders/add/step-1" exact component={requiresAuth(OrderCreateStep1Container)} />
@@ -304,18 +318,15 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:id/unassign-associate" exact component={requiresAuth(OrderUnassignAssociateOperationContainer)} />
                                 <Route path="/order/:id/close" exact component={requiresAuth(OrderCloseOperationContainer)} />
                                 <Route path="/order/:id/reopen" exact component={requiresAuth(OrderReopenOperationContainer)} />
-                                <Route path="/order/:id/update" exact component={requiresAuth(OrderUpdateContainer)} />
+                                <Route path="/order/:id/update/lite" exact component={requiresAuth(OrderLiteUpdateContainer)} />
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />
                                 <Route path="/tasks/search" exact component={requiresAuth(TaskSearchContainer)} />
                                 <Route path="/tasks/search-results" exact component={requiresAuth(TaskSearchResultContainer)} />
-                                <Route path="/task/1/:id/step-1" exact component={requiresAuth(AssignWatchAssociateTaskStep1Container)} />
-                                <Route path="/task/1/:id/step-2" exact component={requiresAuth(AssignWatchAssociateTaskStep2Container)} />
-                                <Route path="/task/1/:id/step-3" exact component={requiresAuth(AssignWatchAssociateTaskStep3Container)} />
-                                <Route path="/task/2/:id/step-1" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep1Container)} />
-                                <Route path="/task/2/:id/step-2" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep2Container)} />
-                                <Route path="/task/2/:id/step-3" exact component={requiresAuth(AssignWatchAreaCoordinatorTaskStep3Container)} />
+                                <Route path="/task/1/:id/step-1" exact component={requiresAuth(AssignAssociateTaskStep1Container)} />
+                                <Route path="/task/1/:id/step-2" exact component={requiresAuth(AssignAssociateTaskStep2Container)} />
+                                <Route path="/task/1/:id/step-3" exact component={requiresAuth(AssignAssociateTaskStep3Container)} />
 
                                 { /* STAFF */ }
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />
@@ -332,7 +343,10 @@ class AppContainer extends React.Component {
                                 <Route path="/staff/:id" exact component={requiresAuth(StaffLiteRetrieveContainer)} />
                                 <Route path="/staff/:id/full" exact component={requiresAuth(StaffFullRetrieveContainer)} />
                                 <Route path="/staff/:id/comments" exact component={requiresAuth(StaffCommentContainer)} />
-                                <Route path="/staff/:id/update" exact component={requiresAuth(StaffUpdateContainer)} />
+                                <Route path="/staff/:id/update/contact" exact component={requiresAuth(StaffContactUpdateContainer)} />
+                                <Route path="/staff/:id/update/address" exact component={requiresAuth(StaffAddressUpdateContainer)} />
+                                <Route path="/staff/:id/update/account" exact component={requiresAuth(StaffAccountUpdateContainer)} />
+                                <Route path="/staff/:id/update/metrics" exact component={requiresAuth(StaffMetricsUpdateContainer)} />
 
                                 { /* REPORTS */ }
                                 <Route path="/reports" exact component={requiresAuth(ReportListContainer)} />
@@ -361,6 +375,7 @@ class AppContainer extends React.Component {
                                 { /* FINANCIALS */ }
                                 <Route path="/financials" exact component={requiresAuth(FinancialListContainer)} />
                                 <Route path="/financial/:id" exact component={requiresAuth(FinancialRetrieveContainer)} />
+                                <Route path="/financial/:id/update" exact component={requiresAuth(FinancialUpdateContainer)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
@@ -415,7 +430,9 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id" exact component={requiresAuth(PartnerLiteRetrieveContainer)} />
                                 <Route path="/partner/:id/full" exact component={requiresAuth(PartnerFullRetrieveContainer)} />
                                 <Route path="/partner/:id/comments" exact component={requiresAuth(PartnerCommentContainer)} />
-                                <Route path="/partner/:id/update" exact component={requiresAuth(PartnerUpdateContainer)} />
+                                <Route path="/partner/:id/update/contact" exact component={requiresAuth(PartnerContactUpdateContainer)} />
+                                <Route path="/partner/:id/update/address" exact component={requiresAuth(PartnerAddressUpdateContainer)} />
+                                <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
 
                                 { /* EVERYTHING ELSE... */ }
                                 <Route component={NotFound404Container} />

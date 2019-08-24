@@ -71,7 +71,10 @@ export default class PartnerFullRetrieveComponent extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-handshake"></i>&nbsp;Identification
+                                        <i className="fas fa-phone"></i>&nbsp;Contact
+                                        <Link to={`/partner/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
@@ -83,12 +86,6 @@ export default class PartnerFullRetrieveComponent extends Component {
                                     <td>{partner.fullName}</td>
                                 </tr>
 
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-phone"></i>&nbsp;Contact
-                                    </th>
-                                </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Telephone</th>
                                     <td><a href={`tel:${partner.e164Telephone}`}>{partner.telephone}</a></td>
@@ -125,6 +122,9 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
+                                        <Link to={`/partner/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
@@ -139,6 +139,9 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                        <Link to={`/partner/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
@@ -245,9 +248,9 @@ export default class PartnerFullRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
-                                <Link to={`/partner/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
+                                {/*<Link to={`/partner/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
-                                </Link>
+                                </Link>*/}
                                 <Link to={`/partners`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>

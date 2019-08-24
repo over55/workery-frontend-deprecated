@@ -77,23 +77,17 @@ export default class StaffFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Type of Staff</th>
                                     <td>{groupDescription}</td>
                                 </tr>
-
-
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-user-tie"></i>&nbsp;Identification
+                                        <i className="fas fa-phone"></i>&nbsp;Contact
+                                        <Link to={`/staff/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{staff.fullName}</td>
-                                </tr>
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-phone"></i>&nbsp;Contact
-                                    </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Telephone</th>
@@ -135,6 +129,9 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
+                                        <Link to={`/staff/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
@@ -150,6 +147,9 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-user-tie"></i>&nbsp;Account
+                                        <Link to={`/staff/${id}/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
@@ -192,6 +192,9 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                        <Link to={`/staff/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
@@ -300,9 +303,11 @@ export default class StaffFullRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
+                                { /*
                                 <Link to={`/staff/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
                                 </Link>
+                                 */}
                                 <Link to={`/staff`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>

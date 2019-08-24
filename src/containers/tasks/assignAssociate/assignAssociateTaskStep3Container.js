@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AssignWatchAssociateTaskStep3Component from "../../../components/tasks/assignWatchAssociate/assignWatchAssociateTaskStep3Component";
+import AssignAssociateTaskStep3Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep3Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 
 
-class AssignWatchAssociateTaskStep3Container extends Component {
+class AssignAssociateTaskStep3Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -84,7 +84,7 @@ class AssignWatchAssociateTaskStep3Container extends Component {
             'absoluteUrl': '/task/argyle'
         };
         return (
-            <AssignWatchAssociateTaskStep3Component
+            <AssignAssociateTaskStep3Component
                 associateLabel={this.state.associateLabel}
                 slug={this.state.slug}
                 taskData={taskData}
@@ -113,4 +113,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssignWatchAssociateTaskStep3Container);
+)(AssignAssociateTaskStep3Container);

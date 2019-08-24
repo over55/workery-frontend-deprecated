@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { FlashMessageComponent } from "../../flashMessageComponent";
 
-
-class AssignWatchAssociateTaskStep1Component extends Component {
+class AssignAssociateTaskStep3Component extends Component {
     render() {
-        const { urlArgument, onClick, onBack, flashMessage } = this.props;
+        const { associateLabel, onClick, onBack, slug } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -23,22 +21,24 @@ class AssignWatchAssociateTaskStep1Component extends Component {
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
                 <h1><i className="fas fa-thumbtack"></i>&nbsp;Argyle</h1>
 
                 <div className="row">
                     <div className="step-navigation">
-                        <div id="step-1" className="st-grey active">
-                            <strong>
+                        <div id="step-1" className="st-grey">
+                            <Link to={`/task/1/${slug}/step-1`}>
                                 <span className="num">1.</span><span className="">Info</span>
-                            </strong>
+                            </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <span className="num">2.</span><span className="">Selection</span>
+                            <Link to={`/task/1/${slug}/step-2`}>
+                                <span className="num">2.</span><span className="">Selection</span>
+                            </Link>
                         </div>
-                        <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Review</span>
+                        <div id="step-3" className="st-grey active">
+                            <strong>
+                                <span className="num">3.</span><span className="">Review</span>
+                            </strong>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ class AssignWatchAssociateTaskStep1Component extends Component {
                             <tbody>
                             <tr className="bg-dark">
                                 <th scope="row" colSpan="2" className="text-light">
-                                    <i className="fas fa-table"></i>&nbsp;Task Details
+                                    <i className="fas fa-table"></i>&nbsp;Submission Details
                                 </th>
                             </tr>
                             <tr>
@@ -57,33 +57,23 @@ class AssignWatchAssociateTaskStep1Component extends Component {
                                 <td>A new watch has been created and requires an associate to be assigned. Please assign an associate to the watch.</td>
                             </tr>
                             <tr>
-                                <th scope="row" className="bg-light">Watch</th>
-                                <td>Argyle Community Watch</td>
+                                <th scope="row" className="bg-light"></th>
+                                <td>Argyle Community </td>
                             </tr>
+
                             <tr>
-                                <th scope="row" className="bg-light">Tags</th>
-                                <td><span className="badge badge-info badge-lg">Skill 1</span> <span
-                                        className="badge badge-info badge-lg">Skill 2</span>
-                                    <span className="badge badge-info badge-lg">HTML</span> <span
-                                            className="badge badge-info badge-lg">PHP</span> <span
-                                            className="badge badge-info badge-lg">Bootstrap</span> <span
-                                            className="badge badge-info badge-lg">Django</span> <span
-                                            className="badge badge-info badge-lg">Photoshop</span> <span
-                                            className="badge badge-info badge-lg">Python</span> <span
-                                            className="badge badge-info badge-lg">ASP.net</span> <span
-                                            className="badge badge-info badge-lg">Android</span> <span
-                                            className="badge badge-info badge-lg">jQuery</span>
-                                </td>
+                                <th scope="row" className="bg-light">Associate</th>
+                                <td>{associateLabel}</td>
                             </tr>
                             </tbody>
                         </table>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
-                                Proceed to Selection&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
+                                <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/1/${slug}/step-2`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>
@@ -97,4 +87,4 @@ class AssignWatchAssociateTaskStep1Component extends Component {
     }
 }
 
-export default AssignWatchAssociateTaskStep1Component;
+export default AssignAssociateTaskStep3Component;

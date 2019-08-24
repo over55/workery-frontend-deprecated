@@ -121,7 +121,7 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                     {associate.wsibInsuranceDate &&
                                         <li>WSIB Expiry: {associate.wsibInsuranceDate}</li>
                                     }
-                                    {associate.latestCompletedAndPaidOrder.paidAt &&
+                                    {associate.latestCompletedAndPaidOrder && associate.latestCompletedAndPaidOrder.paidAt &&
                                         <li>
                                         Last service fee paid on {associate.latestCompletedAndPaidOrder.paidAt} in work order #<Link to={`/order/${associate.latestCompletedAndPaidOrder.id}`}>{associate.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
                                         </li>

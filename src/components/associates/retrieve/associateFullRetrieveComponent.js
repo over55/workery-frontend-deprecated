@@ -1,6 +1,8 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
@@ -88,30 +90,17 @@ export default class AssociateFullRetrieveComponent extends Component {
                                     <td>{typeOfLabel}</td>
                                 </tr>
 
-
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-id-card"></i>&nbsp;Identification
+                                        <i className="fas fa-phone"></i>&nbsp;Contact
+                                        <Link to={`/associate/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{associate.fullName}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Skill sets</th>
-                                    <td>
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-phone"></i>&nbsp;Contact
-                                    </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Telephone</th>
@@ -149,12 +138,15 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
+                                        <Link to={`/associate/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={associate.addressUrl}>{associate.fullAddress}</a>
+                                        <a href={associate.addressUrl} target="_blank">{associate.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
 
@@ -163,13 +155,24 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-user-circle"></i>&nbsp;Account
+                                        <Link to={`/associate/${id}/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Skill sets</th>
+                                    <td>
+                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Insurance Requirement(s)</th>
                                     <td>
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        {associate.prettyInsuranceRequirements && associate.prettyInsuranceRequirements.map(
+                                            (ir) => <InsuranceRequirementItem ir={ir} key={`ir-${ir.id}`} />)
                                         }
                                     </td>
                                 </tr>
@@ -183,27 +186,39 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Member Dues Expiry</th>
-                                    <td>{associate.duesDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.duesDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Commercial insurance expiry date</th>
-                                    <td>{associate.commercialInsuranceExpiryDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.commercialInsuranceExpiryDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Auto Insurance Expiry Date</th>
-                                    <td>{associate.autoInsuranceExpiryDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.autoInsuranceExpiryDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB #</th>
-                                    <td>{associate.wsibNumber}</td>
+                                    <td>
+                                        {associate.wsibNumber}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB Insurance Date</th>
-                                    <td>{associate.wsibInsuranceDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.wsibInsuranceDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Police check date</th>
-                                    <td>{associate.policeCheck}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.policeCheck}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">HST #</th>
@@ -215,12 +230,10 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Vehicle(s)</th>
-                                    <td>TODO
-                                    {/*
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                    <td>
+                                        {associate.prettyVehicleTypes && associate.prettyVehicleTypes.map(
+                                            (vt) => <VehicleTypeItem vt={vt} key={`vt-${vt.id}`} />)
                                         }
-                                        */}
                                     </td>
                                 </tr>
                                 <tr>
@@ -231,11 +244,16 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                        <Link to={`/associate/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
-                                    <td>{associate.birthdate}</td>
+                                    <td>
+                                        {associate && associate.birthdate && <Moment format="YYYY/MM/DD">{associate.birthdate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
@@ -248,14 +266,16 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {associate.tags && associate.tags.map(
-                                            (tag) => <TagItem tag={tag} key={tag.id} />)
+                                        {associate.prettyTags && associate.prettyTags.map(
+                                            (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td>{associate.joinDate}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD">{associate.joinDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
@@ -275,7 +295,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
-                                    <td>{associate.created}</td>
+                                    <td>
+                                         {associate && <Moment format="YYYY/MM/DD hh:mm:ss a">{associate.created}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
@@ -283,7 +305,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
-                                    <td>{associate.lastModified}</td>
+                                    <td>
+                                        {associate && <Moment format="YYYY/MM/DD hh:mm:ss a">{associate.lastModified}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>
@@ -294,9 +318,9 @@ export default class AssociateFullRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
-                                <Link to={`/associate/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
+                                {/*<Link to={`/associate/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
-                                </Link>
+                                </Link>*/}
                                 <Link to={`/associates`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
@@ -313,9 +337,9 @@ export default class AssociateFullRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { text, id } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }
@@ -326,6 +350,26 @@ class SkillSetItem extends Component {
         const { subCategory, value } = this.props.skillSet;
         return (
             <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
+        );
+    };
+}
+
+
+class InsuranceRequirementItem extends Component {
+    render() {
+        const { id, text } = this.props.ir;
+        return (
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
+        );
+    };
+}
+
+
+class VehicleTypeItem extends Component {
+    render() {
+        const { id, text } = this.props.vt;
+        return (
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }

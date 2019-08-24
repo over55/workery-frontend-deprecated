@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 // import 'moment-timezone';
+import NumberFormat from 'react-number-format';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
@@ -29,7 +30,7 @@ export default class OrderFullRetrieveComponent extends Component {
                             <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Order # {id}
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
@@ -80,11 +81,14 @@ export default class OrderFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-wrench"></i>&nbsp;Job Details
+                                        <Link to={`/order/${id}/update/lite`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Order #</th>
-                                    <td>{order.id}</td>
+                                    <td>{order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Full Name</th>
@@ -150,7 +154,12 @@ export default class OrderFullRetrieveComponent extends Component {
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Assignment Date</th>
-                                    <td>{order.assignmentDate}</td>
+                                    <td>
+                                        {order.assignmentDate
+                                            ? <Moment format="YYYY/MM/DD">{order.assignmentDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Is Home Support Service</th>
@@ -176,11 +185,21 @@ export default class OrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Start Date</th>
-                                    <td>{order.startDate}</td>
+                                    <td>
+                                        {order.startDate
+                                            ? <Moment format="YYYY/MM/DD">{order.startDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Completion Date</th>
-                                    <td>{order.completionDate}</td>
+                                    <td>
+                                        {order.completionDate
+                                            ? <Moment format="YYYY/MM/DD">{order.completionDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Hours</th>
@@ -204,7 +223,12 @@ export default class OrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Date</th>
-                                    <td>{order.invoiceDate}</td>
+                                    <td>
+                                        {order.invoiceDate
+                                            ? <Moment format="YYYY/MM/DD">{order.invoiceDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice ID(s) #</th>
@@ -212,27 +236,57 @@ export default class OrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Quote</th>
-                                    <td>{order.invoiceQuoteAmount}</td>
+                                    <td>
+                                        {order.invoiceQuoteAmount
+                                            ?<NumberFormat value={order.invoiceQuoteAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Labour</th>
-                                    <td>{order.invoiceLabourAmount}</td>
+                                    <td>
+                                        {order.invoiceLabourAmount
+                                            ?<NumberFormat value={order.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Invoice Material</th>
-                                    <td>{order.invoiceMaterialAmount}</td>
+                                    <th scope="row" className="bg-light">Invoice Labour</th>
+                                    <td>
+                                        {order.invoiceMaterialAmount
+                                            ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Total</th>
-                                    <td>{order.invoiceTotalAmount}</td>
+                                    <td>
+                                        {order.invoiceTotalAmount
+                                            ?<NumberFormat value={order.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Service Fee</th>
-                                    <td>{order.invoiceServiceFee}</td>
+                                    <td>
+                                        {order.invoiceServiceFeeAmount
+                                            ?<NumberFormat value={order.invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Service Fee Payment Date</th>
-                                    <td>{order.invoiceServiceFeePaymentDate}</td>
+                                    <td>
+                                        {order.invoiceServiceFeePaymentDate
+                                            ? <Moment format="YYYY/MM/DD">{order.invoiceServiceFeePaymentDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
 
 

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import FinancialRetrieveComponent from "../../../components/financials/retrieve/financialRetrieveComponent";
+import { pullOrderDetail } from "../../../actions/orderActions";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
 import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
@@ -25,11 +24,14 @@ class FinancialRetrieveContainer extends Component {
 
         // Update state.
         this.state = {
-            id: id,
-            financialData: {},
-            errors: {},
-            isLoading: false
+            id: parseInt(id),
+            isLoading: false,
+            order: {}
         }
+
+        // Update functions.
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -39,57 +41,7 @@ class FinancialRetrieveContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        this.setState({
-            financialData: {
-                slug: 'argyle',
-                number: 1,
-                name: 'Argyle',
-                absoluteUrl: '/financial/argyle',
-                typeOf: RESIDENCE_TYPE_OF,
-                bizCompanyName: "",
-                bizContactFirstName: "",
-                bizContactLastName: "",
-                bizPrimaryPhone: "",
-                bizSecondaryPhone: "",
-                bizEmail: "",
-                rezFirstName: "Shinji",
-                rezLastName: "Ikari",
-                rezPrimaryPhone:  "(111) 111-1111",
-                rezSecondaryPhone: "(222) 222-2222",
-                rezEmail: "shinji.ikari@nerv.worldgov",
-                streetNumber: 123,
-                streetName: "Somewhere",
-                streetType: "Street",
-                streetTypeOption: "",
-                streetTypeOther: "",
-                apartmentUnit: "Upper",
-                streetDirection: "North",
-                streetDirectionOption: "",
-                postalCode: "N6J4X4",
-                watchSlug: "argyle",
-                watchIcon: "home",
-                watchName: "Argyle",
-                tags:[
-                    "security", "fitness"
-                ],
-                // tags:[
-                //     {selectName: "tags", value: "security", label: "Security"},
-                //     {selectName: "tags", value: "fitness", label: "Fitness"}
-                // ],
-                birthYear: 1980,
-                gender: 2,
-                genderLabel: "Female",
-                howDidYouHear: "internet",
-                howDidYouHearOption: "",
-                howDidYouHearOther: "",
-                howDidYouHearLabel: "Internet",
-                meaning: "Insert meaning here",
-                expectations: "Insert expectations here",
-                willingToVolunteerLabel: "Yes",
-                anotherHouseholdFinancialRegisteredLabel: "Yes",
-            }
-        });
+        this.props.pullOrderDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -109,11 +61,12 @@ class FinancialRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessCallback(response) {
+        console.log(response);
+        this.setState({ isLoading: false, })
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         console.log(errors);
     }
 
@@ -129,15 +82,13 @@ class FinancialRetrieveContainer extends Component {
      */
 
     render() {
-        const howDidYouHearOptions = getHowHearReactSelectOptions(this.state.howDidYouHearData, "howDidYouHear");
-        const tagOptions = getTagReactSelectOptions(this.state.tagsData, "tags");
+        const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
             <FinancialRetrieveComponent
-                slug={this.state.slug}
-                financialData={this.state.financialData}
+                id={this.state.id}
+                isLoading={this.state.isLoading}
+                order={order}
                 flashMessage={this.props.flashMessage}
-                tagOptions={tagOptions}
-                howDidYouHearOptions={howDidYouHearOptions}
             />
         );
     }
@@ -147,6 +98,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        orderDetail: store.orderDetailState,
     };
 }
 
@@ -154,7 +106,12 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        }
+        },
+        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

@@ -1,6 +1,8 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
@@ -90,7 +92,10 @@ export default class ClientFullRetrieveComponent extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-user-circle"></i>&nbsp;Identification
+                                        <i className="fas fa-phone"></i>&nbsp;Contact
+                                        <Link to={`/client/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 {isCompany &&
@@ -102,13 +107,6 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{client.fullName}</td>
-                                </tr>
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-phone"></i>&nbsp;Contact
-                                    </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Telephone</th>
@@ -146,12 +144,15 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
+                                        <Link to={`/client/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={client.addressUrl}>{client.fullAddress}</a>
+                                        <a href={client.addressUrl} target="_blank">{client.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
 
@@ -160,11 +161,16 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                        <Link to={`/client/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
-                                    <td>{client.birthdate}</td>
+                                    <td>
+                                        {client && <Moment format="YYYY/MM/DD">{client.birthdate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
@@ -177,14 +183,16 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {client.tags && client.tags.map(
+                                        {client.prettyTags && client.prettyTags.map(
                                             (tag) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td>{client.joinDate}</td>
+                                    <td>
+                                        {client && <Moment format="YYYY/MM/DD">{client.joinDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
@@ -200,11 +208,13 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Account #</th>
-                                    <td>{client.id}</td>
+                                    <td>{client && client.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
-                                    <td>{client.created}</td>
+                                    <td>
+                                        {client && <Moment format="YYYY/MM/DD hh:mm:ss a">{client.created}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
@@ -212,7 +222,9 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
-                                    <td>{client.lastModified}</td>
+                                    <td>
+                                        {client && <Moment format="YYYY/MM/DD hh:mm:ss a">{client.lastModified}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>
@@ -266,9 +278,10 @@ export default class ClientFullRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
+                                { /*
                                 <Link to={`/client/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
-                                </Link>
+                                </Link> */ }
                                 <Link to={`/clients`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
@@ -285,9 +298,9 @@ export default class ClientFullRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { id, text } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }

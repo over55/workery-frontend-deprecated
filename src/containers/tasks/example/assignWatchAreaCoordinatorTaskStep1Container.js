@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import AssignWatchAreaCoordinatorTaskStep1Component from "../../../components/tasks/assignWatchAreaCoordinator/assignWatchAreaCoordinatorTaskStep1Component";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import { pullTaskDetail } from "../../../actions/taskActions";
 
 
 class AssignWatchAreaCoordinatorTaskStep1Container extends Component {
@@ -16,11 +16,11 @@ class AssignWatchAreaCoordinatorTaskStep1Container extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         // Update state.
         this.state = {
-            slug: slug,
+            id: id,
         }
 
         this.onClick = this.onClick.bind(this);
@@ -31,32 +31,30 @@ class AssignWatchAreaCoordinatorTaskStep1Container extends Component {
      *------------------------------------------------------------
      */
 
-     componentDidMount() {
-         window.scrollTo(0, 0);  // Start the page at the top of the page.
-     }
+    componentDidMount() {
+        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullTaskDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+    }
 
-     componentWillUnmount() {
-         // This code will fix the "ReactJS & Redux: Can't perform a React state
-         // update on an unmounted component" issue as explained in:
-         // https://stackoverflow.com/a/53829700
-         this.setState = (state,callback)=>{
-             return;
-         };
-
-         // Clear any and all flash messages in our queue to be rendered.
-         this.props.clearFlashMessage();
-     }
+    componentWillUnmount() {
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
 
     /**
      *  API callback functions
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
+    onSuccessCallback(profile) {
         console.log(profile);
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         console.log(errors);
     }
 
@@ -77,20 +75,12 @@ class AssignWatchAreaCoordinatorTaskStep1Container extends Component {
      */
 
     render() {
-        const taskData = {
-            'slug': 'Argyle',
-            'number': 1,
-            'name': 'Argyle',
-            'absoluteUrl': '/task/argyle'
-        };
         return (
             <AssignWatchAreaCoordinatorTaskStep1Component
-                urlArgument={this.state.urlArgument}
-                slug={this.state.slug}
-                taskData={taskData}
+                id={this.state.id}
+                task={this.props.taskDetail}
                 onBack={this.onBack}
                 onClick={this.onClick}
-                flashMessage={this.props.flashMessage}
             />
         );
     }
@@ -99,15 +89,17 @@ class AssignWatchAreaCoordinatorTaskStep1Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        flashMessage: store.flashMessageState,
+        taskDetail: store.taskDetailState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        clearFlashMessage: () => {
-            dispatch(clearFlashMessage())
-        }
+        pullTaskDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTaskDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

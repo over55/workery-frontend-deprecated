@@ -51,7 +51,8 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'id',
             text: 'Job #',
-            sort: true
+            sort: true,
+            formatter: idFormatter,
         },{
             dataField: 'associateName',
             text: 'Associate',
@@ -150,6 +151,13 @@ function iconFormatter(cell, row){
             return <i className="fas fa-question"></i>;
             break;
     }
+}
+
+
+function idFormatter(cell, row){
+    return (
+        row.id && row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+    );
 }
 
 

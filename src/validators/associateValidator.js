@@ -8,6 +8,136 @@ import {
 } from '../constants/api';
 
 
+export function validateMetricsInput(data) {
+    let errors = {};
+
+    if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
+        errors.dateOfBirth = 'This field is required';
+    }
+    if (data.gender === undefined || data.gender === null || data.gender === "" ) {
+        errors.gender = 'This field is required';
+    }
+    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
+        errors.howHear = 'This field is required';
+    } else {
+        if (data.howHear === "Other") {
+            if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
+                errors.howHearOther = 'This field is required';
+            }
+        }
+    }
+    if (data.joinDate === undefined || data.joinDate === null || data.joinDate === "" || isNaN(data.joinDate) ) {
+        errors.joinDate = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+export function validateAddressInput(data) {
+    let errors = {};
+    if (data.streetAddress === undefined || data.streetAddress === null || validator.isEmpty(data.streetAddress) || data.streetAddress === "") {
+        errors.streetAddress = 'This field is required';
+    }
+    if (data.region === undefined || data.region === null || validator.isEmpty(data.region) || data.region === "") {
+        errors.region = 'This field is required';
+    }
+    if (data.locality === undefined || data.locality === null || validator.isEmpty(data.locality) || data.locality === "") {
+        errors.locality = 'This field is required';
+    }
+    if (data.country === undefined || data.country === null || validator.isEmpty(data.country) || data.country === "") {
+        errors.country = 'This field is required';
+    }
+    if (data.postalCode === undefined || data.postalCode === null || validator.isEmpty(data.postalCode) || data.postalCode === "") {
+        errors.postalCode = 'This field is required';
+    }
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+export function validateContactInput(data) {
+    let errors = {};
+
+    // --- CONTACT --- //
+
+    if (data.typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
+
+        if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
+            errors.givenName = 'This field is required';
+        }
+        if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
+            errors.lastName = 'This field is required';
+        }
+        if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
+            errors.primaryPhone = 'This field is required';
+        }
+        if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
+            errors.email = 'This field is required';
+        }
+        if (data.isOkToEmail === undefined || data.isOkToEmail === null || data.isOkToEmail === "" || isNaN(data.isOkToEmail)) {
+            errors.isOkToEmail = 'This field is required';
+        }
+        if (data.isOkToText === undefined || data.isOkToText === null || data.isOkToText === "" || isNaN(data.isOkToText) ) {
+            errors.isOkToText = 'This field is required';
+        }
+
+    } else if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+
+        alert("TODO"); // TODO: IMPLEMENT WHEN READY.
+
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+export function validateAccountInput(data) {
+    let errors = {};
+
+    if (data.skillSets === undefined || data.skillSets === null || data.skillSets === "" || isEmpty(data.skillSets) ) {
+        errors.skillSets = 'This field is required';
+    }
+    if (data.insuranceRequirements === undefined || data.insuranceRequirements === null || data.insuranceRequirements === "" || isEmpty(data.insuranceRequirements) ) {
+        errors.insuranceRequirements = 'This field is required';
+    }
+    if (data.hourlySalaryDesired === undefined || data.hourlySalaryDesired === null || data.hourlySalaryDesired === "" || isNaN(data.hourlySalaryDesired) ) {
+        errors.hourlySalaryDesired = 'This field is required';
+    }
+    if (data.duesDate === undefined || data.duesDate === null || data.duesDate === "" || isNaN(data.duesDate) ) {
+        errors.duesDate = 'This field is required';
+    }
+    if (data.commercialInsuranceExpiryDate === undefined || data.commercialInsuranceExpiryDate === null || data.commercialInsuranceExpiryDate === "" || isNaN(data.commercialInsuranceExpiryDate) ) {
+        errors.commercialInsuranceExpiryDate = 'This field is required';
+    }
+    // if (data.autoInsuranceExpiryDate === undefined || data.autoInsuranceExpiryDate === null || data.autoInsuranceExpiryDate === "" || isNaN(data.autoInsuranceExpiryDate) ) {
+    //     errors.autoInsuranceExpiryDate = 'This field is required';
+    // }
+    // if (data.wsibInsuranceDate === undefined || data.wsibInsuranceDate === null || data.wsibInsuranceDate === "" || isNaN(data.wsibInsuranceDate) ) {
+    //     errors.wsibInsuranceDate = 'This field is required';
+    // }
+    if (data.policeCheck === undefined || data.policeCheck === null || data.policeCheck === "" || isNaN(data.policeCheck) ) {
+        errors.policeCheck = 'This field is required';
+    }
+    // if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
+    //     errors.isActive = 'This field is required';
+    // }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
 export function validateInput(data) {
     let errors = {};
 

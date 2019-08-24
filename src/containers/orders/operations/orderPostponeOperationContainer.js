@@ -28,7 +28,7 @@ class OrderPostponeOperationContainer extends Component {
         this.state = {
             errors: {},
             isLoading: false,
-            id: id,
+            id: parseInt(id),
             reason: "",
             reasonOther: "",
             startDate: "",

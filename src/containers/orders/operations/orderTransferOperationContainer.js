@@ -37,7 +37,7 @@ class OrderTransferOperationContainer extends Component {
             reason: "",
             errors: {},
             isLoading: false,
-            id: id,
+            id: parseInt(id),
         }
 
         this.getPostData = this.getPostData.bind(this);
