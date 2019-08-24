@@ -91,21 +91,12 @@ class TaskUpdateContainer extends Component {
      */
 
 
-    onClick(e) {
+    onClick(e, associateId) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-
-        // Perform client-side validation.
-        const { errors, isValid } = validateTask1Step2Input(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.onSuccessfulSubmissionCallback();
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailedSubmissionCallback(errors);
-        }
+        console.log("onClick | associateId:", associateId); // For debugging purposes.
+        localStorage.setItem("workery-task-1-associateId", associateId);
+        this.props.history.push("/task/1/"+this.state.id+"/step-3");
     }
 
 

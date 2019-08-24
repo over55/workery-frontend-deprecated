@@ -121,9 +121,6 @@ export default class AssignAssociateTaskStep1Component extends Component {
                 <div className="col-sm-12 mx-auto mt-4 pt-4">
                     <h2>
                         <i className="fas fa-user-check"></i>&nbsp;Available Associates
-                        { /*
-                            Name	Contacts (30 days)	Phone Number	WSIB #	Rate
-                        */}
                     </h2>
                     <div className="table-responsive">
                         <table className="table table-striped">
@@ -137,7 +134,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             </thead>
                             <tbody>
                                 {associates && associates.map(
-                                    (associate) => <AssociateItem associate={associate} key={`act-${associate.id}`} />)
+                                    (associate) => <AssociateItem associate={associate} onClick={onClick} key={`act-${associate.id}`} />)
                                 }
                             </tbody>
                         </table>
@@ -160,7 +157,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             </thead>
                             <tbody>
                                 {activitySheetItems && activitySheetItems.map(
-                                    (activitySheetItem) => <ActivitySheetItem activitySheetItem={activitySheetItem} key={`act-${activitySheetItem.id}`} />)
+                                    (activitySheetItem) => <ActivitySheetItem activitySheetItem={activitySheetItem} onClick={onClick} key={`act-${activitySheetItem.id}`} />)
                                 }
                             </tbody>
                         </table>
@@ -185,6 +182,7 @@ class SkillSetItem extends Component {
 class ActivitySheetItem extends Component {
     render() {
         const { associate, associateFullName, associateTelephone, associateE164Telephone, associateEmail, prettyState, comment } = this.props.activitySheetItem;
+        const { onClick } = this.props;
         return (
             <tr>
                 <td>
@@ -197,7 +195,7 @@ class ActivitySheetItem extends Component {
                     {comment}
                 </td>
                 <td>
-                    <Link to={`/associate/${associate}`}>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, associate) } }>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
@@ -212,6 +210,7 @@ class ActivitySheetItem extends Component {
 class AssociateItem extends Component {
     render() {
         const { id, fullName, telephone, e164Telephone, email } = this.props.associate;
+        const { onClick } = this.props;
         return (
             <tr>
                 <td>
@@ -224,7 +223,7 @@ class AssociateItem extends Component {
                     <a href={`mailto:${email}`}>{email}</a>
                 </td>
                 <td>
-                    <Link to={`/associate/${id}`}>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, id) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
