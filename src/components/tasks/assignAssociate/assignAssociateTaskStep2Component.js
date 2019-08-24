@@ -118,29 +118,58 @@ export default class AssignAssociateTaskStep1Component extends Component {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-5 mx-auto mt-2">
-                        <form>
-                            <h1><i className="fas fa-vote-yea"></i>&nbsp;Selection Form</h1>
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
-
-
-
-
-
-                            <div className="form-group">
-                                {/*<button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                </button> */}
-                                <Link to={`/task/1/${id}/step-1`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
-                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
-                                </Link>
-                            </div>
-
-                        </form>
+                <div className="col-sm-12 mx-auto mt-4 pt-4">
+                    <h2>
+                        <i className="fas fa-user-check"></i>&nbsp;Available Associates
+                        { /*
+                            Name	Contacts (30 days)	Phone Number	WSIB #	Rate
+                        */}
+                    </h2>
+                    <div className="table-responsive">
+                        <table className="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Full Name</th>
+                                <th>Phone</th>
+                                <th>E-Mail</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1,001</td>
+                                    <td>bart mika</td>
+                                    <td>(111)222-3333</td>
+                                    <td>aaa@bbb.ca</td>
+                                    <td><Link to={`/`}>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
+                <div className="col-sm-12 mx-auto mt-4 pt-4">
+                    <h2>
+                        <i className="fas fa-id-card-alt"></i>&nbsp;Activity Sheet Items
+                    </h2>
+                    <div className="table-responsive">
+                        <table className="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Comment</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {activitySheetItems && activitySheetItems.map(
+                                    (activitySheetItem) => <ActivitySheetItem activitySheetItem={activitySheetItem} key={`act-${activitySheetItem.id}`} />)
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </main>
         );
     }
@@ -153,5 +182,32 @@ class SkillSetItem extends Component {
         return (
             <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
         );
+    };
+}
+
+
+class ActivitySheetItem extends Component {
+    render() {
+        const { associate, associateFullName, associateTelephone, associateE164Telephone, associateEmail, prettyState, comment } = this.props.activitySheetItem;
+        return (
+            <tr>
+                <td>
+                    <Link to={`/associate/${associate}`} target="_blank">{associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                </td>
+                <td>
+                    {prettyState}
+                </td>
+                <td>
+                    {comment}
+                </td>
+                <td>
+                    <Link to={`/associate/${associate}`}>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                </td>
+            </tr>
+        );
+        // const { subCategory, value } = this.props.skillSet;
+        // return (
+        //     <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
+        // );
     };
 }
