@@ -4,6 +4,7 @@ import Scroll from 'react-scroll';
 
 import AssignAssociateTaskStep3Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep3Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask1Step3Input } from "../../../validators/taskValidator";
 import { postTaskAssignAssociateDetail } from "../../../actions/taskActions";
 import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
@@ -40,6 +41,7 @@ class AssignAssociateTaskStep3Container extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onTaskDetailSuccessFetchCallback = this.onTaskDetailSuccessFetchCallback.bind(this);
     }
 
     /**
@@ -65,6 +67,7 @@ class AssignAssociateTaskStep3Container extends Component {
 
      componentDidMount() {
          window.scrollTo(0, 0);  // Start the page at the top of the page.
+         this.props.pullTaskDetail(this.state.id, this.onTaskDetailSuccessFetchCallback);
      }
 
      componentWillUnmount() {
@@ -82,6 +85,9 @@ class AssignAssociateTaskStep3Container extends Component {
      */
 
     onSuccessCallback(profile) {
+        localStorage.removeItem("workery-task-1-status");
+        localStorage.removeItem("workery-task-1-comment");
+        localStorage.removeItem("workery-task-1-associateId");
         this.props.setFlashMessage("success", "Task has been successfully closed.");
         this.props.history.push("/tasks");
     }
@@ -95,6 +101,16 @@ class AssignAssociateTaskStep3Container extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onTaskDetailSuccessFetchCallback(taskDetail) {
+        console.log("onTaskDetailSuccessFetchCallback | taskDetail:", taskDetail); // For debugging purposes only.
+        if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
+            if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
+                this.props.setFlashMessage("danger", "Task has been already been closed.");
+                this.props.history.push("/tasks");
+            }
+        }
     }
 
     /**
@@ -171,6 +187,7 @@ class AssignAssociateTaskStep3Container extends Component {
                 status={this.state.status}
                 comment={this.state.comment}
                 isLoading={this.state.isLoading}
+                task={this.props.taskDetail}
                 errors={this.state.errors}
                 onBack={this.onBack}
                 onClick={this.onClick}
@@ -184,6 +201,7 @@ class AssignAssociateTaskStep3Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        taskDetail: store.taskDetailState,
     };
 }
 
@@ -195,6 +213,11 @@ const mapDispatchToProps = dispatch => {
         postTaskAssignAssociateDetail: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 postTaskAssignAssociateDetail(postData, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullTaskDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTaskDetail(id, onSuccessCallback, onFailureCallback)
             )
         },
     }

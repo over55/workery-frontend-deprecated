@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import AssignAssociateTaskStep1Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep1Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
 
 
 class AssignAssociateTaskStep1Container extends Component {
@@ -24,6 +25,8 @@ class AssignAssociateTaskStep1Container extends Component {
         }
 
         this.onClick = this.onClick.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -50,8 +53,14 @@ class AssignAssociateTaskStep1Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessCallback(profile) {
-        console.log(profile);
+    onSuccessCallback(taskDetail) {
+        console.log("onSuccessCallback | taskDetail:", taskDetail); // For debugging purposes only.
+        if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
+            if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
+                this.props.setFlashMessage("danger", "Task has been already been closed.");
+                this.props.history.push("/tasks");
+            }
+        }
     }
 
     onFailureCallback(errors) {
@@ -99,6 +108,9 @@ const mapDispatchToProps = dispatch => {
             dispatch(
                 pullTaskDetail(id, onSuccessCallback, onFailureCallback)
             )
+        },
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
         },
     }
 }

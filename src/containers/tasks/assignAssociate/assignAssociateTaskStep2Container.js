@@ -4,6 +4,8 @@ import Scroll from 'react-scroll';
 
 import AssignAssociateTaskStep2Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep2Component";
 import { validateTask1Step2Input } from "../../../validators/taskValidator";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { pullTaskDetail } from "../../../actions/taskActions";
 import { pullTaskItemAvailableAssociateList } from '../../../actions/associateActions';
 import { pullActivitySheetList } from '../../../actions/activitySheetActions';
 import {
@@ -31,8 +33,8 @@ class TaskUpdateContainer extends Component {
         }
 
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -52,6 +54,8 @@ class TaskUpdateContainer extends Component {
         parametersMap2.set('task_item', this.state.id);
         parametersMap2.set('o', 'associate_name');
         this.props.pullActivitySheetList(1, 1000, parametersMap2);
+
+        this.props.pullTaskDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -68,21 +72,18 @@ class TaskUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(task) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/task/1/"+this.state.id+"/step-3");
+    onSuccessCallback(taskDetail) {
+        console.log("onSuccessCallback | taskDetail:", taskDetail); // For debugging purposes only.
+        if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
+            if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
+                this.props.setFlashMessage("danger", "Task has been already been closed.");
+                this.props.history.push("/tasks");
+            }
+        }
     }
 
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
+    onFailureCallback(errors) {
+        console.log(errors);
     }
 
     /**
@@ -143,6 +144,14 @@ const mapDispatchToProps = dispatch => {
             dispatch(
                 pullActivitySheetList(id, onSuccessCallback, onFailureCallback)
             )
+        },
+        pullTaskDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTaskDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
         },
     }
 }
