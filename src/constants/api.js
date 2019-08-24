@@ -40,6 +40,7 @@ export const WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_ENDPOINT = '/associate/XXX/acc
 export const WORKERY_ASSOCIATE_METRICS_UPDATE_API_ENDPOINT = '/associate/XXX/metrics';
 export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
 export const WORKERY_TASK_DETAIL_API_ENDPOINT = '/task/';
+export const WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT = '/task/XXX/available-associates';
 export const WORKERY_STAFF_LIST_API_ENDPOINT = '/staves';
 export const WORKERY_STAFF_DETAIL_API_ENDPOINT = '/staff/'
 export const WORKERY_STAFF_COMMENT_LIST_API_ENDPOINT = '/staff-comments';

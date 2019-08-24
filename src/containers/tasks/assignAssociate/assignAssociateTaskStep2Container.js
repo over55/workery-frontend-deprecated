@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import AssignAssociateTaskStep2Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep2Component";
 import { validateTask1Step2Input } from "../../../validators/taskValidator";
-import { pullAssociateList } from '../../../actions/associateActions';
+import { pullTaskItemAvailableAssociateList } from '../../../actions/associateActions';
 import { pullActivitySheetList } from '../../../actions/activitySheetActions';
 import {
     localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem
@@ -46,7 +46,7 @@ class TaskUpdateContainer extends Component {
         const parametersMap = new Map();
         parametersMap.set('available_for_task_item', this.state.id);
         parametersMap.set('o', 'last_name');
-        this.props.pullAssociateList(1, 1000, parametersMap);
+        this.props.pullTaskItemAvailableAssociateList(this.state.id);
 
         const parametersMap2 = new Map();
         parametersMap2.set('task_item', this.state.id);
@@ -143,9 +143,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullAssociateList: (id, onSuccessCallback, onFailureCallback) => {
+        pullTaskItemAvailableAssociateList: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullAssociateList(id, onSuccessCallback, onFailureCallback)
+                pullTaskItemAvailableAssociateList(id, onSuccessCallback, onFailureCallback)
             )
         },
         pullActivitySheetList: (id, onSuccessCallback, onFailureCallback) => {

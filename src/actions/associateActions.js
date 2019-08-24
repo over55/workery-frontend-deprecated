@@ -14,7 +14,8 @@ import {
     WORKERY_ASSOCIATE_CONTACT_UPDATE_API_ENDPOINT,
     WORKERY_ASSOCIATE_ADDRESS_UPDATE_API_ENDPOINT,
     WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_ENDPOINT,
-    WORKERY_ASSOCIATE_METRICS_UPDATE_API_ENDPOINT
+    WORKERY_ASSOCIATE_METRICS_UPDATE_API_ENDPOINT,
+    WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -545,6 +546,89 @@ export function putAssociateMetricsDetail(data, successCallback, failedCallback)
     }
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+//                               OPERATIONS                                   //
+////////////////////////////////////////////////////////////////////////////////
+
+
+export function pullTaskItemAvailableAssociateList(taskItemId, onSuccessCallback=null, onFailureCallback=null) {
+    return dispatch => {
+        // Change the global state to attempting to fetch latest user details.
+        store.dispatch(
+            setAssociateListRequest()
+        );
+
+        console.log(taskItemId, onSuccessCallback, onFailureCallback);
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // Generate the URL from the map.
+        // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
+        let aURL = WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT.replace("XXX", taskItemId);
+
+        // Make the API call.
+        customAxios.get(aURL).then( (successResponse) => { // SUCCESS
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+
+            console.log(responseData); // For debugging purposes.
+
+            let data = camelizeKeys(responseData);
+
+            // Extra.
+            data['isAPIRequestRunning'] = false;
+            data['errors'] = {};
+
+            // console.log(data); // For debugging purposes.
+
+            // Update the global state of the application to store our
+            // user data for the application.
+            store.dispatch(
+                setAssociateListSuccess(data)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(data);
+            }
+
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("pullTaskItemAvailableAssociateList | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateListFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => { // FINALLY
+            // Do nothing.
+        });
+
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                REDUX ACTIONS                               //

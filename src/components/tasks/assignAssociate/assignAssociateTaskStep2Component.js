@@ -129,20 +129,16 @@ export default class AssignAssociateTaskStep1Component extends Component {
                         <table className="table table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Full Name</th>
                                 <th>Phone</th>
                                 <th>E-Mail</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1,001</td>
-                                    <td>bart mika</td>
-                                    <td>(111)222-3333</td>
-                                    <td>aaa@bbb.ca</td>
-                                    <td><Link to={`/`}>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link></td>
-                                </tr>
+                                {associates && associates.map(
+                                    (associate) => <AssociateItem associate={associate} key={`act-${associate.id}`} />)
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -209,5 +205,28 @@ class ActivitySheetItem extends Component {
         // return (
         //     <span className="badge badge-info badge-lg" value={value}>{subCategory}</span>
         // );
+    };
+}
+
+
+class AssociateItem extends Component {
+    render() {
+        const { id, fullName, telephone, e164Telephone, email } = this.props.associate;
+        return (
+            <tr>
+                <td>
+                    <Link to={`/associate/${id}`} target="_blank">{fullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                </td>
+                <td>
+                    <a href={`tel:${e164Telephone}`}>{telephone}</a>
+                </td>
+                <td>
+                    <a href={`mailto:${email}`}>{email}</a>
+                </td>
+                <td>
+                    <Link to={`/associate/${id}`}>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                </td>
+            </tr>
+        );
     };
 }
