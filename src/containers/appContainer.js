@@ -227,7 +227,9 @@ class AppContainer extends React.Component {
 
                     <div className="d-flex align-items-stretch">
                         <main id="main" role="main">
-                            <ScrollUpButton />
+                            <ScrollUpButton ContainerClassName="ScrollUpButton__Container" TransitionClassName="ScrollUpButton__Toggled">
+								<i className="fas fa-angle-up fa-2x"></i>
+							</ScrollUpButton>
                             <Switch>
                                 { /* ACCOUNT + GENERAL */}
                                 <Route path="/" exact component={LoginContainer} />

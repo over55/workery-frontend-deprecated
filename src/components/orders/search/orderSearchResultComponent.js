@@ -67,8 +67,8 @@ class RemoteListComponent extends Component {
             text: 'Assign Date',
             sort: true
         },{
-            dataField: 'startDate',
-            text: 'Start Date',
+            dataField: 'completionDate',
+            text: 'Completion Date',
             sort: true
         },{
             dataField: 'state',
@@ -83,6 +83,11 @@ class RemoteListComponent extends Component {
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
+        },{
+            dataField: 'slug',
+            text: 'Financials',
+            sort: false,
+            formatter: financialsLinkFormatter
         }];
 
         const defaultSorted = [{
@@ -182,7 +187,15 @@ function statusFormatter(cell, row){
 function detailLinkFormatter(cell, row){
     return (
         <Link to={`/order/${row.id}`} target="_blank">
-            View Order&nbsp;<i className="fas fa-external-link-alt"></i>
+            <i className="fa fa-id-card"></i>
+        </Link>
+    )
+}
+
+function financialsLinkFormatter(cell, row){
+    return (
+        <Link to={`/financial/${row.id}`} target="_blank">
+            <i className="fa fa-dollar-sign"></i>
         </Link>
     )
 }
