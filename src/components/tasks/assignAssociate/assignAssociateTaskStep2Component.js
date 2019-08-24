@@ -9,7 +9,9 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 
 class AssignAssociateTaskStep1Component extends Component {
     render() {
-        const { id, errors, isLoading, onClick } = this.props;
+        const {
+            task, associates, activitySheetItems, id, errors, isLoading, onClick 
+        } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">

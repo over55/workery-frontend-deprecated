@@ -116,8 +116,13 @@ class TaskUpdateContainer extends Component {
 
     render() {
         const { isLoading, errors, id, } = this.state;
+        const associates = this.props.associateList ? this.props.associateList.results : [];
+        const activitySheetItems = this.props.activitySheetItemList ? this.props.activitySheetItemList.results : [];
         return (
             <AssignAssociateTaskStep2Component
+                associates={associates}
+                activitySheetItems={activitySheetItems}
+                task={this.props.taskDetail}
                 id={id}
                 isLoading={isLoading}
                 errors={errors}
@@ -130,6 +135,9 @@ class TaskUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        activitySheetItemList: store.activitySheetItemListState,
+        associateList: store.associateListState,
+        taskDetail: store.taskDetailState,
     };
 }
 
