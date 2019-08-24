@@ -4,7 +4,8 @@ import Scroll from 'react-scroll';
 
 import AssignAssociateTaskStep2Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep2Component";
 import { validateTask1Step2Input } from "../../../validators/taskValidator";
-import { getAssociateReactSelectOptions } from '../../../actions/watchAction';
+import { pullAssociateList } from '../../../actions/associateActions';
+import { pullActivitySheetList } from '../../../actions/activitySheetActions';
 import {
     localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem
 } from '../../../helpers/localStorageUtility';
@@ -41,6 +42,16 @@ class TaskUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        const parametersMap = new Map();
+        parametersMap.set('available_for_task_item', this.state.id);
+        parametersMap.set('o', 'last_name');
+        this.props.pullAssociateList(1, 1000, parametersMap);
+
+        const parametersMap2 = new Map();
+        parametersMap2.set('task_item', this.state.id);
+        parametersMap2.set('o', 'associate_name');
+        this.props.pullActivitySheetList(1, 1000, parametersMap2);
     }
 
     componentWillUnmount() {
@@ -123,7 +134,18 @@ const mapStateToProps = function(store) {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {}
+    return {
+        pullAssociateList: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullAssociateList(id, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullActivitySheetList: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullActivitySheetList(id, onSuccessCallback, onFailureCallback)
+            )
+        },
+    }
 }
 
 
