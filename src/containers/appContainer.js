@@ -239,7 +239,8 @@ class AppContainer extends React.Component {
 
                     <div className="d-flex align-items-stretch">
                         <main id="main" role="main">
-                            <ScrollUpButton ContainerClassName="ScrollUpButton__Container" TransitionClassName="ScrollUpButton__Toggled">
+                            <ScrollUpButton ContainerClassName="ScrollUpButtonCustomContainer" TransitionClassName="ScrollUpButtonCustomToggled" >
+								<span></span>
 							</ScrollUpButton>
                             <Switch>
                                 { /* ACCOUNT + GENERAL */}
