@@ -8,6 +8,8 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
@@ -51,7 +53,8 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'id',
             text: 'Job #',
-            sort: true
+            sort: true,
+            formatter: idFormatter,
         },{
             dataField: 'customerName',
             text: 'Client',
@@ -65,11 +68,13 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'assignmentDate',
             text: 'Assign Date',
-            sort: true
+            sort: true,
+            formatter: assignmentDateFormatter,
         },{
             dataField: 'completionDate',
             text: 'Completion Date',
-            sort: true
+            sort: true,
+            formatter: completionDateFormatter,
         },{
             dataField: 'state',
             text: 'Status',
@@ -144,6 +149,13 @@ class RemoteListComponent extends Component {
 }
 
 
+function idFormatter(cell, row){
+    return (
+        row.id && row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+    );
+}
+
+
 function iconFormatter(cell, row){
     switch(row.typeOf) {
         case 2:
@@ -167,6 +179,29 @@ function associateNameFormatter(cell, row){
         </Link>
     );
 }
+
+
+function completionDateFormatter(cell, row) {
+    if (row.completionDate === undefined || row.completionDate === null || row.completionDate === "") {
+        return "-";
+    } else {
+        return (
+            <Moment format="YYYY/MM/DD">{row.completionDate}</Moment>
+        );
+    }
+}
+
+
+function assignmentDateFormatter(cell, row) {
+    if (row.assignmentDate === undefined || row.assignmentDate === null || row.assignmentDate === "") {
+        return "-";
+    } else {
+        return (
+            <Moment format="YYYY/MM/DD">{row.assignmentDate}</Moment>
+        );
+    }
+}
+
 
 function clientFormatter(cell, row){
     if (row.customerName === null || row.customerName === undefined || row.customerName === "None") { return "-"; }
