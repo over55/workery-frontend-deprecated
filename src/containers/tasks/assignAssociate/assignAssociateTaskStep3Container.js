@@ -88,7 +88,7 @@ class AssignAssociateTaskStep3Container extends Component {
         localStorage.removeItem("workery-task-1-status");
         localStorage.removeItem("workery-task-1-comment");
         localStorage.removeItem("workery-task-1-associateId");
-        this.props.setFlashMessage("success", "Task has been successfully closed.");
+        this.props.setFlashMessage("success", "Assign associate task has been successfully closed.");
         this.props.history.push("/tasks");
     }
 

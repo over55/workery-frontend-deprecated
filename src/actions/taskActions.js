@@ -12,7 +12,7 @@ import {
     WORKERY_TASK_LIST_API_ENDPOINT,
     WORKERY_TASK_DETAIL_API_ENDPOINT,
     WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT,
-    WORKERY_TASK_FOURTY_EIGHT_HOUR_FOLLOW_UP_OPERATION_API_ENDPOINT
+    WORKERY_TASK_FOLLOW_UP_OPERATION_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -255,7 +255,7 @@ export function postTaskAssignAssociateDetail(postData, successCallback, failedC
 }
 
 
-export function postTaskFourtyEightHourFollowUpDetail(postData, successCallback, failedCallback) {
+export function postTaskFollowUpDetail(postData, successCallback, failedCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -273,7 +273,7 @@ export function postTaskFourtyEightHourFollowUpDetail(postData, successCallback,
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TASK_FOURTY_EIGHT_HOUR_FOLLOW_UP_OPERATION_API_ENDPOINT, buffer).then( (successResponse) => {
+        customAxios.post(WORKERY_TASK_FOLLOW_UP_OPERATION_API_ENDPOINT, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 
