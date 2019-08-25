@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import AssociateCreateStep3Component from "../../../components/associates/create/associateCreateStep3Component";
+import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
 
 class AssociateCreateStep3Container extends Component {
@@ -9,6 +10,14 @@ class AssociateCreateStep3Container extends Component {
      *  Initializer & Utility
      *------------------------------------------------------------
      */
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            typeOf: localStorageGetIntegerItem("workery-create-associate-typeOf"),
+        };
+        this.onClick = this.onClick.bind(this);
+    }
 
     /**
      *  Component Life-cycle Management
@@ -38,6 +47,11 @@ class AssociateCreateStep3Container extends Component {
      *------------------------------------------------------------
      */
 
+    onClick(e, typeOf) {
+        e.preventDefault();
+        localStorage.setItem("workery-create-associate-typeOf", typeOf);
+        this.props.history.push("/associates/add/step-4");
+    }
 
     /**
      *  Main render function
@@ -46,7 +60,7 @@ class AssociateCreateStep3Container extends Component {
 
     render() {
         return (
-            <AssociateCreateStep3Component />
+            <AssociateCreateStep3Component onClick={this.onClick} />
         );
     }
 }

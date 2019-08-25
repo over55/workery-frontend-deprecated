@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 export default class AssociateCreateStep3Component extends Component {
     render() {
+        const { onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -65,7 +66,7 @@ export default class AssociateCreateStep3Component extends Component {
                 </h2>
 
                 <div className="card-group row">
-                    <div className="col-sm-12">
+                    <div className="col-sm-6">
                         <div className="card box-shadow text-center mx-auto">
                             <div className="card-custom-top-2">
                                 <i className="fas fa-home fa-3x"></i>
@@ -73,13 +74,12 @@ export default class AssociateCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Residential</h3>
                                 <p className="card-text">Add a residential associate</p>
-                                <Link to="/associates/add/step-4-rez-or-cc" className="btn btn-primary btn-lg">
+                                <Link className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, 2) } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </Link>
                             </div>
                         </div>
                     </div>
-{ /*
                     <div className="col-sm-6">
                         <div className="card box-shadow text-center mx-auto">
                             <div className="card-custom-top-2">
@@ -88,13 +88,12 @@ export default class AssociateCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Business</h3>
                                 <p className="card-text">Add a business associate</p>
-                                <Link to="/associates/add/step-4-biz" className="btn btn-primary btn-lg">
+                                <Link className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, 3) } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </Link>
                             </div>
                         </div>
                     </div>
-*/}
                 </div>
 
                 <div className="form-group">
