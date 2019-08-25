@@ -12,6 +12,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 export default class AssociateCreateStep8Component extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
+        // console.log(this.props); // For debugging purposes only.
         const {
             // Step 3
             typeOf,

@@ -22,27 +22,6 @@ class AssociateCreateStep8Container extends Component {
     constructor(props) {
         super(props);
 
-        // Get the type of.
-        const typeOf = localStorageGetIntegerItem("workery-create-associate-typeOf");
-        let primaryPhone;
-        let primaryPhoneTypeOf;
-        let secondaryPhone;
-        let secondaryPhoneTypeOf;
-        let email;
-        let isOkToEmail;
-        let isOkToText;
-        let isOkToEmailLabel;
-        let isOkToTextLabel;
-        primaryPhone = localStorage.getItem("workery-create-associate-primaryPhone");
-        primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-associate-primaryPhoneTypeOf");
-        secondaryPhone = localStorage.getItem("workery-create-associate-secondaryPhone");
-        secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-associate-secondaryPhoneTypeOf");
-        email = localStorage.getItem("workery-create-associate-email");
-        isOkToEmail = localStorageGetIntegerItem("workery-create-associate-isOkToEmail");
-        isOkToText = localStorageGetIntegerItem("workery-create-associate-isOkToText");
-        isOkToEmailLabel = localStorage.getItem("workery-create-associate-isOkToEmail-label");
-        isOkToTextLabel = localStorage.getItem("workery-create-associate-isOkToText-label");
-
         this.state = {
             // Step 3
             typeOf: localStorageGetIntegerItem("workery-create-associate-typeOf"),
@@ -53,18 +32,13 @@ class AssociateCreateStep8Container extends Component {
             organizationTypeOf: localStorageGetIntegerItem("workery-create-associate-organizationTypeOf"),
             givenName: localStorage.getItem("workery-create-associate-givenName"),
             lastName: localStorage.getItem("workery-create-associate-lastName"),
-            primaryPhone: primaryPhone,
-            primaryPhoneTypeOf: primaryPhoneTypeOf,
-            secondaryPhone: secondaryPhone,
-            secondaryPhoneTypeOf: secondaryPhoneTypeOf,
-            email: email,
-            isOkToEmail: isOkToEmail,
-            isOkToEmailLabel: isOkToEmailLabel,
-            isOkToText: isOkToText,
-            isOkToTextLabel: isOkToTextLabel,
-            organizationName: localStorage.getItem("workery-create-associate-biz-organizationName"),
-            givenName: localStorage.getItem("workery-create-associate-biz-givenName"),
-            lastName: localStorage.getItem("workery-create-associate-biz-lastName"),
+            primaryPhone: localStorage.getItem("workery-create-associate-primaryPhone"),
+            secondaryPhone: localStorage.getItem("workery-create-associate-secondaryPhone"),
+            email: localStorage.getItem("workery-create-associate-email"),
+            isOkToEmail: localStorageGetIntegerItem("workery-create-associate-isOkToEmail"),
+            isOkToEmailLabel: localStorage.getItem("workery-create-associate-isOkToEmail-label"),
+            isOkToText: localStorageGetIntegerItem("workery-create-associate-isOkToText"),
+            isOkToTextLabel: localStorage.getItem("workery-create-associate-isOkToText-label"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-associate-country"),

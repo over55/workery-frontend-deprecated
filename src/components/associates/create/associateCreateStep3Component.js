@@ -74,7 +74,7 @@ export default class AssociateCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Residential</h3>
                                 <p className="card-text">Add a residential associate</p>
-                                <Link className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, 2) } }>
+                                <Link className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, 2, "Residential") } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </Link>
                             </div>
@@ -88,7 +88,7 @@ export default class AssociateCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Business</h3>
                                 <p className="card-text">Add a business associate</p>
-                                <Link className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, 3) } }>
+                                <Link className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, 3, "Commercial") } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </Link>
                             </div>

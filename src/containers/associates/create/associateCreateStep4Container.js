@@ -48,13 +48,6 @@ class AssociateCreateStep4Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // DEVELOPERS NOTE:
-        // Since we are in this page, we need to assign the user to be
-        // a residential type user. If the user is community cares type
-        // then this variable will be set then in page 4.
-        localStorage.setItem("workery-create-associate-typeOf", RESIDENTIAL_CUSTOMER_TYPE_OF_ID);
-        localStorage.setItem("workery-create-associate-typeOf-label", "Residential");
         localStorage.setItem("workery-create-associate-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
         localStorage.setItem("workery-create-associate-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
     }

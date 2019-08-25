@@ -15,6 +15,7 @@ class AssociateCreateStep3Container extends Component {
         super(props);
         this.state = {
             typeOf: localStorageGetIntegerItem("workery-create-associate-typeOf"),
+            typeOfLabel: localStorage.getItem("workery-create-associate-typeOf-label"),
         };
         this.onClick = this.onClick.bind(this);
     }
@@ -47,9 +48,11 @@ class AssociateCreateStep3Container extends Component {
      *------------------------------------------------------------
      */
 
-    onClick(e, typeOf) {
+    onClick(e, typeOf, typeOfLabel) {
         e.preventDefault();
+        console.log("onClick", typeOf, typeOfLabel);
         localStorage.setItem("workery-create-associate-typeOf", parseInt(typeOf));
+        localStorage.setItem("workery-create-associate-typeOf-label", typeOfLabel);
         this.props.history.push("/associates/add/step-4");
     }
 
