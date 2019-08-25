@@ -16,7 +16,7 @@ import { IS_ACTIVE_TYPE_OF_CHOICES } from "../../../constants/api";
 class AssociateCreateStep6Component extends Component {
     render() {
         const {
-            returnURL, errors, isLoading, onNextClick, onSelectChange,
+            errors, isLoading, onNextClick, onSelectChange,
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
             isActive, onRadioChange,
@@ -67,7 +67,7 @@ class AssociateCreateStep6Component extends Component {
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <Link to={returnURL}>
+                            <Link to="/associates/add/step-4">
                                 <span className="num">4.</span><span className="">Contact</span>
                             </Link>
                         </div>

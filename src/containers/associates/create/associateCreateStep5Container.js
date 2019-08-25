@@ -24,19 +24,7 @@ class AssociateCreateStep5Container extends Component {
     constructor(props) {
         super(props);
 
-        // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("workery-create-associate-typeOf"));
-        let returnURL;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/associates/add/step-4-rez-or-cc";
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/associates/add/step-4-biz";
-        }
-
         this.state = {
-            returnURL: returnURL,
-            typeOf: typeOf,
             country: localStorage.getItem("workery-create-associate-country"),
             region: localStorage.getItem("workery-create-associate-region"),
             locality: localStorage.getItem("workery-create-associate-locality"),
@@ -165,7 +153,7 @@ class AssociateCreateStep5Container extends Component {
      */
 
     render() {
-        const { referrer, errors, isLoading, returnURL } = this.state;
+        const { referrer, errors, isLoading } = this.state;
         const {
             country, region, locality,
             postalCode, streetAddress,
@@ -184,7 +172,6 @@ class AssociateCreateStep5Container extends Component {
                 onBillingRegionChange={this.onBillingRegionChange}
                 onNextClick={this.onNextClick}
                 errors={errors}
-                returnURL={returnURL}
                 isLoading={isLoading}
             />
         );

@@ -24,7 +24,6 @@ class AssociateCreateStep8Container extends Component {
 
         // Get the type of.
         const typeOf = localStorageGetIntegerItem("workery-create-associate-typeOf");
-        let returnURL;
         let primaryPhone;
         let primaryPhoneTypeOf;
         let secondaryPhone;
@@ -34,39 +33,26 @@ class AssociateCreateStep8Container extends Component {
         let isOkToText;
         let isOkToEmailLabel;
         let isOkToTextLabel;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/associates/add/step-4-rez-or-cc";
-            primaryPhone = localStorage.getItem("workery-create-associate-rez-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-associate-rez-primaryPhoneTypeOf");
-            secondaryPhone = localStorage.getItem("workery-create-associate-rez-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-associate-rez-secondaryPhoneTypeOf");
-            email = localStorage.getItem("workery-create-associate-rez-email");
-            isOkToEmail = localStorageGetIntegerItem("workery-create-associate-rez-isOkToEmail");
-            isOkToText = localStorageGetIntegerItem("workery-create-associate-rez-isOkToText");
-            isOkToEmailLabel = localStorage.getItem("workery-create-associate-rez-isOkToEmail-label");
-            isOkToTextLabel = localStorage.getItem("workery-create-associate-rez-isOkToText-label");
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/associates/add/step-4-biz";
-            primaryPhone = localStorage.getItem("workery-create-associate-biz-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-associate-biz-primaryPhoneTypeOf");
-            secondaryPhone =  localStorage.getItem("workery-create-associate-biz-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-associate-biz-secondaryPhoneTypeOf");
-            email = localStorage.getItem("workery-create-associate-biz-email");
-            isOkToEmail = localStorageGetIntegerItem("workery-create-associate-biz-isOkToEmail");
-            isOkToText = localStorageGetIntegerItem("workery-create-associate-biz-isOkToText");
-            isOkToEmailLabel = localStorage.getItem("workery-create-associate-biz-isOkToEmail-label");
-            isOkToTextLabel = localStorage.getItem("workery-create-associate-biz-isOkToText-label");
-        }
+        primaryPhone = localStorage.getItem("workery-create-associate-primaryPhone");
+        primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-associate-primaryPhoneTypeOf");
+        secondaryPhone = localStorage.getItem("workery-create-associate-secondaryPhone");
+        secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-associate-secondaryPhoneTypeOf");
+        email = localStorage.getItem("workery-create-associate-email");
+        isOkToEmail = localStorageGetIntegerItem("workery-create-associate-isOkToEmail");
+        isOkToText = localStorageGetIntegerItem("workery-create-associate-isOkToText");
+        isOkToEmailLabel = localStorage.getItem("workery-create-associate-isOkToEmail-label");
+        isOkToTextLabel = localStorage.getItem("workery-create-associate-isOkToText-label");
 
         this.state = {
             // Step 3
-            typeOf: typeOf,
+            typeOf: localStorageGetIntegerItem("workery-create-associate-typeOf"),
             typeOfLabel: localStorage.getItem("workery-create-associate-typeOf-label"),
 
             // Step 4 - Residential & Business
-            givenName: localStorage.getItem("workery-create-associate-rez-givenName"),
-            lastName: localStorage.getItem("workery-create-associate-rez-lastName"),
+            organizationName: localStorage.getItem("workery-create-associate-organizationName"),
+            organizationTypeOf: localStorageGetIntegerItem("workery-create-associate-organizationTypeOf"),
+            givenName: localStorage.getItem("workery-create-associate-givenName"),
+            lastName: localStorage.getItem("workery-create-associate-lastName"),
             primaryPhone: primaryPhone,
             primaryPhoneTypeOf: primaryPhoneTypeOf,
             secondaryPhone: secondaryPhone,
@@ -120,7 +106,6 @@ class AssociateCreateStep8Container extends Component {
             comment: localStorage.getItem("workery-create-associate-comment"),
 
             // Everything else
-            returnURL: returnURL,
             errors: {},
             isLoading: false,
             password: localStorage.getItem("workery-create-associate-password"),
@@ -405,7 +390,6 @@ class AssociateCreateStep8Container extends Component {
             comment,
 
             // Everything else
-            returnURL,
             errors,
             isLoading,
         } = this.state;
@@ -470,7 +454,6 @@ class AssociateCreateStep8Container extends Component {
                 comment={comment}
 
                 // Everything else
-                returnURL={returnURL}
                 errors={errors}
                 isLoading={isLoading}
                 onSubmitClick={this.onSubmitClick}

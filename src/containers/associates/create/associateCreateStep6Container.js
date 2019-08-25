@@ -29,16 +29,6 @@ class AssociateCreateStep6Container extends Component {
     constructor(props) {
         super(props);
 
-        // Get the type of.
-        const typeOf = localStorageGetIntegerItem("workery-create-associate-typeOf");
-        let returnURL;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/associates/add/step-4-rez-or-cc";
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/associates/add/step-4-biz";
-        }
-
         this.state = {
             skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
             insuranceRequirements: localStorageGetArrayItem("workery-create-associate-insuranceRequirements"),
@@ -58,8 +48,6 @@ class AssociateCreateStep6Container extends Component {
             emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
             emergencyContactAlternativeTelephone: localStorage.getItem("workery-create-associate-emergencyContactAlternativeTelephone"),
             isActive: localStorageGetIntegerItem("workery-create-associate-isActive"),
-            returnURL: returnURL,
-            typeOf: typeOf,
             errors: {},
             isLoading: false
         }
@@ -288,7 +276,7 @@ class AssociateCreateStep6Container extends Component {
             duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
             emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
             isActive,
-            errors, isLoading, returnURL
+            errors, isLoading
         } = this.state;
 
         const { user } = this.props;
@@ -335,7 +323,6 @@ class AssociateCreateStep6Container extends Component {
 
                 onNextClick={this.onNextClick}
                 errors={errors}
-                returnURL={returnURL}
                 isLoading={isLoading}
             />
         );

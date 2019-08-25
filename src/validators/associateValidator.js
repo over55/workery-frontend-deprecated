@@ -249,8 +249,17 @@ export function validateInput(data) {
 /**
  *  Validator will validate step 4 in the associate creation form.
  */
-export function validateStep4RezCreateInput(data) {
+export function validateStep4CreateInput(data) {
     let errors = {};
+
+    if (data.typeOf === 3) {
+        if (data.organizationName === undefined || data.organizationName === null || data.organizationName === "") {
+            errors.organizationName = 'This field is required';
+        }
+        if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "" || isNaN(data.organizationTypeOf)) {
+            errors.organizationTypeOf = 'This field is required';
+        }
+    }
 
     if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
         errors.givenName = 'This field is required';
@@ -393,7 +402,7 @@ export function validateStep7CreateInput(data) {
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
     }
-    if (data.gender === undefined || data.gender === null || data.gender === "" || isNaN(data.gender) ) {
+    if (data.gender === undefined || data.gender === null || data.gender === "") {
         errors.gender = 'This field is required';
     }
     if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {

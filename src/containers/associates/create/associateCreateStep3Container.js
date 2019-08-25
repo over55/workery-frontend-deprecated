@@ -49,7 +49,7 @@ class AssociateCreateStep3Container extends Component {
 
     onClick(e, typeOf) {
         e.preventDefault();
-        localStorage.setItem("workery-create-associate-typeOf", typeOf);
+        localStorage.setItem("workery-create-associate-typeOf", parseInt(typeOf));
         this.props.history.push("/associates/add/step-4");
     }
 

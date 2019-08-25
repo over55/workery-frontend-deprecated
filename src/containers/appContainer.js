@@ -61,8 +61,7 @@ import AssociateCommentContainer from "./associates/retrieve/associateCommentCon
 import AssociateCreateStep1Container from "./associates/create/associateCreateStep1Container";
 import AssociateCreateStep2Container from "./associates/create/associateCreateStep2Container";
 import AssociateCreateStep3Container from "./associates/create/associateCreateStep3Container";
-import AssociateCreateStep4BizContainer from "./associates/create/associateCreateStep4BizContainer";
-import AssociateCreateStep4RezContainer from "./associates/create/associateCreateStep4RezContainer";
+import AssociateCreateStep4Container from "./associates/create/associateCreateStep4Container";
 import AssociateCreateStep5Container from "./associates/create/associateCreateStep5Container";
 import AssociateCreateStep6Container from "./associates/create/associateCreateStep6Container";
 import AssociateCreateStep7Container from "./associates/create/associateCreateStep7Container";
@@ -283,8 +282,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associates/add/step-1" exact component={requiresAuth(AssociateCreateStep1Container)} />
                                 <Route path="/associates/add/step-2" exact component={requiresAuth(AssociateCreateStep2Container)} />
                                 <Route path="/associates/add/step-3" exact component={requiresAuth(AssociateCreateStep3Container)} />
-                                <Route path="/associates/add/step-4-biz" exact component={requiresAuth(AssociateCreateStep4BizContainer)} />
-                                <Route path="/associates/add/step-4-rez-or-cc" exact component={requiresAuth(AssociateCreateStep4RezContainer)} />
+                                <Route path="/associates/add/step-4" exact component={requiresAuth(AssociateCreateStep4Container)} />
                                 <Route path="/associates/add/step-5" exact component={requiresAuth(AssociateCreateStep5Container)} />
                                 <Route path="/associates/add/step-6" exact component={requiresAuth(AssociateCreateStep6Container)} />
                                 <Route path="/associates/add/step-7" exact component={requiresAuth(AssociateCreateStep7Container)} />

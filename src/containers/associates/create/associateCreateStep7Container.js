@@ -24,19 +24,7 @@ class AssociateCreateStep7Container extends Component {
     constructor(props) {
         super(props);
 
-        // Get the type of.
-        const typeOf = parseInt(localStorage.getItem("workery-create-associate-typeOf"));
-        let returnURL;
-        if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/associates/add/step-4-rez-or-cc";
-        }
-        else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
-            returnURL = "/associates/add/step-4-biz";
-        }
-
         this.state = {
-            returnURL: returnURL,
-            typeOf: typeOf,
             tags: localStorageGetArrayItem("workery-create-associate-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
             gender: localStorage.getItem("workery-create-associate-gender"),
@@ -208,7 +196,7 @@ class AssociateCreateStep7Container extends Component {
 
     render() {
         const {
-            typeOf, returnURL, tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
+            typeOf, tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
             errors
         } = this.state;
 
@@ -218,7 +206,7 @@ class AssociateCreateStep7Container extends Component {
         return (
             <AssociateCreateStep7Component
                 typeOf={typeOf}
-                returnURL={returnURL}
+
                 tags={tags}
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}

@@ -15,7 +15,7 @@ import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNT
 export default class AssociateCreateStep7Component extends Component {
     render() {
         const {
-            typeOf, returnURL, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
+            typeOf, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
             onRadioChange,  onMultiChange, onJoinDateChange, comment,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
@@ -61,7 +61,7 @@ export default class AssociateCreateStep7Component extends Component {
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <Link to={returnURL}>
+                            <Link to="/associates/add/step-4">
                                 <span className="num">4.</span><span className="">Contact</span>
                             </Link>
                         </div>
