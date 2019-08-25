@@ -51,6 +51,7 @@ export default class FollowUpPendingTaskStep2Component extends Component {
                             <h2>
                                 <i className="fas fa-user-check"></i>&nbsp;Review
                             </h2>
+                            <p>Please contact the Associate to confirm if they want the job.</p>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -102,14 +103,19 @@ export default class FollowUpPendingTaskStep2Component extends Component {
 
 const STATUS_CHOICES = [
     {
-        id: 'status-m-choice',
+        id: 'status-accepted-choice',
         name: "status",
-        value: true,
+        value: "accepted",
         label: "Yes"
     },{
-        id: 'status-f-choice',
+        id: 'status-declined-choice',
         name: "status",
-        value: false,
-        label: "Left Message"
+        value: "declined",
+        label: "No"
+    },{
+        id: 'status-pending-choice',
+        name: "status",
+        value: "pending",
+        label: "Pending"
     }
 ];

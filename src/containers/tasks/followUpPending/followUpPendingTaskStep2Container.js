@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import FollowUpPendingTaskStep2Component from "../../../components/tasks/followUpPending/followUpPendingTaskStep2Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
-import { validateTask2Step2Input } from "../../../validators/taskValidator";
+import { validateTask4Step2Input } from "../../../validators/taskValidator";
 import { postTaskFollowUpPendingDetail } from "../../../actions/taskActions";
 import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
@@ -54,7 +54,7 @@ class FollowUpPendingTaskStep2Container extends Component {
         let postData = Object.assign({}, this.state);
 
         postData.task_item = this.state.id;
-        postData.hasAgreedToMeet = this.state.status;
+        postData.state = this.state.status;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -157,7 +157,7 @@ class FollowUpPendingTaskStep2Container extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateTask2Step2Input(this.state);
+        const { errors, isValid } = validateTask4Step2Input(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {

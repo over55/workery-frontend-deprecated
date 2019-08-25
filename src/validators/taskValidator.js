@@ -51,3 +51,20 @@ export function validateTask2Step2Input(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateTask4Step2Input(data) {
+    let errors = {};
+
+    if (data.status === undefined || data.status === null || data.status === "") {
+        errors.status = 'This field is required';
+    }
+    if (data.comment === undefined || data.comment === null || data.comment === "") {
+        errors.comment = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
