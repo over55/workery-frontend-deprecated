@@ -28,7 +28,7 @@ export default class AssignAssociateTaskStep3Component extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</h1>
+                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Assign Associate</h1>
 
                 <div className="row">
                     <div className="step-navigation">

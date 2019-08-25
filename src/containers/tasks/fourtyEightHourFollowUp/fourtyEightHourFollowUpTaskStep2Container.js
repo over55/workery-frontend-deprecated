@@ -5,9 +5,10 @@ import Scroll from 'react-scroll';
 import FourtyEightHourFollowUpTaskStep2Component from "../../../components/tasks/fourtyEightHourFollowUp/fourtyEightHourFollowUpTaskStep2Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
-import { validateTask1Step2Input } from "../../../validators/taskValidator";
+import { validateTask2Step2Input } from "../../../validators/taskValidator";
 // import { postTaskFourtyEightHourFollowUpDetail } from "../../../actions/taskActions";
 import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+
 
 class FourtyEightHourFollowUpTaskStep2Container extends Component {
     /**
@@ -156,7 +157,7 @@ class FourtyEightHourFollowUpTaskStep2Container extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateTask1Step2Input(this.state);
+        const { errors, isValid } = validateTask2Step2Input(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
