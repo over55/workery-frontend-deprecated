@@ -130,9 +130,20 @@ class RemoteListComponent extends Component {
 }
 
 function iconFormatter(cell, row){
-    return (
-        <i className="fas fa-home"></i>
-    )
+    if (row.typeOf === 2) {
+        return (
+            <i className="fas fa-home"></i>
+        )
+    } else if (row.typeOf === 3) {
+        return (
+            <i className="fas fa-building"></i>
+        )
+    } else {
+        return (
+            <i className="fas fa-question-circle"></i>
+        )
+    }
+
 }
 
 function statusFormatter(cell, row){

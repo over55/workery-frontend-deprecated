@@ -33,7 +33,9 @@ class AssociateCreateStep8Container extends Component {
             givenName: localStorage.getItem("workery-create-associate-givenName"),
             lastName: localStorage.getItem("workery-create-associate-lastName"),
             primaryPhone: localStorage.getItem("workery-create-associate-primaryPhone"),
+            primaryPhoneTypeOf: 1,
             secondaryPhone: localStorage.getItem("workery-create-associate-secondaryPhone"),
+            secondaryPhoneTypeOf: 1,
             email: localStorage.getItem("workery-create-associate-email"),
             isOkToEmail: localStorageGetIntegerItem("workery-create-associate-isOkToEmail"),
             isOkToEmailLabel: localStorage.getItem("workery-create-associate-isOkToEmail-label"),
@@ -282,6 +284,49 @@ class AssociateCreateStep8Container extends Component {
     }
 
     onSuccessCallback(response) {
+        localStorage.removeItem("workery-create-associate-typeOf");
+        localStorage.removeItem("workery-create-associate-typeOf-label");
+        localStorage.removeItem("workery-create-associate-organizationName");
+        localStorage.removeItem("workery-create-associate-organizationTypeOf");
+        localStorage.removeItem("workery-create-associate-givenName");
+        localStorage.removeItem("workery-create-associate-lastName");
+        localStorage.removeItem("workery-create-associate-primaryPhone");
+        localStorage.removeItem("workery-create-associate-secondaryPhone");
+        localStorage.removeItem("workery-create-associate-email");
+        localStorage.removeItem("workery-create-associate-isOkToEmail");
+        localStorage.removeItem("workery-create-associate-isOkToText");
+        localStorage.removeItem("workery-create-associate-country");
+        localStorage.removeItem("workery-create-associate-region");
+        localStorage.removeItem("workery-create-associate-locality");
+        localStorage.removeItem("workery-create-associate-postalCode");
+        localStorage.removeItem("workery-create-associate-streetAddress");
+        localStorage.removeItem("workery-create-associate-skillSets");
+        localStorage.removeItem("workery-create-associate-insuranceRequirements");
+        localStorage.removeItem("workery-create-associate-description");
+        localStorage.removeItem("workery-create-associate-hourlySalaryDesired");
+        localStorage.removeItem("workery-create-associate-limitSpecial");
+        localStorage.removeItem("workery-create-associate-duesDate");
+        localStorage.removeItem("workery-create-associate-commercialInsuranceExpiryDate");
+        localStorage.removeItem("workery-create-associate-autoInsuranceExpiryDate");
+        localStorage.removeItem("workery-create-associate-wsibInsuranceDate");
+        localStorage.removeItem("workery-create-associate-policeCheck");
+        localStorage.removeItem("workery-create-associate-taxId");
+        localStorage.removeItem("workery-create-associate-driversLicenseClass");
+        localStorage.removeItem("workery-create-associate-vehicleTypes");
+        localStorage.removeItem("workery-create-associate-emergencyContactName");
+        localStorage.removeItem("workery-create-associate-emergencyContactRelationship");
+        localStorage.removeItem("workery-create-associate-emergencyContactTelephone");
+        localStorage.removeItem("workery-create-associate-emergencyContactAlternativeTelephone");
+        localStorage.removeItem("workery-create-associate-isActive");
+        localStorage.removeItem("workery-create-associate-tags");
+        localStorage.removeItem("workery-create-associate-dateOfBirth");
+        localStorage.removeItem("workery-create-associate-gender");
+        localStorage.removeItem("workery-create-associate-howHear");
+        localStorage.removeItem('workery-create-associate-howHearOption');
+        localStorage.removeItem("workery-create-associate-howHearOther");
+        localStorage.removeItem("workery-create-associate-joinDate");
+        localStorage.removeItem("workery-create-associate-comment");
+
         console.log("onSuccessCallback | State (Post-Fetch):", this.state);
         console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
         this.props.setFlashMessage("success", "Associate has been successfully created.");
