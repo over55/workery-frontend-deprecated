@@ -93,6 +93,34 @@ export default class FourtyEightHourFollowUpTaskStep1Component extends Component
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" className="bg-light">Associate Name</th>
+                                    <td>
+                                        <Link to={`/associate/${task.jobAssociate}`} target="_blank">
+                                            {task && task.jobAssociateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Phone #</th>
+                                    <td>
+                                        {task &&
+                                            <a href={`tel:${task.jobAssociateE164Telephone}`}>
+                                                {task.jobAssociateTelephone}
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Location</th>
+                                    <td>
+                                        {task &&
+                                            <a href={task.jobAssociateLocationGoogleUrl} target="_blank">
+                                                {task.jobAssociateLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row" className="bg-light">Job Description</th>
                                     <td>{task && task.jobDescription}</td>
                                 </tr>
