@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import FollowUpTaskStep2Component from "../../../components/tasks/followUp/followUpTaskStep2Component";
+import FollowUpPendingTaskStep2Component from "../../../components/tasks/followUpPending/followUpPendingTaskStep2Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask2Step2Input } from "../../../validators/taskValidator";
-import { postTaskFollowUpDetail } from "../../../actions/taskActions";
+import { postTaskFollowUpPendingDetail } from "../../../actions/taskActions";
 import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
 
-class FollowUpTaskStep2Container extends Component {
+class FollowUpPendingTaskStep2Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -28,9 +28,9 @@ class FollowUpTaskStep2Container extends Component {
             errors: {},
             isLoading: false,
             id: id,
-            status: localStorage.getItem("workery-task-2-status"),
-            comment: localStorage.getItem("workery-task-2-comment"),
-            associate: localStorageGetIntegerItem("workery-task-2-associateId"),
+            status: localStorage.getItem("workery-task-4-status"),
+            comment: localStorage.getItem("workery-task-4-comment"),
+            associate: localStorageGetIntegerItem("workery-task-4-associateId"),
             errors: {},
             // associate: localStorage.getItem('nwapp-task-1-associate'),
             // associateLabel: localStorage.getItem('nwapp-task-1-associate-label'),
@@ -86,10 +86,10 @@ class FollowUpTaskStep2Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        localStorage.removeItem("workery-task-2-status");
-        localStorage.removeItem("workery-task-2-comment");
-        localStorage.removeItem("workery-task-2-associateId");
-        this.props.setFlashMessage("success", "48 hour follow-up task has been successfully closed.");
+        localStorage.removeItem("workery-task-4-status");
+        localStorage.removeItem("workery-task-4-comment");
+        localStorage.removeItem("workery-task-4-associateId");
+        this.props.setFlashMessage("success", "24 hour follow-up task has been successfully closed.");
         this.props.history.push("/tasks");
     }
 
@@ -123,13 +123,13 @@ class FollowUpTaskStep2Container extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        localStorage.setItem('workery-task-2-'+[e.target.name], e.target.value);
+        localStorage.setItem('workery-task-4-'+[e.target.name], e.target.value);
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-task-2-"+[e.target.name];
-        const storageLabelKey =  "workery-task-2-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-task-4-"+[e.target.name];
+        const storageLabelKey =  "workery-task-4-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -162,7 +162,7 @@ class FollowUpTaskStep2Container extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ isLoading: true, errors:{} }, ()=>{
-                this.props.postTaskFollowUpDetail(
+                this.props.postTaskFollowUpPendingDetail(
                     this.getPostData(),
                     this.onSuccessCallback,
                     this.onFailureCallback
@@ -183,7 +183,7 @@ class FollowUpTaskStep2Container extends Component {
 
     render() {
         return (
-            <FollowUpTaskStep2Component
+            <FollowUpPendingTaskStep2Component
                 id={this.state.id}
                 status={this.state.status}
                 comment={this.state.comment}
@@ -211,9 +211,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        postTaskFollowUpDetail: (postData, onSuccessCallback, onFailureCallback) => {
+        postTaskFollowUpPendingDetail: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                postTaskFollowUpDetail(postData, onSuccessCallback, onFailureCallback)
+                postTaskFollowUpPendingDetail(postData, onSuccessCallback, onFailureCallback)
             )
         },
         pullTaskDetail: (id, onSuccessCallback, onFailureCallback) => {
@@ -228,4 +228,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(FollowUpTaskStep2Container);
+)(FollowUpPendingTaskStep2Container);
