@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssignAssociateTaskStep3Component from "../../../components/tasks/assignAssociate/assignAssociateTaskStep3Component";
+import FollowUpTaskStep2Component from "../../../components/tasks/followUp/followUpTaskStep2Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
-import { validateTask1Step3Input } from "../../../validators/taskValidator";
-import { postTaskAssignAssociateDetail } from "../../../actions/taskActions";
+import { validateTask2Step2Input } from "../../../validators/taskValidator";
+import { postTaskFollowUpDetail } from "../../../actions/taskActions";
 import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
-class AssignAssociateTaskStep3Container extends Component {
+
+class FollowUpTaskStep2Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -27,9 +28,9 @@ class AssignAssociateTaskStep3Container extends Component {
             errors: {},
             isLoading: false,
             id: id,
-            status: localStorage.getItem("workery-task-1-status"),
-            comment: localStorage.getItem("workery-task-1-comment"),
-            associate: localStorageGetIntegerItem("workery-task-1-associateId"),
+            status: localStorage.getItem("workery-task-2-status"),
+            comment: localStorage.getItem("workery-task-2-comment"),
+            associate: localStorageGetIntegerItem("workery-task-2-associateId"),
             errors: {},
             // associate: localStorage.getItem('nwapp-task-1-associate'),
             // associateLabel: localStorage.getItem('nwapp-task-1-associate-label'),
@@ -53,7 +54,7 @@ class AssignAssociateTaskStep3Container extends Component {
         let postData = Object.assign({}, this.state);
 
         postData.task_item = this.state.id;
-        postData.state = this.state.status;
+        postData.hasAgreedToMeet = this.state.status;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -85,10 +86,10 @@ class AssignAssociateTaskStep3Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        localStorage.removeItem("workery-task-1-status");
-        localStorage.removeItem("workery-task-1-comment");
-        localStorage.removeItem("workery-task-1-associateId");
-        this.props.setFlashMessage("success", "Assign associate task has been successfully closed.");
+        localStorage.removeItem("workery-task-2-status");
+        localStorage.removeItem("workery-task-2-comment");
+        localStorage.removeItem("workery-task-2-associateId");
+        this.props.setFlashMessage("success", "48 hour follow-up task has been successfully closed.");
         this.props.history.push("/tasks");
     }
 
@@ -122,13 +123,13 @@ class AssignAssociateTaskStep3Container extends Component {
         this.setState({
             [e.target.name]: e.target.value,
         })
-        localStorage.setItem('workery-task-1-'+[e.target.name], e.target.value);
+        localStorage.setItem('workery-task-2-'+[e.target.name], e.target.value);
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-task-1-"+[e.target.name];
-        const storageLabelKey =  "workery-task-1-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-task-2-"+[e.target.name];
+        const storageLabelKey =  "workery-task-2-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -156,12 +157,12 @@ class AssignAssociateTaskStep3Container extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateTask1Step3Input(this.state);
+        const { errors, isValid } = validateTask2Step2Input(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ isLoading: true, errors:{} }, ()=>{
-                this.props.postTaskAssignAssociateDetail(
+                this.props.postTaskFollowUpDetail(
                     this.getPostData(),
                     this.onSuccessCallback,
                     this.onFailureCallback
@@ -182,7 +183,7 @@ class AssignAssociateTaskStep3Container extends Component {
 
     render() {
         return (
-            <AssignAssociateTaskStep3Component
+            <FollowUpTaskStep2Component
                 id={this.state.id}
                 status={this.state.status}
                 comment={this.state.comment}
@@ -210,9 +211,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        postTaskAssignAssociateDetail: (postData, onSuccessCallback, onFailureCallback) => {
+        postTaskFollowUpDetail: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                postTaskAssignAssociateDetail(postData, onSuccessCallback, onFailureCallback)
+                postTaskFollowUpDetail(postData, onSuccessCallback, onFailureCallback)
             )
         },
         pullTaskDetail: (id, onSuccessCallback, onFailureCallback) => {
@@ -227,4 +228,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssignAssociateTaskStep3Container);
+)(FollowUpTaskStep2Container);

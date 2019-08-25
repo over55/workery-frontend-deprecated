@@ -8,7 +8,7 @@ import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { GENDER_RADIO_CHOICES } from "../../../constants/api";
 
 
-export default class AssignAssociateTaskStep3Component extends Component {
+export default class FollowUpPendingTaskStep2Component extends Component {
     render() {
         const { task, status, id, comment, onClick, onBack, errors, isLoading, onRadioChange, onTextChange } = this.props;
         return (
@@ -28,23 +28,18 @@ export default class AssignAssociateTaskStep3Component extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Assign Associate</h1>
+                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - 24 Hour Follow Up</h1>
 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/task/1/${id}/step-1`}>
+                            <Link to={`/task/4/${id}/step-1`}>
                                 <span className="num">1.</span><span className="">Info</span>
                             </Link>
                         </div>
-                        <div id="step-2" className="st-grey">
-                            <Link to={`/task/1/${id}/step-2`}>
-                                <span className="num">2.</span><span className="">Selection</span>
-                            </Link>
-                        </div>
-                        <div id="step-3" className="st-grey active">
+                        <div id="step-2" className="st-grey active">
                             <strong>
-                                <span className="num">3.</span><span className="">Review</span>
+                                <span className="num">2.</span><span className="">Review</span>
                             </strong>
                         </div>
                     </div>
@@ -56,6 +51,7 @@ export default class AssignAssociateTaskStep3Component extends Component {
                             <h2>
                                 <i className="fas fa-user-check"></i>&nbsp;Review
                             </h2>
+                            <p>Please contact the Associate to confirm if they want the job.</p>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -64,7 +60,7 @@ export default class AssignAssociateTaskStep3Component extends Component {
                                 inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
                                 error={errors.status}
-                                label="Accepted Job? (*)"
+                                label="Have the Client and Associate Member agreed to meet? (*)"
                                 name="status"
                                 onChange={onRadioChange}
                                 selectedValue={status}
@@ -90,7 +86,7 @@ export default class AssignAssociateTaskStep3Component extends Component {
                                 <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/1/${id}/step-2`}>
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/4/${id}/step-1`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>
@@ -107,17 +103,17 @@ export default class AssignAssociateTaskStep3Component extends Component {
 
 const STATUS_CHOICES = [
     {
-        id: 'status-m-choice',
+        id: 'status-accepted-choice',
         name: "status",
         value: "accepted",
         label: "Yes"
     },{
-        id: 'status-f-choice',
+        id: 'status-declined-choice',
         name: "status",
         value: "declined",
         label: "No"
     },{
-        id: 'status-pnts-choice',
+        id: 'status-pending-choice',
         name: "status",
         value: "pending",
         label: "Pending"

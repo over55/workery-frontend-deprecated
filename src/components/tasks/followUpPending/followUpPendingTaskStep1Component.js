@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 
-export default class AssignAssociateTaskStep1Component extends Component {
+export default class FollowUpPendingTaskStep1Component extends Component {
     render() {
         const { id, task, onBack, onClick } = this.props;
         return (
@@ -21,7 +21,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Assign Associate</h1>
+                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - 24 Hour Follow Up</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -31,10 +31,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <span className="num">2.</span><span className="">Selection</span>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Review</span>
+                            <span className="num">2.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -88,6 +85,34 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                         {task &&
                                             <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
                                                 {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Name</th>
+                                    <td>
+                                        <Link to={`/associate/${task.jobAssociate}`} target="_blank">
+                                            {task && task.jobAssociateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Phone #</th>
+                                    <td>
+                                        {task &&
+                                            <a href={`tel:${task.jobAssociateE164Telephone}`}>
+                                                {task.jobAssociateTelephone}
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Location</th>
+                                    <td>
+                                        {task &&
+                                            <a href={task.jobAssociateLocationGoogleUrl} target="_blank">
+                                                {task.jobAssociateLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </a>
                                         }
                                     </td>
@@ -149,7 +174,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
                             <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
-                                Proceed to Selection&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
                             </button>
 
                             <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">

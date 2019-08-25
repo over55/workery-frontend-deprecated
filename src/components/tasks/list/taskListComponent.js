@@ -41,7 +41,7 @@ class RemoteListComponent extends Component {
 
         const typeOfSelectOptions = {
             1: 'Assign associate',
-            2: 'Follow up is job complete',
+            2: '48 hour follow up',
             3: 'Follow up customer survey',
             4: 'Follow up did associate accept job',
             5: 'Follow up was ongoing job updated',
