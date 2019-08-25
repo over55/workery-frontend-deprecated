@@ -48,7 +48,12 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'state',
             text: 'Status',
-            sort: true,
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 1,
+                withoutEmptyOption: true
+            }),
             formatter: statusFormatter
         },{
             dataField: 'givenName',
