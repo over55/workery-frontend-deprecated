@@ -11,7 +11,8 @@ import {
 import {
     WORKERY_TASK_LIST_API_ENDPOINT,
     WORKERY_TASK_DETAIL_API_ENDPOINT,
-    WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT
+    WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT,
+    WORKERY_TASK_FOURTY_EIGHT_HOUR_FOLLOW_UP_OPERATION_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -202,6 +203,77 @@ export function postTaskAssignAssociateDetail(postData, successCallback, failedC
 
         // Perform our API submission.
         customAxios.post(WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT, buffer).then( (successResponse) => {
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+
+            let device = camelizeKeys(responseData);
+
+            // Extra.
+            device['isAPIRequestRunning'] = false;
+            device['errors'] = {};
+
+            // Run our success callback function.
+            successCallback(device);
+
+            // Update the global state of the application to store our
+            // user device for the application.
+            store.dispatch(
+                setTaskDetailSuccess(device)
+            );
+        }).catch( (exception) => {
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("postTaskDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setTaskDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (failedCallback) {
+                    failedCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+
+export function postTaskFourtyEightHourFollowUpDetail(postData, successCallback, failedCallback) {
+    return dispatch => {
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setTaskDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // The following code will convert the `camelized` data into `snake case`
+        // data so our API endpoint will be able to read it.
+        let decamelizedData = decamelizeKeys(postData);
+
+        // Encode from JS Object to MessagePack (Buffer)
+        var buffer = msgpack.encode(decamelizedData);
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_TASK_FOURTY_EIGHT_HOUR_FOLLOW_UP_OPERATION_API_ENDPOINT, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 

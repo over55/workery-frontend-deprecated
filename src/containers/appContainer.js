@@ -101,6 +101,8 @@ import TaskSearchResultContainer from "./tasks/search/taskSearchResultContainer"
 import AssignAssociateTaskStep1Container from "./tasks/assignAssociate/assignAssociateTaskStep1Container";
 import AssignAssociateTaskStep2Container from "./tasks/assignAssociate/assignAssociateTaskStep2Container";
 import AssignAssociateTaskStep3Container from "./tasks/assignAssociate/assignAssociateTaskStep3Container";
+import FourtyEightHourFollowUpTaskStep1Container from "./tasks/fourtyEightHourFollowUp/fourtyEightHourFollowUpTaskStep1Container";
+import FourtyEightHourFollowUpTaskStep2Container from "./tasks/fourtyEightHourFollowUp/fourtyEightHourFollowUpTaskStep2Container";
 
 // Staff
 import StaffListContainer from "./staff/list/staffListContainer";
@@ -327,6 +329,8 @@ class AppContainer extends React.Component {
                                 <Route path="/task/1/:id/step-1" exact component={requiresAuth(AssignAssociateTaskStep1Container)} />
                                 <Route path="/task/1/:id/step-2" exact component={requiresAuth(AssignAssociateTaskStep2Container)} />
                                 <Route path="/task/1/:id/step-3" exact component={requiresAuth(AssignAssociateTaskStep3Container)} />
+                                <Route path="/task/2/:id/step-1" exact component={requiresAuth(FourtyEightHourFollowUpTaskStep1Container)} />
+                                <Route path="/task/2/:id/step-2" exact component={requiresAuth(FourtyEightHourFollowUpTaskStep2Container)} />
 
                                 { /* STAFF */ }
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />
