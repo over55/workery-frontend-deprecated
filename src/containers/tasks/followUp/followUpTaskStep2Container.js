@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import FourtyEightHourFollowUpTaskStep2Component from "../../../components/tasks/fourtyEightHourFollowUp/fourtyEightHourFollowUpTaskStep2Component";
+import FollowUpTaskStep2Component from "../../../components/tasks/followUp/followUpTaskStep2Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask2Step2Input } from "../../../validators/taskValidator";
-// import { postTaskFourtyEightHourFollowUpDetail } from "../../../actions/taskActions";
+// import { postTaskFollowUpDetail } from "../../../actions/taskActions";
 import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
 
-class FourtyEightHourFollowUpTaskStep2Container extends Component {
+class FollowUpTaskStep2Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -162,7 +162,7 @@ class FourtyEightHourFollowUpTaskStep2Container extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             // this.setState({ isLoading: true, errors:{} }, ()=>{
-            //     this.props.postTaskFourtyEightHourFollowUpDetail(
+            //     this.props.postTaskFollowUpDetail(
             //         this.getPostData(),
             //         this.onSuccessCallback,
             //         this.onFailureCallback
@@ -183,7 +183,7 @@ class FourtyEightHourFollowUpTaskStep2Container extends Component {
 
     render() {
         return (
-            <FourtyEightHourFollowUpTaskStep2Component
+            <FollowUpTaskStep2Component
                 id={this.state.id}
                 status={this.state.status}
                 comment={this.state.comment}
@@ -211,9 +211,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        // postTaskFourtyEightHourFollowUpDetail: (postData, onSuccessCallback, onFailureCallback) => {
+        // postTaskFollowUpDetail: (postData, onSuccessCallback, onFailureCallback) => {
         //     dispatch(
-        //         postTaskFourtyEightHourFollowUpDetail(postData, onSuccessCallback, onFailureCallback)
+        //         postTaskFollowUpDetail(postData, onSuccessCallback, onFailureCallback)
         //     )
         // },
         pullTaskDetail: (id, onSuccessCallback, onFailureCallback) => {
@@ -228,4 +228,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(FourtyEightHourFollowUpTaskStep2Container);
+)(FollowUpTaskStep2Container);

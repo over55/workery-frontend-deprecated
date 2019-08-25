@@ -8,7 +8,7 @@ import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { GENDER_RADIO_CHOICES } from "../../../constants/api";
 
 
-export default class FourtyEightHourFollowUpTaskStep2Component extends Component {
+export default class FollowUpTaskStep2Component extends Component {
     render() {
         const { task, status, id, comment, onClick, onBack, errors, isLoading, onRadioChange, onTextChange } = this.props;
         return (

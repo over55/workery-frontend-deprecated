@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import FourtyEightHourFollowUpTaskStep1Component from "../../../components/tasks/fourtyEightHourFollowUp/fourtyEightHourFollowUpTaskStep1Component";
+import FollowUpTaskStep1Component from "../../../components/tasks/followUp/followUpTaskStep1Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 
 
-class FourtyEightHourFollowUpTaskStep1Container extends Component {
+class FollowUpTaskStep1Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -85,7 +85,7 @@ class FourtyEightHourFollowUpTaskStep1Container extends Component {
 
     render() {
         return (
-            <FourtyEightHourFollowUpTaskStep1Component
+            <FollowUpTaskStep1Component
                 id={this.state.id}
                 task={this.props.taskDetail}
                 onBack={this.onBack}
@@ -119,4 +119,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(FourtyEightHourFollowUpTaskStep1Container);
+)(FollowUpTaskStep1Container);

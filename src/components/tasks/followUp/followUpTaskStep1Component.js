@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 
-export default class FourtyEightHourFollowUpTaskStep1Component extends Component {
+export default class FollowUpTaskStep1Component extends Component {
     render() {
         const { id, task, onBack, onClick } = this.props;
         return (
