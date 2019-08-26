@@ -28,9 +28,11 @@ class AssociateContactUpdateContainer extends Component {
 
         this.state = {
             // STEP 3
-            // typeOf: typeOf,
+            typeOf: this.props.associateDetail.typeOf,
 
             // STEP 4
+            organizationName: this.props.associateDetail.organizationName,
+            organizationTypeOf: this.props.associateDetail.organizationTypeOf,
             givenName: this.props.associateDetail.givenName,
             lastName: this.props.associateDetail.lastName,
             primaryPhone: this.props.associateDetail.telephone,
@@ -234,15 +236,23 @@ class AssociateContactUpdateContainer extends Component {
 
     render() {
         const {
+            // Step 3
+            typeOf,
+
             // Step 4
-            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
+            organizationName, organizationTypeOf, givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
 
             // Everything else...
             errors, id, fullName, isLoading,
         } = this.state;
         return (
             <AssociateContactUpdateComponent
+                // Step 3
+                typeOf={typeOf}
+
                 // Step 4
+                organizationName={organizationName}
+                organizationTypeOf={organizationTypeOf}
                 givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}

@@ -19,6 +19,7 @@ export default class OrderFullRetrieveComponent extends Component {
     render() {
         const { id, order, errors, flashMessage } = this.props;
         const isCancelled = order.state === "cancelled";
+        const isCompleted = order.state === "completed_and_unpaid" || order.state === "completed_and_paid" || isCancelled;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -327,43 +328,48 @@ export default class OrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
-                                    <td>
-                                        <ul>
-                                            {order.associate &&
-                                                <li>
-                                                    <Link to={`/order/${order.id}/unassign-associate`}>
-                                                        Unassign Associate&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            {isCancelled
-                                                ?""
-                                                :<li>
-                                                    <Link to={`/order/${order.id}/transfer`}>
-                                                        Transfer&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            {isCancelled
-                                                ?""
-                                                :<li>
-                                                    <Link to={`/order/${order.id}/postpone`}>
-                                                        Postpone&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            <li>
-                                                {isCancelled
-                                                    ?<Link to={`/order/${order.id}/reopen`}>
-                                                        Re-open&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                    :<Link to={`/order/${order.id}/close`}>
-                                                        Close&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
+                                    {isCompleted
+                                        ? <td>    
+                                        </td>
+                                        : <td>
+                                            <ul>
+                                                {order.associate &&
+                                                    <li>
+                                                        <Link to={`/order/${order.id}/unassign-associate`}>
+                                                            Unassign Associate&nbsp;<i className="fas fa-chevron-right"></i>
+                                                        </Link>
+                                                    </li>
                                                 }
-                                            </li>
-                                        </ul>
-                                    </td>
+                                                {isCancelled
+                                                    ?""
+                                                    :<li>
+                                                        <Link to={`/order/${order.id}/transfer`}>
+                                                            Transfer&nbsp;<i className="fas fa-chevron-right"></i>
+                                                        </Link>
+                                                    </li>
+                                                }
+                                                {isCancelled
+                                                    ?""
+                                                    :<li>
+                                                        <Link to={`/order/${order.id}/postpone`}>
+                                                            Postpone&nbsp;<i className="fas fa-chevron-right"></i>
+                                                        </Link>
+                                                    </li>
+                                                }
+                                                <li>
+                                                    {isCancelled
+                                                        ?<Link to={`/order/${order.id}/reopen`}>
+                                                            Re-open&nbsp;<i className="fas fa-chevron-right"></i>
+                                                        </Link>
+                                                        :<Link to={`/order/${order.id}/close`}>
+                                                            Close&nbsp;<i className="fas fa-chevron-right"></i>
+                                                        </Link>
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    }
+
                                 </tr>
 
                             </tbody>

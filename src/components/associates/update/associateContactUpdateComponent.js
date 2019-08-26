@@ -14,19 +14,25 @@ import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES } from "../../../constants/api";
+import {
+    IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES, ORGANIZATION_TYPE_OF_CHOICES
+} from "../../../constants/api";
 
 
 class AssociateContactUpdateComponent extends Component {
     render() {
         const {
+            // Step 3
+            typeOf,
+
             // Step 4
-            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
+            organizationName, organizationTypeOf, givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
 
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
             onSelectChange,
         } = this.props;
+        const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -60,6 +66,32 @@ class AssociateContactUpdateComponent extends Component {
                             { /* -------------------------------------------------------------------------------------- */}
                             <h4><i className="fas fa-id-card"></i>&nbsp;Personal Information</h4>
                             { /* -------------------------------------------------------------------------------------- */}
+
+                            {isCommercial &&
+                                <div>
+                                    <BootstrapInput
+                                        inputClassName="form-control form-control-lg"
+                                        borderColour="border-primary"
+                                        error={errors.organizationName}
+                                        label="Organization Name (*)"
+                                        onChange={onTextChange}
+                                        value={organizationName}
+                                        name="organizationName"
+                                        type="text"
+                                    />
+
+                                    <BootstrapSingleSelect
+                                        borderColour="border-primary"
+                                        label="Organization Type (*)"
+                                        name="organizationTypeOf"
+                                        defaultOptionLabel="Please select a telephone type."
+                                        options={ORGANIZATION_TYPE_OF_CHOICES}
+                                        value={organizationTypeOf}
+                                        error={errors.organizationTypeOf}
+                                        onSelectChange={onSelectChange}
+                                    />
+                                </div>
+                            }
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
