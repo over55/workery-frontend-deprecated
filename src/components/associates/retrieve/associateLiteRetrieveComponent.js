@@ -7,6 +7,8 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class AssociateLiteRetrieveComponent extends Component {
     render() {
         const { id, associate, flashMessage } = this.props;
+        const { typeOf } = associate;
+        const isCommercial = typeOf === 3;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -64,6 +66,9 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                 <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" />
                             </div>
                             <div className="col-sm-7 px-4 py-3">
+                                {isCommercial &&
+                                    <h1>{associate.organizationName}</h1>
+                                }
                                 <h3>{associate && associate.fullName}</h3>
                                 {associate && associate.address &&
                                     <p className="text-muted">

@@ -18,7 +18,8 @@ export default class AssociateFullRetrieveComponent extends Component {
     render() {
         const { id, associate, flashMessage, errors } = this.props;
         const { typeOf } = associate;
-        const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
+        const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial";
+        const isCommercial = typeOf === 3;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -98,6 +99,18 @@ export default class AssociateFullRetrieveComponent extends Component {
                                         </Link>
                                     </th>
                                 </tr>
+                                {isCommercial &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Company Name</th>
+                                        <td>{associate.organizationName}</td>
+                                    </tr>
+                                }
+                                {isCommercial &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Company Type</th>
+                                        <td>{associate.organizationTypeOfLabel}</td>
+                                    </tr>
+                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{associate.fullName}</td>
