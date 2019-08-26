@@ -1,6 +1,7 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import NumberFormat from 'react-number-format';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
@@ -126,9 +127,12 @@ export default class AssignAssociateTaskStep1Component extends Component {
                         <table className="table table-striped">
                             <thead>
                             <tr>
+                                <th></th>
                                 <th>Full Name</th>
                                 <th>Phone</th>
                                 <th>E-Mail</th>
+                                <th>WSIB #</th>
+                                <th>Rate ($/h)</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -209,10 +213,17 @@ class ActivitySheetItem extends Component {
 
 class AssociateItem extends Component {
     render() {
-        const { id, fullName, telephone, e164Telephone, email } = this.props.associate;
+        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired } = this.props.associate;
         const { onClick } = this.props;
+        const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
             <tr>
+                <td>
+                    {isCommercial
+                        ? <i className="fas fa-building"></i>
+                        : <i className="fas fa-home"></i>
+                    }
+                </td>
                 <td>
                     <Link to={`/associate/${id}`} target="_blank">{fullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
                 </td>
@@ -221,6 +232,19 @@ class AssociateItem extends Component {
                 </td>
                 <td>
                     <a href={`mailto:${email}`}>{email}</a>
+                </td>
+                <td>
+                    {wsibNumber}
+                </td>
+                <td>
+                    <NumberFormat
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        value={hourlySalaryDesired}
+                        fixedDecimalScale={true}
+                        decimalScale={2}
+                        displayType={'text'}
+                    />
                 </td>
                 <td>
                     <Link onClick={ (event)=>{ onClick(event, id) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
