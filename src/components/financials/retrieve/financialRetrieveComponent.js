@@ -60,11 +60,21 @@ export default class FinancialRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Order Start Date</th>
-                                    <td>{order.startDate}</td>
+                                    <td>
+                                        {order.startDate
+                                            ? <Moment format="YYYY/MM/DD">{order.startDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Order Completion Date</th>
-                                    <td>{order.completionDate}</td>
+                                    <td>
+                                        {order.completionDate
+                                            ? <Moment format="YYYY/MM/DD">{order.completionDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Order #</th>
@@ -76,7 +86,12 @@ export default class FinancialRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Date</th>
-                                    <td><Moment format="YYYY/MM/DD">{order.invoiceDate}</Moment></td>
+                                    <td>
+                                        {order.invoiceDate
+                                            ? <Moment format="YYYY/MM/DD">{order.invoiceDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice ID(s) #</th>
