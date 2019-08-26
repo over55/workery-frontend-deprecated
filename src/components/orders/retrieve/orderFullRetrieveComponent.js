@@ -233,7 +233,12 @@ export default class OrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice ID(s) #</th>
-                                    <td>{order.invoiceIds}</td>
+                                    <td>
+                                        {order.invoiceIds
+                                            ? order.invoiceIds
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Quote</th>
@@ -329,7 +334,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     {isCompleted
-                                        ? <td>    
+                                        ? <td>
                                         </td>
                                         : <td>
                                             <ul>

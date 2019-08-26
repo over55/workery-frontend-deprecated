@@ -8,6 +8,7 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
+import Moment from 'react-moment';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
@@ -44,7 +45,8 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'id',
             text: 'Job #',
-            sort: true
+            sort: true,
+            formatter: idFormatter
         },{
             dataField: 'customerName',
             text: 'Client',
@@ -56,7 +58,8 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'invoiceServiceFeePaymentDate',
             text: 'Payment Date',
-            sort: true
+            sort: true,
+            formatter: paymentDateFormatter
         },{
             dataField: 'state',
             text: 'Status',
@@ -145,6 +148,18 @@ function iconFormatter(cell, row){
 
 function statusFormatter(cell, row){
     return row.prettyState;
+}
+
+
+function idFormatter(cell, row){
+    return (
+        row.id && row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+    );
+}
+
+
+function paymentDateFormatter(cell, row) {
+    return row.invoiceServiceFeePaymentDate ? <Moment format="YYYY/MM/DD">{row.invoiceServiceFeePaymentDate}</Moment> : "-";
 }
 
 
