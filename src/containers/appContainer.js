@@ -104,6 +104,8 @@ import FollowUpTaskStep1Container from "./tasks/followUp/followUpTaskStep1Contai
 import FollowUpTaskStep2Container from "./tasks/followUp/followUpTaskStep2Container";
 import FollowUpPendingTaskStep1Container from "./tasks/followUpPending/followUpPendingTaskStep1Container";
 import FollowUpPendingTaskStep2Container from "./tasks/followUpPending/followUpPendingTaskStep2Container";
+import OrderCompletionTaskStep1Container from "./tasks/orderCompletion/orderCompletionTaskStep1Container";
+import OrderCompletionTaskStep2Container from "./tasks/orderCompletion/orderCompletionTaskStep2Container";
 
 // Staff
 import StaffListContainer from "./staff/list/staffListContainer";
@@ -204,8 +206,6 @@ import VehicleTypeDeleteContainer from "./settings/vehicleTypes/vehicleTypeDelet
 import VehicleTypeCreateContainer from "./settings/vehicleTypes/create/vehicleTypeCreateContainer";
 import VehicleTypeUpdateContainer from "./settings/vehicleTypes/vehicleTypeUpdateContainer";
 
-
-// Partner
 import PartnerListContainer from "./partners/list/partnerListContainer";
 import PartnerSearchContainer from "./partners/search/partnerSearchContainer";
 import PartnerSearchResultContainer from "./partners/search/partnerSearchResultContainer";
@@ -333,6 +333,8 @@ class AppContainer extends React.Component {
                                 <Route path="/task/2/:id/step-2" exact component={requiresAuth(FollowUpTaskStep2Container)} />
                                 <Route path="/task/4/:id/step-1" exact component={requiresAuth(FollowUpPendingTaskStep1Container)} />
                                 <Route path="/task/4/:id/step-2" exact component={requiresAuth(FollowUpPendingTaskStep2Container)} />
+                                <Route path="/task/6/:id/step-1" exact component={requiresAuth(OrderCompletionTaskStep1Container)} />
+                                <Route path="/task/6/:id/step-2" exact component={requiresAuth(OrderCompletionTaskStep2Container)} />
 
                                 { /* STAFF */ }
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />
