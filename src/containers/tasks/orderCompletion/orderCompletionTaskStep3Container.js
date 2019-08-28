@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderCompletionTaskStep2Component from "../../../components/tasks/orderCompletion/orderCompletionTaskStep2Component";
+import OrderCompletionTaskStep3Component from "../../../components/tasks/orderCompletion/orderCompletionTaskStep3Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
-import { validateTask6Step2Input } from "../../../validators/taskValidator";
+import { validateTask6Step3Input } from "../../../validators/taskValidator";
 import { postTaskOrderCompletionDetail } from "../../../actions/taskActions";
 import {
     localStorageGetIntegerItem,
@@ -14,7 +14,7 @@ import {
 } from '../../../helpers/localStorageUtility';
 
 
-class OrderCompletionTaskStep2Container extends Component {
+class OrderCompletionTaskStep3Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -42,7 +42,6 @@ class OrderCompletionTaskStep2Container extends Component {
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -92,7 +91,11 @@ class OrderCompletionTaskStep2Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        this.props.history.push("/task/6/"+this.state.id+"/step-3");
+        localStorage.removeItem("workery-task-6-status");
+        localStorage.removeItem("workery-task-6-comment");
+        localStorage.removeItem("workery-task-6-associateId");
+        this.props.setFlashMessage("success", "Job completion task has been successfully closed.");
+        this.props.history.push("/tasks");
     }
 
     onFailureCallback(errors) {
@@ -182,12 +185,16 @@ class OrderCompletionTaskStep2Container extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateTask6Step2Input(this.state);
+        const { errors, isValid } = validateTask6Step3Input(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ isLoading: true, errors:{} }, ()=>{
-                this.props.history.push("/task/6/"+this.state.id+"/step-3");
+                this.props.postTaskOrderCompletionDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                )
             });
 
         // CASE 2 OF 2: Validation was a failure.
@@ -204,7 +211,7 @@ class OrderCompletionTaskStep2Container extends Component {
 
     render() {
         return (
-            <OrderCompletionTaskStep2Component
+            <OrderCompletionTaskStep3Component
                 id={this.state.id}
                 status={this.state.status}
                 comment={this.state.comment}
@@ -252,4 +259,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCompletionTaskStep2Container);
+)(OrderCompletionTaskStep3Container);

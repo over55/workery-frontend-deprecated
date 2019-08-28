@@ -106,6 +106,7 @@ import FollowUpPendingTaskStep1Container from "./tasks/followUpPending/followUpP
 import FollowUpPendingTaskStep2Container from "./tasks/followUpPending/followUpPendingTaskStep2Container";
 import OrderCompletionTaskStep1Container from "./tasks/orderCompletion/orderCompletionTaskStep1Container";
 import OrderCompletionTaskStep2Container from "./tasks/orderCompletion/orderCompletionTaskStep2Container";
+import OrderCompletionTaskStep3Container from "./tasks/orderCompletion/orderCompletionTaskStep3Container";
 
 // Staff
 import StaffListContainer from "./staff/list/staffListContainer";
@@ -335,6 +336,7 @@ class AppContainer extends React.Component {
                                 <Route path="/task/4/:id/step-2" exact component={requiresAuth(FollowUpPendingTaskStep2Container)} />
                                 <Route path="/task/6/:id/step-1" exact component={requiresAuth(OrderCompletionTaskStep1Container)} />
                                 <Route path="/task/6/:id/step-2" exact component={requiresAuth(OrderCompletionTaskStep2Container)} />
+                                <Route path="/task/6/:id/step-3" exact component={requiresAuth(OrderCompletionTaskStep3Container)} />                                
 
                                 { /* STAFF */ }
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />

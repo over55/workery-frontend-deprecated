@@ -11,7 +11,7 @@ import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 
 
-export default class OrderCompletionTaskStep2Component extends Component {
+export default class OrderCompletionTaskStep3Component extends Component {
     render() {
         const {
             task, status, id, comment, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
@@ -45,12 +45,12 @@ export default class OrderCompletionTaskStep2Component extends Component {
                                 <span className="num">1.</span><span className="">Info</span>
                             </Link>
                         </div>
-                        <div id="step-2" className="st-grey active">
-                            <strong>
+                        <div id="step-2" className="st-grey">
+                            <Link to={`/task/6/${id}/step-2`}>
                                 <span className="num">2.</span><span className="">Status</span>
-                            </strong>
+                            </Link>
                         </div>
-                        <div id="step-3" className="st-grey">
+                        <div id="step-3" className="st-grey active">
                             <strong>
                                 <span className="num">3.</span><span className="">Financials</span>
                             </strong>
@@ -183,11 +183,11 @@ export default class OrderCompletionTaskStep2Component extends Component {
                         </form>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
-                                Proceed to Financials&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
+                                <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-1`}>
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-2`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>
