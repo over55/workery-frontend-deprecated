@@ -4,13 +4,21 @@ import { Link } from "react-router-dom";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
+import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { GENDER_RADIO_CHOICES } from "../../../constants/api";
+import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 
 
 export default class OrderCompletionTaskStep2Component extends Component {
     render() {
-        const { task, status, id, comment, onClick, onBack, errors, isLoading, onRadioChange, onTextChange } = this.props;
+        const {
+            task, status, id, comment, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
+        } = this.props;
+        const isCancelled = status === false || status === "false";
+        const isCompleted = status === true || status === "true";
+        const isOtherHowDidYouHearSelected = reason === 'Other';
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -55,6 +63,12 @@ export default class OrderCompletionTaskStep2Component extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
+                            {/*
+                            <!--------------------------------------------->
+                            <!--            end YES/NO CHOICE            -->
+                            <!--------------------------------------------->
+                            */}
+
                             <BootstrapRadio
                                 inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
@@ -64,7 +78,84 @@ export default class OrderCompletionTaskStep2Component extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={status}
                                 options={STATUS_CHOICES}
+                                helpText='Selecting "yes" will close this job as success.'
                             />
+                            {/*
+                            <!--------------------------------------------->
+                            <!--            end YES/NO CHOICE            -->
+                            <!--------------------------------------------->
+                            */}
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--          FAILURE REASON SUVERY          -->
+                            <!--------------------------------------------->
+                            */}
+
+                            {isCancelled &&
+                                <div>
+                                    <BootstrapSingleSelect
+                                        borderColour="border-primary"
+                                        label="How did you hear about us? (*)"
+                                        name="reason"
+                                        defaultOptionLabel="Please select how you heard about us."
+                                        options={ORDER_CANCEL_REASON_CHOICES}
+                                        value={reason}
+                                        error={errors.reason}
+                                        onSelectChange={onSelectChange}
+                                    />
+
+                                    {isOtherHowDidYouHearSelected &&
+                                        <BootstrapInput
+                                            inputClassName="form-control form-control-lg"
+                                            borderColour="border-primary"
+                                            error={errors.reasonOther}
+                                            label="Other (*)"
+                                            onChange={onTextChange}
+                                            value={reasonOther}
+                                            name="reasonOther"
+                                            type="text"
+                                        />
+                                    }
+
+                                </div>
+                            }
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--        end FAILURE REASON SUVERY        -->
+                            <!--------------------------------------------->
+                            */}
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--              FINANCIAL DATA             -->
+                            <!--------------------------------------------->
+                            */}
+                            {isCompleted &&
+                                <div>
+                                    <BootstrapDatePicker
+                                        label="Completion date (*)"
+                                        name="invoiceDate"
+                                        dateObj={invoiceDate}
+                                        onTimeChange={onInvoiceDateChange}
+                                        datePickerClassName="form-control form-control-lg border"
+                                        divClassName="form-group p-0 col-md-7 mb-4"
+                                        error={errors.invoiceDate}
+                                    />
+                                </div>
+                            }
+                            {/*
+                            <!--------------------------------------------->
+                            <!--           end FINANCIAL DATA            -->
+                            <!--------------------------------------------->
+                            */}
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--           ADDITIONAL COMMENTS           -->
+                            <!--------------------------------------------->
+                            */}
 
                             <BootstrapTextarea
                                 name="comment"
@@ -77,6 +168,12 @@ export default class OrderCompletionTaskStep2Component extends Component {
                                 onChange={onTextChange}
                                 error={errors.comment}
                             />
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--         end ADDITIONAL COMMENTS         -->
+                            <!--------------------------------------------->
+                            */}
 
                         </form>
 

@@ -1005,3 +1005,71 @@ export const WORK_ORDER_IN_PROGRESS_STATE = 'in_progress'
 export const WORK_ORDER_COMPLETED_BUT_UNPAID_STATE = 'completed_and_unpaid'
 export const WORK_ORDER_COMPLETED_AND_PAID_STATE = 'completed_and_paid'
 export const WORK_ORDER_ARCHIVED_STATE = 'archived'
+
+
+/**
+ *
+ */
+export const ORDER_CANCEL_REASON_CHOICES = [
+    {
+        selectName: "reason",
+        value: "2",
+        label: "Quote was too high"
+    },{
+        selectName: "reason",
+        value: "3",
+        label: "Job completed by someone else"
+    },{
+        selectName: "reason",
+        value: "5",
+        label: "Work no longer needed"
+    },{
+        selectName: "reason",
+        value: "6",
+        label: "Client not satisfied with Associate"
+    },{
+        selectName: "reason",
+        value: "7",
+        label: "Client did work themselves"
+    },{
+        selectName: "reason",
+        value: "8",
+        label: "No Associate available"
+    },{
+        selectName: "reason",
+        value: "9",
+        label: "Work environment unsuitable"
+    },{
+        selectName: "reason",
+        value: 10,
+        label: "Client did not return call"
+    },{
+        selectName: "reason",
+        value: "11",
+        label: "Associate did not have necessary equipment"
+    },{
+        selectName: "reason",
+        value: "12",
+        label: "Repair not possible"
+    },{
+        selectName: "reason",
+        value: "13",
+        label: "Could not meet deadline"
+    },{
+        selectName: "reason",
+        value: "14",
+        label: "Associate did not call client"
+    },{
+        selectName: "reason",
+        value: "15",
+        label: "Member issue"
+    },{
+        selectName: "reason",
+        value: "16",
+        label: "Client billing issue"
+    },{
+        selectName: "reason",
+        value: OTHER_EVENT_TYPE_OF,
+        label: "Other"
+    }
+];

@@ -68,3 +68,37 @@ export function validateTask4Step2Input(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateTask6Step2Input(data) {
+    let errors = {};
+
+    if (data.status === undefined || data.status === null || data.status === "") {
+        errors.status = 'This field is required';
+    }
+
+    const isCancelled = data.status === false || data.status === "false";
+    if (isCancelled) {
+        if (data.reason === undefined || data.reason === null || data.reason === "") {
+            errors.reason = 'This field is required';
+        } else {
+            if (data.reason === 1) {
+                if (data.reasonOther === undefined || data.reasonOther === null || data.reasonOther === "") {
+                    errors.reasonOther = 'This field is required';
+                }
+            }
+        }
+    }
+
+    const isCompleted = data.status === true || data.status === "true";
+    const isOtherHowDidYouHearSelected = data.reason === 'Other';
+
+    if (data.comment === undefined || data.comment === null || data.comment === "") {
+        errors.comment = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
