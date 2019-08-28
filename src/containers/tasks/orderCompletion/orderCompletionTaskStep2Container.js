@@ -34,10 +34,10 @@ class OrderCompletionTaskStep2Container extends Component {
             id: id,
             status: localStorage.getItem("workery-task-6-status"),
             comment: localStorage.getItem("workery-task-6-comment"),
+            invoiceDate: localStorageGetDateItem("workery-task-6-invoiceDate"),
             associate: localStorageGetIntegerItem("workery-task-6-associateId"),
             reason: localStorage.getItem("workery-task-6-reason"),
             errors: {},
-            invoiceDate: localStorageGetDateItem("workery-task-6-invoiceDate"),
         }
 
         this.getPostData = this.getPostData.bind(this);
