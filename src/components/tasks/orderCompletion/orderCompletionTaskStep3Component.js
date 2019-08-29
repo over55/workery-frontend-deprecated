@@ -14,11 +14,11 @@ import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 export default class OrderCompletionTaskStep3Component extends Component {
     render() {
         const {
-            task, status, id, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
+            task, hasInputtedFinancials, id, onClick, onBack, errors, isLoading, onRadioChange, onTextChange
         } = this.props;
-        const isCancelled = status === false || status === "false";
-        const isCompleted = status === true || status === "true";
-        const isOtherHowDidYouHearSelected = reason === 'Other';
+        const isNotInputted = hasInputtedFinancials === false || hasInputtedFinancials === "false";
+        const isInputted = hasInputtedFinancials === true || hasInputtedFinancials === "true";
+        // const isOtherHowDidYouHearSelected = reason === 'Other';
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -56,8 +56,77 @@ export default class OrderCompletionTaskStep3Component extends Component {
                             </strong>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <span className="num">4.</span><span className="">Review</span>
+                            <span className="num">4.</span><span className="">Comment</span>
                         </div>
+                        <div id="step-5" className="st-grey">
+                            <span className="num">5.</span><span className="">Review</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-5 mx-auto mt-2">
+                        <form>
+                            <h2>
+                                <i className="fas fa-credit-card"></i>&nbsp;Financials
+                            </h2>
+                            <p>All fields which have the (*) symbol are required to be filled out.</p>
+
+                            <BootstrapErrorsProcessingAlert errors={errors} />
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--            end YES/NO CHOICE            -->
+                            <!--------------------------------------------->
+                            */}
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.hasInputtedFinancials}
+                                label="Was there financials inputted? (*)"
+                                name="hasInputtedFinancials"
+                                onChange={onRadioChange}
+                                selectedValue={hasInputtedFinancials}
+                                options={HAS_INPUTTED_FINANCIALS_CHOICES}
+                                helpText='Selecting "yes" will require you to ask the financials and input it here.'
+                            />
+                            {/*
+                            <!--------------------------------------------->
+                            <!--            end YES/NO CHOICE            -->
+                            <!--------------------------------------------->
+                            */}
+
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--              FINANCIAL DATA             -->
+                            <!--------------------------------------------->
+                            */}
+
+                            {isInputted &&
+                                <div>test
+                                </div>
+                            }
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--           end FINANCIAL DATA            -->
+                            <!--------------------------------------------->
+                            */}
+
+                        </form>
+
+                        <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
+                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
+                                Proceed to Comment&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            </button>
+
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-2`}>
+                                <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                            </Link>
+                        </div>
+
                     </div>
                 </div>
 
@@ -67,15 +136,15 @@ export default class OrderCompletionTaskStep3Component extends Component {
 }
 
 
-const STATUS_CHOICES = [
+const HAS_INPUTTED_FINANCIALS_CHOICES = [
     {
-        id: 'status-m-choice',
-        name: "status",
+        id: 'hasInputtedFinancials-m-choice',
+        name: "hasInputtedFinancials",
         value: true,
         label: "Yes"
     },{
-        id: 'status-f-choice',
-        name: "status",
+        id: 'hasInputtedFinancials-f-choice',
+        name: "hasInputtedFinancials",
         value: false,
         label: "No"
     }

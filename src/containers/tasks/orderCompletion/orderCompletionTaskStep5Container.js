@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderCompletionTaskStep3Component from "../../../components/tasks/orderCompletion/orderCompletionTaskStep3Component";
+import OrderCompletionTaskStep5Component from "../../../components/tasks/orderCompletion/orderCompletionTaskStep5Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
-import { validateTask6Step3Input } from "../../../validators/taskValidator";
 import { postTaskOrderCompletionDetail } from "../../../actions/taskActions";
 import {
     localStorageGetIntegerItem,
@@ -14,7 +13,7 @@ import {
 } from '../../../helpers/localStorageUtility';
 
 
-class OrderCompletionTaskStep3Container extends Component {
+class OrderCompletionTaskStep5Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -32,14 +31,12 @@ class OrderCompletionTaskStep3Container extends Component {
             errors: {},
             isLoading: false,
             id: id,
-            hasInputtedFinancials: localStorage.getItem("workery-task-6-hasInputtedFinancials"),
+            comment: localStorage.getItem("workery-task-6-comment"),
             errors: {},
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
-        this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
@@ -127,72 +124,17 @@ class OrderCompletionTaskStep3Container extends Component {
         localStorage.setItem('workery-task-6-'+[e.target.name], e.target.value);
     }
 
-    onInvoiceDateChange(dateObj) {
-        this.setState(
-            { invoiceDate: dateObj, }, ()=> {
-                console.log("onInvoiceDateChange:", dateObj);
-            }
-        );
-        localStorageSetObjectOrArrayItem('workery-task-6-invoiceDate', dateObj);
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "workery-task-6-"+[e.target.name];
-        const storageLabelKey =  "workery-task-6-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
-    }
-
-    onSelectChange(option) {
-        console.log(option);
-        const optionKey = [option.selectName]+"Option";
-        this.setState(
-            { [option.selectName]: option.value, [optionKey]: option, },
-            ()=>{
-                localStorage.setItem('workery-create-partner-'+[option.selectName].toString(), option.value);
-                localStorage.setItem('workery-create-partner-'+[option.selectName].toString()+"Label", option.label);
-                localStorageSetObjectOrArrayItem('workery-create-partner-'+optionKey, option);
-                console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-            }
-        );
-    }
-
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // Perform client-side validation.
-        const { errors, isValid } = validateTask6Step3Input(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.setState({ isLoading: true, errors:{} }, ()=>{
-                this.props.history.push("/task/6/"+this.state.id+"/step-4");
-            });
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailureCallback(errors);
-        }
+        this.setState({ isLoading: true, errors:{} }, ()=>{
+            this.props.postTaskOrderCompletionDetail(
+                this.getPostData(),
+                this.onSuccessCallback,
+                this.onFailureCallback
+            )
+        });
 
     }
 
@@ -202,20 +144,16 @@ class OrderCompletionTaskStep3Container extends Component {
      */
 
     render() {
-        const {
-            id, hasInputtedFinancials, errors
-        } = this.state;
         return (
-            <OrderCompletionTaskStep3Component
-                id={id}
-                hasInputtedFinancials={hasInputtedFinancials}
-                errors={errors}
+            <OrderCompletionTaskStep5Component
+                id={this.state.id}
+                comment={this.state.comment}
+                isLoading={this.state.isLoading}
                 task={this.props.taskDetail}
+                errors={this.state.errors}
                 onBack={this.onBack}
                 onClick={this.onClick}
                 onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
             />
         );
     }
@@ -250,4 +188,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCompletionTaskStep3Container);
+)(OrderCompletionTaskStep5Container);

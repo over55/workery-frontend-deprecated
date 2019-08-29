@@ -103,24 +103,11 @@ export function validateTask6Step2Input(data) {
 export function validateTask6Step3Input(data) {
     let errors = {};
 
-    if (data.status === undefined || data.status === null || data.status === "") {
-        errors.status = 'This field is required';
+    if (data.hasInputtedFinancials === undefined || data.hasInputtedFinancials === null || data.hasInputtedFinancials === "") {
+        errors.hasInputtedFinancials = 'This field is required';
     }
 
-    const isCancelled = data.status === false || data.status === "false";
-    if (isCancelled) {
-        if (data.reason === undefined || data.reason === null || data.reason === "") {
-            errors.reason = 'This field is required';
-        } else {
-            if (data.reason === 1) {
-                if (data.reasonOther === undefined || data.reasonOther === null || data.reasonOther === "") {
-                    errors.reasonOther = 'This field is required';
-                }
-            }
-        }
-    }
-
-    const isCompleted = data.status === true || data.status === "true";
+    const isCompleted = data.hasInputtedFinancials === true || data.hasInputtedFinancials === "true";
     const isOtherHowDidYouHearSelected = data.reason === 'Other';
 
     return {

@@ -11,7 +11,7 @@ import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 
 
-export default class OrderCompletionTaskStep4Component extends Component {
+export default class OrderCompletionTaskStep5Component extends Component {
     render() {
         const {
             task, status, id, comment, onClick, onBack, errors, isLoading, onTextChange
@@ -52,13 +52,15 @@ export default class OrderCompletionTaskStep4Component extends Component {
                                 <span className="num">3.</span><span className="">Financials</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey active">
-                            <strong>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/task/6/${id}/step-4`}>
                                 <span className="num">4.</span><span className="">Comment</span>
-                            </strong>
+                            </Link>
                         </div>
-                        <div id="step-5" className="st-grey">
-                            <span className="num">5.</span><span className="">Review</span>
+                        <div id="step-5" className="st-grey active">
+                            <strong>
+                                <span className="num">5.</span><span className="">Review</span>
+                            </strong>
                         </div>
                     </div>
                 </div>
@@ -67,44 +69,22 @@ export default class OrderCompletionTaskStep4Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-credit-card"></i>&nbsp;Comments
+                                <i className="fas fa-credit-card"></i>&nbsp;Status
                             </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            {/*
-                            <!--------------------------------------------->
-                            <!--           ADDITIONAL COMMENTS           -->
-                            <!--------------------------------------------->
-                            */}
-
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-primary"
-                                label="Comment (*)"
-                                placeholder="Write any additional comments here."
-                                rows="5"
-                                value={comment}
-                                helpText="This is the comment will be attached to the order."
-                                onChange={onTextChange}
-                                error={errors.comment}
-                            />
-
-                            {/*
-                            <!--------------------------------------------->
-                            <!--         end ADDITIONAL COMMENTS         -->
-                            <!--------------------------------------------->
-                            */}
+                        
 
                         </form>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
-                                Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
+                                <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-3`}>
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-4`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>

@@ -135,11 +135,7 @@ class OrderCompletionTaskStep4Container extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ isLoading: true, errors:{} }, ()=>{
-                this.props.postTaskOrderCompletionDetail(
-                    this.getPostData(),
-                    this.onSuccessCallback,
-                    this.onFailureCallback
-                )
+                this.props.history.push("/task/6/"+this.state.id+"/step-5");
             });
 
         // CASE 2 OF 2: Validation was a failure.
