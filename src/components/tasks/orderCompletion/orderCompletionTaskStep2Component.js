@@ -6,7 +6,6 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 
@@ -14,7 +13,7 @@ import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 export default class OrderCompletionTaskStep2Component extends Component {
     render() {
         const {
-            task, status, id, comment, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
+            task, status, id, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
         } = this.props;
         const isCancelled = status === false || status === "false";
         const isCompleted = status === true || status === "true";
@@ -151,30 +150,6 @@ export default class OrderCompletionTaskStep2Component extends Component {
                             {/*
                             <!--------------------------------------------->
                             <!--           end FINANCIAL DATA            -->
-                            <!--------------------------------------------->
-                            */}
-
-                            {/*
-                            <!--------------------------------------------->
-                            <!--           ADDITIONAL COMMENTS           -->
-                            <!--------------------------------------------->
-                            */}
-
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-primary"
-                                label="Comment (*)"
-                                placeholder="Write any additional comments here."
-                                rows="5"
-                                value={comment}
-                                helpText="This is the comment will be attached to the order."
-                                onChange={onTextChange}
-                                error={errors.comment}
-                            />
-
-                            {/*
-                            <!--------------------------------------------->
-                            <!--         end ADDITIONAL COMMENTS         -->
                             <!--------------------------------------------->
                             */}
 

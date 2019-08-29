@@ -136,3 +136,17 @@ export function validateTask6Step3Input(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateTask6Step4Input(data) {
+    let errors = {};
+
+    if (data.comment === undefined || data.comment === null || data.comment === "") {
+        errors.comment = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

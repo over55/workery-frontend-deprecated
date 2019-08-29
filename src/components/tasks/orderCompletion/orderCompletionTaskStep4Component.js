@@ -11,14 +11,11 @@ import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 
 
-export default class OrderCompletionTaskStep3Component extends Component {
+export default class OrderCompletionTaskStep4Component extends Component {
     render() {
         const {
-            task, status, id, comment, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
+            task, status, id, comment, onClick, onBack, errors, isLoading, onTextChange
         } = this.props;
-        const isCancelled = status === false || status === "false";
-        const isCompleted = status === true || status === "true";
-        const isOtherHowDidYouHearSelected = reason === 'Other';
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -57,6 +54,56 @@ export default class OrderCompletionTaskStep3Component extends Component {
                         </div>
                     </div>
                 </div>
+
+                <div className="row">
+                    <div className="col-md-5 mx-auto mt-2">
+                        <form>
+                            <h2>
+                                <i className="fas fa-credit-card"></i>&nbsp;Status
+                            </h2>
+                            <p>All fields which have the (*) symbol are required to be filled out.</p>
+
+                            <BootstrapErrorsProcessingAlert errors={errors} />
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--           ADDITIONAL COMMENTS           -->
+                            <!--------------------------------------------->
+                            */}
+
+                            <BootstrapTextarea
+                                name="comment"
+                                borderColour="border-primary"
+                                label="Comment (*)"
+                                placeholder="Write any additional comments here."
+                                rows="5"
+                                value={comment}
+                                helpText="This is the comment will be attached to the order."
+                                onChange={onTextChange}
+                                error={errors.comment}
+                            />
+
+                            {/*
+                            <!--------------------------------------------->
+                            <!--         end ADDITIONAL COMMENTS         -->
+                            <!--------------------------------------------->
+                            */}
+
+                        </form>
+
+                        <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
+                                <i className="fas fa-check-circle"></i>&nbsp;Save
+                            </button>
+
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-2`}>
+                                <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                            </Link>
+                        </div>
+
+                    </div>
+                </div>
+
 
             </div>
         );
