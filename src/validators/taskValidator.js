@@ -93,10 +93,6 @@ export function validateTask6Step2Input(data) {
     const isCompleted = data.status === true || data.status === "true";
     const isOtherHowDidYouHearSelected = data.reason === 'Other';
 
-    if (data.comment === undefined || data.comment === null || data.comment === "") {
-        errors.comment = 'This field is required';
-    }
-
     return {
         errors,
         isValid: isEmpty(errors)
@@ -126,10 +122,6 @@ export function validateTask6Step3Input(data) {
 
     const isCompleted = data.status === true || data.status === "true";
     const isOtherHowDidYouHearSelected = data.reason === 'Other';
-
-    if (data.comment === undefined || data.comment === null || data.comment === "") {
-        errors.comment = 'This field is required';
-    }
 
     return {
         errors,

@@ -338,7 +338,7 @@ class AppContainer extends React.Component {
                                 <Route path="/task/6/:id/step-1" exact component={requiresAuth(OrderCompletionTaskStep1Container)} />
                                 <Route path="/task/6/:id/step-2" exact component={requiresAuth(OrderCompletionTaskStep2Container)} />
                                 <Route path="/task/6/:id/step-3" exact component={requiresAuth(OrderCompletionTaskStep3Container)} />
-                                <Route path="/task/6/:id/step-4" exact component={requiresAuth(OrderCompletionTaskStep4Container)} />                                
+                                <Route path="/task/6/:id/step-4" exact component={requiresAuth(OrderCompletionTaskStep4Container)} />
 
                                 { /* STAFF */ }
                                 <Route path="/staff/add/step-1" exact component={requiresAuth(StaffCreateStep1Container)} />

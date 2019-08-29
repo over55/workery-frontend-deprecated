@@ -14,7 +14,7 @@ import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 export default class OrderCompletionTaskStep3Component extends Component {
     render() {
         const {
-            task, status, id, comment, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
+            task, status, id, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
         } = this.props;
         const isCancelled = status === false || status === "false";
         const isCompleted = status === true || status === "true";
@@ -54,6 +54,9 @@ export default class OrderCompletionTaskStep3Component extends Component {
                             <strong>
                                 <span className="num">3.</span><span className="">Financials</span>
                             </strong>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <span className="num">4.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>

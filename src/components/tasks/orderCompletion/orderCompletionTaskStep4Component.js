@@ -47,9 +47,14 @@ export default class OrderCompletionTaskStep4Component extends Component {
                                 <span className="num">2.</span><span className="">Status</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey active">
-                            <strong>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/task/6/${id}/step-3`}>
                                 <span className="num">3.</span><span className="">Financials</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey active">
+                            <strong>
+                                <span className="num">4.</span><span className="">Review</span>
                             </strong>
                         </div>
                     </div>

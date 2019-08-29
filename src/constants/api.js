@@ -1069,7 +1069,7 @@ export const ORDER_CANCEL_REASON_CHOICES = [
         label: "Client billing issue"
     },{
         selectName: "reason",
-        value: OTHER_EVENT_TYPE_OF,
+        value: "other",
         label: "Other"
     }
 ];

@@ -33,10 +33,10 @@ class OrderCompletionTaskStep2Container extends Component {
             isLoading: false,
             id: id,
             status: localStorage.getItem("workery-task-6-status"),
-            comment: localStorage.getItem("workery-task-6-comment"),
             invoiceDate: localStorageGetDateItem("workery-task-6-invoiceDate"),
             associate: localStorageGetIntegerItem("workery-task-6-associateId"),
             reason: localStorage.getItem("workery-task-6-reason"),
+            reasonOther: localStorage.getItem("workery-task-6-reasonOther"),
             errors: {},
         }
 
@@ -169,9 +169,9 @@ class OrderCompletionTaskStep2Container extends Component {
         this.setState(
             { [option.selectName]: option.value, [optionKey]: option, },
             ()=>{
-                localStorage.setItem('workery-create-partner-'+[option.selectName].toString(), option.value);
-                localStorage.setItem('workery-create-partner-'+[option.selectName].toString()+"Label", option.label);
-                localStorageSetObjectOrArrayItem('workery-create-partner-'+optionKey, option);
+                localStorage.setItem('workery-task-6-'+[option.selectName].toString(), option.value);
+                localStorage.setItem('workery-task-6-'+[option.selectName].toString()+"Label", option.label);
+                localStorageSetObjectOrArrayItem('workery-task-6-'+optionKey, option);
                 console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
             }
         );
@@ -207,9 +207,10 @@ class OrderCompletionTaskStep2Container extends Component {
             <OrderCompletionTaskStep2Component
                 id={this.state.id}
                 status={this.state.status}
-                comment={this.state.comment}
                 invoiceDate={this.state.invoiceDate}
                 onInvoiceDateChange={this.onInvoiceDateChange}
+                reason={this.state.reason}
+                reasonOther={this.state.reasonOther}
                 isLoading={this.state.isLoading}
                 task={this.props.taskDetail}
                 errors={this.state.errors}

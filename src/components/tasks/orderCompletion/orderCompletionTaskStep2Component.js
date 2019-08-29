@@ -45,12 +45,15 @@ export default class OrderCompletionTaskStep2Component extends Component {
                             </Link>
                         </div>
                         <div id="step-2" className="st-grey active">
-                            <span className="num">2.</span><span className="">Status</span>
+                            <strong>
+                                <span className="num">2.</span><span className="">Status</span>
+                            </strong>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <strong>
-                                <span className="num">3.</span><span className="">Financials</span>
-                            </strong>
+                            <span className="num">3.</span><span className="">Financials</span>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <span className="num">4.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
