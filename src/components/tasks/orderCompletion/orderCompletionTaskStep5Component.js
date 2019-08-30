@@ -12,7 +12,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
     render() {
         const {
             // Step 2
-            status, statusLabel, completionDate, reason, reasonLabel, reasonOther,
+            wasCompleted, wasCompletedLabel, completionDate, reason, reasonLabel, reasonOther,
 
             // Step 3
             invoiceIds, visits, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceTotalQuoteAmount, invoiceLabourAmount,
@@ -25,9 +25,9 @@ export default class OrderCompletionTaskStep5Component extends Component {
             // Everything else...
             task, id, onClick, onBack, errors, isLoading
         } = this.props;
-        const isCancelled = status === false || status === "false";
-        const isCompleted = status === true || status === "true";
-        const isOtherHowDidYouHearSelected = reason === 'other';
+        const isCancelled = wasCompleted === false || wasCompleted === "false";
+        const isCompleted = wasCompleted === true || wasCompleted === "true";
+        const isOtherHowDidYouHearSelected = reason === 1;
         const hasFinancials = hasInputtedFinancials === true || hasInputtedFinancials === "true";
         return (
             <div>
@@ -128,7 +128,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Was this job successfully completed by the Associate?</th>
                                     <td>
-                                        {statusLabel}
+                                        {wasCompletedLabel}
                                     </td>
                                 </tr>
                                 {isCancelled &&
@@ -325,13 +325,13 @@ export default class OrderCompletionTaskStep5Component extends Component {
 
 const STATUS_CHOICES = [
     {
-        id: 'status-m-choice',
-        name: "status",
+        id: 'wasCompleted-m-choice',
+        name: "wasCompleted",
         value: true,
         label: "Yes"
     },{
-        id: 'status-f-choice',
-        name: "status",
+        id: 'wasCompleted-f-choice',
+        name: "wasCompleted",
         value: false,
         label: "No"
     }

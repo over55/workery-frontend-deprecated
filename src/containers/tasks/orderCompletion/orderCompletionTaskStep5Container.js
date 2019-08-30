@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import OrderCompletionTaskStep5Component from "../../../components/tasks/orderCompletion/orderCompletionTaskStep5Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
@@ -35,11 +36,11 @@ class OrderCompletionTaskStep5Container extends Component {
             id: id,
 
             // Step 2
-            status: localStorage.getItem("workery-task-6-status"),
-            statusLabel: localStorage.getItem("workery-task-6-status-label"),
+            wasCompleted: localStorage.getItem("workery-task-6-wasCompleted"),
+            wasCompletedLabel: localStorage.getItem("workery-task-6-wasCompleted-label"),
             completionDate: localStorageGetDateItem("workery-task-6-completionDate"),
             associate: localStorageGetIntegerItem("workery-task-6-associateId"),
-            reason: localStorage.getItem("workery-task-6-reason"),
+            reason: localStorageGetIntegerItem("workery-task-6-reason"),
             reasonLabel: localStorage.getItem("workery-task-6-reasonLabel"),
             reasonOther: localStorage.getItem("workery-task-6-reasonOther"),
 
@@ -81,7 +82,15 @@ class OrderCompletionTaskStep5Container extends Component {
         let postData = Object.assign({}, this.state);
 
         postData.task_item = this.state.id;
-        postData.hasAgreedToMeet = this.state.status;
+
+        const completionDateMoment = moment(this.state.completionDate);
+        postData.completionDate = completionDateMoment.format("YYYY-MM-DD")
+
+        const invoiceDateMoment = moment(this.state.invoiceDate);
+        postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD")
+
+        const invoiceServiceFeePaymentDateMoment = moment(this.state.invoiceServiceFeePaymentDate);
+        postData.invoiceServiceFeePaymentDate = invoiceServiceFeePaymentDateMoment.format("YYYY-MM-DD")
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -113,7 +122,7 @@ class OrderCompletionTaskStep5Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        localStorage.removeItem("workery-task-6-status");
+        localStorage.removeItem("workery-task-6-wasCompleted");
         localStorage.removeItem("workery-task-6-comment");
         localStorage.removeItem("workery-task-6-associateId");
         this.props.setFlashMessage("success", "Job completion task has been successfully closed.");
@@ -169,8 +178,8 @@ class OrderCompletionTaskStep5Container extends Component {
         return (
             <OrderCompletionTaskStep5Component
                 // Step 2
-                status={this.state.status}
-                statusLabel={this.state.statusLabel}
+                wasCompleted={this.state.wasCompleted}
+                wasCompletedLabel={this.state.wasCompletedLabel}
                 completionDate={this.state.completionDate}
                 onInvoiceDateChange={this.onInvoiceDateChange}
                 reason={this.state.reason}

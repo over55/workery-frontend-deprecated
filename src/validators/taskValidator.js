@@ -73,18 +73,18 @@ export function validateTask4Step2Input(data) {
 export function validateTask6Step2Input(data) {
     let errors = {};
 
-    if (data.status === undefined || data.status === null || data.status === "") {
-        errors.status = 'This field is required';
+    if (data.wasCompleted === undefined || data.wasCompleted === null || data.wasCompleted === "") {
+        errors.wasCompleted = 'This field is required';
     }
 
-    const isCancelled = data.status === false || data.status === "false";
+    const isCancelled = data.wasCompleted === false || data.wasCompleted === "false";
     if (isCancelled) {
         if (data.reason === undefined || data.reason === null || data.reason === "") {
             errors.reason = 'This field is required';
         }
     }
 
-    const isCompleted = data.status === true || data.status === "true";
+    const isCompleted = data.wasCompleted === true || data.wasCompleted === "true";
     if (isCompleted) {
         if (data.completionDate === undefined || data.completionDate === null || data.completionDate === "" || isNaN(data.completionDate) ) {
             errors.completionDate = 'This field is required';

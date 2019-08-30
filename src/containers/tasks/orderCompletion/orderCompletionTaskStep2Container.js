@@ -32,15 +32,14 @@ class OrderCompletionTaskStep2Container extends Component {
             errors: {},
             isLoading: false,
             id: id,
-            status: localStorage.getItem("workery-task-6-status"),
+            wasCompleted: localStorage.getItem("workery-task-6-wasCompleted"),
             completionDate: localStorageGetDateItem("workery-task-6-completionDate"),
             associate: localStorageGetIntegerItem("workery-task-6-associateId"),
-            reason: localStorage.getItem("workery-task-6-reason"),
+            reason: localStorageGetIntegerItem("workery-task-6-reason"),
             reasonOther: localStorage.getItem("workery-task-6-reasonOther"),
             errors: {},
         }
 
-        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
@@ -49,22 +48,6 @@ class OrderCompletionTaskStep2Container extends Component {
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onTaskDetailSuccessFetchCallback = this.onTaskDetailSuccessFetchCallback.bind(this);
-    }
-
-    /**
-     *  Utility function used to create the `postData` we will be submitting to
-     *  the API; as a result, this function will structure some dictionary key
-     *  items under different key names to support our API web-service's API.
-     */
-    getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.task_item = this.state.id;
-        postData.hasAgreedToMeet = this.state.status;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
     }
 
     /**
@@ -206,7 +189,7 @@ class OrderCompletionTaskStep2Container extends Component {
         return (
             <OrderCompletionTaskStep2Component
                 id={this.state.id}
-                status={this.state.status}
+                wasCompleted={this.state.wasCompleted}
                 completionDate={this.state.completionDate}
                 onCompletionDateChange={this.onCompletionDateChange}
                 reason={this.state.reason}

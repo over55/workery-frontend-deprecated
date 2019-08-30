@@ -1014,31 +1014,31 @@ export const WORK_ORDER_ARCHIVED_STATE = 'archived'
 export const ORDER_CANCEL_REASON_CHOICES = [
     {
         selectName: "reason",
-        value: "2",
+        value: 2,
         label: "Quote was too high"
     },{
         selectName: "reason",
-        value: "3",
+        value: 3,
         label: "Job completed by someone else"
     },{
         selectName: "reason",
-        value: "5",
+        value: 5,
         label: "Work no longer needed"
     },{
         selectName: "reason",
-        value: "6",
+        value: 6,
         label: "Client not satisfied with Associate"
     },{
         selectName: "reason",
-        value: "7",
+        value: 7,
         label: "Client did work themselves"
     },{
         selectName: "reason",
-        value: "8",
+        value: 8,
         label: "No Associate available"
     },{
         selectName: "reason",
-        value: "9",
+        value: 9,
         label: "Work environment unsuitable"
     },{
         selectName: "reason",
@@ -1046,31 +1046,31 @@ export const ORDER_CANCEL_REASON_CHOICES = [
         label: "Client did not return call"
     },{
         selectName: "reason",
-        value: "11",
+        value: 11,
         label: "Associate did not have necessary equipment"
     },{
         selectName: "reason",
-        value: "12",
+        value: 12,
         label: "Repair not possible"
     },{
         selectName: "reason",
-        value: "13",
+        value: 13,
         label: "Could not meet deadline"
     },{
         selectName: "reason",
-        value: "14",
+        value: 14,
         label: "Associate did not call client"
     },{
         selectName: "reason",
-        value: "15",
+        value: 15,
         label: "Member issue"
     },{
         selectName: "reason",
-        value: "16",
+        value: 16,
         label: "Client billing issue"
     },{
         selectName: "reason",
-        value: "other",
+        value: 1,
         label: "Other"
     }
 ];

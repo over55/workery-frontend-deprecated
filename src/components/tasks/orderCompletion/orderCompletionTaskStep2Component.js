@@ -13,11 +13,11 @@ import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 export default class OrderCompletionTaskStep2Component extends Component {
     render() {
         const {
-            task, status, id, reason, reasonOther, onSelectChange, completionDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onCompletionDateChange
+            task, wasCompleted, id, reason, reasonOther, onSelectChange, completionDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onCompletionDateChange
         } = this.props;
-        const isCancelled = status === false || status === "false";
-        const isCompleted = status === true || status === "true";
-        const isOtherHowDidYouHearSelected = reason === 'other';
+        const isCancelled = wasCompleted === false || wasCompleted === "false";
+        const isCompleted = wasCompleted === true || wasCompleted === "true";
+        const isOtherHowDidYouHearSelected = reason === 1;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -80,11 +80,11 @@ export default class OrderCompletionTaskStep2Component extends Component {
                             <BootstrapRadio
                                 inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
-                                error={errors.status}
+                                error={errors.wasCompleted}
                                 label="Was this job successfully completed by the Associate? (*)"
-                                name="status"
+                                name="wasCompleted"
                                 onChange={onRadioChange}
-                                selectedValue={status}
+                                selectedValue={wasCompleted}
                                 options={STATUS_CHOICES}
                                 helpText='Selecting "yes" will close this job as success.'
                             />
@@ -183,13 +183,13 @@ export default class OrderCompletionTaskStep2Component extends Component {
 
 const STATUS_CHOICES = [
     {
-        id: 'status-m-choice',
-        name: "status",
+        id: 'wasCompleted-m-choice',
+        name: "wasCompleted",
         value: true,
         label: "Yes"
     },{
-        id: 'status-f-choice',
-        name: "status",
+        id: 'wasCompleted-f-choice',
+        name: "wasCompleted",
         value: false,
         label: "No"
     }
