@@ -47,7 +47,7 @@ class OrderCompletionTaskStep3Container extends Component {
             invoiceServiceFeePaymentDate:localStorageGetDateItem("workery-task-6-invoiceServiceFeePaymentDate"),
             invoiceActualServiceFeeAmountPaid: localStorageGetFloatItem("workery-task-6-invoiceActualServiceFeeAmountPaid"),
             invoiceBalanceOwingAmount: localStorageGetFloatItem("workery-task-6-invoiceBalanceOwingAmount"),
-            visits: localStorageGetFloatItem("workery-task-6-visits"),
+            visits: localStorageGetIntegerItem("workery-task-6-visits"),
             errors: {},
         }
 
@@ -56,6 +56,7 @@ class OrderCompletionTaskStep3Container extends Component {
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
         this.onInvoiceServiceFeePaymentDate = this.onInvoiceServiceFeePaymentDate.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
     }
 
@@ -99,6 +100,25 @@ class OrderCompletionTaskStep3Container extends Component {
      *------------------------------------------------------------
      */
 
+    onTextChange(e) {
+        this.setState({ [e.target.name]: e.target.value, });
+        const key = "workery-task-6-"+[e.target.name];
+        localStorage.setItem(key, e.target.value);
+    }
+
+    /**
+     *  Function will take the currency string and save it as a float value in
+     *  the state for the field.
+     */
+    onAmountChange(e) {
+        const amount = e.target.value.replace("$","").replace(",", "");
+        this.setState({
+            [e.target.name]: parseFloat(amount),
+        });
+        const key = "workery-task-6-"+[e.target.name];
+        localStorage.setItem(key, parseFloat(amount));
+    }
+
     onRadioChange(e) {
         // Get the values.
         const storageValueKey = "workery-task-6-"+[e.target.name];
@@ -125,53 +145,28 @@ class OrderCompletionTaskStep3Container extends Component {
         });
     }
 
-    onTextChange(e) {
-        this.setState({ [e.target.name]: e.target.value, });
-    }
-
-    /**
-     *  Function will take the currency string and save it as a float value in
-     *  the state for the field.
-     */
-    onAmountChange(e) {
-        const amount = e.target.value.replace("$","").replace(",", "");
-        this.setState({
-            [e.target.name]: parseFloat(amount),
-        });
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "workery-create-client-"+[e.target.name];
-        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
+    onSelectChange(option) {
+        console.log(option);
+        const optionKey = [option.selectName]+"Option";
+        this.setState(
+            { [option.selectName]: option.value, [optionKey]: option, },
+            ()=>{
+                localStorage.setItem('workery-task-6-'+[option.selectName].toString(), option.value);
+                localStorage.setItem('workery-task-6-'+[option.selectName].toString()+"Label", option.label);
+                localStorageSetObjectOrArrayItem('workery-task-6-'+optionKey, option);
+                console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+            }
+        );
     }
 
     onInvoiceDateChange(dateObj) {
         this.setState({ invoiceDate: dateObj, });
+        localStorageSetObjectOrArrayItem('workery-task-6-invoiceDate', dateObj);
     }
 
     onInvoiceServiceFeePaymentDate(dateObj) {
         this.setState({ invoiceServiceFeePaymentDate: dateObj, });
+        localStorageSetObjectOrArrayItem('workery-task-6-invoiceServiceFeePaymentDate', dateObj);
     }
 
     onClick(e) {
@@ -253,6 +248,7 @@ class OrderCompletionTaskStep3Container extends Component {
                 // Select
                 invoiceServiceFee={invoiceServiceFee}
                 invoiceServiceFeeOptions={invoiceServiceFeeOptions}
+                onSelectChange={this.onSelectChange}
 
                 // Radio GUI
                 hasInputtedFinancials={hasInputtedFinancials}

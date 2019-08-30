@@ -153,9 +153,9 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                                     <BootstrapInput
                                         inputClassName="form-control"
-                                        borderColour="border-success"
+                                        borderColour="border-primary"
                                         error={errors.invoiceIds}
-                                        label="Invoice ID(s)"
+                                        label="Invoice ID(s) (*)"
                                         onChange={onTextChange}
                                         value={invoiceIds}
                                         name="invoiceIds"
@@ -165,13 +165,13 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                                     <BootstrapInput
                                         inputClassName="form-control"
-                                        borderColour="border-success"
+                                        borderColour="border-primary"
                                         error={errors.visits}
-                                        label="# of Visit(s)"
+                                        label="# of Visit(s) (*)"
                                         onChange={onTextChange}
                                         value={visits}
                                         name="visits"
-                                        type="text"
+                                        type="number"
                                         helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 100."
                                     />
 
@@ -181,9 +181,9 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                                     <BootstrapCurrencyInput
                                         inputClassName="form-control"
-                                        borderColour="border-success"
+                                        borderColour="border-primary"
                                         error={errors.invoiceQuotedLabourAmount}
-                                        label="Quoted Labour"
+                                        label="Quoted Labour (*)"
                                         onChange={onAmountChange}
                                         value={invoiceQuotedLabourAmount}
                                         name="invoiceQuotedLabourAmount"
@@ -192,9 +192,9 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                                     <BootstrapCurrencyInput
                                         inputClassName="form-control"
-                                        borderColour="border-success"
+                                        borderColour="border-primary"
                                         error={errors.invoiceQuotedMaterialAmount}
-                                        label="Quoted Materials"
+                                        label="Quoted Materials (*)"
                                         onChange={onAmountChange}
                                         value={invoiceQuotedMaterialAmount}
                                         name="invoiceQuotedMaterialAmount"
@@ -219,9 +219,9 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                                     <BootstrapCurrencyInput
                                         inputClassName="form-control"
-                                        borderColour="border-success"
+                                        borderColour="border-primary"
                                         error={errors.invoiceLabourAmount}
-                                        label="Actual Labour"
+                                        label="Actual Labour (*)"
                                         onChange={onAmountChange}
                                         value={invoiceLabourAmount}
                                         name="invoiceLabourAmount"
@@ -232,7 +232,7 @@ export default class OrderCompletionTaskStep3Component extends Component {
                                         inputClassName="form-control"
                                         borderColour="border-success"
                                         error={errors.invoiceMaterialAmount}
-                                        label="Actual Materials"
+                                        label="Actual Materials (*)"
                                         onChange={onAmountChange}
                                         value={invoiceMaterialAmount}
                                         name="invoiceMaterialAmount"
@@ -241,13 +241,13 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                                     <BootstrapCurrencyInput
                                         inputClassName="form-control"
-                                        borderColour="border-success"
+                                        borderColour="border-primary"
                                         error={errors.invoiceTaxAmount}
-                                        label="Tax"
+                                        label="Tax (*)"
                                         onChange={onAmountChange}
                                         value={invoiceTaxAmount}
                                         name="invoiceTaxAmount"
-                                        helpText=""
+                                        helpText="If no tax was paid, please enter zero."
                                     />
 
                                     <BootstrapCurrencyInput
