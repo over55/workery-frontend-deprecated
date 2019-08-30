@@ -46,6 +46,7 @@ export const WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT = '/task/opera
 export const WORKERY_TASK_FOLLOW_UP_OPERATION_API_ENDPOINT = '/v2/task/operation/follow-up';
 export const WORKERY_TASK_FOLLOW_UP_PENDING_OPERATION_API_ENDPOINT = '/v2/task/operation/follow-up-pending';
 export const WORKERY_TASK_ORDER_COMPLETION_API_ENDPOINT = '/task/operation/order-completion';
+export const WORKERY_TASK_SURVEY_OPERATION_API_ENDPOINT = '/task/operation/survey';
 export const WORKERY_STAFF_LIST_API_ENDPOINT = '/staves';
 export const WORKERY_STAFF_DETAIL_API_ENDPOINT = '/staff/'
 export const WORKERY_STAFF_COMMENT_LIST_API_ENDPOINT = '/staff-comments';
