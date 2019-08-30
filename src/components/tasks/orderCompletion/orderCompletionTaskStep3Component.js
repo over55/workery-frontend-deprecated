@@ -301,9 +301,9 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                                     <BootstrapCurrencyInput
                                         inputClassName="form-control"
-                                        borderColour="border-success"
+                                        borderColour="border-primary"
                                         error={errors.invoiceActualServiceFeeAmountPaid}
-                                        label="Actual Service Fee Paid"
+                                        label="Actual Service Fee Paid (*)"
                                         onChange={onAmountChange}
                                         value={invoiceActualServiceFeeAmountPaid}
                                         name="invoiceActualServiceFeeAmountPaid"

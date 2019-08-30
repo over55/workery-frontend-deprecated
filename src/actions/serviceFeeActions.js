@@ -431,3 +431,26 @@ export function getPickedServiceFeeReactSelectOptions(serviceFeePKsArray, servic
     }
     return serviceFeeOptions;
 }
+
+
+/**
+ *  Function returns the percent for the service fee Id.
+ */
+export function getPercentValueForServiceFeeId(serviceFeeList, id) {
+    const isAPIResponseNotEmpty = isEmpty(serviceFeeList) === false;
+    if (isAPIResponseNotEmpty) {
+        const results = serviceFeeList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < results.length; i++) {
+                let serviceFee = results[i];
+                console.log(serviceFee);
+                if (serviceFee.id === id) {
+                    return parseFloat(serviceFee.percentage);
+                }
+            }
+        }
+    }
+
+    return null
+}

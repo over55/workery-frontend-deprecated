@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import OrderCompletionTaskStep3Component from "../../../components/tasks/orderCompletion/orderCompletionTaskStep3Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask6Step3Input } from "../../../validators/taskValidator";
-import { pullServiceFeeList, getServiceFeeReactSelectOptions } from '../../../actions/serviceFeeActions';
+import { pullServiceFeeList, getServiceFeeReactSelectOptions, getPercentValueForServiceFeeId } from '../../../actions/serviceFeeActions';
 import { postTaskOrderCompletionDetail } from "../../../actions/taskActions";
 import {
     localStorageSetObjectOrArrayItem,
@@ -42,6 +42,7 @@ class OrderCompletionTaskStep3Container extends Component {
             invoiceLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceLabourAmount"),
             invoiceMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceMaterialAmount"),
             invoiceTaxAmount: localStorageGetFloatItem("workery-task-6-invoiceTaxAmount"),
+            invoiceTotalAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalAmount"),
             invoiceServiceFee: localStorageGetIntegerItem("workery-task-6-invoiceServiceFee"),
             invoiceServiceFeeAmount: localStorageGetFloatItem("workery-task-6-invoiceServiceFeeAmount"),
             invoiceServiceFeePaymentDate:localStorageGetDateItem("workery-task-6-invoiceServiceFeePaymentDate"),
@@ -51,6 +52,7 @@ class OrderCompletionTaskStep3Container extends Component {
             errors: {},
         }
 
+        this.performCalculation = this.performCalculation.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onAmountChange = this.onAmountChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
@@ -58,6 +60,57 @@ class OrderCompletionTaskStep3Container extends Component {
         this.onInvoiceServiceFeePaymentDate = this.onInvoiceServiceFeePaymentDate.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
+    }
+
+    /**
+     *  Utility function calculates our read-only form fields.
+     */
+    performCalculation() {
+        // Get the variables we are going to use to perform our calculations.
+        const {
+            invoiceQuotedMaterialAmount,
+            invoiceQuotedLabourAmount,
+            invoiceLabourAmount,
+            invoiceMaterialAmount,
+            invoiceTaxAmount,
+            invoiceServiceFee,
+            invoiceActualServiceFeeAmountPaid
+        } = this.state;
+
+        /*
+         *  Compute the total quoted amount.
+         */
+        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount;
+
+        /*
+         *  Compute the total amount.
+         */
+        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
+
+        /*
+         *  Compute the service fee based on the labour.
+         */
+        const serviceFeePercent = getPercentValueForServiceFeeId(this.props.serviceFeeList, invoiceServiceFee);
+        const invoiceServiceFeeAmount = invoiceLabourAmount * (serviceFeePercent/100);
+
+        /*
+         *  Compute balance owing.
+         */
+        const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
+
+        // Update our state.
+        this.setState({
+            invoiceTotalQuoteAmount: invoiceTotalQuoteAmount,
+            invoiceTotalAmount: invoiceTotalAmount,
+            invoiceBalanceOwingAmount: invoiceBalanceOwingAmount,
+            invoiceServiceFeeAmount: invoiceServiceFeeAmount,
+        });
+
+        // Update our persistent storage.
+        localStorage.setItem("workery-task-6-invoiceTotalQuoteAmount", invoiceTotalQuoteAmount);
+        localStorage.setItem("workery-task-6-invoiceTotalAmount", invoiceTotalAmount);
+        localStorage.setItem("workery-task-6-invoiceServiceFeeAmount", invoiceServiceFeeAmount);
+        localStorage.setItem("workery-task-6-invoiceBalanceOwingAmount", invoiceBalanceOwingAmount);
     }
 
     /**
@@ -112,11 +165,17 @@ class OrderCompletionTaskStep3Container extends Component {
      */
     onAmountChange(e) {
         const amount = e.target.value.replace("$","").replace(",", "");
-        this.setState({
-            [e.target.name]: parseFloat(amount),
-        });
-        const key = "workery-task-6-"+[e.target.name];
-        localStorage.setItem(key, parseFloat(amount));
+        this.setState(
+            { [e.target.name]: parseFloat(amount), }, ()=>{
+                const key = "workery-task-6-"+[e.target.name];
+                localStorage.setItem(key, parseFloat(amount));
+
+                // Update our form with our latest calculations. Since all our
+                // currency fields are to be taken into account, then generally
+                // run this function for all modifications.
+                this.performCalculation();
+            }
+        );
     }
 
     onRadioChange(e) {
@@ -155,6 +214,10 @@ class OrderCompletionTaskStep3Container extends Component {
                 localStorage.setItem('workery-task-6-'+[option.selectName].toString()+"Label", option.label);
                 localStorageSetObjectOrArrayItem('workery-task-6-'+optionKey, option);
                 console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+
+                // Since the only dropdown field we are using affects calculations,
+                // therefore perform our calculation.
+                this.performCalculation()
             }
         );
     }
@@ -207,25 +270,9 @@ class OrderCompletionTaskStep3Container extends Component {
             hasInputtedFinancials, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
             invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
-            visits,
+            visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount
         } = this.state;
-
-        const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList);
-
-        /*
-         *  Compute the total quoted amount.
-         */
-        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount;
-
-        /*
-         *  Compute the total amount.
-         */
-        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
-
-        /*
-         *  Compute balance owing.
-         */
-        const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
+        const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList, "invoiceServiceFee");
         return (
             <OrderCompletionTaskStep3Component
                 // Text

@@ -133,9 +133,6 @@ export function validateTask6Step3Input(data) {
         if (data.invoiceServiceFee === undefined || data.invoiceServiceFee === null || data.invoiceServiceFee === "" || isNaN(data.invoiceServiceFee) ) {
             errors.invoiceServiceFee = 'This field is required';
         }
-        if (data.invoiceServiceFeeAmount === undefined || data.invoiceServiceFeeAmount === null || data.invoiceServiceFeeAmount === "" || isNaN(data.invoiceServiceFeeAmount) ) {
-            errors.invoiceServiceFeeAmount = 'This field is required';
-        }
         if (data.invoiceServiceFeePaymentDate === undefined || data.invoiceServiceFeePaymentDate === null || data.invoiceServiceFeePaymentDate === "" || isNaN(data.invoiceServiceFeePaymentDate) ) {
             errors.invoiceServiceFeePaymentDate = 'This field is required';
         }
