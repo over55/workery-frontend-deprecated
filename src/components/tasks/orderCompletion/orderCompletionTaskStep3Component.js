@@ -198,7 +198,7 @@ export default class OrderCompletionTaskStep3Component extends Component {
                                         onChange={onAmountChange}
                                         value={invoiceQuotedMaterialAmount}
                                         name="invoiceQuotedMaterialAmount"
-                                        helpText=""
+                                        helpText="If no material costs will occur then please enter zero."
                                     />
 
                                     <BootstrapCurrencyInput
@@ -230,13 +230,13 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                                     <BootstrapCurrencyInput
                                         inputClassName="form-control"
-                                        borderColour="border-success"
+                                        borderColour="border-primary"
                                         error={errors.invoiceMaterialAmount}
                                         label="Actual Materials (*)"
                                         onChange={onAmountChange}
                                         value={invoiceMaterialAmount}
                                         name="invoiceMaterialAmount"
-                                        helpText=""
+                                        helpText="If no material costs were incurred then please enter zero."
                                     />
 
                                     <BootstrapCurrencyInput
