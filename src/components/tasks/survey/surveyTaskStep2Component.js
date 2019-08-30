@@ -39,8 +39,11 @@ export default class SurveyTaskStep2Component extends Component {
                         </div>
                         <div id="step-2" className="st-grey active">
                             <strong>
-                                <span className="num">2.</span><span className="">Review</span>
+                                <span className="num">2.</span><span className="">Survey</span>
                             </strong>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <span className="num">3.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
