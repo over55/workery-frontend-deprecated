@@ -81,17 +81,22 @@ export function validateTask6Step2Input(data) {
     if (isCancelled) {
         if (data.reason === undefined || data.reason === null || data.reason === "") {
             errors.reason = 'This field is required';
-        } else {
-            if (data.reason === 1) {
-                if (data.reasonOther === undefined || data.reasonOther === null || data.reasonOther === "") {
-                    errors.reasonOther = 'This field is required';
-                }
-            }
         }
     }
 
     const isCompleted = data.status === true || data.status === "true";
-    const isOtherHowDidYouHearSelected = data.reason === 'Other';
+    if (isCompleted) {
+        if (data.completionDate === undefined || data.completionDate === null || data.completionDate === "" || isNaN(data.completionDate) ) {
+            errors.completionDate = 'This field is required';
+        }
+    }
+
+    const isOtherHowDidYouHearSelected = data.reason === 'other';
+    if (isOtherHowDidYouHearSelected) {
+        if (data.reasonOther === undefined || data.reasonOther === null || data.reasonOther === "") {
+            errors.reasonOther = 'This field is required';
+        }
+    }
 
     return {
         errors,

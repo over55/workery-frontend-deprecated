@@ -7,6 +7,7 @@ import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { postTaskOrderCompletionDetail } from "../../../actions/taskActions";
 import {
+    localStorageGetFloatItem,
     localStorageGetIntegerItem,
     localStorageSetObjectOrArrayItem,
     localStorageGetDateItem
@@ -28,15 +29,43 @@ class OrderCompletionTaskStep5Container extends Component {
 
         // Update state.
         this.state = {
+            // Everything else...
             errors: {},
             isLoading: false,
             id: id,
+
+            // Step 2
+            status: localStorage.getItem("workery-task-6-status"),
+            statusLabel: localStorage.getItem("workery-task-6-status-label"),
+            completionDate: localStorageGetDateItem("workery-task-6-completionDate"),
+            associate: localStorageGetIntegerItem("workery-task-6-associateId"),
+            reason: localStorage.getItem("workery-task-6-reason"),
+            reasonLabel: localStorage.getItem("workery-task-6-reasonLabel"),
+            reasonOther: localStorage.getItem("workery-task-6-reasonOther"),
+
+            // Step 3
+            hasInputtedFinancials: localStorage.getItem("workery-task-6-hasInputtedFinancials"),
+            invoiceDate: localStorageGetDateItem("workery-task-6-invoiceDate"),
+            invoiceIds: localStorage.getItem("workery-task-6-invoiceIds"),
+            invoiceQuotedLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedLabourAmount"),
+            invoiceQuotedMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedMaterialAmount"),
+            invoiceTotalQuoteAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalQuoteAmount"),
+            invoiceLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceLabourAmount"),
+            invoiceMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceMaterialAmount"),
+            invoiceTaxAmount: localStorageGetFloatItem("workery-task-6-invoiceTaxAmount"),
+            invoiceTotalAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalAmount"),
+            invoiceServiceFee: localStorageGetIntegerItem("workery-task-6-invoiceServiceFee"),
+            invoiceServiceFeeAmount: localStorageGetFloatItem("workery-task-6-invoiceServiceFeeAmount"),
+            invoiceServiceFeePaymentDate:localStorageGetDateItem("workery-task-6-invoiceServiceFeePaymentDate"),
+            invoiceActualServiceFeeAmountPaid: localStorageGetFloatItem("workery-task-6-invoiceActualServiceFeeAmountPaid"),
+            invoiceBalanceOwingAmount: localStorageGetFloatItem("workery-task-6-invoiceBalanceOwingAmount"),
+            visits: localStorageGetIntegerItem("workery-task-6-visits"),
+
+            // Step 4
             comment: localStorage.getItem("workery-task-6-comment"),
-            errors: {},
         }
 
         this.getPostData = this.getPostData.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
@@ -117,13 +146,6 @@ class OrderCompletionTaskStep5Container extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-        localStorage.setItem('workery-task-6-'+[e.target.name], e.target.value);
-    }
-
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -146,14 +168,42 @@ class OrderCompletionTaskStep5Container extends Component {
     render() {
         return (
             <OrderCompletionTaskStep5Component
-                id={this.state.id}
+                // Step 2
+                status={this.state.status}
+                statusLabel={this.state.statusLabel}
+                completionDate={this.state.completionDate}
+                onInvoiceDateChange={this.onInvoiceDateChange}
+                reason={this.state.reason}
+                reasonLabel={this.state.reasonLabel}
+                reasonOther={this.state.reasonOther}
+
+                // Step 3
+                invoiceIds={this.state.invoiceIds}
+                visits={this.state.visits}
+                invoiceQuotedLabourAmount={this.state.invoiceQuotedLabourAmount}
+                invoiceQuotedMaterialAmount={this.state.invoiceQuotedMaterialAmount}
+                invoiceTotalQuoteAmount={this.state.invoiceTotalQuoteAmount}
+                invoiceLabourAmount={this.state.invoiceLabourAmount}
+                invoiceMaterialAmount={this.state.invoiceMaterialAmount}
+                invoiceTaxAmount={this.state.invoiceTaxAmount}
+                invoiceTotalAmount={this.state.invoiceTotalAmount}
+                invoiceServiceFeeAmount={this.state.invoiceServiceFeeAmount}
+                invoiceBalanceOwingAmount={this.state.invoiceBalanceOwingAmount}
+                invoiceServiceFee={this.state.invoiceServiceFee}
+                hasInputtedFinancials={this.state.hasInputtedFinancials}
+                invoiceDate={this.state.invoiceDate}
+                invoiceActualServiceFeeAmountPaid={this.state.invoiceActualServiceFeeAmountPaid}
+
+                // Step 4
                 comment={this.state.comment}
+
+                // Everything else...
+                id={this.state.id}
                 isLoading={this.state.isLoading}
                 task={this.props.taskDetail}
                 errors={this.state.errors}
                 onBack={this.onBack}
                 onClick={this.onClick}
-                onTextChange={this.onTextChange}
             />
         );
     }

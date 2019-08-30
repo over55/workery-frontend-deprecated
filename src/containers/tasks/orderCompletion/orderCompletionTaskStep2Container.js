@@ -33,7 +33,7 @@ class OrderCompletionTaskStep2Container extends Component {
             isLoading: false,
             id: id,
             status: localStorage.getItem("workery-task-6-status"),
-            invoiceDate: localStorageGetDateItem("workery-task-6-invoiceDate"),
+            completionDate: localStorageGetDateItem("workery-task-6-completionDate"),
             associate: localStorageGetIntegerItem("workery-task-6-associateId"),
             reason: localStorage.getItem("workery-task-6-reason"),
             reasonOther: localStorage.getItem("workery-task-6-reasonOther"),
@@ -44,7 +44,7 @@ class OrderCompletionTaskStep2Container extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
-        this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
+        this.onCompletionDateChange = this.onCompletionDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
@@ -128,13 +128,13 @@ class OrderCompletionTaskStep2Container extends Component {
         localStorage.setItem('workery-task-6-'+[e.target.name], e.target.value);
     }
 
-    onInvoiceDateChange(dateObj) {
+    onCompletionDateChange(dateObj) {
         this.setState(
-            { invoiceDate: dateObj, }, ()=> {
-                console.log("onInvoiceDateChange:", dateObj);
+            { completionDate: dateObj, }, ()=> {
+                console.log("onCompletionDateChange:", dateObj);
             }
         );
-        localStorageSetObjectOrArrayItem('workery-task-6-invoiceDate', dateObj);
+        localStorageSetObjectOrArrayItem('workery-task-6-completionDate', dateObj);
     }
 
     onRadioChange(e) {
@@ -207,8 +207,8 @@ class OrderCompletionTaskStep2Container extends Component {
             <OrderCompletionTaskStep2Component
                 id={this.state.id}
                 status={this.state.status}
-                invoiceDate={this.state.invoiceDate}
-                onInvoiceDateChange={this.onInvoiceDateChange}
+                completionDate={this.state.completionDate}
+                onCompletionDateChange={this.onCompletionDateChange}
                 reason={this.state.reason}
                 reasonOther={this.state.reasonOther}
                 isLoading={this.state.isLoading}

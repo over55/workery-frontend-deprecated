@@ -3,19 +3,30 @@ import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
-import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 
 export default class OrderCompletionTaskStep5Component extends Component {
     render() {
         const {
-            task, status, id, comment, onClick, onBack, errors, isLoading, onTextChange
+            // Step 2
+            status, statusLabel, completionDate, reason, reasonLabel, reasonOther,
+
+            // Step 3
+            invoiceIds, visits, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceTotalQuoteAmount, invoiceLabourAmount,
+            invoiceMaterialAmount, invoiceTaxAmount, invoiceTotalAmount, invoiceServiceFeeAmount, invoiceBalanceOwingAmount,
+            invoiceServiceFee, hasInputtedFinancials, invoiceDate, invoiceActualServiceFeeAmountPaid,
+
+            // Step 4
+            comment,
+
+            // Everything else...
+            task, id, onClick, onBack, errors, isLoading
         } = this.props;
+        const isCancelled = status === false || status === "false";
+        const isCompleted = status === true || status === "true";
+        const isOtherHowDidYouHearSelected = reason === 'other';
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -65,29 +76,120 @@ export default class OrderCompletionTaskStep5Component extends Component {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-5 mx-auto mt-2">
+                <div className="row pt-3 mb-4 pb-2">
+                    <div className="col-md-10 mx-auto p-2">
+
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;Review
+                        </h2>
+
+                        <BootstrapErrorsProcessingAlert errors={errors} />
+                        <p><strong>Please confirm these details before submitting the order completion task:</strong></p>
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-wrench"></i>&nbsp;Order
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Job #</th>
+                                    <td>
+                                        <Link to={`/order/${task.job}`} target="_blank">
+                                            {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Name</th>
+                                    <td>
+                                        <Link to={`/client/${task.jobCustomer}`} target="_blank">
+                                            {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Name</th>
+                                    <td>
+                                        <Link to={`/associate/${task.jobAssociate}`} target="_blank">
+                                            {task && task.jobAssociateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-calendar-check"></i>&nbsp;Status
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Was this job successfully completed by the Associate?</th>
+                                    <td>
+                                        {statusLabel}
+                                    </td>
+                                </tr>
+                                {isCancelled &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Reason&nbsp;{isOtherHowDidYouHearSelected && "(Other)"}</th>
+                                        <td>
+                                            {isOtherHowDidYouHearSelected
+                                               ? reasonOther
+                                               : reasonLabel
+                                           }
+                                        </td>
+                                    </tr>
+                                }
+                                {isCompleted &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Completion Date</th>
+                                        <td>
+                                            {completionDate &&
+                                                <Moment format="YYYY/MM/DD">{completionDate}</Moment>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                                
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-credit-card"></i>&nbsp;Financials
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate</th>
+                                    <td>
+
+                                    </td>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-comments"></i>&nbsp;Comment
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Text</th>
+                                    <td>{comment}</td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+
                         <form>
-                            <h2>
-                                <i className="fas fa-credit-card"></i>&nbsp;Status
-                            </h2>
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
+                            <div className="form-group">
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
+                                </button>
 
-                            <BootstrapErrorsProcessingAlert errors={errors} />
-
-                        
-
+                                <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-4`}>
+                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </Link>
+                            </div>
                         </form>
-
-                        <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
-                                <i className="fas fa-check-circle"></i>&nbsp;Save
-                            </button>
-
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-4`}>
-                                <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
-                            </Link>
-                        </div>
 
                     </div>
                 </div>

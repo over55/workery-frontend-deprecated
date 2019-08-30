@@ -13,11 +13,11 @@ import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 export default class OrderCompletionTaskStep2Component extends Component {
     render() {
         const {
-            task, status, id, reason, reasonOther, onSelectChange, invoiceDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onInvoiceDateChange
+            task, status, id, reason, reasonOther, onSelectChange, completionDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onCompletionDateChange
         } = this.props;
         const isCancelled = status === false || status === "false";
         const isCompleted = status === true || status === "true";
-        const isOtherHowDidYouHearSelected = reason === 'Other';
+        const isOtherHowDidYouHearSelected = reason === 'other';
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -144,12 +144,12 @@ export default class OrderCompletionTaskStep2Component extends Component {
                                 <div>
                                     <BootstrapDatePicker
                                         label="Completion date (*)"
-                                        name="invoiceDate"
-                                        dateObj={invoiceDate}
-                                        onTimeChange={onInvoiceDateChange}
+                                        name="completionDate"
+                                        dateObj={completionDate}
+                                        onTimeChange={onCompletionDateChange}
                                         datePickerClassName="form-control form-control-lg border"
                                         divClassName="form-group p-0 col-md-7 mb-4"
-                                        error={errors.invoiceDate}
+                                        error={errors.completionDate}
                                     />
                                 </div>
                             }
