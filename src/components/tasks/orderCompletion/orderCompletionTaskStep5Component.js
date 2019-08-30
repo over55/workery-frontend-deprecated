@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import NumberFormat from 'react-number-format';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
@@ -16,7 +17,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
             // Step 3
             invoiceIds, visits, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceTotalQuoteAmount, invoiceLabourAmount,
             invoiceMaterialAmount, invoiceTaxAmount, invoiceTotalAmount, invoiceServiceFeeAmount, invoiceBalanceOwingAmount,
-            invoiceServiceFee, hasInputtedFinancials, invoiceDate, invoiceActualServiceFeeAmountPaid,
+            invoiceServiceFee, hasInputtedFinancials, invoiceDate, invoiceActualServiceFeeAmountPaid, invoiceServiceFeePaymentDate,
 
             // Step 4
             comment,
@@ -27,6 +28,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
         const isCancelled = status === false || status === "false";
         const isCompleted = status === true || status === "true";
         const isOtherHowDidYouHearSelected = reason === 'other';
+        const hasFinancials = hasInputtedFinancials === true || hasInputtedFinancials === "true";
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -150,7 +152,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                         </td>
                                     </tr>
                                 }
-                                
+
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
@@ -158,9 +160,129 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Associate</th>
+                                    <th scope="row" className="bg-light">Invoice Date</th>
                                     <td>
-
+                                        {hasFinancials
+                                            ? <Moment format="YYYY/MM/DD">{invoiceDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice ID(s)</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? invoiceIds
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Visits</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? visits
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Quoted Labour</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceQuotedLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Quoted Materials</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceQuotedMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Total Quoted</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceTotalQuoteAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Labour</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Materials</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Tax</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceTaxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Total</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Service Fee</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Service fee payment date</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <Moment format="YYYY/MM/DD">{invoiceServiceFeePaymentDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Service Fee Paid</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceActualServiceFeeAmountPaid} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Balance Owing</th>
+                                    <td>
+                                        {hasFinancials
+                                            ? <NumberFormat value={invoiceBalanceOwingAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            : "-"
+                                        }
                                     </td>
                                 </tr>
 
