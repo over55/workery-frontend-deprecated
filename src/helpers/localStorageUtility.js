@@ -71,6 +71,15 @@ export function localStorageGetIntegerItem(key) {
     return parseInt(str);
 }
 
+export function localStorageGetFloatItem(key) {
+    const str = localStorage.getItem(key);
+    if (str === "undefined" || str === "null") { // Defensive Code: Error.
+        console.error("localStorageGetFloatItem: Detected `undefined` string, could be potential error.");
+        return null;
+    }
+    return parseFloat(str);
+}
+
 export function localStorageSetObjectOrArrayItem(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }

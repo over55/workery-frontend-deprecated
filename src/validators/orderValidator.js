@@ -60,7 +60,7 @@ export function validateFinancialUpdateInput(data) {
     if (data.visits === undefined || data.visits === null || data.visits === "" || isNaN(data.visits) ) {
         errors.visits = 'This field is required';
     }
-    
+
     return {
         errors,
         isValid: isEmpty(errors)

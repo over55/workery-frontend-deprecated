@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import OrderCompletionTaskStep3Component from "../../../components/tasks/orderCompletion/orderCompletionTaskStep3Component";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask6Step3Input } from "../../../validators/taskValidator";
+import { pullServiceFeeList, getServiceFeeReactSelectOptions } from '../../../actions/serviceFeeActions';
 import { postTaskOrderCompletionDetail } from "../../../actions/taskActions";
 import {
-    localStorageGetIntegerItem,
     localStorageSetObjectOrArrayItem,
-    localStorageGetDateItem
+    localStorageGetDateItem,
+    localStorageGetFloatItem,
+    localStorageGetIntegerItem
 } from '../../../helpers/localStorageUtility';
 
 
@@ -33,33 +34,29 @@ class OrderCompletionTaskStep3Container extends Component {
             isLoading: false,
             id: id,
             hasInputtedFinancials: localStorage.getItem("workery-task-6-hasInputtedFinancials"),
+            invoiceDate: localStorageGetDateItem("workery-task-6-invoiceDate"),
+            invoiceIds: localStorage.getItem("workery-task-6-invoiceIds"),
+            invoiceQuotedLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedLabourAmount"),
+            invoiceQuotedMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedMaterialAmount"),
+            invoiceTotalQuoteAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalQuoteAmount"),
+            invoiceLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceLabourAmount"),
+            invoiceMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceMaterialAmount"),
+            invoiceTaxAmount: localStorageGetFloatItem("workery-task-6-invoiceTaxAmount"),
+            invoiceServiceFee: localStorageGetIntegerItem("workery-task-6-invoiceServiceFee"),
+            invoiceServiceFeeAmount: localStorageGetFloatItem("workery-task-6-invoiceServiceFeeAmount"),
+            invoiceServiceFeePaymentDate:localStorageGetDateItem("workery-task-6-invoiceServiceFeePaymentDate"),
+            invoiceActualServiceFeeAmountPaid: localStorageGetFloatItem("workery-task-6-invoiceActualServiceFeeAmountPaid"),
+            invoiceBalanceOwingAmount: localStorageGetFloatItem("workery-task-6-invoiceBalanceOwingAmount"),
+            visits: localStorageGetFloatItem("workery-task-6-visits"),
             errors: {},
         }
 
-        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onAmountChange = this.onAmountChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
+        this.onInvoiceServiceFeePaymentDate = this.onInvoiceServiceFeePaymentDate.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessCallback = this.onSuccessCallback.bind(this);
-        this.onFailureCallback = this.onFailureCallback.bind(this);
-        this.onTaskDetailSuccessFetchCallback = this.onTaskDetailSuccessFetchCallback.bind(this);
-    }
-
-    /**
-     *  Utility function used to create the `postData` we will be submitting to
-     *  the API; as a result, this function will structure some dictionary key
-     *  items under different key names to support our API web-service's API.
-     */
-    getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.task_item = this.state.id;
-        postData.hasAgreedToMeet = this.state.status;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
     }
 
     /**
@@ -70,6 +67,7 @@ class OrderCompletionTaskStep3Container extends Component {
      componentDidMount() {
          window.scrollTo(0, 0);  // Start the page at the top of the page.
          this.props.pullTaskDetail(this.state.id, this.onTaskDetailSuccessFetchCallback);
+         this.props.pullServiceFeeList(1, 1000);
      }
 
      componentWillUnmount() {
@@ -86,25 +84,6 @@ class OrderCompletionTaskStep3Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessCallback(profile) {
-        localStorage.removeItem("workery-task-6-status");
-        localStorage.removeItem("workery-task-6-comment");
-        localStorage.removeItem("workery-task-6-associateId");
-        this.props.setFlashMessage("success", "Job completion task has been successfully closed.");
-        this.props.history.push("/tasks");
-    }
-
-    onFailureCallback(errors) {
-        console.log(errors);
-        this.setState({ errors: errors, isLoading: false, });
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
-    }
-
     onTaskDetailSuccessFetchCallback(taskDetail) {
         console.log("onTaskDetailSuccessFetchCallback | taskDetail:", taskDetail); // For debugging purposes only.
         if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
@@ -119,22 +98,6 @@ class OrderCompletionTaskStep3Container extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
-
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-        localStorage.setItem('workery-task-6-'+[e.target.name], e.target.value);
-    }
-
-    onInvoiceDateChange(dateObj) {
-        this.setState(
-            { invoiceDate: dateObj, }, ()=> {
-                console.log("onInvoiceDateChange:", dateObj);
-            }
-        );
-        localStorageSetObjectOrArrayItem('workery-task-6-invoiceDate', dateObj);
-    }
 
     onRadioChange(e) {
         // Get the values.
@@ -162,18 +125,53 @@ class OrderCompletionTaskStep3Container extends Component {
         });
     }
 
-    onSelectChange(option) {
-        console.log(option);
-        const optionKey = [option.selectName]+"Option";
-        this.setState(
-            { [option.selectName]: option.value, [optionKey]: option, },
-            ()=>{
-                localStorage.setItem('workery-create-partner-'+[option.selectName].toString(), option.value);
-                localStorage.setItem('workery-create-partner-'+[option.selectName].toString()+"Label", option.label);
-                localStorageSetObjectOrArrayItem('workery-create-partner-'+optionKey, option);
-                console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-            }
-        );
+    onTextChange(e) {
+        this.setState({ [e.target.name]: e.target.value, });
+    }
+
+    /**
+     *  Function will take the currency string and save it as a float value in
+     *  the state for the field.
+     */
+    onAmountChange(e) {
+        const amount = e.target.value.replace("$","").replace(",", "");
+        this.setState({
+            [e.target.name]: parseFloat(amount),
+        });
+    }
+
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-client-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+        localStorage.setItem(storageValueKey, value) // Save to storage.
+        localStorage.setItem(storageLabelKey, label) // Save to storage.
+
+        // For the debugging purposes only.
+        console.log({
+            "STORE-VALUE-KEY": storageValueKey,
+            "STORE-VALUE": value,
+            "STORAGE-VALUE-KEY": storeValueKey,
+            "STORAGE-VALUE": value,
+            "STORAGE-LABEL-KEY": storeLabelKey,
+            "STORAGE-LABEL": label,
+        });
+    }
+
+    onInvoiceDateChange(dateObj) {
+        this.setState({ invoiceDate: dateObj, });
+    }
+
+    onInvoiceServiceFeePaymentDate(dateObj) {
+        this.setState({ invoiceServiceFeePaymentDate: dateObj, });
     }
 
     onClick(e) {
@@ -191,7 +189,14 @@ class OrderCompletionTaskStep3Container extends Component {
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailureCallback(errors);
+            console.log(errors);
+            this.setState({ errors: errors, isLoading: false, });
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
         }
 
     }
@@ -203,19 +208,68 @@ class OrderCompletionTaskStep3Container extends Component {
 
     render() {
         const {
-            id, hasInputtedFinancials, errors
+            id, errors, isLoading,
+            hasInputtedFinancials, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
+            invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee,
+            invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
+            visits,
         } = this.state;
+
+        const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList);
+
+        /*
+         *  Compute the total quoted amount.
+         */
+        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount;
+
+        /*
+         *  Compute the total amount.
+         */
+        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
+
+        /*
+         *  Compute balance owing.
+         */
+        const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
         return (
             <OrderCompletionTaskStep3Component
-                id={id}
-                hasInputtedFinancials={hasInputtedFinancials}
-                errors={errors}
-                task={this.props.taskDetail}
-                onBack={this.onBack}
-                onClick={this.onClick}
+                // Text
+                invoiceIds={invoiceIds}
+                visits={visits}
                 onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
+
+                // Amount
+                invoiceQuotedLabourAmount={invoiceQuotedLabourAmount}
+                invoiceQuotedMaterialAmount={invoiceQuotedMaterialAmount}
+                invoiceTotalQuoteAmount={invoiceTotalQuoteAmount}
+                invoiceLabourAmount={invoiceLabourAmount}
+                invoiceMaterialAmount={invoiceMaterialAmount}
+                invoiceTaxAmount={invoiceTaxAmount}
+                invoiceTotalAmount={invoiceTotalAmount}
+                invoiceServiceFeeAmount={invoiceServiceFeeAmount}
+                invoiceBalanceOwingAmount={invoiceBalanceOwingAmount}
+                onAmountChange={this.onAmountChange}
+
+                // Select
+                invoiceServiceFee={invoiceServiceFee}
+                invoiceServiceFeeOptions={invoiceServiceFeeOptions}
+
+                // Radio GUI
+                hasInputtedFinancials={hasInputtedFinancials}
                 onRadioChange={this.onRadioChange}
+
+                // Date GUI
+                invoiceDate={invoiceDate}
+                onInvoiceDateChange={this.onInvoiceDateChange}
+                invoiceServiceFeePaymentDate={invoiceServiceFeePaymentDate}
+                onInvoiceServiceFeePaymentDate={this.onInvoiceServiceFeePaymentDate}
+                invoiceActualServiceFeeAmountPaid={invoiceActualServiceFeeAmountPaid}
+
+                // Other GUI
+                id={id}
+                isLoading={isLoading}
+                errors={errors}
+                onClick={this.onClick}
             />
         );
     }
@@ -225,13 +279,16 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         taskDetail: store.taskDetailState,
+        serviceFeeList: store.serviceFeeListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        setFlashMessage: (typeOf, text) => {
-            dispatch(setFlashMessage(typeOf, text))
+        pullServiceFeeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullServiceFeeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
         },
         postTaskOrderCompletionDetail: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(

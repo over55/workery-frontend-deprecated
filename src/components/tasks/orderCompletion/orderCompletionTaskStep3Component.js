@@ -8,13 +8,48 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
 import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 
 
 export default class OrderCompletionTaskStep3Component extends Component {
     render() {
         const {
-            task, hasInputtedFinancials, id, onClick, onBack, errors, isLoading, onRadioChange, onTextChange
+            // TEXT
+            invoiceIds,
+            visits,
+            onTextChange,
+
+            // AMOUNT
+            invoiceQuotedLabourAmount,
+            invoiceQuotedMaterialAmount,
+            invoiceLabourAmount,
+            invoiceTotalQuoteAmount,
+            invoiceMaterialAmount,
+            invoiceTaxAmount,
+            invoiceTotalAmount,
+            invoiceServiceFeeAmount,
+            invoiceBalanceOwingAmount,
+            onAmountChange,
+
+            // SELECT
+            invoiceServiceFee,
+            invoiceServiceFeeOptions,
+            onSelectChange,
+
+            // RADIO
+            hasInputtedFinancials,
+            onRadioChange,
+
+            // DATE
+            invoiceDate,
+            onInvoiceDateChange,
+            invoiceServiceFeePaymentDate,
+            onInvoiceServiceFeePaymentDate,
+            invoiceActualServiceFeeAmountPaid,
+
+            // EVERYTHING ELSE
+            onClick, onBack, id, isLoading, errors, task
         } = this.props;
         const isNotInputted = hasInputtedFinancials === false || hasInputtedFinancials === "false";
         const isInputted = hasInputtedFinancials === true || hasInputtedFinancials === "true";
@@ -105,7 +140,187 @@ export default class OrderCompletionTaskStep3Component extends Component {
                             */}
 
                             {isInputted &&
-                                <div>test
+                                <div>
+                                    <BootstrapDatePicker
+                                        label="Invoice date (*)"
+                                        name="invoiceDate"
+                                        dateObj={invoiceDate}
+                                        onTimeChange={onInvoiceDateChange}
+                                        datePickerClassName="form-control form-control-lg border"
+                                        divClassName="form-group p-0 col-md-7 mb-4"
+                                        error={errors.invoiceDate}
+                                    />
+
+                                    <BootstrapInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceIds}
+                                        label="Invoice ID(s)"
+                                        onChange={onTextChange}
+                                        value={invoiceIds}
+                                        name="invoiceIds"
+                                        type="text"
+                                        helpText="Please note, you are able to input multiple invoice ID values if you want, just separate them by commas. Ex.: 123, 456."
+                                    />
+
+                                    <BootstrapInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.visits}
+                                        label="# of Visit(s)"
+                                        onChange={onTextChange}
+                                        value={visits}
+                                        name="visits"
+                                        type="text"
+                                        helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 100."
+                                    />
+
+                                    <p className="border-bottom mb-3 pb-1 text-secondary">
+                                        <i className="fas fa-clipboard"></i>&nbsp;Quote
+                                    </p>
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceQuotedLabourAmount}
+                                        label="Quoted Labour"
+                                        onChange={onAmountChange}
+                                        value={invoiceQuotedLabourAmount}
+                                        name="invoiceQuotedLabourAmount"
+                                        helpText=""
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceQuotedMaterialAmount}
+                                        label="Quoted Materials"
+                                        onChange={onAmountChange}
+                                        value={invoiceQuotedMaterialAmount}
+                                        name="invoiceQuotedMaterialAmount"
+                                        helpText=""
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceTotalQuoteAmount}
+                                        label="Total Quoted"
+                                        onChange={onAmountChange}
+                                        value={invoiceTotalQuoteAmount}
+                                        name="invoiceTotalQuoteAmount"
+                                        helpText=""
+                                        disabled={true}
+                                    />
+
+                                    <p className="border-bottom mb-3 pb-1 text-secondary">
+                                        <i className="fas fa-clipboard-check"></i>&nbsp;Actual
+                                    </p>
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceLabourAmount}
+                                        label="Actual Labour"
+                                        onChange={onAmountChange}
+                                        value={invoiceLabourAmount}
+                                        name="invoiceLabourAmount"
+                                        helpText=""
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceMaterialAmount}
+                                        label="Actual Materials"
+                                        onChange={onAmountChange}
+                                        value={invoiceMaterialAmount}
+                                        name="invoiceMaterialAmount"
+                                        helpText=""
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceTaxAmount}
+                                        label="Tax"
+                                        onChange={onAmountChange}
+                                        value={invoiceTaxAmount}
+                                        name="invoiceTaxAmount"
+                                        helpText=""
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceTotalAmount}
+                                        label="Total"
+                                        onChange={onAmountChange}
+                                        value={invoiceTotalAmount}
+                                        name="invoiceTotalAmount"
+                                        helpText=""
+                                        disabled={true}
+                                    />
+
+                                    <p className="border-bottom mb-3 pb-1 text-secondary">
+                                        <i className="fas fa-hand-holding-usd"></i>&nbsp;Service Fee
+                                    </p>
+
+                                    <BootstrapSingleSelect
+                                        borderColour="border-primary"
+                                        label="Service Fee (*)"
+                                        name="invoiceServiceFee"
+                                        defaultOptionLabel="Please select the service fee."
+                                        options={invoiceServiceFeeOptions}
+                                        value={invoiceServiceFee}
+                                        error={errors.invoiceServiceFee}
+                                        onSelectChange={onSelectChange}
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceServiceFeeAmount}
+                                        label="Required Service Fee"
+                                        onChange={onAmountChange}
+                                        value={invoiceServiceFeeAmount}
+                                        name="invoiceServiceFeeAmount"
+                                        helpText="The service fee amount owed by the associate."
+                                        disabled={true}
+                                    />
+
+                                    <BootstrapDatePicker
+                                        label="Invoice service fee payment date (*)"
+                                        name="invoiceServiceFeePaymentDate"
+                                        dateObj={invoiceServiceFeePaymentDate}
+                                        onTimeChange={onInvoiceServiceFeePaymentDate}
+                                        datePickerClassName="form-control form-control-lg border"
+                                        divClassName="form-group p-0 col-md-7 mb-4"
+                                        error={errors.invoiceServiceFeePaymentDate}
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceActualServiceFeeAmountPaid}
+                                        label="Actual Service Fee Paid"
+                                        onChange={onAmountChange}
+                                        value={invoiceActualServiceFeeAmountPaid}
+                                        name="invoiceActualServiceFeeAmountPaid"
+                                        helpText="Please fill in the actual service fee amount paid by the associate and received by your organization."
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceBalanceOwingAmount}
+                                        label="Balance Owing"
+                                        onChange={onAmountChange}
+                                        value={invoiceBalanceOwingAmount}
+                                        name="invoiceBalanceOwingAmount"
+                                        helpText="This is remaining balance to be paid by the associate to your organization."
+                                        disabled={true}
+                                    />
                                 </div>
                             }
 
