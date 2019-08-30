@@ -14,7 +14,7 @@ import {
     WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT,
     WORKERY_TASK_FOLLOW_UP_OPERATION_API_ENDPOINT,
     WORKERY_TASK_FOLLOW_UP_PENDING_OPERATION_API_ENDPOINT,
-    WORKERY_TASK_ORDER_COMPLETION_OPERATION_API_ENDPOINT
+    WORKERY_TASK_ORDER_COMPLETION_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -416,7 +416,7 @@ export function postTaskOrderCompletionDetail(postData, successCallback, failedC
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TASK_ORDER_COMPLETION_OPERATION_API_ENDPOINT, buffer).then( (successResponse) => {
+        customAxios.post(WORKERY_TASK_ORDER_COMPLETION_API_ENDPOINT, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 
