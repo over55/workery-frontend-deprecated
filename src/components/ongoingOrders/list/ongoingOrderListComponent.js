@@ -32,15 +32,9 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "new": 'New',
-            "declined": 'Declined',
-            "pending": 'Pending',
-            "cancelled": 'Cancelled',
-            "ongoing": 'Ongoing',
-            "in_progress": 'In-progress',
-            "completed_and_unpaid": 'Completed and Unpaid',
-            "completed_and_paid": 'Completed and Paid',
-            "archived": 'Archived',
+            "running": 'Running',
+            "idle": 'Idle',
+            "terminated": 'Terminated',
         };
 
         const columns = [{
@@ -63,19 +57,13 @@ class RemoteListComponent extends Component {
             sort: true,
             formatter: associateNameFormatter,
         },{
-            dataField: 'assignmentDate',
-            text: 'Assign Date',
-            sort: true
-        },{
-            dataField: 'startDate',
-            text: 'Start Date',
-            sort: true
-        },{
             dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
-                options: selectOptions
+                options: selectOptions,
+                defaultValue: 'running',
+                withoutEmptyOption: true
             }),
             formatter: statusFormatter
         },{
@@ -217,31 +205,6 @@ class OngoingOrderListComponent extends Component {
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-undo-alt"></i>&nbsp;Ongoing Orders</h1>
-
-                <div className="row">
-                    <div className="col-md-12">
-                        <section className="row text-center placeholders">
-                            <div className="col-sm-6 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/orders/add/step-1" className="d-block link-ndecor" title="Orders">
-                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Add</h4>
-                                <div className="text-muted">Add Orders</div>
-                            </div>
-                            <div className="col-sm-6 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
-                                    <Link to="/orders/search" className="d-block link-ndecor" title="Search">
-                                        <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Search</h4>
-                                <span className="text-muted">Search Orders</span>
-                            </div>
-                        </section>
-                    </div>
-                </div>
 
                 <div className="row">
                     <div className="col-md-12">
