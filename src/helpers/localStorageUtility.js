@@ -83,3 +83,16 @@ export function localStorageGetFloatItem(key) {
 export function localStorageSetObjectOrArrayItem(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
+
+
+export function localStorageRemoveItemsContaining(substring) {
+    // Iterate through all the keys in local storage and try to find the
+    // matching substring to see if we must delete the particular item.
+    for(var key in localStorage) {
+        if ( key.includes(substring) ) {
+            let value = localStorage.getItem(key);
+            console.log("Deleting from localStorage:", key, ":", value);
+            localStorage.removeItem(key);
+        }
+    }
+}

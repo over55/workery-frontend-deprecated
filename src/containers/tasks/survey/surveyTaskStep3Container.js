@@ -7,7 +7,7 @@ import { pullTaskDetail } from "../../../actions/taskActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { postTaskSurveyDetail } from "../../../actions/taskActions";
 import {
-    localStorageGetIntegerItem, localStorageGetBooleanItem, localStorageSetObjectOrArrayItem
+    localStorageGetIntegerItem, localStorageGetBooleanItem, localStorageSetObjectOrArrayItem, localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 
 
@@ -98,7 +98,7 @@ class SurveyTaskStep3Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        localStorage.removeItem("workery-task-7-comment");
+        localStorageRemoveItemsContaining("workery-task-7-");
         this.props.setFlashMessage("success", "Survey task has been successfully closed.");
         this.props.history.push("/tasks");
     }

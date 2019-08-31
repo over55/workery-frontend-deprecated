@@ -6,7 +6,7 @@ import AssignAssociateTaskStep4Component from "../../../components/tasks/assignA
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { postTaskAssignAssociateDetail } from "../../../actions/taskActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+import { localStorageGetIntegerItem, localStorageRemoveItemsContaining } from '../../../helpers/localStorageUtility';
 
 
 class AssignAssociateTaskStep4Container extends Component {
@@ -81,10 +81,7 @@ class AssignAssociateTaskStep4Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        localStorage.removeItem("workery-task-1-status");
-        localStorage.removeItem("workery-task-1-comment");
-        localStorage.removeItem("workery-task-1-associateId");
-        localStorage.removeItem("workery-task-1-associateFullName");
+        localStorageRemoveItemsContaining("workery-task-1-");
         this.props.setFlashMessage("success", "Assign associate task has been successfully closed.");
         this.props.history.push("/tasks");
     }

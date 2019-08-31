@@ -7,7 +7,7 @@ import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask2Step2Input } from "../../../validators/taskValidator";
 import { postTaskFollowUpDetail } from "../../../actions/taskActions";
-import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+import { localStorageGetIntegerItem, localStorageRemoveItemsContaining } from '../../../helpers/localStorageUtility';
 
 
 class FollowUpTaskStep3Container extends Component {
@@ -83,9 +83,7 @@ class FollowUpTaskStep3Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        localStorage.removeItem("workery-task-2-status");
-        localStorage.removeItem("workery-task-2-comment");
-        localStorage.removeItem("workery-task-2-associateId");
+        localStorageRemoveItemsContaining("workery-task-2-");
         this.props.setFlashMessage("success", "48 hour follow-up task has been successfully closed.");
         this.props.history.push("/tasks");
     }

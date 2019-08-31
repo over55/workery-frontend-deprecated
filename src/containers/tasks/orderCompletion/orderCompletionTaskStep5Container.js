@@ -11,7 +11,8 @@ import {
     localStorageGetFloatItem,
     localStorageGetIntegerItem,
     localStorageSetObjectOrArrayItem,
-    localStorageGetDateItem
+    localStorageGetDateItem,
+    localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 
 
@@ -122,9 +123,7 @@ class OrderCompletionTaskStep5Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        localStorage.removeItem("workery-task-6-wasCompleted");
-        localStorage.removeItem("workery-task-6-comment");
-        localStorage.removeItem("workery-task-6-associateId");
+        localStorageRemoveItemsContaining("workery-task-6-");
         this.props.setFlashMessage("success", "Job completion task has been successfully closed.");
         this.props.history.push("/tasks");
     }
