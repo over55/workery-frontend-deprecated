@@ -188,83 +188,83 @@ export function pullOngoingOrderList(page=1, sizePerPage=10, filtersMap=new Map(
 //
 //     }
 // }
-//
-// ////////////////////////////////////////////////////////////////////////////////
-// //                                RETRIEVE                                    //
-// ////////////////////////////////////////////////////////////////////////////////
-//
-// export function pullOngoingOrderDetail(id, onSuccessCallback, onFailureCallback) {
-//     return dispatch => {
-//         // Change the global state to attempting to fetch latest user details.
-//         store.dispatch(
-//             setOngoingOrderDetailRequest()
-//         );
-//
-//         // Generate our app's Axios instance.
-//         const customAxios = getCustomAxios();
-//
-//         const aURL = WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT+id+"/";
-//
-//         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-//             // Decode our MessagePack (Buffer) into JS Object.
-//             const responseData = msgpack.decode(Buffer(successResponse.data));
-//             // console.log(successResult); // For debugging purposes.
-//
-//             let order = camelizeKeys(responseData);
-//
-//             // Extra.
-//             order['isAPIRequestRunning'] = false;
-//             order['errors'] = {};
-//
-//             console.log("pullOngoingOrderDetail | Success:", order); // For debugging purposes.
-//
-//             // Update the global state of the application to store our
-//             // user order for the application.
-//             store.dispatch(
-//                 setOngoingOrderDetailSuccess(order)
-//             );
-//
-//             // DEVELOPERS NOTE:
-//             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-//             // OBJECT WE GOT FROM THE API.
-//             if (onSuccessCallback) {
-//                 onSuccessCallback(order);
-//             }
-//
-//         }).catch( (exception) => { // ERROR
-//             if (exception.response) {
-//                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-//
-//                 // Decode our MessagePack (Buffer) into JS Object.
-//                 const responseData = msgpack.decode(Buffer(responseBinaryData));
-//
-//                 let errors = camelizeKeys(responseData);
-//
-//                 console.log("pullOngoingOrderDetail | error:", errors); // For debuggin purposes only.
-//
-//                 // Send our failure to the redux.
-//                 store.dispatch(
-//                     setOngoingOrderDetailFailure({
-//                         isAPIRequestRunning: false,
-//                         errors: errors
-//                     })
-//                 );
-//
-//                 // DEVELOPERS NOTE:
-//                 // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-//                 // OBJECT WE GOT FROM THE API.
-//                 if (onFailureCallback) {
-//                     onFailureCallback(errors);
-//                 }
-//             }
-//
-//         }).then( () => { // FINALLY
-//             // Do nothing.
-//         });
-//
-//     }
-// }
-//
+
+////////////////////////////////////////////////////////////////////////////////
+//                                RETRIEVE                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+export function pullOngoingOrderDetail(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to fetch latest user details.
+        store.dispatch(
+            setOngoingOrderDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        const aURL = WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT+id+"/";
+
+        customAxios.get(aURL).then( (successResponse) => { // SUCCESS
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            // console.log(successResult); // For debugging purposes.
+
+            let order = camelizeKeys(responseData);
+
+            // Extra.
+            order['isAPIRequestRunning'] = false;
+            order['errors'] = {};
+
+            console.log("pullOngoingOrderDetail | Success:", order); // For debugging purposes.
+
+            // Update the global state of the application to store our
+            // user order for the application.
+            store.dispatch(
+                setOngoingOrderDetailSuccess(order)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(order);
+            }
+
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("pullOngoingOrderDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setOngoingOrderDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => { // FINALLY
+            // Do nothing.
+        });
+
+    }
+}
+
 // ////////////////////////////////////////////////////////////////////////////////
 // //                                UPDATE                                      //
 // ////////////////////////////////////////////////////////////////////////////////

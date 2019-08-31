@@ -232,9 +232,7 @@ import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdat
 
 // Ongoing Work Order
 import OngoingOrderListContainer from "./ongoingOrders/list/ongoingOrderListContainer";
-// import OrderSearchContainer from "./orders/search/orderSearchContainer";
-// import OrderSearchResultContainer from "./orders/search/orderSearchResultContainer";
-// import OrderLiteRetrieveContainer from "./orders/retrieve/orderLiteRetrieveContainer";
+import OngoingOrderLiteRetrieveContainer from "./ongoingOrders/retrieve/ongoingOrderLiteRetrieveContainer";
 // import OrderFullRetrieveContainer from "./orders/retrieve/orderFullRetrieveContainer";
 // import OrderTaskListContainer from "./orders/retrieve/orderTaskListContainer";
 // import OrderActivitySheetListContainer from "./orders/retrieve/orderActivitySheetListContainer";
@@ -470,6 +468,7 @@ class AppContainer extends React.Component {
 
                                 { /* WORK ORDER */}
                                 <Route path="/ongoing-orders" exact component={requiresAuth(OngoingOrderListContainer)} />
+                                <Route path="/ongoing-order/:id" exact component={requiresAuth(OngoingOrderLiteRetrieveContainer)} />
 
                                 { /*
 
@@ -481,7 +480,6 @@ class AppContainer extends React.Component {
                                 <Route path="/orders/add/step-6" exact component={requiresAuth(OrderCreateStep6Container)} />
                                 <Route path="/orders/search" exact component={requiresAuth(OrderSearchContainer)} />
                                 <Route path="/orders/search-results" exact component={requiresAuth(OrderSearchResultContainer)} />
-                                <Route path="/order/:id" exact component={requiresAuth(OrderLiteRetrieveContainer)} />
                                 <Route path="/order/:id/full" exact component={requiresAuth(OrderFullRetrieveContainer)} />
                                 <Route path="/order/:id/tasks" exact component={requiresAuth(OrderTaskListContainer)} />
                                 <Route path="/order/:id/activity-sheets" exact component={requiresAuth(OrderActivitySheetListContainer)} />
