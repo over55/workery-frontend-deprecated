@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import StaffCreateStep8Component from "../../../components/staff/create/staffCreateStep8Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import {
-    localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
+    localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 import { postStaffDetail } from '../../../actions/staffActions';
@@ -249,6 +249,7 @@ class StaffCreateStep8Container extends Component {
     onSuccessCallback(response) {
         console.log("onSuccessCallback | State (Post-Fetch):", this.state);
         console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
+        localStorageRemoveItemsContaining("workery-create-staff-");
         this.props.setFlashMessage("success", "Staff has been successfully created.");
         this.props.history.push("/staff");
     }

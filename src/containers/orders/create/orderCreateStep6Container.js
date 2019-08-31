@@ -11,7 +11,7 @@ import {
     COMMUNITY_CARES_TYPE_OF
 } from '../../../constants/api';
 import {
-    localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
+    localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 import { validateStep6CreateInput } from "../../../validators/orderValidator";
 import { postOrderDetail } from '../../../actions/orderActions';
@@ -126,7 +126,7 @@ class OrderCreateStep6Container extends Component {
             ()=>{
                 console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessCallback | State (Post-Fetch):", this.state);
-
+                localStorageRemoveItemsContaining("workery-create-order-");
                 this.props.history.push("/task/1/" + response.latestPendingTask + "/step-1");
             }
         )

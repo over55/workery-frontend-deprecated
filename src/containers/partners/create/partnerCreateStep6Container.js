@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import PartnerCreateStep6Component from "../../../components/partners/create/partnerCreateStep6Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import {
-    localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
+    localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 import { postPartnerDetail } from '../../../actions/partnerActions';
@@ -269,6 +269,7 @@ class PartnerCreateStep6Container extends Component {
             ()=>{
                 console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
                 console.log("onSuccessCallback | State (Post-Fetch):", this.state);
+                localStorageRemoveItemsContaining("workery-create-partner-");
                 this.props.setFlashMessage("success", "Partner has been successfully created.");
                 this.props.history.push("/partners");
             }
