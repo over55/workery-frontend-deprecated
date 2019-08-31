@@ -92,11 +92,12 @@ class TaskUpdateContainer extends Component {
      */
 
 
-    onClick(e, associateId) {
+    onClick(e, associateId, associateFullName) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
         console.log("onClick | associateId:", associateId); // For debugging purposes.
         localStorage.setItem("workery-task-1-associateId", associateId);
+        localStorage.setItem("workery-task-1-associateFullName", associateFullName);
         this.props.history.push("/task/1/"+this.state.id+"/step-3");
     }
 

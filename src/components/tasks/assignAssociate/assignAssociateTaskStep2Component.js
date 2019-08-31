@@ -44,7 +44,10 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Review</span>
+                            <span className="num">3.</span><span className="">Decision</span>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <span className="num">4.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -199,7 +202,7 @@ class ActivitySheetItem extends Component {
                     {comment}
                 </td>
                 <td>
-                    <Link onClick={ (event)=>{ onClick(event, associate) } }>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, associate, associateFullName) } }>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
@@ -247,7 +250,7 @@ class AssociateItem extends Component {
                     />
                 </td>
                 <td>
-                    <Link onClick={ (event)=>{ onClick(event, id) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );

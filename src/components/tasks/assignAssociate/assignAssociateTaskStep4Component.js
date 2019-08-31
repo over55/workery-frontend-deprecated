@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 
-export default class AssignAssociateTaskStep1Component extends Component {
+
+export default class AssignAssociateTaskStep4Component extends Component {
     render() {
-        const { id, task, onBack, onClick } = this.props;
+        const { statusLabel, associateId, associateFullName, comment, id, task, onBack, onClick, isLoading, errors } = this.props;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -25,35 +29,38 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                 <div className="row">
                     <div className="step-navigation">
-                        <div id="step-1" className="st-grey active">
-                            <strong>
+                        <div id="step-1" className="st-grey">
+                            <Link to={`/task/1/${id}/step-1`}>
                                 <span className="num">1.</span><span className="">Info</span>
-                            </strong>
+                            </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <span className="num">2.</span><span className="">Selection</span>
+                            <Link to={`/task/1/${id}/step-2`}>
+                                <span className="num">2.</span><span className="">Selection</span>
+                            </Link>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Decision</span>
+                            <Link to={`/task/1/${id}/step-3`}>
+                                <span className="num">3.</span><span className="">Decision</span>
+                            </Link>
                         </div>
-                        <div id="step-4" className="st-grey">
-                            <span className="num">4.</span><span className="">Review</span>
+                        <div id="step-4" className="st-grey active">
+                            <strong>
+                                <span className="num">4.</span><span className="">Review</span>
+                            </strong>
                         </div>
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="col-md-10 mx-auto p-2">
+                        <BootstrapErrorsProcessingAlert errors={errors} />
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-table"></i>&nbsp;Task Details
+                                        <i className="fas fa-wrench"></i>&nbsp;Order
                                     </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Description</th>
-                                    <td>{task && task.description}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job #</th>
@@ -64,10 +71,6 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Job Start Date</th>
-                                    <td>{task && task.jobStartDate}</td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
                                     <td>
                                         <Link to={`/client/${task.jobCustomer}`} target="_blank">
@@ -75,58 +78,37 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                         </Link>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Client Phone #</th>
-                                    <td>
-                                        {task &&
-                                            <a href={`tel:${task.jobCustomerE164Telephone}`}>
-                                                {task.jobCustomerTelephone}
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Client Location</th>
-                                    <td>
-                                        {task &&
-                                            <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
-                                                {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Job Description</th>
-                                    <td>{task && task.jobDescription}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Skill Set(s)</th>
-                                    <td>
-                                        {task.jobPrettySkillSets && task.jobPrettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Tag(s)</th>
-                                    <td>
-                                        {task.jobPrettyTags && task.jobPrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Comments</th>
-                                    <td>
-                                        <Link to={`/order/${task.job}/comments`} target="_blank">
-                                            View comments&nbsp;({task.jobCommentsCount})&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link>
-                                    </td>
-                                </tr>
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
+                                        <i className="fas fa-user-plus"></i>&nbsp;Assign Associate
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{task && task.description}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Accepted Job?</th>
+                                    <td>{statusLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate</th>
+                                    <td>
+                                        <Link to={`/associate/${associateId}`} target="_blank">
+                                            {associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Comment</th>
+                                    <td>{comment}</td>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-info-circle"></i>&nbsp;Misc
                                     </th>
                                 </tr>
                                 <tr>
@@ -134,14 +116,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to={`/order/${task.job}/postpone`}>
-                                                    Postpone Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                                </li>
-                                            <li>
-                                                <Link to={`/order/${task.job}/close`}>
-                                                    Close Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
+                                                Please note once an associate gets assigned to a task, a 48 hour follow up task will be created.
                                             </li>
                                         </ul>
                                     </td>
@@ -151,11 +126,11 @@ export default class AssignAssociateTaskStep1Component extends Component {
                         </table>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
-                                Proceed to Selection&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
+                                <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/1/${id}/step-3`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>
