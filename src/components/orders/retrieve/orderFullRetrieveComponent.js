@@ -295,6 +295,54 @@ export default class OrderFullRetrieveComponent extends Component {
                                     </td>
                                 </tr>
 
+                                {order.wasSurveyConducted &&
+                                    <tr className="bg-dark">
+                                        <th scope="row" colSpan="2" className="text-light">
+                                            <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                        </th>
+                                    </tr>
+                                }
+                                {order.wasSurveyConducted &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Was the quality of the work satisfactory?</th>
+                                        <td>
+                                            {order.wasJobSatisfactory ? "Yes" : "No"}
+                                        </td>
+                                    </tr>
+                                }
+                                {order.wasSurveyConducted &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Was the work completed on time and on budget?</th>
+                                        <td>{order.wasJobFinishedOnTimeAndOnBudget ? "Yes" : "No"}</td>
+                                    </tr>
+                                }
+                                {order.wasSurveyConducted &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Was the Associate Member punctual?</th>
+                                        <td>{order.wasAssociatePunctual ? "Yes" : "No"}</td>
+                                    </tr>
+                                }
+                                {order.wasSurveyConducted &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Was the Associate Member professional?</th>
+                                        <td>{order.wasAssociateProfessional ? "Yes" : "No"}</td>
+                                    </tr>
+                                }
+                                {order.wasSurveyConducted &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Would you refer Over55 to a friend of family member?</th>
+                                        <td>{order.wouldCustomerReferOurOrganization ? "Yes" : "No"}</td>
+                                    </tr>
+                                }
+                                {order.wasSurveyConducted &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Overall Order Rating</th>
+                                        <td>
+                                            {order.score}/5
+                                        </td>
+                                    </tr>
+                                }
+
 
 
                                 <tr className="bg-dark">

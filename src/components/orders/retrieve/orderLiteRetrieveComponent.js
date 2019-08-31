@@ -176,7 +176,14 @@ export default class OrderLiteRetrieveComponent extends Component {
                                         </td>
                                     </tr>
                                 }
-
+                                {order.wasSurveyConducted &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Rating</th>
+                                        <td>
+                                            {order.score}/5
+                                        </td>
+                                    </tr>
+                                }
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">

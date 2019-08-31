@@ -11,6 +11,7 @@ import {
     COMMUNITY_CARES_TYPE_OF
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapFiveStarRatingLabel } from "../../bootstrap/bootstrapFiveStarRatingLabel";
 
 
 export default class AssociateFullRetrieveComponent extends Component {
@@ -294,10 +295,12 @@ export default class AssociateFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">How did they discover us?</th>
                                     <td>{associate.howHearPretty}</td>
                                 </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Job Rating</th>
-                                    <td>{associate.score}/5</td>
-                                </tr>
+                                {associate &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Job Rating</th>
+                                        <td><BootstrapFiveStarRatingLabel score={associate.score} /></td>
+                                    </tr>
+                                }
 
 
 
