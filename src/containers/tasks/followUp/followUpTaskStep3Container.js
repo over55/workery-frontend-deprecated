@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import FollowUpTaskStep2Component from "../../../components/tasks/followUp/followUpTaskStep2Component";
+import FollowUpTaskStep3Component from "../../../components/tasks/followUp/followUpTaskStep3Component";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask2Step2Input } from "../../../validators/taskValidator";
+import { postTaskFollowUpDetail } from "../../../actions/taskActions";
 import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 
 
-class FollowUpTaskStep2Container extends Component {
+class FollowUpTaskStep3Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -30,14 +32,12 @@ class FollowUpTaskStep2Container extends Component {
             comment: localStorage.getItem("workery-task-2-comment"),
             associate: localStorageGetIntegerItem("workery-task-2-associateId"),
             errors: {},
-            // associate: localStorage.getItem('nwapp-task-1-associate'),
-            // associateLabel: localStorage.getItem('nwapp-task-1-associate-label'),
         }
 
         this.getPostData = this.getPostData.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onTaskDetailSuccessFetchCallback = this.onTaskDetailSuccessFetchCallback.bind(this);
     }
 
@@ -62,24 +62,43 @@ class FollowUpTaskStep2Container extends Component {
      *------------------------------------------------------------
      */
 
-     componentDidMount() {
-         window.scrollTo(0, 0);  // Start the page at the top of the page.
-         this.props.pullTaskDetail(this.state.id, this.onTaskDetailSuccessFetchCallback);
-     }
+    componentDidMount() {
+        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullTaskDetail(this.state.id, this.onTaskDetailSuccessFetchCallback);
+    }
 
-     componentWillUnmount() {
-         // This code will fix the "ReactJS & Redux: Can't perform a React state
-         // update on an unmounted component" issue as explained in:
-         // https://stackoverflow.com/a/53829700
-         this.setState = (state,callback)=>{
-             return;
-         };
-     }
+    componentWillUnmount() {
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
 
     /**
      *  API callback functions
      *------------------------------------------------------------
      */
+
+    onSuccessCallback(profile) {
+        // localStorage.removeItem("workery-task-2-status");
+        // localStorage.removeItem("workery-task-2-comment");
+        // localStorage.removeItem("workery-task-2-associateId");
+        // this.props.setFlashMessage("success", "48 hour follow-up task has been successfully closed.");
+        // this.props.history.push("/tasks");
+    }
+
+    onFailureCallback(errors) {
+        console.log(errors);
+        this.setState({ errors: errors, isLoading: false, });
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
 
     onTaskDetailSuccessFetchCallback(taskDetail) {
         console.log("onTaskDetailSuccessFetchCallback | taskDetail:", taskDetail); // For debugging purposes only.
@@ -96,60 +115,17 @@ class FollowUpTaskStep2Container extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-        localStorage.setItem('workery-task-2-'+[e.target.name], e.target.value);
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "workery-task-2-"+[e.target.name];
-        const storageLabelKey =  "workery-task-2-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
-    }
-
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // Perform client-side validation.
-        const { errors, isValid } = validateTask2Step2Input(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.props.history.push("/task/2/"+this.state.id+"/step-3");
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.setState({ errors: errors, isLoading: false, });
-
-            // The following code will cause the screen to scroll to the top of
-            // the page. Please see ``react-scroll`` for more information:
-            // https://github.com/fisshy/react-scroll
-            var scroll = Scroll.animateScroll;
-            scroll.scrollToTop();
-        }
+        this.setState({ isLoading: true, errors:{} }, ()=>{
+            this.props.postTaskFollowUpDetail(
+                this.getPostData(),
+                this.onSuccessCallback,
+                this.onFailureCallback
+            )
+        });
     }
 
     /**
@@ -159,17 +135,11 @@ class FollowUpTaskStep2Container extends Component {
 
     render() {
         return (
-            <FollowUpTaskStep2Component
+            <FollowUpTaskStep3Component
                 id={this.state.id}
-                status={this.state.status}
-                comment={this.state.comment}
-                isLoading={this.state.isLoading}
                 task={this.props.taskDetail}
-                errors={this.state.errors}
                 onBack={this.onBack}
                 onClick={this.onClick}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
             />
         );
     }
@@ -189,6 +159,9 @@ const mapDispatchToProps = dispatch => {
                 pullTaskDetail(id, onSuccessCallback, onFailureCallback)
             )
         },
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
     }
 }
 
@@ -196,4 +169,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(FollowUpTaskStep2Container);
+)(FollowUpTaskStep3Container);

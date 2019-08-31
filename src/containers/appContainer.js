@@ -103,6 +103,7 @@ import AssignAssociateTaskStep3Container from "./tasks/assignAssociate/assignAss
 import AssignAssociateTaskStep4Container from "./tasks/assignAssociate/assignAssociateTaskStep4Container";
 import FollowUpTaskStep1Container from "./tasks/followUp/followUpTaskStep1Container";
 import FollowUpTaskStep2Container from "./tasks/followUp/followUpTaskStep2Container";
+import FollowUpTaskStep3Container from "./tasks/followUp/followUpTaskStep3Container";
 import FollowUpPendingTaskStep1Container from "./tasks/followUpPending/followUpPendingTaskStep1Container";
 import FollowUpPendingTaskStep2Container from "./tasks/followUpPending/followUpPendingTaskStep2Container";
 import OrderCompletionTaskStep1Container from "./tasks/orderCompletion/orderCompletionTaskStep1Container";
@@ -339,6 +340,7 @@ class AppContainer extends React.Component {
                                 <Route path="/task/1/:id/step-4" exact component={requiresAuth(AssignAssociateTaskStep4Container)} />
                                 <Route path="/task/2/:id/step-1" exact component={requiresAuth(FollowUpTaskStep1Container)} />
                                 <Route path="/task/2/:id/step-2" exact component={requiresAuth(FollowUpTaskStep2Container)} />
+                                <Route path="/task/2/:id/step-3" exact component={requiresAuth(FollowUpTaskStep3Container)} />
                                 <Route path="/task/4/:id/step-1" exact component={requiresAuth(FollowUpPendingTaskStep1Container)} />
                                 <Route path="/task/4/:id/step-2" exact component={requiresAuth(FollowUpPendingTaskStep2Container)} />
                                 <Route path="/task/6/:id/step-1" exact component={requiresAuth(OrderCompletionTaskStep1Container)} />
