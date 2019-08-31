@@ -72,7 +72,7 @@ export default class OngoingOrderFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-wrench"></i>&nbsp;Job Details
-                                        <Link to={`/order/${id}/update/lite`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/ongoing-order/${id}/update/lite`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
