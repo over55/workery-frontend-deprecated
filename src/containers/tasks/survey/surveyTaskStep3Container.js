@@ -36,6 +36,16 @@ class SurveyTaskStep3Container extends Component {
             noSurveyConductedReason: localStorageGetIntegerItem("workery-task-7-noSurveyConductedReason"),
             noSurveyConductedReasonOther: localStorage.getItem("workery-task-7-noSurveyConductedReasonOther"),
             comment: localStorage.getItem("workery-task-7-comment"),
+            wasJobSatisfactoryLabel: localStorage.getItem("workery-task-7-wasJobSatisfactory-label"),
+            wasJobSatisfactory: localStorageGetBooleanItem("workery-task-7-wasJobSatisfactory"),
+            wasJobFinishedOnTimeAndOnBudgetLabel: localStorage.getItem("workery-task-7-wasJobFinishedOnTimeAndOnBudget-label"),
+            wasJobFinishedOnTimeAndOnBudget: localStorageGetBooleanItem("workery-task-7-wasJobFinishedOnTimeAndOnBudget"),
+            wasAssociatePunctualLabel: localStorage.getItem("workery-task-7-wasAssociatePunctual-label"),
+            wasAssociatePunctual: localStorageGetBooleanItem("workery-task-7-wasAssociatePunctual"),
+            wasAssociateProfessionalLabel: localStorage.getItem("workery-task-7-wasAssociateProfessional-label"),
+            wasAssociateProfessional: localStorageGetBooleanItem("workery-task-7-wasAssociateProfessional"),
+            wouldCustomerReferOurOrganizationLabel: localStorage.getItem("workery-task-7-wouldCustomerReferOurOrganization-label"),
+            wouldCustomerReferOurOrganization: localStorageGetBooleanItem("workery-task-7-wouldCustomerReferOurOrganization"),
         }
 
         this.onClick = this.onClick.bind(this);
@@ -106,6 +116,11 @@ class SurveyTaskStep3Container extends Component {
                 noSurveyConductedReasonLabel={this.state.noSurveyConductedReasonLabel}
                 noSurveyConductedReasonOther={this.state.noSurveyConductedReasonOther}
                 comment={this.state.comment}
+                wasJobSatisfactoryLabel={this.state.wasJobSatisfactoryLabel}
+                wasJobFinishedOnTimeAndOnBudgetLabel={this.state.wasJobFinishedOnTimeAndOnBudgetLabel}
+                wasAssociatePunctualLabel={this.state.wasAssociatePunctualLabel}
+                wasAssociateProfessionalLabel={this.state.wasAssociateProfessionalLabel}
+                wouldCustomerReferOurOrganizationLabel={this.state.wouldCustomerReferOurOrganizationLabel}
                 id={this.state.id}
                 isLoading={this.state.isLoading}
                 errors={this.state.errors}

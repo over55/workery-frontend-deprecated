@@ -33,11 +33,15 @@ class SurveyTaskStep2Container extends Component {
             noSurveyConductedReason: localStorageGetIntegerItem("workery-task-7-noSurveyConductedReason"),
             noSurveyConductedReasonOther: localStorage.getItem("workery-task-7-noSurveyConductedReasonOther"),
             comment: localStorage.getItem("workery-task-7-comment"),
-
+            wasJobSatisfactoryLabel: localStorage.getItem("workery-task-7-wasJobSatisfactory-label"),
             wasJobSatisfactory: localStorageGetBooleanItem("workery-task-7-wasJobSatisfactory"),
+            wasJobFinishedOnTimeAndOnBudgetLabel: localStorage.getItem("workery-task-7-wasJobFinishedOnTimeAndOnBudget-label"),
             wasJobFinishedOnTimeAndOnBudget: localStorageGetBooleanItem("workery-task-7-wasJobFinishedOnTimeAndOnBudget"),
+            wasAssociatePunctualLabel: localStorage.getItem("workery-task-7-wasAssociatePunctual-label"),
             wasAssociatePunctual: localStorageGetBooleanItem("workery-task-7-wasAssociatePunctual"),
+            wasAssociateProfessionalLabel: localStorage.getItem("workery-task-7-wasAssociateProfessional-label"),
             wasAssociateProfessional: localStorageGetBooleanItem("workery-task-7-wasAssociateProfessional"),
+            wouldCustomerReferOurOrganizationLabel: localStorage.getItem("workery-task-7-wouldCustomerReferOurOrganization-label"),
             wouldCustomerReferOurOrganization: localStorageGetBooleanItem("workery-task-7-wouldCustomerReferOurOrganization"),
         }
 

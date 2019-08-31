@@ -9,6 +9,7 @@ export default class SurveyTaskStep3Component extends Component {
         const {
             wasSurveyConducted, wasSurveyConductedLabel,
             noSurveyConductedReason, noSurveyConductedReasonLabel, noSurveyConductedReasonOther,
+            wasJobSatisfactoryLabel, wasJobFinishedOnTimeAndOnBudgetLabel, wasAssociatePunctualLabel, wasAssociateProfessionalLabel, wouldCustomerReferOurOrganizationLabel,
             comment, id, task, onBack, onClick, errors
         } = this.props;
         const hasNoSurvey = wasSurveyConducted === false || wasSurveyConducted === "false";
@@ -105,6 +106,36 @@ export default class SurveyTaskStep3Component extends Component {
                                     <th scope="row" className="bg-light">Was there a survey conducted?</th>
                                     <td>{wasSurveyConductedLabel}</td>
                                 </tr>
+                                {hasSurvey &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Was the quality of the work satisfactory?</th>
+                                        <td>{wasJobSatisfactoryLabel}</td>
+                                    </tr>
+                                }
+                                {hasSurvey &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Was the work completed on time and on budget?</th>
+                                        <td>{wasJobFinishedOnTimeAndOnBudgetLabel}</td>
+                                    </tr>
+                                }
+                                {hasSurvey &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Was the Associate Member punctual?</th>
+                                        <td>{wasAssociatePunctualLabel}</td>
+                                    </tr>
+                                }
+                                {hasSurvey &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Was the Associate Member professional?</th>
+                                        <td>{wasAssociateProfessionalLabel}</td>
+                                    </tr>
+                                }
+                                {hasSurvey &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Would you refer Over55 to a friend of family member?</th>
+                                        <td>{wouldCustomerReferOurOrganizationLabel}</td>
+                                    </tr>
+                                }
                                 {hasNoSurvey &&
                                     <tr>
                                         <th scope="row" className="bg-light">Reason survey was not conducted?</th>
