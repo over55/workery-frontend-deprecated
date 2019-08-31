@@ -18,6 +18,7 @@ import {
     PARTNER_LIST_SUCCESS, PARTNER_COMMENT_LIST_SUCCESS, PARTNER_DETAIL_SUCCESS,
     ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS,
     STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
+    ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
 } from "./constants/actionTypes";
 import { activitySheetItemListReducer, activitySheetItemDetailReducer } from "./reducers/activitySheetItemReducers";
 import { associateCommentListReducer } from "./reducers/associateCommentReducers";
@@ -31,6 +32,8 @@ import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
 import flashMessageReducer from "./reducers/flashMessageReducer";
 import { howHearListReducer, howHearDetailReducer } from "./reducers/howHearReducers";
 import { insuranceRequirementListReducer, insuranceRequirementDetailReducer } from "./reducers/insuranceRequirementReducers";
+import { ongoingOrderListReducer, ongoingOrderDetailReducer } from "./reducers/ongoingOrderReducers";
+import { ongoingOrderCommentListReducer } from "./reducers/ongoingOrderCommentReducers";
 import { orderListReducer, orderDetailReducer } from "./reducers/orderReducers";
 import { orderCommentListReducer } from "./reducers/orderCommentReducers";
 import { partnerListReducer, partnerDetailReducer } from "./reducers/partnerReducers";
@@ -61,6 +64,8 @@ const appReducer = combineReducers({
     flashMessageState: flashMessageReducer,
     howHearListState: howHearListReducer, howHearDetailState: howHearDetailReducer,
     insuranceRequirementListState: insuranceRequirementListReducer, insuranceRequirementDetailState: insuranceRequirementDetailReducer,
+    ongoingOrderListState: ongoingOrderListReducer, ongoingOrderDetailState: ongoingOrderDetailReducer,
+    ongoingOrderCommentListState: ongoingOrderCommentListReducer,
     orderListState: orderListReducer, orderDetailState: orderDetailReducer,
     orderCommentListState: orderCommentListReducer,
     partnerListState: partnerListReducer, partnerDetailState: partnerDetailReducer,
@@ -116,6 +121,7 @@ const localStorageMiddleware = ({ getState }) => {
             ACTIVITY_SHEET_LIST_SUCCESS,  ACTIVITY_SHEET_DETAIL_SUCCESS,
             STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
             PARTNER_LIST_SUCCESS, PARTNER_COMMENT_LIST_SUCCESS, PARTNER_DETAIL_SUCCESS,
+            ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
         ].includes(result.type)) {
             // console.log("De-hydrating store...");
             localStorage.setItem(APP_STATE, JSON.stringify(getState()))

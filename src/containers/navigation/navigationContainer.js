@@ -51,8 +51,13 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
     },{
         id: "full-jobs",
         icon: "wrench",
-        title: "Jobs",
+        title: "Orders",
         url: "/orders"
+    },{
+        id: "full-ongoing-jobs",
+        icon: "undo-alt",
+        title: "Ongoing Orders",
+        url: "/ongoing-orders"
     },{
         id: "full-associates",
         icon: "crown",
@@ -121,8 +126,13 @@ const AUTH_FRONTLINE_STAFF_MENU_DATA = [
     },{
         id: "full-jobs",
         icon: "wrench",
-        title: "Jobs",
+        title: "Orders",
         url: "/orders"
+    },{
+        id: "full-ongoing-jobs",
+        icon: "undo-alt",
+        title: "Ongoing Order",
+        url: "/ongoing-orders"
     },{
         id: "full-associates",
         icon: "crown",
@@ -344,7 +354,7 @@ class NavigationContainer extends React.Component {
                         </Scrollbars>
                     </nav>
                 </div>
-        	}        
+        	}
         </div>
     )
   }

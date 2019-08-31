@@ -98,6 +98,9 @@ export const WORKERY_REPORT_FOURTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/14/csv-
 export const WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/15/csv-download';
 export const WORKERY_REPORT_SIXTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/16/csv-download';
 export const WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/17/csv-download';
+export const WORKERY_ONGOING_ORDER_LIST_API_ENDPOINT = '/ongoing-orders';
+export const WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT = '/ongoing-order/';
+export const WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT = '/ongoing-order-comments';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';

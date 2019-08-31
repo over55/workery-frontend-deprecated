@@ -230,6 +230,16 @@ import PartnerContactUpdateContainer from "./partners/update/partnerContactUpdat
 import PartnerAddressUpdateContainer from "./partners/update/partnerAddressUpdateContainer";
 import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdateContainer";
 
+// Ongoing Work Order
+import OngoingOrderListContainer from "./ongoingOrders/list/ongoingOrderListContainer";
+// import OrderSearchContainer from "./orders/search/orderSearchContainer";
+// import OrderSearchResultContainer from "./orders/search/orderSearchResultContainer";
+// import OrderLiteRetrieveContainer from "./orders/retrieve/orderLiteRetrieveContainer";
+// import OrderFullRetrieveContainer from "./orders/retrieve/orderFullRetrieveContainer";
+// import OrderTaskListContainer from "./orders/retrieve/orderTaskListContainer";
+// import OrderActivitySheetListContainer from "./orders/retrieve/orderActivitySheetListContainer";
+// import OrderCommentContainer from "./orders/retrieve/orderCommentContainer";
+
 
 class AppContainer extends React.Component {
     render() {
@@ -457,6 +467,33 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id/update/contact" exact component={requiresAuth(PartnerContactUpdateContainer)} />
                                 <Route path="/partner/:id/update/address" exact component={requiresAuth(PartnerAddressUpdateContainer)} />
                                 <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
+
+                                { /* WORK ORDER */}
+                                <Route path="/ongoing-orders" exact component={requiresAuth(OngoingOrderListContainer)} />
+
+                                { /*
+
+                                <Route path="/orders/add/step-1" exact component={requiresAuth(OrderCreateStep1Container)} />
+                                <Route path="/orders/add/step-2" exact component={requiresAuth(OrderCreateStep2Container)} />
+                                <Route path="/orders/add/step-3" exact component={requiresAuth(OrderCreateStep3Container)} />
+                                <Route path="/orders/add/step-4" exact component={requiresAuth(OrderCreateStep4Container)} />
+                                <Route path="/orders/add/step-5" exact component={requiresAuth(OrderCreateStep5Container)} />
+                                <Route path="/orders/add/step-6" exact component={requiresAuth(OrderCreateStep6Container)} />
+                                <Route path="/orders/search" exact component={requiresAuth(OrderSearchContainer)} />
+                                <Route path="/orders/search-results" exact component={requiresAuth(OrderSearchResultContainer)} />
+                                <Route path="/order/:id" exact component={requiresAuth(OrderLiteRetrieveContainer)} />
+                                <Route path="/order/:id/full" exact component={requiresAuth(OrderFullRetrieveContainer)} />
+                                <Route path="/order/:id/tasks" exact component={requiresAuth(OrderTaskListContainer)} />
+                                <Route path="/order/:id/activity-sheets" exact component={requiresAuth(OrderActivitySheetListContainer)} />
+                                <Route path="/order/:id/comments" exact component={requiresAuth(OrderCommentContainer)} />
+                                <Route path="/order/:id/transfer" exact component={requiresAuth(OrderTransferOperationContainer)} />
+                                <Route path="/order/:id/postpone" exact component={requiresAuth(OrderPostponeOperationContainer)} />
+                                <Route path="/order/:id/unassign-associate" exact component={requiresAuth(OrderUnassignAssociateOperationContainer)} />
+                                <Route path="/order/:id/close" exact component={requiresAuth(OrderCloseOperationContainer)} />
+                                <Route path="/order/:id/reopen" exact component={requiresAuth(OrderReopenOperationContainer)} />
+                                <Route path="/order/:id/update/lite" exact component={requiresAuth(OrderLiteUpdateContainer)} />
+                                */}
+
 
                                 { /* EVERYTHING ELSE... */ }
                                 <Route component={NotFound404Container} />
