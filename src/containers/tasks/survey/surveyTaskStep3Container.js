@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Scroll from 'react-scroll';
 
 import SurveyTaskStep3Component from "../../../components/tasks/survey/surveyTaskStep3Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { postTaskSurveyDetail } from "../../../actions/taskActions";
 import {
     localStorageGetIntegerItem, localStorageGetBooleanItem, localStorageSetObjectOrArrayItem
 } from '../../../helpers/localStorageUtility';
@@ -48,9 +50,26 @@ class SurveyTaskStep3Container extends Component {
             wouldCustomerReferOurOrganization: localStorageGetBooleanItem("workery-task-7-wouldCustomerReferOurOrganization"),
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.task_item = this.state.id;
+
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -89,6 +108,13 @@ class SurveyTaskStep3Container extends Component {
 
     onFailureCallback(errors) {
         console.log(errors);
+        this.setState({ errors: errors, isLoading: false, });
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
     }
 
     /**
@@ -99,7 +125,14 @@ class SurveyTaskStep3Container extends Component {
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.history.push("/task/7/"+this.state.id+"/step-2");
+
+        this.setState({ isLoading: true, errors:{} }, ()=>{
+            this.props.postTaskSurveyDetail(
+                this.getPostData(),
+                this.onSuccessCallback,
+                this.onFailureCallback
+            )
+        });
     }
 
     /**
@@ -144,6 +177,11 @@ const mapDispatchToProps = dispatch => {
         pullTaskDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullTaskDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
+        postTaskSurveyDetail: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                postTaskSurveyDetail(postData, onSuccessCallback, onFailureCallback)
             )
         },
         setFlashMessage: (typeOf, text) => {

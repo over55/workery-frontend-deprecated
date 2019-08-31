@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 
 
 export default class SurveyTaskStep3Component extends Component {
@@ -10,13 +11,14 @@ export default class SurveyTaskStep3Component extends Component {
             wasSurveyConducted, wasSurveyConductedLabel,
             noSurveyConductedReason, noSurveyConductedReasonLabel, noSurveyConductedReasonOther,
             wasJobSatisfactoryLabel, wasJobFinishedOnTimeAndOnBudgetLabel, wasAssociatePunctualLabel, wasAssociateProfessionalLabel, wouldCustomerReferOurOrganizationLabel,
-            comment, id, task, onBack, onClick, errors
+            comment, id, task, onBack, onClick, errors, isLoading
         } = this.props;
         const hasNoSurvey = wasSurveyConducted === false || wasSurveyConducted === "false";
         const hasSurvey = wasSurveyConducted === true || wasSurveyConducted === "true";
         const isNoSurveyConductedReasonOther = noSurveyConductedReason === 1;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">

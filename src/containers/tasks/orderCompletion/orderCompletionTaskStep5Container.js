@@ -166,7 +166,6 @@ class OrderCompletionTaskStep5Container extends Component {
                 this.onFailureCallback
             )
         });
-
     }
 
     /**
