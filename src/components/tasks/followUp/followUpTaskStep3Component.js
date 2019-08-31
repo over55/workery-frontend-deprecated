@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+
 
 export default class FollowUpTaskStep3Component extends Component {
     render() {
-        const { id, task, onBack, onClick } = this.props;
+        const { statusLabel, comment, id, task, onBack, onClick, errors, isLoading } = this.props;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -45,6 +49,7 @@ export default class FollowUpTaskStep3Component extends Component {
 
                 <div className="row">
                     <div className="col-md-10 mx-auto p-2">
+                        <BootstrapErrorsProcessingAlert errors={errors} />
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
@@ -80,27 +85,28 @@ export default class FollowUpTaskStep3Component extends Component {
                                     <th scope="row" className="bg-light">Description</th>
                                     <td>{task && task.description}</td>
                                 </tr>
-                                
+                                <tr>
+                                    <th scope="row" className="bg-light">Have the Client and Associate Member agreed to meet?</th>
+                                    <td>{task && statusLabel}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Comment</th>
+                                    <td>{task && comment}</td>
+                                </tr>
+
+
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
+                                        <i className="fas fa-info-circle"></i>&nbsp;Misc
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <th scope="row" className="bg-light">Notes:</th>
                                     <td>
                                         <ul>
-                                            <li>
-                                                <Link to={`/order/${task.job}/postpone`}>
-                                                    Postpone Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                                </li>
-                                            <li>
-                                                <Link to={`/order/${task.job}/close`}>
-                                                    Close Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
+                                            <li>Please note if Associate and Client agreed then a completion task will be created.</li>
+                                            <li>If you leave a message then a 24 hour follow up task will be created.</li>
                                         </ul>
                                     </td>
                                 </tr>

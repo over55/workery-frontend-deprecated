@@ -28,6 +28,7 @@ class FollowUpTaskStep3Container extends Component {
             errors: {},
             isLoading: false,
             id: id,
+            statusLabel: localStorage.getItem("workery-task-2-status-label"),
             status: localStorage.getItem("workery-task-2-status"),
             comment: localStorage.getItem("workery-task-2-comment"),
             associate: localStorageGetIntegerItem("workery-task-2-associateId"),
@@ -82,11 +83,11 @@ class FollowUpTaskStep3Container extends Component {
      */
 
     onSuccessCallback(profile) {
-        // localStorage.removeItem("workery-task-2-status");
-        // localStorage.removeItem("workery-task-2-comment");
-        // localStorage.removeItem("workery-task-2-associateId");
-        // this.props.setFlashMessage("success", "48 hour follow-up task has been successfully closed.");
-        // this.props.history.push("/tasks");
+        localStorage.removeItem("workery-task-2-status");
+        localStorage.removeItem("workery-task-2-comment");
+        localStorage.removeItem("workery-task-2-associateId");
+        this.props.setFlashMessage("success", "48 hour follow-up task has been successfully closed.");
+        this.props.history.push("/tasks");
     }
 
     onFailureCallback(errors) {
@@ -136,6 +137,9 @@ class FollowUpTaskStep3Container extends Component {
     render() {
         return (
             <FollowUpTaskStep3Component
+                statusLabel={this.state.statusLabel}
+                comment={this.state.comment}
+                isLoading={this.state.isLoading}
                 id={this.state.id}
                 task={this.props.taskDetail}
                 onBack={this.onBack}
@@ -161,6 +165,11 @@ const mapDispatchToProps = dispatch => {
         },
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
+        },
+        postTaskFollowUpDetail: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                postTaskFollowUpDetail(postData, onSuccessCallback, onFailureCallback)
+            )
         },
     }
 }
