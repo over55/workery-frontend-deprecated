@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import SurveyTaskStep3Component from "../../../components/tasks/survey/surveyTaskStep3Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
+import {
+    localStorageGetIntegerItem, localStorageGetBooleanItem, localStorageSetObjectOrArrayItem
+} from '../../../helpers/localStorageUtility';
 
 
 class SurveyTaskStep3Container extends Component {
@@ -21,7 +24,18 @@ class SurveyTaskStep3Container extends Component {
 
         // Update state.
         this.state = {
+            // Misc.
+            errors: {},
+            isLoading: false,
             id: id,
+
+            // Step 2
+            wasSurveyConductedLabel: localStorage.getItem("workery-task-7-wasSurveyConducted-label"),
+            wasSurveyConducted: localStorageGetBooleanItem("workery-task-7-wasSurveyConducted"),
+            noSurveyConductedReasonLabel: localStorage.getItem("workery-task-7-noSurveyConductedReasonLabel"),
+            noSurveyConductedReason: localStorageGetIntegerItem("workery-task-7-noSurveyConductedReason"),
+            noSurveyConductedReasonOther: localStorage.getItem("workery-task-7-noSurveyConductedReasonOther"),
+            comment: localStorage.getItem("workery-task-7-comment"),
         }
 
         this.onClick = this.onClick.bind(this);
@@ -86,7 +100,15 @@ class SurveyTaskStep3Container extends Component {
     render() {
         return (
             <SurveyTaskStep3Component
+                wasSurveyConducted={this.state.wasSurveyConducted}
+                wasSurveyConductedLabel={this.state.wasSurveyConductedLabel}
+                noSurveyConductedReason={this.state.noSurveyConductedReason}
+                noSurveyConductedReasonLabel={this.state.noSurveyConductedReasonLabel}
+                noSurveyConductedReasonOther={this.state.noSurveyConductedReasonOther}
+                comment={this.state.comment}
                 id={this.state.id}
+                isLoading={this.state.isLoading}
+                errors={this.state.errors}
                 task={this.props.taskDetail}
                 onBack={this.onBack}
                 onClick={this.onClick}

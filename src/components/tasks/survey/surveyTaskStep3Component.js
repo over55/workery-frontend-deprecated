@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+
 
 export default class SurveyTaskStep3Component extends Component {
     render() {
-        const { id, task, onBack, onClick } = this.props;
+        const {
+            wasSurveyConducted, wasSurveyConductedLabel, noSurveyConductedReason, noSurveyConductedReasonLabel, noSurveyConductedReasonOther, comment,
+            id, task, onBack, onClick, errors
+        } = this.props;
+        const hasNoSurvey = wasSurveyConducted === false || wasSurveyConducted === "false";
+        const hasSurvey = wasSurveyConducted === true || wasSurveyConducted === "true";
+        const isNoSurveyConductedReasonOther = noSurveyConductedReason === 1;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -25,32 +33,41 @@ export default class SurveyTaskStep3Component extends Component {
 
                 <div className="row">
                     <div className="step-navigation">
-                        <div id="step-1" className="st-grey active">
-                            <strong>
+                        <div id="step-1" className="st-grey">
+                            <Link to={`/task/7/${id}/step-1`}>
                                 <span className="num">1.</span><span className="">Info</span>
-                            </strong>
+                            </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <span className="num">2.</span><span className="">Survey</span>
+                            <Link to={`/task/7/${id}/step-2`}>
+                                <span className="num">2.</span><span className="">Survey</span>
+                            </Link>
                         </div>
-                        <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Review</span>
+                        <div id="step-3" className="st-grey active">
+                            <strong>
+                                <span className="num">3.</span><span className="">Review</span>
+                            </strong>
                         </div>
                     </div>
                 </div>
 
-                <div className="row">
+                <div className="row pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
+
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;Review
+                        </h2>
+
+                        <BootstrapErrorsProcessingAlert errors={errors} />
+
+                        <p><strong>Please confirm these details before submitting the survey task:</strong></p>
+
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-table"></i>&nbsp;Task Details
+                                        <i className="fas fa-wrench"></i>&nbsp;Order
                                     </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Description</th>
-                                    <td>{task && task.description}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job #</th>
@@ -61,35 +78,11 @@ export default class SurveyTaskStep3Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Job Start Date</th>
-                                    <td>{task && task.jobStartDate}</td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
                                     <td>
                                         <Link to={`/client/${task.jobCustomer}`} target="_blank">
                                             {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Client Phone #</th>
-                                    <td>
-                                        {task &&
-                                            <a href={`tel:${task.jobCustomerE164Telephone}`}>
-                                                {task.jobCustomerTelephone}
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Client Location</th>
-                                    <td>
-                                        {task &&
-                                            <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
-                                                {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </a>
-                                        }
                                     </td>
                                 </tr>
                                 <tr>
@@ -100,74 +93,45 @@ export default class SurveyTaskStep3Component extends Component {
                                         </Link>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Associate Phone #</th>
-                                    <td>
-                                        {task &&
-                                            <a href={`tel:${task.jobAssociateE164Telephone}`}>
-                                                {task.jobAssociateTelephone}
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Associate Location</th>
-                                    <td>
-                                        {task &&
-                                            <a href={task.jobAssociateLocationGoogleUrl} target="_blank">
-                                                {task.jobAssociateLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Job Description</th>
-                                    <td>{task && task.jobDescription}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Skill Set(s)</th>
-                                    <td>
-                                        {task.jobPrettySkillSets && task.jobPrettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Tag(s)</th>
-                                    <td>
-                                        {task.jobPrettyTags && task.jobPrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Comments</th>
-                                    <td>
-                                        <Link to={`/order/${task.job}/comments`} target="_blank">
-                                            View comments&nbsp;({task.jobCommentsCount})&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link>
-                                    </td>
-                                </tr>
+
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
+                                        <i className="fas fa-chart-pie"></i>&nbsp;Survey
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <th scope="row" className="bg-light">Was there a survey conducted?</th>
+                                    <td>{wasSurveyConductedLabel}</td>
+                                </tr>
+
+                                {hasNoSurvey &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Reason survey was not conducted?</th>
+                                        <td>
+                                            {isNoSurveyConductedReasonOther
+                                                ? noSurveyConductedReasonOther
+                                                : noSurveyConductedReasonLabel
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row" className="bg-light">Comment</th>
+                                    <td>{comment}</td>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-info-circle"></i>&nbsp;Misc
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Note(s):</th>
                                     <td>
                                         <ul>
-                                            <li>
-                                                <Link to={`/order/${task.job}/postpone`}>
-                                                    Postpone Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                                </li>
-                                            <li>
-                                                <Link to={`/order/${task.job}/close`}>
-                                                    Close Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
+                                            <li>Please note that upon submission this order will become completed.</li>
                                         </ul>
                                     </td>
                                 </tr>
@@ -176,11 +140,11 @@ export default class SurveyTaskStep3Component extends Component {
                         </table>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
-                                Proceed to Survey&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
+                                <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/7/${id}/step-2`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>

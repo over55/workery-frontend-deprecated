@@ -1075,3 +1075,23 @@ export const ORDER_CANCEL_REASON_CHOICES = [
         label: "Other"
     }
 ];
+
+
+/**
+ *
+ */
+export const NO_SURVEY_CONDUCTED_REASON_CHOICES = [
+    {
+        selectName: "noSurveyConductedReason",
+        value: 2,
+        label: "Unable to reach client"
+    },{
+        selectName: "noSurveyConductedReason",
+        value: 3,
+        label: "Client did not want to complete survey"
+    },{
+        selectName: "noSurveyConductedReason",
+        value: 1,
+        label: "Other"
+    }
+];

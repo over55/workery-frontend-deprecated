@@ -168,3 +168,35 @@ export function validateTask6Step4Input(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateTask7Step2Input(data) {
+    let errors = {};
+
+    if (data.wasSurveyConducted === undefined || data.wasSurveyConducted === null || data.wasSurveyConducted === "") {
+        errors.wasSurveyConducted = 'This field is required';
+    } else {
+        const isCancelled = data.wasSurveyConducted === false || data.wasSurveyConducted === "false";
+        const isCompleted = data.wasSurveyConducted === true || data.wasSurveyConducted === "true";
+        // const isOtherSelected = data.noSurveyConductedReason === 1;
+
+        if (data.noSurveyConductedReason === undefined || data.noSurveyConductedReason === null || data.noSurveyConductedReason === "" || isNaN(data.noSurveyConductedReason)) {
+            errors.noSurveyConductedReason = 'This field is required';
+        } else {
+            if (data.noSurveyConductedReason === 1) {
+                if (data.noSurveyConductedReasonOther === undefined || data.noSurveyConductedReasonOther === null || data.noSurveyConductedReasonOther === "") {
+                    errors.noSurveyConductedReasonOther = 'This field is required';
+                }
+            }
+        }
+
+    }
+    if (data.comment === undefined || data.comment === null || data.comment === "") {
+        errors.comment = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

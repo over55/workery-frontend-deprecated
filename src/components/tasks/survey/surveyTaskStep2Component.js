@@ -3,14 +3,24 @@ import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
+import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { GENDER_RADIO_CHOICES } from "../../../constants/api";
+import { NO_SURVEY_CONDUCTED_REASON_CHOICES } from "../../../constants/api";
 
 
 export default class SurveyTaskStep2Component extends Component {
     render() {
-        const { task, status, id, comment, onClick, onBack, errors, isLoading, onRadioChange, onTextChange } = this.props;
+        const {
+            wasSurveyConducted, noSurveyConductedReason, noSurveyConductedReasonOther,
+            task, id, comment, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onSelectChange
+        } = this.props;
+
+        const isCancelled = wasSurveyConducted === false || wasSurveyConducted === "false";
+        const isCompleted = wasSurveyConducted === true || wasSurveyConducted === "true";
+        const isOtherSelected = noSurveyConductedReason === 1;
+
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -61,13 +71,46 @@ export default class SurveyTaskStep2Component extends Component {
                             <BootstrapRadio
                                 inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
-                                error={errors.status}
-                                label="Have the Client and Associate Member agreed to meet? (*)"
-                                name="status"
+                                error={errors.wasSurveyConducted}
+                                label="Was there a survey conducted? (*)"
+                                name="wasSurveyConducted"
                                 onChange={onRadioChange}
-                                selectedValue={status}
-                                options={STATUS_CHOICES}
+                                selectedValue={wasSurveyConducted}
+                                options={WAS_SURVEY_CONDUCTED_CHOICES}
                             />
+
+                            {isCancelled &&
+                                <div>
+                                    <BootstrapSingleSelect
+                                        borderColour="border-primary"
+                                        label="Please select why the survey was not conducted? (*)"
+                                        name="noSurveyConductedReason"
+                                        defaultOptionLabel="Please select how you heard about u."
+                                        options={NO_SURVEY_CONDUCTED_REASON_CHOICES}
+                                        value={noSurveyConductedReason}
+                                        error={errors.noSurveyConductedReason}
+                                        onSelectChange={onSelectChange}
+                                    />
+
+                                    {isOtherSelected &&
+                                        <BootstrapInput
+                                            inputClassName="form-control form-control-lg"
+                                            borderColour="border-primary"
+                                            error={errors.noSurveyConductedReasonOther}
+                                            label="Other (*)"
+                                            onChange={onTextChange}
+                                            value={noSurveyConductedReasonOther}
+                                            name="noSurveyConductedReasonOther"
+                                            type="text"
+                                        />
+                                    }
+                                </div>
+                            }
+
+                            {isCompleted &&
+                                <div>
+                                </div>
+                            }
 
                             <BootstrapTextarea
                                 name="comment"
@@ -84,8 +127,8 @@ export default class SurveyTaskStep2Component extends Component {
                         </form>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
-                                <i className="fas fa-check-circle"></i>&nbsp;Save
+                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
+                                Proceed to Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
                             </button>
 
                             <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/7/${id}/step-1`}>
@@ -103,16 +146,16 @@ export default class SurveyTaskStep2Component extends Component {
 }
 
 
-const STATUS_CHOICES = [
+const WAS_SURVEY_CONDUCTED_CHOICES = [
     {
-        id: 'status-m-choice',
-        name: "status",
+        id: 'wasSurveyConducted-m-choice',
+        name: "wasSurveyConducted",
         value: true,
         label: "Yes"
     },{
-        id: 'status-f-choice',
-        name: "status",
+        id: 'wasSurveyConducted-f-choice',
+        name: "wasSurveyConducted",
         value: false,
-        label: "Left Message"
+        label: "No"
     }
 ];
