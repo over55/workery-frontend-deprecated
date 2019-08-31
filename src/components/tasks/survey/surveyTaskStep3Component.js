@@ -162,7 +162,7 @@ export default class SurveyTaskStep3Component extends Component {
                                     <th scope="row" className="bg-light">Note(s):</th>
                                     <td>
                                         <ul>
-                                            <li>Please note that upon submission this order will become completed.</li>
+                                            <li>Please note that upon submission this order will become completed and there will be no more tasks afterwords.</li>
                                         </ul>
                                     </td>
                                 </tr>
