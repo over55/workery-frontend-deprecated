@@ -33,6 +33,12 @@ class SurveyTaskStep2Container extends Component {
             noSurveyConductedReason: localStorageGetIntegerItem("workery-task-7-noSurveyConductedReason"),
             noSurveyConductedReasonOther: localStorage.getItem("workery-task-7-noSurveyConductedReasonOther"),
             comment: localStorage.getItem("workery-task-7-comment"),
+
+            wasJobSatisfactory: localStorageGetBooleanItem("workery-task-7-wasJobSatisfactory"),
+            wasJobFinishedOnTimeAndOnBudget: localStorageGetBooleanItem("workery-task-7-wasJobFinishedOnTimeAndOnBudget"),
+            wasAssociatePunctual: localStorageGetBooleanItem("workery-task-7-wasAssociatePunctual"),
+            wasAssociateProfessional: localStorageGetBooleanItem("workery-task-7-wasAssociateProfessional"),
+            wouldCustomerReferOurOrganization: localStorageGetBooleanItem("workery-task-7-wouldCustomerReferOurOrganization"),
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -182,6 +188,11 @@ class SurveyTaskStep2Container extends Component {
                 noSurveyConductedReason={this.state.noSurveyConductedReason}
                 noSurveyConductedReasonOther={this.state.noSurveyConductedReasonOther}
                 comment={this.state.comment}
+                wasJobSatisfactory={this.state.wasJobSatisfactory}
+                wasJobFinishedOnTimeAndOnBudget={this.state.wasJobFinishedOnTimeAndOnBudget}
+                wasAssociatePunctual={this.state.wasAssociatePunctual}
+                wasAssociateProfessional={this.state.wasAssociateProfessional}
+                wouldCustomerReferOurOrganization={this.state.wouldCustomerReferOurOrganization}
                 isLoading={this.state.isLoading}
                 task={this.props.taskDetail}
                 errors={this.state.errors}

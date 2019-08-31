@@ -180,13 +180,34 @@ export function validateTask7Step2Input(data) {
         const isCompleted = data.wasSurveyConducted === true || data.wasSurveyConducted === "true";
         // const isOtherSelected = data.noSurveyConductedReason === 1;
 
-        if (data.noSurveyConductedReason === undefined || data.noSurveyConductedReason === null || data.noSurveyConductedReason === "" || isNaN(data.noSurveyConductedReason)) {
-            errors.noSurveyConductedReason = 'This field is required';
-        } else {
-            if (data.noSurveyConductedReason === 1) {
-                if (data.noSurveyConductedReasonOther === undefined || data.noSurveyConductedReasonOther === null || data.noSurveyConductedReasonOther === "") {
-                    errors.noSurveyConductedReasonOther = 'This field is required';
+        if (isCancelled) {
+            if (data.noSurveyConductedReason === undefined || data.noSurveyConductedReason === null || data.noSurveyConductedReason === "" || isNaN(data.noSurveyConductedReason)) {
+                errors.noSurveyConductedReason = 'This field is required';
+            } else {
+                if (data.noSurveyConductedReason === 1) {
+                    if (data.noSurveyConductedReasonOther === undefined || data.noSurveyConductedReasonOther === null || data.noSurveyConductedReasonOther === "") {
+                        errors.noSurveyConductedReasonOther = 'This field is required';
+                    }
                 }
+            }
+        }
+
+
+        if (isCompleted) {
+            if (data.wasJobSatisfactory === undefined || data.wasJobSatisfactory === null || data.wasJobSatisfactory === "") {
+                errors.wasJobSatisfactory = 'This field is required';
+            }
+            if (data.wasJobFinishedOnTimeAndOnBudget === undefined || data.wasJobFinishedOnTimeAndOnBudget === null || data.wasJobFinishedOnTimeAndOnBudget === "") {
+                errors.wasJobFinishedOnTimeAndOnBudget = 'This field is required';
+            }
+            if (data.wasAssociatePunctual === undefined || data.wasAssociatePunctual === null || data.wasAssociatePunctual === "") {
+                errors.wasAssociatePunctual = 'This field is required';
+            }
+            if (data.wasAssociateProfessional === undefined || data.wasAssociateProfessional === null || data.wasAssociateProfessional === "") {
+                errors.wasAssociateProfessional = 'This field is required';
+            }
+            if (data.wouldCustomerReferOurOrganization === undefined || data.wouldCustomerReferOurOrganization === null || data.wouldCustomerReferOurOrganization === "") {
+                errors.wouldCustomerReferOurOrganization = 'This field is required';
             }
         }
 

@@ -7,8 +7,9 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 export default class SurveyTaskStep3Component extends Component {
     render() {
         const {
-            wasSurveyConducted, wasSurveyConductedLabel, noSurveyConductedReason, noSurveyConductedReasonLabel, noSurveyConductedReasonOther, comment,
-            id, task, onBack, onClick, errors
+            wasSurveyConducted, wasSurveyConductedLabel,
+            noSurveyConductedReason, noSurveyConductedReasonLabel, noSurveyConductedReasonOther,
+            comment, id, task, onBack, onClick, errors
         } = this.props;
         const hasNoSurvey = wasSurveyConducted === false || wasSurveyConducted === "false";
         const hasSurvey = wasSurveyConducted === true || wasSurveyConducted === "true";
@@ -104,7 +105,6 @@ export default class SurveyTaskStep3Component extends Component {
                                     <th scope="row" className="bg-light">Was there a survey conducted?</th>
                                     <td>{wasSurveyConductedLabel}</td>
                                 </tr>
-
                                 {hasNoSurvey &&
                                     <tr>
                                         <th scope="row" className="bg-light">Reason survey was not conducted?</th>

@@ -13,7 +13,7 @@ import { NO_SURVEY_CONDUCTED_REASON_CHOICES } from "../../../constants/api";
 export default class SurveyTaskStep2Component extends Component {
     render() {
         const {
-            wasSurveyConducted, noSurveyConductedReason, noSurveyConductedReasonOther,
+            wasSurveyConducted, noSurveyConductedReason, noSurveyConductedReasonOther, wasJobSatisfactory, wasJobFinishedOnTimeAndOnBudget, wasAssociatePunctual, wasAssociateProfessional, wouldCustomerReferOurOrganization,
             task, id, comment, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onSelectChange
         } = this.props;
 
@@ -109,6 +109,56 @@ export default class SurveyTaskStep2Component extends Component {
 
                             {isCompleted &&
                                 <div>
+                                    <BootstrapRadio
+                                        inputClassName="form-check-input form-check-input-lg"
+                                        borderColour="border-primary"
+                                        error={errors.wasJobSatisfactory}
+                                        label="Was the quality of the work satisfactory? (*)"
+                                        name="wasJobSatisfactory"
+                                        onChange={onRadioChange}
+                                        selectedValue={wasJobSatisfactory}
+                                        options={WAS_JOB_SATISFACTORY_CHOICES}
+                                    />
+                                    <BootstrapRadio
+                                        inputClassName="form-check-input form-check-input-lg"
+                                        borderColour="border-primary"
+                                        error={errors.wasJobFinishedOnTimeAndOnBudget}
+                                        label="Was the work completed on time and on budget? (*)"
+                                        name="wasJobFinishedOnTimeAndOnBudget"
+                                        onChange={onRadioChange}
+                                        selectedValue={wasJobFinishedOnTimeAndOnBudget}
+                                        options={WAS_JOB_FINISHED_ON_TIME_AND_ON_BUDGET_CHOICES}
+                                    />
+                                    <BootstrapRadio
+                                        inputClassName="form-check-input form-check-input-lg"
+                                        borderColour="border-primary"
+                                        error={errors.wasAssociatePunctual}
+                                        label="Was the Associate Member punctual? (*)"
+                                        name="wasAssociatePunctual"
+                                        onChange={onRadioChange}
+                                        selectedValue={wasAssociatePunctual}
+                                        options={WAS_ASSOCIATE_PUNCTUAL_CHOICES}
+                                    />
+                                    <BootstrapRadio
+                                        inputClassName="form-check-input form-check-input-lg"
+                                        borderColour="border-primary"
+                                        error={errors.wasAssociateProfessional}
+                                        label="Was the Associate Member punctual? (*)"
+                                        name="wasAssociateProfessional"
+                                        onChange={onRadioChange}
+                                        selectedValue={wasAssociateProfessional}
+                                        options={WAS_ASSOCIATE_PROFESSIONAL_CHOICES}
+                                    />
+                                    <BootstrapRadio
+                                        inputClassName="form-check-input form-check-input-lg"
+                                        borderColour="border-primary"
+                                        error={errors.wouldCustomerReferOurOrganization}
+                                        label="Was the Associate Member punctual? (*)"
+                                        name="wouldCustomerReferOurOrganization"
+                                        onChange={onRadioChange}
+                                        selectedValue={wouldCustomerReferOurOrganization}
+                                        options={WOULD_CUSTOMER_REFER_OUR_ORGANIZATIONL_CHOICES}
+                                    />
                                 </div>
                             }
 
@@ -155,6 +205,81 @@ const WAS_SURVEY_CONDUCTED_CHOICES = [
     },{
         id: 'wasSurveyConducted-f-choice',
         name: "wasSurveyConducted",
+        value: false,
+        label: "No"
+    }
+];
+
+
+const WAS_JOB_SATISFACTORY_CHOICES = [
+    {
+        id: 'wasJobSatisfactory-m-choice',
+        name: "wasJobSatisfactory",
+        value: true,
+        label: "Yes"
+    },{
+        id: 'wasJobSatisfactory-f-choice',
+        name: "wasJobSatisfactory",
+        value: false,
+        label: "No"
+    }
+];
+
+
+const WAS_JOB_FINISHED_ON_TIME_AND_ON_BUDGET_CHOICES = [
+    {
+        id: 'wasJobFinishedOnTimeAndOnBudget-m-choice',
+        name: "wasJobFinishedOnTimeAndOnBudget",
+        value: true,
+        label: "Yes"
+    },{
+        id: 'wasJobFinishedOnTimeAndOnBudget-f-choice',
+        name: "wasJobFinishedOnTimeAndOnBudget",
+        value: false,
+        label: "No"
+    }
+];
+
+
+const WAS_ASSOCIATE_PUNCTUAL_CHOICES = [
+    {
+        id: 'wasAssociatePunctual-m-choice',
+        name: "wasAssociatePunctual",
+        value: true,
+        label: "Yes"
+    },{
+        id: 'wasAssociatePunctual-f-choice',
+        name: "wasAssociatePunctual",
+        value: false,
+        label: "No"
+    }
+];
+
+
+const WAS_ASSOCIATE_PROFESSIONAL_CHOICES = [
+    {
+        id: 'wasAssociateProfessional-m-choice',
+        name: "wasAssociateProfessional",
+        value: true,
+        label: "Yes"
+    },{
+        id: 'wasAssociateProfessional-f-choice',
+        name: "wasAssociateProfessional",
+        value: false,
+        label: "No"
+    }
+];
+
+
+const WOULD_CUSTOMER_REFER_OUR_ORGANIZATIONL_CHOICES = [
+    {
+        id: 'wouldCustomerReferOurOrganization-m-choice',
+        name: "wouldCustomerReferOurOrganization",
+        value: true,
+        label: "Yes"
+    },{
+        id: 'wouldCustomerReferOurOrganization-f-choice',
+        name: "wouldCustomerReferOurOrganization",
         value: false,
         label: "No"
     }
