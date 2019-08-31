@@ -145,57 +145,6 @@ export default class OngoingOrderLiteRetrieveComponent extends Component {
 
 
                 { /*
-
-
-
-
-
-
-
-
-
-
-
-
-                                <tr>
-                                    <th scope="row" className="bg-light">Description</th>
-                                    <td>{order.description}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Skill(s)</th>
-                                    <td>
-                                        {order.prettySkillSets && order.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Tags(s)</th>
-                                    <td>
-                                        {order.prettyTags && order.prettyTags.map(
-                                            (tag) => <TagItem tag={tag} key={`tag-${tag.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-                                {order.prettyLatestPendingTask &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Required Task</th>
-                                        <td>
-                                            <Link to={`/task/${order.latestPendingTaskTypeOf}/${order.latestPendingTask}/step-1`} target="_blank">
-                                                {order.prettyLatestPendingTask}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                }
-                                {order.wasSurveyConducted &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Rating</th>
-                                        <td>
-                                            {order.score}/5
-                                        </td>
-                                    </tr>
-                                }
-
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-project-diagram"></i>&nbsp;Functions

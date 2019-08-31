@@ -233,7 +233,7 @@ import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdat
 // Ongoing Work Order
 import OngoingOrderListContainer from "./ongoingOrders/list/ongoingOrderListContainer";
 import OngoingOrderLiteRetrieveContainer from "./ongoingOrders/retrieve/ongoingOrderLiteRetrieveContainer";
-// import OrderFullRetrieveContainer from "./orders/retrieve/orderFullRetrieveContainer";
+import OngoingOrderFullRetrieveContainer from "./ongoingOrders/retrieve/ongoingOrderFullRetrieveContainer";
 // import OrderTaskListContainer from "./orders/retrieve/orderTaskListContainer";
 // import OrderActivitySheetListContainer from "./orders/retrieve/orderActivitySheetListContainer";
 // import OrderCommentContainer from "./orders/retrieve/orderCommentContainer";
@@ -469,6 +469,7 @@ class AppContainer extends React.Component {
                                 { /* WORK ORDER */}
                                 <Route path="/ongoing-orders" exact component={requiresAuth(OngoingOrderListContainer)} />
                                 <Route path="/ongoing-order/:id" exact component={requiresAuth(OngoingOrderLiteRetrieveContainer)} />
+                                <Route path="/ongoing-order/:id/full" exact component={requiresAuth(OngoingOrderFullRetrieveContainer)} />
 
                                 { /*
 
