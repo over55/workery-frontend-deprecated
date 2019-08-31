@@ -294,6 +294,10 @@ export default class AssociateFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">How did they discover us?</th>
                                     <td>{associate.howHearPretty}</td>
                                 </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Job Rating</th>
+                                    <td>{associate.score}/5</td>
+                                </tr>
 
 
 

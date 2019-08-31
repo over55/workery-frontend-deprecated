@@ -54,6 +54,7 @@ class SurveyTaskStep3Container extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onTaskDetailSuccessFetchCallback = this.onTaskDetailSuccessFetchCallback.bind(this);
     }
 
     /**
@@ -79,7 +80,7 @@ class SurveyTaskStep3Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullTaskDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullTaskDetail(this.state.id, this.onTaskDetailSuccessFetchCallback);
     }
 
     componentWillUnmount() {
@@ -96,14 +97,10 @@ class SurveyTaskStep3Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessCallback(taskDetail) {
-        console.log("onSuccessCallback | taskDetail:", taskDetail); // For debugging purposes only.
-        if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
-            if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
-                this.props.setFlashMessage("danger", "Task has been already been closed.");
-                this.props.history.push("/tasks");
-            }
-        }
+    onSuccessCallback(profile) {
+        localStorage.removeItem("workery-task-7-comment");
+        this.props.setFlashMessage("success", "Survey task has been successfully closed.");
+        this.props.history.push("/tasks");
     }
 
     onFailureCallback(errors) {
@@ -115,6 +112,16 @@ class SurveyTaskStep3Container extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onTaskDetailSuccessFetchCallback(taskDetail) {
+        console.log("onTaskDetailSuccessFetchCallback | taskDetail:", taskDetail); // For debugging purposes only.
+        if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
+            if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
+                this.props.setFlashMessage("danger", "Task has been already been closed.");
+                this.props.history.push("/tasks");
+            }
+        }
     }
 
     /**

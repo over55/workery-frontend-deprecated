@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapFiveStarRatingLabel } from "../../bootstrap/bootstrapFiveStarRatingLabel";
 
 
 export default class AssociateLiteRetrieveComponent extends Component {
@@ -105,13 +106,9 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                 }
                                 <div className="col-sm-12 p-0">
                                     <p className="m-0"><strong>Ratings:</strong></p>
-                                    <div className="star-rating" data-rating="4.5">
-                                        <span className="far fa-star" data-rating="1"></span>
-                                        <span className="far fa-star" data-rating="2"></span>
-                                        <span className="far fa-star" data-rating="3"></span>
-                                        <span className="far fa-star" data-rating="4"></span>
-                                        <span className="far fa-star" data-rating="5"></span>
-                                    </div>
+                                    {associate &&
+                                        <BootstrapFiveStarRatingLabel score={associate.score} />
+                                    }
                                 </div>
 
                                 <p class="m-0"><strong>Notes:</strong></p>
