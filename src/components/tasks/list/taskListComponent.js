@@ -210,7 +210,9 @@ function financialExternalLinkFormatter(cell, row){
 
 
 function detailLinkFormatter(cell, row){
-    console.log(row);
+    if (row.typeOf === 3) { // Add code to prevent the deprecated task from being accessible.
+        return "[Disabled]"
+    }
     return (
         <Link to={`/task/${row.typeOf}/${row.id}/step-1`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
