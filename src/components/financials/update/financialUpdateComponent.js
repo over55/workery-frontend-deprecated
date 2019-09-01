@@ -7,6 +7,7 @@ import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
@@ -61,6 +62,7 @@ export default class FinancialUpdateComponent extends Component {
 
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -120,9 +122,9 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.invoiceIds}
-                                label="Invoice ID(s)"
+                                label="Invoice ID(s) (*)"
                                 onChange={onTextChange}
                                 value={invoiceIds}
                                 name="invoiceIds"
@@ -132,13 +134,13 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.visits}
-                                label="# of Visit(s)"
+                                label="# of Visit(s) (*)"
                                 onChange={onTextChange}
                                 value={visits}
                                 name="visits"
-                                type="text"
+                                type="number"
                                 helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 100."
                             />
 
@@ -148,9 +150,9 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.invoiceQuotedLabourAmount}
-                                label="Quoted Labour"
+                                label="Quoted Labour (*)"
                                 onChange={onAmountChange}
                                 value={invoiceQuotedLabourAmount}
                                 name="invoiceQuotedLabourAmount"
@@ -159,13 +161,13 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.invoiceQuotedMaterialAmount}
-                                label="Quoted Materials"
+                                label="Quoted Materials (*)"
                                 onChange={onAmountChange}
                                 value={invoiceQuotedMaterialAmount}
                                 name="invoiceQuotedMaterialAmount"
-                                helpText=""
+                                helpText="If no material costs will occur then please enter zero."
                             />
 
                             <BootstrapCurrencyInput
@@ -186,9 +188,9 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.invoiceLabourAmount}
-                                label="Actual Labour"
+                                label="Actual Labour (*)"
                                 onChange={onAmountChange}
                                 value={invoiceLabourAmount}
                                 name="invoiceLabourAmount"
@@ -197,24 +199,24 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.invoiceMaterialAmount}
-                                label="Actual Materials"
+                                label="Actual Materials (*)"
                                 onChange={onAmountChange}
                                 value={invoiceMaterialAmount}
                                 name="invoiceMaterialAmount"
-                                helpText=""
+                                helpText="If no material costs were incurred then please enter zero."
                             />
 
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.invoiceTaxAmount}
-                                label="Tax"
+                                label="Tax (*)"
                                 onChange={onAmountChange}
                                 value={invoiceTaxAmount}
                                 name="invoiceTaxAmount"
-                                helpText=""
+                                helpText="If no tax was paid, please enter zero."
                             />
 
                             <BootstrapCurrencyInput
@@ -268,9 +270,9 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.invoiceActualServiceFeeAmountPaid}
-                                label="Actual Service Fee Paid"
+                                label="Actual Service Fee Paid (*)"
                                 onChange={onAmountChange}
                                 value={invoiceActualServiceFeeAmountPaid}
                                 name="invoiceActualServiceFeeAmountPaid"

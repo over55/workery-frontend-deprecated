@@ -367,14 +367,14 @@ export function putOrderFinancialDetail(data, onSuccessCallback, onFailureCallba
             device['isAPIRequestRunning'] = false;
             device['errors'] = {};
 
+            // Run our success callback function.
+            onSuccessCallback(device);
+
             // Update the global state of the application to store our
             // user device for the application.
             store.dispatch(
                 setOrderDetailSuccess(device)
             );
-
-            // Run our success callback function.
-            onSuccessCallback(device);
 
         }).catch( (exception) => {
             if (exception.response) {

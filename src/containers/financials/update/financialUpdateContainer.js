@@ -5,10 +5,9 @@ import * as moment from 'moment';
 
 import FinancialUpdateComponent from "../../../components/financials/update/financialUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { putOrderFinancialDetail } from '../../../actions/orderActions';
-import { pullServiceFeeList, getServiceFeeReactSelectOptions } from '../../../actions/serviceFeeActions';
-import { validateFinancialUpdateInput } from '../../../validators/orderValidator';
+import { validateFinancialUpdateInput } from "../../../validators/orderValidator";
+import { pullServiceFeeList, getServiceFeeReactSelectOptions, getPercentValueForServiceFeeId } from '../../../actions/serviceFeeActions';
+import { putOrderFinancialDetail } from "../../../actions/orderActions";
 
 
 class FinancialUpdateContainer extends Component {
@@ -24,6 +23,7 @@ class FinancialUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // Update state.
         this.state = {
             errors: {},
             isLoading: false,
@@ -45,17 +45,61 @@ class FinancialUpdateContainer extends Component {
             visits: parseInt(this.props.orderDetail.visits),
         }
 
-        this.getPostData = this.getPostData.bind(this);
+        this.performCalculation = this.performCalculation.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onAmountChange = this.onAmountChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
         this.onInvoiceServiceFeePaymentDate = this.onInvoiceServiceFeePaymentDate.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
-        this.onSuccessfulTagsFetchCallback = this.onSuccessfulTagsFetchCallback.bind(this);
-        this.onSuccessfulSkillSetsFetchCallback = this.onSuccessfulSkillSetsFetchCallback.bind(this);
+    }
+
+    /**
+     *  Utility function calculates our read-only form fields.
+     */
+    performCalculation() {
+        // Get the variables we are going to use to perform our calculations.
+        const {
+            invoiceQuotedMaterialAmount,
+            invoiceQuotedLabourAmount,
+            invoiceLabourAmount,
+            invoiceMaterialAmount,
+            invoiceTaxAmount,
+            invoiceServiceFee,
+            invoiceActualServiceFeeAmountPaid
+        } = this.state;
+
+        /*
+         *  Compute the total quoted amount.
+         */
+        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount;
+
+        /*
+         *  Compute the total amount.
+         */
+        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
+
+        /*
+         *  Compute the service fee based on the labour.
+         */
+        const serviceFeePercent = getPercentValueForServiceFeeId(this.props.serviceFeeList, invoiceServiceFee);
+        const invoiceServiceFeeAmount = invoiceLabourAmount * (serviceFeePercent/100);
+
+        /*
+         *  Compute balance owing.
+         */
+        const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
+
+        // Update our state.
+        this.setState({
+            invoiceTotalQuoteAmount: invoiceTotalQuoteAmount,
+            invoiceTotalAmount: invoiceTotalAmount,
+            invoiceBalanceOwingAmount: invoiceBalanceOwingAmount,
+            invoiceServiceFeeAmount: invoiceServiceFeeAmount,
+        });
     }
 
     /**
@@ -66,29 +110,16 @@ class FinancialUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // Map the fields
-        postData.state = this.state.paymentStatus;
+        postData.task_item = this.state.id;
+
+        const completionDateMoment = moment(this.state.completionDate);
+        postData.completionDate = completionDateMoment.format("YYYY-MM-DD")
 
         const invoiceDateMoment = moment(this.state.invoiceDate);
-        postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD");
+        postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD")
 
         const invoiceServiceFeePaymentDateMoment = moment(this.state.invoiceServiceFeePaymentDate);
-        postData.invoiceServiceFeePaymentDate = invoiceServiceFeePaymentDateMoment.format("YYYY-MM-DD");
-
-        /*
-         *  Compute the total quoted amount.
-         */
-        postData.invoiceTotalQuoteAmount = this.state.invoiceQuotedMaterialAmount + this.state.invoiceQuotedLabourAmount;
-
-        /*
-         *  Compute the total amount.
-         */
-        postData.invoiceTotalAmount = this.state.invoiceLabourAmount + this.state.invoiceMaterialAmount + this.state.invoiceTaxAmount;
-
-        /*
-         *  Compute balance owing.
-         */
-        postData.invoiceBalanceOwingAmount = this.state.invoiceServiceFeeAmount - this.state.invoiceActualServiceFeeAmountPaid;
+        postData.invoiceServiceFeePaymentDate = invoiceServiceFeePaymentDateMoment.format("YYYY-MM-DD")
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -100,27 +131,38 @@ class FinancialUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    componentDidMount() {
-        window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullServiceFeeList(1, 1000);
-    }
+     componentDidMount() {
+         window.scrollTo(0, 0);  // Start the page at the top of the page.
+         this.props.pullServiceFeeList(1, 1000);
+         this.performCalculation();
+     }
 
-    componentWillUnmount() {
-        // This code will fix the "ReactJS & Redux: Can't perform a React state
-        // update on an unmounted component" issue as explained in:
-        // https://stackoverflow.com/a/53829700
-        this.setState = (state,callback)=>{
-            return;
-        };
-    }
+     componentWillUnmount() {
+         // This code will fix the "ReactJS & Redux: Can't perform a React state
+         // update on an unmounted component" issue as explained in:
+         // https://stackoverflow.com/a/53829700
+         this.setState = (state,callback)=>{
+             return;
+         };
+     }
 
     /**
      *  API callback functions
      *------------------------------------------------------------
      */
 
+    onTaskDetailSuccessFetchCallback(taskDetail) {
+        console.log("onTaskDetailSuccessFetchCallback | taskDetail:", taskDetail); // For debugging purposes only.
+        if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
+            if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
+                this.props.setFlashMessage("danger", "Task has been already been closed.");
+                this.props.history.push("/tasks");
+            }
+        }
+    }
+
     onSuccessfulSubmissionCallback(order) {
-        this.setState({ errors: {}, isLoading: true, })
+        this.setState({ errors: {}, isLoading: false, })
         this.props.setFlashMessage("success", "Order has been successfully updated.");
         this.props.history.push("/financial/"+this.state.id);
     }
@@ -128,21 +170,13 @@ class FinancialUpdateContainer extends Component {
     onFailedSubmissionCallback(errors) {
         this.setState({
             errors: errors
-        })
+        });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
-    }
-
-    onSuccessfulSkillSetsFetchCallback(skillSets) {
-        this.setState({ isSkillSetsLoading: false, });
-    }
-
-    onSuccessfulTagsFetchCallback(tags) {
-        this.setState({ isTagsLoading: false, });
     }
 
     /**
@@ -160,15 +194,20 @@ class FinancialUpdateContainer extends Component {
      */
     onAmountChange(e) {
         const amount = e.target.value.replace("$","").replace(",", "");
-        this.setState({
-            [e.target.name]: parseFloat(amount),
-        });
+        this.setState(
+            { [e.target.name]: parseFloat(amount), }, ()=>{
+                // Update our form with our latest calculations. Since all our
+                // currency fields are to be taken into account, then generally
+                // run this function for all modifications.
+                this.performCalculation();
+            }
+        );
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-client-"+[e.target.name];
-        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-task-6-"+[e.target.name];
+        const storageLabelKey =  "workery-task-6-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -177,8 +216,6 @@ class FinancialUpdateContainer extends Component {
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
         this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
 
         // For the debugging purposes only.
         console.log({
@@ -189,6 +226,19 @@ class FinancialUpdateContainer extends Component {
             "STORAGE-LABEL-KEY": storeLabelKey,
             "STORAGE-LABEL": label,
         });
+    }
+
+    onSelectChange(option) {
+        console.log(option);
+        const optionKey = [option.selectName]+"Option";
+        this.setState(
+            { [option.selectName]: option.value, [optionKey]: option, },
+            ()=>{
+                // Since the only dropdown field we are using affects calculations,
+                // therefore perform our calculation.
+                this.performCalculation()
+            }
+        );
     }
 
     onInvoiceDateChange(dateObj) {
@@ -208,10 +258,15 @@ class FinancialUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putOrderFinancialDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
+            this.setState(
+                { isLoading: true, errors: {} },
+                ()=>{
+                    this.props.putOrderFinancialDetail(
+                        this.getPostData(),
+                        this.onSuccessfulSubmissionCallback,
+                        this.onFailedSubmissionCallback
+                    );
+                }
             );
 
         // CASE 2 OF 2: Validation was a failure.
@@ -231,26 +286,9 @@ class FinancialUpdateContainer extends Component {
             paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
             invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
-            visits,
+            visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount
         } = this.state;
-
-        const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList);
-
-        /*
-         *  Compute the total quoted amount.
-         */
-        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount;
-
-        /*
-         *  Compute the total amount.
-         */
-        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
-
-        /*
-         *  Compute balance owing.
-         */
-        const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
-
+        const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList, "invoiceServiceFee");
         return (
             <FinancialUpdateComponent
                 // Text
@@ -273,6 +311,7 @@ class FinancialUpdateContainer extends Component {
                 // Select
                 invoiceServiceFee={invoiceServiceFee}
                 invoiceServiceFeeOptions={invoiceServiceFeeOptions}
+                onSelectChange={this.onSelectChange}
 
                 // Radio GUI
                 paymentStatus={paymentStatus}
@@ -298,8 +337,6 @@ class FinancialUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        skillSetList: store.skillSetListState,
-        tagList: store.tagListState,
         orderDetail: store.orderDetailState,
         serviceFeeList: store.serviceFeeListState,
     };
@@ -310,14 +347,14 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putOrderFinancialDetail: (data, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                putOrderFinancialDetail(data, onSuccessCallback, onFailureCallback)
-            )
-        },
         pullServiceFeeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullServiceFeeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        putOrderFinancialDetail: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                putOrderFinancialDetail(postData, onSuccessCallback, onFailureCallback)
             )
         },
     }
