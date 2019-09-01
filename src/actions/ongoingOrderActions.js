@@ -16,7 +16,7 @@ import {
     // WORKERY_ONGOING_ORDER_CLOSE_OPERATION_API_ENDPOINT,
     // WORKERY_ONGOING_ORDER_REOPEN_OPERATION_API_ENDPOINT,
     // WORKERY_ONGOING_ORDER_POSTPONE_OPERATION_API_ENDPOINT,
-    WORKERY_ONGOING_ORDER_LITE_UPDATE_API_ENDPOINT,
+    WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_ENDPOINT,
     // WORKERY_ONGOING_ORDER_FINANCIAL_UPDATE_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
@@ -287,7 +287,7 @@ export function putOngoingOrderLiteDetail(data, onSuccessCallback, onFailureCall
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ONGOING_ORDER_LITE_UPDATE_API_ENDPOINT.replace("XXX", data.id), buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_ENDPOINT.replace("XXX", data.id), buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             let device = camelizeKeys(responseData);

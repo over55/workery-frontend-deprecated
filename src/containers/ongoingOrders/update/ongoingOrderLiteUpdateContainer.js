@@ -74,8 +74,8 @@ class OngoingOrderLiteUpdateContainer extends Component {
 
     onSuccessfulSubmissionCallback(order) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "OngoingOrder has been successfully updated.");
-        this.props.history.push("/order/"+this.state.id+"/full");
+        this.props.setFlashMessage("success", "Ongoing Order has been successfully updated.");
+        this.props.history.push("/ongoing-order/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {

@@ -46,10 +46,6 @@ export default class OngoingOrderLiteUpdateComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-graduation-cap"></i>&nbsp;Skills and Description
-                            </p>
-
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="How did you hear about us? (*)"

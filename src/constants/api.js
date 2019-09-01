@@ -101,7 +101,7 @@ export const WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/17/csv
 export const WORKERY_ONGOING_ORDER_LIST_API_ENDPOINT = '/ongoing-orders';
 export const WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT = '/ongoing-order/';
 export const WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT = '/ongoing-order-comments';
-export const WORKERY_ONGOING_ORDER_LITE_UPDATE_API_ENDPOINT = '/ongoing-order/XXX/lite';
+export const WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_ENDPOINT = '/v2/ongoing-order/XXX/';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';
