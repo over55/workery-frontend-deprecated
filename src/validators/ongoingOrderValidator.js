@@ -8,8 +8,12 @@ import {
 } from '../constants/api';
 
 
-export function validateLiteUpdateInput(data) {
+export function validateUpdateInput(data) {
     let errors = {};
+
+    if (data.status === undefined || data.status === null || data.status === "") {
+        errors.status = 'This field is required';
+    }
 
     return {
         errors,

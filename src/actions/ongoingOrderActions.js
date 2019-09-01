@@ -269,7 +269,7 @@ export function pullOngoingOrderDetail(id, onSuccessCallback, onFailureCallback)
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putOngoingOrderLiteDetail(data, onSuccessCallback, onFailureCallback) {
+export function putOngoingOrderDetail(data, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(

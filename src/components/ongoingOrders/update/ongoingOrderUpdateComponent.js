@@ -6,7 +6,7 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 
 
-export default class OngoingOrderLiteUpdateComponent extends Component {
+export default class OngoingOrderUpdateComponent extends Component {
     render() {
         const {
             status, id, isLoading, errors,

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OngoingOrderLiteUpdateComponent from "../../../components/ongoingOrders/update/ongoingOrderLiteUpdateComponent";
+import OngoingOrderUpdateComponent from "../../../components/ongoingOrders/update/ongoingOrderUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateLiteUpdateInput } from "../../../validators/orderValidator";
-import { putOngoingOrderLiteDetail } from '../../../actions/ongoingOrderActions';
+import { validateUpdateInput } from "../../../validators/ongoingOrderValidator";
+import { putOngoingOrderDetail } from '../../../actions/ongoingOrderActions';
 
 
 
-class OngoingOrderLiteUpdateContainer extends Component {
+class OngoingOrderUpdateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -108,11 +108,11 @@ class OngoingOrderLiteUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateLiteUpdateInput(this.state);
+        const { errors, isValid } = validateUpdateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putOngoingOrderLiteDetail(
+            this.props.putOngoingOrderDetail(
                 this.getPostData(),
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
@@ -133,7 +133,7 @@ class OngoingOrderLiteUpdateContainer extends Component {
         const { status, id, errors, isLoading } = this.state;
 
         return (
-            <OngoingOrderLiteUpdateComponent
+            <OngoingOrderUpdateComponent
                 status={status}
                 id={id}
                 isLoading={isLoading}
@@ -159,9 +159,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putOngoingOrderLiteDetail: (data, onSuccessCallback, onFailureCallback) => {
+        putOngoingOrderDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                putOngoingOrderLiteDetail(data, onSuccessCallback, onFailureCallback)
+                putOngoingOrderDetail(data, onSuccessCallback, onFailureCallback)
             )
         },
     }
@@ -171,4 +171,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OngoingOrderLiteUpdateContainer);
+)(OngoingOrderUpdateContainer);
