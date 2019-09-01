@@ -17,9 +17,9 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class OngoingOrderFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, order, errors, flashMessage } = this.props;
-        const isCancelled = order.state === "cancelled";
-        const isCompleted = order.state === "completed_and_unpaid" || order.state === "completed_and_paid" || isCancelled;
+        const { id, ongoingOrder, errors, flashMessage } = this.props;
+        const isCancelled = ongoingOrder.state === "cancelled";
+        const isCompleted = ongoingOrder.state === "completed_and_unpaid" || ongoingOrder.state === "completed_and_paid" || isCancelled;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -28,7 +28,7 @@ export default class OngoingOrderFullRetrieveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-undo-alt"></i>&nbsp;Ongoing Orders</Link>
+                            <Link to="/ongoing-orders"><i className="fas fa-undo-alt"></i>&nbsp;Ongoing Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-undo-alt"></i>&nbsp;Ongoing Order # {id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
@@ -79,48 +79,56 @@ export default class OngoingOrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Ongoing Order #</th>
-                                    <td>{order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
+                                    <td>{ongoingOrder.id && ongoingOrder.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Status</th>
+                                    <td>{ongoingOrder.prettyStatus}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Job Type</th>
+                                    <td>{ongoingOrder.prettyTypeOf}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Full Name</th>
                                     <td>
-                                        <Link to={`/client/${order.customer}`} target="_blank">
-                                            {order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/client/${ongoingOrder.customer}`} target="_blank">
+                                            {ongoingOrder.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
-                                {order.customerFullName && order.customerTelephone &&
+                                {ongoingOrder.customerFullName && ongoingOrder.customerTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Client {order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order.customerTelephone}</td>
+                                        <th scope="row" className="bg-light">Client {ongoingOrder.customerPrettyTelephoneTypeOf} #</th>
+                                        <td>{ongoingOrder.customerTelephone}</td>
                                     </tr>
                                 }
-                                {order.customerFullName && order.customerOtherTelephone &&
+                                {ongoingOrder.customerFullName && ongoingOrder.customerOtherTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Client Other {order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order.customerOtherTelephone}</td>
+                                        <th scope="row" className="bg-light">Client Other {ongoingOrder.customerPrettyTelephoneTypeOf} #</th>
+                                        <td>{ongoingOrder.customerOtherTelephone}</td>
                                     </tr>
                                 }
-                                {order.associateFullName && order.associateFullName &&
+                                {ongoingOrder.associateFullName && ongoingOrder.associateFullName &&
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
                                         <td>
-                                            <Link to={`/associate/${order.associate}`} target="_blank">
-                                                {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/associate/${ongoingOrder.associate}`} target="_blank">
+                                                {ongoingOrder.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                 }
-                                {order.associateFullName && order.associateTelephone &&
+                                {ongoingOrder.associateFullName && ongoingOrder.associateTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">{order.associatePrettyTelephoneTypeOf} #</th>
-                                        <td>{order.associateTelephone}</td>
+                                        <th scope="row" className="bg-light">{ongoingOrder.associatePrettyTelephoneTypeOf} #</th>
+                                        <td>{ongoingOrder.associateTelephone}</td>
                                     </tr>
                                 }
-                                {order.associateFullName && order.associateOtherTelephone &&
+                                {ongoingOrder.associateFullName && ongoingOrder.associateOtherTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Other {order.associatePrettyTelephoneTypeOf} #</th>
-                                        <td>{order.associateOtherTelephone}</td>
+                                        <th scope="row" className="bg-light">Other {ongoingOrder.associatePrettyTelephoneTypeOf} #</th>
+                                        <td>{ongoingOrder.associateOtherTelephone}</td>
                                     </tr>
                                 }
 
@@ -133,23 +141,23 @@ export default class OngoingOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Created at</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{order.createdAt}</Moment>
+                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{ongoingOrder.createdAt}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created by</th>
-                                    <td>{order.createdBy}</td>
+                                    <td>{ongoingOrder.createdBy}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified at</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{order.lastModifiedAt}</Moment>
+                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{ongoingOrder.lastModifiedAt}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified by</th>
                                     <td>
-                                        {order.lastModifiedBy}
+                                        {ongoingOrder.lastModifiedBy}
                                     </td>
                                 </tr>
 

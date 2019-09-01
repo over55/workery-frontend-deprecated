@@ -82,11 +82,11 @@ class OngoingOrderFullRetrieveContainer extends Component {
      */
 
     render() {
-        const order = this.props.orderDetail ? this.props.orderDetail : {};
+        const ongoingOrder = this.props.ongoingOrderDetail ? this.props.ongoingOrderDetail : {};
         return (
             <OngoingOrderFullRetrieveComponent
                 id={this.state.id}
-                order={order}
+                ongoingOrder={ongoingOrder}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -97,7 +97,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        orderDetail: store.orderDetailState,
+        ongoingOrderDetail: store.ongoingOrderDetailState,
     };
 }
 
