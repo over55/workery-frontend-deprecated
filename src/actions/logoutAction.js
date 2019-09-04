@@ -58,18 +58,16 @@ export function postLogout(user) {
             baseURL: getAPIBaseURL(),
             headers: {
                 'Authorization': "JWT " + user.token,
-                'Content-Type': 'application/msgpack;',
-                'Accept': 'application/msgpack',
+                'Content-Type': 'application/json;',
+                'Accept': 'application/json',
             },
-            responseType: 'arraybuffer'
         };
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode({
+        const cred = {
             token: user.token
-        });
+        };
 
-        axios.post(WORKERY_LOGOUT_API_ENDPOINT, buffer, config).then( (successResponse) => {
+        axios.post(WORKERY_LOGOUT_API_ENDPOINT, cred, config).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 
