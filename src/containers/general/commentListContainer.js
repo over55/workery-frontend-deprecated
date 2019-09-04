@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
 import CommentListComponent from "../../components/general/commentListComponent";
-import { pullCommentList } from "../../actions/commentActions";
+import { pullOrderCommentList } from "../../actions/orderCommentActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../constants/api";
 
 
@@ -45,7 +45,7 @@ class CommentListContainer extends Component {
         // when the page loads the API call does not get made! We need to do it
         // here when the component finished loading. We only write this code
         // here if no filter was selected in the table.
-        this.props.pullCommentList(this.state.page, this.state.sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        this.props.pullOrderCommentList(this.state.page, this.state.sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     componentWillUnmount() {
@@ -110,7 +110,7 @@ class CommentListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullCommentList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderCommentList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -120,7 +120,7 @@ class CommentListContainer extends Component {
             this.setState(
                 { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullCommentList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderCommentList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -137,7 +137,7 @@ class CommentListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullCommentList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderCommentList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -157,7 +157,7 @@ class CommentListContainer extends Component {
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-                commentList={this.props.commentList}
+                commentList={this.props.orderCommentList}
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
@@ -170,15 +170,15 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        commentList: store.commentListState,
+        orderCommentList: store.orderCommentListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullCommentList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullOrderCommentList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullCommentList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullOrderCommentList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

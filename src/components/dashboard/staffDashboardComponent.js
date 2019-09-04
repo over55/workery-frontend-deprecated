@@ -239,7 +239,6 @@ function jobHistoryLinkFormatter(cell, row){
 }
 
 
-
 class AwayLogComponent extends Component {
     render() {
         const { awayLog } = this.props
@@ -496,11 +495,16 @@ class CommentHistoryComponent extends Component {
                 dataField: 'about',
                 text: 'Job #',
                 sort: false,
-                formatter: jobHistoryIDFormatter
+                formatter: commentAboutFormatter
             },{
                 dataField: 'text',
                 text: 'Comment',
                 sort: false
+            },{
+                dataField: 'about',
+                text: '',
+                sort: false,
+                formatter: commentLinkFormatter
             }];
 
             return (
@@ -528,17 +532,18 @@ class CommentHistoryComponent extends Component {
 }
 
 
-function commentHistoryJobLinkFormatter(cell, row){
+function commentAboutFormatter(cell, row){
     return (
-        <Link to={`/en/jobs/summary/detail/${row.about}/lite/`}>
-            {row.about}
+        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+            {row && row.about.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
         </Link>
     )
 }
 
-function commentHistoryLinkFormatter(cell, row){
+
+function commentLinkFormatter(cell, row){
     return (
-        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+        <Link to={`/order/${row.about}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )

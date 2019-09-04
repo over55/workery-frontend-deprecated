@@ -32,57 +32,17 @@ class RemoteListComponent extends Component {
             onTableChange, isLoading
         } = this.props;
 
-        const selectOptions = {
-            "new": 'New',
-            "declined": 'Declined',
-            "pending": 'Pending',
-            "cancelled": 'Cancelled',
-            "ongoing": 'Ongoing',
-            "in_progress": 'In-progress',
-            "completed_and_unpaid": 'Completed and Unpaid',
-            "completed_and_paid": 'Completed and Paid',
-            "archived": 'Archived',
-        };
-
         const columns = [{
-            dataField: 'typeOf',
-            text: '',
-            sort: false,
-            formatter: iconFormatter
-        },{
-            dataField: 'id',
+            dataField: 'about',
             text: 'Job #',
             sort: true,
             formatter: idFormatter,
         },{
-            dataField: 'customerName',
-            text: 'Client',
-            sort: true
-        },{
-            dataField: 'associateName',
-            text: 'Associate',
+            dataField: 'text',
+            text: 'Text',
             sort: true,
-            formatter: associateNameFormatter,
         },{
-            dataField: 'assignmentDate',
-            text: 'Assign Date',
-            sort: true,
-            formatter: assignmentDateFormatter,
-        },{
-            dataField: 'startDate',
-            text: 'Start Date',
-            sort: true,
-            formatter: startDateFormatter,
-        },{
-            dataField: 'state',
-            text: 'Status',
-            sort: false,
-            filter: selectFilter({
-                options: selectOptions
-            }),
-            formatter: statusFormatter
-        },{
-            dataField: 'slug',
+            dataField: 'about',
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
@@ -159,39 +119,13 @@ function iconFormatter(cell, row){
 
 function idFormatter(cell, row){
     return (
-        row.id && row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+        row.about && row.about.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
     );
 }
-
-
-function associateNameFormatter(cell, row){
-    if (row.associateName === null || row.associateName === undefined || row.associateName === "None") { return "-"; }
-    return (
-        <Link to={`/associate/${row.associate}`} target="_blank">
-            {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
-        </Link>
-    );
-}
-
-
-function statusFormatter(cell, row){
-    return row.prettyState;
-}
-
-
-function startDateFormatter(cell, row){
-    return row.startDate ? <Moment format="YYYY/MM/DD">{row.startDate}</Moment> : "-";
-}
-
-
-function assignmentDateFormatter(cell, row){
-    return row.assignmentDate ? <Moment format="YYYY/MM/DD">{row.assignmentDate}</Moment> : "-";
-}
-
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.id}`}>
+        <Link to={`/order/${row.about}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
@@ -229,7 +163,8 @@ class CommentListComponent extends Component {
 
                 <h1><i className="fas fa-wrench"></i>&nbsp;Comments</h1>
 
-                <div className="row">
+
+                { /*<div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
                             <div className="col-sm-12 placeholder">
@@ -243,7 +178,7 @@ class CommentListComponent extends Component {
                             </div>
                         </section>
                     </div>
-                </div>
+                </div>*/}
 
                 <div className="row">
                     <div className="col-md-12">
