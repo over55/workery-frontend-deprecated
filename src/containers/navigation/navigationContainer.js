@@ -76,7 +76,7 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
     },{
         id: "full-partners",
         icon: "handshake",
-        title: "Parnters",
+        title: "Partners",
         url: "/partners"
     },{
         id: "full-financials",
