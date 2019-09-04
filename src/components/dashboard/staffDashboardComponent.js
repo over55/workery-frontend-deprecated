@@ -387,7 +387,7 @@ function associateStartDateFormatter(cell, row){
     if (row.startDate === undefined || row.startDate === null) {
         return "-";
     } else {
-        return row.startDate
+        return <Moment format="YYYY/MM/DD">{row.startDate}</Moment>;
     }
 }
 
@@ -396,7 +396,7 @@ function associateUntilDateFormatter(cell, row){
     if (row.untilDate === undefined || row.untilDate === null) {
         return "Further notice.";
     } else {
-        return row.untilDate;
+        return <Moment format="YYYY/MM/DD">{row.untilDate}</Moment>;
     }
 }
 
@@ -496,7 +496,7 @@ class CommentHistoryComponent extends Component {
                 dataField: 'about',
                 text: 'Job #',
                 sort: false,
-                formatter: commentHistoryJobLinkFormatter,
+                formatter: jobHistoryIDFormatter
             },{
                 dataField: 'text',
                 text: 'Comment',
