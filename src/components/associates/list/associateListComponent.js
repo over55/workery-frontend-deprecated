@@ -11,6 +11,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import { FRONTLINE_GROUP_ID } from "../../../constants/api";
 
 
 const customTotal = (from, to, size) => (
@@ -202,10 +203,11 @@ class AssociateListComponent extends Component {
             associateList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, user
         } = this.props;
 
         const associates = associateList.results ? associateList.results : [];
+        const isFrontlineStaffUser = user.groupId === FRONTLINE_GROUP_ID;
 
         return (
             <div>
@@ -230,12 +232,25 @@ class AssociateListComponent extends Component {
                         <section className="row text-center placeholders">
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/associates/add/step-1" className="d-block link-ndecor" title="Associates">
-                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
-                                    </Link>
+                                    {isFrontlineStaffUser
+                                        ? <div><span className="r-circle"><i className="fas fa-plus fa-3x"></i></span></div>
+                                        : <Link to="/associates/add/step-1" className="d-block link-ndecor" title="Associates">
+                                            <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
+                                        </Link>
+                                    }
                                 </div>
-                                <h4>Add</h4>
-                                <div className="text-muted">Add Associates</div>
+                                <h4>
+                                    {isFrontlineStaffUser
+                                        ?<div><i className="fas fa-lock"></i>&nbsp;Add</div>
+                                        :<div>Add</div>
+                                    }
+                                </h4>
+                                <div className="text-muted">
+                                    {isFrontlineStaffUser
+                                        ? "Locked"
+                                        : "Add Associates"
+                                    }
+                                    </div>
                             </div>
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
