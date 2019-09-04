@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
+import Scroll from 'react-scroll';
 
 import StaffSearchResultComponent from "../../../components/staff/search/staffSearchResultComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
@@ -17,13 +18,34 @@ class StaffSearchResultContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        const search = localStorageGetObjectItem('workery-search-staff-details');
+        this.state = {
+            // Pagination
+            page: 1,
+            sizePerPage: 100,
+            totalSize: 0,
+
+            // Everything else
+            isLoading: true,
+            search: search,
+        }
+        this.getParametersMapFromState = this.getParametersMapFromState.bind(this);
+        this.onStaffClick = this.onStaffClick.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
+    }
+
+    getParametersMapFromState() {
         const search = localStorageGetObjectItem('workery-search-staff-details');
         const parametersMap = new Map();
         if (search.keyword !== undefined && search.keyword !== "") {
             parametersMap.set("search", search.keyword);
         }
-        if (search.firstName !== undefined && search.firstName !== "") {
-            parametersMap.set("given_name", search.firstName);
+        if (search.givenName !== undefined && search.givenName !== "") {
+            parametersMap.set("given_name", search.givenName);
         }
         if (search.lastName !== undefined && search.lastName !== "") {
             parametersMap.set("last_name", search.lastName);
@@ -35,23 +57,7 @@ class StaffSearchResultContainer extends Component {
             parametersMap.set("email", search.email);
         }
         console.log("FILTERING", parametersMap); // For debugging purposes only.
-
-        this.state = {
-            // Pagination
-            page: 1,
-            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
-            totalSize: 0,
-
-            // Sorting, Filtering, & Searching
-            parametersMap: parametersMap,
-
-            // Everything else
-            isLoading: true,
-            search: search,
-        }
-        this.onTableChange = this.onTableChange.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        return parametersMap;
     }
 
     /**
@@ -61,6 +67,15 @@ class StaffSearchResultContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        this.setState(
+            { parametersMap: this.getParametersMapFromState(), isLoading: true, },
+            ()=>{
+                // STEP 3:
+                // SUBMIT TO OUR API.
+                this.props.pullStaffList(this.state.page, this.state.sizePerPage, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+            }
+        );
     }
 
     componentWillUnmount() {
@@ -80,8 +95,8 @@ class StaffSearchResultContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(response) {
-        console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
                 page: response.page,
@@ -89,15 +104,23 @@ class StaffSearchResultContainer extends Component {
                 isLoading: false,
             },
             ()=>{
-                console.log("onSuccessfulSubmissionCallback | Fetched:",response); // For debugging purposes only.
-                console.log("onSuccessfulSubmissionCallback | State (Post-Fetch):", this.state);
+                console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
+                console.log("onSuccessCallback | State (Post-Fetch):", this.state);
             }
         )
     }
 
-    onFailedSubmissionCallback(errors) {
-        console.log(errors);
-        this.setState({ isLoading: false });
+    onFailureCallback(errors) {
+        this.setState({
+            errors: errors,
+            isLoading: false
+        })
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
     }
 
     /**
@@ -105,63 +128,42 @@ class StaffSearchResultContainer extends Component {
      *------------------------------------------------------------
      */
 
-    /**
-     *  Function takes the user interactions made with the table and perform
-     *  remote API calls to update the table based on user selection.
-     */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
-        // Copy the `parametersMap` that we already have.
-        var parametersMap = this.state.parametersMap;
-
-        if (type === "sort") {
-            console.log(type, sortField, sortOrder); // For debugging purposes only.
-
-            if (sortOrder === "asc") {
-                parametersMap.set('o', decamelize(sortField));
+    onStaffClick(e, staffId, staffGivenName, staffLastName) {
+        this.setState(
+            { isLoading: true },
+            ()=>{
+                this.props.history.push("/staff/"+staffId+"");
             }
-            if (sortOrder === "desc") {
-                parametersMap.set('o', "-"+decamelize(sortField));
-            }
-
-            this.setState(
-                { parametersMap: parametersMap, isLoading: true, },
-                ()=>{
-                    // STEP 3:
-                    // SUBMIT TO OUR API.
-                    this.props.pullStaffList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
-
-        } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
-
-            this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
-                ()=>{
-                    this.props.pullStaffList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
-
-        } else if (type === "filter") {
-            console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
-            } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
-            }
-            this.setState(
-                { parametersMap: parametersMap, isLoading: true, },
-                ()=>{
-                    // STEP 3:
-                    // SUBMIT TO OUR API.
-                    this.props.pullStaffList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
-        }else {
-            alert("Unsupported feature detected!!"+type);
-        }
+        );
     }
+
+    onNextClick(e) {
+        const page = this.state.page + 1;
+        this.setState(
+            {
+                page: page,
+                isLoading: true,
+            },
+            ()=>{
+                this.props.pullStaffList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+            }
+        )
+    }
+
+    onPreviousClick(e) {
+        const page = this.state.page - 1;
+        this.setState(
+            {
+                page: page,
+                isLoading: true,
+            },
+            ()=>{
+                this.props.pullStaffList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+            }
+        )
+    }
+
+
 
     /**
      *  Main render function
@@ -169,16 +171,23 @@ class StaffSearchResultContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading } = this.state;
+        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
+        const staff = (this.props.staffList && this.props.staffList.results) ? this.props.staffList.results : [];
+        const hasNext = this.props.staffList.next !== null;
+        const hasPrevious = this.props.staffList.previous !== null;
         return (
             <StaffSearchResultComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-                staffList={this.props.staffList}
-                onTableChange={this.onTableChange}
-                flashMessage={this.props.flashMessage}
+                staff={staff}
                 isLoading={isLoading}
+                errors={errors}
+                onStaffClick={this.onStaffClick}
+                hasNext={hasNext}
+                onNextClick={this.onNextClick}
+                hasPrevious={hasPrevious}
+                onPreviousClick={this.onPreviousClick}
             />
         );
     }
