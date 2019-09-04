@@ -313,7 +313,7 @@ class NavigationContainer extends React.Component {
 		    {isAuthenticated &&
                 <div>
                     <header className="top-navbar navbar navbar-dark fixed-top bg-dark justify-content-between">
-                        <Link className="navbar-brand" to="/">
+                        <Link className="navbar-brand" to="/dashboard">
                             <img className="img-fluid" src="/img/compressed-logo.png" alt="Workery" width="200px" />
                         </Link>
                         <ul className="navbar-nav flex-row">
