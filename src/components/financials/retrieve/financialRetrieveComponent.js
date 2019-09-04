@@ -161,6 +161,15 @@ export default class FinancialRetrieveComponent extends Component {
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" className="bg-light">Service Fee Rate</th>
+                                    <td>
+                                        {order.prettyInvoiceServiceFee
+                                            ?order.prettyInvoiceServiceFee
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row" className="bg-light">Service Fee</th>
                                     <td>
                                         {order.invoiceServiceFeeAmount
