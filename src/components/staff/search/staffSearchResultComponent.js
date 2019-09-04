@@ -32,7 +32,7 @@ export default class StaffSearchResultComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item">
-                           <Link to={`/staff`}><i className="fas fa-user-circle"></i>&nbsp;Staff</Link>
+                           <Link to={`/staff`}><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item">
                            <Link to={`/staff/search`}><i className="fas fa-search"></i>&nbsp;Search</Link>
