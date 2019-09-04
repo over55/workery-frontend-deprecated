@@ -51,6 +51,14 @@ export default class FinancialRetrieveComponent extends Component {
                                     </th>
                                 </tr>
                                 <tr>
+                                    <th scope="row" className="bg-light">Client</th>
+                                    <td>
+                                        <Link to={`/client/${order.customer}`} target="_blank">
+                                            {order && order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row" className="bg-light">Order #</th>
                                     <td>
                                         <Link to={`/order/${order.id}`} target="_blank">
