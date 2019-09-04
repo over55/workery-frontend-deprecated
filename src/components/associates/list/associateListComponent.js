@@ -149,13 +149,13 @@ function iconFormatter(cell, row){
 function statusFormatter(cell, row){
     switch(row.state) {
         case 1:
-            return <i className="fas fa-check-circle"></i>;
+            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
         case 0:
-            return <i className="fas fa-times-circle"></i>;
+            return <i className="fas fa-times-circle" style={{ color: 'red' }}></i>;
             break;
         default:
-        return <i className="fas fa-question-circle"></i>;
+        return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
             break;
     }
 }
