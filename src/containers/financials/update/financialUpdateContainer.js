@@ -293,7 +293,6 @@ class FinancialUpdateContainer extends Component {
             <FinancialUpdateComponent
                 // Text
                 invoiceIds={invoiceIds}
-                visits={visits}
                 onTextChange={this.onTextChange}
 
                 // Amount
@@ -311,6 +310,7 @@ class FinancialUpdateContainer extends Component {
                 // Select
                 invoiceServiceFee={invoiceServiceFee}
                 invoiceServiceFeeOptions={invoiceServiceFeeOptions}
+                visits={visits}
                 onSelectChange={this.onSelectChange}
 
                 // Radio GUI

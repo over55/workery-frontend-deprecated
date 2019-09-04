@@ -60,6 +60,17 @@ export default class FinancialUpdateComponent extends Component {
             onClick, id, isLoading, errors,
         } = this.props;
 
+        // Generate our list of choices from 1 to 30.
+        let visitChoices = [];
+        for (let i = 1; i <= 30; i++) {
+            visitChoices.push({
+                id: 'visits-t-choice',
+                name: "visits",
+                value: i,
+                label: i
+            });
+        }
+
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -132,16 +143,17 @@ export default class FinancialUpdateComponent extends Component {
                                 helpText="Please note, you are able to input multiple invoice ID values if you want, just separate them by commas. Ex.: 123, 456."
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control"
+                            <BootstrapSingleSelect
                                 borderColour="border-primary"
-                                error={errors.visits}
                                 label="# of Visit(s) (*)"
-                                onChange={onTextChange}
+                                name="invoiceServiceFee"
+                                defaultOptionLabel="Please select the service fee."
+                                options={visitChoices}
                                 value={visits}
-                                name="visits"
-                                type="number"
-                                helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 100."
+                                error={errors.visits}
+                                onSelectChange={onSelectChange}
+                                helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 30."
+
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -312,7 +324,7 @@ export default class FinancialUpdateComponent extends Component {
 }
 
 
-export const PAYMENT_STATUS_CHOICES = [
+const PAYMENT_STATUS_CHOICES = [
     {
         id: 'paymentStatus-t-choice',
         name: "paymentStatus",
