@@ -134,7 +134,7 @@ function iconFormatter(cell, row){
         return (
             <i className="fas fa-home"></i>
         )
-    } else if (row.typeOf === 3) {
+    } else if (row.typeOf === 1) {
         return (
             <i className="fas fa-building"></i>
         )
