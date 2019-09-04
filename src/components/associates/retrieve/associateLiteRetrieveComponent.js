@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import { BootstrapFiveStarRatingLabel } from "../../bootstrap/bootstrapFiveStarRatingLabel";
@@ -115,17 +117,17 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                 <p class="mb-2">
                                     <ul>
                                     {associate.commercialInsuranceExpiryDate &&
-                                        <li>Commercial Insurance Expiry: {associate.commercialInsuranceExpiryDate}</li>
+                                        <li>Commercial Insurance Expiry: <Moment format="YYYY/MM/DD">{associate.commercialInsuranceExpiryDate}</Moment></li>
                                     }
                                     {associate.wsibNumber &&
                                         <li>WSIB # {associate.wsibNumber}</li>
                                     }
                                     {associate.wsibInsuranceDate &&
-                                        <li>WSIB Expiry: {associate.wsibInsuranceDate}</li>
+                                        <li>WSIB Expiry: <Moment format="YYYY/MM/DD">{associate.wsibInsuranceDate}</Moment></li>
                                     }
                                     {associate.latestCompletedAndPaidOrder && associate.latestCompletedAndPaidOrder.paidAt &&
                                         <li>
-                                        Last service fee paid on {associate.latestCompletedAndPaidOrder.paidAt} in work order #<Link to={`/order/${associate.latestCompletedAndPaidOrder.id}`}>{associate.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
+                                        Last service fee paid on <Moment format="YYYY/MM/DD">{associate.latestCompletedAndPaidOrder.paidAt}</Moment> in work order #<Link to={`/order/${associate.latestCompletedAndPaidOrder.id}`}>{associate.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
                                         </li>
                                     }
                                     </ul>

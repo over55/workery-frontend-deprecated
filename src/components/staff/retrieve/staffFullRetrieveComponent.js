@@ -199,7 +199,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
-                                    <td>{staff.birthdate}</td>
+                                    <td>{staff && <Moment format="YYYY/MM/DD">{staff.birthdate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
@@ -219,7 +219,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td>{staff.joinDate}</td>
+                                    <td>{staff && <Moment format="YYYY/MM/DD">{staff.joinDate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
@@ -239,7 +239,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
-                                    <td>{staff.created}</td>
+                                    <td>{staff && <Moment format="YYYY/MM/DD hh:mm:ss a">{staff.created}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
@@ -247,7 +247,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
-                                    <td>{staff.lastModified}</td>
+                                    <td>{staff && <Moment format="YYYY/MM/DD hh:mm:ss a">{staff.lastModified}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>

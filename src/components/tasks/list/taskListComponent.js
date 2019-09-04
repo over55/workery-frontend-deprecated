@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
@@ -74,6 +76,7 @@ class RemoteListComponent extends Component {
             dataField: 'dueDate',
             text: 'Due Date',
             sort: true,
+            formatter: dueDateFormatter,
         },{
             dataField: 'typeOf',
             text: 'Task',
@@ -183,6 +186,10 @@ function typeOfFormatter(cell, row){
     return row.title
 }
 
+
+function dueDateFormatter(cell, row){
+    return row.dueDate ? <Moment format="YYYY/MM/DD">{row.dueDate}</Moment> : "-";
+}
 
 
 function statusFormatter(cell, row){

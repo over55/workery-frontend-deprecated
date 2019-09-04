@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
@@ -60,15 +62,18 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'assignmentDate',
             text: 'Assign Date',
-            sort: true
+            sort: true,
+            formatter: assignmentDateFormatter,
         },{
             dataField: 'startDate',
             text: 'Start Date',
-            sort: true
+            sort: true,
+            formatter: startDateFormatter,
         },{
             dataField: 'completionDate',
             text: 'Completion Date',
-            sort: true
+            sort: true,
+            formatter: completionDateFormatter,
         },{
             dataField: 'state',
             text: 'Status',
@@ -160,6 +165,21 @@ function associateNameFormatter(cell, row){
             {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
+}
+
+
+function startDateFormatter(cell, row){
+    return row.startDate ? <Moment format="YYYY/MM/DD">{row.startDate}</Moment> : "-";
+}
+
+
+function assignmentDateFormatter(cell, row){
+    return row.assignmentDate ? <Moment format="YYYY/MM/DD">{row.assignmentDate}</Moment> : "-";
+}
+
+
+function completionDateFormatter(cell, row){
+    return row.completionDate ? <Moment format="YYYY/MM/DD">{row.completionDate}</Moment> : "-";
 }
 
 

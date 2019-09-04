@@ -1,6 +1,8 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
@@ -146,7 +148,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
-                                    <td>{partner.birthdate}</td>
+                                    <td>{partner && <Moment format="YYYY/MM/DD">{partner.birthdate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
@@ -166,7 +168,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td>{partner.joinDate}</td>
+                                    <td>{partner && <Moment format="YYYY/MM/DD">{partner.joinDate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
@@ -186,7 +188,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
-                                    <td>{partner.created}</td>
+                                    <td>{partner && <Moment format="YYYY/MM/DD hh:mm:ss a">{partner.created}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
@@ -194,7 +196,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
-                                    <td>{partner.lastModified}</td>
+                                    <td>{partner && <Moment format="YYYY/MM/DD hh:mm:ss a">{partner.lastModified}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>

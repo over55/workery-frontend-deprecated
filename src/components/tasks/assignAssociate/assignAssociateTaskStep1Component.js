@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 
 export default class AssignAssociateTaskStep1Component extends Component {
@@ -65,7 +67,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Start Date</th>
-                                    <td>{task && task.jobStartDate}</td>
+                                    <td>{task && <Moment format="YYYY/MM/DD">{task.jobStartDate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
