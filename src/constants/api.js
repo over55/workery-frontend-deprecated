@@ -102,6 +102,7 @@ export const WORKERY_ONGOING_ORDER_LIST_API_ENDPOINT = '/ongoing-orders';
 export const WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT = '/ongoing-order/';
 export const WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT = '/ongoing-order-comments';
 export const WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_ENDPOINT = '/v2/ongoing-order/XXX/';
+export const WORKERY_COMMENT_LIST_API_ENDPOINT = '/comments';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';

@@ -517,7 +517,9 @@ class CommentHistoryComponent extends Component {
                             noDataIndication="There are no recent comments at the moment"
                         />
                     </div>
-                    <a href="#" class="float-right">See more comments&nbsp;<i class="fas fa-chevron-right"></i></a>
+                    <Link to={`/comments`} class="float-right">
+                        See more comments&nbsp;<i class="fas fa-chevron-right"></i>
+                    </Link>
                 </div>
             );
         }

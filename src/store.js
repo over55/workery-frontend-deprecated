@@ -19,6 +19,7 @@ import {
     ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS,
     STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
     ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
+    COMMENT_LIST_SUCCESS, COMMENT_DETAIL_SUCCESS,
 } from "./constants/actionTypes";
 import { activitySheetItemListReducer, activitySheetItemDetailReducer } from "./reducers/activitySheetItemReducers";
 import { associateCommentListReducer } from "./reducers/associateCommentReducers";
@@ -27,6 +28,7 @@ import { awayLogListReducer, awayLogDetailReducer } from "./reducers/awayLogRedu
 import { bulletinBoardItemListReducer, bulletinBoardItemDetailReducer } from "./reducers/bulletinBoardItemReducers";
 import { clientListReducer, clientDetailReducer } from "./reducers/clientReducers";
 import { clientCommentListReducer } from "./reducers/clientCommentReducers";
+import { commentListReducer } from "./reducers/commentReducers";
 import dashboardReducer from "./reducers/dashboardReducer";
 import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
 import flashMessageReducer from "./reducers/flashMessageReducer";
@@ -59,6 +61,7 @@ const appReducer = combineReducers({
     bulletinBoardItemListState: bulletinBoardItemListReducer, bulletinBoardItemDetailState: bulletinBoardItemDetailReducer,
     clientListState: clientListReducer, clientDetailState: clientDetailReducer,
     clientCommentListState: clientCommentListReducer,
+    commentListState: commentListReducer,
     dashboardState: dashboardReducer,
     deactivatedClientListState: deactivatedClientListReducer,
     flashMessageState: flashMessageReducer,

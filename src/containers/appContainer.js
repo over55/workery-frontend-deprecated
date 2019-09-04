@@ -13,6 +13,7 @@ import NotFound404Container from './navigation/notFound404Container';
 import PrivacyContainer from './general/privacyContainer';
 import HelpContainer from './general/helpContainer';
 import TermsContainer from './general/termsContainer';
+import CommentListContainer from "./general/commentListContainer";
 
 // Account
 import LoginContainer from "./account/loginContainer";
@@ -268,6 +269,7 @@ class AppContainer extends React.Component {
                                 <Route path="/organization/add" exact component={requiresAuth(SharedOrganizationCreateContainer)} />
                                 <Route path="/dashboard-redirect/:accessToken/:refreshToken" exact component={TenantDashboardRedirectContainer} />
                                 <Route path="/dashboard" exact component={requiresAuth(DashboardContainer)} />
+                                <Route path="/comments" exact component={requiresAuth(CommentListContainer)} />
 
                                 { /* CLIENTS */ }
                                 <Route path="/clients/add/step-1" exact component={requiresAuth(ClientCreateStep1Container)} />
