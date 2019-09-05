@@ -11,7 +11,7 @@ export default function validateInput(data) {
     if (data.title === undefined || data.title === null || validator.isEmpty(data.title) || data.title === "") {
         errors.title = 'This field is required';
     }
-    if (data.percentage === undefined || data.percentage === null || validator.isEmpty(data.percentage) || data.percentage === "") {
+    if (data.percentage === undefined || data.percentage === null || isNaN(data.percentage) ) {
         errors.percentage = 'This field is required';
     }
     if (data.description === undefined || data.description === null || validator.isEmpty(data.description) || data.description === "") {

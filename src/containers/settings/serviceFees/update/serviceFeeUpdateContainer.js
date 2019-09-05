@@ -5,6 +5,7 @@ import Scroll from 'react-scroll';
 import ServiceFeeUpdateComponent from "../../../../components/settings/serviceFees/update/serviceFeeUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import validateInput from "../../../../validators/serviceFeeValidator";
+import { putServiceFeeDetail, pullServiceFeeDetail } from "../../../../actions/serviceFeeActions";
 
 
 class ServiceFeeUpdateContainer extends Component {
@@ -18,19 +19,33 @@ class ServiceFeeUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         this.state = {
-            name: null,
+            title: "",
+            percentage: "",
+            description: "",
             errors: {},
             isLoading: false,
-            slug: slug
+            id: parseInt(id),
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onServiceFeeCallback = this.onServiceFeeCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.extraText = this.state.text;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -40,6 +55,7 @@ class ServiceFeeUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullServiceFeeDetail(this.state.id, this.onServiceFeeCallback)
     }
 
     componentWillUnmount() {
@@ -56,13 +72,13 @@ class ServiceFeeUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(serviceFee) {
+    onSuccessCallback(serviceFee) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Service fee has been successfully updated.");
         this.props.history.push("/settings/service-fees");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -72,6 +88,15 @@ class ServiceFeeUpdateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onServiceFeeCallback(sfDetail) {
+        this.setState({
+            title: sfDetail.title,
+            percentage: sfDetail.percentage,
+            description: sfDetail.description,
+            errors: {},
+        })
     }
 
     /**
@@ -94,11 +119,19 @@ class ServiceFeeUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.putServiceFeeDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 
@@ -109,10 +142,12 @@ class ServiceFeeUpdateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { title, percentage, description, errors } = this.state;
         return (
             <ServiceFeeUpdateComponent
-                name={name}
+                title={title}
+                percentage={percentage}
+                description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -131,7 +166,13 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        putServiceFeeDetail: (postData, successCallback, failedCallback) => {
+            dispatch(putServiceFeeDetail(postData, successCallback, failedCallback))
+        },
+        pullServiceFeeDetail: (id, successCallback, failedCallback) => {
+            dispatch(pullServiceFeeDetail(id, successCallback, failedCallback))
+        },
     }
 }
 

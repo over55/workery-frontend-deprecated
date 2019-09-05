@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 
 
 class ServiceFeeUpdateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { title, percentage, description, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -24,7 +25,7 @@ class ServiceFeeUpdateComponent extends Component {
                             <Link to="/settings/service-fees"><i className="fas fa-credit-card"></i>&nbsp;Service Fees</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-edit"></i>&nbsp;Update
+                            <i className="fas fa-plus"></i>&nbsp;Add
                         </li>
                     </ol>
                 </nav>
@@ -32,7 +33,7 @@ class ServiceFeeUpdateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Update Service Fee</h1>
+                            <h1>Update New Service Fee</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -40,12 +41,34 @@ class ServiceFeeUpdateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.title}
+                                label="Title (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={title}
+                                name="title"
                                 type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.percentage}
+                                label="Percentage (*)"
+                                onChange={onTextChange}
+                                value={percentage}
+                                name="percentage"
+                                type="number"
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-primary"
+                                label="Description (*)"
+                                placeholder="Description"
+                                rows="5"
+                                value={description}
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">
