@@ -2,16 +2,18 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
-// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 
 
 class InsuranceRequirementUpdateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { text, description, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -40,12 +42,24 @@ class InsuranceRequirementUpdateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.text}
+                                label="Text (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={text}
+                                name="text"
                                 type="text"
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-primary"
+                                label="Description (*)"
+                                placeholder="Please describe this skill set."
+                                rows="5"
+                                value={description}
+                                helpText="This will only be visible to staff members."
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">

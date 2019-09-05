@@ -179,7 +179,7 @@ export function postInsuranceRequirementDetail(postData, successCallback, failed
 //                                RETRIEVE                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullInsuranceRequirementDetail(user, slug) {
+export function pullInsuranceRequirementDetail(id, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -189,7 +189,7 @@ export function pullInsuranceRequirementDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT+id+"/";
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
@@ -210,6 +210,13 @@ export function pullInsuranceRequirementDetail(user, slug) {
                 setInsuranceRequirementDetailSuccess(profile)
             );
 
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(profile);
+            }
+
         }).catch( (exception) => { // ERROR
             if (exception.response) {
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
@@ -229,12 +236,12 @@ export function pullInsuranceRequirementDetail(user, slug) {
                     })
                 );
 
-                // // DEVELOPERS NOTE:
-                // // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // // OBJECT WE GOT FROM THE API.
-                // if (failedCallback) {
-                //     failedCallback(errors);
-                // }
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => { // FINALLY
@@ -248,7 +255,7 @@ export function pullInsuranceRequirementDetail(user, slug) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putInsuranceRequirementDetail(user, data, successCallback, failedCallback) {
+export function putInsuranceRequirementDetail(postData, successCallback, failedCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -260,13 +267,13 @@ export function putInsuranceRequirementDetail(user, data, successCallback, faile
 
         // The following code will convert the `camelized` data into `snake case`
         // data so our API endpoint will be able to read it.
-        let decamelizedData = decamelizeKeys(data);
+        let decamelizedData = decamelizeKeys(postData);
 
         // Encode from JS Object to MessagePack (Buffer)
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT+data.slug, buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT+postData.id+"/", buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             let device = camelizeKeys(responseData);

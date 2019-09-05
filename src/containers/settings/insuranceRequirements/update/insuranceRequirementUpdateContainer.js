@@ -5,6 +5,7 @@ import Scroll from 'react-scroll';
 import InsuranceRequirementUpdateComponent from "../../../../components/settings/insuranceRequirements/update/insuranceRequirementUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import validateInput from "../../../../validators/insuranceRequirementValidator";
+import { pullInsuranceRequirementDetail, putInsuranceRequirementDetail } from "../../../../actions/insuranceRequirementActions";
 
 
 class InsuranceRequirementUpdateContainer extends Component {
@@ -18,19 +19,30 @@ class InsuranceRequirementUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         this.state = {
-            name: null,
+            text: "",
+            description: "",
             errors: {},
             isLoading: false,
-            slug: slug
+            id: parseInt(id)
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onIRFetchCallback = this.onIRFetchCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -40,6 +52,7 @@ class InsuranceRequirementUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullInsuranceRequirementDetail(this.state.id, this.onIRFetchCallback)
     }
 
     componentWillUnmount() {
@@ -74,6 +87,14 @@ class InsuranceRequirementUpdateContainer extends Component {
         scroll.scrollToTop();
     }
 
+    onIRFetchCallback(irDetail) {
+        this.setState({
+            text: irDetail.text,
+            description: irDetail.description,
+            isLoading: false,
+        });
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
@@ -94,7 +115,15 @@ class InsuranceRequirementUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.putInsuranceRequirementDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -109,10 +138,11 @@ class InsuranceRequirementUpdateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, description, errors } = this.state;
         return (
             <InsuranceRequirementUpdateComponent
-                name={name}
+                text={text}
+                description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -131,7 +161,13 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        pullInsuranceRequirementDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(pullInsuranceRequirementDetail(id, onSuccessCallback, onFailureCallback))
+        },
+        putInsuranceRequirementDetail: (postData, successCallback, failedCallback) => {
+            dispatch(putInsuranceRequirementDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 
