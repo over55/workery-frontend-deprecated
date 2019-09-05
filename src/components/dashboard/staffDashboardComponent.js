@@ -119,7 +119,7 @@ class BulletinBoardComponent extends Component {
                             noDataIndication="There are no recent tasks at the moment"
                         />
                         <p class="lead">
-                            <Link className="btn btn-success btn-lg px-4" to="#" role="button">
+                            <Link className="btn btn-success btn-lg px-4" to="/settings/bulletin-board-items/add" role="button">
                                 <i className="fas fa-plus"></i>&nbsp;Add
                             </Link>
                         </p>
@@ -302,7 +302,7 @@ class AwayLogComponent extends Component {
                             noDataIndication="There are no recent tasks at the moment"
                         />
                         <p class="lead">
-                            <Link className="btn btn-success btn-lg px-4" to="#" role="button">
+                            <Link className="btn btn-success btn-lg px-4" to="/settings/away-logs/add" role="button">
                                 <i className="fas fa-plus"></i>&nbsp;Add
                             </Link>
                         </p>
