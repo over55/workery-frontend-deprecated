@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import HowHearUpdateComponent from "../../../components/settings/howHears/howHearUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/howHearValidator";
+import HowHearUpdateComponent from "../../../../components/settings/howHears/update/howHearUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/howHearValidator";
 
 
 class HowHearUpdateContainer extends Component {
