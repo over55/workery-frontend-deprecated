@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import SkillSetUpdateComponent from "../../../components/settings/skillSets/skillSetUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/skillSetValidator";
+import SkillSetUpdateComponent from "../../../../components/settings/skillSets/update/skillSetUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/skillSetValidator";
 
 
 class SkillSetUpdateContainer extends Component {

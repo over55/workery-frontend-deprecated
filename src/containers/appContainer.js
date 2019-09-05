@@ -196,7 +196,7 @@ import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/upda
 import SkillSetsListContainer from "./settings/skillSets/list/skillSetListContainer";
 import SkillSetDeleteContainer from "./settings/skillSets/skillSetDeleteContainer";
 import SkillSetCreateContainer from "./settings/skillSets/create/skillSetCreateContainer";
-import SkillSetUpdateContainer from "./settings/skillSets/skillSetUpdateContainer";
+import SkillSetUpdateContainer from "./settings/skillSets/update/skillSetUpdateContainer";
 
 import InsuranceRequirementsListContainer from "./settings/insuranceRequirements/list/insuranceRequirementListContainer";
 import InsuranceRequirementDeleteContainer from "./settings/insuranceRequirements/insuranceRequirementDeleteContainer";
