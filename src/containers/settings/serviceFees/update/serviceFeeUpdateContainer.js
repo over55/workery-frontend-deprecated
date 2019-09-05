@@ -142,7 +142,7 @@ class ServiceFeeUpdateContainer extends Component {
      */
 
     render() {
-        const { title, percentage, description, errors } = this.state;
+        const { title, percentage, description, errors, isLoading } = this.state;
         return (
             <ServiceFeeUpdateComponent
                 title={title}
@@ -151,6 +151,7 @@ class ServiceFeeUpdateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
+                isLoading={isLoading}
             />
         );
     }
