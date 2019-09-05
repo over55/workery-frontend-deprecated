@@ -136,13 +136,14 @@ class BulletinBoardItemUpdateContainer extends Component {
      */
 
     render() {
-        const { text, errors } = this.state;
+        const { text, errors, isLoading } = this.state;
         return (
             <BulletinBoardItemUpdateComponent
                 text={text}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
+                isLoading={this.isLoading}
             />
         );
     }
