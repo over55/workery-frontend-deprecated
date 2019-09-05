@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import BulletinBoardItemUpdateComponent from "../../../components/settings/bulletinBoardItems/bulletinBoardItemUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/bulletinBoardItemValidator";
+import BulletinBoardItemUpdateComponent from "../../../../components/settings/bulletinBoardItems/update/bulletinBoardItemUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/bulletinBoardItemValidator";
+import { pullBulletinBoardItemDetail, putBulletinBoardItemDetail } from "../../../../actions/bulletinBoardItemActions";
 
 
 class BulletinBoardItemUpdateContainer extends Component {
@@ -18,19 +19,34 @@ class BulletinBoardItemUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         this.state = {
-            name: null,
+            text: null,
             errors: {},
             isLoading: false,
-            slug: slug
+            id: parseInt(id)
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onRetrieveSuccessCallback = this.onRetrieveSuccessCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -40,6 +56,7 @@ class BulletinBoardItemUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullBulletinBoardItemDetail(this.state.id, this.onRetrieveSuccessCallback);
     }
 
     componentWillUnmount() {
@@ -74,6 +91,10 @@ class BulletinBoardItemUpdateContainer extends Component {
         scroll.scrollToTop();
     }
 
+    onRetrieveSuccessCallback(bbi) {
+        this.setState({ text: bbi.text });
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
@@ -94,7 +115,13 @@ class BulletinBoardItemUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({ errors: {}, isLoading: true, }, ()=>{
+                this.props.putBulletinBoardItemDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -109,10 +136,10 @@ class BulletinBoardItemUpdateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, errors } = this.state;
         return (
             <BulletinBoardItemUpdateComponent
-                name={name}
+                text={text}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
@@ -131,7 +158,17 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        pullBulletinBoardItemDetail: (bbiId, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullBulletinBoardItemDetail(bbiId, onSuccessCallback, onFailureCallback)
+            )
+        },
+        putBulletinBoardItemDetail: (postData, onSuccessListCallback, onFailureListCallback) => {
+            dispatch(
+                putBulletinBoardItemDetail(postData, onSuccessListCallback, onFailureListCallback)
+            )
+        },
     }
 }
 

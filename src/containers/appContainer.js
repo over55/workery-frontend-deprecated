@@ -191,7 +191,7 @@ import ResourceUpdateContainer from "./settings/resources/resourceUpdateContaine
 import BulletinBoardItemsListContainer from "./settings/bulletinBoardItems/list/bulletinBoardItemListContainer";
 import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/bulletinBoardItemDeleteContainer";
 import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/create/bulletinBoardItemCreateContainer";
-import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/bulletinBoardItemUpdateContainer";
+import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/update/bulletinBoardItemUpdateContainer";
 
 import SkillSetsListContainer from "./settings/skillSets/list/skillSetListContainer";
 import SkillSetDeleteContainer from "./settings/skillSets/skillSetDeleteContainer";
