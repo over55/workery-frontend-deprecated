@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import InsuranceRequirementUpdateComponent from "../../../components/settings/insuranceRequirements/insuranceRequirementUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/insuranceRequirementValidator";
+import InsuranceRequirementUpdateComponent from "../../../../components/settings/insuranceRequirements/update/insuranceRequirementUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/insuranceRequirementValidator";
 
 
 class InsuranceRequirementUpdateContainer extends Component {

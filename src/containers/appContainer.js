@@ -201,7 +201,7 @@ import SkillSetUpdateContainer from "./settings/skillSets/update/skillSetUpdateC
 import InsuranceRequirementsListContainer from "./settings/insuranceRequirements/list/insuranceRequirementListContainer";
 import InsuranceRequirementDeleteContainer from "./settings/insuranceRequirements/insuranceRequirementDeleteContainer";
 import InsuranceRequirementCreateContainer from "./settings/insuranceRequirements/create/insuranceRequirementCreateContainer";
-import InsuranceRequirementUpdateContainer from "./settings/insuranceRequirements/insuranceRequirementUpdateContainer";
+import InsuranceRequirementUpdateContainer from "./settings/insuranceRequirements/update/insuranceRequirementUpdateContainer";
 
 import ServiceFeesListContainer from "./settings/serviceFees/list/serviceFeeListContainer";
 import ServiceFeeDeleteContainer from "./settings/serviceFees/serviceFeeDeleteContainer";
