@@ -133,18 +133,18 @@ class BulletinBoardComponent extends Component {
 
 function newsEditLinkFormatter(cell, row){
     return (
-        <Link to="#">
+        <Link to={`/settings/bulletin-board-item/${row.id}/update`}>
             <i class="fas fa-pencil-alt"></i>
         </Link>
-    )
+    );
 }
 
 function newsDeleteLinkFormatter(cell, row){
     return (
-        <Link to="#">
+        <Link to={`/settings/bulletin-board-item/${row.id}/delete`}>
             <i class="fas fa-times"></i>
         </Link>
-    )
+    );
 }
 
 /**
@@ -316,7 +316,7 @@ class AwayLogComponent extends Component {
 
 function associateEditLinkFormatter(cell, row){
     return (
-        <Link to="#">
+        <Link to={`/settings/away-log/${row.id}/update`}>
             <i class="fas fa-pencil-alt"></i>
         </Link>
     )
@@ -324,7 +324,7 @@ function associateEditLinkFormatter(cell, row){
 
 function associateDeleteLinkFormatter(cell, row){
     return (
-        <Link to="#">
+        <Link to={`/settings/away-log/${row.id}/delete`}>
             <i class="fas fa-times"></i>
         </Link>
     )
