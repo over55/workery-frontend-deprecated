@@ -213,7 +213,7 @@ import DeactivatedClientListContainer from "./settings/deactivatedClients/list/d
 import VehicleTypesListContainer from "./settings/vehicleTypes/list/vehicleTypeListContainer";
 import VehicleTypeDeleteContainer from "./settings/vehicleTypes/vehicleTypeDeleteContainer";
 import VehicleTypeCreateContainer from "./settings/vehicleTypes/create/vehicleTypeCreateContainer";
-import VehicleTypeUpdateContainer from "./settings/vehicleTypes/vehicleTypeUpdateContainer";
+import VehicleTypeUpdateContainer from "./settings/vehicleTypes/update/vehicleTypeUpdateContainer";
 
 import PartnerListContainer from "./partners/list/partnerListContainer";
 import PartnerSearchContainer from "./partners/search/partnerSearchContainer";

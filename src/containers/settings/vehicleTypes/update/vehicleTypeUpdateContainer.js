@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import VehicleTypeUpdateComponent from "../../../components/settings/vehicleTypes/vehicleTypeUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/vehicleTypeValidator";
+import VehicleTypeUpdateComponent from "../../../../components/settings/vehicleTypes/update/vehicleTypeUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/vehicleTypeValidator";
 
 
 class VehicleTypeUpdateContainer extends Component {
