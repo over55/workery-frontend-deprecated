@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AwayLogUpdateComponent from "../../../components/settings/awayLogs/awayLogUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/awayLogValidator";
+import AwayLogUpdateComponent from "../../../../components/settings/awayLogs/update/awayLogUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/awayLogValidator";
 
 
 class AwayLogUpdateContainer extends Component {

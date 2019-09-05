@@ -181,7 +181,7 @@ import HowHearUpdateContainer from "./settings/howHears/howHearUpdateContainer";
 import AwayLogListContainer from "./settings/awayLogs/list/awayLogListContainer";
 import AwayLogDeleteContainer from "./settings/awayLogs/awayLogDeleteContainer";
 import AwayLogCreateContainer from "./settings/awayLogs/create/awayLogCreateContainer";
-import AwayLogUpdateContainer from "./settings/awayLogs/awayLogUpdateContainer";
+import AwayLogUpdateContainer from "./settings/awayLogs/update/awayLogUpdateContainer";
 
 import ResourcesListContainer from "./settings/resources/list/resourceListContainer";
 import ResourceDeleteContainer from "./settings/resources/resourceDeleteContainer";
