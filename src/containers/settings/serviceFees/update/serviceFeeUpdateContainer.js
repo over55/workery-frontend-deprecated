@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ServiceFeeUpdateComponent from "../../../components/settings/serviceFees/serviceFeeUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/serviceFeeValidator";
+import ServiceFeeUpdateComponent from "../../../../components/settings/serviceFees/update/serviceFeeUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/serviceFeeValidator";
 
 
 class ServiceFeeUpdateContainer extends Component {
