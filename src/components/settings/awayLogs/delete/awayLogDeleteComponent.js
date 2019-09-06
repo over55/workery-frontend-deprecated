@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-
-import { FlashMessageComponent } from "../../../flashMessageComponent";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 
 class AwayLogDeleteComponent extends Component {
     render() {
-        const { awayLogData, onClick, onBack, flashMessage } = this.props;
+        const {
+            associate, associateOptions, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
+            onClick, onBack
+        } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -26,12 +29,10 @@ class AwayLogDeleteComponent extends Component {
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
                 <h1><i className="fas fa-minus"></i>&nbsp;Remove AwayLog</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
-                        <p><strong>Please confirm these details before deleting the awayLog</strong></p>
+                        <p><strong>Please confirm these details before deleting the away log</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
@@ -40,8 +41,14 @@ class AwayLogDeleteComponent extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Text</th>
-                                    <td>{awayLogData.name}</td>
+                                    <th scope="row" className="bg-light">Associate #</th>
+                                    <td>{associate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Start Date</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{startDate}</Moment>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
