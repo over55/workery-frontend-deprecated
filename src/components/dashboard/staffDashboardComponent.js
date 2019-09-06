@@ -141,7 +141,7 @@ function newsEditLinkFormatter(cell, row){
 
 function newsDeleteLinkFormatter(cell, row){
     return (
-        <Link to={`/settings/bulletin-board-item/${row.id}/delete`}>
+        <Link className="text-danger" to={`/settings/bulletin-board-item/${row.id}/delete`}>
             <i class="fas fa-times"></i>
         </Link>
     );
@@ -324,7 +324,7 @@ function associateEditLinkFormatter(cell, row){
 
 function associateDeleteLinkFormatter(cell, row){
     return (
-        <Link to={`/settings/away-log/${row.id}/delete`}>
+        <Link className="text-danger" to={`/settings/away-log/${row.id}/delete`}>
             <i class="fas fa-times"></i>
         </Link>
     )

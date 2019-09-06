@@ -57,7 +57,7 @@ export default class StaffLiteRetrieveComponent extends Component {
                                 <h3>{staff && staff.fullName}</h3>
                                 {staff && staff.address &&
                                     <p className="text-muted">
-                                        <a href={staff.addressUrl}>{staff.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
+                                        <a href={staff.addressUrl}><i className="fas fa-map-marker-alt"></i>&nbsp;{staff.address}</a>
                                     </p>
                                 }
                                 {staff && staff.email &&
@@ -80,16 +80,7 @@ export default class StaffLiteRetrieveComponent extends Component {
                                         }
                                     </p>
                                 }
-                                <div className="col-sm-12 p-0">
-                                    <p className="m-0"><strong>Ratings:</strong></p>
-                                    <div className="star-rating" data-rating="4.5">
-                                        <span className="far fa-star" data-rating="1"></span>
-                                        <span className="far fa-star" data-rating="2"></span>
-                                        <span className="far fa-star" data-rating="3"></span>
-                                        <span className="far fa-star" data-rating="4"></span>
-                                        <span className="far fa-star" data-rating="5"></span>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
