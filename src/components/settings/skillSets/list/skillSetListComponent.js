@@ -32,8 +32,8 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
+            3: 'Active',
+            2: 'Archived',
         };
 
         const columns = [{
@@ -45,8 +45,18 @@ class RemoteListComponent extends Component {
             text: 'Sub-Category',
             sort: true
         },{
+            dataField: 'isArchived',
+            text: 'Status',
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 3,
+                withoutEmptyOption: true
+            }),
+            formatter: isArchivedFormatter
+        },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];
@@ -108,14 +118,28 @@ class RemoteListComponent extends Component {
 function detailLinkFormatter(cell, row){
     return (
         <div>
-            <Link to={`/settings/skill-set/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
-                <i className="fas fa-edit"></i>&nbsp;Edit
-            </Link>&nbsp;&nbsp;&nbsp;
-            <Link to={`/settings/skill-set/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
-                <i className="fas fa-minus"></i>&nbsp;Remove
-            </Link>
+            {row.isArchived
+                ?""
+                :<div>
+                    <Link to={`/settings/skill-set/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
+                        <i className="fas fa-edit"></i>&nbsp;Edit
+                    </Link>&nbsp;&nbsp;&nbsp;
+                    <Link to={`/settings/skill-set/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
+                        <i className="fas fa-minus"></i>&nbsp;Remove
+                    </Link>
+                </div>
+            }
         </div>
     )
+}
+
+
+function isArchivedFormatter(cell, row){
+    if (row.isArchived === false) {
+        return <i className="fas fa-check-circle"></i>
+    } else {
+        return <i className="fas fa-archive"></i>
+    }
 }
 
 

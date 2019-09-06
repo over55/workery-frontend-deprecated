@@ -194,7 +194,7 @@ import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/crea
 import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/update/bulletinBoardItemUpdateContainer";
 
 import SkillSetsListContainer from "./settings/skillSets/list/skillSetListContainer";
-import SkillSetDeleteContainer from "./settings/skillSets/skillSetDeleteContainer";
+import SkillSetDeleteContainer from "./settings/skillSets/delete/skillSetDeleteContainer";
 import SkillSetCreateContainer from "./settings/skillSets/create/skillSetCreateContainer";
 import SkillSetUpdateContainer from "./settings/skillSets/update/skillSetUpdateContainer";
 
