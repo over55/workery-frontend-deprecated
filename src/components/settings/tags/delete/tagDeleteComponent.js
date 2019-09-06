@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { FlashMessageComponent } from "../../flashMessageComponent";
-
 
 class TagDeleteComponent extends Component {
     render() {
-        const { tagData, onClick, onBack, flashMessage } = this.props;
+        const { tagData, onClick, onBack } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -25,8 +23,6 @@ class TagDeleteComponent extends Component {
                         </li>
                     </ol>
                 </nav>
-
-                <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-minus"></i>&nbsp;Remove Tag</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">

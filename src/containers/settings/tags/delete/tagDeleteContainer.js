@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import TagDeleteComponent from "../../../components/settings/tags/tagDeleteComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
+import TagDeleteComponent from "../../../../components/settings/tags/delete/tagDeleteComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
 
 
 class TagDeleteContainer extends Component {
