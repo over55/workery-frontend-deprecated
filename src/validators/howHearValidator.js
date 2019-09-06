@@ -11,7 +11,7 @@ export default function validateInput(data) {
     if (data.text === undefined || data.text === null || validator.isEmpty(data.text) || data.text === "") {
         errors.text = 'This field is required';
     }
-    if (data.sortNumber === undefined || data.sortNumber === null || validator.isEmpty(data.sortNumber) || data.sortNumber === "") {
+    if (data.sortNumber === undefined || data.sortNumber === null || isNaN(data.sortNumber) || data.sortNumber === "") {
         errors.sortNumber = 'This field is required';
     }
     if (data.isForAssociate === undefined || data.isForAssociate === null || isNaN(data.isForAssociate) || data.isForAssociate === "") {

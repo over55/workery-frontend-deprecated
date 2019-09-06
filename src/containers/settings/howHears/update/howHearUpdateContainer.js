@@ -5,6 +5,7 @@ import Scroll from 'react-scroll';
 import HowHearUpdateComponent from "../../../../components/settings/howHears/update/howHearUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import validateInput from "../../../../validators/howHearValidator";
+import { pullHowHearDetail, putHowHearDetail } from "../../../../actions/howHearActions";
 
 
 class HowHearUpdateContainer extends Component {
@@ -18,19 +19,34 @@ class HowHearUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         this.state = {
-            name: null,
+            text: "",
+            sortNumber: "",
+            isForAssociate: "",
+            isForCustomer: "",
+            isForPartner: "",
+            isForStaff: "",
             errors: {},
             isLoading: false,
-            slug: slug
+            id: parseInt(id),
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onHowHearFetchedCallback = this.onHowHearFetchedCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -40,6 +56,7 @@ class HowHearUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullHowHearDetail(this.state.id, this.onHowHearFetchedCallback)
     }
 
     componentWillUnmount() {
@@ -58,7 +75,7 @@ class HowHearUpdateContainer extends Component {
 
     onSuccessfulSubmissionCallback(howHear) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "How hear has been successfully updated.");
+        this.props.setFlashMessage("success", "How hear item has been successfully updated.");
         this.props.history.push("/settings/how-hears");
     }
 
@@ -72,6 +89,20 @@ class HowHearUpdateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onHowHearFetchedCallback(howHearDetail) {
+        console.log(howHearDetail);
+        this.setState({
+            text: howHearDetail.text,
+            sortNumber: howHearDetail.sortNumber,
+            isForAssociate: (howHearDetail.isForAssociate === true || howHearDetail.isForAssociate === "true") ? true : false,
+            isForCustomer: (howHearDetail.isForCustomer === true || howHearDetail.isForCustomer === "true") ? true : false,
+            isForPartner: (howHearDetail.isForPartner === true || howHearDetail.isForPartner === "true") ? true : false,
+            isForStaff: (howHearDetail.isForStaff === true || howHearDetail.isForStaff === "true") ? true : false,
+            isLoading: false,
+            errors: {},
+        });
     }
 
     /**
@@ -94,7 +125,16 @@ class HowHearUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.putHowHearDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
+
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -109,13 +149,19 @@ class HowHearUpdateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors } = this.state;
         return (
             <HowHearUpdateComponent
-                name={name}
+                text={text}
+                sortNumber={sortNumber}
+                isForAssociate={isForAssociate}
+                isForCustomer={isForCustomer}
+                isForPartner={isForPartner}
+                isForStaff={isForStaff}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
+                isLoading={this.isLoading}
             />
         );
     }
@@ -131,7 +177,13 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        pullHowHearDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(pullHowHearDetail(id, onSuccessCallback, onFailureCallback))
+        },
+        putHowHearDetail: (postData, successCallback, failedCallback) => {
+            dispatch(putHowHearDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 
