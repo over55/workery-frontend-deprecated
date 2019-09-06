@@ -189,7 +189,7 @@ import ResourceCreateContainer from "./settings/resources/resourceCreateContaine
 import ResourceUpdateContainer from "./settings/resources/resourceUpdateContainer";
 
 import BulletinBoardItemsListContainer from "./settings/bulletinBoardItems/list/bulletinBoardItemListContainer";
-import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/bulletinBoardItemDeleteContainer";
+import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/delete/bulletinBoardItemDeleteContainer";
 import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/create/bulletinBoardItemCreateContainer";
 import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/update/bulletinBoardItemUpdateContainer";
 

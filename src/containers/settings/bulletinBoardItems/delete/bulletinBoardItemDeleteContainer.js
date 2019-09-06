@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import BulletinBoardItemDeleteComponent from "../../../components/settings/bulletinBoardItems/bulletinBoardItemDeleteComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
+import BulletinBoardItemDeleteComponent from "../../../../components/settings/bulletinBoardItems/delete/bulletinBoardItemDeleteComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
 
 
 class BulletinBoardItemDeleteContainer extends Component {
