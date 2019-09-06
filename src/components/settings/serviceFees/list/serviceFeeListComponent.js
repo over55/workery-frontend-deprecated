@@ -32,8 +32,8 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
+            3: 'Active',
+            2: 'Archived',
         };
 
         const columns = [{
@@ -49,6 +49,16 @@ class RemoteListComponent extends Component {
             dataField: 'description',
             text: 'Description',
             sort: true
+        },{
+            dataField: 'isArchived',
+            text: 'Status',
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 3,
+                withoutEmptyOption: true
+            }),
+            formatter: isArchivedFormatter
         },{
             dataField: 'id',
             text: 'Details',
@@ -114,6 +124,15 @@ function percentFormatter(cell, row){
     return (
         <div>{row.percentage}&nbsp;%</div>
     )
+}
+
+
+function isArchivedFormatter(cell, row){
+    if (row.isArchived === false) {
+        return <i className="fas fa-check-circle"></i>
+    } else {
+        return <i className="fas fa-archive"></i>
+    }
 }
 
 
