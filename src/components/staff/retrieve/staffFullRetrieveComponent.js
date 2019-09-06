@@ -265,11 +265,6 @@ export default class StaffFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
                                         <ul>
-                                            <li>
-                                                <Link onClick={onStaffClick}>
-                                                    Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
                                             { /*
                                             <li>
                                                 {isActiveState
@@ -292,7 +287,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                             */ }
                                             <li>
                                                 <Link to={`/staff/${id}/delete`}>
-                                                    Delete Staff&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    Archive&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                         </ul>
