@@ -179,7 +179,7 @@ import HowHearCreateContainer from "./settings/howHears/create/howHearCreateCont
 import HowHearUpdateContainer from "./settings/howHears/update/howHearUpdateContainer";
 
 import AwayLogListContainer from "./settings/awayLogs/list/awayLogListContainer";
-import AwayLogDeleteContainer from "./settings/awayLogs/awayLogDeleteContainer";
+import AwayLogDeleteContainer from "./settings/awayLogs/delete/awayLogDeleteContainer";
 import AwayLogCreateContainer from "./settings/awayLogs/create/awayLogCreateContainer";
 import AwayLogUpdateContainer from "./settings/awayLogs/update/awayLogUpdateContainer";
 

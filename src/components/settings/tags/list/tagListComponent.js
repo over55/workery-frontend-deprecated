@@ -56,7 +56,7 @@ class RemoteListComponent extends Component {
             formatter: isArchivedFormatter
         },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];

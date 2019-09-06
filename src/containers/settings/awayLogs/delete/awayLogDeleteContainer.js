@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AwayLogDeleteComponent from "../../../components/settings/awayLogs/awayLogDeleteComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
+import AwayLogDeleteComponent from "../../../../components/settings/awayLogs/delete/awayLogDeleteComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
 
 
 class AwayLogDeleteContainer extends Component {
