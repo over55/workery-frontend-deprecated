@@ -6,7 +6,7 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 class BulletinBoardItemDeleteComponent extends Component {
     render() {
-        const { tagData, onClick, onBack, flashMessage } = this.props;
+        const { text, onClick, onBack, flashMessage } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -31,7 +31,7 @@ class BulletinBoardItemDeleteComponent extends Component {
                 <h1><i className="fas fa-minus"></i>&nbsp;Remove Office News</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
-                        <p><strong>Please confirm these details before deleting the tag</strong></p>
+                        <p><strong>Please confirm these details before deleting the office news.</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
@@ -41,7 +41,7 @@ class BulletinBoardItemDeleteComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Text</th>
-                                    <td>{tagData.name}</td>
+                                    <td>{text}</td>
                                 </tr>
                             </tbody>
                         </table>
