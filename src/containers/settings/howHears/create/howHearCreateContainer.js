@@ -77,7 +77,7 @@ class HowHearCreateContainer extends Component {
 
     onFailureCallback(errors) {
         this.setState({
-            errors: errors
+            errors: errors, isLoading: false,
         })
 
         // The following code will cause the screen to scroll to the top of
@@ -142,7 +142,7 @@ class HowHearCreateContainer extends Component {
      */
 
     render() {
-        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors } = this.state;
+        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors, isLoading } = this.state;
         return (
             <HowHearCreateComponent
                 text={text}
@@ -152,6 +152,7 @@ class HowHearCreateContainer extends Component {
                 isForPartner={isForPartner}
                 isForStaff={isForStaff}
                 errors={errors}
+                isLoading={isLoading}
                 onTextChange={this.onTextChange}
                 onRadioChange={this.onRadioChange}
                 onClick={this.onClick}

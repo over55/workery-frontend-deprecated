@@ -80,7 +80,7 @@ class ServiceFeeUpdateContainer extends Component {
 
     onFailureCallback(errors) {
         this.setState({
-            errors: errors
+            errors: errors, isLoading: false,
         })
 
         // The following code will cause the screen to scroll to the top of
