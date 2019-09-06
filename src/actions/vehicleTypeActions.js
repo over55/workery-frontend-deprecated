@@ -341,7 +341,7 @@ export function deleteVehicleTypeDetail(id, onSuccessCallback, onFailureCallback
 
         const aURL = WORKERY_VEHICLE_TYPE_DETAIL_API_ENDPOINT+id+"/";
 
-        customAxios.get(aURL).then( (successResponse) => { // SUCCESS
+        customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             // console.log(successResult); // For debugging purposes.

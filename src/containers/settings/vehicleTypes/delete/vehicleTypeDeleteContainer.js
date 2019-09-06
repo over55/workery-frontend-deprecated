@@ -139,8 +139,8 @@ const mapDispatchToProps = dispatch => {
         pullVehicleTypeDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(pullVehicleTypeDetail(id, onSuccessCallback, onFailureCallback))
         },
-        deleteVehicleTypeDetail: (postData, successCallback, failedCallback) => {
-            dispatch(deleteVehicleTypeDetail(postData, successCallback, failedCallback))
+        deleteVehicleTypeDetail: (id, successCallback, failedCallback) => {
+            dispatch(deleteVehicleTypeDetail(id, successCallback, failedCallback))
         },
     }
 }
