@@ -57,8 +57,10 @@ class AssociateCreateStep7Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
          // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
+        const parametersMap = new Map()
+        parametersMap.set("isArchived", 3)
+        this.props.pullHowHearList(1,1000, parametersMap);
+        this.props.pullTagList(1,1000, parametersMap);
     }
 
     componentWillUnmount() {

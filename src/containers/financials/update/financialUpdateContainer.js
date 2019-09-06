@@ -131,20 +131,22 @@ class FinancialUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-     componentDidMount() {
-         window.scrollTo(0, 0);  // Start the page at the top of the page.
-         this.props.pullServiceFeeList(1, 1000);
-         this.performCalculation();
-     }
+    componentDidMount() {
+        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        const parametersMap = new Map()
+        parametersMap.set("isArchived", 3)
+        this.props.pullServiceFeeList(1, 1000, parametersMap);
+        this.performCalculation();
+    }
 
-     componentWillUnmount() {
-         // This code will fix the "ReactJS & Redux: Can't perform a React state
-         // update on an unmounted component" issue as explained in:
-         // https://stackoverflow.com/a/53829700
-         this.setState = (state,callback)=>{
-             return;
-         };
-     }
+    componentWillUnmount() {
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
 
     /**
      *  API callback functions

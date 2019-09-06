@@ -68,8 +68,10 @@ class OrderLiteUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullSkillSetList(1, 1000, new Map(), this.onSuccessfulSkillSetsFetchCallback);
-        this.props.pullTagList(1,1000, new Map(), this.onSuccessfulTagsFetchCallback);
+        const parametersMap = new Map()
+        parametersMap.set("isArchived", 3)
+        this.props.pullSkillSetList(1, 1000, parametersMap, this.onSuccessfulSkillSetsFetchCallback);
+        this.props.pullTagList(1,1000, parametersMap, this.onSuccessfulTagsFetchCallback);
     }
 
     componentWillUnmount() {

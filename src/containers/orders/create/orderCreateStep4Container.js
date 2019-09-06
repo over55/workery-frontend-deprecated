@@ -41,7 +41,9 @@ class OrderCreateStep4Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullSkillSetList(1, 1000);
+        const parametersMap = new Map()
+        parametersMap.set("isArchived", 3)
+        this.props.pullSkillSetList(1, 1000, parametersMap);
     }
 
     componentWillUnmount() {
