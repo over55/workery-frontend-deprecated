@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import HowHearDeleteComponent from "../../../components/settings/howHears/howHearDeleteComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
+import HowHearDeleteComponent from "../../../../components/settings/howHears/delete/howHearDeleteComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
 
 
 class HowHearDeleteContainer extends Component {

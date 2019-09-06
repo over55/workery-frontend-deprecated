@@ -66,7 +66,7 @@ class RemoteListComponent extends Component {
             formatter: isForStaffIconFormatter,
         },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];

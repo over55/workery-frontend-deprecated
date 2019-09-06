@@ -174,7 +174,7 @@ import TagCreateContainer from "./settings/tags/create/tagCreateContainer";
 import TagUpdateContainer from "./settings/tags/update/tagUpdateContainer";
 
 import HowHearsListContainer from "./settings/howHears/list/howHearListContainer";
-import HowHearDeleteContainer from "./settings/howHears/howHearDeleteContainer";
+import HowHearDeleteContainer from "./settings/howHears/delete/howHearDeleteContainer";
 import HowHearCreateContainer from "./settings/howHears/create/howHearCreateContainer";
 import HowHearUpdateContainer from "./settings/howHears/update/howHearUpdateContainer";
 
