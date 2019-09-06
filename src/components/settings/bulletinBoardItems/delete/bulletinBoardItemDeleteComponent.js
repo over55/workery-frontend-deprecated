@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 
-class AwayLogDeleteComponent extends Component {
+class BulletinBoardItemDeleteComponent extends Component {
     render() {
-        const { awayLogData, onClick, onBack, flashMessage } = this.props;
+        const { text, onClick, onBack, isLoading } = this.props;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -18,7 +20,7 @@ class AwayLogDeleteComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/away-logs"><i className="fas fa-bullhorn"></i>&nbsp;AwayLogs</Link>
+                            <Link to="/settings/bulletin-board-items"><i className="fas fa-newspaper"></i>&nbsp;Office News</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-minus"></i>&nbsp;Remove
@@ -26,12 +28,10 @@ class AwayLogDeleteComponent extends Component {
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
-                <h1><i className="fas fa-minus"></i>&nbsp;Remove AwayLog</h1>
+                <h1><i className="fas fa-minus"></i>&nbsp;Remove Office News</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
-                        <p><strong>Please confirm these details before deleting the awayLog</strong></p>
+                        <p><strong>Please confirm these details before deleting the office news.</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
@@ -41,7 +41,7 @@ class AwayLogDeleteComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Text</th>
-                                    <td>{awayLogData.name}</td>
+                                    <td>{text}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -65,4 +65,4 @@ class AwayLogDeleteComponent extends Component {
     }
 }
 
-export default AwayLogDeleteComponent;
+export default BulletinBoardItemDeleteComponent;

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import VehicleTypeUpdateComponent from "../../../components/settings/vehicleTypes/vehicleTypeUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/vehicleTypeValidator";
+import VehicleTypeUpdateComponent from "../../../../components/settings/vehicleTypes/update/vehicleTypeUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import validateInput from "../../../../validators/vehicleTypeValidator";
+import { pullVehicleTypeDetail, putVehicleTypeDetail } from "../../../../actions/vehicleTypeActions";
 
 
 class VehicleTypeUpdateContainer extends Component {
@@ -18,19 +19,30 @@ class VehicleTypeUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         this.state = {
-            name: null,
+            text: "",
+            description: "",
             errors: {},
             isLoading: false,
-            slug: slug
+            id: parseInt(id),
         }
 
+        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onVehicleTypeFetchedCallback = this.onVehicleTypeFetchedCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -40,6 +52,7 @@ class VehicleTypeUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullVehicleTypeDetail(this.state.id, this.onVehicleTypeFetchedCallback)
     }
 
     componentWillUnmount() {
@@ -74,6 +87,14 @@ class VehicleTypeUpdateContainer extends Component {
         scroll.scrollToTop();
     }
 
+    onVehicleTypeFetchedCallback(vehicleTypeDetail) {
+        this.setState({
+            text: vehicleTypeDetail.text,
+            description: vehicleTypeDetail.description,
+            isLoading: false,
+        });
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
@@ -94,7 +115,16 @@ class VehicleTypeUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.onSuccessfulSubmissionCallback();
+            this.setState({
+                errors: [], isLoading: true,
+            }, ()=>{
+                this.props.putVehicleTypeDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
+
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -109,13 +139,15 @@ class VehicleTypeUpdateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, description, errors } = this.state;
         return (
             <VehicleTypeUpdateComponent
-                name={name}
+                text={text}
+                description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
+                isLoading={this.isLoading}
             />
         );
     }
@@ -131,7 +163,13 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        pullVehicleTypeDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(pullVehicleTypeDetail(id, onSuccessCallback, onFailureCallback))
+        },
+        putVehicleTypeDetail: (postData, successCallback, failedCallback) => {
+            dispatch(putVehicleTypeDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 

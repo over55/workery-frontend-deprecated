@@ -147,7 +147,7 @@ class SkillSetCreateContainer extends Component {
      */
 
     render() {
-        const { category, subCategory, insuranceRequirements, description, errors } = this.state;
+        const { category, subCategory, insuranceRequirements, description, errors, isLoading } = this.state;
         return (
             <SkillSetCreateComponent
                 category={category}
@@ -159,6 +159,7 @@ class SkillSetCreateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
+                isLoading={isLoading}
             />
         );
     }

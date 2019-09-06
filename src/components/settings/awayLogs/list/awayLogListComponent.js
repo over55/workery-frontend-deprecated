@@ -60,7 +60,7 @@ class RemoteListComponent extends Component {
             formatter: statusFormatter
         },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];

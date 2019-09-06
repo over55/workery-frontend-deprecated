@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
-class SkillSetDeleteComponent extends Component {
+class TagDeleteComponent extends Component {
     render() {
-        const { skillSetData, onClick, onBack, flashMessage } = this.props;
+        const { text, description, errors, isLoading, onClick, onBack } = this.props;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -18,7 +19,7 @@ class SkillSetDeleteComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/skill-sets"><i className="fas fa-graduation-cap"></i>&nbsp;Skill Set</Link>
+                            <Link to="/settings/tags"><i className="fas fa-tags"></i>&nbsp;Tags</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-minus"></i>&nbsp;Remove
@@ -26,12 +27,10 @@ class SkillSetDeleteComponent extends Component {
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
-                <h1><i className="fas fa-minus"></i>&nbsp;Remove SkillSet</h1>
+                <h1><i className="fas fa-minus"></i>&nbsp;Remove Tag</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
-                        <p><strong>Please confirm these details before deleting the skillSet</strong></p>
+                        <p><strong>Please confirm these details before deleting the tag</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
@@ -41,7 +40,11 @@ class SkillSetDeleteComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Text</th>
-                                    <td>{skillSetData.name}</td>
+                                    <td>{text}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{description}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -65,4 +68,4 @@ class SkillSetDeleteComponent extends Component {
     }
 }
 
-export default SkillSetDeleteComponent;
+export default TagDeleteComponent;

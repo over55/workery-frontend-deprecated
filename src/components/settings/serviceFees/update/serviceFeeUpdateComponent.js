@@ -8,7 +8,7 @@ import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 
 
-class ServiceFeeCreateComponent extends Component {
+class ServiceFeeUpdateComponent extends Component {
     render() {
         const { title, percentage, description, errors, onTextChange, isLoading, onClick } = this.props;
         return (
@@ -34,7 +34,7 @@ class ServiceFeeCreateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Create New Service Fee</h1>
+                            <h1>Update New Service Fee</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -90,4 +90,4 @@ class ServiceFeeCreateComponent extends Component {
     }
 }
 
-export default ServiceFeeCreateComponent;
+export default ServiceFeeUpdateComponent;

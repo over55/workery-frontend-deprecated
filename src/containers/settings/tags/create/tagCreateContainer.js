@@ -133,6 +133,7 @@ class TagCreateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
+                isLoading={this.isLoading}
             />
         );
     }

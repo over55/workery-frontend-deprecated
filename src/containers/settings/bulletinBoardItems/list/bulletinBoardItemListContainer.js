@@ -40,18 +40,18 @@ class BulletinBoardItemListContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        // DEVELOPERS NOTE:
-        // Since in the react-table does not have a default filter selected so
-        // when the page loads the API call does not get made! We need to do it
-        // here when the component finished loading. We only write this code
-        // here if no filter was selected in the table.
-        this.props.pullBulletinBoardItemList(
-            this.state.page,
-            this.state.sizePerPage,
-            this.state.parametersMap,
-            this.onSuccessfulSubmissionCallback,
-            this.onFailedSubmissionCallback
-        );
+        // // DEVELOPERS NOTE:
+        // // Since in the react-table does not have a default filter selected so
+        // // when the page loads the API call does not get made! We need to do it
+        // // here when the component finished loading. We only write this code
+        // // here if no filter was selected in the table.
+        // this.props.pullBulletinBoardItemList(
+        //     this.state.page,
+        //     this.state.sizePerPage,
+        //     this.state.parametersMap,
+        //     this.onSuccessfulSubmissionCallback,
+        //     this.onFailedSubmissionCallback
+        // );
     }
 
     componentWillUnmount() {
@@ -134,18 +134,19 @@ class BulletinBoardItemListContainer extends Component {
             );
 
         } else if (type === "filter") {
-            console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
+            console.log("FILTER", type, filters); // For debugging purposes only.
+            if (filters.isArchived === undefined) {
+                parametersMap.delete("isArchived");
             } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
+                const filterVal = filters.isArchived.filterVal;
+                parametersMap.set("isArchived", filterVal);
             }
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
+                    console.log("FILTER", parametersMap); // For debugging purposes only.
                     this.props.pullBulletinBoardItemList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );

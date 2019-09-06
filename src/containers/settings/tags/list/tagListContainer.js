@@ -135,11 +135,11 @@ class TagListContainer extends Component {
 
         } else if (type === "filter") {
             console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
+            if (filters.isArchived === undefined) {
+                parametersMap.delete("isArchived");
             } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
+                const filterVal = filters.isArchived.filterVal;
+                parametersMap.set("isArchived", filterVal);
             }
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },

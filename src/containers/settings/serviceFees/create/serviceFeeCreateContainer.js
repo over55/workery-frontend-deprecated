@@ -125,7 +125,7 @@ class ServiceFeeCreateContainer extends Component {
      */
 
     render() {
-        const { title, percentage, description, errors } = this.state;
+        const { title, percentage, description, errors, isLoading } = this.state;
         return (
             <ServiceFeeCreateComponent
                 title={title}
@@ -134,6 +134,7 @@ class ServiceFeeCreateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
+                isLoading={isLoading}
             />
         );
     }

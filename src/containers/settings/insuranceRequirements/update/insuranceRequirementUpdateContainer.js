@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import BulletinBoardItemCreateComponent from "../../../../components/settings/bulletinBoardItems/create/bulletinBoardItemCreateComponent";
+import InsuranceRequirementUpdateComponent from "../../../../components/settings/insuranceRequirements/update/insuranceRequirementUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import validateInput from "../../../../validators/bulletinBoardItemValidator";
-import { postBulletinBoardItemDetail } from "../../../../actions/bulletinBoardItemActions";
+import validateInput from "../../../../validators/insuranceRequirementValidator";
+import { pullInsuranceRequirementDetail, putInsuranceRequirementDetail } from "../../../../actions/insuranceRequirementActions";
 
 
-class BulletinBoardItemCreateContainer extends Component {
+class InsuranceRequirementUpdateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -16,23 +16,29 @@ class BulletinBoardItemCreateContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        // Since we are using the ``react-routes-dom`` library then we
+        // fetch the URL argument as follows.
+        const { id } = this.props.match.params;
+
         this.state = {
-            text: null,
+            text: "",
+            description: "",
             errors: {},
-            isLoading: false
+            isLoading: false,
+            id: parseInt(id)
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessCallback = this.onSuccessCallback.bind(this);
-        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onIRFetchCallback = this.onIRFetchCallback.bind(this);
     }
 
     getPostData() {
         let postData = Object.assign({}, this.state);
-
-        postData.extraText = this.state.text;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -46,6 +52,7 @@ class BulletinBoardItemCreateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullInsuranceRequirementDetail(this.state.id, this.onIRFetchCallback)
     }
 
     componentWillUnmount() {
@@ -62,13 +69,13 @@ class BulletinBoardItemCreateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessCallback(tag) {
+    onSuccessfulSubmissionCallback(insuranceRequirement) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Office news has been successfully created.");
-        this.props.history.push("/settings/bulletin-board-items");
+        this.props.setFlashMessage("success", "Insurance requirement has been successfully updated.");
+        this.props.history.push("/settings/insurance-requirements");
     }
 
-    onFailureCallback(errors) {
+    onFailedSubmissionCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -78,6 +85,14 @@ class BulletinBoardItemCreateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onIRFetchCallback(irDetail) {
+        this.setState({
+            text: irDetail.text,
+            description: irDetail.description,
+            isLoading: false,
+        });
     }
 
     /**
@@ -103,16 +118,16 @@ class BulletinBoardItemCreateContainer extends Component {
             this.setState({
                 errors: [], isLoading: true,
             }, ()=>{
-                this.props.postBulletinBoardItemDetail(
+                this.props.putInsuranceRequirementDetail(
                     this.getPostData(),
-                    this.onSuccessCallback,
-                    this.onFailureCallback
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
                 );
             });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailureCallback(errors);
+            this.onFailedSubmissionCallback(errors);
         }
     }
 
@@ -123,14 +138,14 @@ class BulletinBoardItemCreateContainer extends Component {
      */
 
     render() {
-        const { text, errors, isLoading } = this.state;
+        const { text, description, errors } = this.state;
         return (
-            <BulletinBoardItemCreateComponent
+            <InsuranceRequirementUpdateComponent
                 text={text}
+                description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
-                isLoading={isLoading}
             />
         );
     }
@@ -147,9 +162,12 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        postBulletinBoardItemDetail: (postData, successCallback, failedCallback) => {
-            dispatch(postBulletinBoardItemDetail(postData, successCallback, failedCallback))
-        }
+        pullInsuranceRequirementDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(pullInsuranceRequirementDetail(id, onSuccessCallback, onFailureCallback))
+        },
+        putInsuranceRequirementDetail: (postData, successCallback, failedCallback) => {
+            dispatch(putInsuranceRequirementDetail(postData, successCallback, failedCallback))
+        },
     }
 }
 
@@ -157,4 +175,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(BulletinBoardItemCreateContainer);
+)(InsuranceRequirementUpdateContainer);

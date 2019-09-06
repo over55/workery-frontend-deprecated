@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
-import { FlashMessageComponent } from "../../flashMessageComponent";
 
-
-class BulletinBoardItemDeleteComponent extends Component {
+class AwayLogDeleteComponent extends Component {
     render() {
-        const { tagData, onClick, onBack, flashMessage } = this.props;
+        const {
+            associate, associateOptions, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
+            onClick, onBack
+        } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -18,7 +21,7 @@ class BulletinBoardItemDeleteComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/bulletin-board-items"><i className="fas fa-newspaper"></i>&nbsp;Office News</Link>
+                            <Link to="/settings/away-logs"><i className="fas fa-bullhorn"></i>&nbsp;AwayLogs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-minus"></i>&nbsp;Remove
@@ -26,12 +29,10 @@ class BulletinBoardItemDeleteComponent extends Component {
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
-                <h1><i className="fas fa-minus"></i>&nbsp;Remove Office News</h1>
+                <h1><i className="fas fa-minus"></i>&nbsp;Remove AwayLog</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
-                        <p><strong>Please confirm these details before deleting the tag</strong></p>
+                        <p><strong>Please confirm these details before deleting the away log</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
@@ -40,8 +41,14 @@ class BulletinBoardItemDeleteComponent extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Text</th>
-                                    <td>{tagData.name}</td>
+                                    <th scope="row" className="bg-light">Associate #</th>
+                                    <td>{associate}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Start Date</th>
+                                    <td>
+                                        <Moment format="YYYY/MM/DD">{startDate}</Moment>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -65,4 +72,4 @@ class BulletinBoardItemDeleteComponent extends Component {
     }
 }
 
-export default BulletinBoardItemDeleteComponent;
+export default AwayLogDeleteComponent;

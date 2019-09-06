@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import InsuranceRequirementUpdateComponent from "../../../components/settings/insuranceRequirements/insuranceRequirementUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import validateInput from "../../../validators/insuranceRequirementValidator";
+import TagDeleteComponent from "../../../../components/settings/tags/delete/tagDeleteComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullTagDetail, deleteTagDetail } from "../../../../actions/tagActions";
 
 
-class InsuranceRequirementUpdateContainer extends Component {
+class TagDeleteContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -18,19 +18,21 @@ class InsuranceRequirementUpdateContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
-        const { slug } = this.props.match.params;
+        const { id } = this.props.match.params;
 
         this.state = {
-            name: null,
+            text: "",
+            description: "",
             errors: {},
             isLoading: false,
-            slug: slug
+            id: parseInt(id),
         }
 
-        this.onTextChange = this.onTextChange.bind(this);
+        this.onBack = this.onBack.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onTagFetchedCallback = this.onTagFetchedCallback.bind(this);
     }
 
     /**
@@ -40,6 +42,7 @@ class InsuranceRequirementUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullTagDetail(this.state.id, this.onTagFetchedCallback)
     }
 
     componentWillUnmount() {
@@ -56,10 +59,10 @@ class InsuranceRequirementUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(insuranceRequirement) {
+    onSuccessfulSubmissionCallback(tag) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Insurance requirement has been successfully updated.");
-        this.props.history.push("/settings/insurance-requirements");
+        this.props.setFlashMessage("success", "Tag has been successfully deleted.");
+        this.props.history.push("/settings/tags");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -74,34 +77,38 @@ class InsuranceRequirementUpdateContainer extends Component {
         scroll.scrollToTop();
     }
 
+    onTagFetchedCallback(tagDetail) {
+        this.setState({
+            text: tagDetail.text,
+            description: tagDetail.description,
+            isLoading: false,
+        });
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
+    onBack(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+        this.props.history.push("/settings/tags/");
     }
 
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-
-        // Perform client-side validation.
-        const { errors, isValid } = validateInput(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.onSuccessfulSubmissionCallback();
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailedSubmissionCallback(errors);
-        }
+        this.setState({
+            errors: [], isLoading: true,
+        }, ()=>{
+            this.props.deleteTagDetail(
+                this.state.id,
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
+        });
     }
-
 
     /**
      *  Main render function
@@ -109,13 +116,15 @@ class InsuranceRequirementUpdateContainer extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { text, description, errors, isLoading } = this.state;
         return (
-            <InsuranceRequirementUpdateComponent
-                name={name}
+            <TagDeleteComponent
+                text={text}
+                description={description}
                 errors={errors}
-                onTextChange={this.onTextChange}
+                onBack={this.onBack}
                 onClick={this.onClick}
+                isLoading={isLoading}
             />
         );
     }
@@ -124,6 +133,7 @@ class InsuranceRequirementUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        flashMessage: store.flashMessageState,
     };
 }
 
@@ -131,7 +141,13 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
-        }
+        },
+        pullTagDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(pullTagDetail(id, onSuccessCallback, onFailureCallback))
+        },
+        deleteTagDetail: (id, successCallback, failedCallback) => {
+            dispatch(deleteTagDetail(id, successCallback, failedCallback))
+        },
     }
 }
 
@@ -139,4 +155,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(InsuranceRequirementUpdateContainer);
+)(TagDeleteContainer);

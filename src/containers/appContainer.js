@@ -169,17 +169,17 @@ import FinancialUpdateContainer from "./financials/update/financialUpdateContain
 import SettingListContainer from "./settings/settingListContainer";
 
 import TagsListContainer from "./settings/tags/list/tagListContainer";
-import TagDeleteContainer from "./settings/tags/tagDeleteContainer";
+import TagDeleteContainer from "./settings/tags/delete/tagDeleteContainer";
 import TagCreateContainer from "./settings/tags/create/tagCreateContainer";
 import TagUpdateContainer from "./settings/tags/update/tagUpdateContainer";
 
 import HowHearsListContainer from "./settings/howHears/list/howHearListContainer";
 import HowHearDeleteContainer from "./settings/howHears/howHearDeleteContainer";
 import HowHearCreateContainer from "./settings/howHears/create/howHearCreateContainer";
-import HowHearUpdateContainer from "./settings/howHears/howHearUpdateContainer";
+import HowHearUpdateContainer from "./settings/howHears/update/howHearUpdateContainer";
 
 import AwayLogListContainer from "./settings/awayLogs/list/awayLogListContainer";
-import AwayLogDeleteContainer from "./settings/awayLogs/awayLogDeleteContainer";
+import AwayLogDeleteContainer from "./settings/awayLogs/delete/awayLogDeleteContainer";
 import AwayLogCreateContainer from "./settings/awayLogs/create/awayLogCreateContainer";
 import AwayLogUpdateContainer from "./settings/awayLogs/update/awayLogUpdateContainer";
 
@@ -189,31 +189,31 @@ import ResourceCreateContainer from "./settings/resources/resourceCreateContaine
 import ResourceUpdateContainer from "./settings/resources/resourceUpdateContainer";
 
 import BulletinBoardItemsListContainer from "./settings/bulletinBoardItems/list/bulletinBoardItemListContainer";
-import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/bulletinBoardItemDeleteContainer";
+import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/delete/bulletinBoardItemDeleteContainer";
 import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/create/bulletinBoardItemCreateContainer";
 import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/update/bulletinBoardItemUpdateContainer";
 
 import SkillSetsListContainer from "./settings/skillSets/list/skillSetListContainer";
-import SkillSetDeleteContainer from "./settings/skillSets/skillSetDeleteContainer";
+import SkillSetDeleteContainer from "./settings/skillSets/delete/skillSetDeleteContainer";
 import SkillSetCreateContainer from "./settings/skillSets/create/skillSetCreateContainer";
 import SkillSetUpdateContainer from "./settings/skillSets/update/skillSetUpdateContainer";
 
 import InsuranceRequirementsListContainer from "./settings/insuranceRequirements/list/insuranceRequirementListContainer";
 import InsuranceRequirementDeleteContainer from "./settings/insuranceRequirements/insuranceRequirementDeleteContainer";
 import InsuranceRequirementCreateContainer from "./settings/insuranceRequirements/create/insuranceRequirementCreateContainer";
-import InsuranceRequirementUpdateContainer from "./settings/insuranceRequirements/insuranceRequirementUpdateContainer";
+import InsuranceRequirementUpdateContainer from "./settings/insuranceRequirements/update/insuranceRequirementUpdateContainer";
 
 import ServiceFeesListContainer from "./settings/serviceFees/list/serviceFeeListContainer";
 import ServiceFeeDeleteContainer from "./settings/serviceFees/serviceFeeDeleteContainer";
 import ServiceFeeCreateContainer from "./settings/serviceFees/create/serviceFeeCreateContainer";
-import ServiceFeeUpdateContainer from "./settings/serviceFees/serviceFeeUpdateContainer";
+import ServiceFeeUpdateContainer from "./settings/serviceFees/update/serviceFeeUpdateContainer";
 
 import DeactivatedClientListContainer from "./settings/deactivatedClients/list/deactivatedClientListContainer";
 
 import VehicleTypesListContainer from "./settings/vehicleTypes/list/vehicleTypeListContainer";
 import VehicleTypeDeleteContainer from "./settings/vehicleTypes/vehicleTypeDeleteContainer";
 import VehicleTypeCreateContainer from "./settings/vehicleTypes/create/vehicleTypeCreateContainer";
-import VehicleTypeUpdateContainer from "./settings/vehicleTypes/vehicleTypeUpdateContainer";
+import VehicleTypeUpdateContainer from "./settings/vehicleTypes/update/vehicleTypeUpdateContainer";
 
 import PartnerListContainer from "./partners/list/partnerListContainer";
 import PartnerSearchContainer from "./partners/search/partnerSearchContainer";

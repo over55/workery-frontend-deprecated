@@ -125,7 +125,7 @@ class VehicleTypeCreateContainer extends Component {
      */
 
     render() {
-        const { text, description, errors } = this.state;
+        const { text, description, errors, isLoading } = this.state;
         return (
             <VehicleTypeCreateComponent
                 text={text}
@@ -133,6 +133,7 @@ class VehicleTypeCreateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
+                isLoading={isLoading}
             />
         );
     }

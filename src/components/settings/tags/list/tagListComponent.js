@@ -32,8 +32,8 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
+            3: 'Active',
+            2: 'Archived',
         };
 
         const columns = [{
@@ -45,8 +45,18 @@ class RemoteListComponent extends Component {
             text: 'Description',
             sort: true
         },{
+            dataField: 'isArchived',
+            text: 'Status',
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 3,
+                withoutEmptyOption: true
+            }),
+            formatter: isArchivedFormatter
+        },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];
@@ -101,6 +111,15 @@ class RemoteListComponent extends Component {
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
             />
         );
+    }
+}
+
+
+function isArchivedFormatter(cell, row){
+    if (row.isArchived === false) {
+        return <i className="fas fa-check-circle"></i>
+    } else {
+        return <i className="fas fa-archive"></i>
     }
 }
 

@@ -2,16 +2,18 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 
 
-class InsuranceRequirementUpdateComponent extends Component {
+class VehicleTypeUpdateComponent extends Component {
     render() {
-        const { name, errors, onTextChange, isLoading, onClick } = this.props;
+        const { text, description, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -21,10 +23,10 @@ class InsuranceRequirementUpdateComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/insurance-requirements"><i className="fas fa-balance-scale"></i>&nbsp;Insurance Requirements</Link>
+                            <Link to="/settings/vehicle-types"><i className="fas fa-car"></i>&nbsp;Vehicle Types</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-edit"></i>&nbsp;Update
+                            <i className="fas fa-plus"></i>&nbsp;Add
                         </li>
                     </ol>
                 </nav>
@@ -32,7 +34,7 @@ class InsuranceRequirementUpdateComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Update Insurance Requirement</h1>
+                            <h1>Update New Vehicle Type</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -40,19 +42,30 @@ class InsuranceRequirementUpdateComponent extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.name}
-                                label="Name (*)"
+                                error={errors.text}
+                                label="Text (*)"
                                 onChange={onTextChange}
-                                value={name}
-                                name="name"
+                                value={text}
+                                name="text"
                                 type="text"
+                            />
+
+                            <BootstrapTextarea
+                                name="description"
+                                borderColour="border-primary"
+                                label="Description (*)"
+                                placeholder="Description"
+                                rows="5"
+                                value={description}
+                                onChange={onTextChange}
+                                error={errors.description}
                             />
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/settings/insurance-requirements" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/settings/vehicle-types" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
@@ -66,4 +79,4 @@ class InsuranceRequirementUpdateComponent extends Component {
     }
 }
 
-export default InsuranceRequirementUpdateComponent;
+export default VehicleTypeUpdateComponent;
