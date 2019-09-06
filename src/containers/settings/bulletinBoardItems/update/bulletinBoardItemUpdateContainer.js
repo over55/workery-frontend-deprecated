@@ -143,7 +143,7 @@ class BulletinBoardItemUpdateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
-                isLoading={this.isLoading}
+                isLoading={isLoading}
             />
         );
     }

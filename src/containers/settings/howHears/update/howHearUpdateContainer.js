@@ -149,7 +149,7 @@ class HowHearUpdateContainer extends Component {
      */
 
     render() {
-        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors } = this.state;
+        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors, isLoading } = this.state;
         return (
             <HowHearUpdateComponent
                 text={text}
@@ -161,7 +161,7 @@ class HowHearUpdateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
-                isLoading={this.isLoading}
+                isLoading={isLoading}
             />
         );
     }

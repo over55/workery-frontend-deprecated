@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+
 
 class HowHearDeleteComponent extends Component {
     render() {
-        const { howHearData, onClick, onBack } = this.props;
+        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors, isLoading, onClick } = this.props;
         return (
             <div>
+                <BootstrapErrorsProcessingAlert isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -37,7 +40,11 @@ class HowHearDeleteComponent extends Component {
                             </tr>
                             <tr>
                                 <th scope="row" className="bg-light">Text</th>
-                                <td>{howHearData.name}</td>
+                                <td>{text}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" className="bg-light">Sort #</th>
+                                <td>{sortNumber}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -47,9 +54,9 @@ class HowHearDeleteComponent extends Component {
                                 <i className="fas fa-check-circle"></i>&nbsp;Confirm & Submit
                             </button>
 
-                            <button className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" onClick={onBack}>
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to="/settings/how-hears">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
-                            </button>
+                            </Link>
                         </div>
 
                     </div>

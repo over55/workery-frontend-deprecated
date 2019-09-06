@@ -125,7 +125,7 @@ class TagCreateContainer extends Component {
      */
 
     render() {
-        const { text, description, errors } = this.state;
+        const { text, description, errors, isLoading } = this.state;
         return (
             <TagCreateComponent
                 text={text}
@@ -133,7 +133,7 @@ class TagCreateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
-                isLoading={this.isLoading}
+                isLoading={isLoading}
             />
         );
     }

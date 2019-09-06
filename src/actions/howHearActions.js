@@ -326,6 +326,82 @@ export function putHowHearDetail(postData, successCallback, failedCallback) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//                                 DELETE                                     //
+////////////////////////////////////////////////////////////////////////////////
+
+export function deleteHowHearDetail(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to fetch latest user details.
+        store.dispatch(
+            setHowHearDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        const aURL = WORKERY_HOW_HEAR_DETAIL_API_ENDPOINT+id+"/";
+
+        customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            // console.log(successResult); // For debugging purposes.
+
+            let profile = camelizeKeys(responseData);
+
+            // Extra.
+            profile['isAPIRequestRunning'] = false;
+            profile['errors'] = {};
+
+            console.log("deleteHowHearDetail | Success:", profile); // For debugging purposes.
+
+            // Update the global state of the application to store our
+            // user profile for the application.
+            store.dispatch(
+                setHowHearDetailSuccess(profile)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(profile);
+            }
+
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("deleteHowHearDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setHowHearDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => { // FINALLY
+            // Do nothing.
+        });
+
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //                                REDUX ACTIONS                               //
 ////////////////////////////////////////////////////////////////////////////////
 

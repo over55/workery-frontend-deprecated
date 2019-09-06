@@ -32,8 +32,8 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
+            3: 'Active',
+            2: 'Archived',
         };
 
         const columns = [{
@@ -64,6 +64,16 @@ class RemoteListComponent extends Component {
             text: 'Staff ?',
             sort: true,
             formatter: isForStaffIconFormatter,
+        },{
+            dataField: 'isArchived',
+            text: 'Status',
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 3,
+                withoutEmptyOption: true
+            }),
+            formatter: isArchivedFormatter
         },{
             dataField: 'id',
             text: '',
@@ -157,6 +167,15 @@ function isForStaffIconFormatter(cell, row){
         return <i className="fas fa-check-circle"></i>;
     } else {
         return <i className="fas fa-times-circle"></i>
+    }
+}
+
+
+function isArchivedFormatter(cell, row){
+    if (row.isArchived === false) {
+        return <i className="fas fa-check-circle"></i>
+    } else {
+        return <i className="fas fa-archive"></i>
     }
 }
 

@@ -139,7 +139,7 @@ class TagUpdateContainer extends Component {
      */
 
     render() {
-        const { text, description, errors } = this.state;
+        const { text, description, errors, isLoading } = this.state;
         return (
             <TagUpdateComponent
                 text={text}
@@ -147,7 +147,7 @@ class TagUpdateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}
-                isLoading={this.isLoading}
+                isLoading={isLoading}
             />
         );
     }
