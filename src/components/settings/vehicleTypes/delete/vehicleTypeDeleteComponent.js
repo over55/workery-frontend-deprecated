@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
 class VehicleTypeDeleteComponent extends Component {
     render() {
-        const { vehicleTypeData, onClick, onBack, flashMessage } = this.props;
+        const { text, description, onClick, onBack, isLoading } = this.props;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -26,12 +27,10 @@ class VehicleTypeDeleteComponent extends Component {
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
                 <h1><i className="fas fa-minus"></i>&nbsp;Remove Vehicle Type</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
-                        <p><strong>Please confirm these details before deleting the vehicleType</strong></p>
+                        <p><strong>Please confirm these details before deleting the vehicle type</strong></p>
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">
@@ -41,7 +40,11 @@ class VehicleTypeDeleteComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Text</th>
-                                    <td>{vehicleTypeData.name}</td>
+                                    <td>{text}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{description}</td>
                                 </tr>
                             </tbody>
                         </table>

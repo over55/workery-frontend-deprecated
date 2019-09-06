@@ -211,7 +211,7 @@ import ServiceFeeUpdateContainer from "./settings/serviceFees/update/serviceFeeU
 import DeactivatedClientListContainer from "./settings/deactivatedClients/list/deactivatedClientListContainer";
 
 import VehicleTypesListContainer from "./settings/vehicleTypes/list/vehicleTypeListContainer";
-import VehicleTypeDeleteContainer from "./settings/vehicleTypes/vehicleTypeDeleteContainer";
+import VehicleTypeDeleteContainer from "./settings/vehicleTypes/delete/vehicleTypeDeleteContainer";
 import VehicleTypeCreateContainer from "./settings/vehicleTypes/create/vehicleTypeCreateContainer";
 import VehicleTypeUpdateContainer from "./settings/vehicleTypes/update/vehicleTypeUpdateContainer";
 
