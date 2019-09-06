@@ -199,7 +199,7 @@ import SkillSetCreateContainer from "./settings/skillSets/create/skillSetCreateC
 import SkillSetUpdateContainer from "./settings/skillSets/update/skillSetUpdateContainer";
 
 import InsuranceRequirementsListContainer from "./settings/insuranceRequirements/list/insuranceRequirementListContainer";
-import InsuranceRequirementDeleteContainer from "./settings/insuranceRequirements/insuranceRequirementDeleteContainer";
+import InsuranceRequirementDeleteContainer from "./settings/insuranceRequirements/delete/insuranceRequirementDeleteContainer";
 import InsuranceRequirementCreateContainer from "./settings/insuranceRequirements/create/insuranceRequirementCreateContainer";
 import InsuranceRequirementUpdateContainer from "./settings/insuranceRequirements/update/insuranceRequirementUpdateContainer";
 
@@ -255,7 +255,7 @@ class AppContainer extends React.Component {
                     <div className="d-flex align-items-stretch">
                         <main id="main" role="main">
                             <ScrollUpButton ContainerClassName="ScrollUpButtonCustomContainer" TransitionClassName="ScrollUpButtonCustomToggled" >
-								
+
 							</ScrollUpButton>
                             <Switch>
                                 { /* ACCOUNT + GENERAL */}
