@@ -1177,10 +1177,12 @@ aside.ScrollUpButton__Container:focus {
 	color: #fff;
     background-color: #17a2b8;
     border-color: #17a2b8;
+	z-index: 9999;
 }
 .ScrollUpButtonCustomToggled {
 	right: 20px;
 }
-.ScrollUpButtonCustomContainer span::before {
+/*.ScrollUpButtonCustomContainer span::before {
 	content: "\f106";
-}
+}*/
+
