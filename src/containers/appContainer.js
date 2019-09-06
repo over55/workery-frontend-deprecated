@@ -204,7 +204,7 @@ import InsuranceRequirementCreateContainer from "./settings/insuranceRequirement
 import InsuranceRequirementUpdateContainer from "./settings/insuranceRequirements/update/insuranceRequirementUpdateContainer";
 
 import ServiceFeesListContainer from "./settings/serviceFees/list/serviceFeeListContainer";
-import ServiceFeeDeleteContainer from "./settings/serviceFees/serviceFeeDeleteContainer";
+import ServiceFeeDeleteContainer from "./settings/serviceFees/delete/serviceFeeDeleteContainer";
 import ServiceFeeCreateContainer from "./settings/serviceFees/create/serviceFeeCreateContainer";
 import ServiceFeeUpdateContainer from "./settings/serviceFees/update/serviceFeeUpdateContainer";
 

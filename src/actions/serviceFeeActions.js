@@ -326,6 +326,82 @@ export function putServiceFeeDetail(postData, successCallback, failedCallback) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//                                  DELETE                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+export function deleteServiceFeeDetail(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to fetch latest user details.
+        store.dispatch(
+            setServiceFeeDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        const aURL = WORKERY_SERVICE_FEE_DETAIL_API_ENDPOINT+id+"/";
+
+        customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            // console.log(successResult); // For debugging purposes.
+
+            let profile = camelizeKeys(responseData);
+
+            // Extra.
+            profile['isAPIRequestRunning'] = false;
+            profile['errors'] = {};
+
+            console.log("deleteServiceFeeDetail | Success:", profile); // For debugging purposes.
+
+            // Update the global state of the application to store our
+            // user profile for the application.
+            store.dispatch(
+                setServiceFeeDetailSuccess(profile)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(profile);
+            }
+
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("deleteServiceFeeDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setServiceFeeDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => { // FINALLY
+            // Do nothing.
+        });
+
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //                                REDUX ACTIONS                               //
 ////////////////////////////////////////////////////////////////////////////////
 

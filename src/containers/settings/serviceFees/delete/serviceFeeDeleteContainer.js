@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import InsuranceRequirementDeleteComponent from "../../../../components/settings/insuranceRequirements/delete/insuranceRequirementDeleteComponent";
+import ServiceFeeDeleteComponent from "../../../../components/settings/serviceFees/delete/serviceFeeDeleteComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import validateInput from "../../../../validators/insuranceRequirementValidator";
-import { pullInsuranceRequirementDetail, deleteInsuranceRequirementDetail } from "../../../../actions/insuranceRequirementActions";
+import validateInput from "../../../../validators/serviceFeeValidator";
+import { deleteServiceFeeDetail, pullServiceFeeDetail } from "../../../../actions/serviceFeeActions";
 
 
-class InsuranceRequirementDeleteContainer extends Component {
+class ServiceFeeDeleteContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -22,17 +22,30 @@ class InsuranceRequirementDeleteContainer extends Component {
         const { id } = this.props.match.params;
 
         this.state = {
-            text: "",
+            title: "",
+            percentage: "",
             description: "",
             errors: {},
             isLoading: false,
-            id: parseInt(id)
+            id: parseInt(id),
         }
 
+        this.getPostData = this.getPostData.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
-        this.onIRFetchCallback = this.onIRFetchCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onServiceFeeCallback = this.onServiceFeeCallback.bind(this);
+    }
+
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        postData.extraText = this.state.text;
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -42,7 +55,7 @@ class InsuranceRequirementDeleteContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullInsuranceRequirementDetail(this.state.id, this.onIRFetchCallback)
+        this.props.pullServiceFeeDetail(this.state.id, this.onServiceFeeCallback)
     }
 
     componentWillUnmount() {
@@ -59,13 +72,13 @@ class InsuranceRequirementDeleteContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(insuranceRequirement) {
+    onSuccessCallback(serviceFee) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Insurance requirement has been successfully deleted.");
-        this.props.history.push("/settings/insurance-requirements");
+        this.props.setFlashMessage("success", "Service fee has been successfully deleted.");
+        this.props.history.push("/settings/service-fees");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
         this.setState({
             errors: errors
         })
@@ -77,12 +90,13 @@ class InsuranceRequirementDeleteContainer extends Component {
         scroll.scrollToTop();
     }
 
-    onIRFetchCallback(irDetail) {
+    onServiceFeeCallback(sfDetail) {
         this.setState({
-            text: irDetail.text,
-            description: irDetail.description,
-            isLoading: false,
-        });
+            title: sfDetail.title,
+            percentage: sfDetail.percentage,
+            description: sfDetail.description,
+            errors: {},
+        })
     }
 
     /**
@@ -90,17 +104,20 @@ class InsuranceRequirementDeleteContainer extends Component {
      *------------------------------------------------------------
      */
 
+    onTextChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-
-        this.setState({
-            errors: [], isLoading: true,
-        }, ()=>{
-            this.props.deleteInsuranceRequirementDetail(
+        this.setState({ errors: {}, isLoading: true, }, ()=>{
+            this.props.deleteServiceFeeDetail(
                 this.state.id,
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
+                this.onSuccessCallback,
+                this.onFailureCallback
             );
         });
     }
@@ -112,10 +129,11 @@ class InsuranceRequirementDeleteContainer extends Component {
      */
 
     render() {
-        const { text, description, errors, isLoading } = this.state;
+        const { title, percentage, description, errors, isLoading } = this.state;
         return (
-            <InsuranceRequirementDeleteComponent
-                text={text}
+            <ServiceFeeDeleteComponent
+                title={title}
+                percentage={percentage}
                 description={description}
                 errors={errors}
                 onTextChange={this.onTextChange}
@@ -137,11 +155,11 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        pullInsuranceRequirementDetail: (id, onSuccessCallback, onFailureCallback) => {
-            dispatch(pullInsuranceRequirementDetail(id, onSuccessCallback, onFailureCallback))
+        deleteServiceFeeDetail: (postData, successCallback, failedCallback) => {
+            dispatch(deleteServiceFeeDetail(postData, successCallback, failedCallback))
         },
-        deleteInsuranceRequirementDetail: (postData, successCallback, failedCallback) => {
-            dispatch(deleteInsuranceRequirementDetail(postData, successCallback, failedCallback))
+        pullServiceFeeDetail: (id, successCallback, failedCallback) => {
+            dispatch(pullServiceFeeDetail(id, successCallback, failedCallback))
         },
     }
 }
@@ -150,4 +168,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(InsuranceRequirementDeleteContainer);
+)(ServiceFeeDeleteContainer);

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
 class ServiceFeeDeleteComponent extends Component {
     render() {
-        const { serviceFeeData, onClick, onBack, flashMessage } = this.props;
+        const { title, percentage, description, onClick, isLoading } = this.props;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -26,8 +27,6 @@ class ServiceFeeDeleteComponent extends Component {
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
                 <h1><i className="fas fa-minus"></i>&nbsp;Remove Service Fee</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
@@ -41,7 +40,15 @@ class ServiceFeeDeleteComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Text</th>
-                                    <td>{serviceFeeData.name}</td>
+                                    <td>{title}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Percentage</th>
+                                    <td>{percentage}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Description</th>
+                                    <td>{description}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -51,9 +58,9 @@ class ServiceFeeDeleteComponent extends Component {
                                 <i className="fas fa-check-circle"></i>&nbsp;Confirm & Submit
                             </button>
 
-                            <button className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" onClick={onBack}>
+                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to="/settings/service-fees">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
-                            </button>
+                            </Link>
                         </div>
 
                     </div>
