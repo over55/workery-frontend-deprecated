@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import BulletinBoardItemDeleteComponent from "../../../../components/settings/bulletinBoardItems/delete/bulletinBoardItemDeleteComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { pullBulletinBoardItemDetail, putBulletinBoardItemDetail } from "../../../../actions/bulletinBoardItemActions";
+import { pullBulletinBoardItemDetail, deleteBulletinBoardItemDetail } from "../../../../actions/bulletinBoardItemActions";
 
 
 class BulletinBoardItemDeleteContainer extends Component {
@@ -23,6 +23,7 @@ class BulletinBoardItemDeleteContainer extends Component {
         // Update state.
         this.state = {
             id: id,
+            isLoading: false,
         }
 
         this.onBack = this.onBack.bind(this);
@@ -92,8 +93,13 @@ class BulletinBoardItemDeleteContainer extends Component {
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.setFlashMessage("success", "Office news has been successfully deleted.");
-        this.props.history.push("/settings/bulletin-board-items");
+        this.setState({ errors: {}, isLoading: true, }, ()=>{
+            this.props.deleteBulletinBoardItemDetail(
+                this.state.id,
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
+        });
     }
 
     /**
@@ -105,6 +111,7 @@ class BulletinBoardItemDeleteContainer extends Component {
         return (
             <BulletinBoardItemDeleteComponent
                 text={this.state.text}
+                isLoading={this.state.isLoading}
                 onBack={this.onBack}
                 onClick={this.onClick}
             />
@@ -126,6 +133,11 @@ const mapDispatchToProps = dispatch => {
         pullBulletinBoardItemDetail: (bbiId, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullBulletinBoardItemDetail(bbiId, onSuccessCallback, onFailureCallback)
+            )
+        },
+        deleteBulletinBoardItemDetail: (bbiId, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                deleteBulletinBoardItemDetail(bbiId, onSuccessCallback, onFailureCallback)
             )
         },
     }

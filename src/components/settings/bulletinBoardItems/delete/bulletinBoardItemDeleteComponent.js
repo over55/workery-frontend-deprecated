@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 
 class BulletinBoardItemDeleteComponent extends Component {
     render() {
-        const { text, onClick, onBack, flashMessage } = this.props;
+        const { text, onClick, onBack, isLoading } = this.props;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -25,8 +27,6 @@ class BulletinBoardItemDeleteComponent extends Component {
                         </li>
                     </ol>
                 </nav>
-
-                <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-minus"></i>&nbsp;Remove Office News</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">

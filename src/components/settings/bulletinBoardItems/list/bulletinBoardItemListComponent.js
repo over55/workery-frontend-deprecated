@@ -34,8 +34,8 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Inactive',
+            3: 'Active',
+            2: 'Archived',
         };
 
         const defaultSorted = [{
@@ -52,6 +52,16 @@ class RemoteListComponent extends Component {
             text: 'Created',
             sort: true,
             formatter: dateTimeFormatter,
+        },{
+            dataField: 'isArchived',
+            text: 'Status',
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 3,
+                withoutEmptyOption: true
+            }),
+            formatter: isArchivedFormatter
         },{
             dataField: 'id',
             text: '',
@@ -92,7 +102,7 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ bulletinBoardItems }
                 columns={ columns }
-                defaultSorted={ defaultSorted } 
+                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There is no office news at the moment"
@@ -115,15 +125,29 @@ function dateTimeFormatter(cell, row){
 }
 
 
+function isArchivedFormatter(cell, row){
+    if (row.isArchived === false) {
+        return <i className="fas fa-check-circle"></i>
+    } else {
+        return <i className="fas fa-archive"></i>
+    }
+}
+
+
 function detailLinkFormatter(cell, row){
     return (
         <div>
-            <Link to={`/settings/bulletin-board-item/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
-                <i className="fas fa-edit"></i>&nbsp;Edit
-            </Link>&nbsp;&nbsp;&nbsp;
-            <Link to={`/settings/bulletin-board-item/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
-                <i className="fas fa-minus"></i>&nbsp;Remove
-            </Link>
+            {row.isArchived
+                ?""
+                :<div>
+                    <Link to={`/settings/bulletin-board-item/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
+                        <i className="fas fa-edit"></i>&nbsp;Edit
+                    </Link>&nbsp;&nbsp;&nbsp;
+                    <Link to={`/settings/bulletin-board-item/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
+                        <i className="fas fa-minus"></i>&nbsp;Remove
+                    </Link>
+                </div>
+            }
         </div>
     )
 }

@@ -330,6 +330,82 @@ export function putBulletinBoardItemDetail(postData, successCallback, failedCall
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//                                 DELETE                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+export function deleteBulletinBoardItemDetail(id, successCallback, failedCallback) {
+    return dispatch => {
+        // Change the global state to attempting to fetch latest user details.
+        store.dispatch(
+            setBulletinBoardItemDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        const aURL = WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+id+"/";
+
+        customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            // console.log(successResult); // For debugging purposes.
+
+            let profile = camelizeKeys(responseData);
+
+            // Extra.
+            profile['isAPIRequestRunning'] = false;
+            profile['errors'] = {};
+
+            console.log("pullBulletinBoardItemDetail | Success:", profile); // For debugging purposes.
+
+            // Update the global state of the application to store our
+            // user profile for the application.
+            store.dispatch(
+                setBulletinBoardItemDetailSuccess(profile)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (successCallback) {
+                successCallback(profile);
+            }
+
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("pullBulletinBoardItemDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setBulletinBoardItemDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (failedCallback) {
+                    failedCallback(errors);
+                }
+            }
+
+        }).then( () => { // FINALLY
+            // Do nothing.
+        });
+
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //                                REDUX ACTIONS                               //
 ////////////////////////////////////////////////////////////////////////////////
 
