@@ -286,7 +286,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                             }
                                             */ }
                                             <li>
-                                                <Link to={`/staff/${id}/delete`}>
+                                                <Link to={`/staff/${id}/archive`}>
                                                     Archive&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>

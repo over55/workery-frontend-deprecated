@@ -14,7 +14,8 @@ import {
     WORKERY_STAFF_CONTACT_UPDATE_API_ENDPOINT,
     WORKERY_STAFF_ADDRESS_UPDATE_API_ENDPOINT,
     WORKERY_STAFF_ACCOUNT_UPDATE_API_ENDPOINT,
-    WORKERY_STAFF_METRICS_UPDATE_API_ENDPOINT
+    WORKERY_STAFF_METRICS_UPDATE_API_ENDPOINT,
+    WORKERY_STAFF_ARCHIVE_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -181,7 +182,6 @@ export function postStaffDetail(postData, successCallback, failedCallback) {
 
     }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                RETRIEVE                                    //
@@ -684,6 +684,82 @@ export function deleteStaffDetail(id, onSuccessCallback, onFailureCallback) {
             }
 
         }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//                                  DELETE                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+export function archiveStaffDetail(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to fetch latest user details.
+        store.dispatch(
+            setStaffDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        const aURL = WORKERY_STAFF_ARCHIVE_API_ENDPOINT.replace("XXX", id);
+
+        customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            // console.log(successResult); // For debugging purposes.
+
+            let staff = camelizeKeys(responseData);
+
+            // Extra.
+            staff['isAPIRequestRunning'] = false;
+            staff['errors'] = {};
+
+            console.log("archiveStaffDetail | Success:", staff); // For debugging purposes.
+
+            // Update the global state of the application to store our
+            // user staff for the application.
+            store.dispatch(
+                setStaffDetailSuccess(staff)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(staff);
+            }
+
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("archiveStaffDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setStaffDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => { // FINALLY
             // Do nothing.
         });
 
