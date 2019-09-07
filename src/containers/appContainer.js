@@ -193,6 +193,7 @@ import BulletinBoardItemsListContainer from "./settings/bulletinBoardItems/list/
 import BulletinBoardItemDeleteContainer from "./settings/bulletinBoardItems/delete/bulletinBoardItemDeleteContainer";
 import BulletinBoardItemCreateContainer from "./settings/bulletinBoardItems/create/bulletinBoardItemCreateContainer";
 import BulletinBoardItemUpdateContainer from "./settings/bulletinBoardItems/update/bulletinBoardItemUpdateContainer";
+import BulletinBoardItemRetrieveContainer from "./settings/bulletinBoardItems/retrieve/bulletinBoardItemRetrieveContainer";
 
 import SkillSetsListContainer from "./settings/skillSets/list/skillSetListContainer";
 import SkillSetDeleteContainer from "./settings/skillSets/delete/skillSetDeleteContainer";
@@ -432,6 +433,7 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/resource/:id/update" exact component={requiresAuth(ResourceUpdateContainer)} />
                                 <Route path="/settings/bulletin-board-items" exact component={requiresAuth(BulletinBoardItemsListContainer)} />
                                 <Route path="/settings/bulletin-board-items/add" exact component={requiresAuth(BulletinBoardItemCreateContainer)} />
+                                <Route path="/settings/bulletin-board-item/:id" exact component={requiresAuth(BulletinBoardItemRetrieveContainer)} />
                                 <Route path="/settings/bulletin-board-item/:id/delete" exact component={requiresAuth(BulletinBoardItemDeleteContainer)} />
                                 <Route path="/settings/bulletin-board-item/:id/update" exact component={requiresAuth(BulletinBoardItemUpdateContainer)} />
                                 <Route path="/settings/skill-sets" exact component={requiresAuth(SkillSetsListContainer)} />

@@ -138,7 +138,11 @@ function detailLinkFormatter(cell, row){
     return (
         <div>
             {row.isArchived
-                ?""
+                ?<div>
+                    <Link to={`/settings/bulletin-board-item/${row.id}`}>
+                        View&nbsp;<i className="fas fa-chevron-right"></i>
+                    </Link>
+                </div>
                 :<div>
                     <Link to={`/settings/bulletin-board-item/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
                         <i className="fas fa-edit"></i>&nbsp;Edit
