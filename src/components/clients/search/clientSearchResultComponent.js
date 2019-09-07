@@ -22,7 +22,7 @@ export default class ClientSearchResultComponent extends Component {
         const {
             clients, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick, onClientClick
         } = this.props;
-
+        const hasNoClients = clients.length <= 0;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -51,11 +51,21 @@ export default class ClientSearchResultComponent extends Component {
                             <i className="fas fa-list"></i>&nbsp;Search Results
                         </h2>
 
-                        <div className="card-group row">
-                            {clients && clients.map(
-                                (client) => <CardComponent client={client} key={client.id} isLoading={isLoading} onClientClick={onClientClick} />)
-                            }
-                        </div>
+                        {hasNoClients
+                            ?<div className="jumbotron">
+                                <h1 className="display-4">No Results Found</h1>
+                                <p className="lead">It appears nothing was found for your search results. Please try again by clicking below.</p>
+
+                                <p className="lead">
+                                    <Link className="btn btn-primary btn-lg" to="/clients/search">Try Again&nbsp;<i class="fas fa-chevron-right"></i></Link>
+                                </p>
+                            </div>
+                            :<div className="card-group row">
+                                {clients && clients.map(
+                                    (client) => <CardComponent client={client} key={client.id} isLoading={isLoading} onClientClick={onClientClick} />)
+                                }
+                            </div>
+                        }
 
                         <div className="float-right">
                             {hasPrevious &&

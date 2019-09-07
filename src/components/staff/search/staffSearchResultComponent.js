@@ -22,7 +22,7 @@ export default class StaffSearchResultComponent extends Component {
         const {
             staff, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick, onStaffClick
         } = this.props;
-
+        const hasStaff = staff.length <= 0;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -51,11 +51,21 @@ export default class StaffSearchResultComponent extends Component {
                             <i className="fas fa-list"></i>&nbsp;Search Results
                         </h2>
 
-                        <div className="card-group row">
-                            {staff && staff.map(
-                                (staff) => <CardComponent staff={staff} key={staff.id} isLoading={isLoading} onStaffClick={onStaffClick} />)
-                            }
-                        </div>
+                        {hasStaff
+                            ?<div className="jumbotron">
+                                <h1 className="display-4">No Results Found</h1>
+                                <p className="lead">It appears nothing was found for your search results. Please try again by clicking below.</p>
+
+                                <p className="lead">
+                                    <Link className="btn btn-primary btn-lg" to="/staff/search">Try Again&nbsp;<i class="fas fa-chevron-right"></i></Link>
+                                </p>
+                            </div>
+                            :<div className="card-group row">
+                                {staff && staff.map(
+                                    (staff) => <CardComponent staff={staff} key={staff.id} isLoading={isLoading} onStaffClick={onStaffClick} />)
+                                }
+                            </div>
+                        }
 
                         <div className="float-right">
                             {hasPrevious &&

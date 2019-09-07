@@ -22,7 +22,7 @@ export default class AssociateSearchResultComponent extends Component {
         const {
             associates, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick, onAssociateClick
         } = this.props;
-
+        const hasNoAssociates = associates.length <= 0;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -51,20 +51,21 @@ export default class AssociateSearchResultComponent extends Component {
                             <i className="fas fa-list"></i>&nbsp;Search Results
                         </h2>
 
-                        <div className="card-group row">
-                            {associates && associates.map(
-                                (associate) => <CardComponent associate={associate} key={associate.id} isLoading={isLoading} onAssociateClick={onAssociateClick} />)
-                            }
-                        </div>
+                        {hasNoAssociates
+                            ?<div className="jumbotron">
+                                <h1 className="display-4">No Results Found</h1>
+                                <p className="lead">It appears nothing was found for your search results. Please try again by clicking below.</p>
 
-                        <div className="float-right">
-                            {hasPrevious &&
-                                <Link onClick={onPreviousClick}><i class="fas fa-arrow-circle-left"></i>&nbsp;Previous</Link>
-                            }&nbsp;&nbsp;
-                            {hasNext &&
-                                <Link onClick={onNextClick}>Next&nbsp;<i class="fas fa-arrow-circle-right"></i></Link>
-                            }
-                        </div>
+                                <p className="lead">
+                                    <Link className="btn btn-primary btn-lg" to="/associates/search">Try Again&nbsp;<i class="fas fa-chevron-right"></i></Link>
+                                </p>
+                            </div>
+                            :<div className="card-group row">
+                                {associates && associates.map(
+                                    (associate) => <CardComponent associate={associate} key={associate.id} isLoading={isLoading} onAssociateClick={onAssociateClick} />)
+                                }
+                            </div>
+                        }
 
                     </div>
                 </div>

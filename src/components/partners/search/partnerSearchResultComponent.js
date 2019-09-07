@@ -22,7 +22,7 @@ export default class PartnerSearchResultComponent extends Component {
         const {
             partners, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick, onPartnerClick
         } = this.props;
-
+        const hasNoPartners = partners.length <= 0;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -51,11 +51,21 @@ export default class PartnerSearchResultComponent extends Component {
                             <i className="fas fa-list"></i>&nbsp;Search Results
                         </h2>
 
-                        <div className="card-group row">
-                            {partners && partners.map(
-                                (partner) => <CardComponent partner={partner} key={partner.id} isLoading={isLoading} onPartnerClick={onPartnerClick} />)
-                            }
-                        </div>
+                        {hasNoPartners
+                            ?<div className="jumbotron">
+                                <h1 className="display-4">No Results Found</h1>
+                                <p className="lead">It appears nothing was found for your search results. Please try again by clicking below.</p>
+
+                                <p className="lead">
+                                    <Link className="btn btn-primary btn-lg" to="/partners/search">Try Again&nbsp;<i class="fas fa-chevron-right"></i></Link>
+                                </p>
+                            </div>
+                            :<div className="card-group row">
+                                {partners && partners.map(
+                                    (partner) => <CardComponent partner={partner} key={partner.id} isLoading={isLoading} onPartnerClick={onPartnerClick} />)
+                                }
+                            </div>
+                        }
 
                         <div className="float-right">
                             {hasPrevious &&
