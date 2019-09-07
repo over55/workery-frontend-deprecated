@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
@@ -7,7 +9,7 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 class BulletinBoardItemRetrieveComponent extends Component {
     render() {
-        const { text, onClick, onBack, isLoading } = this.props;
+        const { text, createdAt, createdBy, lastModifiedAt, lastModifiedBy, onClick, onBack, isLoading } = this.props;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -41,6 +43,22 @@ class BulletinBoardItemRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Text</th>
                                     <td>{text}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Created At</th>
+                                    <td><Moment format="YYYY/MM/DD">{createdAt}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Created By</th>
+                                    <td>{createdBy}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Last Modified At</th>
+                                    <td><Moment format="YYYY/MM/DD">{lastModifiedAt}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Last Modified By</th>
+                                    <td>{lastModifiedBy}</td>
                                 </tr>
                             </tbody>
                         </table>

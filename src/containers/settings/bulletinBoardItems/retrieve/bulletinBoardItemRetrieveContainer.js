@@ -23,6 +23,9 @@ class BulletinBoardItemRetrieveContainer extends Component {
         // Update state.
         this.state = {
             id: id,
+            createdAt: "",
+            lastModifiedAt: "",
+            lastModifiedBy: "",
             isLoading: false,
         }
 
@@ -75,7 +78,13 @@ class BulletinBoardItemRetrieveContainer extends Component {
     }
 
     onRetrieveSuccessCallback(bbi) {
-        this.setState({ text: bbi.text });
+        this.setState({
+            text: bbi.text,
+            createdAt: bbi.createdAt,
+            createdBy: bbi.createdBy,
+            lastModifiedAt: bbi.lastModifiedAt,
+            lastModifiedBy: bbi.lastModifiedBy,
+        });
     }
 
     /**
@@ -98,6 +107,10 @@ class BulletinBoardItemRetrieveContainer extends Component {
         return (
             <BulletinBoardItemRetrieveComponent
                 text={this.state.text}
+                createdAt={this.state.createdAt}
+                createdBy={this.state.createdBy}
+                lastModifiedAt={this.state.lastModifiedAt}
+                lastModifiedBy={this.state.lastModifiedBy}
                 isLoading={this.state.isLoading}
                 onBack={this.onBack}
                 onClick={this.onClick}
