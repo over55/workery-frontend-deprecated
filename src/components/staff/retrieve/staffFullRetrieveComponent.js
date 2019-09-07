@@ -265,29 +265,12 @@ export default class StaffFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
                                         <ul>
-                                            { /*
-                                            <li>
-                                                {isActiveState
-                                                    ?<Link to={`/staff/${id}/deactivation`}>
-                                                        Deactivate Staff&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                    :<Link to={`/staff/${id}/activation`}>
-                                                        Activate Staff&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                }
-
-                                            </li>
-                                            {isRezStaff &&
-                                                <li>
-                                                    <Link to={`/staff/${id}/rez-upgrade`}>
-                                                        Upgrade Staff&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            */ }
                                             <li>
                                                 <Link to={`/staff/${id}/archive`}>
-                                                    Archive&nbsp;<i className="fas fa-chevron-right"></i>
+                                                {staff.isArchived
+                                                    ? <div>Unarchive&nbsp;<i className="fas fa-chevron-right"></i></div>
+                                                    : <div>Archive&nbsp;<i className="fas fa-chevron-right"></i></div>
+                                                }
                                                 </Link>
                                             </li>
                                         </ul>

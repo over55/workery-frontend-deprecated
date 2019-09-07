@@ -78,7 +78,7 @@ class StaffArchiveContainer extends Component {
 
     onStaffFetchedCallback(staffDetail) {
         this.setState({
-            text: staffDetail.text,
+            isArchived: staffDetail.isArchived,
             description: staffDetail.description,
             isLoading: false,
         });
@@ -115,6 +115,7 @@ class StaffArchiveContainer extends Component {
                 id={id}
                 givenName={this.props.staffDetail.givenName}
                 lastName={this.props.staffDetail.lastName}
+                isArchived={this.props.staffDetail.isArchived}
                 errors={errors}
                 onClick={this.onClick}
                 isLoading={isLoading}

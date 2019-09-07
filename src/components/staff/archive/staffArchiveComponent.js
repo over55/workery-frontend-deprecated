@@ -6,7 +6,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 
 class StaffArchiveComponent extends Component {
     render() {
-        const { id, givenName, lastName, errors, isLoading, onClick } = this.props;
+        const { id, givenName, lastName, errors, isLoading, onClick, isArchived } = this.props;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -21,13 +21,14 @@ class StaffArchiveComponent extends Component {
                         <li className="breadcrumb-item" aria-current="page">
                             <Link to={`/staff/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName} {lastName}</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-archive"></i>&nbsp;Archive
-                        </li>
+                        {isArchived
+                            ? <li className="breadcrumb-item active" aria-current="page"><i className="fas fa-archive"></i>&nbsp;Unarchied</li>
+                            : <li className="breadcrumb-item active" aria-current="page"><i className="fas fa-archive"></i>&nbsp;Archived</li>
+                        }
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-minus"></i>&nbsp;Remove Staff</h1>
+                <h1><i className="fas fa-minus"></i>&nbsp;{isArchived ? "Unarchive Staff" : "Archive Staff" }</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
                         <p><strong>Please confirm these details before deleting the staff</strong></p>
