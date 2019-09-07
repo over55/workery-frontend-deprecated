@@ -1171,11 +1171,11 @@ aside.ScrollUpButton__Container:focus {
 	bottom: 20px;
 	transition: right 0.5s;
 	cursor: pointer;
-	padding: .5rem 1rem;
+	padding: 7px 10px;
     font-size: 1.25rem;
     border-radius: .2rem;
 	color: #fff;
-    background-color: #17a2b8;
+    background-color: #17a2b8 !important;
     border-color: #17a2b8;
 	z-index: 9999;
 }
