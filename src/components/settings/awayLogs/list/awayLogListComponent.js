@@ -121,13 +121,13 @@ class RemoteListComponent extends Component {
 function statusFormatter(cell, row){
     switch(row.wasDeleted) {
         case true:
-            return <i className="fas fa-times-circle"></i>;
+            return <i className="fas fa-times-circle" style={{ color: 'red' }}></i>;
             break;
         case false:
-            return <i className="fas fa-check-circle"></i>;
+            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
         default:
-        return <i className="fas fa-question-circle"></i>;
+        return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
             break;
     }
 }

@@ -56,7 +56,7 @@ class RemoteListComponent extends Component {
             formatter: isArchivedFormatter
         },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];
@@ -117,9 +117,9 @@ class RemoteListComponent extends Component {
 
 function isArchivedFormatter(cell, row){
     if (row.isArchived === false) {
-        return <i className="fas fa-check-circle"></i>
+        return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>
     } else {
-        return <i className="fas fa-archive"></i>
+        return <i className="fas fa-archive" style={{ color: 'blue' }}></i>
     }
 }
 
@@ -127,12 +127,17 @@ function isArchivedFormatter(cell, row){
 function detailLinkFormatter(cell, row){
     return (
         <div>
-            <Link to={`/settings/vehicle-type/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
-                <i className="fas fa-edit"></i>&nbsp;Edit
-            </Link>&nbsp;&nbsp;&nbsp;
-            <Link to={`/settings/vehicle-type/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
-                <i className="fas fa-minus"></i>&nbsp;Remove
-            </Link>
+            {row.isArchived
+                ?""
+                :<div>
+                    <Link to={`/settings/vehicle-type/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
+                        <i className="fas fa-edit"></i>&nbsp;Edit
+                    </Link>&nbsp;&nbsp;&nbsp;
+                    <Link to={`/settings/vehicle-type/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
+                        <i className="fas fa-minus"></i>&nbsp;Remove
+                    </Link>
+                </div>
+            }
         </div>
     )
 }

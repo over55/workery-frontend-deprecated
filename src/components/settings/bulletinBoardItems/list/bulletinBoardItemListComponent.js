@@ -127,9 +127,9 @@ function dateTimeFormatter(cell, row){
 
 function isArchivedFormatter(cell, row){
     if (row.isArchived === false) {
-        return <i className="fas fa-check-circle"></i>
+        return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>
     } else {
-        return <i className="fas fa-archive"></i>
+        return <i className="fas fa-archive" style={{ color: 'blue' }}></i>
     }
 }
 
