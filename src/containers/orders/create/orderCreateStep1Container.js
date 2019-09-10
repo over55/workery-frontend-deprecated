@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import OrderCreateStep1Component from "../../../components/orders/create/orderCreateStep1Component";
-
+import { validateStep1CreateInput } from "../../../validators/orderValidator";
 
 class OrderCreateStep1Container extends Component {
     /**
@@ -24,8 +24,6 @@ class OrderCreateStep1Container extends Component {
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
 
     /**
@@ -51,23 +49,6 @@ class OrderCreateStep1Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(order) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.history.push("/orders/add/step-2");
-    }
-
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
-    }
-
     /**
      *  Event handling functions
      *------------------------------------------------------------
@@ -86,7 +67,27 @@ class OrderCreateStep1Container extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        this.onSuccessfulSubmissionCallback();
+        // Perform client-side validation.
+        const { errors, isValid } = validateStep1CreateInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            this.setState({ errors: {}, isLoading: true, })
+            this.props.history.push("/orders/add/step-2");
+
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.setState({
+                errors: errors,
+                isLoading: false,
+            })
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
     }
 
 
@@ -96,10 +97,13 @@ class OrderCreateStep1Container extends Component {
      */
 
     render() {
-        const { name, errors } = this.state;
+        const { firstName, lastName, email, phone, errors } = this.state;
         return (
             <OrderCreateStep1Component
-                name={name}
+                firstName={firstName}
+                lastName={lastName}
+                email={email}
+                phone={phone}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onClick={this.onClick}

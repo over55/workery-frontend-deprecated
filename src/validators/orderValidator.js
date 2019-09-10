@@ -68,6 +68,32 @@ export function validateFinancialUpdateInput(data) {
 }
 
 
+export function validateStep1CreateInput(data) {
+    let errors = {};
+
+    var missingCount = 0;
+
+    if (data.firstName === undefined || data.firstName === null || data.firstName === "") {
+        missingCount++;
+    }
+    if (data.lastName === undefined || data.skillSets === null || data.lastName === "" || isEmpty(data.lastName) ) {
+        missingCount++;
+    }
+    if (data.email === undefined || data.email === null || data.email === "" || isEmpty(data.email) ) {
+        missingCount++;
+    }
+    if (data.phone === undefined || data.phone === null || data.phone === "" || isEmpty(data.phone) ) {
+        missingCount++;
+    }
+
+    if (missingCount === 4) {
+        errors.RequiresField = "Please fill at least a single field before proceeding with your search";
+    }
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
 
 
 /**
