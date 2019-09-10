@@ -310,7 +310,7 @@ class NavigationContainer extends React.Component {
     // Render our top navigation.
     return (
         <div>
-		    {isAuthenticated &&
+		    {isAuthenticated && isTenant &&
                 <div>
                     <header className="top-navbar navbar navbar-dark fixed-top bg-dark justify-content-between">
                         <Link className="navbar-brand" to="/dashboard">
