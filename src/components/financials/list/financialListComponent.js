@@ -210,12 +210,12 @@ class FinancialListComponent extends Component {
                         <section className="row text-center placeholders">
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/orders/add/step-1" className="d-block link-ndecor" title="Financials">
+                                    <Link to="/orders/add/step-1" className="d-block link-ndecor" title="Job">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
                                 <h4>Add</h4>
-                                <div className="text-muted">Add Financials</div>
+                                <div className="text-muted">Add Job</div>
                             </div>
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">

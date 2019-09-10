@@ -156,12 +156,12 @@ class CommentListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Comments
+                            <i className="fas fa-comment"></i>&nbsp;Comments
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;Comments</h1>
+                <h1><i className="fas fa-comment"></i>&nbsp;Comments</h1>
 
 
                 { /*<div className="row">

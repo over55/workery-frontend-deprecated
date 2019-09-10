@@ -48,7 +48,7 @@ export default class OngoingOrderUpdateComponent extends Component {
 
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
-                                label="How did you hear about us? (*)"
+                                label="Status: (*)"
                                 name="status"
                                 defaultOptionLabel="Please select how you heard about us."
                                 options={STATE_CHOICES}
