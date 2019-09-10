@@ -73,7 +73,7 @@ export default class OrderCreateStep5Component extends Component {
                             <h2>
                                 <i className="fas fa-chart-pie"></i>&nbsp;Metrics
                             </h2>
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
+                            <p className="text-secondary font-italic">All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
@@ -102,7 +102,7 @@ export default class OrderCreateStep5Component extends Component {
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
-                                    Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                    Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to="/orders/add/step-4" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
