@@ -134,18 +134,12 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        <ul>
-                                            <li>
-                                                <Link to={`/order/${task.job}/postpone`}>
-                                                    Postpone Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                                </li>
-                                            <li>
-                                                <Link to={`/order/${task.job}/close`}>
-                                                    Close Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                        </ul>
+                                        <Link className="btn btn-orange btn-lg btn-fxw mt-4" to={`/order/${task.job}/postpone`}>
+                                            <i className="fas fa-clock"></i>&nbsp;Postpone Order
+                                        </Link>
+                                        <Link className="btn btn-warning btn-lg btn-fxw mt-4" to={`/order/${task.job}/close`}>
+                                            <i className="fas fa-window-close"></i>&nbsp;Close Order
+                                        </Link>
                                     </td>
                                 </tr>
 

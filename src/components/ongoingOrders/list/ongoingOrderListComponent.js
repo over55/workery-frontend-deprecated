@@ -197,14 +197,14 @@ class OngoingOrderListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-undo-alt"></i>&nbsp;Ongoing Orders
+                            <i className="fas fa-undo-alt"></i>&nbsp;Ongoing Jobs
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-undo-alt"></i>&nbsp;Ongoing Orders</h1>
+                <h1><i className="fas fa-undo-alt"></i>&nbsp;Ongoing Jobs</h1>
 
                 <div className="row">
                     <div className="col-md-12">
