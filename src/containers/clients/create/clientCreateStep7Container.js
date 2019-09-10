@@ -8,7 +8,7 @@ import { setFlashMessage } from "../../../actions/flashMessageActions";
 import {
     localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
-import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
+import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID, TELEPHONE_CONTACT_POINT_TYPE_OF_ID } from '../../../constants/api';
 import { postClientDetail } from '../../../actions/clientActions';
 import { validateStep7CreateInput } from "../../../validators/clientValidator";
 
@@ -137,6 +137,16 @@ class ClientCreateStep7Container extends Component {
 
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
+
+        // (12) organizationTypeOf
+        if (this.state.organizationTypeOf === null || this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === "" || isNaN(this.state.organizationTypeOf)) {
+            postData.organizationTypeOf = 0;
+        }
+
+        // (13) otherTelephoneTypeOf
+        if (this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === "" || isNaN(this.state.otherTelephoneTypeOf)) {
+            postData.otherTelephoneTypeOf = TELEPHONE_CONTACT_POINT_TYPE_OF_ID;
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
