@@ -123,8 +123,8 @@ export default class ClientCreateStep1Component extends Component {
                 </div>
                 <div className="col-md-12 text-center">
                     <h3 className="p-2">- or -</h3>
-                    <a href="/clients/add/step-3" role="button">
-                        Add New Client&nbsp;<i class="fas fa-chevron-right"></i>
+                    <a className="btn btn-success btn-lg mt-4" href="/clients/add/step-3" role="button">
+                        <i className="fas fa-plus"></i>&nbsp;Add Client
                     </a>
                 </div>
             </main>

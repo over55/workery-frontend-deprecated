@@ -87,7 +87,7 @@ export default class ClientCreateStep6Component extends Component {
                             <h2>
                                 <i className="fas fa-chart-pie"></i>&nbsp;Metrics
                             </h2>
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
+                            <p className="text-secondary font-italic">All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
