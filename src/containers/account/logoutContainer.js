@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 // import LogoutComponent from '../../components/account/logoutComponent';
 import { postLogout, attemptLogout } from "../../actions/logoutAction";
 import { setFlashMessage } from "../../actions/flashMessageActions";
+import { APP_STATE } from "../../constants/redux";
 
 
 class LogoutContainer extends Component {
@@ -37,7 +38,8 @@ class LogoutContainer extends Component {
             this.props.postLogout(this.props.user);
 
             // CLEAR THE LOCAL STORAGE IF WE SUCCESSFULLY LOGGED OUT!
-            localStorage.clear();
+            localStorage.removeItem(APP_STATE) // Clear the state data of the app.
+            localStorage.clear(); // Clear any remaining items.
 
             // Create a flash message telling the user that they successfully logged out.
             this.props.setFlashMessage("success", "You have successfully logged out.");
