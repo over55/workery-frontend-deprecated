@@ -216,7 +216,7 @@ class JobHistoryComponent extends Component {
 
 function jobHistoryIDFormatter(cell, row){
     return (
-        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+        <Link to={`/order/${row.id}`}>
             {row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
         </Link>
     )
@@ -232,7 +232,7 @@ function jobHistoryLastModifiedFormatter(cell, row){
 
 function jobHistoryLinkFormatter(cell, row){
     return (
-        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+        <Link to={`/order/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
