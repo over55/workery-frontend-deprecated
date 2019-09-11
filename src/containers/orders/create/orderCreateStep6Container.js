@@ -35,7 +35,7 @@ class OrderCreateStep6Container extends Component {
             jobTypeLabel: localStorage.getItem("workery-create-order-jobType-label"),
             homeSupport: localStorageGetIntegerItem("workery-create-order-homeSupport"),
             homeSupportLabel: localStorage.getItem("workery-create-order-homeSupport-label"),
-            skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
+            skillSets: localStorageGetArrayItem("workery-create-order-skillSets"),
             description: localStorage.getItem("workery-create-order-description"),
             tags: localStorageGetArrayItem("workery-create-order-tags"),
             comment: localStorage.getItem("workery-create-order-comment"),
