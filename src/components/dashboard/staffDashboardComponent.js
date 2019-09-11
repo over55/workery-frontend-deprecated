@@ -376,7 +376,7 @@ function associateReasonFormatter(cell, row){
 
 function associateLinkFormatter(cell, row){
     return (
-        <Link to={`/en/jobs/summary/detail/${row.associate}/lite/`} id={row.associate}>
+        <Link to={`/associate/${row.associate}`} id={row.associate}>
             {row.associateName}
         </Link>
     )
