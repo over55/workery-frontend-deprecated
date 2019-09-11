@@ -269,6 +269,7 @@ class TaskListComponent extends Component {
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
+                           {/*
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
                                     <Link to="/tasks/add/step-1" className="d-block link-ndecor" title="Tasks">
@@ -278,7 +279,8 @@ class TaskListComponent extends Component {
                                 <h4>Add</h4>
                                 <div className="text-muted">Add Tasks</div>
                             </div>
-                            <div className="col-sm-6 placeholder">
+                            */}
+                            <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
                                     <Link to="/tasks/search" className="d-block link-ndecor" title="Search">
                                         <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>

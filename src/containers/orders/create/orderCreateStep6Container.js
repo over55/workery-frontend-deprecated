@@ -90,7 +90,9 @@ class OrderCreateStep6Container extends Component {
             const startDateMoment = moment(this.state.startDate);
             postData.startDate = startDateMoment.format("YYYY-MM-DD")
         }
-        console.log(this.state.startDate);
+
+        // IsOngoing
+        postData.isOngoing = this.state.jobType;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

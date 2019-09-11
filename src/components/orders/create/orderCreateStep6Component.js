@@ -97,7 +97,12 @@ export default class OrderCreateStep6Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Start Date</th>
-                                    <td><Moment format="YYYY/MM/DD">{startDate}</Moment></td>
+                                    <td>
+                                        {startDate
+                                            ? <Moment format="YYYY/MM/DD">{startDate}</Moment>
+                                            : "-"
+                                        }                                        
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Type</th>
