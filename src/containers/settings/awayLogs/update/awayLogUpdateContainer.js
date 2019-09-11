@@ -27,6 +27,8 @@ class AwayLogUpdateContainer extends Component {
             id: parseInt(id),
             associate: "",
             associateOption: "",
+            associateOptions: [],
+            isAssociatesLoading: true,
             startDate: "",
             reason: "",
             reasonOther: "",
@@ -45,6 +47,7 @@ class AwayLogUpdateContainer extends Component {
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onAwayLogFetchCallback = this.onAwayLogFetchCallback.bind(this);
+        this.onAssociatesListCallback = this.onAssociatesListCallback.bind(this);
     }
 
     getPostData() {
@@ -77,7 +80,7 @@ class AwayLogUpdateContainer extends Component {
         // Get a filtered list of ALL the ACTIVE associates.
         const parametersMap = new Map();
         parametersMap.set('state', 1); // `1` is `true` in API.
-        this.props.pullAssociateList(1, 10000, parametersMap);
+        this.props.pullAssociateList(1, 10000, parametersMap, this.onAssociatesListCallback);
 
         // Get our detail.
         this.props.pullAwayLogDetail(this.state.id, this.onAwayLogFetchCallback);
@@ -96,6 +99,13 @@ class AwayLogUpdateContainer extends Component {
      *  API callback functions
      *------------------------------------------------------------
      */
+
+    onAssociatesListCallback(associateList) {
+        this.setState({
+            associateOptions: getAssociateReactSelectOptions(associateList),
+            isAssociatesLoading: false,
+        });
+    }
 
     onSuccessCallback(response) {
         if (response !== null && response !== undefined) {
@@ -126,7 +136,7 @@ class AwayLogUpdateContainer extends Component {
         console.log("onAwayLogFetchCallback |", awayLogDetail);
         this.setState({
             associate: parseInt(awayLogDetail.associate),
-            associateOption: "",
+            associateOption: [],
             startDate: new Date(awayLogDetail.startDate),
             reason: parseInt(awayLogDetail.reason),
             reasonOther: awayLogDetail.reasonOther,
@@ -148,10 +158,13 @@ class AwayLogUpdateContainer extends Component {
     }
 
     onSelectChange(option) {
+        console.log("onSelectChange | option |", option);
         const optionKey = [option.selectName]+"Option";
         this.setState({
             [option.selectName]: option.value,
             [optionKey]: option,
+        }, ()=>{
+            console.log("onSelectChange | state |", this.state);
         });
     }
 
@@ -207,12 +220,14 @@ class AwayLogUpdateContainer extends Component {
      */
 
     render() {
-        const { associate, associateOption, startDate, reason, reasonOther, untilFurtherNotice, untilDate, errors } = this.state;
+        const { associate, associateOption, isAssociatesLoading, startDate, reason, reasonOther, untilFurtherNotice, untilDate, errors } = this.state;
         const associateOptions = getAssociateReactSelectOptions(this.props.associateList);
         return (
             <AwayLogUpdateComponent
                 associate={associate}
+                associateOption={associateOption}
                 associateOptions={associateOptions}
+                isAssociatesLoading={isAssociatesLoading}
                 startDate={startDate}
                 onStartDateChange={this.onStartDateChange}
                 reason={reason}

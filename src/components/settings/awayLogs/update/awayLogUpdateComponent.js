@@ -14,7 +14,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 class AwayLogUpdateComponent extends Component {
     render() {
         const {
-            associate, associateOptions, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
+            associate, associateOptions, isAssociatesLoading, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
             errors, onTextChange, onSelectChange, onStartDateChange, onUntilDateChange, onRadioChange, isLoading, onClick
         } = this.props;
         const isOtherReasonSelected = reason === 1;
@@ -56,6 +56,7 @@ class AwayLogUpdateComponent extends Component {
                                 value={associate}
                                 error={errors.associate}
                                 onSelectChange={onSelectChange}
+                                isLoading={isAssociatesLoading}
                             />
 
                             <BootstrapDatePicker
