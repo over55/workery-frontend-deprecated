@@ -144,17 +144,21 @@ class RemoteListComponent extends Component {
 
 
 function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case 2:
-            return <i className="fas fa-building"></i>;
-            break;
-        case 1:
-            return <i className="fas fa-home"></i>;
-            break;
-        default:
-            return <i className="fas fa-question"></i>;
-            break;
+    const icons = [];
+    if (row.typeOf === 2) {
+        icons.push(<i className="fas fa-building"></i>)
     }
+    else if (row.typeOf === 1) {
+        icons.push(<i className="fas fa-home"></i>)
+    }
+    else {
+        icons.push(<i className="fas fa-question"></i>)
+    }
+    if (row.isOngoing) {
+        icons.push(" ");
+        icons.push(<i className="fas fa-redo-alt"></i>)
+    }
+    return <div>{icons}</div>;
 }
 
 
