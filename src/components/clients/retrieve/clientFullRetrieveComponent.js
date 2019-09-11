@@ -43,6 +43,12 @@ export default class ClientFullRetrieveComponent extends Component {
 
                 <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
 
+                {client.state === 'inactive' &&
+                    <div className="alert alert-danger" role="alert">
+                        <strong><i className="fas fa-exclamation-triangle"></i>&nbsp;Warning</strong> - Client is deactivated in our system and cannot produce work orders to associates.
+                    </div>
+                }
+
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
@@ -243,9 +249,15 @@ export default class ClientFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link onClick={onClientClick}>
-                                                    Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
+
+                                                {client.state === 'inactive'
+                                                    ? <div>
+                                                        <i className="fas fa-lock"></i>&nbsp;Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </div>
+                                                    : <Link onClick={onClientClick}>
+                                                        Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                }
                                             </li>
                                             <li>
                                                 {isActiveState

@@ -14,7 +14,10 @@ class CardComponent extends Component {
                     <div className="card-body">
                         <h5 className="card-title">
                             <Link to={`/client/${client.id}`}>
-                                <strong><i className="fas fa-home"></i>&nbsp;{client.givenName}&nbsp;{client.lastName}</strong>
+                                <strong>
+                                    <i className="fas fa-home"></i>&nbsp;{client.givenName}&nbsp;{client.lastName}
+                                    {client.state === 'inactive' && <div>(<i className="fas fa-frown"></i>&nbsp;Deactived)</div>}
+                                </strong>
                             </Link>
                         </h5>
                         <p className="card-text">
@@ -22,9 +25,15 @@ class CardComponent extends Component {
                             {client.addressLocality}, {client.addressRegion}<br />
                             {client.telephone}
                         </p>
-                        <button type="button" className="btn btn-primary btn-lg btn-block" disabled={isLoading} onClick={ (event)=>{ onClientClick(event, client.id, client.givenName, client.lastName) } }>
-                            Select&nbsp;<i class="fas fa-chevron-right"></i>
-                        </button>
+                        {client.state === 'inactive'
+                            ? <button type="button" className="btn btn-secondary btn-lg btn-block" disabled={true}>
+                                <i class="fas fa-lock"></i>&nbsp;Locked
+                            </button>
+                            : <button type="button" className="btn btn-primary btn-lg btn-block" disabled={isLoading} onClick={ (event)=>{ onClientClick(event, client.id, client.givenName, client.lastName) } }>
+                                Select&nbsp;<i class="fas fa-chevron-right"></i>
+                            </button>
+                        }
+
                     </div>
                 </div>
             </div>

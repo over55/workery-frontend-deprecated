@@ -94,7 +94,10 @@ class CardComponent extends Component {
                     <div className="card-body">
                         <h5 className="card-title">
                             <Link to={`/client/${client.id}`}>
-                                <strong><i className="fas fa-home"></i>&nbsp;{client.givenName}&nbsp;{client.lastName}</strong>
+                                <strong>
+                                    <i className="fas fa-home"></i>&nbsp;{client.givenName}&nbsp;{client.lastName}
+                                    {client.state === 'inactive' && <div>(<i className="fas fa-frown"></i>&nbsp;Deactived)</div>}
+                                </strong>
                             </Link>
                         </h5>
                         <p className="card-text">

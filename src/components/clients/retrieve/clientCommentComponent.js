@@ -43,6 +43,12 @@ export default class ClientCommentComponent extends Component {
 
                 <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
 
+                {client.state === 'inactive' &&
+                    <div className="alert alert-danger" role="alert">
+                        <strong><i className="fas fa-exclamation-triangle"></i>&nbsp;Warning</strong> - Client is deactivated in our system and cannot produce work orders to associates.
+                    </div>
+                }
+
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
