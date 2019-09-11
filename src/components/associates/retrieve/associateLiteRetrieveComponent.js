@@ -75,7 +75,7 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                 <h3>{associate && associate.fullName}</h3>
                                 {associate && associate.address &&
                                     <p className="text-muted">
-                                        <a href={associate.addressUrl}>{associate.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
+                                        <a href={associate.addressUrl}><i className="fas fa-map-marker-alt"></i>&nbsp;{associate.address}</a>
                                     </p>
                                 }
                                 {associate && associate.email &&

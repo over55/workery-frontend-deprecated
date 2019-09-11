@@ -111,7 +111,7 @@ function jobFormatter(cell, row){
     if (row.job === null || row.job === undefined || row.job === "None") { return "-"; }
     return (
         <Link to={`/order/${row.job}`} target="_blank">
-            {row.job}&nbsp;<i className="fas fa-external-link-alt"></i>
+            {row.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
@@ -217,7 +217,7 @@ export default class AssociateActivitySheetListComponent extends Component {
                 <div className="row">
                     <div className="col-md-12">
                         <h2>
-                            <i className="fas fa-table"></i>&nbsp;List
+                            <i className="fas fa-chart-line"></i>&nbsp;Activity
                         </h2>
                         <RemoteListComponent
                             page={page}

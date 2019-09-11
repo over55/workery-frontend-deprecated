@@ -83,7 +83,7 @@ export default class OrderCreateStep2Component extends Component {
                 </div>
 
                 <div class="col-sm-12 mx-auto mt-3 mb-3 text-center">
-            		<h5>Please select the order.</h5>
+            		<h5>Please select the client</h5>
                 </div>
 
                 <div className="card-group row">
