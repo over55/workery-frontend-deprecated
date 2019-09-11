@@ -86,8 +86,11 @@ class OrderCreateStep6Container extends Component {
         postData.customer = this.state.clientGivenId
 
         // (5) Start date - We need to format as per required API format.
-        const startDateMoment = moment(this.state.startDate);
-        postData.startDate = startDateMoment.format("YYYY-MM-DD")
+        if (this.state.startDate !== undefined && this.state.startDate !== null && this.state.startDate === "") {
+            const startDateMoment = moment(this.state.startDate);
+            postData.startDate = startDateMoment.format("YYYY-MM-DD")
+        }
+        console.log(this.state.startDate);
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

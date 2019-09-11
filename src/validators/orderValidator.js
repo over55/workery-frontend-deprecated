@@ -102,9 +102,6 @@ export function validateStep1CreateInput(data) {
 export function validateStep3CreateInput(data) {
     let errors = {};
 
-    if (data.startDate === undefined || data.startDate === null || data.startDate === "" || isNaN(data.startDate) ) {
-        errors.startDate = 'This field is required';
-    }
     if (data.jobType === undefined || data.jobType === null || data.jobType === "" || isNaN(data.jobType) ) {
         errors.jobType = 'This field is required';
     }

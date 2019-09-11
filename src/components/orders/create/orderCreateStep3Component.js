@@ -82,13 +82,15 @@ export default class OrderCreateStep3Component extends Component {
                             </p> */}
 
                             <BootstrapDatePicker
-                                label="Start date (*)"
+                                label="Start date"
                                 name="startDate"
                                 dateObj={startDate}
                                 onTimeChange={onStartDateChange}
+                                borderClassname="border-success"
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.startDate}
+                                helpText="This field is optional as start date can be set at a later task."
                             />
 
                             <BootstrapRadio
