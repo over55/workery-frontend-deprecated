@@ -249,7 +249,6 @@ export default class ClientFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-
                                                 {client.state === 'inactive'
                                                     ? <div>
                                                         <i className="fas fa-lock"></i>&nbsp;Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
@@ -279,7 +278,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                             }
                                             <li>
                                                 <Link to={`/client/${id}/delete`}>
-                                                    Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    Permanently Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                         </ul>

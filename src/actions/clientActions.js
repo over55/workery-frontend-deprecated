@@ -504,7 +504,7 @@ export function deleteClientDetail(id, onSuccessCallback, onFailureCallback) {
         const customAxios = getCustomAxios();
 
         // Perform our API submission.
-        customAxios.delete(WORKERY_CLIENT_DETAIL_API_ENDPOINT+id).then( (successResponse) => {
+        customAxios.delete(WORKERY_CLIENT_DETAIL_API_ENDPOINT + id + "/").then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             let client = camelizeKeys(responseData);
