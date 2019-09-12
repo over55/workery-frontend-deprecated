@@ -2,21 +2,24 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import {
-    DEACTIVATION_REASON_CHOICES
+    ARCHIVE_REASON_CHOICES
 } from '../../../constants/api';
 
 
-export default class ClientActivateOperationComponent extends Component {
+export default class ClientArchiveOperationComponent extends Component {
     render() {
         // Common
-        const { comment, id, errors, onTextChange, onSelectChange, isLoading, onClick, client } = this.props;
-
-
+        const { reason, reasonOther, comment, id, errors, onTextChange, onSelectChange, isLoading, onClick, client } = this.props;
+        const isReasonOther = reason === 1;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -29,7 +32,7 @@ export default class ClientActivateOperationComponent extends Component {
                             <Link to={`/client/${id}/full`}><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-smile-beam"></i>&nbsp;Activate
+                            <i className="fas fa-archive"></i>&nbsp;Archive
                         </li>
                     </ol>
                 </nav>
@@ -37,10 +40,35 @@ export default class ClientActivateOperationComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1><i className="fas fa-smile-beam"></i>&nbsp;Activate Client</h1>
-                            <p>You are about to <strong>activate the client</strong>. Please explain why. All fields which have the (*) symbol are required to be filled out.</p>
+                            <h1><i className="fas fa-archive"></i>&nbsp;Archive Client</h1>
+                            <p>You are about to <strong>archive the client</strong> this means the client will be in a read-only state and the client cannot create work orders for our associates. Please explain why. All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Reason(*)"
+                                name="reason"
+                                defaultOptionLabel="Please select the reason."
+                                options={ARCHIVE_REASON_CHOICES}
+                                value={reason}
+                                error={errors.reason}
+                                onSelectChange={onSelectChange}
+                                disabled={isLoading}
+                            />
+
+                            {isReasonOther &&
+                                <BootstrapInput
+                                    inputClassName="form-control"
+                                    borderColour="border-primary"
+                                    error={errors.reasonOther}
+                                    label="Reason (other) (*)"
+                                    onChange={onTextChange}
+                                    value={reasonOther}
+                                    name="reasonOther"
+                                    type="text"
+                                />
+                            }
 
                             <BootstrapTextarea
                                 name="comment"

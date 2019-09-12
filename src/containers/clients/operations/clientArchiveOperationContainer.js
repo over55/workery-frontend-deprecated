@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientDeactivateOperationComponent from "../../../components/clients/operations/clientDeactivateOperationComponent";
+import ClientArchiveOperationComponent from "../../../components/clients/operations/clientArchiveOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { postClientDeactivationDetail } from "../../../actions/clientActions";
 import { validateDeactivationInput } from "../../../validators/clientValidator";
 
 
-class ClientDeactivateOperationContainer extends Component {
+class ClientArchiveOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -154,7 +154,7 @@ class ClientDeactivateOperationContainer extends Component {
         const { id, errors, isLoading, reason, reasonOther } = this.state;
         const client = this.props.clientDetail ? this.props.clientDetail : [];
         return (
-            <ClientDeactivateOperationComponent
+            <ClientArchiveOperationComponent
                 id={id}
                 errors={errors}
                 isLoading={isLoading}
@@ -194,4 +194,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientDeactivateOperationContainer);
+)(ClientArchiveOperationContainer);

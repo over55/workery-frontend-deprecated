@@ -15,7 +15,7 @@ export const WORKERY_TENANT_DETAIL_API_ENDPOINT = '/franchise/';
 export const WORKERY_DASHBOARD_API_ENDPOINT = '/dashboard';
 export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/v2/customers';
 export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/v2/customer/';
-export const WORKERY_CLIENT_DEACTIVATE_API_ENDPOINT = '/customers/operation/deactivation';
+export const WORKERY_CLIENT_ARCHIVE_API_ENDPOINT = '/customers/operation/archive';
 export const WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT = '/customers/operation/upgrade-residential';
 export const WORKERY_CLIENT_COMMENT_LIST_API_ENDPOINT = '/customer-comments';
 export const WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT = '/customer/XXX/contact';
@@ -72,7 +72,7 @@ export const WORKERY_INSURANCE_REQUIREMENT_LIST_API_ENDPOINT = '/insurance_requi
 export const WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT = '/insurance_requirement/';
 export const WORKERY_SERVICE_FEE_LIST_API_ENDPOINT = '/order_service_fees';
 export const WORKERY_SERVICE_FEE_DETAIL_API_ENDPOINT = '/order_service_fee/';
-export const WORKERY_DEACTIVATED_CLIENT_LIST_API_ENDPOINT = '/deactivated-customers';
+export const WORKERY_ARCHIVED_CLIENT_LIST_API_ENDPOINT = '/deactivated-customers';
 export const WORKERY_VEHICLE_TYPE_LIST_API_ENDPOINT = '/vehicle_types';
 export const WORKERY_VEHICLE_TYPE_DETAIL_API_ENDPOINT = '/vehicle_type/';
 export const WORKERY_PARTNER_LIST_API_ENDPOINT = '/v2/partners';
@@ -876,29 +876,29 @@ export const UNTIL_FURTHER_NOTICE_CHOICES = [
 ];
 
 
-export const DEACTIVATION_REASON_CHOICES = [
+export const ARCHIVE_REASON_CHOICES = [
     {
-        id: 'deactivation-reason-2-choice',
+        id: 'archive-reason-2-choice',
         selectName: "reason",
         value: 2,
         label: "Client is blacklisted"
     },{
-        id: 'deactivation-reason-2-choice',
+        id: 'archive-reason-2-choice',
         selectName: "reason",
         value: 3,
         label: "Client has moved"
     },{
-        id: 'deactivation-reason-2-choice',
+        id: 'archive-reason-2-choice',
         selectName: "reason",
         value: 4,
         label: "Client is deceased"
     },{
-        id: 'deactivation-reason-2-choice',
+        id: 'archive-reason-2-choice',
         selectName: "reason",
         value: 5,
         label: "Client does not want us to contact them"
     },{
-        id: 'deactivation-reason-1-choice',
+        id: 'archive-reason-1-choice',
         selectName: "reason",
         value: 1,
         label: "Other"

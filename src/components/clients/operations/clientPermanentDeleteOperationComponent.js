@@ -6,7 +6,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import {
-    DEACTIVATION_REASON_CHOICES
+    ARCHIVE_REASON_CHOICES
 } from '../../../constants/api';
 
 

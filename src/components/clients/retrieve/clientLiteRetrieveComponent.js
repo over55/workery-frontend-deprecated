@@ -29,8 +29,8 @@ export default class ClientLiteRetrieveComponent extends Component {
                 <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
 
                 {client.state === 'inactive' &&
-                    <div className="alert alert-danger" role="alert">
-                        <strong><i className="fas fa-exclamation-triangle"></i>&nbsp;Warning</strong> - Client is deactivated in our system and cannot produce work orders to associates.
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This client is archived and is read-only.
                     </div>
                 }
 

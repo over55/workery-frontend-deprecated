@@ -5,11 +5,11 @@ import isEmpty from 'lodash/isEmpty';
 import msgpack from 'msgpack-lite';
 
 import {
-    DEACTIVATED_CLIENT_LIST_REQUEST,
-    DEACTIVATED_CLIENT_LIST_FAILURE,
-    DEACTIVATED_CLIENT_LIST_SUCCESS
+    ARCHIVED_CLIENT_LIST_REQUEST,
+    ARCHIVED_CLIENT_LIST_FAILURE,
+    ARCHIVED_CLIENT_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_DEACTIVATED_CLIENT_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_ARCHIVED_CLIENT_LIST_API_ENDPOINT } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -40,7 +40,7 @@ export function getDeactivatedClientReactSelectOptions(deactivatedClientList=[],
 
 
 export const setDeactivatedClientListRequest = () => ({
-    type: DEACTIVATED_CLIENT_LIST_REQUEST,
+    type: ARCHIVED_CLIENT_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
         page: 1,
@@ -50,13 +50,13 @@ export const setDeactivatedClientListRequest = () => ({
 
 
 export const setDeactivatedClientListFailure = (info) => ({
-    type: DEACTIVATED_CLIENT_LIST_FAILURE,
+    type: ARCHIVED_CLIENT_LIST_FAILURE,
     payload: info,
 });
 
 
 export const setDeactivatedClientListSuccess = (info) => ({
-    type: DEACTIVATED_CLIENT_LIST_SUCCESS,
+    type: ARCHIVED_CLIENT_LIST_SUCCESS,
     payload: info,
 });
 
@@ -79,7 +79,7 @@ export function pullDeactivatedClientList(page=1, sizePerPage=10, filtersMap=new
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_DEACTIVATED_CLIENT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_ARCHIVED_CLIENT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)

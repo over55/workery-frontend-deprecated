@@ -2,23 +2,21 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import {
-    DEACTIVATION_REASON_CHOICES
+    ARCHIVE_REASON_CHOICES
 } from '../../../constants/api';
 
 
-export default class ClientDeactivateOperationComponent extends Component {
+export default class ClientUnarchiveOperationComponent extends Component {
     render() {
         // Common
-        const { reason, reasonOther, comment, id, errors, onTextChange, onSelectChange, isLoading, onClick, client } = this.props;
-        const isReasonOther = reason === 1;
-        console.log(reason);
+        const { comment, id, errors, onTextChange, onSelectChange, isLoading, onClick, client } = this.props;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -31,7 +29,7 @@ export default class ClientDeactivateOperationComponent extends Component {
                             <Link to={`/client/${id}/full`}><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-frown"></i>&nbsp;Deactivate
+                            <i className="fas fa-box-open"></i>&nbsp;Unarchive
                         </li>
                     </ol>
                 </nav>
@@ -39,35 +37,10 @@ export default class ClientDeactivateOperationComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1><i className="fas fa-frown"></i>&nbsp;Deactivate Client</h1>
-                            <p>You are about to <strong>deactivate the client</strong>. Please explain why. All fields which have the (*) symbol are required to be filled out.</p>
+                            <h1><i className="fas fa-box-open"></i>&nbsp;Unarchive Client</h1>
+                            <p>You are about to <strong>unarchive the client</strong>. Please explain why. All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Reason(*)"
-                                name="reason"
-                                defaultOptionLabel="Please select the reason."
-                                options={DEACTIVATION_REASON_CHOICES}
-                                value={reason}
-                                error={errors.reason}
-                                onSelectChange={onSelectChange}
-                                disabled={isLoading}
-                            />
-
-                            {isReasonOther &&
-                                <BootstrapInput
-                                    inputClassName="form-control"
-                                    borderColour="border-primary"
-                                    error={errors.reasonOther}
-                                    label="Reason (other) (*)"
-                                    onChange={onTextChange}
-                                    value={reasonOther}
-                                    name="reasonOther"
-                                    type="text"
-                                />
-                            }
 
                             <BootstrapTextarea
                                 name="comment"
