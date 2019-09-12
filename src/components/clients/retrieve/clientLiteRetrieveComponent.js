@@ -6,7 +6,7 @@ import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 
 export default class ClientLiteRetrieveComponent extends Component {
     render() {
-        const { id, client, flashMessage } = this.props;
+        const { id, client, flashMessage, onClientClick } = this.props;
         const isCompany = client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         return (
             <div>
@@ -110,6 +110,16 @@ export default class ClientLiteRetrieveComponent extends Component {
                             </div>
                         </div>
                     </div>
+					<div className="col-sm-12 mx-auto text-center mt-4">
+						{client.state === 'inactive'
+                            ? <button className="btn btn-secondary btn-lg">
+                                <i className="fas fa-lock"></i>&nbsp;Add Job
+                              </button>
+                            : <Link className="btn btn-success btn-lg" onClick={onClientClick}>
+                                <i className="fas fa-plus"></i>&nbsp;Add Job
+                              </Link>
+                        }
+					</div>
                 </div>
 
 

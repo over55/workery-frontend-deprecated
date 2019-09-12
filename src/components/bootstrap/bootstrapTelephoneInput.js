@@ -24,7 +24,7 @@ export const BootstrapTelephoneInput = ({
     onChange,
     error,
     inputClassName = "form-group",
-    divClassName = "form-group",
+    divClassName = "form-group, col-sm-6, p-0",
     borderColour = '',
     disabled = false
 }) => {
