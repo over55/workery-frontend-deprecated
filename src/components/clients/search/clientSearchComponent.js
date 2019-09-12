@@ -111,31 +111,29 @@ class ClientSearchComponent extends Component {
                                     type="text"
                                     disabled={isLoading}
                                 />
-                            </div>
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.telephone}
-                                label="Phone #"
-                                onChange={onTextChange}
-                                value={telephone}
-                                name="telephone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                                disabled={isLoading}
-                            />
-                            <div className="form-group col-md-12 mb-4">
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.email}
-                                label="Email"
-                                onChange={onTextChange}
-                                value={email}
-                                name="email"
-                                type="text"
-                                disabled={isLoading}
-                            />
+								<BootstrapTelephoneInput
+									inputClassName="form-control form-control-lg"
+									borderColour="border-primary"
+									error={errors.telephone}
+									label="Phone #"
+									onChange={onTextChange}
+									value={telephone}
+									name="telephone"
+									type="text"
+									placeholder="+1 (xxx) xxx-xxxx"
+									disabled={isLoading}
+								/>
+								<BootstrapInput
+									inputClassName="form-control form-control-lg"
+									borderColour="border-primary"
+									error={errors.email}
+									label="Email"
+									onChange={onTextChange}
+									value={email}
+									name="email"
+									type="text"
+									disabled={isLoading}
+								/>
                             </div>
                         </div>
 
