@@ -84,24 +84,19 @@ class TaskSearchComponent extends Component {
                                     name="lastname" placeholder="Last name" minLength="3" />
                                 <div id="lastname-error" className="invalid-feedback"></div>
                             </div>
-                            <div className="form-group col-md-7 mb-4">
-                                <label htmlFor="phonenumber">Phone</label>
-                                <input type="text" className="form-control form-control-lg border border-primary"
-                                    id="phonenumber" name="phonenumber" placeholder="(xxx) xxx-xxxx" minLength="10"
-                                    maxLength="14" />
-                                <div id="phonenumber-error" className="invalid-feedback"></div>
-                            </div>
-                            <BootstrapTelephoneInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.phone}
-                                label="Phone"
-                                onChange={onTextChange}
-                                value={phone}
-                                name="phone"
-                                type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
-                            />
+                            <div className="form-group col-md-12 mb-4">
+								<BootstrapTelephoneInput
+									inputClassName="form-control form-control-lg"
+									borderColour="border-primary"
+									error={errors.phone}
+									label="Phone"
+									onChange={onTextChange}
+									value={phone}
+									name="phone"
+									type="text"
+									placeholder="+1 (xxx) xxx-xxxx"
+								/>
+							</div>
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-7 mb-4">
