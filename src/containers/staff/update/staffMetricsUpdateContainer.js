@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
 import StaffMetricsUpdateComponent from "../../../components/staff/update/staffMetricsUpdateComponent";
-import { validateStep7CreateInput } from "../../../validators/staffValidator";
+import { validateMetricsUpdateInput } from "../../../validators/staffValidator";
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
@@ -203,7 +203,7 @@ class StaffMetricsUpdateContainer extends Component {
         // console.log(this.state); // For debugging purposes only.
 
         // Perform staff-side validation.
-        const { errors, isValid } = validateStep7CreateInput(this.state);
+        const { errors, isValid } = validateMetricsUpdateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {

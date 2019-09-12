@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
@@ -9,7 +10,7 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
+import { ROLE_RADIO_CHOICES } from "../../../constants/api";
 
 
 export default class StaffChangeRoleComponent extends Component {
@@ -19,6 +20,7 @@ export default class StaffChangeRoleComponent extends Component {
         } = this.props;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -59,7 +61,7 @@ export default class StaffChangeRoleComponent extends Component {
                                 name="role"
                                 onChange={onRadioChange}
                                 selectedValue={role}
-                                options={GENDER_RADIO_CHOICES}
+                                options={ROLE_RADIO_CHOICES}
                             />
 
                             <div className="form-group">

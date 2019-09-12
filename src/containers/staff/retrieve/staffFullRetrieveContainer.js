@@ -89,6 +89,7 @@ class StaffFullRetrieveContainer extends Component {
         return (
             <StaffFullRetrieveComponent
                 id={id}
+                user={this.props.user}
                 staff={staff}
                 flashMessage={this.props.flashMessage}
                 onStaffClick={this.onStaffClick}

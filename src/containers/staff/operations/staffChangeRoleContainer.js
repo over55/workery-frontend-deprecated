@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import StaffChangeRoleComponent from "../../../components/staff/operations/staffChangeRoleComponent";
 import { validateChangeRoleInput } from "../../../validators/staffValidator";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { putStaffMetricsDetail } from '../../../actions/staffActions';
+import { putStaffChangeRoleOperation } from '../../../actions/staffActions';
 
 
 class StaffChangeRoleContainer extends Component {
@@ -22,14 +22,11 @@ class StaffChangeRoleContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        const birthdateObj = new Date(this.props.staffDetail.birthdate);
-        const joinDateObj = new Date(this.props.staffDetail.joinDate);
-
         this.state = {
             id: id,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
-            role: this.props.staffDetail.role,
+            role: this.props.staffDetail.groupId,
             errors: {},
             isLoading: false
         }
@@ -48,22 +45,6 @@ class StaffChangeRoleContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
-
-        // (1) birthdate - We need to format as per required API format.
-        const birthdateMoment = moment(this.state.dateOfBirth);
-        postData.birthdate = birthdateMoment.format("YYYY-MM-DD");
-
-        // (2) Join date - We need to format as per required API format.
-        const joinDateMoment = moment(this.state.joinDate);
-        postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
-
-        // // (3) Tags - We need to only return our `id` values.
-        // let idTags = [];
-        // for (let i = 0; i < this.state.tags.length; i++) {
-        //     let tag = this.state.tags[i];
-        //     idTags.push(tag.value);
-        // }
-        // postData.tags = idTags;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -94,13 +75,13 @@ class StaffChangeRoleContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(staff) {
-        this.props.setFlashMessage("success", "Staff has been successfully updated.");
+        this.props.setFlashMessage("success", "Staff role has been successfully updated.");
         this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
         this.setState({
-            errors: errors
+            errors: errors, isLoading: false,
         });
 
         // The following code will cause the screen to scroll to the top of
@@ -140,11 +121,13 @@ class StaffChangeRoleContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putStaffMetricsDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({ isLoading: true, errors: {} }, ()=>{
+                this.props.putStaffChangeRoleOperation(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            })
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -159,12 +142,11 @@ class StaffChangeRoleContainer extends Component {
 
     render() {
         const {
-            id, givenName, lastName, role,
-            errors
+            id, givenName, lastName, role, isLoading, errors
         } = this.state;
-
         return (
             <StaffChangeRoleComponent
+                isLoading={isLoading}
                 id={id}
                 givenName={givenName}
                 lastName={lastName}
@@ -172,6 +154,7 @@ class StaffChangeRoleContainer extends Component {
                 errors={errors}
                 onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
+                user={this.props.user}
             />
         );
     }
@@ -189,8 +172,8 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putStaffMetricsDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffMetricsDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        putStaffChangeRoleOperation: (postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffChangeRoleOperation(postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
     }
 }

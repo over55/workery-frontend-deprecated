@@ -300,18 +300,38 @@ export function validateSearchInput(data) {
 }
 
 
-/**
- *  Validator will validate step 6 in the staff creation form.
- */
-export function validateAddressUpdateInput(data) {
+ export function validateMetricsUpdateInput(data) {
+     let errors = {};
+
+     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
+         errors.dateOfBirth = 'This field is required';
+     }
+     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
+         errors.gender = 'This field is required';
+     }
+     if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
+         errors.howHear = 'This field is required';
+     } else {
+         if (data.howHear === "Other") {
+             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
+                 errors.howHearOther = 'This field is required';
+             }
+         }
+     }
+     if (data.joinDate === undefined || data.joinDate === null || data.joinDate === "" || isNaN(data.joinDate) ) {
+         errors.joinDate = 'This field is required';
+     }
+     return {
+         errors,
+         isValid: isEmpty(errors)
+     }
+ }
+
+export function validateChangeRoleInput(data) {
     let errors = {};
 
-    if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
-        errors.isActive = 'This field is required';
-    }
-    if (data.password !== data.passwordRepeat) {
-        errors.password = 'Password does not match!';
-        errors.passwordRepeat = 'Password does not match!';
+    if (data.role === undefined || data.role === null || data.role === "" ) {
+        errors.role = 'This field is required';
     }
 
     return {
@@ -321,13 +341,36 @@ export function validateAddressUpdateInput(data) {
 }
 
 
-export function validateChangeRoleInput(data) {
+export function validateChangePasswordOperationInput(data) {
     let errors = {};
 
-    if (data.role === undefined || data.role === null || data.role === "" ) {
-        errors.role = 'This field is required';
+    if (data.password !== data.passwordRepeat) {
+        errors.password = 'Password does not match!';
+        errors.passwordRepeat = 'Password does not match!';
+    }
+    if (data.password === undefined || data.password === null || data.password === "" ) {
+        errors.password = 'This field is required';
+    }
+    if (data.passwordRepeat === undefined || data.passwordRepeat === null || data.passwordRepeat === "" ) {
+        errors.passwordRepeat = 'This field is required';
     }
 
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
+export function validateAccountUpdateInput(data) {
+    let errors = {};
+
+    if (data.policeCheck === undefined || data.policeCheck === null || data.policeCheck === "" || isNaN(data.policeCheck) ) {
+        errors.policeCheck = 'This field is required';
+    }
+    if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
+        errors.isActive = 'This field is required';
+    }
     return {
         errors,
         isValid: isEmpty(errors)

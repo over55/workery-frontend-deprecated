@@ -53,7 +53,9 @@ export const WORKERY_STAFF_COMMENT_LIST_API_ENDPOINT = '/staff-comments';
 export const WORKERY_STAFF_CONTACT_UPDATE_API_ENDPOINT = '/staff/XXX/contact';
 export const WORKERY_STAFF_ADDRESS_UPDATE_API_ENDPOINT = '/staff/XXX/address';
 export const WORKERY_STAFF_ACCOUNT_UPDATE_API_ENDPOINT = '/staff/XXX/account';
-export const WORKERY_STAFF_METRICS_UPDATE_API_ENDPOINT = '/staff/XXX/metrics'
+export const WORKERY_STAFF_METRICS_UPDATE_API_ENDPOINT = '/staff/XXX/metrics';
+export const WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_ENDPOINT = '/staff/XXX/change-role';
+export const WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_ENDPOINT = '/staff/XXX/change-password';
 export const WORKERY_FINANCIAL_LIST_API_ENDPOINT = '/financials';
 export const WORKERY_FINANCIAL_DETAIL_API_ENDPOINT = '/financial/';
 export const WORKERY_TAG_LIST_API_ENDPOINT = '/tags';
@@ -1099,5 +1101,21 @@ export const NO_SURVEY_CONDUCTED_REASON_CHOICES = [
         selectName: "noSurveyConductedReason",
         value: 1,
         label: "Other"
+    }
+];
+
+
+
+export const ROLE_RADIO_CHOICES = [
+    {
+        id: 'role-m-choice',
+        name: "role",
+        value: MANAGEMENT_GROUP_ID,
+        label: "Management"
+    },{
+        id: 'role-f-choice',
+        name: "role",
+        value: FRONTLINE_GROUP_ID,
+        label: "Frontline Staff"
     }
 ];

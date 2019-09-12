@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import StaffAccountChangePasswordComponent from "../../../components/staff/operations/staffAccountChangePasswordComponent";
-import { validateAddressUpdateInput } from "../../../validators/staffValidator";
+import { validateChangePasswordOperationInput } from "../../../validators/staffValidator";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { putStaffAccountDetail } from '../../../actions/staffActions';
+import { putStaffChangePasswordOperation } from '../../../actions/staffActions';
 
 
 class StaffAccountChangePasswordContainer extends Component {
@@ -20,11 +20,6 @@ class StaffAccountChangePasswordContainer extends Component {
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
-
-        // Map the API fields to our fields.
-        const country = this.props.staffDetail.addressCountry === "CA" ? "Canada" : this.props.staffDetail.addressCountry;
-        const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
-        const isActive = this.props.staffDetail.isActive === true ? 1 : 2;
 
         this.state = {
             id: id,
@@ -87,7 +82,7 @@ class StaffAccountChangePasswordContainer extends Component {
 
     onFailedSubmissionCallback(errors) {
         this.setState({
-            errors: errors
+            errors: errors, isLoading: false,
         })
 
         // The following code will cause the screen to scroll to the top of
@@ -118,15 +113,17 @@ class StaffAccountChangePasswordContainer extends Component {
         e.preventDefault();
 
         // Perform staff-side validation.
-        const { errors, isValid } = validateAddressUpdateInput(this.state);
+        const { errors, isValid } = validateChangePasswordOperationInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putStaffAccountDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({ isLoading: true, errors:{} }, ()=>{
+                this.props.putStaffChangePasswordOperation(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -177,8 +174,8 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putStaffAccountDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffAccountDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        putStaffChangePasswordOperation: (postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffChangePasswordOperation(postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
     }
 }

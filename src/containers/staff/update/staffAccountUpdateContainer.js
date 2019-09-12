@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import StaffAccountUpdateComponent from "../../../components/staff/update/staffAccountUpdateComponent";
-import { validateAddressUpdateInput } from "../../../validators/staffValidator";
+import { validateAccountUpdateInput } from "../../../validators/staffValidator";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { putStaffAccountDetail } from '../../../actions/staffActions';
 
@@ -162,15 +162,17 @@ class StaffAccountUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform staff-side validation.
-        const { errors, isValid } = validateAddressUpdateInput(this.state);
+        const { errors, isValid } = validateAccountUpdateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putStaffAccountDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({ isLoading: true, errors: {}, }, ()=>{
+                this.props.putStaffAccountDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {

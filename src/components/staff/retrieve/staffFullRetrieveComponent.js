@@ -6,6 +6,7 @@ import Moment from 'react-moment';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
+    EXECUTIVE_GROUP_ID,
     MANAGEMENT_GROUP_ID,
     FRONTLINE_GROUP_ID
 } from '../../../constants/api';
@@ -15,8 +16,9 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class StaffFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, staff, flashMessage, errors, onStaffClick } = this.props;
+        const { id, staff, user, flashMessage, errors, onStaffClick } = this.props;
         const { groupDescription } = staff;
+        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -256,36 +258,40 @@ export default class StaffFullRetrieveComponent extends Component {
 
 
 
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <Link to={`/staff/${id}/archive`}>
-                                                {staff.isArchived
-                                                    ? <div>Unarchive&nbsp;<i className="fas fa-chevron-right"></i></div>
-                                                    : <div>Archive&nbsp;<i className="fas fa-chevron-right"></i></div>
-                                                }
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/staff/${id}/password`}>
-                                                    <div>Change Password&nbsp;<i className="fas fa-chevron-right"></i></div>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/staff/${id}/role`}>
-                                                    <div>Change Role&nbsp;<i className="fas fa-chevron-right"></i></div>
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
+                                {canViewFunctions &&
+                                    <tr className="bg-dark">
+                                        <th scope="row" colSpan="2" className="text-light">
+                                            <i className="fas fa-project-diagram"></i>&nbsp;Functions
+                                        </th>
+                                    </tr>
+                                }
+                                {canViewFunctions &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Available Choices</th>
+                                        <td>
+                                            <ul>
+                                                <li>
+                                                    <Link to={`/staff/${id}/archive`}>
+                                                    {staff.isArchived
+                                                        ? <div>Unarchive&nbsp;<i className="fas fa-chevron-right"></i></div>
+                                                        : <div>Archive&nbsp;<i className="fas fa-chevron-right"></i></div>
+                                                    }
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link to={`/staff/${id}/password`}>
+                                                        <div>Change Password&nbsp;<i className="fas fa-chevron-right"></i></div>
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link to={`/staff/${id}/role`}>
+                                                        <div>Change Role&nbsp;<i className="fas fa-chevron-right"></i></div>
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                }
 
                             </tbody>
                         </table>
