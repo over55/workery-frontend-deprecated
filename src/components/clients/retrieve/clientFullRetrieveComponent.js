@@ -9,7 +9,8 @@ import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF,
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    EXECUTIVE_GROUP_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -17,12 +18,13 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class ClientFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, client, flashMessage, errors, onClientClick } = this.props;
+        const { id, client, flashMessage, errors, onClientClick, user } = this.props;
         const { typeOf } = client;
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
         const isActiveState = client.state === "active";
         const isRezClient = typeOf === 2;
         const isCompany = client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
+        const canDeleteClient = user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -276,11 +278,13 @@ export default class ClientFullRetrieveComponent extends Component {
                                                     </Link>
                                                 </li>
                                             }
-                                            <li>
-                                                <Link to={`/client/${id}/delete`}>
-                                                    Permanently Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
+                                            {canDeleteClient &&
+                                                <li>
+                                                    <Link to={`/client/${id}/delete`}>
+                                                        Permanently Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
                                         </ul>
                                     </td>
                                 </tr>
