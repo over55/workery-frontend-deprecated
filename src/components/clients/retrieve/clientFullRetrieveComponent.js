@@ -9,7 +9,8 @@ import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF,
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    EXECUTIVE_GROUP_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -17,12 +18,13 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class ClientFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, client, flashMessage, errors, onClientClick } = this.props;
+        const { id, client, flashMessage, errors, onClientClick, user } = this.props;
         const { typeOf } = client;
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
         const isActiveState = client.state === "active";
         const isRezClient = typeOf === 2;
         const isCompany = client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
+        const canDeleteClient = user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -44,8 +46,8 @@ export default class ClientFullRetrieveComponent extends Component {
                 <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
 
                 {client.state === 'inactive' &&
-                    <div className="alert alert-danger" role="alert">
-                        <strong><i className="fas fa-exclamation-triangle"></i>&nbsp;Warning</strong> - Client is deactivated in our system and cannot produce work orders to associates.
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This client is archived and is read-only.
                     </div>
                 }
 
@@ -249,7 +251,6 @@ export default class ClientFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-
                                                 {client.state === 'inactive'
                                                     ? <div>
                                                         <i className="fas fa-lock"></i>&nbsp;Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
@@ -261,11 +262,11 @@ export default class ClientFullRetrieveComponent extends Component {
                                             </li>
                                             <li>
                                                 {isActiveState
-                                                    ?<Link to={`/client/${id}/deactivation`}>
-                                                        Deactivate Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    ?<Link to={`/client/${id}/archive`}>
+                                                        Archive&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
-                                                    :<Link to={`/client/${id}/activation`}>
-                                                        Activate Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    :<Link to={`/client/${id}/unarchive`}>
+                                                        Unarchive&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                 }
 
@@ -277,11 +278,13 @@ export default class ClientFullRetrieveComponent extends Component {
                                                     </Link>
                                                 </li>
                                             }
-                                            <li>
-                                                <Link to={`/client/${id}/delete`}>
-                                                    Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
+                                            {canDeleteClient &&
+                                                <li>
+                                                    <Link to={`/client/${id}/delete`}>
+                                                        Permanently Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
                                         </ul>
                                     </td>
                                 </tr>

@@ -45,8 +45,8 @@ import ClientCreateStep7Container from "./clients/create/clientCreateStep7Contai
 import ClientContactUpdateContainer from "./clients/update/clientContactUpdateContainer";
 import ClientAddressUpdateContainer from "./clients/update/clientAddressUpdateContainer";
 import ClientMetricsUpdateContainer from "./clients/update/clientMetricsUpdateContainer";
-import ClientActivateOperationContainer from "./clients/operations/clientActivateOperationContainer";
-import ClientDeactivateOperationContainer from "./clients/operations/clientDeactivateOperationContainer";
+import ClientUnarchiveOperationContainer from "./clients/operations/clientUnarchiveOperationContainer";
+import ClientArchiveOperationContainer from "./clients/operations/clientArchiveOperationContainer";
 import ClientRezUpgradeOperationContainer from "./clients/operations/clientRezUpgradeOperationContainer";
 import ClientPermanentDeleteOperationContainer from "./clients/operations/clientPermanentDeleteOperationContainer";
 
@@ -294,8 +294,8 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id/update/address" exact component={requiresAuth(ClientAddressUpdateContainer)} />
                                 <Route path="/client/:id/update/metrics" exact component={requiresAuth(ClientMetricsUpdateContainer)} />
 
-                                <Route path="/client/:id/activation" exact component={requiresAuth(ClientActivateOperationContainer)} />
-                                <Route path="/client/:id/deactivation" exact component={requiresAuth(ClientDeactivateOperationContainer)} />
+                                <Route path="/client/:id/unarchive" exact component={requiresAuth(ClientUnarchiveOperationContainer)} />
+                                <Route path="/client/:id/archive" exact component={requiresAuth(ClientArchiveOperationContainer)} />
                                 <Route path="/client/:id/delete" exact component={requiresAuth(ClientPermanentDeleteOperationContainer)} />
                                 <Route path="/client/:id/rez-upgrade" exact component={requiresAuth(ClientRezUpgradeOperationContainer)} />
 

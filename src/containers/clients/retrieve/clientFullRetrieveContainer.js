@@ -92,6 +92,7 @@ class ClientFullRetrieveContainer extends Component {
                 client={client}
                 flashMessage={this.props.flashMessage}
                 onClientClick={this.onClientClick}
+                user={this.props.user}
             />
         );
     }

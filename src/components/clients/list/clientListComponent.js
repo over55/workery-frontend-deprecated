@@ -37,7 +37,7 @@ class RemoteListComponent extends Component {
 
         const selectOptions = {
             "active": 'Active',
-            "inactive": 'Inactive',
+            "inactive": 'Archived',
         };
 
         const columns = [{
@@ -160,7 +160,7 @@ function statusFormatter(cell, row){
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
         case "inactive":
-            return <i className="fas fa-times-circle" style={{ color: 'red' }}></i>;
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
         return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;

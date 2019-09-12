@@ -10,7 +10,7 @@ import {
 } from '../constants/actionTypes';
 import {
     WORKERY_CLIENT_LIST_API_ENDPOINT, WORKERY_CLIENT_DETAIL_API_ENDPOINT,
-    WORKERY_CLIENT_DEACTIVATE_API_ENDPOINT, WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT,
+    WORKERY_CLIENT_ARCHIVE_API_ENDPOINT, WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT,
     WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT,
     WORKERY_CLIENT_ADDRESS_UPDATE_API_ENDPOINT,
     WORKERY_CLIENT_METRICS_UPDATE_API_ENDPOINT
@@ -504,7 +504,7 @@ export function deleteClientDetail(id, onSuccessCallback, onFailureCallback) {
         const customAxios = getCustomAxios();
 
         // Perform our API submission.
-        customAxios.delete(WORKERY_CLIENT_DETAIL_API_ENDPOINT+id).then( (successResponse) => {
+        customAxios.delete(WORKERY_CLIENT_DETAIL_API_ENDPOINT + id + "/").then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             let client = camelizeKeys(responseData);
@@ -582,7 +582,7 @@ export function postClientDeactivationDetail(postData, onSuccessCallback, onFail
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_DEACTIVATE_API_ENDPOINT, buffer).then( (successResponse) => {
+        customAxios.post(WORKERY_CLIENT_ARCHIVE_API_ENDPOINT, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 
