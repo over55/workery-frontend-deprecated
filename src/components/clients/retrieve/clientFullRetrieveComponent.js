@@ -263,10 +263,10 @@ export default class ClientFullRetrieveComponent extends Component {
                                             <li>
                                                 {isActiveState
                                                     ?<Link to={`/client/${id}/deactivation`}>
-                                                        Deactivate Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                        Archive&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                     :<Link to={`/client/${id}/activation`}>
-                                                        Activate Client&nbsp;<i className="fas fa-chevron-right"></i>
+                                                        Unarchive&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                 }
 

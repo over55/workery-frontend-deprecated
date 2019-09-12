@@ -29,7 +29,7 @@ export default class ClientPermanentDeleteOperationComponent extends Component {
                             <Link to={`/client/${client.id}/full`}><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-smile-beam"></i>&nbsp;PermanentDelete
+                            <i className="fas fa-skull-crossbones"></i>&nbsp;Permanently Delete Client
                         </li>
                     </ol>
                 </nav>
@@ -37,7 +37,7 @@ export default class ClientPermanentDeleteOperationComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1><i className="fas fa-skull-crossbones"></i>&nbsp;Permanent Delete Client</h1>
+                            <h1><i className="fas fa-skull-crossbones"></i>&nbsp;Permanently Delete Client</h1>
                             <p>Warning, you are about to permanently delete this customer from the system. This action cannot be undone!</p>
                             <p>To acknowledge that you understand this, please write in the client ID value of <strong>{client.id}</strong> in the textfield below and then click the delete button. Once the button has been clicked, there is no going back.</p>
 
