@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
-import StaffAccountUpdateComponent from "../../../components/staff/update/staffAccountUpdateComponent";
-import { validateAddressUpdateInput } from "../../../validators/staffValidator";
+import StaffChangeRoleComponent from "../../../components/staff/operations/staffChangeRoleComponent";
+import { validateChangeRoleInput } from "../../../validators/staffValidator";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { putStaffAccountDetail } from '../../../actions/staffActions';
+import { putStaffMetricsDetail } from '../../../actions/staffActions';
 
 
-class StaffAccountUpdateContainer extends Component {
+class StaffChangeRoleContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -21,32 +22,21 @@ class StaffAccountUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        // Map the API fields to our fields.
-        const country = this.props.staffDetail.addressCountry === "CA" ? "Canada" : this.props.staffDetail.addressCountry;
-        const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
-        const isActive = this.props.staffDetail.isActive === true ? 1 : 2;
+        const birthdateObj = new Date(this.props.staffDetail.birthdate);
+        const joinDateObj = new Date(this.props.staffDetail.joinDate);
 
         this.state = {
             id: id,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
-            description: this.props.staffDetail.description,
-            emergencyContactName: this.props.staffDetail.emergencyContactName,
-            emergencyContactRelationship: this.props.staffDetail.emergencyContactRelationship,
-            emergencyContactTelephone: this.props.staffDetail.emergencyContactTelephone,
-            emergencyContactAlternativeTelephone: this.props.staffDetail.emergencyContactAlternativeTelephone,
-            description: this.props.staffDetail.description,
-            isActive: isActive,
+            role: this.props.staffDetail.role,
             errors: {},
             isLoading: false
         }
 
         this.getPostData = this.getPostData.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
-        this.onPoliceCheckDateChange = this.onPoliceCheckDateChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
-        this.onNextClick = this.onNextClick.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -59,12 +49,21 @@ class StaffAccountUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        if (parseInt(this.state.isActive) === 3) {
-            postData.isActive = true;
-        }
-        if (parseInt(this.state.isActive) === 2) {
-            postData.isActive = false;
-        }
+        // (1) birthdate - We need to format as per required API format.
+        const birthdateMoment = moment(this.state.dateOfBirth);
+        postData.birthdate = birthdateMoment.format("YYYY-MM-DD");
+
+        // (2) Join date - We need to format as per required API format.
+        const joinDateMoment = moment(this.state.joinDate);
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
+
+        // // (3) Tags - We need to only return our `id` values.
+        // let idTags = [];
+        // for (let i = 0; i < this.state.tags.length; i++) {
+        //     let tag = this.state.tags[i];
+        //     idTags.push(tag.value);
+        // }
+        // postData.tags = idTags;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -95,7 +94,6 @@ class StaffAccountUpdateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(staff) {
-        this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Staff has been successfully updated.");
         this.props.history.push("/staff/"+this.state.id+"/full");
     }
@@ -103,7 +101,7 @@ class StaffAccountUpdateContainer extends Component {
     onFailedSubmissionCallback(errors) {
         this.setState({
             errors: errors
-        })
+        });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -117,25 +115,6 @@ class StaffAccountUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        // Update our state.
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-
-        // Update our persistent storage.
-        const key = "workery-create-staff-"+[e.target.name];
-        localStorage.setItem(key, e.target.value)
-    }
-
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            [optionKey]: option,
-        });
-    }
-
     onRadioChange(e) {
         // Get the values.
         const storageValueKey = "workery-create-staff-"+[e.target.name];
@@ -147,26 +126,21 @@ class StaffAccountUpdateContainer extends Component {
 
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ [storeLabelKey]: label, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
     }
 
-    onPoliceCheckDateChange(dateObj) {
-        this.setState(
-            { policeCheck: dateObj },
-            ()=>{  }
-        );
-    }
-
-    onNextClick(e) {
+    onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
+        // console.log(this.state); // For debugging purposes only.
+
         // Perform staff-side validation.
-        const { errors, isValid } = validateAddressUpdateInput(this.state);
+        const { errors, isValid } = validateChangeRoleInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putStaffAccountDetail(
+            this.props.putStaffMetricsDetail(
                 this.getPostData(),
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
@@ -178,7 +152,6 @@ class StaffAccountUpdateContainer extends Component {
         }
     }
 
-
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -186,37 +159,19 @@ class StaffAccountUpdateContainer extends Component {
 
     render() {
         const {
-            id, givenName, lastName, description, policeCheck,
-            emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-            isActive, errors, isLoading, returnURL
+            id, givenName, lastName, role,
+            errors
         } = this.state;
 
-        const { user } = this.props;
         return (
-            <StaffAccountUpdateComponent
+            <StaffChangeRoleComponent
                 id={id}
                 givenName={givenName}
                 lastName={lastName}
-
-                description={description}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                onTextChange={this.onTextChange}
-
-                policeCheck={policeCheck}
-                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
-
-                onSelectChange={this.onSelectChange}
-
-                isActive={isActive}
-                onRadioChange={this.onRadioChange}
-
-                onNextClick={this.onNextClick}
+                role={role}
                 errors={errors}
-                returnURL={returnURL}
-                isLoading={isLoading}
+                onRadioChange={this.onRadioChange}
+                onClick={this.onClick}
             />
         );
     }
@@ -234,13 +189,14 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putStaffAccountDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffAccountDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        putStaffMetricsDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffMetricsDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
     }
 }
 
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(StaffAccountUpdateContainer);
+)(StaffChangeRoleContainer);

@@ -319,3 +319,17 @@ export function validateAddressUpdateInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateChangeRoleInput(data) {
+    let errors = {};
+
+    if (data.role === undefined || data.role === null || data.role === "" ) {
+        errors.role = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

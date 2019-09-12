@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import StaffAccountUpdateComponent from "../../../components/staff/update/staffAccountUpdateComponent";
+import StaffAccountChangePasswordComponent from "../../../components/staff/operations/staffAccountChangePasswordComponent";
 import { validateAddressUpdateInput } from "../../../validators/staffValidator";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { putStaffAccountDetail } from '../../../actions/staffActions';
 
 
-class StaffAccountUpdateContainer extends Component {
+class StaffAccountChangePasswordContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -30,22 +30,14 @@ class StaffAccountUpdateContainer extends Component {
             id: id,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
-            description: this.props.staffDetail.description,
-            emergencyContactName: this.props.staffDetail.emergencyContactName,
-            emergencyContactRelationship: this.props.staffDetail.emergencyContactRelationship,
-            emergencyContactTelephone: this.props.staffDetail.emergencyContactTelephone,
-            emergencyContactAlternativeTelephone: this.props.staffDetail.emergencyContactAlternativeTelephone,
-            description: this.props.staffDetail.description,
-            isActive: isActive,
+            password: "",
+            passwordRepeat: "",
             errors: {},
             isLoading: false
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
-        this.onPoliceCheckDateChange = this.onPoliceCheckDateChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -58,13 +50,6 @@ class StaffAccountUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
-
-        if (parseInt(this.state.isActive) === 3) {
-            postData.isActive = true;
-        }
-        if (parseInt(this.state.isActive) === 2) {
-            postData.isActive = false;
-        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -96,7 +81,7 @@ class StaffAccountUpdateContainer extends Component {
 
     onSuccessfulSubmissionCallback(staff) {
         this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Staff has been successfully updated.");
+        this.props.setFlashMessage("success", "Staff password has been successfully updated.");
         this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
@@ -128,35 +113,6 @@ class StaffAccountUpdateContainer extends Component {
         localStorage.setItem(key, e.target.value)
     }
 
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            [optionKey]: option,
-        });
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "workery-create-staff-"+[e.target.name];
-        const storageLabelKey =  "workery-create-staff-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ [storeLabelKey]: label, }); // Save to store.
-    }
-
-    onPoliceCheckDateChange(dateObj) {
-        this.setState(
-            { policeCheck: dateObj },
-            ()=>{  }
-        );
-    }
-
     onNextClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -186,32 +142,19 @@ class StaffAccountUpdateContainer extends Component {
 
     render() {
         const {
-            id, givenName, lastName, description, policeCheck,
-            emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-            isActive, errors, isLoading, returnURL
+            id, givenName, lastName, description, policeCheck, password, passwordRepeat, errors, isLoading, returnURL
         } = this.state;
 
         const { user } = this.props;
         return (
-            <StaffAccountUpdateComponent
+            <StaffAccountChangePasswordComponent
                 id={id}
                 givenName={givenName}
                 lastName={lastName}
 
-                description={description}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
+                password={password}
+                passwordRepeat={passwordRepeat}
                 onTextChange={this.onTextChange}
-
-                policeCheck={policeCheck}
-                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
-
-                onSelectChange={this.onSelectChange}
-
-                isActive={isActive}
-                onRadioChange={this.onRadioChange}
 
                 onNextClick={this.onNextClick}
                 errors={errors}
@@ -243,4 +186,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(StaffAccountUpdateContainer);
+)(StaffAccountChangePasswordContainer);
