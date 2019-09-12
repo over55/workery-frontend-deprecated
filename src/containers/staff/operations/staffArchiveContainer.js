@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import StaffArchiveComponent from "../../../components/staff/archive/staffArchiveComponent";
+import StaffArchiveComponent from "../../../components/staff/operations/staffArchiveComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullStaffDetail, archiveStaffDetail } from "../../../actions/staffActions";
 

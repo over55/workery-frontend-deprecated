@@ -17,7 +17,7 @@ class StaffAccountAddressComponent extends Component {
     render() {
         const {
             id, givenName, lastName, errors, isLoading, onNextClick, onSelectChange,
-            password, passwordRepeat, description, emergencyContactName,
+            description, emergencyContactName,
             emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
             isActive, onRadioChange,
             policeCheck, onPoliceCheckDateChange
@@ -134,27 +134,6 @@ class StaffAccountAddressComponent extends Component {
                                 helpText='Selecting "yes" will grant the staff login ability.'
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.password}
-                                label="Password (*)"
-                                onChange={onTextChange}
-                                value={password}
-                                name="password"
-                                type="password"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.passwordRepeat}
-                                label="Repeat Password (*)"
-                                onChange={onTextChange}
-                                value={passwordRepeat}
-                                name="passwordRepeat"
-                                type="password"
-                            />
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>

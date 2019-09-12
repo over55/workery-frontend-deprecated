@@ -273,6 +273,11 @@ export default class StaffFullRetrieveComponent extends Component {
                                                 }
                                                 </Link>
                                             </li>
+                                            <li>
+                                                <Link to={`/staff/${id}/password`}>
+                                                    <div>Change Password&nbsp;<i className="fas fa-chevron-right"></i></div>
+                                                </Link>
+                                            </li>
                                         </ul>
                                     </td>
                                 </tr>
