@@ -96,6 +96,7 @@ import OrderTransferStep1Container from "./orders/operations/transfer/orderTrans
 import OrderTransferStep2Container from "./orders/operations/transfer/orderTransferStep2Container";
 import OrderTransferStep3Container from "./orders/operations/transfer/orderTransferStep3Container";
 import OrderTransferStep4Container from "./orders/operations/transfer/orderTransferStep4Container";
+import OrderTransferStep5Container from "./orders/operations/transfer/orderTransferStep5Container";
 
 // Tasks
 import TaskListContainer from "./tasks/list/taskListContainer";
@@ -348,6 +349,7 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:id/transfer-step-2" exact component={requiresAuth(OrderTransferStep2Container)} />
                                 <Route path="/order/:id/transfer-step-3" exact component={requiresAuth(OrderTransferStep3Container)} />
                                 <Route path="/order/:id/transfer-step-4" exact component={requiresAuth(OrderTransferStep4Container)} />
+                                <Route path="/order/:id/transfer-step-5" exact component={requiresAuth(OrderTransferStep5Container)} />
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />

@@ -2,13 +2,11 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
-class OrderTransferOperationComponent extends Component {
+class OrderTransferStep5Component extends Component {
     render() {
         const {
             associate, associateOptions, isAssociatesLoading,
@@ -43,42 +41,6 @@ class OrderTransferOperationComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Associate (*)"
-                                name="associate"
-                                defaultOptionLabel="Please select the associate."
-                                options={associateOptions}
-                                value={associate}
-                                error={errors.associate}
-                                onSelectChange={onSelectChange}
-                                isLoading={isAssociatesLoading}
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Client (*)"
-                                name="client"
-                                defaultOptionLabel="Please select the client."
-                                options={clientOptions}
-                                value={client}
-                                error={errors.client}
-                                onSelectChange={onSelectChange}
-                                isLoading={isClientLoading}
-                            />
-
-                            <BootstrapTextarea
-                                name="reason"
-                                borderColour="border-primary"
-                                label="Describe the reason (*)"
-                                placeholder="Describe here."
-                                rows="5"
-                                value={reason}
-                                helpText="Maximum 1,000 characters."
-                                onChange={onTextChange}
-                                error={errors.reason}
-                            />
-
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
@@ -97,4 +59,4 @@ class OrderTransferOperationComponent extends Component {
     }
 }
 
-export default OrderTransferOperationComponent;
+export default OrderTransferStep5Component;

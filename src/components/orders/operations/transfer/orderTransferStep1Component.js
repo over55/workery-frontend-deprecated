@@ -18,15 +18,18 @@ class OrderTransferStep1Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
+                            <Link to={`/orders`}><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
+                        </li>
+                        <li className="breadcrumb-item" aria-current="page">
+                            <Link to={`/order/${orderDetail.id}/full`}><i className="fas fa-wrench"></i>&nbsp;Order # {orderDetail.id && orderDetail.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-search"></i>&nbsp;Search
+                            <i className="fas fa-exchange-alt"></i>&nbsp;Transfer
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-search"></i>&nbsp;Clients Search</h1>
+                <h1><i className="fas fa-exchange-alt"></i>&nbsp;Transfer</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -97,7 +100,7 @@ class OrderTransferStep1Component extends Component {
                             <i className="fas fa-times"></i> Advanced Search
                         </button>
                         <div className="col-md-12 text-center">
-                            <Link to="/clients" className="btn btn-secondary btn-lg mt-4 pl-4 pr-4">
+                            <Link to={`/order/${orderDetail.id}/full`} className="btn btn-secondary btn-lg mt-4 pl-4 pr-4">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>

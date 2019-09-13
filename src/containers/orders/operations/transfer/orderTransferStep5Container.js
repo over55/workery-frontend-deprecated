@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderTransferOperationComponent from "../../../components/orders/operations/orderTransferOperationComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateTransferInput } from "../../../validators/orderValidator";
+import OrderTransferStep5Component from "../../../../components/orders/operations/transfer/orderTransferStep5Component";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { validateTransferInput } from "../../../../validators/orderValidator";
 import {
-    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
-} from '../../../constants/api';
-import { pullAssociateList, getAssociateReactSelectOptions } from "../../../actions/associateActions";
-import { pullClientList, getClientReactSelectOptions } from "../../../actions/clientActions";
-import { postOrderTransfer } from "../../../actions/orderActions";
+    RESIDENCE_TYPE_OF,
+    BUSINESS_TYPE_OF,
+    COMMUNITY_CARES_TYPE_OF,
+    BASIC_STREET_TYPE_CHOICES,
+    STREET_DIRECTION_CHOICES
+} from '../../../../constants/api';
+import { pullAssociateList, getAssociateReactSelectOptions } from "../../../../actions/associateActions";
+import { pullClientList, getClientReactSelectOptions } from "../../../../actions/clientActions";
+import { postOrderTransfer } from "../../../../actions/orderActions";
 
 
 
@@ -182,7 +186,7 @@ class OrderTransferOperationContainer extends Component {
         } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
-            <OrderTransferOperationComponent
+            <OrderTransferStep5Component
                 id={id}
                 order={order}
                 associate={associate}
