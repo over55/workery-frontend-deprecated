@@ -76,9 +76,8 @@ class OrderTransferStep1Container extends Component {
             // CASE 1 OF 2: Validation passed successfully.
             if (isValid) {
 
-                    localStorageSetObjectOrArrayItem('workery-transfer-client-details', this.state);
-                    this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-2");
-
+                localStorageSetObjectOrArrayItem('workery-transfer-order-details', this.state);
+                this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-2");
 
             // CASE 2 OF 2: Validation was a failure.
             } else {
@@ -103,7 +102,7 @@ class OrderTransferStep1Container extends Component {
             // CASE 1 OF 2: Validation passed successfully.
             if (isValid) {
 
-                    localStorageSetObjectOrArrayItem('workery-transfer-client-details', this.state);
+                    localStorageSetObjectOrArrayItem('workery-transfer-order-details', this.state);
                     this.props.history.push("/order/+"+this.props.orderDetail.id+"/transfer-step-2");
 
             // CASE 2 OF 2: Validation was a failure.

@@ -9,6 +9,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 class OrderTransferStep5Component extends Component {
     render() {
         const {
+            clientGivenName, clientLastName, associateGivenName, associateLastName,
             associate, client, reason, errors, id, order, isLoading, onTextChange, onSelectChange, onClick, orderDetail
         } = this.props;
         return (
@@ -63,6 +64,50 @@ class OrderTransferStep5Component extends Component {
                     </div>
                 </div>
 
+                <div className="row pt-3 mb-4 pb-2">
+                    <div className="col-md-10 mx-auto p-2">
+
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;Review
+                        </h2>
+
+                        <BootstrapErrorsProcessingAlert errors={errors} />
+                        <p><strong>Please confirm these details before transforing the order:</strong></p>
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-wrench"></i>&nbsp;Order
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Order #</th>
+                                    <td>{orderDetail.id}</td>
+                                </tr>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-user-circle"></i>&nbsp;Client
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Full-Name</th>
+                                    <td>{clientGivenName}&nbsp;{clientLastName}</td>
+                                </tr>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-crown"></i>&nbsp;Associate
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Full-Name</th>
+                                    <td>{associateGivenName}&nbsp;{associateLastName}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+{ /*
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
@@ -84,6 +129,7 @@ class OrderTransferStep5Component extends Component {
                         </form>
                     </div>
                 </div>
+*/}
 
             </main>
         );

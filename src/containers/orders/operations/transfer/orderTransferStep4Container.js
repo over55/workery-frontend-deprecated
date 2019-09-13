@@ -132,6 +132,9 @@ class OrderTransferStep4Container extends Component {
         this.setState(
             { isLoading: true },
             ()=>{
+                localStorage.setItem("workery-transfer-order-associateId", associateId);
+                localStorage.setItem("workery-transfer-order-associateGivenName", associateGivenName);
+                localStorage.setItem("workery-transfer-order-associateLastName", associateLastName);
                 this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-5");
             }
         );

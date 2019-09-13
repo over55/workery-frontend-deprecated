@@ -19,7 +19,7 @@ class OrderTransferStep2Container extends Component {
     constructor(props) {
         super(props);
 
-        const search = localStorageGetObjectItem('workery-search-client-details');
+        const search = localStorageGetObjectItem('workery-transfer-order-details');
         this.state = {
             // Pagination
             page: 1,
@@ -39,7 +39,7 @@ class OrderTransferStep2Container extends Component {
     }
 
     getParametersMapFromState() {
-        const search = localStorageGetObjectItem('workery-search-client-details');
+        const search = localStorageGetObjectItem('workery-transfer-order-details');
         const parametersMap = new Map();
         if (search.keyword !== undefined && search.keyword !== "") {
             parametersMap.set("search", search.keyword);
@@ -132,6 +132,9 @@ class OrderTransferStep2Container extends Component {
         this.setState(
             { isLoading: true },
             ()=>{
+                localStorage.setItem("workery-transfer-order-clientId", clientId);
+                localStorage.setItem("workery-transfer-order-clientGivenName", clientGivenName);
+                localStorage.setItem("workery-transfer-order-clientLastName", clientLastName);
                 this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-3");
             }
         );

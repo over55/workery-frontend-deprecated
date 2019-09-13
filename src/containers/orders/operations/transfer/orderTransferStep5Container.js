@@ -32,8 +32,12 @@ class OrderTransferOperationContainer extends Component {
         const { id } = this.props.match.params;
 
         this.state = {
-            associate: "",
-            client: "",
+            client: localStorage.getItem("workery-transfer-order-clientId"),
+            clientGivenName: localStorage.getItem("workery-transfer-order-clientGivenName"),
+            clientLastName: localStorage.getItem("workery-transfer-order-clientLastName"),
+            associate: localStorage.getItem("workery-transfer-order-associateId"),
+            associateGivenName: localStorage.getItem("workery-transfer-order-associateGivenName"),
+            associateLastName: localStorage.getItem("workery-transfer-order-associateLastName"),
             reason: "",
             errors: {},
             isLoading: false,
@@ -136,8 +140,8 @@ class OrderTransferOperationContainer extends Component {
 
     render() {
         const {
-            associate,
-            client,
+            associate, associateGivenName, associateLastName,
+            client, clientGivenName, clientLastName,
             reason, errors, id, isLoading
         } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
@@ -145,8 +149,12 @@ class OrderTransferOperationContainer extends Component {
             <OrderTransferStep5Component
                 id={id}
                 order={order}
-                associate={associate}
                 client={client}
+                clientGivenName={clientGivenName}
+                clientLastName={clientLastName}
+                associate={associate}
+                associateGivenName={associateGivenName}
+                associateLastName={associateLastName}
                 reason={reason}
                 errors={errors}
                 isLoading={isLoading}
