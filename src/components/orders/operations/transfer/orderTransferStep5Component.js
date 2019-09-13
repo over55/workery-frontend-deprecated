@@ -9,7 +9,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 class OrderTransferStep5Component extends Component {
     render() {
         const {
-            clientGivenName, clientLastName, associateGivenName, associateLastName,
+            clientGivenName, clientLastName, associateGivenName, associateLastName, onSubmitClick,
             associate, client, reason, errors, id, order, isLoading, onTextChange, onSelectChange, onClick, orderDetail
         } = this.props;
         return (
@@ -104,32 +104,16 @@ class OrderTransferStep5Component extends Component {
                                 </tr>
                             </tbody>
                         </table>
+                        <div className="form-group">
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onSubmitClick}>
+                                <i className="fas fa-check-circle"></i>&nbsp;Save
+                            </button>
+                            <Link to={`/order/${orderDetail.id}/transfer-step-4`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                            </Link>
+                        </div>
                     </div>
                 </div>
-
-{ /*
-                <div className="row">
-                    <div className="col-md-5 mx-auto mt-2">
-                        <form>
-                            <h1><i className="fas fa-exchange-alt"></i>&nbsp;Transfer Order</h1>
-                            <p>You are about to <strong>transfer the ownership</strong> of this job for the <strong>associate</strong> or the <strong>client</strong>.</p>
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
-
-                            <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <div className="form-group">
-                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    <i className="fas fa-check-circle"></i>&nbsp;Save
-                                </button>
-                                <Link to={`/order/${orderDetail.id}/transfer-step-4`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
-                                    <i className="fas fa-arrow-circle-left"></i> Back
-                                </Link>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-*/}
 
             </main>
         );

@@ -38,6 +38,7 @@ class OrderTransferOperationContainer extends Component {
             associate: localStorage.getItem("workery-transfer-order-associateId"),
             associateGivenName: localStorage.getItem("workery-transfer-order-associateGivenName"),
             associateLastName: localStorage.getItem("workery-transfer-order-associateLastName"),
+            reason: "-",
             reason: "",
             errors: {},
             isLoading: false,
@@ -45,7 +46,7 @@ class OrderTransferOperationContainer extends Component {
         }
 
         this.getPostData = this.getPostData.bind(this);
-        this.onClick = this.onClick.bind(this);
+        this.onSubmitClick = this.onSubmitClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -110,7 +111,7 @@ class OrderTransferOperationContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onClick(e) {
+    onSubmitClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
@@ -160,7 +161,7 @@ class OrderTransferOperationContainer extends Component {
                 isLoading={isLoading}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
-                onClick={this.onClick}
+                onSubmitClick={this.onSubmitClick}
                 orderDetail={this.props.orderDetail}
             />
         );
