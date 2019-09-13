@@ -33,11 +33,7 @@ class OrderTransferOperationContainer extends Component {
 
         this.state = {
             associate: "",
-            associateOptions: [],
-            isAssociatesLoading: true,
             client: "",
-            clientOptions: [],
-            isClientLoading: true,
             reason: "",
             errors: {},
             isLoading: false,
@@ -45,11 +41,7 @@ class OrderTransferOperationContainer extends Component {
         }
 
         this.getPostData = this.getPostData.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onAssociatesListCallback = this.onAssociatesListCallback.bind(this);
-        this.onClientListCallback = this.onClientListCallback.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -77,12 +69,6 @@ class OrderTransferOperationContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        const parametersMap = new Map();
-        parametersMap.set('state', 1);
-        this.props.pullAssociateList(1, 100, parametersMap, this.onAssociatesListCallback, null);
-        parametersMap.set('state', "active");
-        this.props.pullClientList(1, 100, parametersMap, this.onClientListCallback, null);
     }
 
     componentWillUnmount() {
@@ -115,30 +101,10 @@ class OrderTransferOperationContainer extends Component {
         scroll.scrollToTop();
     }
 
-    onAssociatesListCallback(associateList) {
-        this.setState({
-            associateOptions: getAssociateReactSelectOptions(associateList),
-            isAssociatesLoading: false,
-        });
-    }
-
-    onClientListCallback(clientList) {
-        this.setState({
-            clientOptions: getClientReactSelectOptions(clientList),
-            isClientLoading: false,
-        });
-    }
-
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
-
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-    }
 
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
@@ -163,16 +129,6 @@ class OrderTransferOperationContainer extends Component {
         }
     }
 
-    onSelectChange(option) {
-        const optionKey = [option.selectName].toString()+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            optionKey: option,
-        });
-        console.log([option.selectName], optionKey, "|",option); // For debugging purposes only.
-    }
-
-
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -180,8 +136,8 @@ class OrderTransferOperationContainer extends Component {
 
     render() {
         const {
-            associate, associateOptions, isAssociatesLoading,
-            client, clientOptions, isClientLoading,
+            associate,
+            client,
             reason, errors, id, isLoading
         } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
@@ -190,17 +146,14 @@ class OrderTransferOperationContainer extends Component {
                 id={id}
                 order={order}
                 associate={associate}
-                associateOptions={associateOptions}
-                isAssociatesLoading={isAssociatesLoading}
                 client={client}
-                clientOptions={clientOptions}
-                isClientLoading={isClientLoading}
                 reason={reason}
                 errors={errors}
                 isLoading={isLoading}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
                 onClick={this.onClick}
+                orderDetail={this.props.orderDetail}
             />
         );
     }

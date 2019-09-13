@@ -132,7 +132,7 @@ class OrderTransferStep4Container extends Component {
         this.setState(
             { isLoading: true },
             ()=>{
-                this.props.history.push("/order/"+associateId+"/transfer-step-5");
+                this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-5");
             }
         );
     }

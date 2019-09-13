@@ -9,9 +9,8 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 class OrderTransferStep5Component extends Component {
     render() {
         const {
-            associate, associateOptions, isAssociatesLoading,
-            client, clientOptions, isClientLoading,
-            reason, errors, id, order, isLoading, onTextChange, onSelectChange, onClick } = this.props;
+            associate, client, reason, errors, id, order, isLoading, onTextChange, onSelectChange, onClick, orderDetail
+        } = this.props;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -32,6 +31,38 @@ class OrderTransferStep5Component extends Component {
                     </ol>
                 </nav>
 
+                <h1><i className="fas fa-search"></i>&nbsp;Associates Search</h1>
+
+                <div className="row">
+                    <div className="step-navigation">
+                        <div id="step-1" className="st-grey">
+                            <Link to={`/order/${orderDetail.id}/transfer-step-1`}>
+                                <span className="num">1.</span><span className="">Search Clients</span>
+                            </Link>
+                        </div>
+                        <div id="step-2" className="st-grey">
+                            <Link to={`/order/${orderDetail.id}/transfer-step-2`}>
+                                <span className="num">2.</span><span className="">Pick Client</span>
+                            </Link>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/order/${orderDetail.id}/transfer-step-3`}>
+                                <span className="num">3.</span><span className="">Search Associates</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/order/${orderDetail.id}/transfer-step-4`}>
+                                <span className="num">4.</span><span className="">Pick Associate</span>
+                            </Link>
+                        </div>
+                        <div id="step-5" className="st-grey active">
+                            <strong>
+                                <span className="num">5.</span><span className="">Review</span>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
@@ -45,7 +76,7 @@ class OrderTransferStep5Component extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/order/${id}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/order/${orderDetail.id}/transfer-step-4`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
