@@ -81,7 +81,6 @@ import OrderFullRetrieveContainer from "./orders/retrieve/orderFullRetrieveConta
 import OrderTaskListContainer from "./orders/retrieve/orderTaskListContainer";
 import OrderActivitySheetListContainer from "./orders/retrieve/orderActivitySheetListContainer";
 import OrderCommentContainer from "./orders/retrieve/orderCommentContainer";
-import OrderTransferOperationContainer from "./orders/operations/orderTransferOperationContainer";
 import OrderUnassignAssociateOperationContainer from "./orders/operations/orderUnassignAssociateOperationContainer";
 import OrderPostponeOperationContainer from "./orders/operations/orderPostponeOperationContainer";
 import OrderCloseOperationContainer from "./orders/operations/orderCloseOperationContainer";
@@ -93,6 +92,10 @@ import OrderCreateStep4Container from "./orders/create/orderCreateStep4Container
 import OrderCreateStep5Container from "./orders/create/orderCreateStep5Container";
 import OrderCreateStep6Container from "./orders/create/orderCreateStep6Container";
 import OrderLiteUpdateContainer from "./orders/update/orderLiteUpdateContainer";
+import OrderTransferStep1Container from "./orders/operations/transfer/orderTransferStep1Container";
+import OrderTransferStep2Container from "./orders/operations/transfer/orderTransferStep2Container";
+import OrderTransferStep3Container from "./orders/operations/transfer/orderTransferStep3Container";
+import OrderTransferStep4Container from "./orders/operations/transfer/orderTransferStep4Container";
 
 // Tasks
 import TaskListContainer from "./tasks/list/taskListContainer";
@@ -336,12 +339,15 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:id/tasks" exact component={requiresAuth(OrderTaskListContainer)} />
                                 <Route path="/order/:id/activity-sheets" exact component={requiresAuth(OrderActivitySheetListContainer)} />
                                 <Route path="/order/:id/comments" exact component={requiresAuth(OrderCommentContainer)} />
-                                <Route path="/order/:id/transfer" exact component={requiresAuth(OrderTransferOperationContainer)} />
                                 <Route path="/order/:id/postpone" exact component={requiresAuth(OrderPostponeOperationContainer)} />
                                 <Route path="/order/:id/unassign-associate" exact component={requiresAuth(OrderUnassignAssociateOperationContainer)} />
                                 <Route path="/order/:id/close" exact component={requiresAuth(OrderCloseOperationContainer)} />
                                 <Route path="/order/:id/reopen" exact component={requiresAuth(OrderReopenOperationContainer)} />
                                 <Route path="/order/:id/update/lite" exact component={requiresAuth(OrderLiteUpdateContainer)} />
+                                <Route path="/order/:id/transfer-step-1" exact component={requiresAuth(OrderTransferStep1Container)} />
+                                <Route path="/order/:id/transfer-step-2" exact component={requiresAuth(OrderTransferStep2Container)} />
+                                <Route path="/order/:id/transfer-step-3" exact component={requiresAuth(OrderTransferStep3Container)} />
+                                <Route path="/order/:id/transfer-step-4" exact component={requiresAuth(OrderTransferStep4Container)} />
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />

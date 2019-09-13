@@ -396,7 +396,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                                 {isCancelled
                                                     ?""
                                                     :<li>
-                                                        <Link to={`/order/${order.id}/transfer`}>
+                                                        <Link to={`/order/${order.id}/transfer-step-1`}>
                                                             Transfer&nbsp;<i className="fas fa-chevron-right"></i>
                                                         </Link>
                                                     </li>
