@@ -38,7 +38,7 @@ class OrderTransferOperationContainer extends Component {
             associate: localStorage.getItem("workery-transfer-order-associateId"),
             associateGivenName: localStorage.getItem("workery-transfer-order-associateGivenName"),
             associateLastName: localStorage.getItem("workery-transfer-order-associateLastName"),
-            reason: "-",
+            reason: "Transfered work order.",
             reason: "",
             errors: {},
             isLoading: false,
