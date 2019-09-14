@@ -23,6 +23,7 @@ import LogoutContainer from "./account/logoutContainer";
 import SharedOrganizationListContainer from "./organization/shared/list/sharedOrganizationListContainer";
 import SharedOrganizationCreateContainer from "./organization/shared/create/sharedOrganizationCreateContainer";
 import SharedOrganizationCreateSuccessContainer from "./organization/shared/create/sharedOrganizationCreateSuccessContainer";
+import SharedOrganizationUpdateContainer from "./organization/shared/update/sharedOrganizationUpdateContainer";
 
 // Dashboard
 import TenantDashboardRedirectContainer from "./dashboard/tenantDashboardRedirectContainer";
@@ -277,6 +278,7 @@ class AppContainer extends React.Component {
                                 <Route path="/organizations" exact component={requiresAuth(SharedOrganizationListContainer)} />
                                 <Route path="/organization/add" exact component={requiresAuth(SharedOrganizationCreateContainer)} />
                                 <Route path="/organization/add-success" exact component={requiresAuth(SharedOrganizationCreateSuccessContainer)} />
+                                <Route path="/organization/:id/update" exact component={requiresAuth(SharedOrganizationUpdateContainer)} />
                                 <Route path="/dashboard-redirect/:accessToken/:refreshToken" exact component={TenantDashboardRedirectContainer} />
                                 <Route path="/dashboard" exact component={requiresAuth(DashboardContainer)} />
                                 <Route path="/comments" exact component={requiresAuth(CommentListContainer)} />

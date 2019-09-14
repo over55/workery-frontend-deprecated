@@ -44,7 +44,7 @@ class RemoteListComponent extends Component {
             sort: true
         },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];
@@ -106,7 +106,10 @@ function detailLinkFormatter(cell, row){
     const absoluteUrl =  process.env.REACT_APP_WWW_PROTOCOL + "://" + schemaName + "." +process.env.REACT_APP_WWW_DOMAIN+"/dashboard"+"-redirect/"+accessToken+"/"+refreshToken;
 
     return (
-        <a href={absoluteUrl}>View&nbsp;<i className="fas fa-chevron-right"></i></a>
+        <div>
+            <a href={`/organization/${row.id}/update`}><i className="fas fa-edit"></i>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href={absoluteUrl}>View&nbsp;<i className="fas fa-chevron-right"></i></a>
+        </div>
     )
 }
 
