@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import SharedOrganizationListComponent from "../../../components/organizations/shared/sharedOrganizationListComponent";
-import { pullTenantList } from "../../../actions/tenantActions";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import SharedOrganizationListComponent from "../../../../components/organizations/shared/list/sharedOrganizationListComponent";
+import { pullTenantList } from "../../../../actions/tenantActions";
+import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class SharedOrganizationListContainer extends Component {
@@ -40,7 +40,7 @@ class SharedOrganizationListContainer extends Component {
      */
 
     componentDidMount() {
-        this.props.pullTenantList(this.state.page, this.state.sizePerPage, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        this.props.pullTenantList(this.state.page, this.state.sizePerPage, new Map(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
         window.scrollTo(0, 0);  // Start the page at the top of the page.
     }
 
@@ -77,7 +77,7 @@ class SharedOrganizationListContainer extends Component {
 
      onFailedSubmissionCallback(errors) {
          console.log(errors);
-         this.setState({ isLoading: false });
+         this.setState({ errors: {}, isLoading: false });
      }
 
     /**
@@ -175,8 +175,8 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullTenantList: (successCallback, failureCallback) => {
-            dispatch(pullTenantList(successCallback, failureCallback))
+        pullTenantList: (page, sizePerPage, filtersMap, successCallback, failureCallback) => {
+            dispatch(pullTenantList(page, sizePerPage, filtersMap, successCallback, failureCallback))
         },
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())

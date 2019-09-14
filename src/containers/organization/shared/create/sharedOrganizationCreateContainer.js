@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import SharedOrganizationCreateComponent from "../../../components/organizations/shared/sharedOrganizationCreateComponent";
-import validateInput from '../../../validators/organizationValidator';
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { getTimezoneReactSelectOptions } from "../../../helpers/timezoneUtlity";
-import { postTenantDetail } from "../../../actions/tenantActions";
+import SharedOrganizationCreateComponent from "../../../../components/organizations/shared/create/sharedOrganizationCreateComponent";
+import validateInput from '../../../../validators/organizationValidator';
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { getTimezoneReactSelectOptions } from "../../../../helpers/timezoneUtlity";
+import { postTenantDetail } from "../../../../actions/tenantActions";
 
 
 class SharedOrganizationCreateContainer extends Component {
@@ -106,7 +106,7 @@ class SharedOrganizationCreateContainer extends Component {
 
     onFailedSubmissionCallback(errors) {
         this.setState({
-            errors: errors
+            errors: errors, isLoading: false,
         })
 
         // The following code will cause the screen to scroll to the top of
@@ -160,11 +160,13 @@ class SharedOrganizationCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.postTenantDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({ errors: {}, isLoading: true, }, ()=> {
+                this.props.postTenantDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {

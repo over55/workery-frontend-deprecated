@@ -20,8 +20,8 @@ import LoginContainer from "./account/loginContainer";
 import LogoutContainer from "./account/logoutContainer";
 
 // Organizations
-import SharedOrganizationListContainer from "./organization/shared/sharedOrganizationListContainer";
-import SharedOrganizationCreateContainer from "./organization/shared/sharedOrganizationCreateContainer";
+import SharedOrganizationListContainer from "./organization/shared/list/sharedOrganizationListContainer";
+import SharedOrganizationCreateContainer from "./organization/shared/create/sharedOrganizationCreateContainer";
 
 // Dashboard
 import TenantDashboardRedirectContainer from "./dashboard/tenantDashboardRedirectContainer";

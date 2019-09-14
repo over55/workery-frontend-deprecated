@@ -9,9 +9,9 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { FlashMessageComponent } from "../../flashMessageComponent";
-import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from '../../../helpers/jwtUtility';
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { FlashMessageComponent } from "../../../flashMessageComponent";
+import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from '../../../../helpers/jwtUtility';
 
 
 
@@ -126,6 +126,7 @@ class SharedOrganizationListComponent extends Component {
         const organizations = tenantList.results ? tenantList.results : [];
         return (
             <div className="container-fluid">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
 
                 <div className="d-flex align-items-stretch">
                     <main id="main" role="main">

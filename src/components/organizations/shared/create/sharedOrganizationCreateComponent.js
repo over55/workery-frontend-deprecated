@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect';
-import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect';
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapCountrySelect } from '../../../bootstrap/bootstrapCountrySelect';
+import { BootstrapRegionSelect } from '../../../bootstrap/bootstrapRegionSelect';
+import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
 
 
 class SharedOrganizationCreateComponent extends Component {
@@ -17,6 +18,7 @@ class SharedOrganizationCreateComponent extends Component {
         } = this.props;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
