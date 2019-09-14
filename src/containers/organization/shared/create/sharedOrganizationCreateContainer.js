@@ -4,7 +4,6 @@ import Scroll from 'react-scroll';
 
 import SharedOrganizationCreateComponent from "../../../../components/organizations/shared/create/sharedOrganizationCreateComponent";
 import validateInput from '../../../../validators/organizationValidator';
-import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { getTimezoneReactSelectOptions } from "../../../../helpers/timezoneUtlity";
 import { postTenantDetail } from "../../../../actions/tenantActions";
 
@@ -100,8 +99,7 @@ class SharedOrganizationCreateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback() {
-        this.props.setFlashMessage("success", "Organization has been successfully created.");
-        this.props.history.push("/organizations");
+        this.props.history.push("/organization/add-success");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -222,9 +220,6 @@ const mapDispatchToProps = dispatch => {
                 postTenantDetail(postData, successCallback, errorCallback)
             )
         },
-        setFlashMessage: (typeOf, text) => {
-            dispatch(setFlashMessage(typeOf, text))
-        }
     }
 }
 
