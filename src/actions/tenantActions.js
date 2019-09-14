@@ -181,7 +181,7 @@ export function postTenantDetail(postData, successCallback, failedCallback) {
 //                                RETRIEVE                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullTenantDetail(user, slug) {
+export function pullTenantDetail(id, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -191,7 +191,7 @@ export function pullTenantDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_TENANT_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_TENANT_DETAIL_API_ENDPOINT+id+"/";
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
@@ -212,6 +212,13 @@ export function pullTenantDetail(user, slug) {
                 setTenantDetailSuccess(profile)
             );
 
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(profile);
+            }
+
         }).catch( (exception) => { // ERROR
             if (exception.response) {
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
@@ -231,12 +238,12 @@ export function pullTenantDetail(user, slug) {
                     })
                 );
 
-                // // DEVELOPERS NOTE:
-                // // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // // OBJECT WE GOT FROM THE API.
-                // if (failedCallback) {
-                //     failedCallback(errors);
-                // }
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => { // FINALLY
@@ -250,7 +257,7 @@ export function pullTenantDetail(user, slug) {
 //                                UPDATE                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function putTenantDetail(user, data, successCallback, failedCallback) {
+export function putTenantDetail(postData, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
@@ -262,13 +269,13 @@ export function putTenantDetail(user, data, successCallback, failedCallback) {
 
         // The following code will convert the `camelized` data into `snake case`
         // data so our API endpoint will be able to read it.
-        let decamelizedData = decamelizeKeys(data);
+        let decamelizedData = decamelizeKeys(postData);
 
         // Encode from JS Object to MessagePack (Buffer)
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_TENANT_DETAIL_API_ENDPOINT+data.slug, buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_TENANT_DETAIL_API_ENDPOINT+postData.id+"/", buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
             let device = camelizeKeys(responseData);
@@ -283,8 +290,12 @@ export function putTenantDetail(user, data, successCallback, failedCallback) {
                 setTenantDetailSuccess(device)
             );
 
-            // Run our success callback function.
-            successCallback(device);
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(device);
+            }
 
         }).catch( (exception) => {
             if (exception.response) {
@@ -308,8 +319,8 @@ export function putTenantDetail(user, data, successCallback, failedCallback) {
                 // DEVELOPERS NOTE:
                 // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
                 // OBJECT WE GOT FROM THE API.
-                if (failedCallback) {
-                    failedCallback(errors);
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
                 }
             }
 

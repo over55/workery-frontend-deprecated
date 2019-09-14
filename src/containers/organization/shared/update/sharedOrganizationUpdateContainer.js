@@ -5,7 +5,8 @@ import Scroll from 'react-scroll';
 import SharedOrganizationUpdateComponent from "../../../../components/organizations/shared/update/sharedOrganizationUpdateComponent";
 import validateInput from '../../../../validators/organizationValidator';
 import { getTimezoneReactSelectOptions } from "../../../../helpers/timezoneUtlity";
-import { postTenantDetail } from "../../../../actions/tenantActions";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullTenantDetail, putTenantDetail } from "../../../../actions/tenantActions";
 
 
 class SharedOrganizationUpdateContainer extends Component {
@@ -18,7 +19,12 @@ class SharedOrganizationUpdateContainer extends Component {
     constructor(props) {
         super(props);
 
+        // Since we are using the ``react-routes-dom`` library then we
+        // fetch the URL argument as follows.
+        const { id } = this.props.match.params;
+
         this.state = {
+            id: id,
             schema: '',  //TODO: FIX.
             name: '',
             alternateName: '',
@@ -30,7 +36,7 @@ class SharedOrganizationUpdateContainer extends Component {
             postalCode: '',
             timezone: '',
             errors: {},
-            isLoading: false,
+            isLoading: true,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -42,6 +48,7 @@ class SharedOrganizationUpdateContainer extends Component {
         this.onRegionChange = this.onRegionChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onOrgDetailFetchCallback = this.onOrgDetailFetchCallback.bind(this);
     }
 
     /**
@@ -51,6 +58,7 @@ class SharedOrganizationUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullTenantDetail(this.state.id, this.onOrgDetailFetchCallback);
     }
 
     componentWillUnmount() {
@@ -99,7 +107,8 @@ class SharedOrganizationUpdateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback() {
-        this.props.history.push("/organization/add-success");
+        this.props.setFlashMessage("success", "Organization has been successfully updated.");
+        this.props.history.push("/organizations");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -112,6 +121,25 @@ class SharedOrganizationUpdateContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onOrgDetailFetchCallback(orgDetail) {
+        console.log(orgDetail); // For debugging purpose only.
+
+        this.setState({
+            schema: orgDetail.schemaName,
+            name: orgDetail.name,
+            alternateName: orgDetail.alternateName,
+            description: orgDetail.description,
+            country: orgDetail.addressCountry,
+            region: orgDetail.addressRegion,
+            locality: orgDetail.addressLocality,
+            streetAddress: orgDetail.streetAddress,
+            postalCode: orgDetail.postalCode,
+            timezone: orgDetail.timezoneName,
+            errors: {},
+            isLoading: false,
+        });
     }
 
     /**
@@ -159,11 +187,11 @@ class SharedOrganizationUpdateContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true, }, ()=> {
-                // this.props.postTenantDetail( //TODO: FIX.
-                //     this.getPostData(),
-                //     this.onSuccessfulSubmissionCallback,
-                //     this.onFailedSubmissionCallback
-                // );
+                this.props.putTenantDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
             });
 
         // CASE 2 OF 2: Validation was a failure.
@@ -215,10 +243,18 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        postTenantDetail: (postData, successCallback, errorCallback) => {
+        pullTenantDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                postTenantDetail(postData, successCallback, errorCallback)
+                pullTenantDetail(id, onSuccessCallback, onFailureCallback)
             )
+        },
+        putTenantDetail: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                putTenantDetail(postData, onSuccessCallback, onFailureCallback)
+            )
+        },
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
         },
     }
 }
