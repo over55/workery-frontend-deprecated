@@ -30,6 +30,12 @@ export default class FollowUpPendingTaskStep2Component extends Component {
 
                 <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - 24 Hour Follow Up</h1>
 
+                {task.associateAwayLog !== undefined && task.associateAwayLog !== null &&
+                    <div className="alert alert-warning" role="alert">
+                        <strong><i className="fas fa-exclamation-triangle"></i>&nbsp;Warning</strong> - The associate assigned to this task is currently away.
+                    </div>
+                }
+
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
