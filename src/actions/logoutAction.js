@@ -43,14 +43,12 @@ export const setLogoutFailure = payload => ({
 });
 
 
-export function postLogout(user) {
+export function postLogout(user, onSuccessCallback, onFailureCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
             setLogoutRequest()
         );
-
-        attemptLogout();
 
         // Create our oAuth 2.0 authenticated API header to use with our
         // submission.
@@ -68,14 +66,7 @@ export function postLogout(user) {
         };
 
         axios.post(WORKERY_LOGOUT_API_ENDPOINT, cred, config).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-
-            let profile = camelizeKeys(responseData);
-
-            // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
+            const responseData = successResponse.data;
 
             // Update the global state of the application to store our
             // user profile for the application.
@@ -83,12 +74,16 @@ export function postLogout(user) {
                 setLogoutSuccess()
             );
 
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback({});
+            }
+
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -99,6 +94,13 @@ export function postLogout(user) {
                         errors: errors
                     })
                 );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
         }).then( () => {
             // Do nothing.
