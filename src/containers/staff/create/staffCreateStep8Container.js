@@ -38,7 +38,7 @@ class StaffCreateStep8Container extends Component {
             accountTypeLabel: localStorage.getItem("workery-create-staff-accountTypeLabel"),
 
             // Step 4 - Residential & Business
-            firstName: localStorage.getItem("workery-create-staff-firstName"),
+            givenName: localStorage.getItem("workery-create-staff-givenName"),
             lastName: localStorage.getItem("workery-create-staff-lastName"),
             primaryPhone: primaryPhone,
             primaryPhoneTypeOf: primaryPhoneTypeOf,
@@ -50,9 +50,6 @@ class StaffCreateStep8Container extends Component {
             isOkToEmailLabel: isOkToEmailLabel,
             isOkToText: isOkToText,
             isOkToTextLabel: isOkToTextLabel,
-            organizationName: localStorage.getItem("workery-create-staff-biz-organizationName"),
-            firstName: localStorage.getItem("workery-create-staff-biz-firstName"),
-            lastName: localStorage.getItem("workery-create-staff-biz-lastName"),
 
             // Step 5 - Address
             country: localStorage.getItem("workery-create-staff-country"),
@@ -104,9 +101,6 @@ class StaffCreateStep8Container extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
-
-        // (1) Given name - We need t refactor name for API field match.
-        postData.givenName = this.state.firstName;
 
         // (2) Middle name (API ISSUE)
         postData.middleName = this.state.middleName;
@@ -251,7 +245,7 @@ class StaffCreateStep8Container extends Component {
         console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
         localStorageRemoveItemsContaining("workery-create-staff-");
         this.props.setFlashMessage("success", "Staff has been successfully created.");
-        this.props.history.push("/staff");
+        this.props.history.push("/staff/"+response['id']);
     }
 
     onFailureCallback(errors) {
@@ -279,7 +273,7 @@ class StaffCreateStep8Container extends Component {
             accountTypeLabel,
 
             // Step 4 - Residential & Business
-            firstName,
+            givenName,
             lastName,
             primaryPhone,
             secondaryPhone,
@@ -332,7 +326,7 @@ class StaffCreateStep8Container extends Component {
                 accountTypeLabel={accountTypeLabel}
 
                 // Step 4 - Residential & Business
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}

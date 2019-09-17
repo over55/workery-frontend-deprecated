@@ -19,7 +19,7 @@ class StaffCreateStep4Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-staff-firstName"),
+            givenName: localStorage.getItem("workery-create-staff-givenName"),
             lastName: localStorage.getItem("workery-create-staff-lastName"),
             primaryPhone: localStorage.getItem("workery-create-staff-primaryPhone"),
             secondaryPhone: localStorage.getItem("workery-create-staff-secondaryPhone"),
@@ -145,11 +145,11 @@ class StaffCreateStep4Container extends Component {
 
     render() {
         const {
-            firstName, lastName, primaryPhone, secondaryPhone, workEmail, personalEmail, isOkToEmail, isOkToText, errors
+            givenName, lastName, primaryPhone, secondaryPhone, workEmail, personalEmail, isOkToEmail, isOkToText, errors
         } = this.state;
         return (
             <StaffCreateStep4Component
-                firstName={firstName}
+                givenName={givenName}
                 lastName={lastName}
                 primaryPhone={primaryPhone}
                 secondaryPhone={secondaryPhone}

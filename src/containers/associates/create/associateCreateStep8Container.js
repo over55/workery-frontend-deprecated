@@ -179,8 +179,8 @@ class AssociateCreateStep8Container extends Component {
         }
 
         // (6) Organization Type Of - This field may not be null, therefore make blank.
-        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
-            postData.organizationTypeOf = "";
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null || isNaN( this.state.organizationTypeOf) ) {
+            postData.organizationTypeOf = 0;
         }
 
         // (7) Extra Comment: This field is required.
@@ -288,7 +288,7 @@ class AssociateCreateStep8Container extends Component {
         console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
         localStorageRemoveItemsContaining("workery-create-associate-");
         this.props.setFlashMessage("success", "Associate has been successfully created.");
-        this.props.history.push("/associates");
+        this.props.history.push("/associate/"+response['id']);
     }
 
     onFailureCallback(errors) {

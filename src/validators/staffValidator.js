@@ -75,7 +75,7 @@ export function validateInput(data) {
     if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
         errors.dateOfBirth = 'This field is required';
     }
-    if (data.gender === undefined || data.gender === null || data.gender === "" || isNaN(data.gender) ) {
+    if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
     if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {

@@ -264,14 +264,14 @@ class PartnerCreateStep6Container extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                isLoading: false,
+                isLoading: false, errors: {},
             },
             ()=>{
                 console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
                 console.log("onSuccessCallback | State (Post-Fetch):", this.state);
                 localStorageRemoveItemsContaining("workery-create-partner-");
                 this.props.setFlashMessage("success", "Partner has been successfully created.");
-                this.props.history.push("/partners");
+                this.props.history.push("/partner/"+response['id']);
             }
         )
     }

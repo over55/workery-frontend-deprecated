@@ -386,9 +386,6 @@ export function validateStep5CreateInput(data) {
 export function validateStep6CreateInput(data) {
     let errors = {};
 
-    if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
-        errors.dateOfBirth = 'This field is required';
-    }
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }

@@ -73,7 +73,7 @@ export default class ClientCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Residential</h3>
                                 <p className="card-text">Add a residential client</p>
-                                <button className="btn btn-success btn-lg" onClick={ (event)=>{ onClick(event, RESIDENTIAL_CUSTOMER_TYPE_OF_ID, "Residential") } }>
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, RESIDENTIAL_CUSTOMER_TYPE_OF_ID, "Residential") } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                             </div>
@@ -87,7 +87,7 @@ export default class ClientCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Business</h3>
                                 <p className="card-text">Add a business client</p>
-                                <button className="btn btn-success btn-lg" onClick={ (event)=>{ onClick(event, COMMERCIAL_CUSTOMER_TYPE_OF_ID, "Business") } }>
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, COMMERCIAL_CUSTOMER_TYPE_OF_ID, "Business") } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                             </div>

@@ -118,13 +118,15 @@ export default class ClientCreateStep6Component extends Component {
                             />
 
                             <BootstrapDatePicker
-                                label="Date of Birth (*)"
+                                label="Date of Birth"
                                 name="dateOfBirth"
                                 dateObj={dateOfBirth}
                                 onTimeChange={onDateOfBirthChange}
+                                borderClassname="border-success"
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.dateOfBirth}
+                                helpText="This field is optional as start date can be set at a later task."
                             />
 
                             <BootstrapSingleSelect

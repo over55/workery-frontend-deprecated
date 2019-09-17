@@ -225,7 +225,7 @@ class ClientCreateStep7Container extends Component {
                 console.log("onSuccessCallback | State (Post-Fetch):", this.state);
                 localStorageRemoveItemsContaining("workery-create-client-");
                 this.props.setFlashMessage("success", "Client has been successfully created.");
-                this.props.history.push("/clients");
+                this.props.history.push("/client/"+response['id']);
             }
         )
     }
