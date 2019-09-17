@@ -24,6 +24,9 @@ class ClientCreateStep6Container extends Component {
     constructor(props) {
         super(props);
 
+        const rawJoinDate = localStorageGetDateItem("workery-create-client-joinDate")
+        const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
+
         this.state = {
             tags: localStorageGetArrayItem("workery-create-client-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
@@ -31,7 +34,7 @@ class ClientCreateStep6Container extends Component {
             howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
-            joinDate: localStorageGetDateItem("workery-create-client-joinDate"),
+            joinDate: joinDate,
             comment: localStorage.getItem("workery-create-client-comment"),
             errors: {},
             isLoading: false
