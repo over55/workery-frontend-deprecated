@@ -22,6 +22,9 @@ class AssociateCreateStep8Container extends Component {
     constructor(props) {
         super(props);
 
+        const rawJoinDate = localStorageGetDateItem("workery-create-associate-joinDate")
+        const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
+
         this.state = {
             // Step 3
             typeOf: localStorageGetIntegerItem("workery-create-associate-typeOf"),
@@ -78,7 +81,7 @@ class AssociateCreateStep8Container extends Component {
             howHearLabel: localStorage.getItem("workery-create-associate-howHearLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-associate-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-associate-howHearOther"),
-            joinDate: localStorageGetDateItem("workery-create-associate-joinDate"),
+            joinDate: joinDate,
             comment: localStorage.getItem("workery-create-associate-comment"),
 
             // Everything else

@@ -22,6 +22,9 @@ class PartnerCreateStep6Container extends Component {
     constructor(props) {
         super(props);
 
+        const rawJoinDate = localStorageGetDateItem("workery-create-partner-joinDate")
+        const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
+
         // Get the type of.
         const typeOf = localStorageGetIntegerItem("workery-create-partner-typeOf");
         let returnURL;
@@ -98,7 +101,7 @@ class PartnerCreateStep6Container extends Component {
             howHearLabel: localStorage.getItem("workery-create-partner-howHearLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-partner-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-partner-howHearOther"),
-            joinDate: localStorageGetDateItem("workery-create-partner-joinDate"),
+            joinDate: joinDate,
             comment: localStorage.getItem("workery-create-partner-comment"),
 
             // Everything else

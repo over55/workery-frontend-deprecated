@@ -21,6 +21,10 @@ class StaffCreateStep8Container extends Component {
 
     constructor(props) {
         super(props);
+
+        const rawJoinDate = localStorageGetDateItem("workery-create-staff-joinDate")
+        const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
+
         const primaryPhone = localStorage.getItem("workery-create-staff-primaryPhone");
         const primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-staff-primaryPhoneTypeOf");
         const secondaryPhone = localStorage.getItem("workery-create-staff-secondaryPhone");
@@ -78,7 +82,7 @@ class StaffCreateStep8Container extends Component {
             howHearLabel: localStorage.getItem("workery-create-staff-howHearLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-staff-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-staff-howHearOther"),
-            joinDate: localStorageGetDateItem("workery-create-staff-joinDate"),
+            joinDate: joinDate,
             comment: localStorage.getItem("workery-create-staff-comment"),
 
             // Everything else

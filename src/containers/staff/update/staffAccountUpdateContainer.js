@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import StaffAccountUpdateComponent from "../../../components/staff/update/staffAccountUpdateComponent";
 import { validateAccountUpdateInput } from "../../../validators/staffValidator";
@@ -25,6 +26,7 @@ class StaffAccountUpdateContainer extends Component {
         const country = this.props.staffDetail.addressCountry === "CA" ? "Canada" : this.props.staffDetail.addressCountry;
         const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
         const isActive = this.props.staffDetail.isActive === true ? 1 : 2;
+        const policeCheckObj = new Date(this.props.staffDetail.policeCheck);
 
         this.state = {
             id: id,
@@ -36,6 +38,7 @@ class StaffAccountUpdateContainer extends Component {
             emergencyContactTelephone: this.props.staffDetail.emergencyContactTelephone,
             emergencyContactAlternativeTelephone: this.props.staffDetail.emergencyContactAlternativeTelephone,
             description: this.props.staffDetail.description,
+            policeCheck: policeCheckObj,
             isActive: isActive,
             errors: {},
             isLoading: false
@@ -65,6 +68,10 @@ class StaffAccountUpdateContainer extends Component {
         if (parseInt(this.state.isActive) === 2) {
             postData.isActive = false;
         }
+
+        // (2) Join date - We need to format as per required API format.
+        const policeCheckMoment = moment(this.state.policeCheck);
+        postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD")
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

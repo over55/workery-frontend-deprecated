@@ -107,6 +107,20 @@ class StaffAccountAddressComponent extends Component {
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
+                                <i className="fas fa-user-shield"></i>&nbsp;Policy
+                            </p>
+
+                            <BootstrapDatePicker
+                                label="Police Check Expiry (*)"
+                                name="policeCheck"
+                                dateObj={policeCheck}
+                                onTimeChange={onPoliceCheckDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.policeCheck}
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
                                 <i className="fas fa-server"></i>&nbsp;System
                             </p>
 
