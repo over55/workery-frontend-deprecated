@@ -114,7 +114,7 @@ class RemoteListComponent extends Component {
 
         const defaultSorted = [{
             dataField: 'dueDate',
-            order: 'desc'
+            order: 'asc'
         }];
 
 
