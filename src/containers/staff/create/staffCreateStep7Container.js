@@ -24,6 +24,9 @@ class StaffCreateStep7Container extends Component {
     constructor(props) {
         super(props);
 
+        const rawJoinDate = localStorageGetDateItem("workery-create-staff-joinDate")
+        const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
+
         this.state = {
             tags: localStorageGetArrayItem("workery-create-staff-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-staff-dateOfBirth"),
@@ -31,7 +34,7 @@ class StaffCreateStep7Container extends Component {
             howHear: localStorageGetIntegerItem("workery-create-staff-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-staff-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-staff-howHearOther"),
-            joinDate: localStorageGetDateItem("workery-create-staff-joinDate"),
+            joinDate: joinDate,
             comment: localStorage.getItem("workery-create-staff-comment"),
             errors: {},
             isLoading: false

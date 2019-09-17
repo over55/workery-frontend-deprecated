@@ -34,6 +34,9 @@ class PartnerCreateStep5Container extends Component {
             returnURL = "/partners/add/step-4-biz";
         }
 
+        const rawJoinDate = localStorageGetDateItem("workery-create-partner-joinDate")
+        const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
+
         this.state = {
             returnURL: returnURL,
             typeOf: typeOf,
@@ -43,7 +46,7 @@ class PartnerCreateStep5Container extends Component {
             howHear: localStorageGetIntegerItem("workery-create-partner-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-partner-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-partner-howHearOther"),
-            joinDate: localStorageGetDateItem("workery-create-partner-joinDate"),
+            joinDate: rawJoinDate,
             comment: localStorage.getItem("workery-create-partner-comment"),
             errors: {},
             isLoading: false
