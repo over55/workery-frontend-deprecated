@@ -159,7 +159,7 @@ function idFormatter(cell, row){
 
 
 function paymentDateFormatter(cell, row) {
-    return row.invoiceServiceFeePaymentDate ? <Moment format="YYYY/MM/DD">{row.invoiceServiceFeePaymentDate}</Moment> : "-";
+    return row.invoiceServiceFeePaymentDate ? <Moment format="MM/DD/YYYY">{row.invoiceServiceFeePaymentDate}</Moment> : "-";
 }
 
 

@@ -153,7 +153,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                         <th scope="row" className="bg-light">Completion Date</th>
                                         <td>
                                             {completionDate &&
-                                                <Moment format="YYYY/MM/DD">{completionDate}</Moment>
+                                                <Moment format="MM/DD/YYYY">{completionDate}</Moment>
                                             }
                                         </td>
                                     </tr>
@@ -169,7 +169,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                     <th scope="row" className="bg-light">Invoice Date</th>
                                     <td>
                                         {hasFinancials
-                                            ? <Moment format="YYYY/MM/DD">{invoiceDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{invoiceDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -268,7 +268,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                     <th scope="row" className="bg-light">Service fee payment date</th>
                                     <td>
                                         {hasFinancials
-                                            ? <Moment format="YYYY/MM/DD">{invoiceServiceFeePaymentDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{invoiceServiceFeePaymentDate}</Moment>
                                             : "-"
                                         }
                                     </td>

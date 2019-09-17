@@ -157,7 +157,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Police Check Expiry</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD">{staff.policeCheck}</Moment>
+                                        <Moment format="MM/DD/YYYY">{staff.policeCheck}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
@@ -201,7 +201,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
-                                    <td>{staff && <Moment format="YYYY/MM/DD">{staff.birthdate}</Moment>}</td>
+                                    <td>{staff && <Moment format="MM/DD/YYYY">{staff.birthdate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
@@ -221,7 +221,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td>{staff && <Moment format="YYYY/MM/DD">{staff.joinDate}</Moment>}</td>
+                                    <td>{staff && <Moment format="MM/DD/YYYY">{staff.joinDate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
@@ -241,7 +241,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
-                                    <td>{staff && <Moment format="YYYY/MM/DD hh:mm:ss a">{staff.created}</Moment>}</td>
+                                    <td>{staff && <Moment format="MM/DD/YYYY hh:mm:ss a">{staff.created}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
@@ -249,7 +249,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
-                                    <td>{staff && <Moment format="YYYY/MM/DD hh:mm:ss a">{staff.lastModified}</Moment>}</td>
+                                    <td>{staff && <Moment format="MM/DD/YYYY hh:mm:ss a">{staff.lastModified}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>

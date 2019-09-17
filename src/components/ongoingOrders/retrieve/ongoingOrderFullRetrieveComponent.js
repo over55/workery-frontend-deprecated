@@ -141,7 +141,7 @@ export default class OngoingOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Created at</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{ongoingOrder.createdAt}</Moment>
+                                        <Moment format="MM/DD/YYYY hh:mm:ss a">{ongoingOrder.createdAt}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
@@ -151,7 +151,7 @@ export default class OngoingOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Modified at</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{ongoingOrder.lastModifiedAt}</Moment>
+                                        <Moment format="MM/DD/YYYY hh:mm:ss a">{ongoingOrder.lastModifiedAt}</Moment>
                                     </td>
                                 </tr>
                                 <tr>

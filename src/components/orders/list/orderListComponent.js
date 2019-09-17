@@ -185,12 +185,12 @@ function statusFormatter(cell, row){
 
 
 function startDateFormatter(cell, row){
-    return row.startDate ? <Moment format="YYYY/MM/DD">{row.startDate}</Moment> : "-";
+    return row.startDate ? <Moment format="MM/DD/YYYY">{row.startDate}</Moment> : "-";
 }
 
 
 function assignmentDateFormatter(cell, row){
-    return row.assignmentDate ? <Moment format="YYYY/MM/DD">{row.assignmentDate}</Moment> : "-";
+    return row.assignmentDate ? <Moment format="MM/DD/YYYY">{row.assignmentDate}</Moment> : "-";
 }
 
 

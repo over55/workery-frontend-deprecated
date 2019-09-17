@@ -225,7 +225,7 @@ function jobHistoryIDFormatter(cell, row){
 
 function jobHistoryLastModifiedFormatter(cell, row){
     return (
-        <Moment format="YYYY/MM/DD hh:mm:ss a">{row.lastModified}</Moment>
+        <Moment format="MM/DD/YYYY hh:mm:ss a">{row.lastModified}</Moment>
     )
 }
 
@@ -386,7 +386,7 @@ function associateStartDateFormatter(cell, row){
     if (row.startDate === undefined || row.startDate === null) {
         return "-";
     } else {
-        return <Moment format="YYYY/MM/DD">{row.startDate}</Moment>;
+        return <Moment format="MM/DD/YYYY">{row.startDate}</Moment>;
     }
 }
 
@@ -395,7 +395,7 @@ function associateUntilDateFormatter(cell, row){
     if (row.untilDate === undefined || row.untilDate === null) {
         return "Further notice.";
     } else {
-        return <Moment format="YYYY/MM/DD">{row.untilDate}</Moment>;
+        return <Moment format="MM/DD/YYYY">{row.untilDate}</Moment>;
     }
 }
 

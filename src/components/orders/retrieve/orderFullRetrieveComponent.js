@@ -157,7 +157,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Assignment Date</th>
                                     <td>
                                         {order.assignmentDate
-                                            ? <Moment format="YYYY/MM/DD">{order.assignmentDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{order.assignmentDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -188,7 +188,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Start Date</th>
                                     <td>
                                         {order.startDate
-                                            ? <Moment format="YYYY/MM/DD">{order.startDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{order.startDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -197,7 +197,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Completion Date</th>
                                     <td>
                                         {order.completionDate
-                                            ? <Moment format="YYYY/MM/DD">{order.completionDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{order.completionDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -226,7 +226,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Invoice Date</th>
                                     <td>
                                         {order.invoiceDate
-                                            ? <Moment format="YYYY/MM/DD">{order.invoiceDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{order.invoiceDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -289,7 +289,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Invoice Service Fee Payment Date</th>
                                     <td>
                                         {order.invoiceServiceFeePaymentDate
-                                            ? <Moment format="YYYY/MM/DD">{order.invoiceServiceFeePaymentDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{order.invoiceServiceFeePaymentDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -353,7 +353,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Created at</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{order.createdAt}</Moment>
+                                        <Moment format="MM/DD/YYYY hh:mm:ss a">{order.createdAt}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
@@ -363,7 +363,7 @@ export default class OrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Modified at</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD hh:mm:ss a">{order.lastModifiedAt}</Moment>
+                                        <Moment format="MM/DD/YYYY hh:mm:ss a">{order.lastModifiedAt}</Moment>
                                     </td>
                                 </tr>
                                 <tr>

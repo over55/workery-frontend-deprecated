@@ -191,7 +191,7 @@ function typeOfFormatter(cell, row){
 
 
 function dueDateFormatter(cell, row){
-    return row.dueDate ? <Moment format="YYYY/MM/DD">{row.dueDate}</Moment> : "-";
+    return row.dueDate ? <Moment format="MM/DD/YYYY">{row.dueDate}</Moment> : "-";
 }
 
 

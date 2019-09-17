@@ -177,7 +177,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
                                     <td>
-                                        {client && <Moment format="YYYY/MM/DD">{client.birthdate}</Moment>}
+                                        {client && <Moment format="MM/DD/YYYY">{client.birthdate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -199,7 +199,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
                                     <td>
-                                        {client && <Moment format="YYYY/MM/DD">{client.joinDate}</Moment>}
+                                        {client && <Moment format="MM/DD/YYYY">{client.joinDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -221,7 +221,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
                                     <td>
-                                        {client && <Moment format="YYYY/MM/DD hh:mm:ss a">{client.created}</Moment>}
+                                        {client && <Moment format="MM/DD/YYYY hh:mm:ss a">{client.created}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -231,7 +231,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
                                     <td>
-                                        {client && <Moment format="YYYY/MM/DD hh:mm:ss a">{client.lastModified}</Moment>}
+                                        {client && <Moment format="MM/DD/YYYY hh:mm:ss a">{client.lastModified}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>

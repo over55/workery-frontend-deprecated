@@ -67,7 +67,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Start Date</th>
-                                    <td>{task && <Moment format="YYYY/MM/DD">{task.jobStartDate}</Moment>}</td>
+                                    <td>{task && <Moment format="MM/DD/YYYY">{task.jobStartDate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Name</th>

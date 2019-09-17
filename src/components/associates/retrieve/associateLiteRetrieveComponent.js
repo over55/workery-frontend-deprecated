@@ -117,17 +117,17 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                 <p class="mb-2">
                                     <ul>
                                     {associate.commercialInsuranceExpiryDate &&
-                                        <li>Commercial Insurance Expiry: <Moment format="YYYY/MM/DD">{associate.commercialInsuranceExpiryDate}</Moment></li>
+                                        <li>Commercial Insurance Expiry: <Moment format="MM/DD/YYYY">{associate.commercialInsuranceExpiryDate}</Moment></li>
                                     }
                                     {associate.wsibNumber &&
                                         <li>WSIB # {associate.wsibNumber}</li>
                                     }
                                     {associate.wsibInsuranceDate &&
-                                        <li>WSIB Expiry: <Moment format="YYYY/MM/DD">{associate.wsibInsuranceDate}</Moment></li>
+                                        <li>WSIB Expiry: <Moment format="MM/DD/YYYY">{associate.wsibInsuranceDate}</Moment></li>
                                     }
                                     {associate.latestCompletedAndPaidOrder && associate.latestCompletedAndPaidOrder.paidAt &&
                                         <li>
-                                        Last service fee paid on <Moment format="YYYY/MM/DD">{associate.latestCompletedAndPaidOrder.paidAt}</Moment> in work order #<Link to={`/order/${associate.latestCompletedAndPaidOrder.id}`}>{associate.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
+                                        Last service fee paid on <Moment format="MM/DD/YYYY">{associate.latestCompletedAndPaidOrder.paidAt}</Moment> in work order #<Link to={`/order/${associate.latestCompletedAndPaidOrder.id}`}>{associate.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
                                         </li>
                                     }
                                     </ul>

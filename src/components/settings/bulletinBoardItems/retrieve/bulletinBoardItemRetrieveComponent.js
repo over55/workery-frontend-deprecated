@@ -46,7 +46,7 @@ class BulletinBoardItemRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
-                                    <td><Moment format="YYYY/MM/DD">{createdAt}</Moment></td>
+                                    <td><Moment format="MM/DD/YYYY">{createdAt}</Moment></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
@@ -54,7 +54,7 @@ class BulletinBoardItemRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Last Modified At</th>
-                                    <td><Moment format="YYYY/MM/DD">{lastModifiedAt}</Moment></td>
+                                    <td><Moment format="MM/DD/YYYY">{lastModifiedAt}</Moment></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Last Modified By</th>

@@ -112,7 +112,7 @@ export default class PartnerPromoteStep2Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Police Check Date</th>
-                                    <td><Moment format="YYYY/MM/DD">{policeCheckDate}</Moment></td>
+                                    <td><Moment format="MM/DD/YYYY">{policeCheckDate}</Moment></td>
                                 </tr>
                             </tbody>
                         </table>

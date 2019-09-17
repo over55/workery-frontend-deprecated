@@ -120,7 +120,7 @@ class CommentComponent extends Component {
                     <div className="row">
                         <h5 className="mt-0 col-sm-10"><strong>{comment.createdBy}</strong></h5>
                         <h6 className="col-sm-2 text-secondary text-right">
-                            <Moment format="YYYY/MM/DD hh:mm:ss a">{comment.createdAt}</Moment>
+                            <Moment format="MM/DD/YYYY hh:mm:ss a">{comment.createdAt}</Moment>
                         </h6>
                     </div>
                     <p>{ comment.text }</p>

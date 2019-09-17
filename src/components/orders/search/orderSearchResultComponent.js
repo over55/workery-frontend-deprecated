@@ -186,7 +186,7 @@ function completionDateFormatter(cell, row) {
         return "-";
     } else {
         return (
-            <Moment format="YYYY/MM/DD">{row.completionDate}</Moment>
+            <Moment format="MM/DD/YYYY">{row.completionDate}</Moment>
         );
     }
 }
@@ -197,7 +197,7 @@ function assignmentDateFormatter(cell, row) {
         return "-";
     } else {
         return (
-            <Moment format="YYYY/MM/DD">{row.assignmentDate}</Moment>
+            <Moment format="MM/DD/YYYY">{row.assignmentDate}</Moment>
         );
     }
 }

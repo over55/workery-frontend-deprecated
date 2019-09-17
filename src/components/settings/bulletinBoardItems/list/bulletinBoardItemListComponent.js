@@ -120,7 +120,7 @@ class RemoteListComponent extends Component {
 
 function dateTimeFormatter(cell, row){
     return (
-        <Moment format="YYYY/MM/DD hh:mm:ss a">{row.createdAt}</Moment>
+        <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>
     )
 }
 

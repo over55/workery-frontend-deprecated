@@ -213,7 +213,7 @@ export default class StaffCreateStep8Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Police Check Expiry</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD">{policeCheck}</Moment>
+                                        <Moment format="MM/DD/YYYY">{policeCheck}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
@@ -262,7 +262,7 @@ export default class StaffCreateStep8Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD">{dateOfBirth}</Moment>
+                                        <Moment format="MM/DD/YYYY">{dateOfBirth}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
@@ -275,7 +275,7 @@ export default class StaffCreateStep8Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td><Moment format="YYYY/MM/DD">{joinDate}</Moment></td>
+                                    <td><Moment format="MM/DD/YYYY">{joinDate}</Moment></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Comment(s)</th>

@@ -147,7 +147,7 @@ function statusFormatter(cell, row){
 }
 
 function createdAtFormatter(cell, row){
-    return <Moment format="YYYY/MM/DD hh:mm:ss a">{row.createdAt}</Moment>;
+    return <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>;
 }
 
 

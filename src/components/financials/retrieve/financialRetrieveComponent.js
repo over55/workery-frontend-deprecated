@@ -70,7 +70,7 @@ export default class FinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Order Start Date</th>
                                     <td>
                                         {order.startDate
-                                            ? <Moment format="YYYY/MM/DD">{order.startDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{order.startDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -79,7 +79,7 @@ export default class FinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Order Completion Date</th>
                                     <td>
                                         {order.completionDate
-                                            ? <Moment format="YYYY/MM/DD">{order.completionDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{order.completionDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -96,7 +96,7 @@ export default class FinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Invoice Date</th>
                                     <td>
                                         {order.invoiceDate
-                                            ? <Moment format="YYYY/MM/DD">{order.invoiceDate}</Moment>
+                                            ? <Moment format="MM/DD/YYYY">{order.invoiceDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -190,7 +190,7 @@ export default class FinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Service Fee Payment Date</th>
                                     <td>
                                         {order.invoiceServiceFeePaymentDate
-                                            ?<Moment format="YYYY/MM/DD">{order.invoiceServiceFeePaymentDate}</Moment>
+                                            ?<Moment format="MM/DD/YYYY">{order.invoiceServiceFeePaymentDate}</Moment>
                                             :"-"
                                         }
                                     </td>

@@ -47,7 +47,7 @@ class AwayLogDeleteComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Start Date</th>
                                     <td>
-                                        <Moment format="YYYY/MM/DD">{startDate}</Moment>
+                                        <Moment format="MM/DD/YYYY">{startDate}</Moment>
                                     </td>
                                 </tr>
                             </tbody>
