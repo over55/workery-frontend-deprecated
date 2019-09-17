@@ -137,13 +137,14 @@ export default class ClientContactUpdateComponent extends Component {
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
+                                borderColour="border-success"
                                 error={errors.email}
-                                label="Email (*)"
+                                label="Email"
                                 onChange={onTextChange}
                                 value={email}
                                 name="email"
                                 type="text"
+                                helpText="This field is optional only for customers."
                             />
 
                             <BootstrapRadio
