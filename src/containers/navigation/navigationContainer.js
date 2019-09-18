@@ -254,12 +254,13 @@ class ItemNode extends React.Component {
         }
     }
 }
+
 class NavigationContainer extends React.Component {
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
+
         this.state = {
-            active: false
+            active: false,
         }
 
         this.sideMenuToggle = this.sideMenuToggle.bind(this);
@@ -271,93 +272,97 @@ class NavigationContainer extends React.Component {
         })
     }
 
-  render() {
-    const { user } = this.props;
-    let menuTitle;
-    let menuData;
-    let isAuthenticated = false;
+    componentDidMount() {
+        // Do nothing.
+    }
 
-    if (user !== null && user !== undefined) {
-        const keysArr = Object.keys(user);
-        const count = keysArr.length;
-        if (count > 0) {
-            // Get our permission handling fields from the user object which
-            // we received from the API endpoint.
-            const { groupId } = user;
+    render() {
+        const { user } = this.props;
+        let menuTitle;
+        let menuData;
+        let isAuthenticated = false;
 
-            // Indicate we are authenticated.
-            isAuthenticated = true;
+        if (user !== null && user !== undefined) {
+            const keysArr = Object.keys(user);
+            const count = keysArr.length;
+            if (count > 0) {
+                // Get our permission handling fields from the user object which
+                // we received from the API endpoint.
+                const { groupId } = user;
 
-            // Generate a friendly message in the menu for authenitcatd users.
-            menuTitle = "Hi, "+user.firstName;
+                // Indicate we are authenticated.
+                isAuthenticated = true;
 
-            // Lookup the user group membership and get the navigation tree.
-            menuData = NAVIGATION_TREE[parseInt(groupId)];
+                // Generate a friendly message in the menu for authenitcatd users.
+                menuTitle = "Hi, "+user.firstName;
+
+                // Lookup the user group membership and get the navigation tree.
+                menuData = NAVIGATION_TREE[parseInt(groupId)];
+            }
         }
-    }
 
-    // If no menu was set then we will create our anonymous menu by default.
-    if (menuData === null || menuData === undefined) {
-        isAuthenticated = false;
-        menuTitle = "Menu"
-        menuData = NAVIGATION_TREE[ANONYMOUS_GROUP_ID];
-    }
+        // If no menu was set then we will create our anonymous menu by default.
+        if (menuData === null || menuData === undefined) {
+            isAuthenticated = false;
+            menuTitle = "Menu"
+            menuData = NAVIGATION_TREE[ANONYMOUS_GROUP_ID];
+        }
 
-    // Check if we are in a tenant or not.
-    const subdomain = getSubdomain();
-    const isTenant = subdomain !== null && subdomain !== undefined;
+        // Check if we are in a tenant or not.
+        const subdomain = getSubdomain();
+        const isTenant = subdomain !== null && subdomain !== undefined;
 
-    // Render our top navigation.
-    return (
-        <div>
-		    {isAuthenticated && isTenant &&
-                <div>
-                    <header className="top-navbar navbar navbar-dark fixed-top bg-dark justify-content-between">
-                        <Link className="navbar-brand" to="/dashboard">
-                            <img className="img-fluid" src="/img/compressed-logo.png" alt="Workery" width="200px" />
-                        </Link>
-                        <ul className="navbar-nav flex-row">
-                            {isAuthenticated && isTenant &&
-                                <li className="dropdown-list dropdown nav-item">
-                                    <Link aria-haspopup="true" to="/tasks" className="dropdown-toggle-nocaret nav-link text-white py-0" aria-expanded="false">
-                                        <i className="far fa-check-square"></i>
-                                        <span className="badge badge-orange">11</span>
-                                    </Link>
-                                </li>
-                            }
+        // Render our top navigation.
+        return (
+            <div>
+             {isAuthenticated && isTenant &&
+                    <div>
+                        <header className="top-navbar navbar navbar-dark fixed-top bg-dark justify-content-between">
+                            <Link className="navbar-brand" to="/dashboard">
+                                <img className="img-fluid" src="/img/compressed-logo.png" alt="Workery" width="200px" />
+                            </Link>
+                            <ul className="navbar-nav flex-row">
+                                {isAuthenticated && isTenant &&
+                                    <li className="dropdown-list dropdown nav-item">
+                                        <Link aria-haspopup="true" to="/tasks" className="dropdown-toggle-nocaret nav-link text-white py-0" aria-expanded="false">
+                                            <i className="far fa-check-square"></i>
+                                            <span className="badge badge-orange">11</span>
+                                        </Link>
+                                    </li>
+                                }
+
+                                    <li className="nav-item">
+                                        &nbsp;&nbsp;&nbsp;
+                                    </li>
 
                                 <li className="nav-item">
-                                    &nbsp;&nbsp;&nbsp;
+                                    <button className={`navbar-toggler ${ this.state.active ? "active" : ""}` } type="button" id="sidebarCollapse"
+                                        onClick = { this.sideMenuToggle }>
+                                        <i className="fa fa-bars"></i>
+                                    </button>
                                 </li>
-
-                            <li className="nav-item">
-                                <button className={`navbar-toggler ${ this.state.active ? "active" : ""}` } type="button" id="sidebarCollapse"
-                                    onClick = { this.sideMenuToggle }>
-                                    <i className="fa fa-bars"></i>
-                                </button>
-                            </li>
-                        </ul>
-
-                    </header>
-                    <nav id="sidebar" className={ `${ this.state.active ? "active" : ""}` }>
-                        <div className="sideMenuTouchGlass"
-                               onClick={ this.sideMenuToggle }
-                                 style={{ display: this.state.active ? "block" : "none"}}></div>
-                        <Scrollbars>
-                            <p className="text-center text-light mt-3 mb-2">{menuTitle}</p>
-                            <hr className="nav-divider" />
-                            <ul className="nav flex-column">
-                                { menuData.map((item, index)=>(
-                                    <ItemNode menuData={item} key={index} sideMenuToggle={this.sideMenuToggle}></ItemNode>
-                                )) }
                             </ul>
-                        </Scrollbars>
-                    </nav>
-                </div>
-        	}
-        </div>
-    )
-  }
+
+                        </header>
+                        <nav id="sidebar" className={ `${ this.state.active ? "active" : ""}` }>
+                            <div className="sideMenuTouchGlass"
+                                   onClick={ this.sideMenuToggle }
+                                     style={{ display: this.state.active ? "block" : "none"}}></div>
+                            <Scrollbars>
+                                <p className="text-center text-light mt-3 mb-2">{menuTitle}</p>
+                                <hr className="nav-divider" />
+                                <ul className="nav flex-column">
+                                    { menuData.map((item, index)=>(
+                                        <ItemNode menuData={item} key={index} sideMenuToggle={this.sideMenuToggle}></ItemNode>
+                                    )) }
+                                </ul>
+                            </Scrollbars>
+                        </nav>
+                    </div>
+             }
+            </div>
+        )
+    }
 
 }
 
