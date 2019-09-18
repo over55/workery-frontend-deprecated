@@ -126,8 +126,8 @@ export default class AssociateCreateStep1Component extends Component {
                 </div>
                 <div className="col-md-12 text-center">
                     <h3 className="p-2">- or -</h3>
-                    <a href="/associates/add/step-3" role="button">
-                        Add New Associate&nbsp;<i class="fas fa-chevron-right"></i>
+                    <a className="btn btn-primary btn-lg mt-4" href="/associates/add/step-3" role="button">
+                        <i className="fas fa-plus"></i>&nbsp;Add Associate
                     </a>
                 </div>
             </main>
