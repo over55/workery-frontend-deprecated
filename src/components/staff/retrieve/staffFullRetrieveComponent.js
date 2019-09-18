@@ -92,11 +92,11 @@ export default class StaffFullRetrieveComponent extends Component {
                                     <td>{staff.fullName}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Telephone</th>
+                                    <th scope="row" className="bg-light">Primary Telephone</th>
                                     <td><a href={`tel:${staff.e164Telephone}`}>{staff.telephone}</a></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Other Telephone</th>
+                                    <th scope="row" className="bg-light">Secondary Telephone</th>
                                     <td><a href={`tel:${staff.e164OtherTelephone}`}>{staff.otherTelephone}</a></td>
                                 </tr>
                                 <tr>
