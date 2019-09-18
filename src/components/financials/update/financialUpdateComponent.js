@@ -55,6 +55,8 @@ export default class FinancialUpdateComponent extends Component {
             invoiceServiceFeePaymentDate,
             onInvoiceServiceFeePaymentDate,
             invoiceActualServiceFeeAmountPaid,
+            completionDate,
+            onCompletionDate,
 
             // EVERYTHING ELSE
             onClick, id, isLoading, errors,
@@ -120,6 +122,18 @@ export default class FinancialUpdateComponent extends Component {
                                 options={PAYMENT_STATUS_CHOICES}
                                 helpText='Selecting "yes" will result in job being paid.'
                             />
+
+                            {paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE &&
+                                <BootstrapDatePicker
+                                    label="Completion date (*)"
+                                    name="completionDate"
+                                    dateObj={completionDate}
+                                    onTimeChange={onCompletionDate}
+                                    datePickerClassName="form-control form-control-lg border"
+                                    divClassName="form-group p-0 col-md-7 mb-4"
+                                    error={errors.completionDate}
+                                />
+                            }
 
                             <BootstrapDatePicker
                                 label="Invoice date (*)"

@@ -4,7 +4,8 @@ import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF,
-    ASSOCIATE_GROUP_ID
+    ASSOCIATE_GROUP_ID,
+    WORK_ORDER_COMPLETED_AND_PAID_STATE
 } from '../constants/api';
 
 
@@ -23,6 +24,12 @@ export function validateFinancialUpdateInput(data) {
 
     if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "" || isEmpty(data.paymentStatus)) {
         errors.paymentStatus = 'This field is required';
+    } else {
+        if (data.paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE) {
+            if (data.completionDate === undefined || data.completionDate === null || data.completionDate === "" || isNaN(data.completionDate) ) {
+                errors.completionDate = 'This field is required';
+            }
+        }
     }
     if (data.invoiceDate === undefined || data.invoiceDate === null || data.invoiceDate === "" || isNaN(data.invoiceDate) ) {
         errors.invoiceDate = 'This field is required';
