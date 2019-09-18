@@ -221,7 +221,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td>{staff && <Moment format="MM/DD/YYYY">{staff.joinDate}</Moment>}</td>
+                                    <td>{staff && staff.joinDate && <Moment format="MM/DD/YYYY">{staff.joinDate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
