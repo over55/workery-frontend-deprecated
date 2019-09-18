@@ -281,7 +281,7 @@ class NavigationContainer extends React.Component {
 
     componentDidMount() {
         // Startup the background refresh task.
-        var intervalId = setInterval(this.onBackgroundRefreshTick, 1000 * 1); // 1000 = 1 second.
+        var intervalId = setInterval(this.onBackgroundRefreshTick, 1000 * 30); // 1000 = 1 second.
 
         // store intervalId in the state so it can be accessed later:
         this.setState({intervalId: intervalId});
@@ -290,7 +290,7 @@ class NavigationContainer extends React.Component {
         const tenant_schema = getSubdomain();
         if (tenant_schema !== "public" && tenant_schema !== null && tenant_schema !== undefined) {
             if (this.props.user !== undefined && this.props.user !== null && isEmpty(this.props.user) === false) {
-               this.props.pullNavigation(tenant_schema, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                this.props.pullNavigation(tenant_schema, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
             }
         }
     }

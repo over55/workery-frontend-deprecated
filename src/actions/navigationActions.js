@@ -48,7 +48,7 @@ export function pullNavigation(schema, successCallback=null, failedCallback=null
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 
-            console.log(responseData); // For debugging purposes.
+            // console.log(responseData); // For debugging purposes.
 
             let navigation = camelizeKeys(responseData);
 
