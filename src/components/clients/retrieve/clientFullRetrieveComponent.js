@@ -117,11 +117,11 @@ export default class ClientFullRetrieveComponent extends Component {
                                     <td>{client.fullName}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Telephone</th>
+                                    <th scope="row" className="bg-light">Primary Telephone</th>
                                     <td><a href={`tel:${client.e164Telephone}`}>{client.telephone}</a></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Other Telephone</th>
+                                    <th scope="row" className="bg-light">Secondary Telephone</th>
                                     <td><a href={`tel:${client.e164OtherTelephone}`}>{client.otherTelephone}</a></td>
                                 </tr>
                                 <tr>

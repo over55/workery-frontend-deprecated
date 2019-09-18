@@ -115,7 +115,7 @@ export default class ClientContactUpdateComponent extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.primaryPhone}
-                                label="Telephone (*)"
+                                label="Primary Telephone (*)"
                                 onChange={onTextChange}
                                 value={primaryPhone}
                                 name="primaryPhone"
@@ -127,7 +127,7 @@ export default class ClientContactUpdateComponent extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 error={errors.secondaryPhone}
-                                label="Other Telephone"
+                                label="Secondary Telephone"
                                 onChange={onTextChange}
                                 value={secondaryPhone}
                                 name="secondaryPhone"
