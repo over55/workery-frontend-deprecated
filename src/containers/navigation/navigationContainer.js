@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, NavLink } from "react-router-dom";
 import { Scrollbars } from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import { setFlashMessage } from "../../actions/flashMessageActions";
 import { pullNavigation } from "../../actions/navigationActions";
@@ -280,13 +281,18 @@ class NavigationContainer extends React.Component {
 
     componentDidMount() {
         // Startup the background refresh task.
-        var intervalId = setInterval(this.onBackgroundRefreshTick, 1000 * 10); // 1000 = 1 second.
+        var intervalId = setInterval(this.onBackgroundRefreshTick, 1000 * 1); // 1000 = 1 second.
 
         // store intervalId in the state so it can be accessed later:
         this.setState({intervalId: intervalId});
 
         // Pull the navigation right away and get the value.
-        this.props.pullNavigation(getSubdomain(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        const tenant_schema = getSubdomain();
+        if (tenant_schema !== "public" && tenant_schema !== null && tenant_schema !== undefined) {
+            if (this.props.user !== undefined && this.props.user !== null && isEmpty(this.props.user) === false) {
+               this.props.pullNavigation(tenant_schema, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+            }
+        }
     }
 
     componentWillUnmount() {
@@ -306,7 +312,12 @@ class NavigationContainer extends React.Component {
      *  backend to get the latest navigation data.
      */
     onBackgroundRefreshTick() {
-        this.props.pullNavigation(getSubdomain(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        const tenant_schema = getSubdomain();
+        if (tenant_schema !== "public" && tenant_schema !== null && tenant_schema !== undefined) {
+            if (this.props.user !== undefined && this.props.user !== null && isEmpty(this.props.user) === false) {
+               this.props.pullNavigation(tenant_schema, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+            }
+        }
     }
 
     onSuccessfulSubmissionCallback(response) {
