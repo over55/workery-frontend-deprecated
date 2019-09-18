@@ -52,7 +52,10 @@ class LogoutContainer extends Component {
                 this.onFailedSubmissionCallback
             );
         } else {
-            alert("WARNING: No user logged in, automatically redirecting to login page.");
+            // CLEAR THE LOCAL STORAGE IF WE SUCCESSFULLY LOGGED OUT!
+            localStorage.removeItem(APP_STATE) // Clear the state data of the app.
+            localStorage.clear(); // Clear any remaining items.
+
             this.props.setFlashMessage("success", "You have successfully logged out.");
             this.setState({
                 isLoading: false,
