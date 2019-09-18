@@ -261,9 +261,11 @@ class NavigationContainer extends React.Component {
 
         this.state = {
             active: false,
+            intervalId: 0,
         }
 
         this.sideMenuToggle = this.sideMenuToggle.bind(this);
+        this.onBackgroundRefreshTick = this.onBackgroundRefreshTick.bind(this);
     }
 
     sideMenuToggle() {
@@ -273,7 +275,31 @@ class NavigationContainer extends React.Component {
     }
 
     componentDidMount() {
-        // Do nothing.
+        // Startup the background refresh task.
+        var intervalId = setInterval(this.onBackgroundRefreshTick, 1000 * 60); // 1000 = 1 second.
+
+        // store intervalId in the state so it can be accessed later:
+        this.setState({intervalId: intervalId});
+    }
+
+    componentWillUnmount() {
+        // use intervalId from the state to clear the interval
+        clearInterval(this.state.intervalId);
+
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
+
+    /**
+     * Function used by the event timer to call the latest data from the API
+     *  backend to get the latest device data.
+     */
+    onBackgroundRefreshTick() {
+        // console.log("Tick"); //TODO: IMPLEMENT THE NAVIGATION REFRESH HERE.
     }
 
     render() {
