@@ -117,11 +117,11 @@ export default class AssociateFullRetrieveComponent extends Component {
                                     <td>{associate.fullName}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Telephone</th>
+                                    <th scope="row" className="bg-light">Primary Telephone</th>
                                     <td><a href={`tel:${associate.e164Telephone}`}>{associate.telephone}</a></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Other Telephone</th>
+                                    <th scope="row" className="bg-light">Secondary Telephone</th>
                                     <td><a href={`tel:${associate.e164OtherTelephone}`}>{associate.otherTelephone}</a></td>
                                 </tr>
                                 <tr>
