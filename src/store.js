@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { APP_STATE } from "./constants/redux";
 import {
-    LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, PROFILE_SUCCESS,
+    LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, NAVIGATION_SUCCESS, PROFILE_SUCCESS,
     TENANT_LIST_SUCCESS,
     CLIENT_LIST_SUCCESS, CLIENT_DETAIL_SUCCESS, CLIENT_COMMENT_LIST_REQUEST, ARCHIVED_CLIENT_LIST_SUCCESS,
     ORDER_LIST_SUCCESS, ORDER_DETAIL_SUCCESS,
@@ -34,6 +34,7 @@ import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
 import flashMessageReducer from "./reducers/flashMessageReducer";
 import { howHearListReducer, howHearDetailReducer } from "./reducers/howHearReducers";
 import { insuranceRequirementListReducer, insuranceRequirementDetailReducer } from "./reducers/insuranceRequirementReducers";
+import navigationReducer from "./reducers/navigationReducer";
 import { ongoingOrderListReducer, ongoingOrderDetailReducer } from "./reducers/ongoingOrderReducers";
 import { ongoingOrderCommentListReducer } from "./reducers/ongoingOrderCommentReducers";
 import { orderListReducer, orderDetailReducer } from "./reducers/orderReducers";
@@ -67,6 +68,7 @@ const appReducer = combineReducers({
     flashMessageState: flashMessageReducer,
     howHearListState: howHearListReducer, howHearDetailState: howHearDetailReducer,
     insuranceRequirementListState: insuranceRequirementListReducer, insuranceRequirementDetailState: insuranceRequirementDetailReducer,
+    navigationState: navigationReducer,
     ongoingOrderListState: ongoingOrderListReducer, ongoingOrderDetailState: ongoingOrderDetailReducer,
     ongoingOrderCommentListState: ongoingOrderCommentListReducer,
     orderListState: orderListReducer, orderDetailState: orderDetailReducer,
@@ -111,7 +113,7 @@ const localStorageMiddleware = ({ getState }) => {
     return next => action => {
         const result = next(action);
         if ([
-            LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, PROFILE_SUCCESS,
+            LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, NAVIGATION_SUCCESS, PROFILE_SUCCESS,
             TENANT_LIST_SUCCESS, CLIENT_LIST_SUCCESS, CLIENT_DETAIL_SUCCESS, CLIENT_COMMENT_LIST_REQUEST,
             ORDER_LIST_SUCCESS, ORDER_DETAIL_SUCCESS,
             TASK_LIST_SUCCESS, TASK_DETAIL_SUCCESS,

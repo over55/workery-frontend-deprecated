@@ -13,6 +13,7 @@ export const WORKERY_PROFILE_API_ENDPOINT = '/profile';
 export const WORKERY_TENANT_LIST_API_ENDPOINT = '/franchises';
 export const WORKERY_TENANT_DETAIL_API_ENDPOINT = '/franchise/';
 export const WORKERY_DASHBOARD_API_ENDPOINT = '/dashboard';
+export const WORKERY_NAVIGATION_API_ENDPOINT = '/navigation';
 export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/v2/customers';
 export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/v2/customer/';
 export const WORKERY_CLIENT_ARCHIVE_API_ENDPOINT = '/customers/operation/archive';

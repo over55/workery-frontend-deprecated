@@ -4,6 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 
 import { setFlashMessage } from "../../actions/flashMessageActions";
+import { pullNavigation } from "../../actions/navigationActions";
 import { getSubdomain } from '../../helpers/urlUtility';
 
 
@@ -262,10 +263,13 @@ class NavigationContainer extends React.Component {
         this.state = {
             active: false,
             intervalId: 0,
+            tasksCount: this.props.navigation.tasksCount,
         }
 
         this.sideMenuToggle = this.sideMenuToggle.bind(this);
         this.onBackgroundRefreshTick = this.onBackgroundRefreshTick.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
 
     sideMenuToggle() {
@@ -276,10 +280,13 @@ class NavigationContainer extends React.Component {
 
     componentDidMount() {
         // Startup the background refresh task.
-        var intervalId = setInterval(this.onBackgroundRefreshTick, 1000 * 60); // 1000 = 1 second.
+        var intervalId = setInterval(this.onBackgroundRefreshTick, 1000 * 10); // 1000 = 1 second.
 
         // store intervalId in the state so it can be accessed later:
         this.setState({intervalId: intervalId});
+
+        // Pull the navigation right away and get the value.
+        this.props.pullNavigation(getSubdomain(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     componentWillUnmount() {
@@ -296,10 +303,18 @@ class NavigationContainer extends React.Component {
 
     /**
      * Function used by the event timer to call the latest data from the API
-     *  backend to get the latest device data.
+     *  backend to get the latest navigation data.
      */
     onBackgroundRefreshTick() {
-        // console.log("Tick"); //TODO: IMPLEMENT THE NAVIGATION REFRESH HERE.
+        this.props.pullNavigation(getSubdomain(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onSuccessfulSubmissionCallback(response) {
+        this.setState({ tasksCount: response.tasksCount, });
+    }
+
+    onFailedSubmissionCallback(response) {
+
     }
 
     render() {
@@ -338,6 +353,9 @@ class NavigationContainer extends React.Component {
         const subdomain = getSubdomain();
         const isTenant = subdomain !== null && subdomain !== undefined;
 
+        // Get state variables.
+        const { tasksCount } = this.state;
+
         // Render our top navigation.
         return (
             <div>
@@ -352,7 +370,7 @@ class NavigationContainer extends React.Component {
                                     <li className="dropdown-list dropdown nav-item">
                                         <Link aria-haspopup="true" to="/tasks" className="dropdown-toggle-nocaret nav-link text-white py-0" aria-expanded="false">
                                             <i className="far fa-check-square"></i>
-                                            <span className="badge badge-orange">11</span>
+                                            <span className="badge badge-orange">{tasksCount}</span>
                                         </Link>
                                     </li>
                                 }
@@ -396,6 +414,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
+        navigation: store.navigationState,
     };
 }
 
@@ -403,6 +422,9 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
+        },
+        pullNavigation: (schema, successCallback, failureCallback) => {
+            dispatch(pullNavigation(schema, successCallback, failureCallback))
         }
     }
 }
