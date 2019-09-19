@@ -10,8 +10,8 @@ import {
 export function validateInput(data) {
     let errors = {};
 
-    if (data.text === undefined || data.text === null || data.text === "") {
-        errors.text = 'This field is required';
+    if (data.file === undefined || data.file === null || data.file === "") {
+        errors.file = 'This field is required';
     }
 
     return {

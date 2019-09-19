@@ -4,8 +4,8 @@ import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
 import OrderListComponent from "../../../../components/clients/retrieve/file_upload/clientFileUploadComponent";
+import { postClientFileUpload } from "../../../../actions/clientFileUploadActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
-import { pullClientFileUploadList, postClientFileUpload } from "../../../../actions/clientFileUploadActions";
 import { validateInput } from "../../../../validators/fileValidator"
 
 
@@ -18,22 +18,13 @@ class CustomerFileUploadContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
-        const parametersMap = new Map();
-        parametersMap.set("about", id);
-        parametersMap.set("o", "-created_at");
         this.state = {
-            // Pagination
-            page: 1,
-            sizePerPage: 10000,
-            totalSize: 0,
-
-            // Sorting, Filtering, & Searching
-            parametersMap: parametersMap,
-
             // Overaly
-            isLoading: true,
+            isLoading: false,
 
             // Everything else...
+            customer: id,
+            file: null,
             id: id,
             text: "",
             errors: {},
@@ -45,6 +36,8 @@ class CustomerFileUploadContainer extends Component {
         this.onSuccessPostCallback = this.onSuccessPostCallback.bind(this);
         this.onFailurePostCallback = this.onFailurePostCallback.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onFileDrop = this.onFileDrop.bind(this);
+        this.onRemoveFileUploadClick = this.onRemoveFileUploadClick.bind(this);
     }
 
     /**
@@ -54,9 +47,6 @@ class CustomerFileUploadContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
-
-        postData.about = this.state.id;
-        postData.extraText = this.state.text;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -70,15 +60,6 @@ class CustomerFileUploadContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        // Get our data.
-        this.props.pullClientFileUploadList(
-            this.state.page,
-            this.state.sizePerPage,
-            this.state.parametersMap,
-            this.onSuccessListCallback,
-            this.onFailureListCallback
-        );
     }
 
     componentWillUnmount() {
@@ -129,14 +110,6 @@ class CustomerFileUploadContainer extends Component {
             ()=>{
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
-                // Get our data.
-                this.props.pullClientFileUploadList(
-                    this.state.page,
-                    this.state.sizePerPage,
-                    this.state.parametersMap,
-                    this.onSuccessListCallback,
-                    this.onFailureListCallback
-                );
             }
         )
     }
@@ -198,12 +171,47 @@ class CustomerFileUploadContainer extends Component {
     }
 
     /**
+     *  Special Thanks: https://react-dropzone.netlify.com/#previews
+     */
+    onFileDrop(acceptedFiles) {
+        console.log("DEBUG | onFileDrop | acceptedFiles", acceptedFiles);
+        const file = acceptedFiles[0];
+
+        // For debuging purposes only.
+        console.log("DEBUG | onFileDrop | file", file);
+
+        if (file !== undefined && file !== null) {
+            const fileWithPreview = Object.assign(file, {
+                preview: URL.createObjectURL(file)
+            });
+
+            // For debugging purposes.
+            console.log("DEBUG | onFileDrop | fileWithPreview", fileWithPreview);
+
+            // Update our local state to update the GUI.
+            this.setState({
+                file: fileWithPreview
+            })
+        }
+    }
+
+    onRemoveFileUploadClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        // Clear uploaded file.
+        this.setState({
+            file: null
+        })
+    }
+
+    /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
-        const { isLoading, id, text, errors } = this.state;
+        const { isLoading, id, text, errors, file } = this.state;
         const client = this.props.clientDetail ? this.props.clientDetail : {};
         const clientFiles = this.props.clientFileList ? this.props.clientFileList.results : [];
         return (
@@ -217,6 +225,9 @@ class CustomerFileUploadContainer extends Component {
                 isLoading={isLoading}
                 errors={errors}
                 onClick={this.onClick}
+                file={file}
+                onFileDrop={this.onFileDrop}
+                onRemoveFileUploadClick={this.onRemoveFileUploadClick}
             />
         );
     }
@@ -235,11 +246,6 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
-        },
-        pullClientFileUploadList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
-            dispatch(
-                pullClientFileUploadList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
-            )
         },
         postClientFileUpload: (postData, successCallback, failedCallback) => {
             dispatch(postClientFileUpload(postData, successCallback, failedCallback))

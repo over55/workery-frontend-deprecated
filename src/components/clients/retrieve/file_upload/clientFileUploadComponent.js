@@ -15,12 +15,14 @@ import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAler
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import { BootstrapSingleFileUploadAndPreview } from "../../../bootstrap/bootstrapSingleFileUploadAndPreview";
 
 
 export default class ClientFileUploadComponent extends Component {
     render() {
         const {
-            clientFiles, flashMessage, isLoading, id, client, text, onTextChange, errors, onClick
+            clientFiles, flashMessage, isLoading, id, client, text, onTextChange, errors, onClick,
+            file, onFileDrop, onRemoveFileUploadClick
         } = this.props;
         return (
             <div>
@@ -79,13 +81,33 @@ export default class ClientFileUploadComponent extends Component {
                     </div>
                 </div>
 
+                <div className="row">
+                    <div className="col-md-5 mx-auto mt-2">
+                        <form>
+                            <h1>Create New Resource</h1>
+                            <p>All fields which have the (*) symbol are required to be filled out.</p>
 
+                            <BootstrapErrorsProcessingAlert errors={errors} />
 
+                            <BootstrapSingleFileUploadAndPreview
+                                error={errors.file}
+                                label="File (*)"
+                                onDrop={onFileDrop}
+                                name="file"
+                                fileObj={file}
+                                onRemoveUploadClick={onRemoveFileUploadClick}
+                            />
 
-                <div className="row align-items-start">
-                    <h1>Files/Notes</h1>
-                    <div className="col-lg-12">
+                            <div className="form-group">
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
+                                </button>
+                                <Link to="/settings/resources" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <i className="fas fa-arrow-circle-left"></i> Back
+                                </Link>
+                            </div>
 
+                        </form>
                     </div>
                 </div>
 

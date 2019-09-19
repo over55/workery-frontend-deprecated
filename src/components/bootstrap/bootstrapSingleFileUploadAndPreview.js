@@ -73,7 +73,7 @@ export const BootstrapSingleFileUploadAndPreview = ({
                     {fileObj &&
                         <li className="list-group-item list-group-item-success">
                             {fileObj.name}
-                            <button className="btn btn-danger btn-sm float-left" onClick={onRemoveUploadClick}>
+                            <button className="btn btn-danger btn-sm float-right" onClick={onRemoveUploadClick}>
                                 <i className="fas fa-trash-alt"></i>&nbsp;Remove Upload
                             </button>
                             <br />
