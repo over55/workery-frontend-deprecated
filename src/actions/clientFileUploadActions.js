@@ -15,11 +15,11 @@ import getCustomAxios from '../helpers/customAxios';
 //                                 LIST                                       //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullClientFileList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullClientFileUploadList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
-            setClientFileListRequest()
+            setClientFileUploadListRequest()
         );
 
         console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback);
@@ -56,7 +56,7 @@ export function pullClientFileList(page=1, sizePerPage=10, filtersMap=new Map(),
             // Update the global state of the application to store our
             // user data for the application.
             store.dispatch(
-                setClientFileListSuccess(data)
+                setClientFileUploadListSuccess(data)
             );
 
             // DEVELOPERS NOTE:
@@ -75,11 +75,11 @@ export function pullClientFileList(page=1, sizePerPage=10, filtersMap=new Map(),
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("pullClientFileList | error:", errors); // For debuggin purposes only.
+                console.log("pullClientFileUploadList | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
-                    setClientFileListFailure({
+                    setClientFileUploadListFailure({
                         isAPIRequestRunning: false,
                         errors: errors
                     })
@@ -104,11 +104,11 @@ export function pullClientFileList(page=1, sizePerPage=10, filtersMap=new Map(),
 //                                 CREATE                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function postClientFile(postData, successCallback, failedCallback) {
+export function postClientFileUpload(postData, successCallback, failedCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
         store.dispatch(
-            setClientFileListRequest()
+            setClientFileUploadListRequest()
         );
 
         // Generate our app's Axios instance.
@@ -138,7 +138,7 @@ export function postClientFile(postData, successCallback, failedCallback) {
             // Update the global state of the application to store our
             // user device for the application.
             store.dispatch(
-                setClientFileListSuccess(device)
+                setClientFileUploadListSuccess(device)
             );
         }).catch( (exception) => {
             if (exception.response) {
@@ -149,11 +149,11 @@ export function postClientFile(postData, successCallback, failedCallback) {
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("postClientFileList | error:", errors); // For debuggin purposes only.
+                console.log("postClientFileUploadList | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
-                    setClientFileListFailure({
+                    setClientFileUploadListFailure({
                         isAPIRequestRunning: false,
                         errors: errors
                     })
@@ -180,7 +180,7 @@ export function postClientFile(postData, successCallback, failedCallback) {
 //                                REDUX ACTIONS                               //
 ////////////////////////////////////////////////////////////////////////////////
 
-export const setClientFileListRequest = () => ({
+export const setClientFileUploadListRequest = () => ({
     type: CLIENT_FILE_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
@@ -190,13 +190,13 @@ export const setClientFileListRequest = () => ({
 });
 
 
-export const setClientFileListFailure = (info) => ({
+export const setClientFileUploadListFailure = (info) => ({
     type: CLIENT_FILE_LIST_FAILURE,
     payload: info,
 });
 
 
-export const setClientFileListSuccess = (info) => ({
+export const setClientFileUploadListSuccess = (info) => ({
     type: CLIENT_FILE_LIST_SUCCESS,
     payload: info,
 });
@@ -210,7 +210,7 @@ export const setClientFileListSuccess = (info) => ({
  * Utility function takes the API data and converts it to HTML dropdown
  * options which will be consumed by the `react-select` library elements.
  */
-export function getClientFileReactSelectOptions(clientFileList=[], selectName="clientFile") {
+export function getClientFileUploadReactSelectOptions(clientFileList=[], selectName="clientFile") {
     const clientFileOptions = [];
     const isNotProductionsEmpty = isEmpty(clientFileList) === false;
     if (isNotProductionsEmpty) {

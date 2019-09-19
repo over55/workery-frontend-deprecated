@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderListComponent from "../../../components/clients/retrieve/clientFileComponent";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullClientFileList, postClientFile } from "../../../actions/clientFileActions";
-import { validateInput } from "../../../validators/fileValidator"
+import OrderListComponent from "../../../../components/clients/retrieve/file_upload/clientFileUploadComponent";
+import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullClientFileUploadList, postClientFileUpload } from "../../../../actions/clientFileUploadActions";
+import { validateInput } from "../../../../validators/fileValidator"
 
 
-class ClientFileContainer extends Component {
+class CustomerFileUploadContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -72,7 +72,7 @@ class ClientFileContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Get our data.
-        this.props.pullClientFileList(
+        this.props.pullClientFileUploadList(
             this.state.page,
             this.state.sizePerPage,
             this.state.parametersMap,
@@ -130,7 +130,7 @@ class ClientFileContainer extends Component {
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
-                this.props.pullClientFileList(
+                this.props.pullClientFileUploadList(
                     this.state.page,
                     this.state.sizePerPage,
                     this.state.parametersMap,
@@ -177,7 +177,7 @@ class ClientFileContainer extends Component {
 
                 // Once our state has been validated `client-side` then we will
                 // make an API request with the server to create our new production.
-                this.props.postClientFile(
+                this.props.postClientFileUpload(
                     this.getPostData(),
                     this.onSuccessPostCallback,
                     this.onFailurePostCallback
@@ -236,13 +236,13 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullClientFileList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
+        pullClientFileUploadList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullClientFileList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
+                pullClientFileUploadList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
             )
         },
-        postClientFile: (postData, successCallback, failedCallback) => {
-            dispatch(postClientFile(postData, successCallback, failedCallback))
+        postClientFileUpload: (postData, successCallback, failedCallback) => {
+            dispatch(postClientFileUpload(postData, successCallback, failedCallback))
         },
     }
 }
@@ -251,4 +251,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientFileContainer);
+)(CustomerFileUploadContainer);

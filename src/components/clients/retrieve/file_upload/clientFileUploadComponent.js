@@ -11,13 +11,13 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { FlashMessageComponent } from "../../flashMessageComponent";
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { FlashMessageComponent } from "../../../flashMessageComponent";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 
 
-export default class ClientFileComponent extends Component {
+export default class ClientFileUploadComponent extends Component {
     render() {
         const {
             clientFiles, flashMessage, isLoading, id, client, text, onTextChange, errors, onClick
