@@ -4,6 +4,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
 import OrderListComponent from "../../../../components/clients/retrieve/file_upload/clientFileUploadAddComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { postClientFileUpload } from "../../../../actions/clientFileUploadActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../validators/fileValidator"
@@ -20,7 +21,11 @@ class CustomerFileUploadAddContainer extends Component {
         const { id } = this.props.match.params;
         this.state = {
             isLoading: false,
+            title: "",
+            description: "",
             fileReader: new FileReader(), // DJANGO-REACT UPLOAD: STEP 1 OF 4.
+            tags: [],
+            is_archived: false,
 
             // Everything else...
             customer: id,
@@ -111,6 +116,8 @@ class CustomerFileUploadAddContainer extends Component {
             ()=>{
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
+                this.props.setFlashMessage("success", "Client file has been successfully created.");
+                this.props.history.push("/client/"+response['id']+"/files");
             }
         )
     }
@@ -233,13 +240,16 @@ class CustomerFileUploadAddContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, text, errors, file } = this.state;
+        const { isLoading, id, title, description, tags, is_archived, errors, file } = this.state;
         const client = this.props.clientDetail ? this.props.clientDetail : {};
         const clientFiles = this.props.clientFileList ? this.props.clientFileList.results : [];
         return (
             <OrderListComponent
                 id={id}
-                text={text}
+                title={title}
+                description={description}
+                tags={tags}
+                is_archived={is_archived}
                 client={client}
                 clientFiles={clientFiles}
                 flashMessage={this.props.flashMessage}
@@ -266,6 +276,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
