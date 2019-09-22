@@ -113,6 +113,8 @@ export const WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT = '/ongoing-order-c
 export const WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_ENDPOINT = '/v2/ongoing-order/XXX/';
 export const WORKERY_COMMENT_LIST_API_ENDPOINT = '/comments';
 export const WORKERY_STAFF_ARCHIVE_API_ENDPOINT = '/staff/XXX/archive'
+export const WORKERY_STAFF_FILE_LIST_API_ENDPOINT = '/staff-files';
+export const WORKERY_STAFF_FILE_ARCHIVE_API_ENDPOINT = '/staff-file/XXX/';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';

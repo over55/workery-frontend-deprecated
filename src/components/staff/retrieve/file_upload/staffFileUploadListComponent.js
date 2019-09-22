@@ -31,7 +31,7 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            orderFiles,
+            staffFiles,
 
             // Everything else.
             onTableChange, isLoading
@@ -130,12 +130,12 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ orderFiles }
+                data={ staffFiles }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no orders at the moment"
+                noDataIndication="There are no staff at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -178,7 +178,7 @@ function fileFormatter(cell, row){
             }
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             {row.isArchived === false &&
-                <Link to={`/order/${row.customer}/file/archive/${row.id}`}>
+                <Link to={`/staff/${row.staff}/file/archive/${row.id}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archive
                 </Link>
             }
@@ -197,14 +197,14 @@ function createdAtFormatter(cell, row){
 }
 
 
-class OrderFileUploadListComponent extends Component {
+class StaffFileUploadListComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            orderFiles, order, id,
+            staffFiles, staff, id,
 
             // Everything else...
             flashMessage, onTableChange, isLoading
@@ -219,45 +219,35 @@ class OrderFileUploadListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
+                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{order && order.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}
                         </li>
                     </ol>
                 </nav>
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Order</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Staff</h1>
 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/order/${id}`}>
+                            <Link to={`/staff/${id}`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Summary</span>
                             </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/order/${id}/full`}>
+                            <Link to={`/staff/${id}/full`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <Link to={`/order/${id}/tasks`}>
-                                <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Tasks</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to={`/order/${id}/activity-sheets`}>
-                                <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity Sheets</span>
-                            </Link>
-                        </div>
-                        <div id="step-5" className="st-grey">
-                            <Link to={`/order/${id}/comments`}>
+                            <Link to={`/staff/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
-                        <div id="step-6" className="st-grey active">
+                        <div id="step-4" className="st-grey active">
                             <strong>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </strong>
@@ -270,7 +260,7 @@ class OrderFileUploadListComponent extends Component {
                         <section className="row text-center placeholders">
                             <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to={`/order/${id}/file/add`} className="d-block link-ndecor" title="Orders">
+                                    <Link to={`/staff/${id}/file/add`} className="d-block link-ndecor" title="Staffs">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
@@ -290,7 +280,7 @@ class OrderFileUploadListComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            orderFiles={orderFiles}
+                            staffFiles={staffFiles}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
@@ -301,4 +291,4 @@ class OrderFileUploadListComponent extends Component {
     }
 }
 
-export default OrderFileUploadListComponent;
+export default StaffFileUploadListComponent;
