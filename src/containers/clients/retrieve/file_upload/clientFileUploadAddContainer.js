@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderListComponent from "../../../../components/clients/retrieve/file_upload/clientFileUploadComponent";
+import OrderListComponent from "../../../../components/clients/retrieve/file_upload/clientFileUploadAddComponent";
 import { postClientFileUpload } from "../../../../actions/clientFileUploadActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../validators/fileValidator"
 
 
-class CustomerFileUploadContainer extends Component {
+class CustomerFileUploadAddContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -279,4 +279,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CustomerFileUploadContainer);
+)(CustomerFileUploadAddContainer);

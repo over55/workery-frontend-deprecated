@@ -18,7 +18,7 @@ import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapSingleFileUploadAndPreview } from "../../../bootstrap/bootstrapSingleFileUploadAndPreview";
 
 
-export default class ClientFileUploadComponent extends Component {
+export default class ClientFileUploadAddComponent extends Component {
     render() {
         const {
             clientFiles, flashMessage, isLoading, id, client, text, onTextChange, errors, onClick,
