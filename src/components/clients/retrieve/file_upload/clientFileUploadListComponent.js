@@ -166,9 +166,17 @@ function statusFormatter(cell, row){
 function fileFormatter(cell, row){
     return (
         <div>
-            <a href={row.fileUrl} target="_blank">
-                <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
-            </a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            {row.isArchived === false &&
+                <a href={row.fileUrl} target="_blank">
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </a>
+            }
+            {row.isArchived === true &&
+                <strong>
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </strong>
+            }
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             {row.isArchived === false &&
                 <Link to={`/client/${row.customer}/file/archive/${row.id}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archive
