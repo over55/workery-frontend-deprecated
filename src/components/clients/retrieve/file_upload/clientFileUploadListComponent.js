@@ -97,7 +97,7 @@ class RemoteListComponent extends Component {
         ];
 
         const defaultSorted = [{
-            dataField: 'lastName',
+            dataField: 'createdAt',
             order: 'asc'
         }];
 
@@ -182,9 +182,14 @@ function statusFormatter(cell, row){
 
 function fileFormatter(cell, row){
     return (
-        <a href={row.fileUrl} target="_blank">
-            <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
-        </a>
+        <div>
+            <a href={row.fileUrl} target="_blank">
+                <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+            </a>&nbsp;
+            <Link to={`/client/${row.customer}/file/archive/${row.id}`}>
+                <i className="fas fa-archive"></i>&nbsp;Archive
+            </Link>
+        </div>
     )
 }
 

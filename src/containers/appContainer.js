@@ -38,6 +38,7 @@ import ClientFullRetrieveContainer from "./clients/retrieve/clientFullRetrieveCo
 import ClientOrderListContainer from "./clients/retrieve/clientOrderListContainer";
 import ClientCommentContainer from "./clients/retrieve/clientCommentContainer";
 import CustomerFileUploadAddContainer from "./clients/retrieve/file_upload/clientFileUploadAddContainer";
+import CustomerFileUploadArchiveContainer from "./clients/retrieve/file_upload/clientFileUploadArchiveContainer";
 import CustomerFileUploadListContainer from "./clients/retrieve/file_upload/clientFileUploadListContainer";
 import ClientCreateStep1Container from "./clients/create/clientCreateStep1Container";
 import ClientCreateStep2Container from "./clients/create/clientCreateStep2Container";
@@ -301,6 +302,7 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id/orders" exact component={requiresAuth(ClientOrderListContainer)} />
                                 <Route path="/client/:id/comments" exact component={requiresAuth(ClientCommentContainer)} />
                                 <Route path="/client/:id/file/add" exact component={requiresAuth(CustomerFileUploadAddContainer)} />
+                                <Route path="/client/:id/file/archive/:fileId" exact component={requiresAuth(CustomerFileUploadArchiveContainer)} />
                                 <Route path="/client/:id/files" exact component={requiresAuth(CustomerFileUploadListContainer)} />
                                 <Route path="/client/:id/update/contact" exact component={requiresAuth(ClientContactUpdateContainer)} />
                                 <Route path="/client/:id/update/address" exact component={requiresAuth(ClientAddressUpdateContainer)} />
