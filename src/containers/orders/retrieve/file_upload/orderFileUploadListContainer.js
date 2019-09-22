@@ -9,7 +9,7 @@ import { pullOrderFileUploadList, postOrderFileUpload } from "../../../../action
 import { validateInput } from "../../../../validators/fileValidator"
 
 
-class CustomerFileUploadListContainer extends Component {
+class OrderFileUploadListContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -19,7 +19,7 @@ class CustomerFileUploadListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("customer", id);
+        parametersMap.set("order", id);
         // parametersMap.set("is_archived", 3); // 3 = TRUE | 2 = FALSE
         parametersMap.set("o", "-created_at");
         this.state = {
@@ -302,4 +302,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CustomerFileUploadListContainer);
+)(OrderFileUploadListContainer);

@@ -11,7 +11,7 @@ import { validateInput } from "../../../../validators/fileValidator"
 import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
 
 
-class CustomerFileUploadAddContainer extends Component {
+class OrderFileUploadAddContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -30,7 +30,7 @@ class CustomerFileUploadAddContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            customer: id,
+            work_order: id,
             file: null,
             id: id,
             text: "",
@@ -332,4 +332,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CustomerFileUploadAddContainer);
+)(OrderFileUploadAddContainer);

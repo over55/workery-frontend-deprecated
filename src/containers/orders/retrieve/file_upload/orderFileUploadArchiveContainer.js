@@ -8,7 +8,7 @@ import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { deleteOrderFileUpload } from "../../../../actions/orderFileUploadActions";
 
 
-class CustomerFileUploadArchiveContainer extends Component {
+class OrderFileUploadArchiveContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -19,7 +19,7 @@ class CustomerFileUploadArchiveContainer extends Component {
         const { id, fileId } = this.props.match.params;
         this.state = {
             isLoading: false,
-            customer: id,
+            order: id,
             id: id,
             fileId: fileId,
             errors: {},
@@ -134,4 +134,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CustomerFileUploadArchiveContainer);
+)(OrderFileUploadArchiveContainer);
