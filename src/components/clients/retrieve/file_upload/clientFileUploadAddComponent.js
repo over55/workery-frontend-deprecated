@@ -14,6 +14,7 @@ import Moment from 'react-moment';
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { BootstrapSingleFileUploadAndPreview } from "../../../bootstrap/bootstrapSingleFileUploadAndPreview";
@@ -22,8 +23,8 @@ import { BootstrapSingleFileUploadAndPreview } from "../../../bootstrap/bootstra
 export default class ClientFileUploadAddComponent extends Component {
     render() {
         const {
-            title, description, tags, file, isArchived,
-            flashMessage, isLoading, id, client, onTextChange, errors, onClick,
+            title, description, tags, tagOptions, isTagSetsLoading, file, isArchived,
+            flashMessage, isLoading, id, client, onTextChange, onMultiChange, errors, onClick,
             onFileDrop, onRemoveFileUploadClick
         } = this.props;
         return (
@@ -121,6 +122,18 @@ export default class ClientFileUploadAddComponent extends Component {
                                 name="file"
                                 fileObj={file}
                                 onRemoveUploadClick={onRemoveFileUploadClick}
+                            />
+
+                            <BootstrapMultipleSelect
+                                borderColour="border-success"
+                                label="Tags"
+                                name="tags"
+                                defaultOptionLabel="Please select the tag."
+                                options={tagOptions}
+                                selectedOptions={tags}
+                                error={errors.tags}
+                                onMultiChange={onMultiChange}
+                                isLoading={isTagSetsLoading}
                             />
 
                             <div className="form-group">

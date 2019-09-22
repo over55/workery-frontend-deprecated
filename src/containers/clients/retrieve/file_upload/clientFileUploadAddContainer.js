@@ -26,6 +26,7 @@ class CustomerFileUploadAddContainer extends Component {
             description: "",
             fileReader: new FileReader(), // DJANGO-REACT UPLOAD: STEP 1 OF 4.
             tags: [],
+            isTagSetsLoading: true,
             is_archived: false,
 
             // Everything else...
@@ -46,6 +47,7 @@ class CustomerFileUploadAddContainer extends Component {
         this.onRemoveFileUploadClick = this.onRemoveFileUploadClick.bind(this);
         this.handleFile = this.handleFile.bind(this); // DJANGO-REACT UPLOAD: STEP 2 OF 4.
         this.onMultiChange = this.onMultiChange.bind(this);
+        this.onTagFetchSuccessCallback = this.onTagFetchSuccessCallback.bind(this);
     }
 
     /**
@@ -55,6 +57,14 @@ class CustomerFileUploadAddContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        // (3) Tags - We need to only return our `id` values.
+        let idTags = [];
+        for (let i = 0; i < this.state.tags.length; i++) {
+            let tag = this.state.tags[i];
+            idTags.push(tag.value);
+        }
+        postData.tags = idTags;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -68,6 +78,9 @@ class CustomerFileUploadAddContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // DEVELOPERS NOTE: Fetch our skillset list.
+        this.props.pullTagList(1, 1000, new Map(), this.onTagFetchSuccessCallback);
     }
 
     componentWillUnmount() {
@@ -128,6 +141,11 @@ class CustomerFileUploadAddContainer extends Component {
         console.log("onFailurePostCallback |", errors);
         this.setState({ isLoading: false, errors: errors, });
     }
+
+    onTagFetchSuccessCallback(response) {
+        this.setState({ isTagSetsLoading: false, });
+    }
+
 
     /**
      *  Event handling functions
@@ -252,15 +270,17 @@ class CustomerFileUploadAddContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, title, description, tags, is_archived, errors, file } = this.state;
+        const { isLoading, id, title, description, tags, isTagSetsLoading, is_archived, errors, file } = this.state;
         const client = this.props.clientDetail ? this.props.clientDetail : {};
         const clientFiles = this.props.clientFileList ? this.props.clientFileList.results : [];
+        const tagOptions = getTagReactSelectOptions(this.props.tagList);
         return (
             <OrderListComponent
                 id={id}
                 title={title}
                 description={description}
                 tags={tags}
+                tagOptions={tagOptions}
                 is_archived={is_archived}
                 client={client}
                 clientFiles={clientFiles}
@@ -273,6 +293,7 @@ class CustomerFileUploadAddContainer extends Component {
                 onFileDrop={this.onFileDrop}
                 onRemoveFileUploadClick={this.onRemoveFileUploadClick}
                 onMultiChange={this.onMultiChange}
+                isTagSetsLoading={isTagSetsLoading}
             />
         );
     }
@@ -281,6 +302,7 @@ class CustomerFileUploadAddContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        tagList: store.tagListState,
         flashMessage: store.flashMessageState,
         clientFileList: store.clientFileListState,
         clientDetail: store.clientDetailState,
@@ -297,6 +319,11 @@ const mapDispatchToProps = dispatch => {
         },
         postClientFileUpload: (postData, successCallback, failedCallback) => {
             dispatch(postClientFileUpload(postData, successCallback, failedCallback))
+        },
+        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
         },
     }
 }

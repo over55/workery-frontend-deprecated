@@ -13,9 +13,9 @@ export function validateInput(data) {
     if (data.title === undefined || data.title === null || data.title === "") {
         errors.title = 'This field is required';
     }
-    if (data.description === undefined || data.description === null || data.description === "") {
-        errors.description = 'This field is required';
-    }
+    // if (data.description === undefined || data.description === null || data.description === "") {
+    //     errors.description = 'This field is required';
+    // }
     if (data.file === undefined || data.file === null || data.file === "") {
         errors.file = 'This field is required';
     }
