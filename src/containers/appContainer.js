@@ -243,6 +243,9 @@ import PartnerSearchResultContainer from "./partners/search/partnerSearchResultC
 import PartnerLiteRetrieveContainer from "./partners/retrieve/partnerLiteRetrieveContainer";
 import PartnerFullRetrieveContainer from "./partners/retrieve/partnerFullRetrieveContainer";
 import PartnerCommentContainer from "./partners/retrieve/partnerCommentContainer";
+import PartnerFileUploadAddContainer from "./partners/retrieve/file_upload/partnerFileUploadAddContainer";
+import PartnerFileUploadArchiveContainer from "./partners/retrieve/file_upload/partnerFileUploadArchiveContainer";
+import PartnerFileUploadListContainer from "./partners/retrieve/file_upload/partnerFileUploadListContainer";
 import PartnerCreateStep1Container from "./partners/create/partnerCreateStep1Container";
 import PartnerCreateStep2Container from "./partners/create/partnerCreateStep2Container";
 import PartnerCreateStep3Container from "./partners/create/partnerCreateStep3Container";
@@ -506,6 +509,9 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id" exact component={requiresAuth(PartnerLiteRetrieveContainer)} />
                                 <Route path="/partner/:id/full" exact component={requiresAuth(PartnerFullRetrieveContainer)} />
                                 <Route path="/partner/:id/comments" exact component={requiresAuth(PartnerCommentContainer)} />
+                                <Route path="/partner/:id/file/add" exact component={requiresAuth(PartnerFileUploadAddContainer)} />
+                                <Route path="/partner/:id/file/archive/:fileId" exact component={requiresAuth(PartnerFileUploadArchiveContainer)} />
+                                <Route path="/partner/:id/files" exact component={requiresAuth(PartnerFileUploadListContainer)} />
                                 <Route path="/partner/:id/update/contact" exact component={requiresAuth(PartnerContactUpdateContainer)} />
                                 <Route path="/partner/:id/update/address" exact component={requiresAuth(PartnerAddressUpdateContainer)} />
                                 <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
