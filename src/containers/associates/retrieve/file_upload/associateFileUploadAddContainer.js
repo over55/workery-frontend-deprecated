@@ -30,7 +30,7 @@ class CustomerFileUploadAddContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            customer: id,
+            associate: id,
             file: null,
             id: id,
             text: "",
