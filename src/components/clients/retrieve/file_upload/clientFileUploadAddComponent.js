@@ -46,7 +46,7 @@ export default class ClientFileUploadAddComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
 
                 {client.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
@@ -87,7 +87,7 @@ export default class ClientFileUploadAddComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Create New Resource</h1>
+                            <h1>Upload a File</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />

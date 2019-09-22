@@ -19,7 +19,7 @@ class CustomerFileUploadListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("about", id);
+        parametersMap.set("customer", id);
         parametersMap.set("o", "-created_at");
         this.state = {
             // Pagination

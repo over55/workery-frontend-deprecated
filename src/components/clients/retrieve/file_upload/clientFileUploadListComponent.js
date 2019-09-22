@@ -196,7 +196,7 @@ class ClientFileUploadListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            clientFiles,
+            clientFiles, client, id,
 
             // Everything else...
             flashMessage, onTableChange, isLoading
@@ -210,36 +210,59 @@ class ClientFileUploadListComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
+                        <li className="breadcrumb-item" aria-current="page">
+                            <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
+                        </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user-circle"></i>&nbsp;Clients
+                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
                         </li>
                     </ol>
                 </nav>
-
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user-circle"></i>&nbsp;Clients</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
+
+                <div className="row">
+                    <div className="step-navigation">
+                        <div id="step-1" className="st-grey">
+                            <Link to={`/client/${id}`}>
+                                <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Summary</span>
+                            </Link>
+                        </div>
+                        <div id="step-2" className="st-grey">
+                            <Link to={`/client/${id}/full`}>
+                                <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
+                            </Link>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/client/${id}/orders`}>
+                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/client/${id}/comments`}>
+                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
+                            </Link>
+                        </div>
+                        <div id="step-5" className="st-grey active">
+                            <strong>
+                                <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
 
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
-                            <div className="col-sm-6 placeholder">
+                            <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/clients/add/step-1" className="d-block link-ndecor" title="Clients">
+                                    <Link to={`/client/${id}/file/add`} className="d-block link-ndecor" title="Clients">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
-                                <h4>Add</h4>
-                                <div className="text-muted">Add Clients</div>
-                            </div>
-                            <div className="col-sm-6 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
-                                    <Link to="/clients/search" className="d-block link-ndecor" title="Search">
-                                        <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Search</h4>
-                                <span className="text-muted">Search Clients</span>
+                                <h4>Upload</h4>
+                                <div className="text-muted">Upload a file</div>
                             </div>
                         </section>
                     </div>

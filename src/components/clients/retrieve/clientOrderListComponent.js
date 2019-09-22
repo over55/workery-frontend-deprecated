@@ -239,7 +239,7 @@ export default class ClientOrderListComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;Orders</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
 
                 {client.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
