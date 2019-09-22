@@ -59,6 +59,11 @@ export default class AssociateLiteRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/associate/${id}/files`}>
+                                <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 

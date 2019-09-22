@@ -64,6 +64,9 @@ import AssociateFullRetrieveContainer from "./associates/retrieve/associateFullR
 import AssociateOrderListContainer from "./associates/retrieve/associateOrderListContainer";
 import AssociateActivitySheetListContainer from "./associates/retrieve/associateActivitySheetListContainer";
 import AssociateCommentContainer from "./associates/retrieve/associateCommentContainer";
+import AssociateFileUploadAddContainer from "./associates/retrieve/file_upload/associateFileUploadAddContainer";
+import AssociateFileUploadArchiveContainer from "./associates/retrieve/file_upload/associateFileUploadArchiveContainer";
+import AssociateFileUploadListContainer from "./associates/retrieve/file_upload/associateFileUploadListContainer";
 import AssociateCreateStep1Container from "./associates/create/associateCreateStep1Container";
 import AssociateCreateStep2Container from "./associates/create/associateCreateStep2Container";
 import AssociateCreateStep3Container from "./associates/create/associateCreateStep3Container";
@@ -328,6 +331,9 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
                                 <Route path="/associate/:id/orders" exact component={requiresAuth(AssociateOrderListContainer)} />
                                 <Route path="/associate/:id/comments" exact component={requiresAuth(AssociateCommentContainer)} />
+                                <Route path="/associate/:id/file/add" exact component={requiresAuth(AssociateFileUploadAddContainer)} />
+                                <Route path="/associate/:id/file/archive/:fileId" exact component={requiresAuth(AssociateFileUploadArchiveContainer)} />
+                                <Route path="/associate/:id/files" exact component={requiresAuth(AssociateFileUploadListContainer)} />
                                 <Route path="/associate/:id/activity-sheets" exact component={requiresAuth(AssociateActivitySheetListContainer)} />
                                 <Route path="/associate/:id/update/account" exact component={requiresAuth(AssociateAccountUpdateContainer)} />
                                 <Route path="/associate/:id/update/address" exact component={requiresAuth(AssociateAddressUpdateContainer)} />

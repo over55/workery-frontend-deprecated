@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
-import Moment from 'react-moment';
-// import 'moment-timezone';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
@@ -10,9 +8,15 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { FlashMessageComponent } from "../../../flashMessageComponent";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+} from '../../../../constants/api';
 
 
 const customTotal = (from, to, size) => (
@@ -27,72 +31,72 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            orders,
+            associateFiles,
 
             // Everything else.
             onTableChange, isLoading
         } = this.props;
 
         const selectOptions = {
-            "new": 'New',
-            "declined": 'Declined',
-            "pending": 'Pending',
-            "cancelled": 'Cancelled',
-            "ongoing": 'Ongoing',
-            "in_progress": 'In-progress',
-            "completed_and_unpaid": 'Completed and Unpaid',
-            "completed_and_paid": 'Completed and Paid',
-            "archived": 'Archived',
+            3: 'Active',
+            2: 'Archived',
         };
 
-        const columns = [{
-            dataField: 'typeOf',
-            text: '',
-            sort: false,
-            formatter: iconFormatter
-        },{
-            dataField: 'id',
-            text: 'Job #',
-            sort: true,
-            formatter: idFormatter,
-        },{
-            dataField: 'associateName',
-            text: 'Associate',
-            sort: true,
-            formatter: associateNameFormatter,
-        },{
-            dataField: 'assignmentDate',
-            text: 'Assign Date',
-            sort: true,
-            formatter: assignmentDateFormatter,
-        },{
-            dataField: 'startDate',
-            text: 'Start Date',
-            sort: true,
-            formatter: startDateFormatter,
-        },{
-            dataField: 'completionDate',
-            text: 'Completion Date',
-            sort: true,
-            formatter: completionDateFormatter,
-        },{
-            dataField: 'state',
+        const columns = [
+        {
+            dataField: 'is_archived',
             text: 'Status',
             sort: false,
             filter: selectFilter({
-                options: selectOptions
+                options: selectOptions,
+                defaultValue: 3,
+                withoutEmptyOption: true
             }),
             formatter: statusFormatter
-        },{
-            dataField: 'slug',
-            text: 'Details',
+        },
+        {
+            dataField: 'title',
+            text: 'Title',
+            sort: false
+        },
+        {
+            dataField: 'description',
+            text: 'Description',
+            sort: false
+        },
+        {
+            dataField: 'createdAt',
+            text: 'Created At',
+            sort: true,
+            formatter: createdAtFormatter
+        },
+        {
+            dataField: 'fileUrl',
+            text: 'File',
             sort: false,
-            formatter: detailLinkFormatter
-        }];
+            formatter: fileFormatter
+        },
+        // {
+        //     dataField: 'email',
+        //     text: 'Email',
+        //     sort: true,
+        //     formatter: emailFormatter,
+        // },{
+        //     dataField: 'slug',
+        //     text: 'Financials',
+        //     sort: false,
+        //     formatter: financialExternalLinkFormatter
+        // },{
+        //     dataField: 'id',
+        //     text: 'Details',
+        //     sort: false,
+        //     formatter: detailLinkFormatter
+        // }
+        ];
 
         const defaultSorted = [{
-            dataField: 'id',
-            order: 'desc'
+            dataField: 'createdAt',
+            order: 'asc'
         }];
 
         const paginationOption = {
@@ -126,12 +130,12 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ orders }
+                data={ associateFiles }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no orders at the moment"
+                noDataIndication="There are no associates at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -144,85 +148,67 @@ class RemoteListComponent extends Component {
 }
 
 
-function iconFormatter(cell, row){
-    const icons = [];
-    if (row.typeOf === 2) {
-        icons.push(<i className="fas fa-building"></i>)
-    }
-    else if (row.typeOf === 1) {
-        icons.push(<i className="fas fa-home"></i>)
-    }
-    else {
-        icons.push(<i className="fas fa-question"></i>)
-    }
-    if (row.isOngoing) {
-        icons.push(" ");
-        icons.push(<i className="fas fa-redo-alt"></i>)
-    }
-    return <div>{icons}</div>;
-}
-
-
-function idFormatter(cell, row){
-    return (
-        row.id && row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
-    );
-}
-
-
-function associateNameFormatter(cell, row){
-    if (row.associateName === null || row.associateName === undefined || row.associateName === "None") { return "-"; }
-    return (
-        <Link to={`/associate/${row.associate}`} target="_blank">
-            {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
-        </Link>
-    )
-}
-
-
-function startDateFormatter(cell, row){
-    return row.startDate ? <Moment format="MM/DD/YYYY">{row.startDate}</Moment> : "-";
-}
-
-
-function assignmentDateFormatter(cell, row){
-    return row.assignmentDate ? <Moment format="MM/DD/YYYY">{row.assignmentDate}</Moment> : "-";
-}
-
-
-function completionDateFormatter(cell, row){
-    return row.completionDate ? <Moment format="MM/DD/YYYY">{row.completionDate}</Moment> : "-";
-}
-
-
 function statusFormatter(cell, row){
-    return row.prettyState;
+    switch(row.isArchived) {
+        case false:
+            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
+            break;
+        case true:
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
+            break;
+        default:
+            return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
+            break;
+    }
 }
 
 
-function detailLinkFormatter(cell, row){
+function fileFormatter(cell, row){
     return (
-        <Link to={`/order/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
-        </Link>
+        <div>
+            {row.isArchived === false &&
+                <a href={row.fileUrl} target="_blank">
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </a>
+            }
+            {row.isArchived === true &&
+                <strong>
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </strong>
+            }
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            {row.isArchived === false &&
+                <Link to={`/associate/${row.customer}/file/archive/${row.id}`}>
+                    <i className="fas fa-archive"></i>&nbsp;Archive
+                </Link>
+            }
+            {row.isArchived === true &&
+                <strong>
+                    <i className="fas fa-archive"></i>&nbsp;Archived
+                </strong>
+            }
+        </div>
     )
 }
 
 
-export default class AssociateOrderListComponent extends Component {
+function createdAtFormatter(cell, row){
+    return <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>
+}
+
+
+class AssociateFileUploadListComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            orderList,
+            associateFiles, associate, id,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id, associate
+            flashMessage, onTableChange, isLoading
         } = this.props;
-
-        const orders = orderList.results ? orderList.results : [];
 
         return (
             <div>
@@ -233,14 +219,13 @@ export default class AssociateOrderListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/associates"><i className="fas fa-crown"></i>&nbsp;Associates</Link>
+                            <Link to="/associates"><i className="fas fa-user-circle"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}
                         </li>
                     </ol>
                 </nav>
-
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-user"></i>&nbsp;View Associate</h1>
@@ -262,21 +247,37 @@ export default class AssociateOrderListComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey active">
-                            <strong>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/associate/${id}/orders`}>
                                 <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
-                            </strong>
+                            </Link>
                         </div>
                         <div id="step-5" className="st-grey">
                             <Link to={`/associate/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
-                        <div id="step-6" className="st-grey">
-                            <Link to={`/associate/${id}/files`}>
+                        <div id="step-6" className="st-grey active">
+                            <strong>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
-                            </Link>
+                            </strong>
                         </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <section className="row text-center placeholders">
+                            <div className="col-sm-12 placeholder">
+                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
+                                    <Link to={`/associate/${id}/file/add`} className="d-block link-ndecor" title="Associates">
+                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
+                                    </Link>
+                                </div>
+                                <h4>Upload</h4>
+                                <div className="text-muted">Upload a file</div>
+                            </div>
+                        </section>
                     </div>
                 </div>
 
@@ -289,7 +290,7 @@ export default class AssociateOrderListComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            orders={orders}
+                            associateFiles={associateFiles}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
@@ -299,3 +300,5 @@ export default class AssociateOrderListComponent extends Component {
         );
     }
 }
+
+export default AssociateFileUploadListComponent;
