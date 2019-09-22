@@ -19,8 +19,8 @@ class CustomerFileUploadContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         this.state = {
-            // Overaly
             isLoading: false,
+            fileReader: new FileReader(), // DJANGO-REACT UPLOAD: STEP 1 OF 4.
 
             // Everything else...
             customer: id,
@@ -38,6 +38,7 @@ class CustomerFileUploadContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onFileDrop = this.onFileDrop.bind(this);
         this.onRemoveFileUploadClick = this.onRemoveFileUploadClick.bind(this);
+        this.handleFile = this.handleFile.bind(this); // DJANGO-REACT UPLOAD: STEP 2 OF 4.
     }
 
     /**
@@ -131,6 +132,31 @@ class CustomerFileUploadContainer extends Component {
         });
     }
 
+    handleFile(e) { // DJANGO-REACT UPLOAD: STEP 3 OF 4.
+        const content = this.state.fileReader.result;
+        this.setState({
+            errors: {},
+            isLoading: true,
+            upload_content: content,
+            upload_filename: this.state.file.name,
+            // upload_filename: this.state.fileReader
+        }, ()=>{
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+
+            // Once our state has been validated `client-side` then we will
+            // make an API request with the server to create our new production.
+            this.props.postClientFileUpload(
+                this.getPostData(),
+                this.onSuccessPostCallback,
+                this.onFailurePostCallback
+            );
+        });
+    }
+
     onClick(e) {
         e.preventDefault();
 
@@ -138,24 +164,20 @@ class CustomerFileUploadContainer extends Component {
         // console.log(errors, isValid); // For debugging purposes only.
 
         if (isValid) {
+            // DJANGO-REACT UPLOAD: STEP 4 OF 4.
+            // DEVELOPERS NOTE:
+            // (1) http://jsbin.com/piqiqecuxo/1/edit?js,console,output
+            // (2) https://stackoverflow.com/questions/51272255/how-to-use-filereader-in-react
+            var fileReader = new FileReader();
+            fileReader.readAsDataURL(this.state.file);
+            fileReader.onload = this.handleFile;
+            fileReader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
             this.setState({
-                errors: {},
-                isLoading: true,
-            }, ()=>{
-                // The following code will cause the screen to scroll to the top of
-                // the page. Please see ``react-scroll`` for more information:
-                // https://github.com/fisshy/react-scroll
-                var scroll = Scroll.animateScroll;
-                scroll.scrollToTop();
-
-                // Once our state has been validated `client-side` then we will
-                // make an API request with the server to create our new production.
-                this.props.postClientFileUpload(
-                    this.getPostData(),
-                    this.onSuccessPostCallback,
-                    this.onFailurePostCallback
-                );
+                fileReader: fileReader,
             });
+
         } else {
             this.setState({
                 errors: errors,
