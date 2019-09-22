@@ -11,8 +11,12 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { FlashMessageComponent } from "../../../flashMessageComponent";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+} from '../../../../constants/api';
 
 
 const customTotal = (from, to, size) => (
@@ -27,35 +31,72 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            activitySheetItems,
+            orderFiles,
 
             // Everything else.
             onTableChange, isLoading
         } = this.props;
 
-        const columns = [{
-            dataField: 'job',
-            text: 'Job #',
+        const selectOptions = {
+            3: 'Active',
+            2: 'Archived',
+        };
+
+        const columns = [
+        {
+            dataField: 'is_archived',
+            text: 'Status',
             sort: false,
-            formatter: jobFormatter,
-        },{
-            dataField: 'state',
-            text: 'Has Accepted?',
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 3,
+                withoutEmptyOption: true
+            }),
+            formatter: statusFormatter
+        },
+        {
+            dataField: 'title',
+            text: 'Title',
             sort: false
-        },{
+        },
+        {
+            dataField: 'description',
+            text: 'Description',
+            sort: false
+        },
+        {
             dataField: 'createdAt',
             text: 'Created At',
+            sort: true,
+            formatter: createdAtFormatter
+        },
+        {
+            dataField: 'fileUrl',
+            text: 'File',
             sort: false,
-            formatter: createdAtFormatter,
-        },{
-            dataField: 'comment',
-            text: 'Reason',
-            sort: false
-        }];
+            formatter: fileFormatter
+        },
+        // {
+        //     dataField: 'email',
+        //     text: 'Email',
+        //     sort: true,
+        //     formatter: emailFormatter,
+        // },{
+        //     dataField: 'slug',
+        //     text: 'Financials',
+        //     sort: false,
+        //     formatter: financialExternalLinkFormatter
+        // },{
+        //     dataField: 'id',
+        //     text: 'Details',
+        //     sort: false,
+        //     formatter: detailLinkFormatter
+        // }
+        ];
 
         const defaultSorted = [{
-            dataField: 'id',
-            order: 'desc'
+            dataField: 'createdAt',
+            order: 'asc'
         }];
 
         const paginationOption = {
@@ -89,12 +130,12 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ activitySheetItems }
+                data={ orderFiles }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no activity sheets at the moment"
+                noDataIndication="There are no orders at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -107,62 +148,68 @@ class RemoteListComponent extends Component {
 }
 
 
-function jobFormatter(cell, row){
-    if (row.job === null || row.job === undefined || row.job === "None") { return "-"; }
-    return (
-        <Link to={`/order/${row.job}`} target="_blank">
-            {row.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
-        </Link>
-    )
-}
-
-
-function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case 2:
-            return <i className="fas fa-building"></i>;
+function statusFormatter(cell, row){
+    switch(row.isArchived) {
+        case false:
+            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
-        case 1:
-            return <i className="fas fa-home"></i>;
+        case true:
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
-            return <i className="fas fa-question"></i>;
+            return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
             break;
     }
 }
 
 
-function orderNameFormatter(cell, row){
-    if (row.orderName === null || row.orderName === undefined || row.orderName === "None") { return "-"; }
+function fileFormatter(cell, row){
     return (
-        <Link to={`/order/${row.order}`} target="_blank">
-            {row.orderName}&nbsp;<i className="fas fa-external-link-alt"></i>
-        </Link>
+        <div>
+            {row.isArchived === false &&
+                <a href={row.fileUrl} target="_blank">
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </a>
+            }
+            {row.isArchived === true &&
+                <strong>
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </strong>
+            }
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            {row.isArchived === false &&
+                <Link to={`/order/${row.customer}/file/archive/${row.id}`}>
+                    <i className="fas fa-archive"></i>&nbsp;Archive
+                </Link>
+            }
+            {row.isArchived === true &&
+                <strong>
+                    <i className="fas fa-archive"></i>&nbsp;Archived
+                </strong>
+            }
+        </div>
     )
 }
 
 
-function statusFormatter(cell, row){
-    return row.prettyState;
-}
-
 function createdAtFormatter(cell, row){
-    return <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>;
+    return <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>
 }
 
 
-export default class OrderActivitySheetListComponent extends Component {
+class OrderFileUploadListComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            activitySheetItems,
+            orderFiles, order, id,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id, order
+            flashMessage, onTableChange, isLoading
         } = this.props;
+
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -172,17 +219,16 @@ export default class OrderActivitySheetListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
+                            <Link to="/orders"><i className="fas fa-user-circle"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Order # {order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-user"></i>&nbsp;{order && order.fullName}
                         </li>
                     </ol>
                 </nav>
-
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;View Order</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -201,21 +247,37 @@ export default class OrderActivitySheetListComponent extends Component {
                                 <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Tasks</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey active">
-                            <strong>
-                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
-                            </strong>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/order/${id}/activity-sheets`}>
+                                <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity Sheets</span>
+                            </Link>
                         </div>
                         <div id="step-5" className="st-grey">
                             <Link to={`/order/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
-                        <div id="step-6" className="st-grey">
-                            <Link to={`/order/${id}/files`}>
+                        <div id="step-6" className="st-grey active">
+                            <strong>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
-                            </Link>
+                            </strong>
                         </div>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <section className="row text-center placeholders">
+                            <div className="col-sm-12 placeholder">
+                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
+                                    <Link to={`/order/${id}/file/add`} className="d-block link-ndecor" title="Orders">
+                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
+                                    </Link>
+                                </div>
+                                <h4>Upload</h4>
+                                <div className="text-muted">Upload a file</div>
+                            </div>
+                        </section>
                     </div>
                 </div>
 
@@ -228,7 +290,7 @@ export default class OrderActivitySheetListComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            activitySheetItems={activitySheetItems}
+                            orderFiles={orderFiles}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
@@ -238,3 +300,5 @@ export default class OrderActivitySheetListComponent extends Component {
         );
     }
 }
+
+export default OrderFileUploadListComponent;

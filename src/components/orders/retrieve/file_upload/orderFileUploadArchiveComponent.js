@@ -11,16 +11,14 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { FlashMessageComponent } from "../../flashMessageComponent";
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
-export default class OrderCommentComponent extends Component {
+export default class OrderFileUploadArchiveComponent extends Component {
     render() {
         const {
-            orderComments, flashMessage, isLoading, id, associate, text, onTextChange, errors, onClick
+            isLoading, id, order, errors, onClick
         } = this.props;
         return (
             <div>
@@ -31,17 +29,21 @@ export default class OrderCommentComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/orders`}><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
+                            <Link to="/orders"><i className="fas fa-user-circle"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Order # {id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-user"></i>&nbsp;{order && order.fullName}
                         </li>
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
+                <h1><i className="fas fa-user"></i>&nbsp;View Order</h1>
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
+                {order.state === 'inactive' &&
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This order is archived and is read-only.
+                    </div>
+                }
 
                 <div className="row">
                     <div className="step-navigation">
@@ -65,70 +67,44 @@ export default class OrderCommentComponent extends Component {
                                 <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity Sheets</span>
                             </Link>
                         </div>
-                        <div id="step-5" className="st-grey active">
-                            <strong>
+                        <div id="step-5" className="st-grey">
+                            <Link to={`/order/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
-                            </strong>
-                        </div>
-                        <div id="step-6" className="st-grey">
-                            <Link to={`/order/${id}/files`}>
-                                <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
+                        </div>
+                        <div id="step-6" className="st-grey active">
+                            <strong>
+                                <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
+                            </strong>
                         </div>
                     </div>
                 </div>
 
-
-
-
-                <div className="row align-items-start">
-                    <h1>Comments/Notes</h1>
-                    <div className="col-lg-12">
-                        {orderComments && orderComments.map(
-                            (comment) => <CommentComponent comment={comment} id={comment.id} />
-                        )}
-                        <hr className="my-4" />
+                <div className="row">
+                    <div className="col-md-5 mx-auto mt-2">
                         <form>
+                            <h1><i className="fas fa-archive"></i>&nbsp;Archive File</h1>
+
                             <BootstrapErrorsProcessingAlert errors={errors} />
-                            <BootstrapTextarea
-                                name="text"
-                                borderColour="border-success"
-                                label="Additional Comments"
-                                placeholder="Write any additional text here."
-                                rows="5"
-                                value={text}
-                                helpText="This is the comment of the organization."
-                                onChange={onTextChange}
-                                error={errors.text}
-                            />
-                            <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onClick}>
-                                <i className="fas fa-check-circle"></i>&nbsp;Save
-                            </button>
+
+                            <div className="jumbotron">
+                                <h1 className="display-4"><i className="fas fa-question-circle"></i>&nbsp;Are you sure?</h1>
+                                <p className="lead">You are about to archive the file, this file will no longer be available to the staff and the order.</p>
+                            </div>
+
+                            <div className="form-group">
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
+                                </button>
+                                <Link to={`/order/${id}/files`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <i className="fas fa-arrow-circle-left"></i> Back
+                                </Link>
+                            </div>
+
                         </form>
                     </div>
                 </div>
 
-            </div>
-        );
-    }
-}
-
-
-class CommentComponent extends Component {
-    render() {
-        const { comment } = this.props;
-        return (
-            <div className="media mt-4">
-                <img className="mr-3 img-head" src="/img/placeholder.png" alt="" />
-                <div className="media-body">
-                    <div className="row">
-                        <h5 className="mt-0 col-sm-10"><strong>{comment.createdBy}</strong></h5>
-                        <h6 className="col-sm-2 text-secondary text-right">
-                            <Moment format="MM/DD/YYYY hh:mm:ss a">{comment.createdAt}</Moment>
-                        </h6>
-                    </div>
-                    <p>{ comment.text }</p>
-                </div>
             </div>
         );
     }

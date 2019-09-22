@@ -89,6 +89,9 @@ import OrderFullRetrieveContainer from "./orders/retrieve/orderFullRetrieveConta
 import OrderTaskListContainer from "./orders/retrieve/orderTaskListContainer";
 import OrderActivitySheetListContainer from "./orders/retrieve/orderActivitySheetListContainer";
 import OrderCommentContainer from "./orders/retrieve/orderCommentContainer";
+import OrderFileUploadAddContainer from "./orders/retrieve/file_upload/orderFileUploadAddContainer";
+import OrderFileUploadArchiveContainer from "./orders/retrieve/file_upload/orderFileUploadArchiveContainer";
+import OrderFileUploadListContainer from "./orders/retrieve/file_upload/orderFileUploadListContainer";
 import OrderUnassignAssociateOperationContainer from "./orders/operations/orderUnassignAssociateOperationContainer";
 import OrderPostponeOperationContainer from "./orders/operations/orderPostponeOperationContainer";
 import OrderCloseOperationContainer from "./orders/operations/orderCloseOperationContainer";
@@ -355,6 +358,9 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:id/tasks" exact component={requiresAuth(OrderTaskListContainer)} />
                                 <Route path="/order/:id/activity-sheets" exact component={requiresAuth(OrderActivitySheetListContainer)} />
                                 <Route path="/order/:id/comments" exact component={requiresAuth(OrderCommentContainer)} />
+                                <Route path="/order/:id/file/add" exact component={requiresAuth(OrderFileUploadAddContainer)} />
+                                <Route path="/order/:id/file/archive/:fileId" exact component={requiresAuth(OrderFileUploadArchiveContainer)} />
+                                <Route path="/order/:id/files" exact component={requiresAuth(OrderFileUploadListContainer)} />
                                 <Route path="/order/:id/postpone" exact component={requiresAuth(OrderPostponeOperationContainer)} />
                                 <Route path="/order/:id/unassign-associate" exact component={requiresAuth(OrderUnassignAssociateOperationContainer)} />
                                 <Route path="/order/:id/close" exact component={requiresAuth(OrderCloseOperationContainer)} />
