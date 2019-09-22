@@ -8,6 +8,7 @@ import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { postClientFileUpload } from "../../../../actions/clientFileUploadActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../validators/fileValidator"
+import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
 
 
 class CustomerFileUploadAddContainer extends Component {
@@ -44,6 +45,7 @@ class CustomerFileUploadAddContainer extends Component {
         this.onFileDrop = this.onFileDrop.bind(this);
         this.onRemoveFileUploadClick = this.onRemoveFileUploadClick.bind(this);
         this.handleFile = this.handleFile.bind(this); // DJANGO-REACT UPLOAD: STEP 2 OF 4.
+        this.onMultiChange = this.onMultiChange.bind(this);
     }
 
     /**
@@ -136,6 +138,16 @@ class CustomerFileUploadAddContainer extends Component {
         e.preventDefault();
         this.setState({
             [e.target.name]: e.target.value,
+        });
+    }
+
+    onMultiChange(...args) {
+        // Extract the select options from the parameter.
+        const selectedOptions = args[0];
+
+        // Set all the tags we have selected to the STORE.
+        this.setState({
+            tags: selectedOptions,
         });
     }
 
@@ -260,6 +272,7 @@ class CustomerFileUploadAddContainer extends Component {
                 file={file}
                 onFileDrop={this.onFileDrop}
                 onRemoveFileUploadClick={this.onRemoveFileUploadClick}
+                onMultiChange={this.onMultiChange}
             />
         );
     }
