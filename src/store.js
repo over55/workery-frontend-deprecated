@@ -6,7 +6,7 @@ import { APP_STATE } from "./constants/redux";
 import {
     LOGIN_SUCCESS, LOGOUT_SUCCESS, DASHBOARD_SUCCESS, NAVIGATION_SUCCESS, PROFILE_SUCCESS,
     TENANT_LIST_SUCCESS,
-    CLIENT_LIST_SUCCESS, CLIENT_DETAIL_SUCCESS, CLIENT_COMMENT_LIST_REQUEST, ARCHIVED_CLIENT_LIST_SUCCESS,
+    CLIENT_LIST_SUCCESS, CLIENT_DETAIL_SUCCESS, CLIENT_COMMENT_LIST_REQUEST, ARCHIVED_CLIENT_LIST_SUCCESS, CLIENT_FILE_LIST_SUCCESS,
     ORDER_LIST_SUCCESS, ORDER_DETAIL_SUCCESS,
     ASSOCIATE_LIST_SUCCESS, ASSOCIATE_DETAIL_SUCCESS,
     TASK_LIST_SUCCESS, TASK_DETAIL_SUCCESS,
@@ -28,6 +28,7 @@ import { awayLogListReducer, awayLogDetailReducer } from "./reducers/awayLogRedu
 import { bulletinBoardItemListReducer, bulletinBoardItemDetailReducer } from "./reducers/bulletinBoardItemReducers";
 import { clientListReducer, clientDetailReducer } from "./reducers/clientReducers";
 import { clientCommentListReducer } from "./reducers/clientCommentReducers";
+import { clientFileListReducer } from "./reducers/clientFileUploadReducers";
 import { commentListReducer } from "./reducers/commentReducers";
 import dashboardReducer from "./reducers/dashboardReducer";
 import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
@@ -63,6 +64,7 @@ const appReducer = combineReducers({
     clientListState: clientListReducer, clientDetailState: clientDetailReducer,
     clientCommentListState: clientCommentListReducer,
     commentListState: commentListReducer,
+    clientFileListState: clientFileListReducer,
     dashboardState: dashboardReducer,
     deactivatedClientListState: deactivatedClientListReducer,
     flashMessageState: flashMessageReducer,
@@ -127,6 +129,7 @@ const localStorageMiddleware = ({ getState }) => {
             STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
             PARTNER_LIST_SUCCESS, PARTNER_COMMENT_LIST_SUCCESS, PARTNER_DETAIL_SUCCESS,
             ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
+            CLIENT_FILE_LIST_SUCCESS
         ].includes(result.type)) {
             // console.log("De-hydrating store...");
             localStorage.setItem(APP_STATE, JSON.stringify(getState()))

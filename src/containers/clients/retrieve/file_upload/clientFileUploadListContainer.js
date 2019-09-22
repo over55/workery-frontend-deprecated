@@ -205,13 +205,13 @@ class CustomerFileUploadListContainer extends Component {
     render() {
         const { isLoading, id, text, errors } = this.state;
         const client = this.props.clientDetail ? this.props.clientDetail : {};
-        const clientFiles = this.props.clientFileList ? this.props.clientFileList.results : [];
+        const clientFileList = this.props.clientFileList && this.props.clientFileList.results ? this.props.clientFileList.results : [];
         return (
             <OrderListComponent
                 id={id}
                 text={text}
                 client={client}
-                clientFiles={clientFiles}
+                clientFiles={clientFileList}
                 flashMessage={this.props.flashMessage}
                 onTextChange={this.onTextChange}
                 isLoading={isLoading}
