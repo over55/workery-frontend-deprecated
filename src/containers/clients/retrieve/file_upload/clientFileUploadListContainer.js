@@ -20,7 +20,7 @@ class CustomerFileUploadListContainer extends Component {
         const { id } = this.props.match.params;
         const parametersMap = new Map();
         parametersMap.set("customer", id);
-        parametersMap.set("is_archived", 3); // 3 = TRUE | 2 = FALSE
+        // parametersMap.set("is_archived", 3); // 3 = TRUE | 2 = FALSE
         parametersMap.set("o", "-created_at");
         this.state = {
             // Pagination
@@ -40,12 +40,12 @@ class CustomerFileUploadListContainer extends Component {
             errors: {},
         }
         this.getPostData = this.getPostData.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
         this.onSuccessListCallback = this.onSuccessListCallback.bind(this);
         this.onFailureListCallback = this.onFailureListCallback.bind(this);
         this.onSuccessPostCallback = this.onSuccessPostCallback.bind(this);
         this.onFailurePostCallback = this.onFailurePostCallback.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onTableChange = this.onTableChange.bind(this);
     }
 
     /**
@@ -152,13 +152,6 @@ class CustomerFileUploadListContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        e.preventDefault();
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-    }
-
     onClick(e) {
         e.preventDefault();
 
@@ -199,6 +192,64 @@ class CustomerFileUploadListContainer extends Component {
     }
 
     /**
+     *  Function takes the user interactions made with the table and perform
+     *  remote API calls to update the table based on user selection.
+     */
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        if (type === "sort") {
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
+
+            if (sortOrder === "asc") {
+                parametersMap.set('o', decamelize(sortField));
+            }
+            if (sortOrder === "desc") {
+                parametersMap.set('o', "-"+decamelize(sortField));
+            }
+
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullClientFileUploadList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                }
+            );
+
+        } else if (type === "pagination") {
+            console.log(type, page, sizePerPage); // For debugging purposes only.
+
+            this.setState(
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                ()=>{
+                    this.props.pullClientFileUploadList(page, sizePerPage, this.state.parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                }
+            );
+
+        } else if (type === "filter") {
+            console.log(type, filters); // For debugging purposes only.
+            if (filters.is_archived === undefined) {
+                parametersMap.delete("is_archived");
+            } else {
+                const filterVal = filters.is_archived.filterVal;
+                parametersMap.set("is_archived", filterVal);
+            }
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullClientFileUploadList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                }
+            );
+        }else {
+            alert("Unsupported feature detected!!"+type);
+        }
+    }
+
+    /**
      *  Main render function
      *------------------------------------------------------------
      */
@@ -210,14 +261,13 @@ class CustomerFileUploadListContainer extends Component {
         return (
             <OrderListComponent
                 id={id}
-                text={text}
                 client={client}
                 clientFiles={clientFileList}
                 flashMessage={this.props.flashMessage}
-                onTextChange={this.onTextChange}
                 isLoading={isLoading}
                 errors={errors}
                 onClick={this.onClick}
+                onTableChange={this.onTableChange}
             />
         );
     }

@@ -62,7 +62,7 @@ class CustomerFileUploadArchiveContainer extends Component {
                 console.log("onSuccessCallback | Response:",response); // For debugging purposes only.
                 console.log("onSuccessCallback | State (Post-Fetch):", this.state);
                 this.props.setFlashMessage("success", "Client file has been successfully archived.");
-                this.props.history.push("/client/"+response['id']+"/files");
+                this.props.history.push("/client/"+this.state.id+"/files");
             }
         )
     }

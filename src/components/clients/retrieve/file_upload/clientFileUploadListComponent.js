@@ -8,6 +8,8 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
@@ -36,27 +38,22 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "active": 'Active',
-            "inactive": 'Archived',
+            3: 'Active',
+            2: 'Archived',
         };
 
         const columns = [
-        // {
-        //     dataField: 'icon',
-        //     text: '',
-        //     sort: false,
-        //     formatter: iconFormatter
-        // },{
-        //     dataField: 'state',
-        //     text: 'Status',
-        //     sort: false,
-        //     filter: selectFilter({
-        //         options: selectOptions,
-        //         defaultValue: 1,
-        //         withoutEmptyOption: true
-        //     }),
-        //     formatter: statusFormatter
-        // },
+        {
+            dataField: 'is_archived',
+            text: 'Status',
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions,
+                defaultValue: 3,
+                withoutEmptyOption: true
+            }),
+            formatter: statusFormatter
+        },
         {
             dataField: 'title',
             text: 'Title',
@@ -68,17 +65,18 @@ class RemoteListComponent extends Component {
             sort: false
         },
         {
+            dataField: 'createdAt',
+            text: 'Created At',
+            sort: true,
+            formatter: createdAtFormatter
+        },
+        {
             dataField: 'fileUrl',
             text: 'File',
             sort: false,
             formatter: fileFormatter
-        }
+        },
         // {
-        //     dataField: 'telephone',
-        //     text: 'Phone',
-        //     sort: true,
-        //     formatter: telephoneFormatter
-        // },{
         //     dataField: 'email',
         //     text: 'Email',
         //     sort: true,
@@ -150,31 +148,16 @@ class RemoteListComponent extends Component {
 }
 
 
-function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case COMMERCIAL_CUSTOMER_TYPE_OF_ID:
-            return <i className="fas fa-building"></i>;
-            break;
-        case RESIDENTIAL_CUSTOMER_TYPE_OF_ID:
-            return <i className="fas fa-home"></i>;
-            break;
-        default:
-            return <i className="fas fa-question"></i>;
-            break;
-    }
-}
-
-
 function statusFormatter(cell, row){
-    switch(row.state) {
-        case "active":
+    switch(row.isArchived) {
+        case false:
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
-        case "inactive":
+        case true:
             return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
-        return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
+            return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
             break;
     }
 }
@@ -185,12 +168,24 @@ function fileFormatter(cell, row){
         <div>
             <a href={row.fileUrl} target="_blank">
                 <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
-            </a>&nbsp;
-            <Link to={`/client/${row.customer}/file/archive/${row.id}`}>
-                <i className="fas fa-archive"></i>&nbsp;Archive
-            </Link>
+            </a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            {row.isArchived === false &&
+                <Link to={`/client/${row.customer}/file/archive/${row.id}`}>
+                    <i className="fas fa-archive"></i>&nbsp;Archive
+                </Link>
+            }
+            {row.isArchived === true &&
+                <strong>
+                    <i className="fas fa-archive"></i>&nbsp;Archived
+                </strong>
+            }
         </div>
     )
+}
+
+
+function createdAtFormatter(cell, row){
+    return <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>
 }
 
 

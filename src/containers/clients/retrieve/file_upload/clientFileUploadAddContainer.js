@@ -132,7 +132,7 @@ class CustomerFileUploadAddContainer extends Component {
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 this.props.setFlashMessage("success", "Client file has been successfully created.");
-                this.props.history.push("/client/"+response['id']+"/files");
+                this.props.history.push("/client/"+this.state.id+"/files");
             }
         )
     }
