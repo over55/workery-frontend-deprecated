@@ -93,6 +93,7 @@ export const WORKERY_PARTNER_CONTACT_UPDATE_API_ENDPOINT = '/partner/XXX/contact
 export const WORKERY_PARTNER_METRICS_UPDATE_API_ENDPOINT = '/partner/XXX/metrics';
 export const WORKERY_PARTNER_FILE_LIST_API_ENDPOINT = '/partner-files';
 export const WORKERY_PARTNER_FILE_ARCHIVE_API_ENDPOINT = '/partner-file/XXX/';
+export const WORKERY_PARTNER_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT = '/partners/operation/avatar';
 export const WORKERY_ACTIVITY_SHEET_LIST_API_ENDPOINT = '/activity-sheets';
 export const WORKERY_ACTIVITY_SHEET_DETAIL_API_ENDPOINT = '/activity-sheet/';
 export const WORKERY_REPORT_ONE_CSV_DOWNLOAD_API_ENDPOINT = 'report/1/csv-download';

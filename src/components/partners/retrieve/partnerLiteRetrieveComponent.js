@@ -56,7 +56,13 @@ export default class PartnerLiteRetrieveComponent extends Component {
                     <div className="col-md-10 mx-auto rounded bg-light border p-2">
                         <div className="row">
                             <div className="col-sm-5">
-                                <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" />
+                                <Link to={`/partner/${id}/avatar`}>
+                                    {partner && partner.avatarUrl !== undefined && partner.avatarUrl !== null
+                                        ? <img src={partner.avatarUrl} className="img-fluid rounded" alt="Profile" id={`partner-avatar-${id}`} />
+                                        : <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" id={`avatar-placeholder`}/>
+                                    }
+                                    <p><i className="fas fa-edit"></i>Click here to change photo</p>
+                                </Link>
                             </div>
                             <div className="col-sm-7 px-4 py-3">
                                 <h3>{partner && partner.fullName}</h3>

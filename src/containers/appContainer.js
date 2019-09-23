@@ -258,6 +258,7 @@ import PartnerCreateStep6Container from "./partners/create/partnerCreateStep6Con
 import PartnerContactUpdateContainer from "./partners/update/partnerContactUpdateContainer";
 import PartnerAddressUpdateContainer from "./partners/update/partnerAddressUpdateContainer";
 import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdateContainer";
+import PartnerAvatarUpdateOperationContainer from "./partners/operations/partnerAvatarUpdateOperationContainer";
 
 // Ongoing Work Order
 import OngoingOrderListContainer from "./ongoingOrders/list/ongoingOrderListContainer";
@@ -518,6 +519,7 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id/file/add" exact component={requiresAuth(PartnerFileUploadAddContainer)} />
                                 <Route path="/partner/:id/file/archive/:fileId" exact component={requiresAuth(PartnerFileUploadArchiveContainer)} />
                                 <Route path="/partner/:id/files" exact component={requiresAuth(PartnerFileUploadListContainer)} />
+                                <Route path="/partner/:id/avatar" exact component={requiresAuth(PartnerAvatarUpdateOperationContainer)} />
                                 <Route path="/partner/:id/update/contact" exact component={requiresAuth(PartnerContactUpdateContainer)} />
                                 <Route path="/partner/:id/update/address" exact component={requiresAuth(PartnerAddressUpdateContainer)} />
                                 <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
