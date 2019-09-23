@@ -65,6 +65,7 @@ import AssociateFullRetrieveContainer from "./associates/retrieve/associateFullR
 import AssociateOrderListContainer from "./associates/retrieve/associateOrderListContainer";
 import AssociateActivitySheetListContainer from "./associates/retrieve/associateActivitySheetListContainer";
 import AssociateCommentContainer from "./associates/retrieve/associateCommentContainer";
+import AssociateAvatarOperationContainer from "./associates/operations/associateAvatarOperationContainer";
 import AssociateFileUploadAddContainer from "./associates/retrieve/file_upload/associateFileUploadAddContainer";
 import AssociateFileUploadArchiveContainer from "./associates/retrieve/file_upload/associateFileUploadArchiveContainer";
 import AssociateFileUploadListContainer from "./associates/retrieve/file_upload/associateFileUploadListContainer";
@@ -342,6 +343,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
                                 <Route path="/associate/:id/orders" exact component={requiresAuth(AssociateOrderListContainer)} />
                                 <Route path="/associate/:id/comments" exact component={requiresAuth(AssociateCommentContainer)} />
+                                <Route path="/associate/:id/avatar" exact component={requiresAuth(AssociateAvatarOperationContainer)} />
                                 <Route path="/associate/:id/file/add" exact component={requiresAuth(AssociateFileUploadAddContainer)} />
                                 <Route path="/associate/:id/file/archive/:fileId" exact component={requiresAuth(AssociateFileUploadArchiveContainer)} />
                                 <Route path="/associate/:id/files" exact component={requiresAuth(AssociateFileUploadListContainer)} />
