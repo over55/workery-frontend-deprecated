@@ -158,6 +158,7 @@ import StaffCreateStep8Container from "./staff/create/staffCreateStep8Container"
 import StaffArchiveContainer from "./staff/operations/staffArchiveContainer";
 import StaffAccountChangePasswordContainer from "./staff/operations/staffAccountChangePasswordContainer";
 import StaffChangeRoleContainer from "./staff/operations/staffChangeRoleContainer";
+import StaffAvatarUpdateOperationContainer from "./staff/operations/staffAvatarUpdateOperationContainer";
 
 // Reports
 import ReportListContainer from "./reports/reportListContainer";
@@ -429,6 +430,7 @@ class AppContainer extends React.Component {
                                 <Route path="/staff/:id/archive" exact component={requiresAuth(StaffArchiveContainer)} />
                                 <Route path="/staff/:id/password" exact component={requiresAuth(StaffAccountChangePasswordContainer)} />
                                 <Route path="/staff/:id/role" exact component={requiresAuth(StaffChangeRoleContainer)} />
+                                <Route path="/staff/:id/avatar" exact component={requiresAuth(StaffAvatarUpdateOperationContainer)} />
 
                                 { /* REPORTS */ }
                                 <Route path="/reports" exact component={requiresAuth(ReportListContainer)} />

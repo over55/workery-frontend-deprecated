@@ -73,7 +73,7 @@ export default class AssociateLiteRetrieveComponent extends Component {
                             <div className="col-sm-5">
                                 <Link to={`/associate/${id}/avatar`}>
                                     {associate && associate.avatarUrl !== undefined && associate.avatarUrl !== null
-                                        ? <img src={associate.avatarUrl} className="img-fluid rounded" alt="Profile" id={`customer-avatar-${id}`} />
+                                        ? <img src={associate.avatarUrl} className="img-fluid rounded" alt="Profile" id={`associate-avatar-${id}`} />
                                         : <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" id={`avatar-placeholder`}/>
                                     }
                                     <p><i className="fas fa-edit"></i>Click here to change photo</p>
