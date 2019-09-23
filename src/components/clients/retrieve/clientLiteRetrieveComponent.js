@@ -68,7 +68,13 @@ export default class ClientLiteRetrieveComponent extends Component {
                     <div className="col-md-10 mx-auto rounded bg-light border p-2">
                         <div className="row">
                             <div className="col-sm-5">
-                                <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" />
+                                <Link to={`/client/${id}/avatar`}>
+                                    {client && client.avatarUrl !== undefined && client.avatarUrl !== null
+                                        ? <img src={client.avatarUrl} className="img-fluid rounded" alt="Profile" id={`customer-avatar-${id}`} />
+                                        : <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" id={`avatar-placeholder`}/>
+                                    }
+                                    <p><i className="fas fa-edit"></i>Click here to change photo</p>
+                                </Link>
                             </div>
                             <div className="col-sm-7 px-4 py-3">
                                 {isCompany &&

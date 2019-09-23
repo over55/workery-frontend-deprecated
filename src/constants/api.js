@@ -18,6 +18,7 @@ export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/v2/customers';
 export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/v2/customer/';
 export const WORKERY_CLIENT_ARCHIVE_API_ENDPOINT = '/customers/operation/archive';
 export const WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT = '/customers/operation/upgrade-residential';
+export const WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT = '/customers/operation/avatar';
 export const WORKERY_CLIENT_COMMENT_LIST_API_ENDPOINT = '/customer-comments';
 export const WORKERY_CLIENT_FILE_LIST_API_ENDPOINT = '/customer-files';
 export const WORKERY_CLIENT_FILE_ARCHIVE_API_ENDPOINT = '/customer-file/XXX/';

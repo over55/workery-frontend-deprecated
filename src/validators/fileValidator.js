@@ -28,3 +28,17 @@ export function validateInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateImageInput(data) {
+    let errors = {};
+
+    if (data.file === undefined || data.file === null || data.file === "") {
+        errors.file = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
