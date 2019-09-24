@@ -26,7 +26,8 @@ class AssociateCreateStep6Component extends Component {
             commercialInsuranceExpiryDate, onCommercialInsuranceExpiryDate,
             autoInsuranceExpiryDate, onAutoInsuranceExpiryDateChange,
             wsibInsuranceDate, onWsibInsuranceDateChange,
-            policeCheck, onPoliceCheckDateChange
+            policeCheck, onPoliceCheckDateChange,
+            isVehicleTypesLoading, isInsuranceRequirementsLoading, isSkillsetLoading
         } = this.props;
 
         return (
@@ -113,6 +114,7 @@ class AssociateCreateStep6Component extends Component {
                                 selectedOptions={skillSets}
                                 error={errors.skillSets}
                                 onMultiChange={onSkillSetMultiChange}
+                                isLoading={isSkillsetLoading}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -128,6 +130,7 @@ class AssociateCreateStep6Component extends Component {
                                 selectedOptions={insuranceRequirements}
                                 error={errors.insuranceRequirements}
                                 onMultiChange={onInsuranceRequirementMultiChange}
+                                isLoading={isInsuranceRequirementsLoading}
                             />
 
                             <BootstrapInput
@@ -236,6 +239,7 @@ class AssociateCreateStep6Component extends Component {
                                 selectedOptions={vehicleTypes}
                                 error={errors.vehicleTypes}
                                 onMultiChange={onVehicleTypeMultiChange}
+                                isLoading={isVehicleTypesLoading}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">

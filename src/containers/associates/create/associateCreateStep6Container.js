@@ -32,6 +32,7 @@ class AssociateCreateStep6Container extends Component {
         this.state = {
             isSkillsetLoading: true,
             skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
+            isInsuranceRequirementsLoading: true,
             insuranceRequirements: localStorageGetArrayItem("workery-create-associate-insuranceRequirements"),
             description: localStorage.getItem("workery-create-associate-description"),
             hourlySalaryDesired: localStorageGetIntegerItem("workery-create-associate-hourlySalaryDesired"),
@@ -43,6 +44,7 @@ class AssociateCreateStep6Container extends Component {
             policeCheck: localStorageGetDateItem("workery-create-associate-policeCheck"),
             taxId: localStorage.getItem("workery-create-associate-taxId"),
             driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
+            isVehicleTypesLoading: true,
             vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
             emergencyContactName: localStorage.getItem("workery-create-associate-emergencyContactName"),
             emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
@@ -68,6 +70,8 @@ class AssociateCreateStep6Container extends Component {
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
         this.onSkillSetSuccessFetch = this.onSkillSetSuccessFetch.bind(this);
+        this.onInsuranceRequirementsSuccessFetch = this.onInsuranceRequirementsSuccessFetch.bind(this);
+        this.onVehicleTypesSuccessFetch = this.onVehicleTypesSuccessFetch.bind(this);
     }
 
     /**
@@ -82,8 +86,8 @@ class AssociateCreateStep6Container extends Component {
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
         this.props.pullSkillSetList(1, 1000, parametersMap, this.onSkillSetSuccessFetch);
-        this.props.pullInsuranceRequirementList(1, 1000, parametersMap);
-        this.props.pullVehicleTypeList(1, 1000, parametersMap);
+        this.props.pullInsuranceRequirementList(1, 1000, parametersMap, this.onInsuranceRequirementsSuccessFetch);
+        this.props.pullVehicleTypeList(1, 1000, parametersMap, this.onVehicleTypesSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -119,6 +123,14 @@ class AssociateCreateStep6Container extends Component {
 
     onSkillSetSuccessFetch(howHearList) {
         this.setState({ isSkillsetLoading: false, });
+    }
+
+    onInsuranceRequirementsSuccessFetch(response) {
+        this.setState({ isInsuranceRequirementsLoading: false, });
+    }
+
+    onVehicleTypesSuccessFetch(response) {
+        this.setState({ isVehicleTypesLoading: false, });
     }
 
     /**
@@ -283,6 +295,7 @@ class AssociateCreateStep6Container extends Component {
             vehicleTypes,
             duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
             emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
+            isInsuranceRequirementsLoading, isVehicleTypesLoading,
             isActive,
             errors, isLoading
         } = this.state;
@@ -306,10 +319,12 @@ class AssociateCreateStep6Container extends Component {
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
                 onSkillSetMultiChange={this.onSkillSetMultiChange}
 
+                isInsuranceRequirementsLoading={isInsuranceRequirementsLoading}
                 insuranceRequirements={insuranceRequirements}
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
                 onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
 
+                isVehicleTypesLoading={isVehicleTypesLoading}
                 vehicleTypes={vehicleTypes}
                 vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
                 onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
