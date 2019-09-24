@@ -44,15 +44,10 @@ class RemoteListComponent extends Component {
             // sort: true,
             formatter: idFormatter,
         },{
-            dataField: 'completionDate',
-            text: 'Completion Date',
+            dataField: 'invoiceServiceFeePaymentDate',
+            text: 'Service Fee Payment Date',
             // sort: true,
             formatter: completionDateFormatter,
-        },{
-            dataField: 'invoiceQuotedLabourAmount',
-            text: 'Quoted Labour',
-            // sort: true,
-            // formatter: idFormatter,
         },{
             dataField: 'invoiceLabourAmount',
             text: 'Actual Labour',
@@ -171,8 +166,8 @@ function statusFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
+        <Link to={`/order/${row.id}`} target="_blank">
+            View&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
@@ -218,7 +213,7 @@ export default class AssociateBalanceOperationComponent extends Component {
                 <div className="row">
                     <div className="col-md-12">
                         <h2>
-                            <i className="fas fa-table"></i>&nbsp;List
+                            <i className="fas fa-table"></i>&nbsp;Account Balance List
                         </h2>
                         <RemoteListComponent
                             page={page}
