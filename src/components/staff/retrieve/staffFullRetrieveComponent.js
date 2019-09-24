@@ -162,7 +162,10 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Police Check Expiry</th>
                                     <td>
-                                        <Moment format="MM/DD/YYYY">{staff.policeCheck}</Moment>
+                                        {staff.policeCheck
+                                            ? <Moment format="MM/DD/YYYY">{staff.policeCheck}</Moment>
+                                            : "-"
+                                        }                                        
                                     </td>
                                 </tr>
                                 <tr>
