@@ -20,7 +20,7 @@ import {
 export default class PartnerCreateStep5Component extends Component {
     render() {
         const {
-            typeOf, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
+            typeOf, isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOther, joinDate,
             onRadioChange,  onMultiChange, onJoinDateChange, comment,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
@@ -104,6 +104,7 @@ export default class PartnerCreateStep5Component extends Component {
                                 selectedOptions={tags}
                                 error={errors.tags}
                                 onMultiChange={onMultiChange}
+                                isLoading={isTagsLoading}
                             />
 
                             <BootstrapRadio
@@ -136,6 +137,7 @@ export default class PartnerCreateStep5Component extends Component {
                                 value={howHear}
                                 error={errors.howHear}
                                 onSelectChange={onSelectChange}
+                                isLoading={isHowHearLoading}
                             />
 
                             {isOtherHowDidYouHearSelected &&
