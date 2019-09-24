@@ -41,7 +41,7 @@ export default class StaffCommentComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Staff</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}</h1>
 
                 <div className="row">
                     <div className="step-navigation">

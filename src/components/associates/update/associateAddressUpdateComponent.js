@@ -40,10 +40,10 @@ class AssociateAddressUpdateComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associate</Link>
+                            <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/associate/${id}/full`}><i className="fas fa-crown"></i>&nbsp;{fullName}</Link>
+                            <Link to={`/associate/${id}/full`}><i className="fas fa-user"></i>&nbsp;{fullName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;AddressUpdate

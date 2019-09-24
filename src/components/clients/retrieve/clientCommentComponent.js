@@ -41,7 +41,7 @@ export default class ClientCommentComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Client</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</h1>
 
                 {client.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

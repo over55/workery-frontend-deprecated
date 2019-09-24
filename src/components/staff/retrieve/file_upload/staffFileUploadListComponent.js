@@ -219,7 +219,7 @@ class StaffFileUploadListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staffs</Link>
+                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}
@@ -228,7 +228,7 @@ class StaffFileUploadListComponent extends Component {
                 </nav>
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Staff</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -260,7 +260,7 @@ class StaffFileUploadListComponent extends Component {
                         <section className="row text-center placeholders">
                             <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to={`/staff/${id}/file/add`} className="d-block link-ndecor" title="Staffs">
+                                    <Link to={`/staff/${id}/file/add`} className="d-block link-ndecor" title="Staff">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>

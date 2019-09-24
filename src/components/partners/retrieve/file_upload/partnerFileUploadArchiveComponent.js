@@ -37,7 +37,7 @@ export default class PartnerFileUploadArchiveComponent extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Partner</h1>
+                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}</h1>
 
                 {partner.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

@@ -30,7 +30,7 @@ export default class AssociateLiteRetrieveComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Associate</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
 
                 <div className="row">
                     <div className="step-navigation">

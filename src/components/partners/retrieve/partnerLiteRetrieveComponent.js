@@ -25,7 +25,7 @@ export default class PartnerLiteRetrieveComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-handshake"></i>&nbsp;View Partner</h1>
+                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
