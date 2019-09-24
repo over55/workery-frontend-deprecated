@@ -11,7 +11,7 @@ export default class OrderCreateStep5Component extends Component {
     render() {
         const {
             comment, onTextChange,
-            tags, tagOptions, onTagMultiChange,
+            isTagsLoading, tags, tagOptions, onTagMultiChange,
             onNextClick, errors,
         } = this.props;
         return (
@@ -86,6 +86,7 @@ export default class OrderCreateStep5Component extends Component {
                                 selectedOptions={tags}
                                 error={errors.tags}
                                 onMultiChange={onTagMultiChange}
+                                isLoading={isTagsLoading}
                             />
 
                             <BootstrapTextarea

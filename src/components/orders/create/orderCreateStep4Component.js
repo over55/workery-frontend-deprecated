@@ -11,7 +11,7 @@ export default class OrderCreateStep4Component extends Component {
     render() {
         const {
             description, onTextChange,
-            skillSets, skillSetOptions, onSkillSetMultiChange,
+            isSkillsetLoading, skillSets, skillSetOptions, onSkillSetMultiChange,
             onNextClick, errors,
         } = this.props;
         return (
@@ -96,6 +96,7 @@ export default class OrderCreateStep4Component extends Component {
                                 selectedOptions={skillSets}
                                 error={errors.skillSets}
                                 onMultiChange={onSkillSetMultiChange}
+                                isLoading={isSkillsetLoading}
                             />
 
                             <div className="form-group">

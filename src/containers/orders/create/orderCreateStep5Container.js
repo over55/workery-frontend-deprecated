@@ -17,6 +17,7 @@ class OrderCreateStep5Container extends Component {
         super(props);
         this.state = {
             comment: localStorage.getItem("workery-create-order-comment"),
+            isTagsLoading: true,
             tags: localStorageGetArrayItem("workery-create-order-tags"),
             isLoading: true,
             errors: {},
@@ -24,6 +25,7 @@ class OrderCreateStep5Container extends Component {
         }
         this.onTextChange = this.onTextChange.bind(this);
         this.onTagMultiChange = this.onTagMultiChange.bind(this);
+        this.onTagsSuccessFetch = this.onTagsSuccessFetch.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
     }
 
@@ -38,7 +40,7 @@ class OrderCreateStep5Container extends Component {
        // Fetch all our GUI drop-down options which are populated by the API.
        const parametersMap = new Map()
        parametersMap.set("isArchived", 3)
-       this.props.pullTagList(1,1000, parametersMap);
+       this.props.pullTagList(1,1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -54,6 +56,10 @@ class OrderCreateStep5Container extends Component {
      *  API callback functions
      *------------------------------------------------------------
      */
+
+    onTagsSuccessFetch(tags) {
+        this.setState({ isTagsLoading: false, });
+    }
 
     /**
      *  Event handling functions
@@ -114,12 +120,13 @@ class OrderCreateStep5Container extends Component {
      */
 
     render() {
-        const { comment, tags, errors } = this.state;
+        const { comment, isTagsLoading, tags, errors } = this.state;
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         return (
             <OrderCreateStep5Component
                 comment={comment}
                 onTextChange={this.onTextChange}
+                isTagsLoading={isTagsLoading}
                 tags={tags}
                 tagOptions={tagOptions}
                 onTagMultiChange={this.onTagMultiChange}

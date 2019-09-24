@@ -21,6 +21,7 @@ class OrderCreateStep4Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isSkillsetLoading: true,
             description: localStorage.getItem("workery-create-order-description"),
             skillSets: localStorageGetArrayItem("workery-create-order-skillSets"),
             isLoading: true,
@@ -29,6 +30,7 @@ class OrderCreateStep4Container extends Component {
         }
         this.onTextChange = this.onTextChange.bind(this);
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
+        this.onSkillSetSuccessFetch = this.onSkillSetSuccessFetch.bind(this);
         this.onNextClick = this.onNextClick.bind(this);
     }
 
@@ -43,7 +45,7 @@ class OrderCreateStep4Container extends Component {
         // DEVELOPERS NOTE: Fetch our skillset list.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap);
+        this.props.pullSkillSetList(1, 1000, parametersMap, this.onSkillSetSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -59,6 +61,10 @@ class OrderCreateStep4Container extends Component {
      *  API callback functions
      *------------------------------------------------------------
      */
+
+    onSkillSetSuccessFetch(howHearList) {
+        this.setState({ isSkillsetLoading: false, });
+    }
 
     /**
      *  Event handling functions
@@ -119,11 +125,12 @@ class OrderCreateStep4Container extends Component {
      */
 
     render() {
-        const { description, skillSets, errors } = this.state;
+        const { description, isSkillsetLoading, skillSets, errors } = this.state;
         return (
             <OrderCreateStep4Component
                 description={description}
                 onTextChange={this.onTextChange}
+                isSkillsetLoading={isSkillsetLoading}
                 skillSets={skillSets}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
                 onSkillSetMultiChange={this.onSkillSetMultiChange}

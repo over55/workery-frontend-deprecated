@@ -30,6 +30,7 @@ class AssociateCreateStep6Container extends Component {
         super(props);
 
         this.state = {
+            isSkillsetLoading: true,
             skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
             insuranceRequirements: localStorageGetArrayItem("workery-create-associate-insuranceRequirements"),
             description: localStorage.getItem("workery-create-associate-description"),
@@ -66,6 +67,7 @@ class AssociateCreateStep6Container extends Component {
         this.onNextClick = this.onNextClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSkillSetSuccessFetch = this.onSkillSetSuccessFetch.bind(this);
     }
 
     /**
@@ -79,7 +81,7 @@ class AssociateCreateStep6Container extends Component {
         // DEVELOPERS NOTE: Fetch our skillset list.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap);
+        this.props.pullSkillSetList(1, 1000, parametersMap, this.onSkillSetSuccessFetch);
         this.props.pullInsuranceRequirementList(1, 1000, parametersMap);
         this.props.pullVehicleTypeList(1, 1000, parametersMap);
     }
@@ -113,6 +115,10 @@ class AssociateCreateStep6Container extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onSkillSetSuccessFetch(howHearList) {
+        this.setState({ isSkillsetLoading: false, });
     }
 
     /**
@@ -272,7 +278,7 @@ class AssociateCreateStep6Container extends Component {
     render() {
         const {
             description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
-            skillSets,
+            isSkillsetLoading, skillSets,
             insuranceRequirements,
             vehicleTypes,
             duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
@@ -295,6 +301,7 @@ class AssociateCreateStep6Container extends Component {
                 emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
                 onTextChange={this.onTextChange}
 
+                isSkillsetLoading={isSkillsetLoading}
                 skillSets={skillSets}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
                 onSkillSetMultiChange={this.onSkillSetMultiChange}
