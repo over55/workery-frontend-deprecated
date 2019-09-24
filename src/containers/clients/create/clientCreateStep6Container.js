@@ -28,9 +28,11 @@ class ClientCreateStep6Container extends Component {
         const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
 
         this.state = {
+            isTagsLoading: true,
             tags: localStorageGetArrayItem("workery-create-client-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
             gender: localStorage.getItem("workery-create-client-gender"),
+            isHowHearLoading: true,
             howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
@@ -49,6 +51,8 @@ class ClientCreateStep6Container extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onTagsSuccessFetch = this.onTagsSuccessFetch.bind(this);
+        this.onHowHearSuccessFetch = this.onHowHearSuccessFetch.bind(this);
     }
 
     /**
@@ -62,8 +66,8 @@ class ClientCreateStep6Container extends Component {
         // Fetch all our GUI drop-down options which are populated by the API.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullHowHearList(1,1000, parametersMap);
-        this.props.pullTagList(1,1000, parametersMap);
+        this.props.pullHowHearList(1,1000, parametersMap, this.onHowHearSuccessFetch);
+        this.props.pullTagList(1, 1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -95,6 +99,14 @@ class ClientCreateStep6Container extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onTagsSuccessFetch(tags) {
+        this.setState({ isTagsLoading: false, });
+    }
+
+    onHowHearSuccessFetch(howHearList) {
+        this.setState({ isHowHearLoading: false, });
     }
 
     /**
@@ -201,7 +213,7 @@ class ClientCreateStep6Container extends Component {
 
     render() {
         const {
-            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
+            isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate, comment,
             errors
         } = this.state;
 
@@ -210,6 +222,7 @@ class ClientCreateStep6Container extends Component {
 
         return (
             <ClientCreateStep6Component
+                isTagsLoading={isTagsLoading}
                 tags={tags}
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
@@ -217,6 +230,7 @@ class ClientCreateStep6Container extends Component {
                 joinDate={joinDate}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                isHowHearLoading={isHowHearLoading}
                 howHear={howHear}
                 howHearOptions={howHearOptions}
                 howHearOther={howHearOther}
