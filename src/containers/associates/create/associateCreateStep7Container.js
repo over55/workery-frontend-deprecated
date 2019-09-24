@@ -28,9 +28,11 @@ class AssociateCreateStep7Container extends Component {
         const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
 
         this.state = {
+            isTagsLoading: true,
             tags: localStorageGetArrayItem("workery-create-associate-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
             gender: localStorage.getItem("workery-create-associate-gender"),
+            isHowHearLoading: true,
             howHear: localStorageGetIntegerItem("workery-create-associate-howHear"),
             howHearOption: localStorageGetObjectItem('workery-create-associate-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-associate-howHearOther"),
@@ -49,6 +51,8 @@ class AssociateCreateStep7Container extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onTagsSuccessFetch = this.onTagsSuccessFetch.bind(this);
+        this.onHowHearSuccessFetch = this.onHowHearSuccessFetch.bind(this);
     }
 
     /**
@@ -62,8 +66,8 @@ class AssociateCreateStep7Container extends Component {
          // Fetch all our GUI drop-down options which are populated by the API.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullHowHearList(1,1000, parametersMap);
-        this.props.pullTagList(1,1000, parametersMap);
+        this.props.pullHowHearList(1,1000, parametersMap, this.onHowHearSuccessFetch);
+        this.props.pullTagList(1,1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -95,6 +99,14 @@ class AssociateCreateStep7Container extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onTagsSuccessFetch(tags) {
+        this.setState({ isTagsLoading: false, });
+    }
+
+    onHowHearSuccessFetch(howHearList) {
+        this.setState({ isHowHearLoading: false, });
     }
 
     /**
@@ -201,7 +213,7 @@ class AssociateCreateStep7Container extends Component {
 
     render() {
         const {
-            typeOf, tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
+            typeOf, isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate, comment,
             errors
         } = this.state;
 
@@ -211,7 +223,7 @@ class AssociateCreateStep7Container extends Component {
         return (
             <AssociateCreateStep7Component
                 typeOf={typeOf}
-
+                isTagsLoading={isTagsLoading}
                 tags={tags}
                 tagOptions={tagOptions}
                 dateOfBirth={dateOfBirth}
@@ -219,6 +231,7 @@ class AssociateCreateStep7Container extends Component {
                 joinDate={joinDate}
                 errors={errors}
                 onTextChange={this.onTextChange}
+                isHowHearLoading={isHowHearLoading}
                 howHear={howHear}
                 howHearOptions={howHearOptions}
                 howHearOther={howHearOther}
