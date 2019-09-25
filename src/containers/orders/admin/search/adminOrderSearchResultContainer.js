@@ -9,7 +9,7 @@ import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api
 import { localStorageGetObjectItem } from '../../../../helpers/localStorageUtility';
 
 
-class OrderSearchResultContainer extends Component {
+class AdminOrderSearchResultContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -209,4 +209,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderSearchResultContainer);
+)(AdminOrderSearchResultContainer);

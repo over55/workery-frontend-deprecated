@@ -17,7 +17,7 @@ import {
 } from '../../../../../constants/api';
 
 
-export default class OrderTransferStep4Component extends Component {
+export default class AdminOrderTransferStep4Component extends Component {
     render() {
         const {
             associates, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick, onAssociateClick, orderDetail

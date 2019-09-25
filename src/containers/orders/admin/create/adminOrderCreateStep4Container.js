@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import OrderCreateStep4Component from "../../../../components/orders/admin/create/adminOrderCreateStep4Component";
+import  AdminOrderCreateStep4Component from "../../../../components/orders/admin/create/adminOrderCreateStep4Component";
 import { validateStep4CreateInput } from "../../../../validators/orderValidator";
 import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
 import {
@@ -12,7 +12,7 @@ import {
     localStorageGetDateItem
 } from '../../../../helpers/localStorageUtility';
 
-class OrderCreateStep4Container extends Component {
+class  AdminOrderCreateStep4Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -127,7 +127,7 @@ class OrderCreateStep4Container extends Component {
     render() {
         const { description, isSkillsetLoading, skillSets, errors } = this.state;
         return (
-            <OrderCreateStep4Component
+            < AdminOrderCreateStep4Component
                 description={description}
                 onTextChange={this.onTextChange}
                 isSkillsetLoading={isSkillsetLoading}
@@ -162,4 +162,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCreateStep4Container);
+)( AdminOrderCreateStep4Container);

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import OrderCreateStep5Component from "../../../../components/orders/admin/create/adminOrderCreateStep5Component";
+import  AdminOrderCreateStep5Component from "../../../../components/orders/admin/create/adminOrderCreateStep5Component";
 import { validateStep5CreateInput } from "../../../../validators/orderValidator";
 import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
 import { localStorageSetObjectOrArrayItem, localStorageGetArrayItem } from '../../../../helpers/localStorageUtility';
 
 
-class OrderCreateStep5Container extends Component {
+class  AdminOrderCreateStep5Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -123,7 +123,7 @@ class OrderCreateStep5Container extends Component {
         const { comment, isTagsLoading, tags, errors } = this.state;
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         return (
-            <OrderCreateStep5Component
+            < AdminOrderCreateStep5Component
                 comment={comment}
                 onTextChange={this.onTextChange}
                 isTagsLoading={isTagsLoading}
@@ -158,4 +158,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCreateStep5Container);
+)( AdminOrderCreateStep5Container);

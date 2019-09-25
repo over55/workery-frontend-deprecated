@@ -15,7 +15,7 @@ import { BootstrapErrorsProcessingAlert } from "../../../../bootstrap/bootstrapA
 import { BootstrapPageLoadingAnimation } from "../../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
-export default class OrderFileUploadArchiveComponent extends Component {
+export default class AdminOrderFileUploadArchiveComponent extends Component {
     render() {
         const {
             isLoading, id, order, errors, onClick

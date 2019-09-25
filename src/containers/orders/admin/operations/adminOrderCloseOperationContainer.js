@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderCloseOperationComponent from "../../../../components/orders/admin/operations/adminOrderCloseOperationComponent";
+import AdminOrderCloseOperationComponent from "../../../../components/orders/admin/operations/adminOrderCloseOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateCloseInput } from "../../../../validators/orderValidator";
 import {
@@ -11,7 +11,7 @@ import {
 import { postOrderClose } from "../../../../actions/orderActions";
 
 
-class OrderCloseOperationContainer extends Component {
+class AdminOrderCloseOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -186,7 +186,7 @@ class OrderCloseOperationContainer extends Component {
         const { id, errors, reason, reasonOther, comment, isLoading } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
-            <OrderCloseOperationComponent
+            <AdminOrderCloseOperationComponent
                 id={id}
                 order={order}
                 errors={errors}
@@ -225,4 +225,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCloseOperationContainer);
+)(AdminOrderCloseOperationContainer);

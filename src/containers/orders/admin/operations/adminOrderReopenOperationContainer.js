@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderReopenOperationComponent from "../../../../components/orders/admin/operations/adminOrderReopenOperationComponent";
+import AdminOrderReopenOperationComponent from "../../../../components/orders/admin/operations/adminOrderReopenOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateReopenInput } from "../../../../validators/orderValidator";
 import {
@@ -11,7 +11,7 @@ import {
 import { postOrderReopen } from "../../../../actions/orderActions";
 
 
-class OrderReopenOperationContainer extends Component {
+class AdminOrderReopenOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -132,7 +132,7 @@ class OrderReopenOperationContainer extends Component {
         const { errors, id, reason } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
-            <OrderReopenOperationComponent
+            <AdminOrderReopenOperationComponent
                 id={id}
                 errors={errors}
                 order={order}
@@ -166,4 +166,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderReopenOperationContainer);
+)(AdminOrderReopenOperationContainer);

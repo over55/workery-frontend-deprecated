@@ -42,7 +42,7 @@ class CardComponent extends Component {
 }
 
 
-export default class OrderCreateStep2Component extends Component {
+export default class AdminOrderCreateStep2Component extends Component {
     render() {
         const { clients, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick, onClientClick } = this.props;
         return (

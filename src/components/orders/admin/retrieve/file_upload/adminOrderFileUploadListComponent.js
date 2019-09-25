@@ -197,7 +197,7 @@ function createdAtFormatter(cell, row){
 }
 
 
-class OrderFileUploadListComponent extends Component {
+class AdminOrderFileUploadListComponent extends Component {
     render() {
         const {
             // Pagination
@@ -301,4 +301,4 @@ class OrderFileUploadListComponent extends Component {
     }
 }
 
-export default OrderFileUploadListComponent;
+export default AdminOrderFileUploadListComponent;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import OrderCreateStep6Component from "../../../../components/orders/admin/create/adminOrderCreateStep6Component";
+import  AdminOrderCreateStep6Component from "../../../../components/orders/admin/create/adminOrderCreateStep6Component";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import {
     RESIDENCE_TYPE_OF,
@@ -17,7 +17,7 @@ import { validateStep6CreateInput } from "../../../../validators/orderValidator"
 import { postOrderDetail } from '../../../../actions/orderActions';
 
 
-class OrderCreateStep6Container extends Component {
+class  AdminOrderCreateStep6Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -198,7 +198,7 @@ class OrderCreateStep6Container extends Component {
             clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, tags, comment, isLoading, errors,
         } = this.state;
         return (
-            <OrderCreateStep6Component
+            < AdminOrderCreateStep6Component
                 clientGivenName={clientGivenName}
                 clientLastName={clientLastName}
                 startDate={startDate}
@@ -237,4 +237,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCreateStep6Container);
+)( AdminOrderCreateStep6Container);

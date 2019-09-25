@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import TaskListComponent from "../../../../components/orders/admin/retrieve/adminOrderTaskListComponent";
+import AdminOrderTaskListComponent from "../../../../components/orders/admin/retrieve/adminOrderTaskListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullTaskList } from "../../../../actions/taskActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
@@ -162,7 +162,7 @@ class OrderTaskListContainer extends Component {
     render() {
         const { id, page, sizePerPage, totalSize, isLoading } = this.state;
         return (
-            <TaskListComponent
+            <AdminOrderTaskListComponent
                 id={id}
                 page={page}
                 sizePerPage={sizePerPage}

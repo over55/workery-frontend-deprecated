@@ -10,7 +10,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 import { WORK_ORDER_CLOSE_REASON_CHOICES } from "../../../../constants/api";
 
 
-class OrderCloseOperationComponent extends Component {
+class AdminOrderCloseOperationComponent extends Component {
     render() {
         // Common
         const { id, errors, reason, reasonOther, comment, isLoading, onClick, onTextChange, onSelectChange, order } = this.props;
@@ -139,4 +139,4 @@ class OrderCloseOperationComponent extends Component {
     }
 }
 
-export default OrderCloseOperationComponent;
+export default AdminOrderCloseOperationComponent;

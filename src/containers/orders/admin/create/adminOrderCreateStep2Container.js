@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderCreateStep2Component from "../../../../components/orders/admin/create/adminOrderCreateStep2Component";
+import  AdminOrderCreateStep2Component from "../../../../components/orders/admin/create/adminOrderCreateStep2Component";
 import { pullClientList } from "../../../../actions/clientActions";
 
 
-class OrderCreateStep2Container extends Component {
+class  AdminOrderCreateStep2Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -155,7 +155,7 @@ class OrderCreateStep2Container extends Component {
         const hasNext = this.props.clientList.next !== null;
         const hasPrevious = this.props.clientList.previous !== null;
         return (
-            <OrderCreateStep2Component
+            < AdminOrderCreateStep2Component
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
@@ -193,4 +193,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCreateStep2Container);
+)( AdminOrderCreateStep2Container);

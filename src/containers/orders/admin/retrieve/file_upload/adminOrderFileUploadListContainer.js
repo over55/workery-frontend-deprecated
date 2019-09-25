@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderListComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadListComponent";
+import AdminOrderFileUploadListComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadListComponent";
 import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
 import { pullOrderFileUploadList, postOrderFileUpload } from "../../../../../actions/orderFileUploadActions";
 import { validateInput } from "../../../../../validators/fileValidator"
@@ -259,7 +259,7 @@ class OrderFileUploadListContainer extends Component {
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         const orderFileList = this.props.orderFileList && this.props.orderFileList.results ? this.props.orderFileList.results : [];
         return (
-            <OrderListComponent
+            <AdminOrderFileUploadListComponent
                 id={id}
                 order={order}
                 orderFiles={orderFileList}

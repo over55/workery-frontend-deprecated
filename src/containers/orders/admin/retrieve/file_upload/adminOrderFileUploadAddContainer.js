@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderListComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadAddComponent";
+import AdminOrderFileUploadAddComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadAddComponent";
 import { postOrderFileUpload } from "../../../../../actions/orderFileUploadActions";
 import { clearFlashMessage, setFlashMessage } from "../../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../../validators/fileValidator"
 import { getTagReactSelectOptions, pullTagList } from "../../../../../actions/tagActions";
 
 
-class OrderFileUploadAddContainer extends Component {
+class AdminOrderFileUploadAddContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -274,7 +274,7 @@ class OrderFileUploadAddContainer extends Component {
         const orderFiles = this.props.orderFileList ? this.props.orderFileList.results : [];
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         return (
-            <OrderListComponent
+            <AdminOrderFileUploadAddComponent
                 id={id}
                 title={title}
                 description={description}
@@ -331,4 +331,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderFileUploadAddContainer);
+)(AdminOrderFileUploadAddContainer);

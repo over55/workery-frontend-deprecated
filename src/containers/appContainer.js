@@ -84,34 +84,34 @@ import AssociateMetricsUpdateContainer from "./associates/update/associateMetric
 import AssociateBalanceOperationContainer from "./associates/operations/associateBalanceOperationContainer";
 import AssociateChangePasswordOperationContainer from "./associates/operations/associateChangePasswordOperationContainer";
 
-// Work Order
-import OrderListContainer from "./orders/admin/list/adminOrderListContainer";
-import OrderSearchContainer from "./orders/admin/search/adminOrderSearchContainer";
-import OrderSearchResultContainer from "./orders/admin/search/adminOrderSearchResultContainer";
-import OrderLiteRetrieveContainer from "./orders/admin/retrieve/adminOrderLiteRetrieveContainer";
-import OrderFullRetrieveContainer from "./orders/admin/retrieve/adminOrderFullRetrieveContainer";
-import OrderTaskListContainer from "./orders/admin/retrieve/adminOrderTaskListContainer";
-import OrderActivitySheetListContainer from "./orders/admin/retrieve/adminOrderActivitySheetListContainer";
-import OrderCommentContainer from "./orders/admin/retrieve/adminOrderCommentContainer";
-import OrderFileUploadAddContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadAddContainer";
-import OrderFileUploadArchiveContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadArchiveContainer";
-import OrderFileUploadListContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadListContainer";
-import OrderUnassignAssociateOperationContainer from "./orders/admin/operations/adminOrderUnassignAssociateOperationContainer";
-import OrderPostponeOperationContainer from "./orders/admin/operations/adminOrderPostponeOperationContainer";
-import OrderCloseOperationContainer from "./orders/admin/operations/adminOrderCloseOperationContainer";
-import OrderReopenOperationContainer from "./orders/admin/operations/adminOrderReopenOperationContainer";
-import OrderCreateStep1Container from "./orders/admin/create/adminOrderCreateStep1Container";
-import OrderCreateStep2Container from "./orders/admin/create/adminOrderCreateStep2Container";
-import OrderCreateStep3Container from "./orders/admin/create/adminOrderCreateStep3Container";
-import OrderCreateStep4Container from "./orders/admin/create/adminOrderCreateStep4Container";
-import OrderCreateStep5Container from "./orders/admin/create/adminOrderCreateStep5Container";
-import OrderCreateStep6Container from "./orders/admin/create/adminOrderCreateStep6Container";
-import OrderLiteUpdateContainer from "./orders/admin/update/adminOrderLiteUpdateContainer";
-import OrderTransferStep1Container from "./orders/admin/operations/transfer/adminOrderTransferStep1Container";
-import OrderTransferStep2Container from "./orders/admin/operations/transfer/adminOrderTransferStep2Container";
-import OrderTransferStep3Container from "./orders/admin/operations/transfer/adminOrderTransferStep3Container";
-import OrderTransferStep4Container from "./orders/admin/operations/transfer/adminOrderTransferStep4Container";
-import OrderTransferStep5Container from "./orders/admin/operations/transfer/adminOrderTransferStep5Container";
+// Admin Work Order
+import AdminOrderListContainer from "./orders/admin/list/adminOrderListContainer";
+import AdminOrderSearchContainer from "./orders/admin/search/adminOrderSearchContainer";
+import AdminOrderSearchResultContainer from "./orders/admin/search/adminOrderSearchResultContainer";
+import AdminOrderLiteRetrieveContainer from "./orders/admin/retrieve/adminOrderLiteRetrieveContainer";
+import AdminOrderFullRetrieveContainer from "./orders/admin/retrieve/adminOrderFullRetrieveContainer";
+import AdminOrderTaskListContainer from "./orders/admin/retrieve/adminOrderTaskListContainer";
+import AdminOrderActivitySheetListContainer from "./orders/admin/retrieve/adminOrderActivitySheetListContainer";
+import AdminOrderCommentContainer from "./orders/admin/retrieve/adminOrderCommentContainer";
+import AdminOrderFileUploadAddContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadAddContainer";
+import AdminOrderFileUploadArchiveContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadArchiveContainer";
+import AdminOrderFileUploadListContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadListContainer";
+import AdminOrderUnassignAssociateOperationContainer from "./orders/admin/operations/adminOrderUnassignAssociateOperationContainer";
+import AdminOrderPostponeOperationContainer from "./orders/admin/operations/adminOrderPostponeOperationContainer";
+import AdminOrderCloseOperationContainer from "./orders/admin/operations/adminOrderCloseOperationContainer";
+import AdminOrderReopenOperationContainer from "./orders/admin/operations/adminOrderReopenOperationContainer";
+import AdminOrderCreateStep1Container from "./orders/admin/create/adminOrderCreateStep1Container";
+import AdminOrderCreateStep2Container from "./orders/admin/create/adminOrderCreateStep2Container";
+import AdminOrderCreateStep3Container from "./orders/admin/create/adminOrderCreateStep3Container";
+import AdminOrderCreateStep4Container from "./orders/admin/create/adminOrderCreateStep4Container";
+import AdminOrderCreateStep5Container from "./orders/admin/create/adminOrderCreateStep5Container";
+import AdminOrderCreateStep6Container from "./orders/admin/create/adminOrderCreateStep6Container";
+import AdminOrderLiteUpdateContainer from "./orders/admin/update/adminOrderLiteUpdateContainer";
+import AdminOrderTransferStep1Container from "./orders/admin/operations/transfer/adminOrderTransferStep1Container";
+import AdminOrderTransferStep2Container from "./orders/admin/operations/transfer/adminOrderTransferStep2Container";
+import AdminOrderTransferStep3Container from "./orders/admin/operations/transfer/adminOrderTransferStep3Container";
+import AdminOrderTransferStep4Container from "./orders/admin/operations/transfer/adminOrderTransferStep4Container";
+import AdminOrderTransferStep5Container from "./orders/admin/operations/transfer/adminOrderTransferStep5Container";
 
 // Tasks
 import TaskListContainer from "./tasks/list/taskListContainer";
@@ -361,33 +361,33 @@ class AppContainer extends React.Component {
 
 
                                 { /* WORK ORDER */}
-                                <Route path="/orders/add/step-1" exact component={requiresAuth(OrderCreateStep1Container)} />
-                                <Route path="/orders/add/step-2" exact component={requiresAuth(OrderCreateStep2Container)} />
-                                <Route path="/orders/add/step-3" exact component={requiresAuth(OrderCreateStep3Container)} />
-                                <Route path="/orders/add/step-4" exact component={requiresAuth(OrderCreateStep4Container)} />
-                                <Route path="/orders/add/step-5" exact component={requiresAuth(OrderCreateStep5Container)} />
-                                <Route path="/orders/add/step-6" exact component={requiresAuth(OrderCreateStep6Container)} />
-                                <Route path="/orders" exact component={requiresAuth(OrderListContainer)} />
-                                <Route path="/orders/search" exact component={requiresAuth(OrderSearchContainer)} />
-                                <Route path="/orders/search-results" exact component={requiresAuth(OrderSearchResultContainer)} />
-                                <Route path="/order/:id" exact component={requiresAuth(OrderLiteRetrieveContainer)} />
-                                <Route path="/order/:id/full" exact component={requiresAuth(OrderFullRetrieveContainer)} />
-                                <Route path="/order/:id/tasks" exact component={requiresAuth(OrderTaskListContainer)} />
-                                <Route path="/order/:id/activity-sheets" exact component={requiresAuth(OrderActivitySheetListContainer)} />
-                                <Route path="/order/:id/comments" exact component={requiresAuth(OrderCommentContainer)} />
-                                <Route path="/order/:id/file/add" exact component={requiresAuth(OrderFileUploadAddContainer)} />
-                                <Route path="/order/:id/file/archive/:fileId" exact component={requiresAuth(OrderFileUploadArchiveContainer)} />
-                                <Route path="/order/:id/files" exact component={requiresAuth(OrderFileUploadListContainer)} />
-                                <Route path="/order/:id/postpone" exact component={requiresAuth(OrderPostponeOperationContainer)} />
-                                <Route path="/order/:id/unassign-associate" exact component={requiresAuth(OrderUnassignAssociateOperationContainer)} />
-                                <Route path="/order/:id/close" exact component={requiresAuth(OrderCloseOperationContainer)} />
-                                <Route path="/order/:id/reopen" exact component={requiresAuth(OrderReopenOperationContainer)} />
-                                <Route path="/order/:id/update/lite" exact component={requiresAuth(OrderLiteUpdateContainer)} />
-                                <Route path="/order/:id/transfer-step-1" exact component={requiresAuth(OrderTransferStep1Container)} />
-                                <Route path="/order/:id/transfer-step-2" exact component={requiresAuth(OrderTransferStep2Container)} />
-                                <Route path="/order/:id/transfer-step-3" exact component={requiresAuth(OrderTransferStep3Container)} />
-                                <Route path="/order/:id/transfer-step-4" exact component={requiresAuth(OrderTransferStep4Container)} />
-                                <Route path="/order/:id/transfer-step-5" exact component={requiresAuth(OrderTransferStep5Container)} />
+                                <Route path="/orders/add/step-1" exact component={requiresAuth(AdminOrderCreateStep1Container)} />
+                                <Route path="/orders/add/step-2" exact component={requiresAuth(AdminOrderCreateStep2Container)} />
+                                <Route path="/orders/add/step-3" exact component={requiresAuth(AdminOrderCreateStep3Container)} />
+                                <Route path="/orders/add/step-4" exact component={requiresAuth(AdminOrderCreateStep4Container)} />
+                                <Route path="/orders/add/step-5" exact component={requiresAuth(AdminOrderCreateStep5Container)} />
+                                <Route path="/orders/add/step-6" exact component={requiresAuth(AdminOrderCreateStep6Container)} />
+                                <Route path="/orders" exact component={requiresAuth(AdminOrderListContainer)} />
+                                <Route path="/orders/search" exact component={requiresAuth(AdminOrderSearchContainer)} />
+                                <Route path="/orders/search-results" exact component={requiresAuth(AdminOrderSearchResultContainer)} />
+                                <Route path="/order/:id" exact component={requiresAuth(AdminOrderLiteRetrieveContainer)} />
+                                <Route path="/order/:id/full" exact component={requiresAuth(AdminOrderFullRetrieveContainer)} />
+                                <Route path="/order/:id/tasks" exact component={requiresAuth(AdminOrderTaskListContainer)} />
+                                <Route path="/order/:id/activity-sheets" exact component={requiresAuth(AdminOrderActivitySheetListContainer)} />
+                                <Route path="/order/:id/comments" exact component={requiresAuth(AdminOrderCommentContainer)} />
+                                <Route path="/order/:id/file/add" exact component={requiresAuth(AdminOrderFileUploadAddContainer)} />
+                                <Route path="/order/:id/file/archive/:fileId" exact component={requiresAuth(AdminOrderFileUploadArchiveContainer)} />
+                                <Route path="/order/:id/files" exact component={requiresAuth(AdminOrderFileUploadListContainer)} />
+                                <Route path="/order/:id/postpone" exact component={requiresAuth(AdminOrderPostponeOperationContainer)} />
+                                <Route path="/order/:id/unassign-associate" exact component={requiresAuth(AdminOrderUnassignAssociateOperationContainer)} />
+                                <Route path="/order/:id/close" exact component={requiresAuth(AdminOrderCloseOperationContainer)} />
+                                <Route path="/order/:id/reopen" exact component={requiresAuth(AdminOrderReopenOperationContainer)} />
+                                <Route path="/order/:id/update/lite" exact component={requiresAuth(AdminOrderLiteUpdateContainer)} />
+                                <Route path="/order/:id/transfer-step-1" exact component={requiresAuth(AdminOrderTransferStep1Container)} />
+                                <Route path="/order/:id/transfer-step-2" exact component={requiresAuth(AdminOrderTransferStep2Container)} />
+                                <Route path="/order/:id/transfer-step-3" exact component={requiresAuth(AdminOrderTransferStep3Container)} />
+                                <Route path="/order/:id/transfer-step-4" exact component={requiresAuth(AdminOrderTransferStep4Container)} />
+                                <Route path="/order/:id/transfer-step-5" exact component={requiresAuth(AdminOrderTransferStep5Container)} />
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />

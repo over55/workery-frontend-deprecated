@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import ActivitySheetListComponent from "../../../../components/orders/admin/retrieve/adminOrderActivitySheetListComponent";
+import AdminOrderActivitySheetListComponent from "../../../../components/orders/admin/retrieve/adminOrderActivitySheetListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullActivitySheetList } from "../../../../actions/activitySheetActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
@@ -166,7 +166,7 @@ class OrderActivitySheetListContainer extends Component {
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
         return (
-            <ActivitySheetListComponent
+            <AdminOrderActivitySheetListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}

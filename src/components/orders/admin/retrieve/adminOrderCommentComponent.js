@@ -17,7 +17,7 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 
 
-export default class OrderCommentComponent extends Component {
+export default class AdminOrderCommentComponent extends Component {
     render() {
         const {
             orderComments, flashMessage, isLoading, id, associate, text, onTextChange, errors, onClick

@@ -8,7 +8,7 @@ import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
 
 
-export default class OrderCreateStep1Component extends Component {
+export default class AdminOrderCreateStep1Component extends Component {
     render() {
         const { firstName, lastName, email, phone, errors, onTextChange, isLoading, onClick } = this.props;
         return (

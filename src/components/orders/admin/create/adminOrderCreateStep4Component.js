@@ -7,7 +7,7 @@ import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
 
 
-export default class OrderCreateStep4Component extends Component {
+export default class AdminOrderCreateStep4Component extends Component {
     render() {
         const {
             description, onTextChange,

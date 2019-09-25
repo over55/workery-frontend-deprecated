@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderUnassignAssociateOperationComponent from "../../../../components/orders/admin/operations/adminOrderUnassignAssociateOperationComponent";
+import AdminOrderUnassignAssociateOperationComponent from "../../../../components/orders/admin/operations/adminOrderUnassignAssociateOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateUnassignAssociateInput } from "../../../../validators/orderValidator";
 import {
@@ -11,7 +11,7 @@ import {
 import { postOrderUnassignAssociate } from "../../../../actions/orderActions";
 
 
-class OrderUnassignAssociateOperationContainer extends Component {
+class AdminOrderUnassignAssociateOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -135,7 +135,7 @@ class OrderUnassignAssociateOperationContainer extends Component {
         const { errors, id, reason } = this.state;
 
         return (
-            <OrderUnassignAssociateOperationComponent
+            <AdminOrderUnassignAssociateOperationComponent
                 reason={reason}
                 id={id}
                 errors={errors}
@@ -167,4 +167,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderUnassignAssociateOperationContainer);
+)(AdminOrderUnassignAssociateOperationContainer);

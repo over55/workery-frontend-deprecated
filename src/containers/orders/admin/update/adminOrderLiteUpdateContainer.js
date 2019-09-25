@@ -11,7 +11,7 @@ import { putOrderLiteDetail } from '../../../../actions/orderActions';
 
 
 
-class OrderLiteUpdateContainer extends Component {
+class AdminOrderLiteUpdateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -251,4 +251,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderLiteUpdateContainer);
+)(AdminOrderLiteUpdateContainer);

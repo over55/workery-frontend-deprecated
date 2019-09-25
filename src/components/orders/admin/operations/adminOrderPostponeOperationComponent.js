@@ -11,7 +11,7 @@ import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
 import { WORK_ORDER_POSTPONE_REASON_CHOICES } from "../../../../constants/api";
 
 
-class OrderReopenOperationComponent extends Component {
+class AdminOrderReopenOperationComponent extends Component {
     render() {
         const {
             id, errors, reason, reasonOther, startDate, comment, isLoading, onClick, onTextChange, onSelectChange, onStartDateTimeChange, order
@@ -109,4 +109,4 @@ class OrderReopenOperationComponent extends Component {
         );
     }
 }
-export default OrderReopenOperationComponent;
+export default AdminOrderReopenOperationComponent;

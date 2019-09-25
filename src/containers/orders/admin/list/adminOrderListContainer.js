@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import OrderListComponent from "../../../../components/orders/admin/list/adminOrderListComponent";
+import AdminOrderListComponent from "../../../../components/orders/admin/list/adminOrderListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullOrderList } from "../../../../actions/orderActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
-class OrderListContainer extends Component {
+class AdminOrderListContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -156,7 +156,7 @@ class OrderListContainer extends Component {
     render() {
         const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
-            <OrderListComponent
+            <AdminOrderListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
@@ -194,4 +194,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderListContainer);
+)(AdminOrderListContainer);

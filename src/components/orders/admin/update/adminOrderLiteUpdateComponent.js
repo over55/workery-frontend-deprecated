@@ -7,7 +7,7 @@ import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
 
 
-export default class OrderLiteUpdateComponent extends Component {
+export default class AdminOrderLiteUpdateComponent extends Component {
     render() {
         const {
             id, isLoading, errors,

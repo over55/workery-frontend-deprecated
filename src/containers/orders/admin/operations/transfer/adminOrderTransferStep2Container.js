@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderTransferStep2Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep2Component";
+import AdminOrderTransferStep2Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep2Component";
 import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
 import { pullClientList } from "../../../../../actions/clientActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../../constants/api";
 import { localStorageGetObjectItem } from '../../../../../helpers/localStorageUtility';
 
 
-class OrderTransferStep2Container extends Component {
+class AdminOrderTransferStep2Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -179,7 +179,7 @@ class OrderTransferStep2Container extends Component {
         const hasNext = this.props.clientList.next !== null;
         const hasPrevious = this.props.clientList.previous !== null;
         return (
-            <OrderTransferStep2Component
+            <AdminOrderTransferStep2Component
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
@@ -223,4 +223,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderTransferStep2Container);
+)(AdminOrderTransferStep2Container);

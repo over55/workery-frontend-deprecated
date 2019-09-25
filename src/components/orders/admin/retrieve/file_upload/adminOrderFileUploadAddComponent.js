@@ -20,7 +20,7 @@ import { FlashMessageComponent } from "../../../../flashMessageComponent";
 import { BootstrapSingleFileUploadAndPreview } from "../../../../bootstrap/bootstrapSingleFileUploadAndPreview";
 
 
-export default class OrderFileUploadAddComponent extends Component {
+export default class AdminOrderFileUploadAddComponent extends Component {
     render() {
         const {
             title, description, tags, tagOptions, isTagSetsLoading, file, isArchived,

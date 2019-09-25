@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderTransferStep5Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep5Component";
+import AdminOrderTransferStep5Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep5Component";
 import { setFlashMessage } from "../../../../../actions/flashMessageActions";
 import { validateTransferInput } from "../../../../../validators/orderValidator";
 import {
@@ -18,7 +18,7 @@ import { postOrderTransfer } from "../../../../../actions/orderActions";
 
 
 
-class OrderTransferOperationContainer extends Component {
+class AdminOrderTransferStep5Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -146,7 +146,7 @@ class OrderTransferOperationContainer extends Component {
         } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
-            <OrderTransferStep5Component
+            <AdminOrderTransferStep5Component
                 id={id}
                 order={order}
                 client={client}
@@ -201,4 +201,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderTransferOperationContainer);
+)(AdminOrderTransferStep5Container);

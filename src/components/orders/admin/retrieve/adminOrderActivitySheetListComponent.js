@@ -151,7 +151,7 @@ function createdAtFormatter(cell, row){
 }
 
 
-export default class OrderActivitySheetListComponent extends Component {
+export default class AdminOrderActivitySheetListComponent extends Component {
     render() {
         const {
             // Pagination

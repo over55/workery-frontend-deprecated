@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderTransferStep3Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep3Component";
+import AdminOrderTransferStep3Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep3Component";
 import { validateSearchInput } from "../../../../../validators/associateValidator";
 import { localStorageSetObjectOrArrayItem } from '../../../../../helpers/localStorageUtility';
 
@@ -125,7 +125,7 @@ class AssociateListContainer extends Component {
 
     render() {
         return (
-            <OrderTransferStep3Component
+            <AdminOrderTransferStep3Component
                 keyword={this.state.keyword}
                 givenName={this.state.givenName}
                 lastName={this.state.lastName}

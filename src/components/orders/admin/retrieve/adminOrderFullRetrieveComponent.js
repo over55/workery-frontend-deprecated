@@ -14,7 +14,7 @@ import {
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 
-export default class OrderFullRetrieveComponent extends Component {
+export default class AdminOrderFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const { id, order, errors, flashMessage } = this.props;

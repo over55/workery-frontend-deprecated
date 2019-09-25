@@ -7,7 +7,7 @@ import { validateSearchInput } from "../../../../validators/orderValidator";
 import { localStorageSetObjectOrArrayItem } from '../../../../helpers/localStorageUtility';
 
 
-class OrderListContainer extends Component {
+class AdminOrderSearchContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -159,4 +159,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderListContainer);
+)(AdminOrderSearchContainer);

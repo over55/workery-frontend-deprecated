@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import OrderLiteRetrieveComponent from "../../../../components/orders/admin/retrieve/adminOrderLiteRetrieveComponent";
+import AdminOrderLiteRetrieveComponent from "../../../../components/orders/admin/retrieve/adminOrderLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullOrderDetail } from "../../../../actions/orderActions";
 
@@ -77,7 +77,7 @@ class OrderLiteRetrieveContainer extends Component {
     render() {
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
-            <OrderLiteRetrieveComponent
+            <AdminOrderLiteRetrieveComponent
                 id={this.state.id}
                 order={order}
                 flashMessage={this.props.flashMessage}

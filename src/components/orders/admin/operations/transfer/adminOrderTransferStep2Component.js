@@ -17,7 +17,7 @@ import {
 } from '../../../../../constants/api';
 
 
-export default class OrderTransferStep2Component extends Component {
+export default class AdminOrderTransferStep2Component extends Component {
     render() {
         const {
             clients, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick, onClientClick, orderDetail

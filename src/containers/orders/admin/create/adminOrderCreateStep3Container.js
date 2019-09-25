@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import OrderCreateStep3Component from "../../../../components/orders/admin/create/adminOrderCreateStep3Component";
+import  AdminOrderCreateStep3Component from "../../../../components/orders/admin/create/adminOrderCreateStep3Component";
 import {
     localStorageSetObjectOrArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
 } from '../../../../helpers/localStorageUtility';
 import { validateStep3CreateInput } from "../../../../validators/orderValidator";
 
 
-class OrderCreateStep3Container extends Component {
+class  AdminOrderCreateStep3Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -122,7 +122,7 @@ class OrderCreateStep3Container extends Component {
     render() {
         const { startDate, jobType, homeSupport, errors } = this.state;
         return (
-            <OrderCreateStep3Component
+            < AdminOrderCreateStep3Component
                 startDate={startDate}
                 onStartDateChange={this.onStartDateChange}
                 jobType={jobType}
@@ -149,4 +149,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCreateStep3Container);
+)( AdminOrderCreateStep3Container);

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 
-export default class OrderLiteRetrieveComponent extends Component {
+export default class AdminOrderLiteRetrieveComponent extends Component {
     render() {
         const { id, order, flashMessage } = this.props;
         const isCancelled = order.state === "cancelled";

@@ -8,7 +8,7 @@ import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
 import { JOB_TYPE_CHOICES, HOME_SUPPORT_CHOICES, IS_ONGOING_JOB_TYPE } from '../../../../constants/api';
 
 
-export default class OrderCreateStep3Component extends Component {
+export default class AdminOrderCreateStep3Component extends Component {
     render() {
         const {
             errors, onNextClick,

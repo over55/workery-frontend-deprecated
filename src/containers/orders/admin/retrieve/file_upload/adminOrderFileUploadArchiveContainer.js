@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderFileUploadArchiveComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadArchiveComponent";
+import AdminOrderFileUploadArchiveComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadArchiveComponent";
 import { setFlashMessage } from "../../../../../actions/flashMessageActions";
 import { deleteOrderFileUpload } from "../../../../../actions/orderFileUploadActions";
 
@@ -101,7 +101,7 @@ class OrderFileUploadArchiveContainer extends Component {
         const { isLoading, id, errors } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
-            <OrderFileUploadArchiveComponent
+            <AdminOrderFileUploadArchiveComponent
                 id={id}
                 order={order}
                 isLoading={isLoading}

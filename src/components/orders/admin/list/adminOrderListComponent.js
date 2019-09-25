@@ -203,7 +203,7 @@ function detailLinkFormatter(cell, row){
 }
 
 
-class OrderListComponent extends Component {
+class AdminOrderListComponent extends Component {
     render() {
         const {
             // Pagination
@@ -281,4 +281,4 @@ class OrderListComponent extends Component {
     }
 }
 
-export default OrderListComponent;
+export default AdminOrderListComponent;

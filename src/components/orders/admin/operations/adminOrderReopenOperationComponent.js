@@ -7,7 +7,7 @@ import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
-export default class OrderPostponeOperationComponent extends Component {
+export default class AdminOrderPostponeOperationComponent extends Component {
     render() {
         const {
             reason, errors, id, order, isLoading, onTextChange, onClick } = this.props;

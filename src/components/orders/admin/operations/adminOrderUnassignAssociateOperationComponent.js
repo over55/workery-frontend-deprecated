@@ -8,7 +8,7 @@ import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
-class OrderUnassignAssociateOperationComponent extends Component {
+class AdminOrderUnassignAssociateOperationComponent extends Component {
     render() {
         const {
             reason, errors, id, order, isLoading, onTextChange, onClick } = this.props;
@@ -70,4 +70,4 @@ class OrderUnassignAssociateOperationComponent extends Component {
     }
 }
 
-export default OrderUnassignAssociateOperationComponent;
+export default AdminOrderUnassignAssociateOperationComponent;

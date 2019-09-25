@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import OrderFullRetrieveComponent from "../../../../components/orders/admin/retrieve/adminOrderFullRetrieveComponent";
+import AdminOrderFullRetrieveComponent from "../../../../components/orders/admin/retrieve/adminOrderFullRetrieveComponent";
 import { pullOrderDetail } from "../../../../actions/orderActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { getHowHearReactSelectOptions } from "../../../../actions/howHearActions";
@@ -84,7 +84,7 @@ class OrderFullRetrieveContainer extends Component {
     render() {
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
-            <OrderFullRetrieveComponent
+            <AdminOrderFullRetrieveComponent
                 id={this.state.id}
                 order={order}
                 flashMessage={this.props.flashMessage}

@@ -6,7 +6,7 @@ import { BootstrapErrorsProcessingAlert } from "../../../../bootstrap/bootstrapA
 import { BootstrapPageLoadingAnimation } from "../../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
-class OrderTransferStep5Component extends Component {
+class AdminOrderTransferStep5Component extends Component {
     render() {
         const {
             clientGivenName, clientLastName, associateGivenName, associateLastName, onSubmitClick,
@@ -120,4 +120,4 @@ class OrderTransferStep5Component extends Component {
     }
 }
 
-export default OrderTransferStep5Component;
+export default AdminOrderTransferStep5Component;

@@ -236,7 +236,7 @@ function financialsLinkFormatter(cell, row){
 }
 
 
-class OrderSearchResultComponent extends Component {
+class AdminOrderSearchResultComponent extends Component {
     render() {
         const {
             // Pagination
@@ -296,4 +296,4 @@ class OrderSearchResultComponent extends Component {
     }
 }
 
-export default OrderSearchResultComponent;
+export default AdminOrderSearchResultComponent;

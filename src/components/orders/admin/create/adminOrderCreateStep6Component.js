@@ -8,7 +8,7 @@ import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAler
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation"
 
 
-export default class OrderCreateStep6Component extends Component {
+export default class AdminOrderCreateStep6Component extends Component {
     render() {
         const {
             clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, tags, comment, isLoading, errors, onSubmitClick

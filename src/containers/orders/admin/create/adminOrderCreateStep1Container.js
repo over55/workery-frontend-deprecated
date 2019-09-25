@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderCreateStep1Component from "../../../../components/orders/admin/create/adminOrderCreateStep1Component";
+import  AdminOrderCreateStep1Component from "../../../../components/orders/admin/create/adminOrderCreateStep1Component";
 import { validateStep1CreateInput } from "../../../../validators/orderValidator";
 
-class OrderCreateStep1Container extends Component {
+class  AdminOrderCreateStep1Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -99,7 +99,7 @@ class OrderCreateStep1Container extends Component {
     render() {
         const { firstName, lastName, email, phone, errors } = this.state;
         return (
-            <OrderCreateStep1Component
+            < AdminOrderCreateStep1Component
                 firstName={firstName}
                 lastName={lastName}
                 email={email}
@@ -127,4 +127,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderCreateStep1Container);
+)( AdminOrderCreateStep1Container);

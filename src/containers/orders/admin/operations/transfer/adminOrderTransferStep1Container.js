@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import OrderTransferStep1Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep1Component";
+import AdminOrderTransferStep1Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep1Component";
 import { validateSearchInput } from "../../../../../validators/clientValidator";
 import { localStorageSetObjectOrArrayItem } from '../../../../../helpers/localStorageUtility';
 
 
-class OrderTransferStep1Container extends Component {
+class AdminOrderTransferStep1Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -125,7 +125,7 @@ class OrderTransferStep1Container extends Component {
 
     render() {
         return (
-            <OrderTransferStep1Component
+            <AdminOrderTransferStep1Component
                 keyword={this.state.keyword}
                 givenName={this.state.givenName}
                 lastName={this.state.lastName}
@@ -159,4 +159,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderTransferStep1Container);
+)(AdminOrderTransferStep1Container);

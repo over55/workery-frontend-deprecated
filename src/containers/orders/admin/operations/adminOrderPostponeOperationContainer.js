@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import OrderPostponeOperationComponent from "../../../../components/orders/admin/operations/adminOrderPostponeOperationComponent";
+import AdminOrderReopenOperationComponent from "../../../../components/orders/admin/operations/adminOrderPostponeOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validatePostponeInput } from "../../../../validators/orderValidator";
 import {
@@ -12,7 +12,7 @@ import {
 import { postOrderPostpone } from "../../../../actions/orderActions";
 
 
-class OrderPostponeOperationContainer extends Component {
+class AdminOrderPostponeOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -159,7 +159,7 @@ class OrderPostponeOperationContainer extends Component {
             reason, reasonOther, startDate, comment, id, errors, isLoading,
         } = this.state;
         return (
-            <OrderPostponeOperationComponent
+            <AdminOrderReopenOperationComponent
                 isLoading={isLoading}
                 errors={errors}
                 id={id}
@@ -197,4 +197,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderPostponeOperationContainer);
+)(AdminOrderPostponeOperationContainer);

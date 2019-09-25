@@ -6,7 +6,7 @@ import { BootstrapInput } from "../../../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../../../bootstrap/bootstrapTelephoneInput";
 
 
-class OrderTransferStep1Component extends Component {
+class AdminOrderTransferStep1Component extends Component {
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange, orderDetail } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
@@ -176,4 +176,4 @@ class OrderTransferStep1Component extends Component {
     }
 }
 
-export default OrderTransferStep1Component;
+export default AdminOrderTransferStep1Component;
