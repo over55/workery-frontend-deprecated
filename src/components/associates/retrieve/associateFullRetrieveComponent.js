@@ -353,6 +353,11 @@ export default class AssociateFullRetrieveComponent extends Component {
                                                     View Account Balance&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
+                                            <li>
+                                                <Link to={`/associate/${id}/operations/password`}>
+                                                    Change Password&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
                                         </ul>
                                     </td>
                                 </tr>

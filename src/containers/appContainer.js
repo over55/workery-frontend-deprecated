@@ -82,6 +82,7 @@ import AssociateAddressUpdateContainer from "./associates/update/associateAddres
 import AssociateContactUpdateContainer from "./associates/update/associateContactUpdateContainer";
 import AssociateMetricsUpdateContainer from "./associates/update/associateMetricsUpdateContainer";
 import AssociateBalanceOperationContainer from "./associates/operations/associateBalanceOperationContainer";
+import AssociateChangePasswordOperationContainer from "./associates/operations/associateChangePasswordOperationContainer";
 
 // Work Order
 import OrderListContainer from "./orders/list/orderListContainer";
@@ -356,6 +357,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/update/contact" exact component={requiresAuth(AssociateContactUpdateContainer)} />
                                 <Route path="/associate/:id/update/metrics" exact component={requiresAuth(AssociateMetricsUpdateContainer)} />
                                 <Route path="/associate/:id/operations/balance" exact component={requiresAuth(AssociateBalanceOperationContainer)} />
+                                <Route path="/associate/:id/operations/password" exact component={requiresAuth(AssociateChangePasswordOperationContainer)} />
 
 
                                 { /* WORK ORDER */}
