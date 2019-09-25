@@ -2,21 +2,21 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
-import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
-import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
-import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from '../../../bootstrap/bootstrapSingleSelect';
+import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
+import { BootstrapCountrySelect } from '../../../bootstrap/bootstrapCountrySelect'
+import { BootstrapRegionSelect } from '../../../bootstrap/bootstrapRegionSelect'
+import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
 import {
     IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES, ORGANIZATION_TYPE_OF_CHOICES
-} from "../../../constants/api";
+} from "../../../../constants/api";
 
 
 class AdminAssociateContactUpdateComponent extends Component {

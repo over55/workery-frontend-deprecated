@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep6Component from "../../../components/associates/create/associateCreateStep6Component";
+import AssociateCreateStep6Component from "../../../../components/associates/admin/create/adminAssociateCreateStep6Component";
 import {
     localStorageGetObjectItem,
     localStorageSetObjectOrArrayItem,
     localStorageGetArrayItem,
     localStorageGetIntegerItem,
     localStorageGetDateItem
-} from '../../../helpers/localStorageUtility';
-import { validateStep6CreateInput } from "../../../validators/associateValidator";
+} from '../../../../helpers/localStorageUtility';
+import { validateStep6CreateInput } from "../../../../validators/associateValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID
-} from '../../../constants/api';
-import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
-import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
-import { getVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../actions/vehicleTypeActions";
+} from '../../../../constants/api';
+import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
+import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
+import { getVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../../actions/vehicleTypeActions";
 
 
-class AssociateCreateStep6Container extends Component {
+class AdminAssociateCreateStep6Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -385,4 +385,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateCreateStep6Container);
+)(AdminAssociateCreateStep6Container);

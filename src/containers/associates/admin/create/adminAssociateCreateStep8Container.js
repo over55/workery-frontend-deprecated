@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateCreateStep8Component from "../../../components/associates/create/associateCreateStep8Component";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
+import AssociateCreateStep8Component from "../../../../components/associates/admin/create/adminAssociateCreateStep8Component";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import {
     localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining
-} from '../../../helpers/localStorageUtility';
-import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
-import { postAssociateDetail } from '../../../actions/associateActions';
-import { validateStep8CreateInput } from "../../../validators/associateValidator";
+} from '../../../../helpers/localStorageUtility';
+import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../../constants/api';
+import { postAssociateDetail } from '../../../../actions/associateActions';
+import { validateStep8CreateInput } from "../../../../validators/associateValidator";
 
 
-class AssociateCreateStep8Container extends Component {
+class AdminAssociateCreateStep8Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -463,4 +463,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateCreateStep8Container);
+)(AdminAssociateCreateStep8Container);

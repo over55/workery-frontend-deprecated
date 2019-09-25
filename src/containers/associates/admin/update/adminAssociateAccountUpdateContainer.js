@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateAccountUpdateComponent from "../../../components/associates/update/associateAccountUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateAccountInput } from "../../../validators/associateValidator";
-import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
-import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
-import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../actions/vehicleTypeActions";
-import { putAssociateAccountDetail } from "../../../actions/associateActions";
+import AssociateAccountUpdateComponent from "../../../../components/associates/admin/update/adminAssociateAccountUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { validateAccountInput } from "../../../../validators/associateValidator";
+import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
+import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
+import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../../actions/vehicleTypeActions";
+import { putAssociateAccountDetail } from "../../../../actions/associateActions";
 
 
-class AssociateAccountUpdateContainer extends Component {
+class AdminAssociateAccountUpdateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -501,4 +501,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateAccountUpdateContainer);
+)(AdminAssociateAccountUpdateContainer);

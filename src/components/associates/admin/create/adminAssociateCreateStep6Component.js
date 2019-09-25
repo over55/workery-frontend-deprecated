@@ -2,15 +2,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
-import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
-import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { IS_ACTIVE_TYPE_OF_CHOICES } from "../../../constants/api";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from '../../../bootstrap/bootstrapSingleSelect';
+import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
+import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
+import { IS_ACTIVE_TYPE_OF_CHOICES } from "../../../../constants/api";
 
 
 class AdminAssociateCreateStep6Component extends Component {

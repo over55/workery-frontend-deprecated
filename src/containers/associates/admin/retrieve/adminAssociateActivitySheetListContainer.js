@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import ActivitySheetListComponent from "../../../components/associates/retrieve/associateActivitySheetListComponent";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullActivitySheetList } from "../../../actions/activitySheetActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import ActivitySheetListComponent from "../../../../components/associates/admin/retrieve/adminAssociateActivitySheetListComponent";
+import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullActivitySheetList } from "../../../../actions/activitySheetActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
-class AssociateActivitySheetListContainer extends Component {
+
+class AdminAssociateActivitySheetListContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -207,4 +208,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateActivitySheetListContainer);
+)(AdminAssociateActivitySheetListContainer);

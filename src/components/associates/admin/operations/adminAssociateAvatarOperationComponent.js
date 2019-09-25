@@ -11,9 +11,9 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { BootstrapSingleImageUploadAndPreview } from "../../bootstrap/bootstrapSingleImageUploadAndPreview";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapSingleImageUploadAndPreview } from "../../../bootstrap/bootstrapSingleImageUploadAndPreview";
 
 
 export default class AdminAssociateAvatarOperationComponentOperationComponent extends Component {

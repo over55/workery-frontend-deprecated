@@ -9,12 +9,12 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { FlashMessageComponent } from "../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { FlashMessageComponent } from "../../../flashMessageComponent";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-} from '../../../constants/api';
+} from '../../../../constants/api';
 
 
 export default class AdminAssociateSearchResultComponent extends Component {

@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AssociateChangePasswordOperationComponent from "../../../components/associates/operations/associateChangePasswordOperationComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { postAssociateChangePasswordOperation } from "../../../actions/associateActions";
-import { validateChangePasswordOperationInput } from "../../../validators/associateValidator"
+import AssociateChangePasswordOperationComponent from "../../../../components/associates/admin/operations/adminAssociateChangePasswordOperationComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { postAssociateChangePasswordOperation } from "../../../../actions/associateActions";
+import { validateChangePasswordOperationInput } from "../../../../validators/associateValidator"
 
 
-class AssociateAvatarOperationContainer extends Component {
+class AdminAssociateAvatarOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -171,4 +171,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateAvatarOperationContainer);
+)(AdminAssociateAvatarOperationContainer);

@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep5Component from "../../../components/associates/create/associateCreateStep5Component";
+import AssociateCreateStep5Component from "../../../../components/associates/admin/create/adminAssociateCreateStep5Component";
 import {
     localStorageGetObjectItem, localStorageSetObjectOrArrayItem
-} from '../../../helpers/localStorageUtility';
-import { validateStep5CreateInput } from "../../../validators/associateValidator";
+} from '../../../../helpers/localStorageUtility';
+import { validateStep5CreateInput } from "../../../../validators/associateValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID
-} from '../../../constants/api';
-import { BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES } from "../../../constants/api";
+} from '../../../../constants/api';
+import { BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES } from "../../../../constants/api";
 
 
 
-class AssociateCreateStep5Container extends Component {
+class AdminAssociateCreateStep5Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -192,4 +192,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateCreateStep5Container);
+)(AdminAssociateCreateStep5Container);

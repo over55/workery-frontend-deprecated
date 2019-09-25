@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AssociateSearchResultComponent from "../../../components/associates/search/associateSearchResultComponent";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullAssociateList } from "../../../actions/associateActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
-import { localStorageGetObjectItem } from '../../../helpers/localStorageUtility';
+import AssociateSearchResultComponent from "../../../../components/associates/admin/search/adminAssociateSearchResultComponent";
+import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullAssociateList } from "../../../../actions/associateActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
+import { localStorageGetObjectItem } from '../../../../helpers/localStorageUtility';
 
 
-class AssociateSearchResultContainer extends Component {
+class AdminAssociateSearchResultContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -218,4 +218,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateSearchResultContainer);
+)(AdminAssociateSearchResultContainer);

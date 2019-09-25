@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateAddressUpdateComponent from "../../../components/associates/update/associateAddressUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateAddressInput } from "../../../validators/associateValidator";
-import { putAssociateAddressDetail } from "../../../actions/associateActions";
+import AssociateAddressUpdateComponent from "../../../../components/associates/admin/update/adminAssociateAddressUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { validateAddressInput } from "../../../../validators/associateValidator";
+import { putAssociateAddressDetail } from "../../../../actions/associateActions";
 
 
-class AssociateAddressUpdateContainer extends Component {
+class AdminAssociateAddressUpdateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -274,4 +274,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateAddressUpdateContainer);
+)(AdminAssociateAddressUpdateContainer);

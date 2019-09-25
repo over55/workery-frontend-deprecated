@@ -2,13 +2,13 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
-import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, ORGANIZATION_TYPE_OF_CHOICES } from "../../../constants/api";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
+import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
+import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, ORGANIZATION_TYPE_OF_CHOICES } from "../../../../constants/api";
 
 
 class AdminAssociateCreateStep4Component extends Component {

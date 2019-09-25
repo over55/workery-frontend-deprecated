@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AssociateFullRetrieveComponent from "../../../components/associates/retrieve/associateFullRetrieveComponent";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullAssociateDetail } from "../../../actions/associateActions";
+import AssociateFullRetrieveComponent from "../../../../components/associates/admin/retrieve/adminAssociateFullRetrieveComponent";
+import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullAssociateDetail } from "../../../../actions/associateActions";
 
 
-class AssociateFullRetrieveContainer extends Component {
+class AdminAssociateFullRetrieveContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -112,4 +112,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateFullRetrieveContainer);
+)(AdminAssociateFullRetrieveContainer);

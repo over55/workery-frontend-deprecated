@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import OrderListComponent from "../../../components/associates/retrieve/associateOrderListComponent";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullOrderList } from "../../../actions/orderActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import OrderListComponent from "../../../../components/associates/admin/retrieve/adminAssociateOrderListComponent";
+import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullOrderList } from "../../../../actions/orderActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
-class AssociateOrderListContainer extends Component {
+
+class AdminAssociateOrderListContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -197,4 +198,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateOrderListContainer);
+)(AdminAssociateOrderListContainer);

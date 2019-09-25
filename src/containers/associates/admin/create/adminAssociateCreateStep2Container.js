@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep2Component from "../../../components/associates/create/associateCreateStep2Component";
-import { pullAssociateList } from "../../../actions/associateActions";
+import AssociateCreateStep2Component from "../../../../components/associates/admin/create/adminAssociateCreateStep2Component";
+import { pullAssociateList } from "../../../../actions/associateActions";
 
 
-class AssociateCreateStep2Container extends Component {
+class AdminAssociateCreateStep2Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -187,4 +187,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateCreateStep2Container);
+)(AdminAssociateCreateStep2Container);

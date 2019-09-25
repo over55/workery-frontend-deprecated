@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateSearchComponent from "../../../components/associates/search/associateSearchComponent";
-import { validateSearchInput } from "../../../validators/associateValidator";
-import { localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
+import AssociateSearchComponent from "../../../../components/associates/admin/search/adminAssociateSearchComponent";
+import { validateSearchInput } from "../../../../validators/associateValidator";
+import { localStorageSetObjectOrArrayItem } from '../../../../helpers/localStorageUtility';
 
 
-class AssociateListContainer extends Component {
+class AdminAssociateListContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -159,4 +159,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateListContainer);
+)(AdminAssociateListContainer);

@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep4Component from "../../../components/associates/create/associateCreateStep4Component";
-import { validateStep4CreateInput } from "../../../validators/associateValidator";
+import AssociateCreateStep4Component from "../../../../components/associates/admin/create/adminAssociateCreateStep4Component";
+import { validateStep4CreateInput } from "../../../../validators/associateValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     TELEPHONE_CONTACT_POINT_TYPE_OF_ID
-} from '../../../constants/api';
-import { localStorageGetIntegerItem, localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
+} from '../../../../constants/api';
+import { localStorageGetIntegerItem, localStorageSetObjectOrArrayItem } from '../../../../helpers/localStorageUtility';
 
-class AssociateCreateStep4Container extends Component {
+
+class AdminAssociateCreateStep4Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -198,4 +199,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateCreateStep4Container);
+)(AdminAssociateCreateStep4Container);

@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep7Component from "../../../components/associates/create/associateCreateStep7Component";
-import { validateStep7CreateInput } from "../../../validators/associateValidator";
+import AssociateCreateStep7Component from "../../../../components/associates/admin/create/adminAssociateCreateStep7Component";
+import { validateStep7CreateInput } from "../../../../validators/associateValidator";
 import {
     localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
-} from '../../../helpers/localStorageUtility';
-import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
+} from '../../../../helpers/localStorageUtility';
+import { getHowHearReactSelectOptions, pullHowHearList } from "../../../../actions/howHearActions";
+import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID
-} from '../../../constants/api';
+} from '../../../../constants/api';
 
 
-class AssociateCreateStep7Container extends Component {
+class AdminAssociateCreateStep7Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -274,4 +274,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateCreateStep7Container);
+)(AdminAssociateCreateStep7Container);

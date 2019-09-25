@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateMetricsUpdateComponent from "../../../components/associates/update/associateMetricsUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateMetricsInput } from "../../../validators/associateValidator";
-import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { putAssociateMetricsDetail } from "../../../actions/associateActions";
+import AssociateMetricsUpdateComponent from "../../../../components/associates/admin/update/adminAssociateMetricsUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { validateMetricsInput } from "../../../../validators/associateValidator";
+import { getHowHearReactSelectOptions, pullHowHearList } from "../../../../actions/howHearActions";
+import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
+import { putAssociateMetricsDetail } from "../../../../actions/associateActions";
 
 
-class AssociateMetricsUpdateContainer extends Component {
+class AdminAssociateMetricsUpdateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -328,4 +328,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateMetricsUpdateContainer);
+)(AdminAssociateMetricsUpdateContainer);

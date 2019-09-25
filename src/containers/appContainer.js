@@ -56,33 +56,33 @@ import ClientArchiveOperationContainer from "./clients/operations/clientArchiveO
 import ClientRezUpgradeOperationContainer from "./clients/operations/clientRezUpgradeOperationContainer";
 import ClientPermanentDeleteOperationContainer from "./clients/operations/clientPermanentDeleteOperationContainer";
 
-// Associate
-import AssociateListContainer from "./associates/list/associateListContainer";
-import AssociateSearchContainer from "./associates/search/associateSearchContainer";
-import AssociateSearchResultContainer from "./associates/search/associateSearchResultContainer";
-import AssociateLiteRetrieveContainer from "./associates/retrieve/associateLiteRetrieveContainer";
-import AssociateFullRetrieveContainer from "./associates/retrieve/associateFullRetrieveContainer";
-import AssociateOrderListContainer from "./associates/retrieve/associateOrderListContainer";
-import AssociateActivitySheetListContainer from "./associates/retrieve/associateActivitySheetListContainer";
-import AssociateCommentContainer from "./associates/retrieve/associateCommentContainer";
-import AssociateAvatarOperationContainer from "./associates/operations/associateAvatarOperationContainer";
-import AssociateFileUploadAddContainer from "./associates/retrieve/file_upload/associateFileUploadAddContainer";
-import AssociateFileUploadArchiveContainer from "./associates/retrieve/file_upload/associateFileUploadArchiveContainer";
-import AssociateFileUploadListContainer from "./associates/retrieve/file_upload/associateFileUploadListContainer";
-import AssociateCreateStep1Container from "./associates/create/associateCreateStep1Container";
-import AssociateCreateStep2Container from "./associates/create/associateCreateStep2Container";
-import AssociateCreateStep3Container from "./associates/create/associateCreateStep3Container";
-import AssociateCreateStep4Container from "./associates/create/associateCreateStep4Container";
-import AssociateCreateStep5Container from "./associates/create/associateCreateStep5Container";
-import AssociateCreateStep6Container from "./associates/create/associateCreateStep6Container";
-import AssociateCreateStep7Container from "./associates/create/associateCreateStep7Container";
-import AssociateCreateStep8Container from "./associates/create/associateCreateStep8Container";
-import AssociateAccountUpdateContainer from "./associates/update/associateAccountUpdateContainer";
-import AssociateAddressUpdateContainer from "./associates/update/associateAddressUpdateContainer";
-import AssociateContactUpdateContainer from "./associates/update/associateContactUpdateContainer";
-import AssociateMetricsUpdateContainer from "./associates/update/associateMetricsUpdateContainer";
-import AssociateBalanceOperationContainer from "./associates/operations/associateBalanceOperationContainer";
-import AssociateChangePasswordOperationContainer from "./associates/operations/associateChangePasswordOperationContainer";
+// Admin Associate
+import AdminAssociateListContainer from "./associates/admin/list/adminAssociateListContainer";
+import AdminAssociateSearchContainer from "./associates/admin/search/adminAssociateSearchContainer";
+import AdminAssociateSearchResultContainer from "./associates/admin/search/adminAssociateSearchResultContainer";
+import AdminAssociateLiteRetrieveContainer from "./associates/admin/retrieve/adminAssociateLiteRetrieveContainer";
+import AdminAssociateFullRetrieveContainer from "./associates/admin/retrieve/adminAssociateFullRetrieveContainer";
+import AdminAssociateOrderListContainer from "./associates/admin/retrieve/adminAssociateOrderListContainer";
+import AdminAssociateActivitySheetListContainer from "./associates/admin/retrieve/adminAssociateActivitySheetListContainer";
+import AdminAssociateCommentContainer from "./associates/admin/retrieve/adminAssociateCommentContainer";
+import AdminAssociateAvatarOperationContainer from "./associates/admin/operations/adminAssociateAvatarOperationContainer";
+import AdminAssociateFileUploadAddContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadAddContainer";
+import AdminAssociateFileUploadArchiveContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadArchiveContainer";
+import AdminAssociateFileUploadListContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadListContainer";
+import AdminAssociateCreateStep1Container from "./associates/admin/create/adminAssociateCreateStep1Container";
+import AdminAssociateCreateStep2Container from "./associates/admin/create/adminAssociateCreateStep2Container";
+import AdminAssociateCreateStep3Container from "./associates/admin/create/adminAssociateCreateStep3Container";
+import AdminAssociateCreateStep4Container from "./associates/admin/create/adminAssociateCreateStep4Container";
+import AdminAssociateCreateStep5Container from "./associates/admin/create/adminAssociateCreateStep5Container";
+import AdminAssociateCreateStep6Container from "./associates/admin/create/adminAssociateCreateStep6Container";
+import AdminAssociateCreateStep7Container from "./associates/admin/create/adminAssociateCreateStep7Container";
+import AdminAssociateCreateStep8Container from "./associates/admin/create/adminAssociateCreateStep8Container";
+import AdminAssociateAccountUpdateContainer from "./associates/admin/update/adminAssociateAccountUpdateContainer";
+import AdminAssociateAddressUpdateContainer from "./associates/admin/update/adminAssociateAddressUpdateContainer";
+import AdminAssociateContactUpdateContainer from "./associates/admin/update/adminAssociateContactUpdateContainer";
+import AdminAssociateMetricsUpdateContainer from "./associates/admin/update/adminAssociateMetricsUpdateContainer";
+import AdminAssociateBalanceOperationContainer from "./associates/admin/operations/adminAssociateBalanceOperationContainer";
+import AdminAssociateChangePasswordOperationContainer from "./associates/admin/operations/adminAssociateChangePasswordOperationContainer";
 
 // Admin Work Order
 import AdminOrderListContainer from "./orders/admin/list/adminOrderListContainer";
@@ -332,32 +332,32 @@ class AppContainer extends React.Component {
                                 <Route path="/client/:id/rez-upgrade" exact component={requiresAuth(ClientRezUpgradeOperationContainer)} />
 
                                 { /* ASSOCIATES */ }
-                                <Route path="/associates/add/step-1" exact component={requiresAuth(AssociateCreateStep1Container)} />
-                                <Route path="/associates/add/step-2" exact component={requiresAuth(AssociateCreateStep2Container)} />
-                                <Route path="/associates/add/step-3" exact component={requiresAuth(AssociateCreateStep3Container)} />
-                                <Route path="/associates/add/step-4" exact component={requiresAuth(AssociateCreateStep4Container)} />
-                                <Route path="/associates/add/step-5" exact component={requiresAuth(AssociateCreateStep5Container)} />
-                                <Route path="/associates/add/step-6" exact component={requiresAuth(AssociateCreateStep6Container)} />
-                                <Route path="/associates/add/step-7" exact component={requiresAuth(AssociateCreateStep7Container)} />
-                                <Route path="/associates/add/step-8" exact component={requiresAuth(AssociateCreateStep8Container)} />
-                                <Route path="/associates" exact component={requiresAuth(AssociateListContainer)} />
-                                <Route path="/associates/search" exact component={requiresAuth(AssociateSearchContainer)} />
-                                <Route path="/associates/search-results" exact component={requiresAuth(AssociateSearchResultContainer)} />
-                                <Route path="/associate/:id" exact component={requiresAuth(AssociateLiteRetrieveContainer)} />
-                                <Route path="/associate/:id/full" exact component={requiresAuth(AssociateFullRetrieveContainer)} />
-                                <Route path="/associate/:id/orders" exact component={requiresAuth(AssociateOrderListContainer)} />
-                                <Route path="/associate/:id/comments" exact component={requiresAuth(AssociateCommentContainer)} />
-                                <Route path="/associate/:id/avatar" exact component={requiresAuth(AssociateAvatarOperationContainer)} />
-                                <Route path="/associate/:id/file/add" exact component={requiresAuth(AssociateFileUploadAddContainer)} />
-                                <Route path="/associate/:id/file/archive/:fileId" exact component={requiresAuth(AssociateFileUploadArchiveContainer)} />
-                                <Route path="/associate/:id/files" exact component={requiresAuth(AssociateFileUploadListContainer)} />
-                                <Route path="/associate/:id/activity-sheets" exact component={requiresAuth(AssociateActivitySheetListContainer)} />
-                                <Route path="/associate/:id/update/account" exact component={requiresAuth(AssociateAccountUpdateContainer)} />
-                                <Route path="/associate/:id/update/address" exact component={requiresAuth(AssociateAddressUpdateContainer)} />
-                                <Route path="/associate/:id/update/contact" exact component={requiresAuth(AssociateContactUpdateContainer)} />
-                                <Route path="/associate/:id/update/metrics" exact component={requiresAuth(AssociateMetricsUpdateContainer)} />
-                                <Route path="/associate/:id/operations/balance" exact component={requiresAuth(AssociateBalanceOperationContainer)} />
-                                <Route path="/associate/:id/operations/password" exact component={requiresAuth(AssociateChangePasswordOperationContainer)} />
+                                <Route path="/associates/add/step-1" exact component={requiresAuth(AdminAssociateCreateStep1Container)} />
+                                <Route path="/associates/add/step-2" exact component={requiresAuth(AdminAssociateCreateStep2Container)} />
+                                <Route path="/associates/add/step-3" exact component={requiresAuth(AdminAssociateCreateStep3Container)} />
+                                <Route path="/associates/add/step-4" exact component={requiresAuth(AdminAssociateCreateStep4Container)} />
+                                <Route path="/associates/add/step-5" exact component={requiresAuth(AdminAssociateCreateStep5Container)} />
+                                <Route path="/associates/add/step-6" exact component={requiresAuth(AdminAssociateCreateStep6Container)} />
+                                <Route path="/associates/add/step-7" exact component={requiresAuth(AdminAssociateCreateStep7Container)} />
+                                <Route path="/associates/add/step-8" exact component={requiresAuth(AdminAssociateCreateStep8Container)} />
+                                <Route path="/associates" exact component={requiresAuth(AdminAssociateListContainer)} />
+                                <Route path="/associates/search" exact component={requiresAuth(AdminAssociateSearchContainer)} />
+                                <Route path="/associates/search-results" exact component={requiresAuth(AdminAssociateSearchResultContainer)} />
+                                <Route path="/associate/:id" exact component={requiresAuth(AdminAssociateLiteRetrieveContainer)} />
+                                <Route path="/associate/:id/full" exact component={requiresAuth(AdminAssociateFullRetrieveContainer)} />
+                                <Route path="/associate/:id/orders" exact component={requiresAuth(AdminAssociateOrderListContainer)} />
+                                <Route path="/associate/:id/comments" exact component={requiresAuth(AdminAssociateCommentContainer)} />
+                                <Route path="/associate/:id/avatar" exact component={requiresAuth(AdminAssociateAvatarOperationContainer)} />
+                                <Route path="/associate/:id/file/add" exact component={requiresAuth(AdminAssociateFileUploadAddContainer)} />
+                                <Route path="/associate/:id/file/archive/:fileId" exact component={requiresAuth(AdminAssociateFileUploadArchiveContainer)} />
+                                <Route path="/associate/:id/files" exact component={requiresAuth(AdminAssociateFileUploadListContainer)} />
+                                <Route path="/associate/:id/activity-sheets" exact component={requiresAuth(AdminAssociateActivitySheetListContainer)} />
+                                <Route path="/associate/:id/update/account" exact component={requiresAuth(AdminAssociateAccountUpdateContainer)} />
+                                <Route path="/associate/:id/update/address" exact component={requiresAuth(AdminAssociateAddressUpdateContainer)} />
+                                <Route path="/associate/:id/update/contact" exact component={requiresAuth(AdminAssociateContactUpdateContainer)} />
+                                <Route path="/associate/:id/update/metrics" exact component={requiresAuth(AdminAssociateMetricsUpdateContainer)} />
+                                <Route path="/associate/:id/operations/balance" exact component={requiresAuth(AdminAssociateBalanceOperationContainer)} />
+                                <Route path="/associate/:id/operations/password" exact component={requiresAuth(AdminAssociateChangePasswordOperationContainer)} />
 
 
                                 { /* WORK ORDER */}

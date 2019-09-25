@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF
-} from '../../../constants/api';
-import { FlashMessageComponent } from "../../flashMessageComponent";
-import { BootstrapFiveStarRatingLabel } from "../../bootstrap/bootstrapFiveStarRatingLabel";
+} from '../../../../constants/api';
+import { FlashMessageComponent } from "../../../flashMessageComponent";
+import { BootstrapFiveStarRatingLabel } from "../../../bootstrap/bootstrapFiveStarRatingLabel";
 
 
 export default class AdminAssociateFullRetrieveComponent extends Component {

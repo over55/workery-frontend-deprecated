@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../../constants/api';
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
 export default class AdminAssociateCreateStep8Component extends Component {

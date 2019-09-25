@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
 
 
 class AdminAssociateSearchComponent extends Component {

@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
-import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
-import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from '../../../bootstrap/bootstrapSingleSelect';
+import { BootstrapCountrySelect } from '../../../bootstrap/bootstrapCountrySelect'
+import { BootstrapRegionSelect } from '../../../bootstrap/bootstrapRegionSelect'
 
 
 

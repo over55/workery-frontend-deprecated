@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
 
 
 export default class AdminAssociateCreateStep1Component extends Component {

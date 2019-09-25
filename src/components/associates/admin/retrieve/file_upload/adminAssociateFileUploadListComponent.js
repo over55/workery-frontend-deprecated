@@ -11,12 +11,12 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
-import { FlashMessageComponent } from "../../../flashMessageComponent";
+import { BootstrapPageLoadingAnimation } from "../../../../bootstrap/bootstrapPageLoadingAnimation";
+import { FlashMessageComponent } from "../../../../flashMessageComponent";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-} from '../../../../constants/api';
+} from '../../../../../constants/api';
 
 
 const customTotal = (from, to, size) => (

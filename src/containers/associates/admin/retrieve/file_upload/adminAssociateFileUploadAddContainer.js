@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderListComponent from "../../../../components/associates/retrieve/file_upload/associateFileUploadAddComponent";
-import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { postAssociateFileUpload } from "../../../../actions/associateFileUploadActions";
-import { clearFlashMessage } from "../../../../actions/flashMessageActions";
-import { validateInput } from "../../../../validators/fileValidator"
-import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
+import OrderListComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadAddComponent";
+import { setFlashMessage } from "../../../../../actions/flashMessageActions";
+import { postAssociateFileUpload } from "../../../../../actions/associateFileUploadActions";
+import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
+import { validateInput } from "../../../../../validators/fileValidator"
+import { getTagReactSelectOptions, pullTagList } from "../../../../../actions/tagActions";
 
 
-class CustomerFileUploadAddContainer extends Component {
+class AdminAssociateFileUploadAddContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -332,4 +332,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CustomerFileUploadAddContainer);
+)(AdminAssociateFileUploadAddContainer);

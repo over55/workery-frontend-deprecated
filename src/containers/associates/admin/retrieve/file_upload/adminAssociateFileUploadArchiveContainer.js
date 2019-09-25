@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AssociateFileUploadArchiveComponent from "../../../../components/associates/retrieve/file_upload/associateFileUploadArchiveComponent";
-import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { deleteAssociateFileUpload } from "../../../../actions/associateFileUploadActions";
+import AssociateFileUploadArchiveComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadArchiveComponent";
+import { setFlashMessage } from "../../../../../actions/flashMessageActions";
+import { deleteAssociateFileUpload } from "../../../../../actions/associateFileUploadActions";
 
 
-class CustomerFileUploadArchiveContainer extends Component {
+class AdminAssociateFileUploadArchiveContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -134,4 +134,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CustomerFileUploadArchiveContainer);
+)(AdminAssociateFileUploadArchiveContainer);

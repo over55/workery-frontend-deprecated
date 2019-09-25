@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import OrderListComponent from "../../../components/associates/operations/associateBalanceOperationComponent";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullAssociateBalanceOperation } from "../../../actions/associateOperationActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import OrderListComponent from "../../../../components/associates/admin/operations/adminAssociateBalanceOperationComponent";
+import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { pullAssociateBalanceOperation } from "../../../../actions/associateOperationActions";
+import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
-class AssociateBalanceOperationContainer extends Component {
+class AdminAssociateBalanceOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -190,4 +190,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateBalanceOperationContainer);
+)(AdminAssociateBalanceOperationContainer);

@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderListComponent from "../../../../components/associates/retrieve/file_upload/associateFileUploadListComponent";
-import { clearFlashMessage } from "../../../../actions/flashMessageActions";
-import { pullAssociateFileUploadList, postAssociateFileUpload } from "../../../../actions/associateFileUploadActions";
-import { validateInput } from "../../../../validators/fileValidator"
+import OrderListComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadListComponent";
+import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
+import { pullAssociateFileUploadList, postAssociateFileUpload } from "../../../../../actions/associateFileUploadActions";
+import { validateInput } from "../../../../../validators/fileValidator"
 
 
-class CustomerFileUploadListContainer extends Component {
+class AdminAssociateFileUploadListContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -302,4 +302,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CustomerFileUploadListContainer);
+)(AdminAssociateFileUploadListContainer);

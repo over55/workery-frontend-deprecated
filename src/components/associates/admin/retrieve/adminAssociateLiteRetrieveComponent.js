@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { FlashMessageComponent } from "../../flashMessageComponent";
-import { BootstrapFiveStarRatingLabel } from "../../bootstrap/bootstrapFiveStarRatingLabel";
+import { FlashMessageComponent } from "../../../flashMessageComponent";
+import { BootstrapFiveStarRatingLabel } from "../../../bootstrap/bootstrapFiveStarRatingLabel";
 
 
 export default class AdminAssociateLiteRetrieveComponent extends Component {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AssociateCreateStep3Component from "../../../components/associates/create/associateCreateStep3Component";
-import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+import AssociateCreateStep3Component from "../../../../components/associates/admin/create/adminAssociateCreateStep3Component";
+import { localStorageGetIntegerItem } from '../../../../helpers/localStorageUtility';
 
 
-class AssociateCreateStep3Container extends Component {
+class AdminAssociateCreateStep3Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -82,4 +82,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateCreateStep3Container);
+)(AdminAssociateCreateStep3Container);

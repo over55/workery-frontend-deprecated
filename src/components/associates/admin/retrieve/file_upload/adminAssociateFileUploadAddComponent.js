@@ -11,13 +11,13 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
-import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
-import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
-import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
-import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
-import { FlashMessageComponent } from "../../../flashMessageComponent";
-import { BootstrapSingleFileUploadAndPreview } from "../../../bootstrap/bootstrapSingleFileUploadAndPreview";
+import { BootstrapErrorsProcessingAlert } from "../../../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapInput } from "../../../../bootstrap/bootstrapInput";
+import { BootstrapMultipleSelect } from "../../../../bootstrap/bootstrapMultipleSelect";
+import { BootstrapTextarea } from "../../../../bootstrap/bootstrapTextarea";
+import { FlashMessageComponent } from "../../../../flashMessageComponent";
+import { BootstrapSingleFileUploadAndPreview } from "../../../../bootstrap/bootstrapSingleFileUploadAndPreview";
 
 
 export default class AdminAssociateFileUploadAddComponent extends Component {

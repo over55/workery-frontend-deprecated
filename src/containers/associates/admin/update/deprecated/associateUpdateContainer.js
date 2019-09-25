@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateUpdateComponent from "../../../components/associates/update/associateUpdateComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { validateInput } from "../../../validators/associateValidator";
-import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
-import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../actions/skillSetActions";
-import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../actions/insuranceRequirementActions";
-import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../actions/vehicleTypeActions";
-import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { putAssociateDetail } from "../../../actions/associateActions";
+import AssociateUpdateComponent from "../../../../components/associates/admin/update/associateUpdateComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { validateInput } from "../../../../validators/associateValidator";
+import { getHowHearReactSelectOptions, pullHowHearList } from "../../../../actions/howHearActions";
+import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
+import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
+import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../../actions/vehicleTypeActions";
+import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
+import { putAssociateDetail } from "../../../../actions/associateActions";
 
 
 class AssociateUpdateContainer extends Component {

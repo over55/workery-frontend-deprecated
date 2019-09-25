@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 
 
 class CardComponent extends Component {

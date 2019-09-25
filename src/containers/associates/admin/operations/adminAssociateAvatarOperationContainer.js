@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AssociateAvatarOperationComponent from "../../../components/associates/operations/associateAvatarOperationComponent";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { postAssociateAvatarCreateOrUpdate } from "../../../actions/associateActions";
-import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { validateImageInput } from "../../../validators/fileValidator"
+import AssociateAvatarOperationComponent from "../../../../components/associates/admin/operations/adminAssociateAvatarOperationComponent";
+import { setFlashMessage } from "../../../../actions/flashMessageActions";
+import { postAssociateAvatarCreateOrUpdate } from "../../../../actions/associateActions";
+import { clearFlashMessage } from "../../../../actions/flashMessageActions";
+import { validateImageInput } from "../../../../validators/fileValidator"
 
 
-class AssociateAvatarOperationContainer extends Component {
+class AdminAssociateAvatarOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -293,4 +293,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AssociateAvatarOperationContainer);
+)(AdminAssociateAvatarOperationContainer);
