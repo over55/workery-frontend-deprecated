@@ -7,7 +7,7 @@ import Moment from 'react-moment';
 // import 'moment-timezone';
 
 
-export default class StaffDashboardComponent extends Component {
+export default class AdminDashboardComponent extends Component {
     render() {
         const { dashboard } = this.props;
         const {

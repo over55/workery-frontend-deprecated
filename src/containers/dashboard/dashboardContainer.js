@@ -9,7 +9,7 @@ import {
 //     AREA_COORDINATOR_GROUP_ID,
 //     MEMBER_GROUP_ID
 } from '../../constants/api';
-import StaffDashboardComponent from "../../components/dashboard/staffDashboardComponent";
+import AdminDashboardComponent from "../../components/dashboard/adminDashboardComponent";
 import AssociateDashboardComponent from "../../components/dashboard/associateDashboardComponent";
 import { pullProfile } from "../../actions/profileAction";
 import { pullDashboard } from "../../actions/dashboardActions";
@@ -90,7 +90,7 @@ class DashboardContainer extends Component {
         const { groupId } = this.props.user;
         if (groupId === EXECUTIVE_GROUP_ID || groupId === MANAGEMENT_GROUP_ID || groupId === FRONTLINE_GROUP_ID) {
             return (
-                <StaffDashboardComponent
+                <AdminDashboardComponent
                     user={this.props.user}
                     dashboard={this.props.dashboard}
                 />
