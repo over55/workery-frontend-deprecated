@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import AssociateListComponent from "../../../../components/associates/admin/list/adminAssociateListComponent";
+import AdminAssociateListComponent from "../../../../components/associates/admin/list/adminAssociateListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateList } from "../../../../actions/associateActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
@@ -149,7 +149,7 @@ class AdminAssociateListContainer extends Component {
     render() {
         const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
-            <AssociateListComponent
+            <AdminAssociateListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}

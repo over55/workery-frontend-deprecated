@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderListComponent from "../../../../components/associates/admin/retrieve/adminAssociateCommentComponent";
+import AdminAssociateCommentComponent from "../../../../components/associates/admin/retrieve/adminAssociateCommentComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateCommentList, postAssociateComment } from "../../../../actions/associateCommentActions";
 import { validateInput } from "../../../../validators/commentValidator"
@@ -207,7 +207,7 @@ class AdminAssociateCommentContainer extends Component {
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         const associateComments = this.props.associateCommentList ? this.props.associateCommentList.results : [];
         return (
-            <OrderListComponent
+            <AdminAssociateCommentComponent
                 id={id}
                 text={text}
                 associate={associate}

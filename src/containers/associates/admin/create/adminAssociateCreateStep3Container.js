@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AssociateCreateStep3Component from "../../../../components/associates/admin/create/adminAssociateCreateStep3Component";
+import AdminAssociateCreateStep3Component from "../../../../components/associates/admin/create/adminAssociateCreateStep3Component";
 import { localStorageGetIntegerItem } from '../../../../helpers/localStorageUtility';
 
 
@@ -63,7 +63,7 @@ class AdminAssociateCreateStep3Container extends Component {
 
     render() {
         return (
-            <AssociateCreateStep3Component onClick={this.onClick} />
+            <AdminAssociateCreateStep3Component onClick={this.onClick} />
         );
     }
 }

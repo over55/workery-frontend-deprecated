@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AssociateAvatarOperationComponent from "../../../../components/associates/admin/operations/adminAssociateAvatarOperationComponent";
+import AdminAssociateAvatarOperationComponent from "../../../../components/associates/admin/operations/adminAssociateAvatarOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { postAssociateAvatarCreateOrUpdate } from "../../../../actions/associateActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
@@ -250,7 +250,7 @@ class AdminAssociateAvatarOperationContainer extends Component {
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         const associateFiles = this.props.associateFileList ? this.props.associateFileList.results : [];
         return (
-            <AssociateAvatarOperationComponent
+            <AdminAssociateAvatarOperationComponent
                 id={id}
                 associate={associate}
                 associateFiles={associateFiles}

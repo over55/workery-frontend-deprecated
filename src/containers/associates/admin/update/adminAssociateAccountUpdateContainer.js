@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateAccountUpdateComponent from "../../../../components/associates/admin/update/adminAssociateAccountUpdateComponent";
+import AdminAssociateAccountUpdateComponent from "../../../../components/associates/admin/update/adminAssociateAccountUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateAccountInput } from "../../../../validators/associateValidator";
 import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
@@ -405,7 +405,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
         const transcodedVehicleTypes = getPickedVehicleTypeReactSelectOptions(vehicleTypes, this.props.vehicleTypeList)
 
         return (
-            <AssociateAccountUpdateComponent
+            <AdminAssociateAccountUpdateComponent
                 // Step 4
                 givenName={givenName}
                 lastName={lastName}

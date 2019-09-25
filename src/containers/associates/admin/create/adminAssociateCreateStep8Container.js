@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateCreateStep8Component from "../../../../components/associates/admin/create/adminAssociateCreateStep8Component";
+import AdminAssociateCreateStep8Component from "../../../../components/associates/admin/create/adminAssociateCreateStep8Component";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import {
     localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining
@@ -375,7 +375,7 @@ class AdminAssociateCreateStep8Container extends Component {
         } = this.state;
 
         return (
-            <AssociateCreateStep8Component
+            <AdminAssociateCreateStep8Component
                 // Step 3
                 typeOf={typeOf}
                 typeOfLabel={typeOfLabel}

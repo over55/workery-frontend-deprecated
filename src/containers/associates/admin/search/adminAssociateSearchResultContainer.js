@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AssociateSearchResultComponent from "../../../../components/associates/admin/search/adminAssociateSearchResultComponent";
+import AdminAssociateSearchResultComponent from "../../../../components/associates/admin/search/adminAssociateSearchResultComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateList } from "../../../../actions/associateActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
@@ -176,7 +176,7 @@ class AdminAssociateSearchResultContainer extends Component {
         const hasNext = this.props.associateList.next !== null;
         const hasPrevious = this.props.associateList.previous !== null;
         return (
-            <AssociateSearchResultComponent
+            <AdminAssociateSearchResultComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}

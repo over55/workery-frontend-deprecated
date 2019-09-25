@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AssociateFileUploadArchiveComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadArchiveComponent";
+import AdminAssociateFileUploadArchiveComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadArchiveComponent";
 import { setFlashMessage } from "../../../../../actions/flashMessageActions";
 import { deleteAssociateFileUpload } from "../../../../../actions/associateFileUploadActions";
 
@@ -101,7 +101,7 @@ class AdminAssociateFileUploadArchiveContainer extends Component {
         const { isLoading, id, errors } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         return (
-            <AssociateFileUploadArchiveComponent
+            <AdminAssociateFileUploadArchiveComponent
                 id={id}
                 associate={associate}
                 isLoading={isLoading}

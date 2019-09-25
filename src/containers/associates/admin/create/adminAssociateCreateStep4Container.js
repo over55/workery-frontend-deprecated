@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep4Component from "../../../../components/associates/admin/create/adminAssociateCreateStep4Component";
+import AdminAssociateCreateStep4Component from "../../../../components/associates/admin/create/adminAssociateCreateStep4Component";
 import { validateStep4CreateInput } from "../../../../validators/associateValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
@@ -164,7 +164,7 @@ class AdminAssociateCreateStep4Container extends Component {
             typeOf, organizationName, organizationTypeOf, givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors
         } = this.state;
         return (
-            <AssociateCreateStep4Component
+            <AdminAssociateCreateStep4Component
                 typeOf={typeOf}
                 organizationName={organizationName}
                 organizationTypeOf={organizationTypeOf}

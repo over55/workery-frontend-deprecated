@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep1Component from "../../../../components/associates/admin/create/adminAssociateCreateStep1Component";
+import AdminAssociateCreateStep1Component from "../../../../components/associates/admin/create/adminAssociateCreateStep1Component";
 
 
 class AdminAssociateCreateStep1Container extends Component {
@@ -98,7 +98,7 @@ class AdminAssociateCreateStep1Container extends Component {
     render() {
         const { givenName, lastName, email, phone, errors, isLoading } = this.state
         return (
-            <AssociateCreateStep1Component
+            <AdminAssociateCreateStep1Component
                 givenName={givenName}
                 lastName={lastName}
                 email={email}

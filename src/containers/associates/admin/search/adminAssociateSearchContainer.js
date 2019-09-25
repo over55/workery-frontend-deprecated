@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateSearchComponent from "../../../../components/associates/admin/search/adminAssociateSearchComponent";
+import AdminAssociateSearchComponent from "../../../../components/associates/admin/search/adminAssociateSearchComponent";
 import { validateSearchInput } from "../../../../validators/associateValidator";
 import { localStorageSetObjectOrArrayItem } from '../../../../helpers/localStorageUtility';
 
@@ -127,7 +127,7 @@ class AdminAssociateListContainer extends Component {
 
     render() {
         return (
-            <AssociateSearchComponent
+            <AdminAssociateSearchComponent
                 keyword={this.state.keyword}
                 givenName={this.state.givenName}
                 lastName={this.state.lastName}

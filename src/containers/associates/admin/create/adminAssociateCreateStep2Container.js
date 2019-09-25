@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep2Component from "../../../../components/associates/admin/create/adminAssociateCreateStep2Component";
+import AdminAssociateCreateStep2Component from "../../../../components/associates/admin/create/adminAssociateCreateStep2Component";
 import { pullAssociateList } from "../../../../actions/associateActions";
 
 
@@ -149,7 +149,7 @@ class AdminAssociateCreateStep2Container extends Component {
         const hasNext = this.props.associateList.next !== null;
         const hasPrevious = this.props.associateList.previous !== null;
         return (
-            <AssociateCreateStep2Component
+            <AdminAssociateCreateStep2Component
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}

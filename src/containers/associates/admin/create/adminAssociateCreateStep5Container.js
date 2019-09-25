@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep5Component from "../../../../components/associates/admin/create/adminAssociateCreateStep5Component";
+import AdminAssociateCreateStep5Component from "../../../../components/associates/admin/create/adminAssociateCreateStep5Component";
 import {
     localStorageGetObjectItem, localStorageSetObjectOrArrayItem
 } from '../../../../helpers/localStorageUtility';
@@ -160,7 +160,7 @@ class AdminAssociateCreateStep5Container extends Component {
         } = this.state;
         const { user } = this.props;
         return (
-            <AssociateCreateStep5Component
+            <AdminAssociateCreateStep5Component
                 country={country}
                 region={region}
                 locality={locality}

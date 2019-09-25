@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateAddressUpdateComponent from "../../../../components/associates/admin/update/adminAssociateAddressUpdateComponent";
+import AdminAssociateAddressUpdateComponent from "../../../../components/associates/admin/update/adminAssociateAddressUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateAddressInput } from "../../../../validators/associateValidator";
 import { putAssociateAddressDetail } from "../../../../actions/associateActions";
@@ -223,7 +223,7 @@ class AdminAssociateAddressUpdateContainer extends Component {
         } = this.state;
 
         return (
-            <AssociateAddressUpdateComponent
+            <AdminAssociateAddressUpdateComponent
                 // Step 5
                 country={country}
                 region={region}

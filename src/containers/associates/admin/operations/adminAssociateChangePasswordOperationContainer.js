@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AssociateChangePasswordOperationComponent from "../../../../components/associates/admin/operations/adminAssociateChangePasswordOperationComponent";
+import AdminAssociateChangePasswordOperationComponent from "../../../../components/associates/admin/operations/adminAssociateChangePasswordOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { postAssociateChangePasswordOperation } from "../../../../actions/associateActions";
 import { validateChangePasswordOperationInput } from "../../../../validators/associateValidator"
@@ -137,7 +137,7 @@ class AdminAssociateAvatarOperationContainer extends Component {
         const { isLoading, id, errors, file } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         return (
-            <AssociateChangePasswordOperationComponent
+            <AdminAssociateChangePasswordOperationComponent
                 id={id}
                 associate={associate}
                 isLoading={isLoading}

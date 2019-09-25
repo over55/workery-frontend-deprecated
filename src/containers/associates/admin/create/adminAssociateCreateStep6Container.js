@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep6Component from "../../../../components/associates/admin/create/adminAssociateCreateStep6Component";
+import AdminAssociateCreateStep6Component from "../../../../components/associates/admin/create/adminAssociateCreateStep6Component";
 import {
     localStorageGetObjectItem,
     localStorageSetObjectOrArrayItem,
@@ -302,7 +302,7 @@ class AdminAssociateCreateStep6Container extends Component {
 
         const { user } = this.props;
         return (
-            <AssociateCreateStep6Component
+            <AdminAssociateCreateStep6Component
                 description={description}
                 hourlySalaryDesired={hourlySalaryDesired}
                 limitSpecial={limitSpecial}

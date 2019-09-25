@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateContactUpdateComponent from "../../../../components/associates/admin/update/adminAssociateContactUpdateComponent";
+import AdminAssociateContactUpdateComponent from "../../../../components/associates/admin/update/adminAssociateContactUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateContactInput } from "../../../../validators/associateValidator";
 import { putAssociateContactDetail } from "../../../../actions/associateActions";
@@ -246,7 +246,7 @@ class AdminAssociateContactUpdateContainer extends Component {
             errors, id, fullName, isLoading,
         } = this.state;
         return (
-            <AssociateContactUpdateComponent
+            <AdminAssociateContactUpdateComponent
                 // Step 3
                 typeOf={typeOf}
 

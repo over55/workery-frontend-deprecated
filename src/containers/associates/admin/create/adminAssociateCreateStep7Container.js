@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import AssociateCreateStep7Component from "../../../../components/associates/admin/create/adminAssociateCreateStep7Component";
+import AdminAssociateCreateStep7Component from "../../../../components/associates/admin/create/adminAssociateCreateStep7Component";
 import { validateStep7CreateInput } from "../../../../validators/associateValidator";
 import {
     localStorageGetObjectItem, localStorageSetObjectOrArrayItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem
@@ -221,7 +221,7 @@ class AdminAssociateCreateStep7Container extends Component {
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
 
         return (
-            <AssociateCreateStep7Component
+            <AdminAssociateCreateStep7Component
                 typeOf={typeOf}
                 isTagsLoading={isTagsLoading}
                 tags={tags}

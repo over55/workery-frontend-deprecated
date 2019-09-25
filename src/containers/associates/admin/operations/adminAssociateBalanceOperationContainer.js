@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import OrderListComponent from "../../../../components/associates/admin/operations/adminAssociateBalanceOperationComponent";
+import AdminAssociateBalanceOperationComponent from "../../../../components/associates/admin/operations/adminAssociateBalanceOperationComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateBalanceOperation } from "../../../../actions/associateOperationActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
@@ -149,7 +149,7 @@ class AdminAssociateBalanceOperationContainer extends Component {
         const { page, sizePerPage, totalSize, isLoading, id } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
-            <OrderListComponent
+            <AdminAssociateBalanceOperationComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import AssociateMetricsUpdateComponent from "../../../../components/associates/admin/update/adminAssociateMetricsUpdateComponent";
+import AdminAssociateMetricsUpdateComponent from "../../../../components/associates/admin/update/adminAssociateMetricsUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateMetricsInput } from "../../../../validators/associateValidator";
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../../actions/howHearActions";
@@ -253,7 +253,7 @@ class AdminAssociateMetricsUpdateContainer extends Component {
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList);
 
         return (
-            <AssociateMetricsUpdateComponent
+            <AdminAssociateMetricsUpdateComponent
                 // Step 4
                 givenName={givenName}
                 lastName={lastName}

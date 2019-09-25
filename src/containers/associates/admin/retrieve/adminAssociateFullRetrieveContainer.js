@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AssociateFullRetrieveComponent from "../../../../components/associates/admin/retrieve/adminAssociateFullRetrieveComponent";
+import AdminAssociateFullRetrieveComponent from "../../../../components/associates/admin/retrieve/adminAssociateFullRetrieveComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateDetail } from "../../../../actions/associateActions";
 
@@ -78,7 +78,7 @@ class AdminAssociateFullRetrieveContainer extends Component {
         const { id } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
-            <AssociateFullRetrieveComponent
+            <AdminAssociateFullRetrieveComponent
                 id={id}
                 associate={associate}
                 flashMessage={this.props.flashMessage}

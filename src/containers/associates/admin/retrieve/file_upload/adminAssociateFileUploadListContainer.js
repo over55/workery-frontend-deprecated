@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import OrderListComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadListComponent";
+import AdminOrderListComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadListComponent";
 import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
 import { pullAssociateFileUploadList, postAssociateFileUpload } from "../../../../../actions/associateFileUploadActions";
 import { validateInput } from "../../../../../validators/fileValidator"
@@ -259,7 +259,7 @@ class AdminAssociateFileUploadListContainer extends Component {
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         const associateFileList = this.props.associateFileList && this.props.associateFileList.results ? this.props.associateFileList.results : [];
         return (
-            <OrderListComponent
+            <AdminOrderListComponent
                 id={id}
                 associate={associate}
                 associateFiles={associateFileList}

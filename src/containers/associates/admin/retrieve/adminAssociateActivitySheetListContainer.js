@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import ActivitySheetListComponent from "../../../../components/associates/admin/retrieve/adminAssociateActivitySheetListComponent";
+import AdminAssociateActivitySheetListComponent from "../../../../components/associates/admin/retrieve/adminAssociateActivitySheetListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullActivitySheetList } from "../../../../actions/activitySheetActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
@@ -167,7 +167,7 @@ class AdminAssociateActivitySheetListContainer extends Component {
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
         return (
-            <ActivitySheetListComponent
+            <AdminAssociateActivitySheetListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}

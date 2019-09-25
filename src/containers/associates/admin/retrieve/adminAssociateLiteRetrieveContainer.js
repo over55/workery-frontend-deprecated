@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AssociateLiteRetrieveComponent from "../../../../components/associates/admin/retrieve/adminAssociateLiteRetrieveComponent";
+import AdminAssociateLiteRetrieveComponent from "../../../../components/associates/admin/retrieve/adminAssociateLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateDetail } from "../../../../actions/associateActions";
 
@@ -78,7 +78,7 @@ class AdminAssociateLiteRetrieveContainer extends Component {
         const { id } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
-            <AssociateLiteRetrieveComponent
+            <AdminAssociateLiteRetrieveComponent
                 id={id}
                 associate={associate}
                 flashMessage={this.props.flashMessage}
