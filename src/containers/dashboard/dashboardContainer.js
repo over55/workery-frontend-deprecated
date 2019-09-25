@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import {
-//     EXECUTIVE_GROUP_ID,
-//     MANAGEMENT_GROUP_ID,
-//     FRONTLINE_STAFF_GROUP_ID,
-//     ASSOCIATE_GROUP_ID,
+import {
+    EXECUTIVE_GROUP_ID,
+    MANAGEMENT_GROUP_ID,
+    FRONTLINE_GROUP_ID,
+    ASSOCIATE_GROUP_ID,
 //     AREA_COORDINATOR_GROUP_ID,
 //     MEMBER_GROUP_ID
-// } from '../../constants/api';
+} from '../../constants/api';
 import StaffDashboardComponent from "../../components/dashboard/staffDashboardComponent";
+import AssociateDashboardComponent from "../../components/dashboard/associateDashboardComponent";
 import { pullProfile } from "../../actions/profileAction";
 import { pullDashboard } from "../../actions/dashboardActions";
 import { getSubdomain } from '../../helpers/urlUtility';
@@ -86,13 +87,25 @@ class DashboardContainer extends Component {
      */
 
     render() {
-        return (
-            <StaffDashboardComponent
-                // dashboard={this.props.dashboard}
-                user={this.props.user}
-                dashboard={this.props.dashboard}
-            />
-        );
+        const { groupId } = this.props.user;
+        if (groupId === EXECUTIVE_GROUP_ID || groupId === MANAGEMENT_GROUP_ID || groupId === FRONTLINE_GROUP_ID) {
+            return (
+                <StaffDashboardComponent
+                    user={this.props.user}
+                    dashboard={this.props.dashboard}
+                />
+            );
+        }
+        if (groupId === ASSOCIATE_GROUP_ID) {
+            return (
+                <AssociateDashboardComponent
+                    user={this.props.user}
+                    dashboard={this.props.dashboard}
+                />
+            );
+        }
+        return <p>Forbidden: Invalid group ID.</p>
+
     };
 }
 
