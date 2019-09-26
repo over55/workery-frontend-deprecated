@@ -29,7 +29,7 @@ export default class AssociateDashboardComponent extends Component {
                                                 <p className="card-text">List due service fees for associates.</p>
                                             </div>
 											<div className="card-footer bg-transparent border-0">
-												<Link to="/dashboard" className="btn btn-success btn-lg">
+												<Link to="/jobs" className="btn btn-success btn-lg">
                                                     Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                                 </Link>
 											</div>

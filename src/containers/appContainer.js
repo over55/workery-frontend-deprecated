@@ -29,7 +29,7 @@ import SharedOrganizationUpdateContainer from "./organization/shared/update/shar
 import TenantDashboardRedirectContainer from "./dashboard/tenantDashboardRedirectContainer";
 import DashboardContainer from "./dashboard/dashboardContainer";
 
-// Client
+// (Admin) Client
 import ClientListContainer from "./clients/list/clientListContainer";
 import ClientSearchContainer from "./clients/search/clientSearchContainer";
 import ClientSearchResultContainer from "./clients/search/clientSearchResultContainer";
@@ -56,7 +56,7 @@ import ClientArchiveOperationContainer from "./clients/operations/clientArchiveO
 import ClientRezUpgradeOperationContainer from "./clients/operations/clientRezUpgradeOperationContainer";
 import ClientPermanentDeleteOperationContainer from "./clients/operations/clientPermanentDeleteOperationContainer";
 
-// Admin Associate
+// (Admin) Associate
 import AdminAssociateListContainer from "./associates/admin/list/adminAssociateListContainer";
 import AdminAssociateSearchContainer from "./associates/admin/search/adminAssociateSearchContainer";
 import AdminAssociateSearchResultContainer from "./associates/admin/search/adminAssociateSearchResultContainer";
@@ -84,7 +84,7 @@ import AdminAssociateMetricsUpdateContainer from "./associates/admin/update/admi
 import AdminAssociateBalanceOperationContainer from "./associates/admin/operations/adminAssociateBalanceOperationContainer";
 import AdminAssociateChangePasswordOperationContainer from "./associates/admin/operations/adminAssociateChangePasswordOperationContainer";
 
-// Admin Work Order
+// (Admin) Work Order
 import AdminOrderListContainer from "./orders/admin/list/adminOrderListContainer";
 import AdminOrderSearchContainer from "./orders/admin/search/adminOrderSearchContainer";
 import AdminOrderSearchResultContainer from "./orders/admin/search/adminOrderSearchResultContainer";
@@ -112,6 +112,9 @@ import AdminOrderTransferStep2Container from "./orders/admin/operations/transfer
 import AdminOrderTransferStep3Container from "./orders/admin/operations/transfer/adminOrderTransferStep3Container";
 import AdminOrderTransferStep4Container from "./orders/admin/operations/transfer/adminOrderTransferStep4Container";
 import AdminOrderTransferStep5Container from "./orders/admin/operations/transfer/adminOrderTransferStep5Container";
+
+// (Associate) Work Order
+import AssociateOrderListContainer from "./orders/associate/list/associateOrderListContainer";
 
 // Tasks
 import TaskListContainer from "./tasks/list/taskListContainer";
@@ -388,6 +391,9 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:id/transfer-step-3" exact component={requiresAuth(AdminOrderTransferStep3Container)} />
                                 <Route path="/order/:id/transfer-step-4" exact component={requiresAuth(AdminOrderTransferStep4Container)} />
                                 <Route path="/order/:id/transfer-step-5" exact component={requiresAuth(AdminOrderTransferStep5Container)} />
+
+                                { /* (Associate) Work Orders */ }
+                                <Route path="/jobs" exact component={requiresAuth(AssociateOrderListContainer)} />
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />
