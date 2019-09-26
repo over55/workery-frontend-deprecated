@@ -55,7 +55,6 @@ export const RadioChoiceOption = ({
             <label className="custom-control-label form-check-label" htmlFor={choiceOption.id}>
                 {choiceOption.label}
             </label>
-			{error && <div className="invalid-feedback">{error}</div>}
         </div>
     );
 }
