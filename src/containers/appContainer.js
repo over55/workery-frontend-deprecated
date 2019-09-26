@@ -274,9 +274,13 @@ import OngoingOrderFullRetrieveContainer from "./ongoingOrders/retrieve/ongoingO
 import OngoingOrderUpdateContainer from "./ongoingOrders/update/ongoingOrderUpdateContainer";
 import OngoingOrderCommentContainer from "./ongoingOrders/retrieve/ongoingOrderCommentContainer";
 
-// Associate Profile
+// (Associate) Profile
 import AssociateProfileLiteRetrieveContainer from "./account/associateProfile/retrieve/associateProfileLiteRetrieveContainer";
 import AssociateProfileFullRetrieveContainer from "./account/associateProfile/retrieve/associateProfileFullRetrieveContainer";
+import AssociateProfileAccountUpdateContainer from "./account/associateProfile/update/associateProfileAccountUpdateContainer";
+import AssociateProfileAddressUpdateContainer from "./account/associateProfile/update/associateProfileAddressUpdateContainer";
+import AssociateProfileContactUpdateContainer from "./account/associateProfile/update/associateProfileContactUpdateContainer";
+import AssociateProfileMetricsUpdateContainer from "./account/associateProfile/update/associateProfileMetricsUpdateContainer";
 
 
 class AppContainer extends React.Component {
@@ -314,6 +318,10 @@ class AppContainer extends React.Component {
                                 <Route path="/comments" exact component={requiresAuth(CommentListContainer)} />
                                 <Route path="/profile/associate/lite" exact component={requiresAuth(AssociateProfileLiteRetrieveContainer)} />
                                 <Route path="/profile/associate/full" exact component={requiresAuth(AssociateProfileFullRetrieveContainer)} />
+                                <Route path="/profile/associate/update/account" exact component={requiresAuth(AssociateProfileAccountUpdateContainer)} />
+                                <Route path="/profile/associate/update/address" exact component={requiresAuth(AssociateProfileAddressUpdateContainer)} />
+                                <Route path="/profile/associate/update/contact" exact component={requiresAuth(AssociateProfileContactUpdateContainer)} />
+                                <Route path="/profile/associate/update/metrics" exact component={requiresAuth(AssociateProfileMetricsUpdateContainer)} />
 
                                 { /* CLIENTS */ }
                                 <Route path="/clients/add/step-1" exact component={requiresAuth(ClientCreateStep1Container)} />

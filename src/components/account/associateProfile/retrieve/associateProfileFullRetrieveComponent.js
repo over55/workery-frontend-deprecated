@@ -50,28 +50,6 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </strong>
                         </div>
-                        {/*
-                        <div id="step-3" className="st-grey">
-                            <Link to={`/associate/${id}/activity-sheets`}>
-                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to={`/associate/${id}/orders`}>
-                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
-                            </Link>
-                        </div>
-                        <div id="step-5" className="st-grey">
-                            <Link to={`/associate/${id}/comments`}>
-                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
-                            </Link>
-                        </div>
-                        <div id="step-6" className="st-grey">
-                            <Link to={`/associate/${id}/files`}>
-                                <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
-                            </Link>
-                        </div>
-                        */}
                     </div>
                 </div>
 
@@ -99,7 +77,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-phone"></i>&nbsp;Contact
-                                        <Link to={`/user/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/profile/associate/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
@@ -156,7 +134,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
-                                        <Link to={`/user/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/profile/associate/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
@@ -173,7 +151,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-user-circle"></i>&nbsp;Account
-                                        <Link to={`/user/${id}/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/profile/associate/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
@@ -262,7 +240,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
-                                        <Link to={`/user/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/profile/associate/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
@@ -338,38 +316,10 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                     <td>{user.lastModifiedBy}</td>
                                 </tr>
 
-                                {/*
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <Link to={`/user/${id}/operations/balance`}>
-                                                    View Account Balance&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/user/${id}/operations/password`}>
-                                                    Change Password&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                */}
-
                             </tbody>
                         </table>
                         <form>
                             <div className="form-group">
-                                {/*<Link to={`/user/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
-                                    <i className="fas fa-edit"></i>&nbsp;Update
-                                </Link>*/}
                                 <Link to={`/dashboard`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
