@@ -169,16 +169,6 @@ function idFormatter(cell, row){
 }
 
 
-function customerNameFormatter(cell, row){
-    if (row.customerName === null || row.customerName === undefined || row.customerName === "None") { return "-"; }
-    return (
-        <Link to={`/associate/${row.associate}`} target="_blank">
-            {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
-        </Link>
-    )
-}
-
-
 function startDateFormatter(cell, row){
     return row.startDate ? <Moment format="MM/DD/YYYY">{row.startDate}</Moment> : "-";
 }
@@ -201,7 +191,7 @@ function statusFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.id}`}>
+        <Link to={`/job/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )

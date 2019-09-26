@@ -115,6 +115,8 @@ import AdminOrderTransferStep5Container from "./orders/admin/operations/transfer
 
 // (Associate) Work Order
 import AssociateOrderListContainer from "./orders/associate/list/associateOrderListContainer";
+import AssociateOrderLiteRetrieveContainer from "./orders/associate/retrieve/associateOrderLiteRetrieveContainer";
+import AssociateOrderFullRetrieveContainer from "./orders/associate/retrieve/associateOrderFullRetrieveContainer";
 
 // Tasks
 import TaskListContainer from "./tasks/list/taskListContainer";
@@ -394,6 +396,8 @@ class AppContainer extends React.Component {
 
                                 { /* (Associate) Work Orders */ }
                                 <Route path="/jobs" exact component={requiresAuth(AssociateOrderListContainer)} />
+                                <Route path="/job/:id" exact component={requiresAuth(AssociateOrderLiteRetrieveContainer)} />
+                                <Route path="/job/:id/full" exact component={requiresAuth(AssociateOrderFullRetrieveContainer)} />
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />
