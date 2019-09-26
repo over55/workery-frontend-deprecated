@@ -1187,3 +1187,13 @@ aside.ScrollUpButton__Container:focus {
 	content: "\f106";
 }*/
 
+.new-upload-ui {
+	border-radius: 4px;
+    padding: 20px;
+    border: 1px solid #dee2e6!important;
+    cursor: pointer;
+    color: #1d2124;
+    text-align: center;
+    background: #f8f9fa!important;
+}
+
