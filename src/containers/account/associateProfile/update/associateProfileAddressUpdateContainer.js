@@ -23,8 +23,8 @@ class AssociateProfileAddressUpdateContainer extends Component {
         const { id } = this.props.match.params;
 
         // Map the API fields to our fields.
-        const country = this.props.associateDetail.addressCountry === "CA" ? "Canada" : this.props.associateDetail.addressCountry;
-        const region = this.props.associateDetail.addressRegion === "ON" ? "Ontario" : this.props.associateDetail.addressRegion;
+        const country = this.props.user.addressCountry === "CA" ? "Canada" : this.props.user.addressCountry;
+        const region = this.props.user.addressRegion === "ON" ? "Ontario" : this.props.user.addressRegion;
 
         this.state = {
             // STEP 3
@@ -33,15 +33,15 @@ class AssociateProfileAddressUpdateContainer extends Component {
             // STEP 5
             country: country,
             region: region,
-            locality: this.props.associateDetail.addressLocality,
-            postalCode: this.props.associateDetail.postalCode,
-            streetAddress: this.props.associateDetail.streetAddress,
+            locality: this.props.user.addressLocality,
+            postalCode: this.props.user.postalCode,
+            streetAddress: this.props.user.streetAddress,
 
             // Everything else...
             errors: {},
             isLoading: false,
             id: id,
-            fullName: this.props.associateDetail.fullName,
+            fullName: this.props.user.fullName,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -253,7 +253,6 @@ class AssociateProfileAddressUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        associateDetail: store.associateDetailState,
     };
 }
 

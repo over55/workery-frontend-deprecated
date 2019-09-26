@@ -18,36 +18,31 @@ class AssociateProfileContactUpdateContainer extends Component {
     constructor(props) {
         super(props);
 
-        // Since we are using the ``react-routes-dom`` library then we
-        // fetch the URL argument as follows.
-        const { id } = this.props.match.params;
-
         // Map the API fields to our fields.
-        const isOkToEmail = this.props.associateDetail.isOkToEmail === true ? 1 : 0;
-        const isOkToText = this.props.associateDetail.isOkToText === true ? 1 : 0;
+        const isOkToEmail = this.props.user.isOkToEmail === true ? 1 : 0;
+        const isOkToText = this.props.user.isOkToText === true ? 1 : 0;
 
         this.state = {
             // STEP 3
-            typeOf: this.props.associateDetail.typeOf,
+            typeOf: this.props.user.typeOf,
 
             // STEP 4
-            organizationName: this.props.associateDetail.organizationName,
-            organizationTypeOf: this.props.associateDetail.organizationTypeOf,
-            givenName: this.props.associateDetail.givenName,
-            lastName: this.props.associateDetail.lastName,
-            primaryPhone: this.props.associateDetail.telephone,
-            primaryPhoneTypeOf: this.props.associateDetail.telephoneTypeOf,
-            secondaryPhone: this.props.associateDetail.otherTelephone,
-            secondaryPhoneTypeOf: this.props.associateDetail.otherTelephoneTypeOf,
-            email: this.props.associateDetail.email,
+            organizationName: this.props.user.organizationName,
+            organizationTypeOf: this.props.user.organizationTypeOf,
+            givenName: this.props.user.givenName,
+            lastName: this.props.user.lastName,
+            primaryPhone: this.props.user.telephone,
+            primaryPhoneTypeOf: this.props.user.telephoneTypeOf,
+            secondaryPhone: this.props.user.otherTelephone,
+            secondaryPhoneTypeOf: this.props.user.otherTelephoneTypeOf,
+            email: this.props.user.email,
             isOkToEmail: isOkToEmail,
             isOkToText: isOkToText,
 
             // Everything else...
             errors: {},
             isLoading: false,
-            id: id,
-            fullName: this.props.associateDetail.fullName,
+            fullName: this.props.user.fullName,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -282,7 +277,6 @@ class AssociateProfileContactUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        associateDetail: store.associateDetailState,
     };
 }
 

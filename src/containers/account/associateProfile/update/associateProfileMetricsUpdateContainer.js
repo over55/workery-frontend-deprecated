@@ -24,25 +24,25 @@ class AssociateProfileMetricsUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        const birthdateObj = this.props.associateDetail.birthdate ? new Date(this.props.associateDetail.birthdate) : null;
-        const joinDateObj = new Date(this.props.associateDetail.joinDate);
+        const birthdateObj = this.props.user.birthdate ? new Date(this.props.user.birthdate) : null;
+        const joinDateObj = new Date(this.props.user.joinDate);
 
         this.state = {
             // STEP 3
             // typeOf: typeOf,
 
             // STEP 4
-            givenName: this.props.associateDetail.givenName,
-            lastName: this.props.associateDetail.lastName,
+            givenName: this.props.user.givenName,
+            lastName: this.props.user.lastName,
 
             // STEP 7
             isTagsLoading: true,
-            tags: this.props.associateDetail.tags,
-            gender: this.props.associateDetail.gender,
+            tags: this.props.user.tags,
+            gender: this.props.user.gender,
             isHowHearLoading: true,
-            howHear: this.props.associateDetail.howHear,
-            howHearOption: this.props.associateDetail.howHearOption,
-            howHearOther: this.props.associateDetail.howHearOther,
+            howHear: this.props.user.howHear,
+            howHearOption: this.props.user.howHearOption,
+            howHearOther: this.props.user.howHearOther,
             dateOfBirth: birthdateObj,
             joinDate: joinDateObj,
 
@@ -50,7 +50,7 @@ class AssociateProfileMetricsUpdateContainer extends Component {
             errors: {},
             isLoading: false,
             id: id,
-            fullName: this.props.associateDetail.fullName,
+            fullName: this.props.user.fullName,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -292,7 +292,6 @@ class AssociateProfileMetricsUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        associateDetail: store.associateDetailState,
         skillSetList: store.skillSetListState,
         insuranceRequirementList: store.insuranceRequirementListState,
         vehicleTypeList: store.vehicleTypeListState,

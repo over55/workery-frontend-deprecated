@@ -25,11 +25,11 @@ class AssociateProfileAccountUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        const duesDateObj = new Date(this.props.associateDetail.duesDate);
-        const commercialInsuranceExpiryDateObj = new Date(this.props.associateDetail.commercialInsuranceExpiryDate);
-        const autoInsuranceExpiryDateObj = new Date(this.props.associateDetail.autoInsuranceExpiryDate);
-        const wsibInsuranceDateObj = new Date(this.props.associateDetail.wsibInsuranceDate);
-        const policeCheckObj = new Date(this.props.associateDetail.policeCheck);
+        const duesDateObj = new Date(this.props.user.duesDate);
+        const commercialInsuranceExpiryDateObj = new Date(this.props.user.commercialInsuranceExpiryDate);
+        const autoInsuranceExpiryDateObj = new Date(this.props.user.autoInsuranceExpiryDate);
+        const wsibInsuranceDateObj = new Date(this.props.user.wsibInsuranceDate);
+        const policeCheckObj = new Date(this.props.user.policeCheck);
 
         this.state = {
             // STEP 3
@@ -37,32 +37,32 @@ class AssociateProfileAccountUpdateContainer extends Component {
 
             // STEP 6
             isSkillSetsLoading: true,
-            skillSets: this.props.associateDetail.skillSets,
-            insuranceRequirements: this.props.associateDetail.insuranceRequirements,
+            skillSets: this.props.user.skillSets,
+            insuranceRequirements: this.props.user.insuranceRequirements,
             isInsuranceRequirementsLoading: true,
-            description: this.props.associateDetail.description,
-            hourlySalaryDesired: this.props.associateDetail.hourlySalaryDesired,
-            limitSpecial: this.props.associateDetail.limitSpecial,
+            description: this.props.user.description,
+            hourlySalaryDesired: this.props.user.hourlySalaryDesired,
+            limitSpecial: this.props.user.limitSpecial,
             duesDate: duesDateObj,
             commercialInsuranceExpiryDate: commercialInsuranceExpiryDateObj,
             autoInsuranceExpiryDate: autoInsuranceExpiryDateObj,
-            wsibNumber: this.props.associateDetail.wsibNumber,
+            wsibNumber: this.props.user.wsibNumber,
             wsibInsuranceDate: wsibInsuranceDateObj,
             policeCheck: policeCheckObj,
-            taxId: this.props.associateDetail.taxId,
-            driversLicenseClass: this.props.associateDetail.driversLicenseClass,
+            taxId: this.props.user.taxId,
+            driversLicenseClass: this.props.user.driversLicenseClass,
             isVehicleTypesLoading: true,
-            vehicleTypes: this.props.associateDetail.vehicleTypes,
-            emergencyContactName: this.props.associateDetail.emergencyContactName,
-            emergencyContactRelationship: this.props.associateDetail.emergencyContactRelationship,
-            emergencyContactTelephone: this.props.associateDetail.emergencyContactTelephone,
-            emergencyContactAlternativeTelephone: this.props.associateDetail.emergencyContactAlternativeTelephone,
+            vehicleTypes: this.props.user.vehicleTypes,
+            emergencyContactName: this.props.user.emergencyContactName,
+            emergencyContactRelationship: this.props.user.emergencyContactRelationship,
+            emergencyContactTelephone: this.props.user.emergencyContactTelephone,
+            emergencyContactAlternativeTelephone: this.props.user.emergencyContactAlternativeTelephone,
 
             // Everything else...
             errors: {},
             isLoading: false,
             id: id,
-            fullName: this.props.associateDetail.fullName,
+            fullName: this.props.user.fullName,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -462,7 +462,6 @@ class AssociateProfileAccountUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        associateDetail: store.associateDetailState,
         skillSetList: store.skillSetListState,
         insuranceRequirementList: store.insuranceRequirementListState,
         vehicleTypeList: store.vehicleTypeListState,
