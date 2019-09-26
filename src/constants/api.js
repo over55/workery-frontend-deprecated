@@ -39,6 +39,7 @@ export const WORKERY_TASK_ORDER_COMPLETION_OPERATION_API_ENDPOINT = '/orders/ope
 export const WORKERY_ORDER_FILE_LIST_API_ENDPOINT = '/order-files';
 export const WORKERY_ORDER_FILE_ARCHIVE_API_ENDPOINT = '/order-file/XXX/';
 export const WORKERY_MY_ORDER_LIST_API_ENDPOINT = '/my-orders';
+export const WORKERY_MY_ORDER_DETAIL_API_ENDPOINT = '/my-order/';
 export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';
 export const WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT = '/associate/';
 export const WORKERY_ASSOCIATE_COMMENT_LIST_API_ENDPOINT = '/associate-comments';

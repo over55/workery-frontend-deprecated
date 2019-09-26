@@ -1,6 +1,6 @@
 // import PropTypes from 'prop-types';
 import React from 'react';
-// import classnames from 'classnames';
+import classnames from 'classnames';
 import shortid from "shortid";
 
 
@@ -36,7 +36,7 @@ export const BootstrapRadio = ({
 }
 
 export const RadioChoiceOption = ({
-    name, selectedValue, error, choiceOption
+    name, selectedValue, error, choiceOption, borderColour
 }) => {
 
     // Select the selected value.
