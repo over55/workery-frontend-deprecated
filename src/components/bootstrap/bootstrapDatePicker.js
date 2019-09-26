@@ -13,11 +13,10 @@ export const BootstrapDatePicker = ({ label, name, datePickerClassName, divClass
                     name={name}
                     selected={dateObj}
                     onChange={onTimeChange}
-                    className={classnames(datePickerClassName, { 'has-error': error }, { 'border-success': !error && borderClassname === 'border-success' }, { 'border-primary': !error && borderClassname === 'border-primary' } )}
-
+                    className={classnames(datePickerClassName, { 'border-danger has-error': error }, { 'border-success': !error && borderClassname === 'border-success' }, { 'border-primary': !error && borderClassname === 'border-primary' } )}
                 />
                 <div className="input-group-append">
-                    <span className={classnames({ 'input-group-text dob-icon bg-success border-success': !error && borderClassname === 'border-success' }, { 'input-group-text dob-icon bg-primary border-primary': !error && borderClassname === 'border-primary' } )}>
+                    <span className={classnames('input-group-text dob-icon', { 'bg-danger border-danger': error }, { 'bg-success border-success': !error && borderClassname === 'border-success' }, { 'bg-primary border-primary': !error && borderClassname === 'border-primary' } )}>
                         <i className="far fa-calendar"></i>
                     </span>
                 </div>

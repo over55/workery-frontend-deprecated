@@ -15,6 +15,7 @@ import shortid from "shortid";
 export const BootstrapRadio = ({
     selectedValue,
     onChange,
+	error,
     options,
     name,
     label = "Please select either option.",
@@ -25,7 +26,7 @@ export const BootstrapRadio = ({
         <div className="form-group mt-2 mb-4" id={id} onChange={ (event)=>{ onChange(event) }  }>
             <p className="mb-1">{label}</p>
             {options && options.map(
-                (optionDatum, i) => <RadioChoiceOption name={name} selectedValue={selectedValue} choiceOption={optionDatum} key={i+shortid.generate()} />)
+                (optionDatum, i) => <RadioChoiceOption name={name} error={error} selectedValue={selectedValue} choiceOption={optionDatum} key={i+shortid.generate()} />)
             }
             {helpText &&
                 <small id={shortid.generate()} className="form-text text-muted" dangerouslySetInnerHTML={{ __html:helpText }}></small>
@@ -35,7 +36,7 @@ export const BootstrapRadio = ({
 }
 
 export const RadioChoiceOption = ({
-    name, selectedValue, choiceOption
+    name, selectedValue, error, choiceOption
 }) => {
 
     // Select the selected value.
@@ -49,11 +50,12 @@ export const RadioChoiceOption = ({
     // - We can call these custom attributes in our container using `dataset`,
     //   for more details see this link via // Note: https://stackoverflow.com/a/20383295.
     return (
-        <div className="form-radio custom-control custom-radio custom-control-inline">
-            <input data-label={choiceOption.label} defaultChecked={defaultChecked} type="radio" id={choiceOption.id} name={name} value={choiceOption.value} className="custom-control-input form-check-input" required />
+        <div className={classnames('form-radio custom-control custom-radio custom-control-inline', { 'has-error': error })}>
+            <input data-label={choiceOption.label} defaultChecked={defaultChecked} type="radio" id={choiceOption.id} name={name} value={choiceOption.value} className={classnames('custom-control-input form-check-input', { 'is-invalid': error }, { 'border-success': !error && borderColour === 'border-success' }, { 'border-primary': !error && borderColour === 'border-primary' })} required />
             <label className="custom-control-label form-check-label" htmlFor={choiceOption.id}>
                 {choiceOption.label}
             </label>
+			{error && <div className="invalid-feedback">{error}</div>}
         </div>
     );
 }
