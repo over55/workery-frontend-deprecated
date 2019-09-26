@@ -17,6 +17,10 @@ import {
 import { getAPIBaseURL } from '../helpers/urlUtility';
 
 
+////////////////////////////////////////////////////////////////////////////////
+//                                  REDUUX                                    //
+////////////////////////////////////////////////////////////////////////////////
+
 export const setProfileRequest = () => ({
     type: PROFILE_REQUEST,
     payload: {
@@ -37,6 +41,9 @@ export const setProfileFailure = profile => ({
     payload: profile,
 });
 
+////////////////////////////////////////////////////////////////////////////////
+//                             STAFF / ASSOCIATE                              //
+////////////////////////////////////////////////////////////////////////////////
 
 export function pullProfile(successCallback=null, failedCallback=null) {
     return dispatch => {
@@ -124,6 +131,9 @@ export function pullProfile(successCallback=null, failedCallback=null) {
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+//                                  STAFF                                     //
+////////////////////////////////////////////////////////////////////////////////
 
 export function postProfile(data, successCallback, failedCallback) {
     return dispatch => {
@@ -212,7 +222,6 @@ export function postProfile(data, successCallback, failedCallback) {
     }
 }
 
-
 export function postActivateProfile(accessCode, successCallback, failedCallback) {
     return dispatch => {
         // Change the global state to attempting to log in.
@@ -283,3 +292,9 @@ export function postActivateProfile(accessCode, successCallback, failedCallback)
 
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//                                 ASSOCIATE                                  //
+////////////////////////////////////////////////////////////////////////////////
+
+//TODO: IMPLEMENT HERE.
