@@ -274,6 +274,10 @@ import OngoingOrderFullRetrieveContainer from "./ongoingOrders/retrieve/ongoingO
 import OngoingOrderUpdateContainer from "./ongoingOrders/update/ongoingOrderUpdateContainer";
 import OngoingOrderCommentContainer from "./ongoingOrders/retrieve/ongoingOrderCommentContainer";
 
+// Associate Profile
+import AssociateProfileLiteRetrieveContainer from "./account/associateProfile/retrieve/associateProfileLiteRetrieveContainer";
+import AssociateProfileFullRetrieveContainer from "./account/associateProfile/retrieve/associateProfileFullRetrieveContainer";
+
 
 class AppContainer extends React.Component {
     render() {
@@ -308,6 +312,8 @@ class AppContainer extends React.Component {
                                 <Route path="/dashboard-redirect/:accessToken/:refreshToken" exact component={TenantDashboardRedirectContainer} />
                                 <Route path="/dashboard" exact component={requiresAuth(DashboardContainer)} />
                                 <Route path="/comments" exact component={requiresAuth(CommentListContainer)} />
+                                <Route path="/profile/associate/lite" exact component={requiresAuth(AssociateProfileLiteRetrieveContainer)} />
+                                <Route path="/profile/associate/full" exact component={requiresAuth(AssociateProfileFullRetrieveContainer)} />
 
                                 { /* CLIENTS */ }
                                 <Route path="/clients/add/step-1" exact component={requiresAuth(ClientCreateStep1Container)} />
@@ -363,7 +369,6 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/update/metrics" exact component={requiresAuth(AdminAssociateMetricsUpdateContainer)} />
                                 <Route path="/associate/:id/operations/balance" exact component={requiresAuth(AdminAssociateBalanceOperationContainer)} />
                                 <Route path="/associate/:id/operations/password" exact component={requiresAuth(AdminAssociateChangePasswordOperationContainer)} />
-
 
                                 { /* WORK ORDER */}
                                 <Route path="/orders/add/step-1" exact component={requiresAuth(AdminOrderCreateStep1Container)} />
