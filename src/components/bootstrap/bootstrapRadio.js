@@ -51,7 +51,7 @@ export const RadioChoiceOption = ({
     //   for more details see this link via // Note: https://stackoverflow.com/a/20383295.
     return (
         <div className={classnames('form-radio custom-control custom-radio custom-control-inline', { 'has-error': error })}>
-            <input data-label={choiceOption.label} defaultChecked={defaultChecked} type="radio" id={choiceOption.id} name={name} value={choiceOption.value} className={classnames('custom-control-input form-check-input', { 'is-invalid': error }, { 'border-success': !error && borderColour === 'border-success' }, { 'border-primary': !error && borderColour === 'border-primary' })} required />
+            <input data-label={choiceOption.label} defaultChecked={defaultChecked} type="radio" id={choiceOption.id} name={name} value={choiceOption.value} className={classnames('custom-control-input form-check-input', { 'is-invalid': error })} required />
             <label className="custom-control-label form-check-label" htmlFor={choiceOption.id}>
                 {choiceOption.label}
             </label>
