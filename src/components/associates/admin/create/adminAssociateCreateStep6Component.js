@@ -134,7 +134,7 @@ class AdminAssociateCreateStep6Component extends Component {
                             />
 
                             <BootstrapInput
-                                inputClassName="form-control"
+                                inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.hourlySalaryDesired}
                                 label="Hourly Rate (*)"
@@ -209,7 +209,7 @@ class AdminAssociateCreateStep6Component extends Component {
                             />
 
                             <BootstrapInput
-                                inputClassName="form-control"
+                                inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 error={errors.taxId}
                                 label="HST #"
@@ -220,7 +220,7 @@ class AdminAssociateCreateStep6Component extends Component {
                             />
 
                             <BootstrapInput
-                                inputClassName="form-control"
+                                inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 error={errors.driversLicenseClass}
                                 label="Drivers license class(es):"
@@ -247,7 +247,7 @@ class AdminAssociateCreateStep6Component extends Component {
                             </p>
 
                             <BootstrapInput
-                                inputClassName="form-control"
+                                inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 error={errors.emergencyContactName}
                                 label="Full name"
@@ -258,7 +258,7 @@ class AdminAssociateCreateStep6Component extends Component {
                             />
 
                             <BootstrapInput
-                                inputClassName="form-control"
+                                inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 error={errors.emergencyContactRelationship}
                                 label="Relationship"
