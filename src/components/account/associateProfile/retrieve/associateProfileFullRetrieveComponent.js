@@ -17,8 +17,8 @@ import { BootstrapFiveStarRatingLabel } from "../../../bootstrap/bootstrapFiveSt
 export default class AssociateProfileFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, associate, flashMessage, errors } = this.props;
-        const { typeOf } = associate;
+        const { id, user, flashMessage, errors } = this.props;
+        const { typeOf } = user;
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial";
         const isCommercial = typeOf === 3;
         return (
@@ -99,7 +99,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-phone"></i>&nbsp;Contact
-                                        <Link to={`/associate/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/user/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
@@ -107,35 +107,35 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 {isCommercial &&
                                     <tr>
                                         <th scope="row" className="bg-light">Company Name</th>
-                                        <td>{associate.organizationName}</td>
+                                        <td>{user.organizationName}</td>
                                     </tr>
                                 }
                                 {isCommercial &&
                                     <tr>
                                         <th scope="row" className="bg-light">Company Type</th>
-                                        <td>{associate.organizationTypeOfLabel}</td>
+                                        <td>{user.organizationTypeOfLabel}</td>
                                     </tr>
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
-                                    <td>{associate.fullName}</td>
+                                    <td>{user.fullName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Primary Telephone</th>
-                                    <td><a href={`tel:${associate.e164Telephone}`}>{associate.telephone}</a></td>
+                                    <td><a href={`tel:${user.e164Telephone}`}>{user.telephone}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Secondary Telephone</th>
-                                    <td><a href={`tel:${associate.e164OtherTelephone}`}>{associate.otherTelephone}</a></td>
+                                    <td><a href={`tel:${user.e164OtherTelephone}`}>{user.otherTelephone}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Email</th>
-                                    <td><a href={`mailto:${associate.email}`}>{associate.email}</a></td>
+                                    <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Ok to Email?</th>
                                     <td>
-                                        {associate.isOkToEmail
+                                        {user.isOkToEmail
                                             ?"Yes"
                                             :"No"
                                         }
@@ -144,7 +144,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Ok to Text?</th>
                                     <td>
-                                        {associate.isOkToText
+                                        {user.isOkToText
                                             ?"Yes"
                                             :"No"
                                         }
@@ -156,7 +156,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
-                                        <Link to={`/associate/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/user/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
@@ -164,7 +164,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={associate.addressUrl} target="_blank">{associate.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
+                                        <a href={user.addressUrl} target="_blank">{user.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
 
@@ -173,7 +173,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-user-circle"></i>&nbsp;Account
-                                        <Link to={`/associate/${id}/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/user/${id}/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
@@ -181,7 +181,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Skill sets</th>
                                     <td>
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                        {user.prettySkillSets && user.prettySkillSets.map(
                                             (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
                                         }
                                     </td>
@@ -189,80 +189,80 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Insurance Requirement(s)</th>
                                     <td>
-                                        {associate.prettyInsuranceRequirements && associate.prettyInsuranceRequirements.map(
+                                        {user.prettyInsuranceRequirements && user.prettyInsuranceRequirements.map(
                                             (ir) => <InsuranceRequirementItem ir={ir} key={`ir-${ir.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Hourly salary desired</th>
-                                    <td>{associate.hourlySalaryDesired}</td>
+                                    <td>{user.hourlySalaryDesired}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Limit Special</th>
-                                    <td>{associate.limitSpecial}</td>
+                                    <td>{user.limitSpecial}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Member Dues Expiry</th>
                                     <td>
-                                        {associate && <Moment format="MM/DD/YYYY">{associate.duesDate}</Moment>}
+                                        {user && <Moment format="MM/DD/YYYY">{user.duesDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Commercial insurance expiry date</th>
                                     <td>
-                                        {associate && <Moment format="MM/DD/YYYY">{associate.commercialInsuranceExpiryDate}</Moment>}
+                                        {user && <Moment format="MM/DD/YYYY">{user.commercialInsuranceExpiryDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Auto Insurance Expiry Date</th>
                                     <td>
-                                        {associate && <Moment format="MM/DD/YYYY">{associate.autoInsuranceExpiryDate}</Moment>}
+                                        {user && <Moment format="MM/DD/YYYY">{user.autoInsuranceExpiryDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB #</th>
                                     <td>
-                                        {associate.wsibNumber}
+                                        {user.wsibNumber}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB Insurance Date</th>
                                     <td>
-                                        {associate && <Moment format="MM/DD/YYYY">{associate.wsibInsuranceDate}</Moment>}
+                                        {user && <Moment format="MM/DD/YYYY">{user.wsibInsuranceDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Police check date</th>
                                     <td>
-                                        {associate && <Moment format="MM/DD/YYYY">{associate.policeCheck}</Moment>}
+                                        {user && <Moment format="MM/DD/YYYY">{user.policeCheck}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">HST #</th>
-                                    <td>{associate.taxId}</td>
+                                    <td>{user.taxId}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Drivers license class(es)</th>
-                                    <td>{associate.driversLicenseClass}</td>
+                                    <td>{user.driversLicenseClass}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Vehicle(s)</th>
                                     <td>
-                                        {associate.prettyVehicleTypes && associate.prettyVehicleTypes.map(
+                                        {user.prettyVehicleTypes && user.prettyVehicleTypes.map(
                                             (vt) => <VehicleTypeItem vt={vt} key={`vt-${vt.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Account Balance</th>
-                                    <td>{associate.balanceOwingAmount}</td>
+                                    <td>{user.balanceOwingAmount}</td>
                                 </tr>
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
-                                        <Link to={`/associate/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                        <Link to={`/user/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
@@ -270,21 +270,21 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
                                     <td>
-                                        {associate && associate.birthdate && <Moment format="MM/DD/YYYY">{associate.birthdate}</Moment>}
+                                        {user && user.birthdate && <Moment format="MM/DD/YYYY">{user.birthdate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
-                                    <td>{associate.gender}</td>
+                                    <td>{user.gender}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
-                                    <td>{associate.description}</td>
+                                    <td>{user.description}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {associate.prettyTags && associate.prettyTags.map(
+                                        {user.prettyTags && user.prettyTags.map(
                                             (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                                         }
                                     </td>
@@ -292,17 +292,17 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
                                     <td>
-                                        {associate && <Moment format="MM/DD/YYYY">{associate.joinDate}</Moment>}
+                                        {user && <Moment format="MM/DD/YYYY">{user.joinDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
-                                    <td>{associate.howHearPretty}</td>
+                                    <td>{user.howHearPretty}</td>
                                 </tr>
-                                {associate &&
+                                {user &&
                                     <tr>
                                         <th scope="row" className="bg-light">Job Rating</th>
-                                        <td><BootstrapFiveStarRatingLabel score={associate.score} /></td>
+                                        <td><BootstrapFiveStarRatingLabel score={user.score} /></td>
                                     </tr>
                                 }
 
@@ -315,27 +315,27 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Account #</th>
-                                    <td>{associate.id}</td>
+                                    <td>{user.id}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
                                     <td>
-                                         {associate && <Moment format="MM/DD/YYYY hh:mm:ss a">{associate.created}</Moment>}
+                                         {user && <Moment format="MM/DD/YYYY hh:mm:ss a">{user.created}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
-                                    <td>{associate.createdBy}</td>
+                                    <td>{user.createdBy}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
                                     <td>
-                                        {associate && <Moment format="MM/DD/YYYY hh:mm:ss a">{associate.lastModified}</Moment>}
+                                        {user && <Moment format="MM/DD/YYYY hh:mm:ss a">{user.lastModified}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>
-                                    <td>{associate.lastModifiedBy}</td>
+                                    <td>{user.lastModifiedBy}</td>
                                 </tr>
 
                                 {/*
@@ -349,12 +349,12 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to={`/associate/${id}/operations/balance`}>
+                                                <Link to={`/user/${id}/operations/balance`}>
                                                     View Account Balance&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`/associate/${id}/operations/password`}>
+                                                <Link to={`/user/${id}/operations/password`}>
                                                     Change Password&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
@@ -367,7 +367,7 @@ export default class AssociateProfileFullRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
-                                {/*<Link to={`/associate/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
+                                {/*<Link to={`/user/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
                                 </Link>*/}
                                 <Link to={`/dashboard`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">

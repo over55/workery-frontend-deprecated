@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import AssociateProfileFullRetrieveComponent from "../../../../components/account/associateProfile/retrieve/associateProfileFullRetrieveComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
-import { pullAssociateDetail } from "../../../../actions/associateActions";
+import { pullProfile } from "../../../../actions/profileAction";
 
 
 class AssociateProfileFullRetrieveContainer extends Component {
@@ -14,14 +14,6 @@ class AssociateProfileFullRetrieveContainer extends Component {
 
     constructor(props) {
         super(props);
-
-        const { id } = this.props.match.params;
-
-        // Update state.
-        this.state = {
-            id: id,
-            associate: {}
-        }
 
         // Update functions.
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
@@ -35,7 +27,7 @@ class AssociateProfileFullRetrieveContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullAssociateDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullProfile(this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     componentWillUnmount() {
@@ -75,12 +67,9 @@ class AssociateProfileFullRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
-        const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
             <AssociateProfileFullRetrieveComponent
-                id={id}
-                associate={associate}
+                user={this.props.user}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -100,10 +89,8 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullAssociateDetail: (id, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                pullAssociateDetail(id, onSuccessCallback, onFailureCallback)
-            )
+        pullProfile: (successCallback, failureCallback) => {
+            dispatch(pullProfile(successCallback, failureCallback))
         },
     }
 }

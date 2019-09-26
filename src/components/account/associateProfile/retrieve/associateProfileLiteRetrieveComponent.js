@@ -9,8 +9,8 @@ import { BootstrapFiveStarRatingLabel } from "../../../bootstrap/bootstrapFiveSt
 
 export default class AssociateProfileLiteRetrieveComponent extends Component {
     render() {
-        const { id, associate, flashMessage } = this.props;
-        const { typeOf } = associate;
+        const { id, user, flashMessage } = this.props;
+        const { typeOf } = user;
         const isCommercial = typeOf === 3;
         return (
             <div>
@@ -70,9 +70,9 @@ export default class AssociateProfileLiteRetrieveComponent extends Component {
                     <div className="col-md-10 mx-auto rounded bg-light border p-2">
                         <div className="row">
                             <div className="col-sm-5">
-                                <Link to={`/associate/${id}/avatar`}>
-                                    {associate && associate.avatarUrl !== undefined && associate.avatarUrl !== null
-                                        ? <img src={associate.avatarUrl} className="img-fluid rounded" alt="Profile" id={`associate-avatar-${id}`} />
+                                <Link to={`/profile/associate/${id}/avatar`}>
+                                    {user && user.avatarUrl !== undefined && user.avatarUrl !== null
+                                        ? <img src={user.avatarUrl} className="img-fluid rounded" alt="Profile" id={`user-avatar-${id}`} />
                                         : <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" id={`avatar-placeholder`}/>
                                     }
                                     <p><i className="fas fa-edit"></i>Click here to change photo</p>
@@ -80,64 +80,64 @@ export default class AssociateProfileLiteRetrieveComponent extends Component {
                             </div>
                             <div className="col-sm-7 px-4 py-3">
                                 {isCommercial &&
-                                    <h1>{associate.organizationName}</h1>
+                                    <h1>{user.organizationName}</h1>
                                 }
-                                <h3>{associate && associate.fullName}</h3>
-                                {associate && associate.address &&
+                                <h3>{user && user.fullName}</h3>
+                                {user && user.address &&
                                     <p className="text-muted">
-                                        <a href={associate.addressUrl}><i className="fas fa-map-marker-alt"></i>&nbsp;{associate.address}</a>
+                                        <a href={user.addressUrl}><i className="fas fa-map-marker-alt"></i>&nbsp;{user.address}</a>
                                     </p>
                                 }
-                                {associate && associate.email &&
+                                {user && user.email &&
                                     <p>
-                                        <a href={`mailto:${associate.email}`}><i className="fas fa-envelope"></i>&nbsp;{associate.email}</a>
+                                        <a href={`mailto:${user.email}`}><i className="fas fa-envelope"></i>&nbsp;{user.email}</a>
                                     </p>
                                 }
-                                {associate && associate.telephone &&
+                                {user && user.telephone &&
                                     <p>
-                                        <a href={`tel:${associate.e164Telephone}`}>
-                                            <i className="fas fa-phone-square"></i>&nbsp;{associate.telephone}
+                                        <a href={`tel:${user.e164Telephone}`}>
+                                            <i className="fas fa-phone-square"></i>&nbsp;{user.telephone}
                                         </a>
                                     </p>
                                 }
                                 <p className="m-0"><strong>Skill sets:</strong></p>
-                                {associate &&
+                                {user &&
                                     <p>
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                        {user.prettySkillSets && user.prettySkillSets.map(
                                             (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
                                         }
                                     </p>
                                 }
                                 <p className="m-0"><strong>Tags:</strong></p>
-                                {associate &&
+                                {user &&
                                     <p>
-                                        {associate.tags && associate.tags.map(
+                                        {user.tags && user.tags.map(
                                             (tag) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </p>
                                 }
                                 <div className="col-sm-12 p-0">
                                     <p className="m-0"><strong>Ratings:</strong></p>
-                                    {associate &&
-                                        <BootstrapFiveStarRatingLabel score={associate.score} />
+                                    {user &&
+                                        <BootstrapFiveStarRatingLabel score={user.score} />
                                     }
                                 </div>
 
                                 <p class="m-0"><strong>Notes:</strong></p>
                                 <p class="mb-2">
                                     <ul>
-                                    {associate.commercialInsuranceExpiryDate &&
-                                        <li>Commercial Insurance Expiry: <Moment format="MM/DD/YYYY">{associate.commercialInsuranceExpiryDate}</Moment></li>
+                                    {user.commercialInsuranceExpiryDate &&
+                                        <li>Commercial Insurance Expiry: <Moment format="MM/DD/YYYY">{user.commercialInsuranceExpiryDate}</Moment></li>
                                     }
-                                    {associate.wsibNumber &&
-                                        <li>WSIB # {associate.wsibNumber}</li>
+                                    {user.wsibNumber &&
+                                        <li>WSIB # {user.wsibNumber}</li>
                                     }
-                                    {associate.wsibInsuranceDate &&
-                                        <li>WSIB Expiry: <Moment format="MM/DD/YYYY">{associate.wsibInsuranceDate}</Moment></li>
+                                    {user.wsibInsuranceDate &&
+                                        <li>WSIB Expiry: <Moment format="MM/DD/YYYY">{user.wsibInsuranceDate}</Moment></li>
                                     }
-                                    {associate.latestCompletedAndPaidOrder && associate.latestCompletedAndPaidOrder.paidAt &&
+                                    {user.latestCompletedAndPaidOrder && user.latestCompletedAndPaidOrder.paidAt &&
                                         <li>
-                                        Last service fee paid on <Moment format="MM/DD/YYYY">{associate.latestCompletedAndPaidOrder.paidAt}</Moment> in work order #<Link to={`/order/${associate.latestCompletedAndPaidOrder.id}`}>{associate.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
+                                        Last service fee paid on <Moment format="MM/DD/YYYY">{user.latestCompletedAndPaidOrder.paidAt}</Moment> in work order #<Link to={`/order/${user.latestCompletedAndPaidOrder.id}`}>{user.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
                                         </li>
                                     }
                                     </ul>
