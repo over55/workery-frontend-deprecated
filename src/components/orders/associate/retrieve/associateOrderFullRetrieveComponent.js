@@ -28,22 +28,22 @@ export default class AssociateOrderFullRetrieveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
+                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Jobs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-wrench"></i>&nbsp;Order # {id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-wrench"></i>&nbsp;Job # {id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;View Job</h1>
 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/order/${id}`}>
+                            <Link to={`/job/${id}`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Summary</span>
                             </Link>
                         </div>
@@ -51,26 +51,6 @@ export default class AssociateOrderFullRetrieveComponent extends Component {
                             <strong>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </strong>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to={`/order/${id}/tasks`}>
-                                <span className="num"><i className="fas fa-tasks"></i>&nbsp;</span><span className="">Tasks</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to={`/order/${id}/activity-sheets`}>
-                                <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity Sheets</span>
-                            </Link>
-                        </div>
-                        <div id="step-5" className="st-grey">
-                            <Link to={`/order/${id}/comments`}>
-                                <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
-                            </Link>
-                        </div>
-                        <div id="step-6" className="st-grey">
-                            <Link to={`/order/${id}/files`}>
-                                <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
-                            </Link>
                         </div>
                     </div>
                 </div>
@@ -87,35 +67,16 @@ export default class AssociateOrderFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-wrench"></i>&nbsp;Job Details
-                                        <Link to={`/order/${id}/update/lite`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
-                                            <i className="fas fa-edit"></i>&nbsp;
-                                        </Link>
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Order #</th>
+                                    <th scope="row" className="bg-light">Job #</th>
                                     <td>{order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Full Name</th>
-                                    <td>
-                                        <Link to={`/client/${order.customer}`} target="_blank">
-                                            {order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link>
-                                    </td>
+                                    <td>{order.customerFullName}</td>
                                 </tr>
-                                {order.customerFullName && order.customerTelephone &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Client {order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order.customerTelephone}</td>
-                                    </tr>
-                                }
-                                {order.customerFullName && order.customerOtherTelephone &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Client Other {order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order.customerOtherTelephone}</td>
-                                    </tr>
-                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
                                     <td>{order.description}</td>
@@ -139,11 +100,7 @@ export default class AssociateOrderFullRetrieveComponent extends Component {
                                 {order.associateFullName && order.associateFullName &&
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
-                                        <td>
-                                            <Link to={`/associate/${order.associate}`} target="_blank">
-                                                {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </Link>
-                                        </td>
+                                        <td>{order.associateFullName}</td>
                                     </tr>
                                 }
                                 {order.associateFullName && order.associateTelephone &&
@@ -341,7 +298,7 @@ export default class AssociateOrderFullRetrieveComponent extends Component {
                                 }
                                 {order.wasSurveyConducted &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Overall Order Rating</th>
+                                        <th scope="row" className="bg-light">Overall Job Rating</th>
                                         <td>
                                             {order.score}/5
                                         </td>
@@ -376,58 +333,6 @@ export default class AssociateOrderFullRetrieveComponent extends Component {
                                     <td>
                                         {order.lastModifiedBy}
                                     </td>
-                                </tr>
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
-                                    {isCompleted
-                                        ? <td>
-                                        </td>
-                                        : <td>
-                                            <ul>
-                                                {order.associate &&
-                                                    <li>
-                                                        <Link to={`/order/${order.id}/unassign-associate`}>
-                                                            Unassign Associate&nbsp;<i className="fas fa-chevron-right"></i>
-                                                        </Link>
-                                                    </li>
-                                                }
-                                                {isCancelled
-                                                    ?""
-                                                    :<li>
-                                                        <Link to={`/order/${order.id}/transfer-step-1`}>
-                                                            Transfer&nbsp;<i className="fas fa-chevron-right"></i>
-                                                        </Link>
-                                                    </li>
-                                                }
-                                                {isCancelled
-                                                    ?""
-                                                    :<li>
-                                                        <Link to={`/order/${order.id}/postpone`}>
-                                                            Postpone&nbsp;<i className="fas fa-chevron-right"></i>
-                                                        </Link>
-                                                    </li>
-                                                }
-                                                <li>
-                                                    {isCancelled
-                                                        ?<Link to={`/order/${order.id}/reopen`}>
-                                                            Re-open&nbsp;<i className="fas fa-chevron-right"></i>
-                                                        </Link>
-                                                        :<Link to={`/order/${order.id}/close`}>
-                                                            Close&nbsp;<i className="fas fa-chevron-right"></i>
-                                                        </Link>
-                                                    }
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    }
-
                                 </tr>
 
                             </tbody>
