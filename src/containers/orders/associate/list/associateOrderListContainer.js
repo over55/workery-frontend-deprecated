@@ -4,7 +4,7 @@ import { camelizeKeys, decamelize } from 'humps';
 
 import AssociateOrderListComponent from "../../../../components/orders/associate/list/associateOrderListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
-import { pullOrderList } from "../../../../actions/orderActions";
+import { pullMyOrderList } from "../../../../actions/orderActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
@@ -32,6 +32,7 @@ class AssociateOrderListContainer extends Component {
 
             // Everything else...
             id: id,
+            associateId: id,
         }
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -112,7 +113,7 @@ class AssociateOrderListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullMyOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -122,7 +123,7 @@ class AssociateOrderListContainer extends Component {
             this.setState(
                 { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullMyOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -139,7 +140,7 @@ class AssociateOrderListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullMyOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -185,9 +186,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullMyOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullMyOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

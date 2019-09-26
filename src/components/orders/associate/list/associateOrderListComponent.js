@@ -59,7 +59,6 @@ class RemoteListComponent extends Component {
             dataField: 'customerName',
             text: 'Customer',
             sort: true,
-            formatter: customerNameFormatter,
         },{
             dataField: 'assignmentDate',
             text: 'Assign Date',
