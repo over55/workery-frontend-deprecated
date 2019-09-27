@@ -27,6 +27,8 @@ class AssociateProfileContactUpdateContainer extends Component {
             typeOf: this.props.user.typeOf,
 
             // STEP 4
+            id: this.props.user.associateId,
+            associateId: this.props.user.associateId,
             organizationName: this.props.user.organizationName,
             organizationTypeOf: this.props.user.organizationTypeOf,
             givenName: this.props.user.givenName,
@@ -153,7 +155,7 @@ class AssociateProfileContactUpdateContainer extends Component {
     onSuccessfulSubmissionCallback(associate) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Associate has been successfully updated.");
-        this.props.history.push("/associate/"+this.state.id+"/full");
+        this.props.history.push("/profile/associate/full");
     }
 
     onFailedSubmissionCallback(errors) {

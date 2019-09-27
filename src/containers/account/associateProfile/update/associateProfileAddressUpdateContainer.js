@@ -18,10 +18,6 @@ class AssociateProfileAddressUpdateContainer extends Component {
     constructor(props) {
         super(props);
 
-        // Since we are using the ``react-routes-dom`` library then we
-        // fetch the URL argument as follows.
-        const { id } = this.props.match.params;
-
         // Map the API fields to our fields.
         const country = this.props.user.addressCountry === "CA" ? "Canada" : this.props.user.addressCountry;
         const region = this.props.user.addressRegion === "ON" ? "Ontario" : this.props.user.addressRegion;
@@ -40,7 +36,8 @@ class AssociateProfileAddressUpdateContainer extends Component {
             // Everything else...
             errors: {},
             isLoading: false,
-            id: id,
+            associateId: this.props.user.associateId,
+            id: this.props.user.associateId,
             fullName: this.props.user.fullName,
         }
 
@@ -151,7 +148,7 @@ class AssociateProfileAddressUpdateContainer extends Component {
     onSuccessfulSubmissionCallback(associate) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Associate has been successfully updated.");
-        this.props.history.push("/associate/"+this.state.id+"/full");
+        this.props.history.push("/profile/associate/full");
     }
 
     onFailedSubmissionCallback(errors) {

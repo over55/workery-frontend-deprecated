@@ -20,10 +20,6 @@ class AssociateProfileMetricsUpdateContainer extends Component {
     constructor(props) {
         super(props);
 
-        // Since we are using the ``react-routes-dom`` library then we
-        // fetch the URL argument as follows.
-        const { id } = this.props.match.params;
-
         const birthdateObj = this.props.user.birthdate ? new Date(this.props.user.birthdate) : null;
         const joinDateObj = new Date(this.props.user.joinDate);
 
@@ -49,7 +45,8 @@ class AssociateProfileMetricsUpdateContainer extends Component {
             // Everything else...
             errors: {},
             isLoading: false,
-            id: id,
+            associateId: this.props.user.associateId,
+            id: this.props.user.associateId,
             fullName: this.props.user.fullName,
         }
 
@@ -125,7 +122,7 @@ class AssociateProfileMetricsUpdateContainer extends Component {
     onSuccessfulSubmissionCallback(associate) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Associate has been successfully updated.");
-        this.props.history.push("/associate/"+this.state.id+"/full");
+        this.props.history.push("/profile/associate/full");
     }
 
     onFailedSubmissionCallback(errors) {
