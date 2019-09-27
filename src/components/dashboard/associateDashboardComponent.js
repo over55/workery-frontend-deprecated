@@ -26,7 +26,7 @@ export default class AssociateDashboardComponent extends Component {
                                             </div>
                                             <div className="card-body">
                                                 <h3 className="card-title">Jobs</h3>
-                                                <p className="card-text">List due service fees for associates.</p>
+                                                <p className="card-text">View My Jobs.</p>
                                             </div>
 											<div className="card-footer bg-transparent border-0">
 												<Link to="/jobs" className="btn btn-success btn-lg">
@@ -42,7 +42,7 @@ export default class AssociateDashboardComponent extends Component {
                                             </div>
                                             <div className="card-body">
                                                 <h3 className="card-title">Invoices</h3>
-                                                <p className="card-text">List due service fees for associates.</p>
+                                                <p className="card-text">Update My Invoices.</p>
                                             </div>
 											<div className="card-footer bg-transparent border-0">
 												<Link to="/dashboard" className="btn btn-success btn-lg">
@@ -58,7 +58,7 @@ export default class AssociateDashboardComponent extends Component {
                                             </div>
                                             <div className="card-body">
                                                 <h3 className="card-title">Profile</h3>
-                                                <p className="card-text">List due service fees for associates.</p>
+                                                <p className="card-text">Metrics and Account should be read only. Also, can we add a section below (on in) contact info with Emergency Contacts.</p>
                                             </div>
 											<div className="card-footer bg-transparent border-0">
 												<Link to="/profile/associate/lite" className="btn btn-success btn-lg">
