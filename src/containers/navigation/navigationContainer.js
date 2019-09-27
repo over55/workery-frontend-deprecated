@@ -166,6 +166,16 @@ const AUTH_ASSOCIATE_MENU_DATA = [
         title: "Dashboard",
         url: "/dashboard"
     },{
+        id: "full-jobs",
+        icon: "wrench",
+        title: "Jobs",
+        url: "/jobs"
+    },{
+        id: "full-profile",
+        icon: "user-circle",
+        title: "Profile",
+        url: "/profile/associate/lite"
+    },{
         id: "full-help",
         icon: "question-circle",
         title: "Help",
