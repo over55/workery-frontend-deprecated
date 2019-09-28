@@ -34,6 +34,21 @@ export default class FinancialRetrieveComponent extends Component {
 
                 <h1><i className="fas fa-money-check-alt"></i>&nbsp;View Financial Details</h1>
 
+                <div className="row">
+                    <div className="step-navigation">
+                        <div id="step-1" className="st-grey active">
+                            <strong>
+                                <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Details</span>
+                            </strong>
+                        </div>
+                        <div id="step-2" className="st-grey">
+                            <Link to={`/financial/${order.id}/invoice`}>
+                                <span className="num"><i className="fas fa-file-invoice"></i>&nbsp;</span><span className="">Invoices</span>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="row pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
 
@@ -232,6 +247,11 @@ export default class FinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
                                         <ul>
+                                            <li>
+                                                <Link to={`/financial/${order.id}/clone`}>
+                                                    Clone&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
                                             <li>
                                                 <Link to={`/order/${order.id}/close`} target="_blank">
                                                     Cancel&nbsp;<i className="fas fa-external-link-alt"></i>

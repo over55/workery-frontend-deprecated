@@ -36,6 +36,7 @@ export const WORKERY_ORDER_CLOSE_OPERATION_API_ENDPOINT = '/orders/operation/clo
 export const WORKERY_ORDER_REOPEN_OPERATION_API_ENDPOINT = '/orders/operation/reopen';
 export const WORKERY_ORDER_POSTPONE_OPERATION_API_ENDPOINT = '/orders/operation/postpone';
 export const WORKERY_TASK_ORDER_COMPLETION_OPERATION_API_ENDPOINT = '/orders/operation/order-completion';
+export const WORKERY_ORDER_CLONE_OPERATION_API_ENDPOINT = '/orders/operation/clone';
 export const WORKERY_ORDER_FILE_LIST_API_ENDPOINT = '/order-files';
 export const WORKERY_ORDER_FILE_ARCHIVE_API_ENDPOINT = '/order-file/XXX/';
 export const WORKERY_MY_ORDER_LIST_API_ENDPOINT = '/my-orders';

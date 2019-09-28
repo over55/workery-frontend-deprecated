@@ -85,7 +85,7 @@ export default class FinancialUpdateComponent extends Component {
                             <Link to={`/financials`}><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/financial/${id}`}><i className="fas fa-money-check-alt"></i>&nbsp;Order # {id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</Link>
+                            <Link to={`/financial/${id}`}><i className="fas fa-money-check-alt"></i>&nbsp;Order #{id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Update

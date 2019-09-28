@@ -195,6 +195,7 @@ import SkillsetSearchResultsContainer from "./skillsets/skillsetSearchResultsCon
 import FinancialListContainer from "./financials/list/financialListContainer";
 import FinancialRetrieveContainer from "./financials/retrieve/financialRetrieveContainer";
 import FinancialUpdateContainer from "./financials/update/financialUpdateContainer";
+import FinancialCloneOperationContainer from "./financials/operations/financialCloneOperationContainer";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -489,6 +490,7 @@ class AppContainer extends React.Component {
                                 <Route path="/financials" exact component={requiresAuth(FinancialListContainer)} />
                                 <Route path="/financial/:id" exact component={requiresAuth(FinancialRetrieveContainer)} />
                                 <Route path="/financial/:id/update" exact component={requiresAuth(FinancialUpdateContainer)} />
+                                <Route path="/financial/:id/clone" exact component={requiresAuth(FinancialCloneOperationContainer)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
