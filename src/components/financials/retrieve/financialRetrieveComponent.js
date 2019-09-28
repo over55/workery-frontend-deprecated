@@ -81,6 +81,16 @@ export default class FinancialRetrieveComponent extends Component {
                                         </Link>
                                     </td>
                                 </tr>
+                                {order && order.clonedFrom !== undefined && order.clonedFrom !== null && order.clonedFrom !== "" &&
+                                    <tr>
+                                        <th scope="row" className="bg-light"><i className="fas fa-external-link-alt"></i>Cloned from Order #</th>
+                                        <td>
+                                            <Link to={`/order/${order.clonedFrom}`} target="_blank">
+                                                {order && order.clonedFrom && order.clonedFrom.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Order Start Date</th>
                                     <td>
