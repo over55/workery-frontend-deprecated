@@ -221,10 +221,9 @@ export default class InvoiceRetrieveComponent extends Component {
                         </div>
                     </div>
                     : <div className="jumbotron">
-                        <h1 className="display-4">No Invoice</h1>
+                        <h1 className="display-4"><i className="fas fa-exclamation-triangle"></i>&nbsp;No Invoice</h1>
                         <p className="lead">No invoice has been created, as a result you will need to create it here.</p>
-                        <p>It uses utility classes for typography and spacing to space content out within the larger
-                            container.</p>
+                        <p>Please click below to begin creating the invoice.</p>
                         <p className="lead">
                             <Link className="btn btn-primary btn-lg" to={`/financial/${order.id}/invoice/create/step-1`}>
                                 Begin Wizard&nbsp;<i className="fas fa-chevron-right"></i>

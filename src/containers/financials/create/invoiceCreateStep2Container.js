@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import InvoiceCreateComponent from "../../../components/financials/create/invoiceCreateStep1Component";
+import InvoiceCreateComponent from "../../../components/financials/create/invoiceCreateStep2Component";
 import { pullOrderDetail } from "../../../actions/orderActions";
 import { validateInvoiceSectionOneInput } from "../../../validators/orderValidator";
-import { localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    TELEPHONE_CONTACT_POINT_TYPE_OF_ID
+} from '../../../constants/api';
 import { putStaffContactDetail } from '../../../actions/staffActions';
 
 
@@ -24,8 +27,8 @@ class InvoiceCreateContainer extends Component {
 
         this.state = {
             orderId: parseInt(id),
-            invoiceId: localStorageGetIntegerItem("workery-create-invoice-invoiceId"),
-            invoiceDate: localStorageGetDateItem("workery-create-invoice-invoiceDate"),
+            invoiceId: "",
+            invoiceDate: new Date(),
             errors: {},
             isLoading: false
         }
@@ -107,7 +110,6 @@ class InvoiceCreateContainer extends Component {
 
     onTextChange(e) {
         this.setState({ [e.target.name]: e.target.value, });
-        localStorage.setItem('workery-create-invoice-'+[e.target.name], e.target.value);
     }
 
     onSelectChange(option) {
@@ -133,10 +135,7 @@ class InvoiceCreateContainer extends Component {
     }
 
     onInvoiceDateChange(dateObj) {
-        this.setState({
-            invoiceDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-invoice-invoiceDate', dateObj);
+        this.setState({ invoiceDate: dateObj, });
     }
 
     onClick(e) {
@@ -148,7 +147,7 @@ class InvoiceCreateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.history.push("/financial/"+this.state.orderId+"/invoice/create/step-2");
+            alert("OK");
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
