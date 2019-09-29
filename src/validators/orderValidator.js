@@ -414,3 +414,26 @@ export function validateInvoiceSectionOneInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateInvoiceSectionTwoInput(data) {
+    let errors = {};
+
+    if (data.line01Quantity === undefined || data.line01Quantity === null || data.line01Quantity === "" || isNaN(data.line01Quantity)) {
+        errors.line01Quantity = 'This field is required';
+    }
+    if (data.line01Description === undefined || data.line01Description === null || data.line01Description === "") {
+        errors.line01Description = 'This field is required';
+    }
+    if (data.line01UnitPrice === undefined || data.line01UnitPrice === null || data.line01UnitPrice === "") {
+        errors.line01UnitPrice = 'This field is required';
+    }
+    if (data.line01Amount === undefined || data.line01Amount === null || data.line01Amount === "") {
+        errors.line01Amount = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

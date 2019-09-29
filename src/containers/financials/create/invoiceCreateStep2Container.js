@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import InvoiceCreateComponent from "../../../components/financials/create/invoiceCreateStep2Component";
 import { pullOrderDetail } from "../../../actions/orderActions";
-import { validateInvoiceSectionOneInput } from "../../../validators/orderValidator";
+import { validateInvoiceSectionTwoInput } from "../../../validators/orderValidator";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     TELEPHONE_CONTACT_POINT_TYPE_OF_ID
@@ -27,17 +27,17 @@ class InvoiceCreateContainer extends Component {
 
         this.state = {
             orderId: parseInt(id),
-            invoiceId: "",
-            invoiceDate: new Date(),
+            line01Quantity: localStorage.getItem("workery-create-invoice-line01Quantity"),
+            line01Description: localStorage.getItem("workery-create-invoice-line01Description"),
+            line01UnitPrice: localStorage.getItem("workery-create-invoice-line01UnitPrice"),
+            line01Amount: localStorage.getItem("workery-create-invoice-line01Amount"),
             errors: {},
             isLoading: false
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
-        this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
+        this.onAmountChange = this.onAmountChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -112,30 +112,17 @@ class InvoiceCreateContainer extends Component {
         this.setState({ [e.target.name]: e.target.value, });
     }
 
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            [optionKey]: option,
-        });
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "workery-create-staff-"+[e.target.name];
-        const storageLabelKey =  "workery-create-staff-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-    }
-
-    onInvoiceDateChange(dateObj) {
-        this.setState({ invoiceDate: dateObj, });
+    /**
+     *  Function will take the currency string and save it as a float value in
+     *  the state for the field.
+     */
+    onAmountChange(e) {
+        const amount = e.target.value.replace("$","").replace(",", "");
+        this.setState(
+            { [e.target.name]: parseFloat(amount), }, ()=>{
+                // Do nothing.
+            }
+        );
     }
 
     onClick(e) {
@@ -143,11 +130,11 @@ class InvoiceCreateContainer extends Component {
         e.preventDefault();
 
         // Perform staff-side validation.
-        const { errors, isValid } = validateInvoiceSectionOneInput(this.state);
+        const { errors, isValid } = validateInvoiceSectionTwoInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            alert("OK");
+            this.props.history.push("/financial/"+this.state.orderId+"/invoice/create/step-3");
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -163,19 +150,19 @@ class InvoiceCreateContainer extends Component {
 
     render() {
         const {
-            orderId, errors, invoiceId, invoiceDate
+            orderId, errors, line01Quantity, line01Description, line01UnitPrice, line01Amount
         } = this.state;
         return (
             <InvoiceCreateComponent
                 orderId={orderId}
                 order={this.props.orderDetail}
-                invoiceId={invoiceId}
-                invoiceDate={invoiceDate}
+                line01Quantity={line01Quantity}
+                line01Description={line01Description}
+                line01UnitPrice={line01UnitPrice}
+                line01Amount={line01Amount}
                 errors={errors}
                 onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onInvoiceDateChange={this.onInvoiceDateChange}
+                onAmountChange={this.onAmountChange}
                 onClick={this.onClick}
             />
         );

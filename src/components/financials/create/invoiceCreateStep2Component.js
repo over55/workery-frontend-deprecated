@@ -12,6 +12,7 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
 import {
     IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
@@ -21,9 +22,8 @@ import {
 class InvoiceCreateStep2Component extends Component {
     render() {
         const {
-            orderId, order, errors,
-            invoiceId, invoiceDate,
-            onTextChange, onRadioChange, onInvoiceDateChange, isLoading, onClick, onSelectChange
+            orderId, order, errors, line01Quantity, line01Description, line01UnitPrice, line01Amount,
+            onAmountChange, onTextChange, isLoading, onClick
         } = this.props;
         return (
             <main id="main" role="main">
@@ -72,7 +72,7 @@ class InvoiceCreateStep2Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;First Section
+                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;Second Section
                             </h2>
 
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
@@ -82,84 +82,46 @@ class InvoiceCreateStep2Component extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.invoiceId}
-                                label="Invoice ID (*)"
+                                error={errors.line01Quantity}
+                                label="Line 01 Quantity (*)"
                                 onChange={onTextChange}
-                                value={invoiceId}
-                                name="invoiceId"
+                                value={line01Quantity}
+                                name="line01Quantity"
                                 type="number"
                             />
 
-                            <BootstrapDatePicker
-                                label="Invoice Date(*)"
-                                name="invoiceDate"
-                                dateObj={invoiceDate}
-                                onTimeChange={onInvoiceDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.invoiceDate}
-                            />
-
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Associate Name"
-                                value={order && order.associateFullName}
-                                name="associateFullName"
-                                type="string"
-                                disabled={true}
+                                borderColour="border-primary"
+                                error={errors.line01Description}
+                                label="Line 01 Description (*)"
+                                onChange={onTextChange}
+                                value={line01Description}
+                                name="line01Description"
+                                type="text"
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Associate Telephone"
-                                value={order && order.associateTelephone}
-                                name="associateTelephone"
-                                type="string"
-                                disabled={true}
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.line01UnitPrice}
+                                label="Line 01 Unit Price (*)"
+                                onChange={onAmountChange}
+                                value={line01UnitPrice}
+                                name="line01UnitPrice"
+                                helpText=""
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Associate Tax ID"
-                                value={order && order.associateTaxId}
-                                name="associateTaxId"
-                                type="string"
-                                disabled={true}
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.line01UnitPrice}
+                                label="Line 01 Amount (*)"
+                                onChange={onAmountChange}
+                                value={line01Amount}
+                                name="line01Amount"
+                                helpText=""
                             />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Client Name"
-                                value={order && order.customerFullName}
-                                name="customerFullName"
-                                type="string"
-                                disabled={true}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Client Address"
-                                value={order && order.customerAddress}
-                                name="customerAddress"
-                                type="string"
-                                disabled={true}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Client Email"
-                                value={order && order.customerEmail}
-                                name="customerEmail"
-                                type="string"
-                                disabled={true}
-                            />
-
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
