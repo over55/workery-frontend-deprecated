@@ -26,11 +26,33 @@ class InvoiceCreateContainer extends Component {
         const { id } = this.props.match.params;
 
         this.state = {
-            orderId: parseInt(id),
+            // LINE 01
             line01Quantity: localStorage.getItem("workery-create-invoice-line01Quantity"),
             line01Description: localStorage.getItem("workery-create-invoice-line01Description"),
             line01UnitPrice: localStorage.getItem("workery-create-invoice-line01UnitPrice"),
             line01Amount: localStorage.getItem("workery-create-invoice-line01Amount"),
+            // LINE 02
+            line02Quantity: localStorage.getItem("workery-create-invoice-line02Quantity"),
+            line02Description: localStorage.getItem("workery-create-invoice-line02Description"),
+            line02UnitPrice: localStorage.getItem("workery-create-invoice-line02UnitPrice"),
+            line02Amount: localStorage.getItem("workery-create-invoice-line02Amount"),
+            // LINE 03
+            line03Quantity: localStorage.getItem("workery-create-invoice-line03Quantity"),
+            line03Description: localStorage.getItem("workery-create-invoice-line03Description"),
+            line03UnitPrice: localStorage.getItem("workery-create-invoice-line03UnitPrice"),
+            line03Amount: localStorage.getItem("workery-create-invoice-line03Amount"),
+            // LINE 04
+            line04Quantity: localStorage.getItem("workery-create-invoice-line04Quantity"),
+            line04Description: localStorage.getItem("workery-create-invoice-line04Description"),
+            line04UnitPrice: localStorage.getItem("workery-create-invoice-line04UnitPrice"),
+            line04Amount: localStorage.getItem("workery-create-invoice-line04Amount"),
+            // LINE 05
+            line05Quantity: localStorage.getItem("workery-create-invoice-line05Quantity"),
+            line05Description: localStorage.getItem("workery-create-invoice-line05Description"),
+            line05UnitPrice: localStorage.getItem("workery-create-invoice-line05UnitPrice"),
+            line05Amount: localStorage.getItem("workery-create-invoice-line05Amount"),
+            // OTHER
+            orderId: parseInt(id),
             errors: {},
             isLoading: false
         }
@@ -150,7 +172,12 @@ class InvoiceCreateContainer extends Component {
 
     render() {
         const {
-            orderId, errors, line01Quantity, line01Description, line01UnitPrice, line01Amount
+            orderId, errors,
+            line01Quantity, line01Description, line01UnitPrice, line01Amount,
+            line02Quantity, line02Description, line02UnitPrice, line02Amount,
+            line03Quantity, line03Description, line03UnitPrice, line03Amount,
+            line04Quantity, line04Description, line04UnitPrice, line04Amount,
+            line05Quantity, line05Description, line05UnitPrice, line05Amount
         } = this.state;
         return (
             <InvoiceCreateComponent
@@ -160,6 +187,22 @@ class InvoiceCreateContainer extends Component {
                 line01Description={line01Description}
                 line01UnitPrice={line01UnitPrice}
                 line01Amount={line01Amount}
+                line02Quantity={line02Quantity}
+                line02Description={line02Description}
+                line02UnitPrice={line02UnitPrice}
+                line02Amount={line02Amount}
+                line03Quantity={line03Quantity}
+                line03Description={line03Description}
+                line03UnitPrice={line03UnitPrice}
+                line03Amount={line03Amount}
+                line04Quantity={line04Quantity}
+                line04Description={line04Description}
+                line04UnitPrice={line04UnitPrice}
+                line04Amount={line04Amount}
+                line05Quantity={line05Quantity}
+                line05Description={line05Description}
+                line05UnitPrice={line05UnitPrice}
+                line05Amount={line05Amount}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onAmountChange={this.onAmountChange}
