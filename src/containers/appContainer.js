@@ -197,6 +197,7 @@ import FinancialRetrieveContainer from "./financials/retrieve/financialRetrieveC
 import FinancialUpdateContainer from "./financials/update/financialUpdateContainer";
 import FinancialCloneOperationContainer from "./financials/operations/financialCloneOperationContainer";
 import InvoiceRetrieveContainer from "./financials/retrieve/invoiceRetrieveContainer";
+import InvoiceCreateContainer from "./financials/create/invoiceCreateContainer";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -493,6 +494,7 @@ class AppContainer extends React.Component {
                                 <Route path="/financial/:id/update" exact component={requiresAuth(FinancialUpdateContainer)} />
                                 <Route path="/financial/:id/clone" exact component={requiresAuth(FinancialCloneOperationContainer)} />
                                 <Route path="/financial/:id/invoice" exact component={requiresAuth(InvoiceRetrieveContainer)} />
+                                <Route path="/financial/:id/invoice/create" exact component={requiresAuth(InvoiceCreateContainer)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />

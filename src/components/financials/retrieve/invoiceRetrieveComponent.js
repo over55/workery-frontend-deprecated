@@ -49,63 +49,179 @@ export default class InvoiceRetrieveComponent extends Component {
                     </div>
                 </div>
 
-                {order && order.invoice !== undefined && order.invoice !== null && order.invoice !== ""
-                    ? <div className="row pt-3 mb-4 pb-2">
-                        <div className="col-md-10 mx-auto p-2">
 
-                            <h2>
-                                <i className="fas fa-table"></i>&nbsp;Details
-                            </h2>
+                <div className="row pt-3 mb-4 pb-2">
+                    <div className="col-md-10 mx-auto p-2">
 
-                            <BootstrapErrorsProcessingAlert errors={errors} />
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;Details
+                        </h2>
 
-                            <table className="table table-bordered custom-cell-w">
-                                <tbody>
-                                    <tr className="bg-dark">
-                                        <th scope="row" colSpan="2" className="text-light">
-                                            <i className="fas fa-file-invoice"></i>&nbsp;Invoice
-                                            <Link to={`/financial/${order.id}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
-                                                <i className="fas fa-edit"></i>&nbsp;
-                                            </Link>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" className="bg-light">Invoice ID</th>
-                                        <td>
+                        <BootstrapErrorsProcessingAlert errors={errors} />
 
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                            <form>
-                                <div className="form-group">
-                                    {order && order.invoice !== undefined && order.invoice !== null && order.invoice !== ""
-                                        ? <Link to={`/financial/${order.id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
-                                            <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-file-invoice"></i>&nbsp;Invoice Header
+                                        <Link to={`/financial/${order.id}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
-                                        : <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={true}>
-                                            <i className="fas fa-edit"></i>&nbsp;Edit
-                                        </Link>
-                                    }
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice ID</th>
+                                    <td>---</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Date</th>
+                                    <td>---</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Name</th>
+                                    <td>{order && order.associateFullName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Phone</th>
+                                    <td>{order && order.associateTelephone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate HST #</th>
+                                    <td>{order && order.associateTaxId}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Name</th>
+                                    <td>{order && order.customerFullName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Address</th>
+                                    <td>{order && order.customerAddress}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Phone</th>
+                                    <td>{order && order.customerTelephone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Email</th>
+                                    <td>{order && order.customerEmail}</td>
+                                </tr>
 
-                                    <Link to={`/financials`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
-                                        <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-file-invoice"></i>&nbsp;Invoice Description
+                                        <Link to={`/financial/${order.id}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
+                                    </th>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-file-invoice"></i>&nbsp;Invoice Financials
+                                        <Link to={`/financial/${order.id}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <i className="fas fa-edit"></i>&nbsp;
+                                        </Link>
+                                    </th>
+                                </tr>
+
+
+
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Labour</th>
+                                    <td>
+                                        {order.invoiceLabourAmount
+                                            ?<NumberFormat value={order.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Materials</th>
+                                    <td>
+                                        {order.invoiceMaterialAmount
+                                            ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Total Tax</th>
+                                    <td>
+                                        {order.invoiceTaxAmount
+                                            ?<NumberFormat value={order.invoiceTaxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Total</th>
+                                    <td>
+                                        {order.invoiceTotalAmount
+                                            ?<NumberFormat value={order.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Service Fee Rate</th>
+                                    <td>
+                                        {order.prettyInvoiceServiceFee
+                                            ?order.prettyInvoiceServiceFee
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Service Fee</th>
+                                    <td>
+                                        {order.invoiceServiceFeeAmount
+                                            ?<NumberFormat value={order.invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Service Fee Payment Date</th>
+                                    <td>
+                                        {order.invoiceServiceFeePaymentDate
+                                            ?<Moment format="MM/DD/YYYY">{order.invoiceServiceFeePaymentDate}</Moment>
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Service Fee Paid</th>
+                                    <td>
+                                        {order.invoiceActualServiceFeeAmountPaid
+                                            ?<NumberFormat value={order.invoiceActualServiceFeeAmountPaid} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <form>
+                            <div className="form-group">
+                                {order && order.invoice !== undefined && order.invoice !== null && order.invoice !== ""
+                                    ? <Link to={`/financial/${order.id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
+                                        <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                                     </Link>
-                                </div>
-                            </form>
-                        </div>
+                                    : <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={true}>
+                                        <i className="fas fa-edit"></i>&nbsp;Edit
+                                    </Link>
+                                }
+
+                                <Link to={`/financials`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                </Link>
+                            </div>
+                        </form>
                     </div>
-                    : <div className="jumbotron">
-                        <h1 className="display-4">No Invoice</h1>
-                        <p className="lead">It appears you need to create the invoice before you are able to download the invoice PDF.</p>
-                        <hr className="my-4" />
-                        <p>Please click below to get started.</p>
-                        <p className="lead">
-                            <Link className="btn btn-primary btn-lg" to="#">Begin Invoice Creation Wizard&nbsp;<i className="fas fa-chevron-right"></i></Link>
-                        </p>
-                    </div>
-                }
+                </div>
+
+
             </main>
         );
     }
