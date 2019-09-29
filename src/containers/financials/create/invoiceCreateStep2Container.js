@@ -51,6 +51,56 @@ class InvoiceCreateContainer extends Component {
             line05Description: localStorage.getItem("workery-create-invoice-line05Description"),
             line05UnitPrice: localStorage.getItem("workery-create-invoice-line05UnitPrice"),
             line05Amount: localStorage.getItem("workery-create-invoice-line05Amount"),
+            // LINE 06
+            line06Quantity: localStorage.getItem("workery-create-invoice-line06Quantity"),
+            line06Description: localStorage.getItem("workery-create-invoice-line06Description"),
+            line06UnitPrice: localStorage.getItem("workery-create-invoice-line06UnitPrice"),
+            line06Amount: localStorage.getItem("workery-create-invoice-line06Amount"),
+            // LINE 07
+            line07Quantity: localStorage.getItem("workery-create-invoice-line07Quantity"),
+            line07Description: localStorage.getItem("workery-create-invoice-line07Description"),
+            line07UnitPrice: localStorage.getItem("workery-create-invoice-line07UnitPrice"),
+            line07Amount: localStorage.getItem("workery-create-invoice-line07Amount"),
+            // LINE 08
+            line08Quantity: localStorage.getItem("workery-create-invoice-line08Quantity"),
+            line08Description: localStorage.getItem("workery-create-invoice-line08Description"),
+            line08UnitPrice: localStorage.getItem("workery-create-invoice-line08UnitPrice"),
+            line08Amount: localStorage.getItem("workery-create-invoice-line08Amount"),
+            // LINE 09
+            line09Quantity: localStorage.getItem("workery-create-invoice-line09Quantity"),
+            line09Description: localStorage.getItem("workery-create-invoice-line09Description"),
+            line09UnitPrice: localStorage.getItem("workery-create-invoice-line09UnitPrice"),
+            line09Amount: localStorage.getItem("workery-create-invoice-line09Amount"),
+            // LINE 10
+            line10Quantity: localStorage.getItem("workery-create-invoice-line10Quantity"),
+            line10Description: localStorage.getItem("workery-create-invoice-line10Description"),
+            line10UnitPrice: localStorage.getItem("workery-create-invoice-line10UnitPrice"),
+            line10Amount: localStorage.getItem("workery-create-invoice-line10Amount"),
+            // LINE 11
+            line11Quantity: localStorage.getItem("workery-create-invoice-line11Quantity"),
+            line11Description: localStorage.getItem("workery-create-invoice-line11Description"),
+            line11UnitPrice: localStorage.getItem("workery-create-invoice-line11UnitPrice"),
+            line11Amount: localStorage.getItem("workery-create-invoice-line11Amount"),
+            // LINE 12
+            line12Quantity: localStorage.getItem("workery-create-invoice-line12Quantity"),
+            line12Description: localStorage.getItem("workery-create-invoice-line12Description"),
+            line12UnitPrice: localStorage.getItem("workery-create-invoice-line12UnitPrice"),
+            line12Amount: localStorage.getItem("workery-create-invoice-line12Amount"),
+            // LINE 13
+            line13Quantity: localStorage.getItem("workery-create-invoice-line13Quantity"),
+            line13Description: localStorage.getItem("workery-create-invoice-line13Description"),
+            line13UnitPrice: localStorage.getItem("workery-create-invoice-line13UnitPrice"),
+            line13Amount: localStorage.getItem("workery-create-invoice-line13Amount"),
+            // LINE 14
+            line14Quantity: localStorage.getItem("workery-create-invoice-line14Quantity"),
+            line14Description: localStorage.getItem("workery-create-invoice-line14Description"),
+            line14UnitPrice: localStorage.getItem("workery-create-invoice-line14UnitPrice"),
+            line14Amount: localStorage.getItem("workery-create-invoice-line14Amount"),
+            // LINE 15
+            line15Quantity: localStorage.getItem("workery-create-invoice-line15Quantity"),
+            line15Description: localStorage.getItem("workery-create-invoice-line15Description"),
+            line15UnitPrice: localStorage.getItem("workery-create-invoice-line15UnitPrice"),
+            line15Amount: localStorage.getItem("workery-create-invoice-line15Amount"),
             // OTHER
             orderId: parseInt(id),
             errors: {},
@@ -177,7 +227,17 @@ class InvoiceCreateContainer extends Component {
             line02Quantity, line02Description, line02UnitPrice, line02Amount,
             line03Quantity, line03Description, line03UnitPrice, line03Amount,
             line04Quantity, line04Description, line04UnitPrice, line04Amount,
-            line05Quantity, line05Description, line05UnitPrice, line05Amount
+            line05Quantity, line05Description, line05UnitPrice, line05Amount,
+            line06Quantity, line06Description, line06UnitPrice, line06Amount,
+            line07Quantity, line07Description, line07UnitPrice, line07Amount,
+            line08Quantity, line08Description, line08UnitPrice, line08Amount,
+            line09Quantity, line09Description, line09UnitPrice, line09Amount,
+            line10Quantity, line10Description, line10UnitPrice, line10Amount,
+            line11Quantity, line11Description, line11UnitPrice, line11Amount,
+            line12Quantity, line12Description, line12UnitPrice, line12Amount,
+            line13Quantity, line13Description, line13UnitPrice, line13Amount,
+            line14Quantity, line14Description, line14UnitPrice, line14Amount,
+            line15Quantity, line15Description, line15UnitPrice, line15Amount
         } = this.state;
         return (
             <InvoiceCreateComponent
@@ -203,6 +263,46 @@ class InvoiceCreateContainer extends Component {
                 line05Description={line05Description}
                 line05UnitPrice={line05UnitPrice}
                 line05Amount={line05Amount}
+                line06Quantity={line06Quantity}
+                line06Description={line06Description}
+                line06UnitPrice={line06UnitPrice}
+                line06Amount={line06Amount}
+                line07Quantity={line07Quantity}
+                line07Description={line07Description}
+                line07UnitPrice={line07UnitPrice}
+                line07Amount={line07Amount}
+                line08Quantity={line08Quantity}
+                line08Description={line08Description}
+                line08UnitPrice={line08UnitPrice}
+                line08Amount={line08Amount}
+                line09Quantity={line09Quantity}
+                line09Description={line09Description}
+                line09UnitPrice={line09UnitPrice}
+                line09Amount={line09Amount}
+                line10Quantity={line10Quantity}
+                line10Description={line10Description}
+                line10UnitPrice={line10UnitPrice}
+                line10Amount={line10Amount}
+                line11Quantity={line11Quantity}
+                line11Description={line11Description}
+                line11UnitPrice={line11UnitPrice}
+                line11Amount={line11Amount}
+                line12Quantity={line12Quantity}
+                line12Description={line12Description}
+                line12UnitPrice={line12UnitPrice}
+                line12Amount={line12Amount}
+                line13Quantity={line13Quantity}
+                line13Description={line13Description}
+                line13UnitPrice={line13UnitPrice}
+                line13Amount={line13Amount}
+                line14Quantity={line14Quantity}
+                line14Description={line14Description}
+                line14UnitPrice={line14UnitPrice}
+                line14Amount={line14Amount}
+                line15Quantity={line15Quantity}
+                line15Description={line15Description}
+                line15UnitPrice={line15UnitPrice}
+                line15Amount={line15Amount}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onAmountChange={this.onAmountChange}

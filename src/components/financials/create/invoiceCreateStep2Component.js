@@ -28,6 +28,16 @@ class InvoiceCreateStep2Component extends Component {
             line03Quantity, line03Description, line03UnitPrice, line03Amount,
             line04Quantity, line04Description, line04UnitPrice, line04Amount,
             line05Quantity, line05Description, line05UnitPrice, line05Amount,
+            line06Quantity, line06Description, line06UnitPrice, line06Amount,
+            line07Quantity, line07Description, line07UnitPrice, line07Amount,
+            line08Quantity, line08Description, line08UnitPrice, line08Amount,
+            line09Quantity, line09Description, line09UnitPrice, line09Amount,
+            line10Quantity, line10Description, line10UnitPrice, line10Amount,
+            line11Quantity, line11Description, line11UnitPrice, line11Amount,
+            line12Quantity, line12Description, line12UnitPrice, line12Amount,
+            line13Quantity, line13Description, line13UnitPrice, line13Amount,
+            line14Quantity, line14Description, line14UnitPrice, line14Amount,
+            line15Quantity, line15Description, line15UnitPrice, line15Amount,
             onAmountChange, onTextChange, isLoading, onClick
         } = this.props;
         return (
@@ -321,6 +331,486 @@ class InvoiceCreateStep2Component extends Component {
                                 onChange={onAmountChange}
                                 value={line05Amount}
                                 name="line05Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 06
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line06Quantity}
+                                label="Line 06 Quantity"
+                                onChange={onTextChange}
+                                value={line06Quantity}
+                                name="line06Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line06Description}
+                                label="Line 06 Description"
+                                onChange={onTextChange}
+                                value={line06Description}
+                                name="line06Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line06UnitPrice}
+                                label="Line 06 Unit Price"
+                                onChange={onAmountChange}
+                                value={line06UnitPrice}
+                                name="line06UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line06UnitPrice}
+                                label="Line 06 Amount"
+                                onChange={onAmountChange}
+                                value={line06Amount}
+                                name="line06Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 07
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line07Quantity}
+                                label="Line 07 Quantity"
+                                onChange={onTextChange}
+                                value={line07Quantity}
+                                name="line07Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line07Description}
+                                label="Line 07 Description"
+                                onChange={onTextChange}
+                                value={line07Description}
+                                name="line07Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line07UnitPrice}
+                                label="Line 07 Unit Price"
+                                onChange={onAmountChange}
+                                value={line07UnitPrice}
+                                name="line07UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line07UnitPrice}
+                                label="Line 07 Amount"
+                                onChange={onAmountChange}
+                                value={line07Amount}
+                                name="line07Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 08
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line08Quantity}
+                                label="Line 08 Quantity"
+                                onChange={onTextChange}
+                                value={line08Quantity}
+                                name="line08Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line08Description}
+                                label="Line 08 Description"
+                                onChange={onTextChange}
+                                value={line08Description}
+                                name="line08Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line08UnitPrice}
+                                label="Line 08 Unit Price"
+                                onChange={onAmountChange}
+                                value={line08UnitPrice}
+                                name="line08UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line08UnitPrice}
+                                label="Line 08 Amount"
+                                onChange={onAmountChange}
+                                value={line08Amount}
+                                name="line08Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 09
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line09Quantity}
+                                label="Line 09 Quantity"
+                                onChange={onTextChange}
+                                value={line09Quantity}
+                                name="line09Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line09Description}
+                                label="Line 09 Description"
+                                onChange={onTextChange}
+                                value={line09Description}
+                                name="line09Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line09UnitPrice}
+                                label="Line 09 Unit Price"
+                                onChange={onAmountChange}
+                                value={line09UnitPrice}
+                                name="line09UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line09UnitPrice}
+                                label="Line 09 Amount"
+                                onChange={onAmountChange}
+                                value={line09Amount}
+                                name="line09Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 10
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line10Quantity}
+                                label="Line 10 Quantity"
+                                onChange={onTextChange}
+                                value={line10Quantity}
+                                name="line10Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line10Description}
+                                label="Line 10 Description"
+                                onChange={onTextChange}
+                                value={line10Description}
+                                name="line10Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line10UnitPrice}
+                                label="Line 10 Unit Price"
+                                onChange={onAmountChange}
+                                value={line10UnitPrice}
+                                name="line10UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line10UnitPrice}
+                                label="Line 10 Amount"
+                                onChange={onAmountChange}
+                                value={line10Amount}
+                                name="line10Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 11
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line11Quantity}
+                                label="Line 11 Quantity"
+                                onChange={onTextChange}
+                                value={line11Quantity}
+                                name="line11Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line11Description}
+                                label="Line 11 Description"
+                                onChange={onTextChange}
+                                value={line11Description}
+                                name="line11Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line11UnitPrice}
+                                label="Line 11 Unit Price"
+                                onChange={onAmountChange}
+                                value={line11UnitPrice}
+                                name="line11UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line11UnitPrice}
+                                label="Line 11 Amount"
+                                onChange={onAmountChange}
+                                value={line11Amount}
+                                name="line11Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 12
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line12Quantity}
+                                label="Line 12 Quantity"
+                                onChange={onTextChange}
+                                value={line12Quantity}
+                                name="line12Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line12Description}
+                                label="Line 12 Description"
+                                onChange={onTextChange}
+                                value={line12Description}
+                                name="line12Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line12UnitPrice}
+                                label="Line 12 Unit Price"
+                                onChange={onAmountChange}
+                                value={line12UnitPrice}
+                                name="line12UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line12UnitPrice}
+                                label="Line 12 Amount"
+                                onChange={onAmountChange}
+                                value={line12Amount}
+                                name="line12Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 13
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line13Quantity}
+                                label="Line 13 Quantity"
+                                onChange={onTextChange}
+                                value={line13Quantity}
+                                name="line13Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line13Description}
+                                label="Line 13 Description"
+                                onChange={onTextChange}
+                                value={line13Description}
+                                name="line13Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line13UnitPrice}
+                                label="Line 13 Unit Price"
+                                onChange={onAmountChange}
+                                value={line13UnitPrice}
+                                name="line13UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line13UnitPrice}
+                                label="Line 13 Amount"
+                                onChange={onAmountChange}
+                                value={line13Amount}
+                                name="line13Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 14
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line14Quantity}
+                                label="Line 14 Quantity"
+                                onChange={onTextChange}
+                                value={line14Quantity}
+                                name="line14Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line14Description}
+                                label="Line 14 Description"
+                                onChange={onTextChange}
+                                value={line14Description}
+                                name="line14Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line14UnitPrice}
+                                label="Line 14 Unit Price"
+                                onChange={onAmountChange}
+                                value={line14UnitPrice}
+                                name="line14UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line14UnitPrice}
+                                label="Line 14 Amount"
+                                onChange={onAmountChange}
+                                value={line14Amount}
+                                name="line14Amount"
+                                helpText=""
+                            />
+
+                            <p className="border-bottom mb-3 pb-1 text-secondary">
+                                Line 15
+                            </p>
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line15Quantity}
+                                label="Line 15 Quantity"
+                                onChange={onTextChange}
+                                value={line15Quantity}
+                                name="line15Quantity"
+                                type="number"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.line15Description}
+                                label="Line 15 Description"
+                                onChange={onTextChange}
+                                value={line15Description}
+                                name="line15Description"
+                                type="text"
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line15UnitPrice}
+                                label="Line 15 Unit Price"
+                                onChange={onAmountChange}
+                                value={line15UnitPrice}
+                                name="line15UnitPrice"
+                                helpText=""
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.line15UnitPrice}
+                                label="Line 15 Amount"
+                                onChange={onAmountChange}
+                                value={line15Amount}
+                                name="line15Amount"
                                 helpText=""
                             />
 
