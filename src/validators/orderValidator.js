@@ -397,3 +397,20 @@ export function validateSearchInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateInvoiceSectionOneInput(data) {
+    let errors = {};
+
+    if (data.invoiceId === undefined || data.invoiceId === null || data.invoiceId === "" || isNaN(data.invoiceId)) {
+        errors.invoiceId = 'This field is required';
+    }
+    if (data.invoiceDate === undefined || data.invoiceDate === null || data.invoiceDate === "" || isNaN(data.invoiceDate)) {
+        errors.invoiceDate = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
