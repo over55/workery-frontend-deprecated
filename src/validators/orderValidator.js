@@ -448,6 +448,27 @@ export function validateInvoiceSectionThirdInput(data) {
     if (data.invoiceQuoteDate === undefined || data.invoiceQuoteDate === null || data.invoiceQuoteDate === "" || isNaN(data.invoiceQuoteDate)) {
         errors.invoiceQuoteDate = 'This field is required';
     }
+    if (data.invoiceCustomersApproval === undefined || data.invoiceCustomersApproval === null || data.invoiceCustomersApproval === "") {
+        errors.invoiceCustomersApproval = 'This field is required';
+    }
+    if (data.line01Notes === undefined || data.line01Notes === null || data.line01Notes === "") {
+        errors.line01Notes = 'This field is required';
+    }
+    if (data.paymentAmount === undefined || data.paymentAmount === null || data.paymentAmount === "") {
+        errors.paymentAmount = 'This field is required';
+    }
+    if (data.paymentDate === undefined || data.paymentDate === null || data.paymentDate === "" || isNaN(data.paymentDate)) {
+        errors.paymentDate = 'This field is required';
+    }
+    if (data.clientSignature === undefined || data.clientSignature === null || data.clientSignature === "") {
+        errors.clientSignature = 'This field is required';
+    }
+    if (data.associateSignDate === undefined || data.associateSignDate === null || data.associateSignDate === "" || isNaN(data.associateSignDate)) {
+        errors.associateSignDate = 'This field is required';
+    }
+    if (data.associateSignDate === undefined || data.associateSignDate === null || data.associateSignDate === "") {
+        errors.associateSignDate = 'This field is required';
+    }
 
     return {
         errors,
