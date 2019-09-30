@@ -86,9 +86,10 @@ class  AdminOrderCreateStep6Container extends Component {
         postData.customer = this.state.clientGivenId
 
         // (5) Start date - We need to format as per required API format.
-        if (this.state.startDate !== undefined && this.state.startDate !== null && this.state.startDate === "") {
+        if (this.state.startDate instanceof Date) {
             const startDateMoment = moment(this.state.startDate);
             postData.startDate = startDateMoment.format("YYYY-MM-DD")
+
         }
 
         // IsOngoing
