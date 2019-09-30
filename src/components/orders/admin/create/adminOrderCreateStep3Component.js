@@ -15,9 +15,10 @@ export default class AdminOrderCreateStep3Component extends Component {
             startDate, onStartDateChange,
             jobType, homeSupport, onRadioChange,
         } = this.props;
-        const isOngoing = parseInt(jobType) === IS_ONGOING_JOB_TYPE;
-        const helpText = "<strong>Note:</strong> Selecting 'Ongoing' will result in this job will being re-created by the system every month. You will be able to terminate or pause this job from the <a href='/'>ongoing jobs page</a> . If you have any questions please <a href='/help'>contact the administrator</a>.";
-        const jobTypeHelpText = isOngoing ? helpText : null;
+        const jobTypeBool = (jobType === 'true' || jobType === 'True' || jobType === true ) ? true : false;
+        const isOngoing = jobTypeBool === IS_ONGOING_JOB_TYPE;
+        const helpText = "<strong>Note:</strong> If the client would like recurring service, select \"Ongoing\".";
+        const jobTypeHelpText = isOngoing == true ? helpText : null;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
