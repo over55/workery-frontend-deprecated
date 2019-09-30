@@ -200,6 +200,7 @@ import InvoiceRetrieveContainer from "./financials/retrieve/invoiceRetrieveConta
 import InvoiceCreateContainer from "./financials/create/invoiceCreateContainer";
 import InvoiceCreateStep1Container from "./financials/create/invoiceCreateStep1Container";
 import InvoiceCreateStep2Container from "./financials/create/invoiceCreateStep2Container";
+import InvoiceCreateStep3Container from "./financials/create/invoiceCreateStep3Container";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -499,6 +500,7 @@ class AppContainer extends React.Component {
                                 <Route path="/financial/:id/invoice/create" exact component={requiresAuth(InvoiceCreateContainer)} />
                                 <Route path="/financial/:id/invoice/create/step-1" exact component={requiresAuth(InvoiceCreateStep1Container)} />
                                 <Route path="/financial/:id/invoice/create/step-2" exact component={requiresAuth(InvoiceCreateStep2Container)} />
+                                <Route path="/financial/:id/invoice/create/step-3" exact component={requiresAuth(InvoiceCreateStep3Container)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />

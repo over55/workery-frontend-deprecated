@@ -5,10 +5,7 @@ import Scroll from 'react-scroll';
 import InvoiceCreateComponent from "../../../components/financials/create/invoiceCreateStep2Component";
 import { pullOrderDetail } from "../../../actions/orderActions";
 import { validateInvoiceSectionTwoInput } from "../../../validators/orderValidator";
-import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    TELEPHONE_CONTACT_POINT_TYPE_OF_ID
-} from '../../../constants/api';
+import { localStorageGetIntegerItem, localStorageGetFloatItem } from '../../../helpers/localStorageUtility';
 import { putStaffContactDetail } from '../../../actions/staffActions';
 
 
@@ -27,10 +24,10 @@ class InvoiceCreateContainer extends Component {
 
         this.state = {
             // LINE 01
-            line01Quantity: localStorage.getItem("workery-create-invoice-line01Quantity"),
+            line01Quantity: localStorageGetIntegerItem("workery-create-invoice-line01Quantity"),
             line01Description: localStorage.getItem("workery-create-invoice-line01Description"),
-            line01UnitPrice: localStorage.getItem("workery-create-invoice-line01UnitPrice"),
-            line01Amount: localStorage.getItem("workery-create-invoice-line01Amount"),
+            line01UnitPrice: localStorageGetFloatItem("workery-create-invoice-line01UnitPrice"),
+            line01Amount: localStorageGetFloatItem("workery-create-invoice-line01Amount"),
             // LINE 02
             line02Quantity: localStorage.getItem("workery-create-invoice-line02Quantity"),
             line02Description: localStorage.getItem("workery-create-invoice-line02Description"),
@@ -182,6 +179,7 @@ class InvoiceCreateContainer extends Component {
 
     onTextChange(e) {
         this.setState({ [e.target.name]: e.target.value, });
+        localStorage.setItem('workery-create-invoice-'+[e.target.name], e.target.value);
     }
 
     /**
@@ -192,7 +190,7 @@ class InvoiceCreateContainer extends Component {
         const amount = e.target.value.replace("$","").replace(",", "");
         this.setState(
             { [e.target.name]: parseFloat(amount), }, ()=>{
-                // Do nothing.
+                localStorage.setItem('workery-create-invoice-'+[e.target.name], parseFloat(amount) );
             }
         );
     }

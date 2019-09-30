@@ -134,7 +134,7 @@ class InvoiceCreateStep2Component extends Component {
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.line01UnitPrice}
+                                error={errors.line01Amount}
                                 label="Line 01 Amount (*)"
                                 onChange={onAmountChange}
                                 value={line01Amount}

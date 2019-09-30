@@ -437,3 +437,20 @@ export function validateInvoiceSectionTwoInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateInvoiceSectionThirdInput(data) {
+    let errors = {};
+
+    if (data.invoiceQuoteDays === undefined || data.invoiceQuoteDays === null || data.invoiceQuoteDays === "" || isNaN(data.invoiceQuoteDays)) {
+        errors.invoiceQuoteDays = 'This field is required';
+    }
+    if (data.invoiceQuoteDate === undefined || data.invoiceQuoteDate === null || data.invoiceQuoteDate === "" || isNaN(data.invoiceQuoteDate)) {
+        errors.invoiceQuoteDate = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
