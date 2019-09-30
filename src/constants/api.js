@@ -820,18 +820,18 @@ export const IS_ACTIVE_TYPE_OF_CHOICES = [
 
 
 
-export const IS_ONGOING_JOB_TYPE = 1;
-export const IS_ONE_TIME_JOB_TYPE_OF = 2;
+export const IS_ONGOING_JOB_TYPE = true;
+export const IS_ONE_TIME_JOB_TYPE_OF = false;
 export const JOB_TYPE_CHOICES = [
     {
         id: 'jobType-1-choice',
         selectName: "jobType",
-        value: IS_ONGOING_JOB_TYPE,
+        value: true,
         label: "Ongoing"
     },{
         id: 'jobType-2-choice',
         selectName: "jobType",
-        value: IS_ONE_TIME_JOB_TYPE_OF,
+        value: false,
         label: "One-time"
     }
 ];

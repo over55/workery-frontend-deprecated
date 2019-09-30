@@ -11,7 +11,7 @@ import {
     COMMUNITY_CARES_TYPE_OF
 } from '../../../../constants/api';
 import {
-    localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining
+    localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining, localStorageGetBooleanItem
 } from '../../../../helpers/localStorageUtility';
 import { validateStep6CreateInput } from "../../../../validators/orderValidator";
 import { postOrderDetail } from '../../../../actions/orderActions';
@@ -31,7 +31,7 @@ class  AdminOrderCreateStep6Container extends Component {
             clientGivenName: localStorage.getItem("workery-create-order-clientGivenName"),
             clientLastName: localStorage.getItem("workery-create-order-clientLastName", ),
             startDate: localStorageGetDateItem("workery-create-order-startDate"),
-            jobType: localStorageGetIntegerItem("workery-create-order-jobType"),
+            jobType: localStorageGetBooleanItem("workery-create-order-jobType"),
             jobTypeLabel: localStorage.getItem("workery-create-order-jobType-label"),
             homeSupport: localStorageGetIntegerItem("workery-create-order-homeSupport"),
             homeSupportLabel: localStorage.getItem("workery-create-order-homeSupport-label"),

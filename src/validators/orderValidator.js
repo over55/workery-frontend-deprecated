@@ -109,7 +109,7 @@ export function validateStep1CreateInput(data) {
 export function validateStep3CreateInput(data) {
     let errors = {};
 
-    if (data.jobType === undefined || data.jobType === null || data.jobType === "" || isNaN(data.jobType) ) {
+    if (data.jobType === undefined || data.jobType === null || data.jobType === "") {
         errors.jobType = 'This field is required';
     }
     if (data.homeSupport === undefined || data.homeSupport === null || data.homeSupport === "" || isNaN(data.homeSupport) ) {
