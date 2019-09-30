@@ -13,6 +13,7 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
+import { BootstrapCheckbox } from "../../bootstrap/bootstrapCheckbox";
 import {
     IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
@@ -25,7 +26,7 @@ class InvoiceCreateStep2Component extends Component {
             orderId, order, errors,
             invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
-            onTextChange, onInvoiceQuoteDateChange, isLoading, onClick, onSelectChange, onAmountChange, onPaymentDateChange, onAssociateSignDateChange,
+            onTextChange, onInvoiceQuoteDateChange, isLoading, onClick, onSelectChange, onAmountChange, onPaymentDateChange, onAssociateSignDateChange, onCheckboxChange
         } = this.props;
         const invoiceTotalAmount = order.invoiceLabourAmount + order.invoiceTaxAmount;
         return (
@@ -227,6 +228,56 @@ class InvoiceCreateStep2Component extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.paymentDate}
+                            />
+
+                            <BootstrapCheckbox
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.cash}
+                                label="Cash"
+                                onChange={onCheckboxChange}
+                                value={cash}
+                                name="cash"
+                            />
+
+                            <BootstrapCheckbox
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.cheque}
+                                label="Cheque"
+                                onChange={onCheckboxChange}
+                                value={cheque}
+                                name="cheque"
+                            />
+
+                            <BootstrapCheckbox
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.debit}
+                                label="Debit"
+                                onChange={onCheckboxChange}
+                                value={debit}
+                                name="debit"
+                            />
+
+                            <BootstrapCheckbox
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.credit}
+                                label="Credit"
+                                onChange={onCheckboxChange}
+                                value={credit}
+                                name="credit"
+                            />
+
+                            <BootstrapCheckbox
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-success"
+                                error={errors.other}
+                                label="Other"
+                                onChange={onCheckboxChange}
+                                value={other}
+                                name="other"
                             />
 
                             <BootstrapInput
