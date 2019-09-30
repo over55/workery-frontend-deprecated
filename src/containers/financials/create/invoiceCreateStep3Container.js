@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import InvoiceCreateStep3Component from "../../../components/financials/create/invoiceCreateStep3Component";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullOrderDetail, invoiceOrderOperation } from "../../../actions/orderActions";
 import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
 import {
@@ -105,7 +106,8 @@ class InvoiceCreateStep3Container extends Component {
     }
 
     onSuccessCallback(response) {
-        console.log(response);
+        // localStorageRemoveItemsContaining("workery-create-client-"); //TODO: UNCOMMENT WHEN CONFIRMED WORKING.
+        this.props.setFlashMessage("success", "Invoice has been successfully created.");
         this.props.history.push("/financial/"+this.state.orderId+"/invoice");
     }
 
@@ -236,6 +238,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
         putStaffContactDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(putStaffContactDetail(data, onSuccessCallback, onFailureCallback))
         },
