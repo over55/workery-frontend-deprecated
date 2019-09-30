@@ -179,12 +179,12 @@ class InvoiceCreateStep2Component extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.invoiceQuoteDays}
+                                error={errors.invoiceCustomersApproval}
                                 label="Customer Approval: (*)"
                                 onChange={onTextChange}
                                 value={invoiceCustomersApproval}
-                                name="invoiceQuoteDays"
-                                type="number"
+                                name="invoiceCustomersApproval"
+                                type="text"
                             />
 
                             <BootstrapInput

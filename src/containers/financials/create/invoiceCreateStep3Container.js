@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import InvoiceCreateStep3Component from "../../../components/financials/create/invoiceCreateStep3Component";
-import { pullOrderDetail } from "../../../actions/orderActions";
+import { pullOrderDetail, invoiceOrderOperation } from "../../../actions/orderActions";
 import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
 import {
     localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanItem
@@ -28,7 +28,7 @@ class InvoiceCreateStep3Container extends Component {
             orderId: parseInt(id),
             invoiceQuoteDays: localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays"),
             invoiceQuoteDate: localStorageGetDateItem("workery-create-invoice-invoiceQuoteDate"),
-            invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-line01Description"),
+            invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-invoiceCustomersApproval"),
             line01Notes: localStorage.getItem("workery-create-invoice-line01Notes"),
             line02Notes: localStorage.getItem("workery-create-invoice-line02Notes"),
             paymentAmount: localStorageGetFloatItem("workery-create-invoice-paymentAmount"),
@@ -47,12 +47,14 @@ class InvoiceCreateStep3Container extends Component {
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onAmountChange = this.onAmountChange.bind(this);
         this.onInvoiceQuoteDateChange = this.onInvoiceQuoteDateChange.bind(this);
         this.onPaymentDateChange = this.onPaymentDateChange.bind(this);
         this.onAssociateSignDateChange = this.onAssociateSignDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onSuccessOrderCallback = this.onSuccessOrderCallback.bind(this);
     }
 
     /**
@@ -75,7 +77,7 @@ class InvoiceCreateStep3Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullOrderDetail(this.state.orderId, this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullOrderDetail(this.state.orderId, this.onSuccessOrderCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -92,12 +94,8 @@ class InvoiceCreateStep3Container extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(staff) {
-        this.props.history.push("/staff/"+this.state.id+"/full");
-    }
-
-    onFailedSubmissionCallback(errors) {
-        this.setState({ errors: errors, });
+    onFailureCallback(errors) {
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -108,11 +106,11 @@ class InvoiceCreateStep3Container extends Component {
 
     onSuccessCallback(response) {
         console.log(response);
-        this.setState({ isLoading: false, })
+        this.props.history.push("/financial/"+this.state.orderId+"/invoice");
     }
 
-    onFailureCallback(errors) {
-        console.log(errors);
+    onSuccessOrderCallback(response) {
+        // Do nothing.
     }
 
     /**
@@ -146,6 +144,19 @@ class InvoiceCreateStep3Container extends Component {
         localStorageSetObjectOrArrayItem('workery-create-invoice-associateSignDate', dateObj);
     }
 
+    /**
+     *  Function will take the currency string and save it as a float value in
+     *  the state for the field.
+     */
+    onAmountChange(e) {
+        const amount = e.target.value.replace("$","").replace(",", "");
+        this.setState(
+            { [e.target.name]: parseFloat(amount), }, ()=>{
+                localStorage.setItem('workery-create-invoice-'+[e.target.name], parseFloat(amount) );
+            }
+        );
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -155,11 +166,19 @@ class InvoiceCreateStep3Container extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.history.push("/financial/"+this.state.orderId+"/invoice/create/step-4");
+            this.setState({
+                isLoading: true, errors: {}
+            }, ()=>{
+                this.props.invoiceOrderOperation(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailureCallback,
+                );
+            })
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
     }
 
@@ -185,6 +204,7 @@ class InvoiceCreateStep3Container extends Component {
                 line01Notes={line01Notes}
                 line02Notes={line02Notes}
                 paymentAmount={paymentAmount}
+                onAmountChange={this.onAmountChange}
                 paymentDate={paymentDate}
                 cash={cash}
                 cheque={cheque}
@@ -216,12 +236,17 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        putStaffContactDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffContactDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        putStaffContactDetail: (data, onSuccessCallback, onFailureCallback) => {
+            dispatch(putStaffContactDetail(data, onSuccessCallback, onFailureCallback))
         },
         pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
+        invoiceOrderOperation: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                invoiceOrderOperation(postData, onSuccessCallback, onFailureCallback)
             )
         },
     }
