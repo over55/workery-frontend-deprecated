@@ -5,6 +5,7 @@ import NumberFormat from 'react-number-format';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
@@ -31,6 +32,7 @@ class InvoiceCreateStep2Component extends Component {
         const invoiceTotalAmount = order.invoiceLabourAmount + order.invoiceTaxAmount;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -301,7 +303,16 @@ class InvoiceCreateStep2Component extends Component {
                                 error={errors.associateSignDate}
                             />
 
-
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-primary"
+                                error={errors.associateSignature}
+                                label="Associate Signature:"
+                                onChange={onTextChange}
+                                value={associateSignature}
+                                name="associateSignature"
+                                type="text"
+                            />
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>

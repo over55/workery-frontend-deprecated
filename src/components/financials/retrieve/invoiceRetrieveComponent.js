@@ -49,7 +49,7 @@ export default class InvoiceRetrieveComponent extends Component {
                     </div>
                 </div>
 
-                {order && order.invoice !== undefined && order.invoice !== null
+                {order && order.invoiceId !== undefined && order.invoiceId !== null
                     ? <div className="row pt-3 mb-4 pb-2">
                         <div className="col-md-10 mx-auto p-2">
 
