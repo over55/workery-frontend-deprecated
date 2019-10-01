@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 import InvoiceRetrieveComponent from "../../../components/financials/retrieve/invoiceRetrieveComponent";
 import { pullOrderInvoice } from "../../../actions/orderActions";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
-} from '../../../constants/api';
+import { getSubdomain } from "../../../helpers/urlUtility";
+import { WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_ENDPOINT } from '../../../constants/api';
 
 
 class InvoiceRetrieveContainer extends Component {
@@ -32,6 +29,7 @@ class InvoiceRetrieveContainer extends Component {
         // Update functions.
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onDownloadInvoicePDFClick = this.onDownloadInvoicePDFClick.bind(this);
     }
 
     /**
@@ -75,6 +73,34 @@ class InvoiceRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
+    onDownloadInvoicePDFClick(e) {
+        e.preventDefault();
+
+        // Disable the button so the user cannot double click and download
+        // the file multiple times.
+        this.setState({ isLoading: true, })
+
+        // DEVELOPERS NOTE:
+        // Because we have a multi-tenant architecture, we need to make calls
+        // to the specific tenant for the CSV download API to work.
+        const schema = getSubdomain();
+
+        // Generate our URL.
+        const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_ENDPOINT.replace("XXX", this.state.id);
+        console.log(url);
+
+        // The following code will open up a new browser tab and load up the
+        // URL that you inputted.
+        var win = window.open(url, '_blank');
+        win.focus();
+
+        // Add minor delay and then run to remove the button ``disable`` state
+        // so the user is able to click the download button again.
+        setTimeout(() => {
+            this.setState({ isLoading: false, errors: [], })
+        }, 100); // 0.10 seconds.
+    }
+
 
     /**
      *  Main render function
@@ -89,6 +115,7 @@ class InvoiceRetrieveContainer extends Component {
                 isLoading={this.state.isLoading}
                 invoice={invoice}
                 flashMessage={this.props.flashMessage}
+                onDownloadInvoicePDFClick={this.onDownloadInvoicePDFClick}
             />
         );
     }

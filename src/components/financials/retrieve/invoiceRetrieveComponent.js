@@ -12,7 +12,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class InvoiceRetrieveComponent extends Component {
     render() {
-        const { invoice, errors, flashMessage, isLoading, } = this.props;
+        const { invoice, errors, flashMessage, isLoading, onDownloadInvoicePDFClick } = this.props;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -204,15 +204,19 @@ export default class InvoiceRetrieveComponent extends Component {
                             </table>
                             <form>
                                 <div className="form-group">
+                                    <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onDownloadInvoicePDFClick}>
+                                        <i className="fas fa-cloud-download-alt"></i>&nbsp;Download PDF
+                                    </button>
+                                { /*
                                     {invoice && invoice.order !== undefined && invoice.order !== null && invoice.order !== "" &&
                                         <Link to={`/financial/${invoice.order}/update`} className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4">
                                             <i className="fas fa-cloud-download-alt"></i>&nbsp;Download Invoice PDF
                                         </Link>
                                     }
-
                                     <Link to={`/financials`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                         <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                     </Link>
+                                    */}
                                 </div>
                             </form>
                         </div>
