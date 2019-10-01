@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -6,6 +7,8 @@ import { pullOrderInvoice } from "../../../actions/orderActions";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { getSubdomain } from "../../../helpers/urlUtility";
 import { WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_ENDPOINT } from '../../../constants/api';
+import { getAPIBaseURL } from '../../../helpers/urlUtility';
+import { getAccessTokenFromLocalStorage, attachAxiosRefreshTokenHandler } from '../../../helpers/jwtUtility';
 
 
 class InvoiceRetrieveContainer extends Component {
@@ -27,9 +30,11 @@ class InvoiceRetrieveContainer extends Component {
         }
 
         // Update functions.
+        this.onSuccessPDFDownloadCallback = this.onSuccessPDFDownloadCallback.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onDownloadInvoicePDFClick = this.onDownloadInvoicePDFClick.bind(this);
+        this.performDownloadPDF = this.performDownloadPDF.bind(this);
     }
 
     /**
@@ -59,6 +64,60 @@ class InvoiceRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
+    onSuccessPDFDownloadCallback(successResponse) {
+        this.setState({ isLoading: false, })
+
+        /**
+         *  The following code was taken from the following URL:
+         *  https://gist.github.com/javilobo8/097c30a233786be52070986d8cdb1743
+         */
+        const url = window.URL.createObjectURL(new Blob([successResponse.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'invoice.pdf');
+        document.body.appendChild(link);
+        link.click();
+    }
+
+    /**
+     *  The following function will request from the server our PDF invoice
+     *  file and receive the data from the API web service.
+     */
+    performDownloadPDF() {
+        // IMPORTANT: THIS IS THE ONLY WAY WE CAN GET THE ACCESS TOKEN.
+        const accessToken = getAccessTokenFromLocalStorage();
+
+        // Generate our app's Axios instance.
+        // Create a new Axios instance which will be sending and receiving in
+        // blob (binary data) format. Special thanks to the following URL:
+        // https://gist.github.com/javilobo8/097c30a233786be52070986d8cdb1743
+        const customAxios = axios.create({
+            baseURL: getAPIBaseURL(),
+            headers: {
+                'Authorization': "JWT " + accessToken,
+                'Content-Type': 'application/octet-stream;',
+                'Accept': 'application/octet-stream',
+            },
+            responseType: 'blob', // important
+        })
+
+        // Attach our Axios "refesh token" interceptor.
+        attachAxiosRefreshTokenHandler(customAxios);
+
+        const aURL = WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_ENDPOINT.replace("XXX", this.state.id);
+
+        customAxios.get(aURL).then( (successResponse) => { // SUCCESS
+            this.onSuccessPDFDownloadCallback(successResponse);
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+                console.log("pullOrderInvoice | error:", responseData); // For debuggin purposes only.
+            }
+        }).then( () => { // FINALLY
+            // Do nothing.
+        });
+    }
+
     onSuccessCallback(response) {
         // console.log(response);
         this.setState({ isLoading: false, })
@@ -80,25 +139,8 @@ class InvoiceRetrieveContainer extends Component {
         // the file multiple times.
         this.setState({ isLoading: true, })
 
-        // DEVELOPERS NOTE:
-        // Because we have a multi-tenant architecture, we need to make calls
-        // to the specific tenant for the CSV download API to work.
-        const schema = getSubdomain();
-
-        // Generate our URL.
-        const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_ENDPOINT.replace("XXX", this.state.id);
-        console.log(url);
-
-        // The following code will open up a new browser tab and load up the
-        // URL that you inputted.
-        var win = window.open(url, '_blank');
-        win.focus();
-
-        // Add minor delay and then run to remove the button ``disable`` state
-        // so the user is able to click the download button again.
-        setTimeout(() => {
-            this.setState({ isLoading: false, errors: [], })
-        }, 100); // 0.10 seconds.
+        // Make a request to our API web-service.
+        this.performDownloadPDF();
     }
 
 
