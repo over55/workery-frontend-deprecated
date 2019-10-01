@@ -210,21 +210,13 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <Link to={`/financials`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                         <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                     </Link>
-                                { /*
-                                    {invoice && invoice.order !== undefined && invoice.order !== null && invoice.order !== "" &&
-                                        <Link to={`/financial/${invoice.order}/update`} className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4">
-                                            <i className="fas fa-cloud-download-alt"></i>&nbsp;Download Invoice PDF
-                                        </Link>
-                                    }
-
-                                    */}
                                 </div>
                             </form>
                         </div>
                     </div>
                     : <div className="jumbotron">
                         <h1 className="display-4"><i className="fas fa-exclamation-triangle"></i>&nbsp;No Invoice</h1>
-                        <p className="lead">No invoice has been created, as a result you will need to create it here.</p>
+                        <p className="lead">No invoice has been created, as a result you will need to create it before you are able to download the PDF copy of it.</p>
                         <p>Please click below to begin creating the invoice.</p>
                         <p className="lead">
                             <Link className="btn btn-primary btn-lg" to={`/financial/${invoice.order}/invoice/create/step-1`}>
