@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import InvoiceRetrieveComponent from "../../../components/financials/retrieve/invoiceRetrieveComponent";
-import { pullOrderDetail } from "../../../actions/orderActions";
+import { pullOrderInvoice } from "../../../actions/orderActions";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import {
     RESIDENCE_TYPE_OF,
@@ -26,7 +26,7 @@ class InvoiceRetrieveContainer extends Component {
         this.state = {
             id: parseInt(id),
             isLoading: false,
-            order: {}
+            invoice: {}
         }
 
         // Update functions.
@@ -41,7 +41,7 @@ class InvoiceRetrieveContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullOrderDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullOrderInvoice(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -62,7 +62,7 @@ class InvoiceRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log(response);
+        // console.log(response);
         this.setState({ isLoading: false, })
     }
 
@@ -82,12 +82,12 @@ class InvoiceRetrieveContainer extends Component {
      */
 
     render() {
-        const order = this.props.orderDetail ? this.props.orderDetail : {};
+        const invoice = this.props.orderDetail ? this.props.orderDetail : {};
         return (
             <InvoiceRetrieveComponent
                 id={this.state.id}
                 isLoading={this.state.isLoading}
-                order={order}
+                invoice={invoice}
                 flashMessage={this.props.flashMessage}
             />
         );
@@ -107,9 +107,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+        pullOrderInvoice: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+                pullOrderInvoice(id, onSuccessCallback, onFailureCallback)
             )
         },
     }

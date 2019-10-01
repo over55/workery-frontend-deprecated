@@ -12,7 +12,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class InvoiceRetrieveComponent extends Component {
     render() {
-        const { order, errors, flashMessage, isLoading, } = this.props;
+        const { invoice, errors, flashMessage, isLoading, } = this.props;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -25,7 +25,7 @@ export default class InvoiceRetrieveComponent extends Component {
                             <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{order && order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{invoice && invoice.order && invoice.order.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
@@ -37,7 +37,7 @@ export default class InvoiceRetrieveComponent extends Component {
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/financial/${order.id}`}>
+                            <Link to={`/financial/${invoice.order}`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
@@ -49,7 +49,7 @@ export default class InvoiceRetrieveComponent extends Component {
                     </div>
                 </div>
 
-                {order && order.invoiceId !== undefined && order.invoiceId !== null
+                {invoice && invoice.invoiceId !== undefined && invoice.invoiceId !== null
                     ? <div className="row pt-3 mb-4 pb-2">
                         <div className="col-md-10 mx-auto p-2">
 
@@ -64,7 +64,7 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-file-invoice"></i>&nbsp;Invoice Header
-                                            <Link to={`/financial/${order.id}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <Link to={`/financial/${invoice.order}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                                 <i className="fas fa-edit"></i>&nbsp;
                                             </Link>
                                         </th>
@@ -79,37 +79,37 @@ export default class InvoiceRetrieveComponent extends Component {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Name</th>
-                                        <td>{order && order.associateFullName}</td>
+                                        <td>{invoice && invoice.associateFullName}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Phone</th>
-                                        <td>{order && order.associateTelephone}</td>
+                                        <td>{invoice && invoice.associateTelephone}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Associate HST #</th>
-                                        <td>{order && order.associateTaxId}</td>
+                                        <td>{invoice && invoice.associateTaxId}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Name</th>
-                                        <td>{order && order.customerFullName}</td>
+                                        <td>{invoice && invoice.customerFullName}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Address</th>
-                                        <td>{order && order.customerAddress}</td>
+                                        <td>{invoice && invoice.customerAddress}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Phone</th>
-                                        <td>{order && order.customerTelephone}</td>
+                                        <td>{invoice && invoice.customerTelephone}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Email</th>
-                                        <td>{order && order.customerEmail}</td>
+                                        <td>{invoice && invoice.customerEmail}</td>
                                     </tr>
 
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-file-invoice"></i>&nbsp;Invoice Description
-                                            <Link to={`/financial/${order.id}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <Link to={`/financial/${invoice.order}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                                 <i className="fas fa-edit"></i>&nbsp;
                                             </Link>
                                         </th>
@@ -119,7 +119,7 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-file-invoice"></i>&nbsp;Invoice Financials
-                                            <Link to={`/financial/${order.id}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <Link to={`/financial/${invoice.order}/invoice/update`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                                 <i className="fas fa-edit"></i>&nbsp;
                                             </Link>
                                         </th>
@@ -130,8 +130,8 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Actual Labour</th>
                                         <td>
-                                            {order.invoiceLabourAmount
-                                                ?<NumberFormat value={order.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice.invoiceLabourAmount
+                                                ?<NumberFormat value={invoice.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -139,8 +139,8 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Actual Materials</th>
                                         <td>
-                                            {order.invoiceMaterialAmount
-                                                ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice.invoiceMaterialAmount
+                                                ?<NumberFormat value={invoice.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -148,8 +148,8 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Total Tax</th>
                                         <td>
-                                            {order.invoiceTaxAmount
-                                                ?<NumberFormat value={order.invoiceTaxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice.invoiceTaxAmount
+                                                ?<NumberFormat value={invoice.invoiceTaxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -157,8 +157,8 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Total</th>
                                         <td>
-                                            {order.invoiceTotalAmount
-                                                ?<NumberFormat value={order.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice.invoiceTotalAmount
+                                                ?<NumberFormat value={invoice.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -166,8 +166,8 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Service Fee Rate</th>
                                         <td>
-                                            {order.prettyInvoiceServiceFee
-                                                ?order.prettyInvoiceServiceFee
+                                            {invoice.prettyInvoiceServiceFee
+                                                ?invoice.prettyInvoiceServiceFee
                                                 :"-"
                                             }
                                         </td>
@@ -175,8 +175,8 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Service Fee</th>
                                         <td>
-                                            {order.invoiceServiceFeeAmount
-                                                ?<NumberFormat value={order.invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice.invoiceServiceFeeAmount
+                                                ?<NumberFormat value={invoice.invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -184,8 +184,8 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Service Fee Payment Date</th>
                                         <td>
-                                            {order.invoiceServiceFeePaymentDate
-                                                ?<Moment format="MM/DD/YYYY">{order.invoiceServiceFeePaymentDate}</Moment>
+                                            {invoice.invoiceServiceFeePaymentDate
+                                                ?<Moment format="MM/DD/YYYY">{invoice.invoiceServiceFeePaymentDate}</Moment>
                                                 :"-"
                                             }
                                         </td>
@@ -193,8 +193,8 @@ export default class InvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Actual Service Fee Paid</th>
                                         <td>
-                                            {order.invoiceActualServiceFeeAmountPaid
-                                                ?<NumberFormat value={order.invoiceActualServiceFeeAmountPaid} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice.invoiceActualServiceFeeAmountPaid
+                                                ?<NumberFormat value={invoice.invoiceActualServiceFeeAmountPaid} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -204,12 +204,9 @@ export default class InvoiceRetrieveComponent extends Component {
                             </table>
                             <form>
                                 <div className="form-group">
-                                    {order && order.invoice !== undefined && order.invoice !== null && order.invoice !== ""
-                                        ? <Link to={`/financial/${order.id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
-                                            <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
-                                        </Link>
-                                        : <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={true}>
-                                            <i className="fas fa-edit"></i>&nbsp;Edit
+                                    {invoice && invoice.order !== undefined && invoice.order !== null && invoice.order !== "" &&
+                                        <Link to={`/financial/${invoice.order}/update`} className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4">
+                                            <i className="fas fa-cloud-download-alt"></i>&nbsp;Download Invoice PDF
                                         </Link>
                                     }
 
@@ -225,7 +222,7 @@ export default class InvoiceRetrieveComponent extends Component {
                         <p className="lead">No invoice has been created, as a result you will need to create it here.</p>
                         <p>Please click below to begin creating the invoice.</p>
                         <p className="lead">
-                            <Link className="btn btn-primary btn-lg" to={`/financial/${order.id}/invoice/create/step-1`}>
+                            <Link className="btn btn-primary btn-lg" to={`/financial/${invoice.order}/invoice/create/step-1`}>
                                 Begin Wizard&nbsp;<i className="fas fa-chevron-right"></i>
                             </Link>
                         </p>

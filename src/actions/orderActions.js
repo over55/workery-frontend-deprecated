@@ -13,6 +13,7 @@ import {
     WORKERY_MY_ORDER_DETAIL_API_ENDPOINT,
     WORKERY_ORDER_LIST_API_ENDPOINT,
     WORKERY_ORDER_DETAIL_API_ENDPOINT,
+    WORKERY_ORDER_INVOICE_RETRIEVE_API_ENDPOINT,
     WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT,
     WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT,
     WORKERY_ORDER_CLOSE_OPERATION_API_ENDPOINT,
@@ -402,6 +403,79 @@ export function pullMyOrderDetail(id, onSuccessCallback, onFailureCallback) {
                 let errors = camelizeKeys(responseData);
 
                 console.log("pullOrderDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setOrderDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => { // FINALLY
+            // Do nothing.
+        });
+
+    }
+}
+
+
+export function pullOrderInvoice(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to fetch latest user details.
+        store.dispatch(
+            setOrderDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        const aURL = WORKERY_ORDER_INVOICE_RETRIEVE_API_ENDPOINT.replace("XXX", id);
+
+        customAxios.get(aURL).then( (successResponse) => { // SUCCESS
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            // console.log(successResult); // For debugging purposes.
+
+            let order = camelizeKeys(responseData);
+
+            // Extra.
+            order['isAPIRequestRunning'] = false;
+            order['errors'] = {};
+
+            console.log("pullOrderInvoice | Success:", order); // For debugging purposes.
+
+            // Update the global state of the application to store our
+            // user order for the application.
+            store.dispatch(
+                setOrderDetailSuccess(order)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(order);
+            }
+
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("pullOrderInvoice | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(

@@ -26,6 +26,7 @@ export const WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT = '/customer/XXX/contact
 export const WORKERY_CLIENT_ADDRESS_UPDATE_API_ENDPOINT = '/customer/XXX/address';
 export const WORKERY_CLIENT_METRICS_UPDATE_API_ENDPOINT = '/customer/XXX/metrics';
 export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
+export const WORKERY_ORDER_INVOICE_RETRIEVE_API_ENDPOINT = '/order/XXX/invoice';
 export const WORKERY_ORDER_DETAIL_API_ENDPOINT = '/order/';
 export const WORKERY_ORDER_LITE_UPDATE_API_ENDPOINT = '/order/XXX/lite';
 export const WORKERY_ORDER_FINANCIAL_UPDATE_API_ENDPOINT = '/order/XXX/financial';
