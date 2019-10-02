@@ -24,12 +24,27 @@ import {
 class InvoiceCreateStep2Component extends Component {
     render() {
         const {
-            orderId, order, errors,
+            line01Quantity, line01Description, line01UnitPrice, line01Amount,
+            line02Quantity, line02Description, line02UnitPrice, line02Amount,
+            line03Quantity, line03Description, line03UnitPrice, line03Amount,
+            line04Quantity, line04Description, line04UnitPrice, line04Amount,
+            line05Quantity, line05Description, line05UnitPrice, line05Amount,
+            line06Quantity, line06Description, line06UnitPrice, line06Amount,
+            line07Quantity, line07Description, line07UnitPrice, line07Amount,
+            line08Quantity, line08Description, line08UnitPrice, line08Amount,
+            line09Quantity, line09Description, line09UnitPrice, line09Amount,
+            line10Quantity, line10Description, line10UnitPrice, line10Amount,
+            line11Quantity, line11Description, line11UnitPrice, line11Amount,
+            line12Quantity, line12Description, line12UnitPrice, line12Amount,
+            line13Quantity, line13Description, line13UnitPrice, line13Amount,
+            line14Quantity, line14Description, line14UnitPrice, line14Amount,
+            line15Quantity, line15Description, line15UnitPrice, line15Amount,
+            orderId, order, errors, invoiceId, invoiceDate,
             invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
             onTextChange, onInvoiceQuoteDateChange, isLoading, onClick, onSelectChange, onAmountChange, onPaymentDateChange, onAssociateSignDateChange, onCheckboxChange
         } = this.props;
-        const invoiceTotalAmount = order.invoiceLabourAmount + order.invoiceTaxAmount;
+        const invoiceSubTotalAmount = parseFloat(order.invoiceLabourAmount) + parseFloat(order.invoiceTaxAmount);
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -68,265 +83,313 @@ class InvoiceCreateStep2Component extends Component {
                                 <span className="num">2.</span><span className="">Second Section</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey active">
-                            <strong>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/financial/${orderId}/invoice/create/step-3`}>
                                 <span className="num">3.</span><span className="">Third Section</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey active">
+                            <strong>
+                                <span className="num">4.</span><span className="">Review</span>
                             </strong>
                         </div>
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-md-5 mx-auto mt-2">
+                <div className="row pt-3 mb-4 pb-2">
+                    <div className="col-md-10 mx-auto p-2">
+
+                        <h2>
+                            <i className="fas fa-table"></i>&nbsp;Review
+                        </h2>
+
+                        <BootstrapErrorsProcessingAlert errors={errors} />
+                        <p><strong>Please confirm these details before adding the invoice:</strong></p>
+                        <table className="table table-bordered custom-cell-w">
+                            <tbody>
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;First Section
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice ID</th>
+                                    <td>{invoiceId}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Invoice Date</th>
+                                    <td><Moment format="MM/DD/YYYY">{invoiceDate}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Name</th>
+                                    <td>{order && order.associateFullName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Telephone</th>
+                                    <td>{order && order.associateTelephone}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Tax ID</th>
+                                    <td>{order && order.associateTaxId}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Name</th>
+                                    <td>{order && order.customerFullName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Address</th>
+                                    <td>{order && order.customerAddress}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Email</th>
+                                    <td>{order && order.customerEmail}</td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Second Section
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 01</th>
+                                    <td>x{line01Quantity} | {line01Description} | {line01UnitPrice} | {line01Amount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 02</th>
+                                    <td>
+                                        {line02Quantity
+                                            ? <div>x{line02Quantity} | {line02Description} | {line02UnitPrice} | {line02Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 03</th>
+                                    <td>
+                                        {line03Quantity
+                                            ? <div>x{line03Quantity} | {line03Description} | {line03UnitPrice} | {line03Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 04</th>
+                                    <td>
+                                        {line04Quantity
+                                            ? <div>x{line04Quantity} | {line04Description} | {line04UnitPrice} | {line04Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 05</th>
+                                    <td>
+                                        {line05Quantity
+                                            ? <div>x{line05Quantity} | {line05Description} | {line05UnitPrice} | {line05Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 06</th>
+                                    <td>
+                                        {line06Quantity
+                                            ? <div>x{line06Quantity} | {line06Description} | {line06UnitPrice} | {line06Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 07</th>
+                                    <td>
+                                        {line07Quantity
+                                            ? <div>x{line07Quantity} | {line07Description} | {line07UnitPrice} | {line07Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 08</th>
+                                    <td>
+                                        {line08Quantity
+                                            ? <div>x{line08Quantity} | {line08Description} | {line08UnitPrice} | {line08Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 09</th>
+                                    <td>
+                                        {line09Quantity
+                                            ? <div>x{line09Quantity} | {line09Description} | {line09UnitPrice} | {line09Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 10</th>
+                                    <td>
+                                        {line10Quantity
+                                            ? <div>x{line10Quantity} | {line10Description} | {line10UnitPrice} | {line10Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 11</th>
+                                    <td>
+                                        {line11Quantity
+                                            ? <div>x{line11Quantity} | {line11Description} | {line11UnitPrice} | {line11Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 12</th>
+                                    <td>
+                                        {line12Quantity
+                                            ? <div>x{line12Quantity} | {line12Description} | {line12UnitPrice} | {line12Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 13</th>
+                                    <td>
+                                        {line13Quantity
+                                            ? <div>x{line13Quantity} | {line13Description} | {line13UnitPrice} | {line13Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 14</th>
+                                    <td>
+                                        {line14Quantity
+                                            ? <div>x{line14Quantity} | {line14Description} | {line14UnitPrice} | {line14Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 15</th>
+                                    <td>
+                                        {line15Quantity
+                                            ? <div>x{line15Quantity} | {line15Description} | {line15UnitPrice} | {line15Amount}</div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Third Section
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Labour Amount</th>
+                                    <td>{order && order.invoiceLabourAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Labour Materials</th>
+                                    <td>{order && order.invoiceMaterialAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Waste Removal</th>
+                                    <td>{order && order.invoiceWasteRemovalAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Subtotal</th>
+                                    <td>{invoiceSubTotalAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">HST (13%)</th>
+                                    <td>{order && order.invoiceTaxAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Grand Total</th>
+                                    <td>{order && order.invoiceTotalAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">This quote is valid for the following number of days</th>
+                                    <td>{invoiceQuoteDays}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate HST</th>
+                                    <td>{order && order.associateTaxId}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Date of Quote Approval</th>
+                                    <td><Moment format="MM/DD/YYYY">{invoiceQuoteDate}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Customer Approval</th>
+                                    <td>{invoiceCustomersApproval}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 01 - Notes or Extras</th>
+                                    <td>{line01Notes}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Line 02 - Notes or Extras</th>
+                                    <td>{line02Notes}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Payment Amount</th>
+                                    <td>{paymentAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Payment Date</th>
+                                    <td><Moment format="MM/DD/YYYY">{paymentDate}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Cash</th>
+                                    <td>{cash}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">cheque</th>
+                                    <td>{cheque}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">debit</th>
+                                    <td>{debit}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">credit</th>
+                                    <td>{credit}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">other</th>
+                                    <td>{other}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Signature upon completion</th>
+                                    <td>{clientSignature}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Signature Date</th>
+                                    <td><Moment format="MM/DD/YYYY">{associateSignDate}</Moment></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate Signature</th>
+                                    <td>{associateSignature}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
                         <form>
-                            <h2>
-                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;Third Section
-                            </h2>
-
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
-
-                            <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
-                                label="Labour Amount"
-                                value={order && order.invoiceLabourAmount}
-                                name="invoiceLabourAmount"
-                                helpText=""
-                                disabled={true}
-                            />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
-                                label="Labour Materials"
-                                value={order && order.invoiceMaterialAmount}
-                                name="invoiceMaterialAmount"
-                                helpText=""
-                                disabled={true}
-                            />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
-                                label="Waste Removal"
-                                value={order && order.invoiceWasteRemovalAmount}
-                                name="invoiceWasteRemovalAmount"
-                                helpText=""
-                                disabled={true}
-                            />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
-                                label="Subtotal"
-                                value={invoiceTotalAmount}
-                                name="invoiceTotalAmount"
-                                helpText=""
-                                disabled={true}
-                            />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
-                                label="HST (13%)"
-                                value={order && order.invoiceTaxAmount}
-                                name="invoiceTaxAmount"
-                                helpText=""
-                                disabled={true}
-                            />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
-                                label="Total"
-                                value={order && order.invoiceTotalAmount}
-                                name="invoiceTotalAmount"
-                                helpText=""
-                                disabled={true}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.invoiceQuoteDays}
-                                label="This quote is valid for the following number of days: (*)"
-                                onChange={onTextChange}
-                                value={invoiceQuoteDays}
-                                name="invoiceQuoteDays"
-                                type="number"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Associate HST"
-                                value={order && order.associateTaxId}
-                                name="associateTaxId"
-                                type="string"
-                                disabled={true}
-                            />
-
-                            <BootstrapDatePicker
-                                label="Date of Quote Approval (*)"
-                                name="invoiceQuoteDate"
-                                dateObj={invoiceQuoteDate}
-                                onTimeChange={onInvoiceQuoteDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.invoiceQuoteDate}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.invoiceCustomersApproval}
-                                label="Customer Approval: (*)"
-                                onChange={onTextChange}
-                                value={invoiceCustomersApproval}
-                                name="invoiceCustomersApproval"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.line01Notes}
-                                label="Line 01 - Notes or Extras (*)"
-                                onChange={onTextChange}
-                                value={line01Notes}
-                                name="line01Notes"
-                                type="text"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                error={errors.line02Notes}
-                                label="Line 02 - Notes or Extras"
-                                onChange={onTextChange}
-                                value={line02Notes}
-                                name="line02Notes"
-                                type="text"
-                            />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.paymentAmount}
-                                label="Payment Amount (*)"
-                                onChange={onAmountChange}
-                                value={paymentAmount}
-                                name="paymentAmount"
-                                helpText=""
-                            />
-
-                            <BootstrapDatePicker
-                                label="Payment Date (*)"
-                                name="paymentDate"
-                                dateObj={paymentDate}
-                                onTimeChange={onPaymentDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.paymentDate}
-                            />
-
-                            <BootstrapCheckbox
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-success"
-                                error={errors.cash}
-                                label="Cash"
-                                onChange={onCheckboxChange}
-                                value={cash}
-                                name="cash"
-                            />
-
-                            <BootstrapCheckbox
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-success"
-                                error={errors.cheque}
-                                label="Cheque"
-                                onChange={onCheckboxChange}
-                                value={cheque}
-                                name="cheque"
-                            />
-
-                            <BootstrapCheckbox
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-success"
-                                error={errors.debit}
-                                label="Debit"
-                                onChange={onCheckboxChange}
-                                value={debit}
-                                name="debit"
-                            />
-
-                            <BootstrapCheckbox
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-success"
-                                error={errors.credit}
-                                label="Credit"
-                                onChange={onCheckboxChange}
-                                value={credit}
-                                name="credit"
-                            />
-
-                            <BootstrapCheckbox
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-success"
-                                error={errors.other}
-                                label="Other"
-                                onChange={onCheckboxChange}
-                                value={other}
-                                name="other"
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.clientSignature}
-                                label="Client Signature upon completion:"
-                                onChange={onTextChange}
-                                value={clientSignature}
-                                name="clientSignature"
-                                type="text"
-                            />
-
-                            <BootstrapDatePicker
-                                label="Associate Signature Date (*)"
-                                name="associateSignDate"
-                                dateObj={associateSignDate}
-                                onTimeChange={onAssociateSignDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.associateSignDate}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.associateSignature}
-                                label="Associate Signature:"
-                                onChange={onTextChange}
-                                value={associateSignature}
-                                name="associateSignature"
-                                type="text"
-                            />
-
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/financial/${orderId}/invoice/create/step-2`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/financial/${orderId}/invoice/create/step-3`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
-
                         </form>
                     </div>
                 </div>
-
             </main>
         );
     }

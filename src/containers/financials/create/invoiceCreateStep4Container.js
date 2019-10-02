@@ -127,12 +127,6 @@ class InvoiceCreateStep4Container extends Component {
         }
 
         this.getPostData = this.getPostData.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
-        this.onAmountChange = this.onAmountChange.bind(this);
-        this.onInvoiceQuoteDateChange = this.onInvoiceQuoteDateChange.bind(this);
-        this.onPaymentDateChange = this.onPaymentDateChange.bind(this);
-        this.onAssociateSignDateChange = this.onAssociateSignDateChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
@@ -243,78 +237,23 @@ class InvoiceCreateStep4Container extends Component {
     }
 
     onSuccessOrderCallback(response) {
-        // Do nothing.
+        var { clientSignature, associateSignature } = this.state;
+        if (clientSignature === undefined || clientSignature === null || clientSignature === "") {
+            this.setState({
+                clientSignature: response['customerFullName'],
+            });
+        }
+        if (associateSignature === undefined || associateSignature === null || associateSignature === "") {
+            this.setState({
+                associateSignature: response['associateFullName'],
+            });
+        }
     }
 
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
-
-    onTextChange(e) {
-        this.setState({ [e.target.name]: e.target.value, });
-        localStorage.setItem('workery-create-invoice-'+[e.target.name], e.target.value);
-    }
-
-    onInvoiceQuoteDateChange(dateObj) {
-        this.setState({
-            invoiceQuoteDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-invoice-invoiceQuoteDate', dateObj);
-    }
-
-    onPaymentDateChange(dateObj) {
-        this.setState({
-            paymentDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-invoice-paymentDate', dateObj);
-    }
-
-    onAssociateSignDateChange(dateObj) {
-        this.setState({
-            associateSignDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-invoice-associateSignDate', dateObj);
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "workery-create-invoice-"+[e.target.name];
-        const storageLabelKey =  "workery-create-invoice-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-        localStorage.setItem(storageValueKey, value) // Save to storage.
-        localStorage.setItem(storageLabelKey, label) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
-    }
-
-    /**
-     *  Function will take the currency string and save it as a float value in
-     *  the state for the field.
-     */
-    onAmountChange(e) {
-        const amount = e.target.value.replace("$","").replace(",", "");
-        this.setState(
-            { [e.target.name]: parseFloat(amount), }, ()=>{
-                localStorage.setItem('workery-create-invoice-'+[e.target.name], parseFloat(amount) );
-            }
-        );
-    }
 
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
@@ -349,14 +288,33 @@ class InvoiceCreateStep4Container extends Component {
 
     render() {
         const {
-            orderId, errors, isLoading, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
+            orderId, errors, isLoading, invoiceId, invoiceDate, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
             cash, cheque, debit, credit, other, gender,
             clientSignature, associateSignDate, associateSignature
+        } = this.state;
+        const {
+            line01Quantity, line01Description, line01UnitPrice, line01Amount,
+            line02Quantity, line02Description, line02UnitPrice, line02Amount,
+            line03Quantity, line03Description, line03UnitPrice, line03Amount,
+            line04Quantity, line04Description, line04UnitPrice, line04Amount,
+            line05Quantity, line05Description, line05UnitPrice, line05Amount,
+            line06Quantity, line06Description, line06UnitPrice, line06Amount,
+            line07Quantity, line07Description, line07UnitPrice, line07Amount,
+            line08Quantity, line08Description, line08UnitPrice, line08Amount,
+            line09Quantity, line09Description, line09UnitPrice, line09Amount,
+            line10Quantity, line10Description, line10UnitPrice, line10Amount,
+            line11Quantity, line11Description, line11UnitPrice, line11Amount,
+            line12Quantity, line12Description, line12UnitPrice, line12Amount,
+            line13Quantity, line13Description, line13UnitPrice, line13Amount,
+            line14Quantity, line14Description, line14UnitPrice, line14Amount,
+            line15Quantity, line15Description, line15UnitPrice, line15Amount
         } = this.state;
         return (
             <InvoiceCreateStep4Component
                 orderId={orderId}
                 order={this.props.orderDetail}
+                invoiceId={invoiceId}
+                invoiceDate={invoiceDate}
                 invoiceQuoteDays={invoiceQuoteDays}
                 invoiceQuoteDate={invoiceQuoteDate}
                 invoiceCustomersApproval={invoiceCustomersApproval}
@@ -376,14 +334,68 @@ class InvoiceCreateStep4Container extends Component {
                 gender={gender}
                 errors={errors}
                 isLoading={isLoading}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onInvoiceQuoteDateChange={this.onInvoiceQuoteDateChange}
-                onPaymentDateChange={this.onPaymentDateChange}
-                onAssociateSignDateChange={this.onAssociateSignDateChange}
-                onRadioChange={this.onRadioChange}
                 onClick={this.onClick}
+
+                line01Quantity={line01Quantity}
+                line01Description={line01Description}
+                line01UnitPrice={line01UnitPrice}
+                line01Amount={line01Amount}
+                line02Quantity={line02Quantity}
+                line02Description={line02Description}
+                line02UnitPrice={line02UnitPrice}
+                line02Amount={line02Amount}
+                line03Quantity={line03Quantity}
+                line03Description={line03Description}
+                line03UnitPrice={line03UnitPrice}
+                line03Amount={line03Amount}
+                line04Quantity={line04Quantity}
+                line04Description={line04Description}
+                line04UnitPrice={line04UnitPrice}
+                line04Amount={line04Amount}
+                line05Quantity={line05Quantity}
+                line05Description={line05Description}
+                line05UnitPrice={line05UnitPrice}
+                line05Amount={line05Amount}
+                line06Quantity={line06Quantity}
+                line06Description={line06Description}
+                line06UnitPrice={line06UnitPrice}
+                line06Amount={line06Amount}
+                line07Quantity={line07Quantity}
+                line07Description={line07Description}
+                line07UnitPrice={line07UnitPrice}
+                line07Amount={line07Amount}
+                line08Quantity={line08Quantity}
+                line08Description={line08Description}
+                line08UnitPrice={line08UnitPrice}
+                line08Amount={line08Amount}
+                line09Quantity={line09Quantity}
+                line09Description={line09Description}
+                line09UnitPrice={line09UnitPrice}
+                line09Amount={line09Amount}
+                line10Quantity={line10Quantity}
+                line10Description={line10Description}
+                line10UnitPrice={line10UnitPrice}
+                line10Amount={line10Amount}
+                line11Quantity={line11Quantity}
+                line11Description={line11Description}
+                line11UnitPrice={line11UnitPrice}
+                line11Amount={line11Amount}
+                line12Quantity={line12Quantity}
+                line12Description={line12Description}
+                line12UnitPrice={line12UnitPrice}
+                line12Amount={line12Amount}
+                line13Quantity={line13Quantity}
+                line13Description={line13Description}
+                line13UnitPrice={line13UnitPrice}
+                line13Amount={line13Amount}
+                line14Quantity={line14Quantity}
+                line14Description={line14Description}
+                line14UnitPrice={line14UnitPrice}
+                line14Amount={line14Amount}
+                line15Quantity={line15Quantity}
+                line15Description={line15Description}
+                line15UnitPrice={line15UnitPrice}
+                line15Amount={line15Amount}
             />
         );
     }
