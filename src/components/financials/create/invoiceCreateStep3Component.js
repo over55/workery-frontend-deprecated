@@ -293,6 +293,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={clientSignature}
                                 name="clientSignature"
                                 type="text"
+                                helpText="If the client's partner or legal representitive is signing on behalf of the client, please write their full name here, else leave the text as is."
                             />
 
                             <BootstrapDatePicker
@@ -314,6 +315,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={associateSignature}
                                 name="associateSignature"
                                 type="text"
+                                helpText="If the associate is being represented by their business partner or other legal representitive then please write their full name here, else leave the text as is."
                             />
 
                             <div className="form-group">

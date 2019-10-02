@@ -177,7 +177,17 @@ class InvoiceCreateStep3Container extends Component {
     }
 
     onSuccessOrderCallback(response) {
-        // Do nothing.
+        var { clientSignature, associateSignature } = this.state;
+        if (clientSignature === undefined || clientSignature === null || clientSignature === "") {
+            this.setState({
+                clientSignature: response['customerFullName'],
+            });
+        }
+        if (associateSignature === undefined || associateSignature === null || associateSignature === "") {
+            this.setState({
+                associateSignature: response['associateFullName'],
+            });
+        }
     }
 
     /**
