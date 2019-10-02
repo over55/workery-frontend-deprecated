@@ -63,6 +63,9 @@ class InvoiceCreateStep1Component extends Component {
                         <div id="step-3" className="st-grey">
                             <span className="num">3.</span><span className="">Third Section</span>
                         </div>
+                        <div id="step-4" className="st-grey">
+                            <span className="num">4.</span><span className="">Review</span>
+                        </div>
                     </div>
                 </div>
 

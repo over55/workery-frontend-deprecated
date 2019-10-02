@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
-import InvoiceCreateStep3Component from "../../../components/financials/create/invoiceCreateStep3Component";
+import InvoiceCreateStep4Component from "../../../components/financials/create/invoiceCreateStep4Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullOrderDetail, invoiceOrderOperation } from "../../../actions/orderActions";
 import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
@@ -13,7 +13,7 @@ import {
 import { putStaffContactDetail } from '../../../actions/staffActions';
 
 
-class InvoiceCreateStep3Container extends Component {
+class InvoiceCreateStep4Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -109,6 +109,7 @@ class InvoiceCreateStep3Container extends Component {
             invoiceQuoteDays: localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays"),
             invoiceQuoteDate: localStorageGetDateItem("workery-create-invoice-invoiceQuoteDate"),
             invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-invoiceCustomersApproval"),
+            gender: localStorage.getItem("workery-create-invoice-gender"),
             line01Notes: localStorage.getItem("workery-create-invoice-line01Notes"),
             line02Notes: localStorage.getItem("workery-create-invoice-line02Notes"),
             paymentAmount: localStorageGetFloatItem("workery-create-invoice-paymentAmount"),
@@ -349,11 +350,11 @@ class InvoiceCreateStep3Container extends Component {
     render() {
         const {
             orderId, errors, isLoading, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
-            cash, cheque, debit, credit, other,
+            cash, cheque, debit, credit, other, gender,
             clientSignature, associateSignDate, associateSignature
         } = this.state;
         return (
-            <InvoiceCreateStep3Component
+            <InvoiceCreateStep4Component
                 orderId={orderId}
                 order={this.props.orderDetail}
                 invoiceQuoteDays={invoiceQuoteDays}
@@ -372,6 +373,7 @@ class InvoiceCreateStep3Container extends Component {
                 clientSignature={clientSignature}
                 associateSignDate={associateSignDate}
                 associateSignature={associateSignature}
+                gender={gender}
                 errors={errors}
                 isLoading={isLoading}
                 onTextChange={this.onTextChange}
@@ -419,4 +421,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(InvoiceCreateStep3Container);
+)(InvoiceCreateStep4Container);

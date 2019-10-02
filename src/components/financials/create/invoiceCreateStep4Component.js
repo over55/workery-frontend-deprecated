@@ -16,7 +16,8 @@ import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
 import { BootstrapCheckbox } from "../../bootstrap/bootstrapCheckbox";
 import {
-    CUSTOMER_APPROVAL_RADIO_CHOICES
+    IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES,
+    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
 } from "../../../constants/api";
 
 
@@ -26,7 +27,7 @@ class InvoiceCreateStep2Component extends Component {
             orderId, order, errors,
             invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
-            onTextChange, onInvoiceQuoteDateChange, isLoading, onClick, onSelectChange, onAmountChange, onPaymentDateChange, onAssociateSignDateChange, onCheckboxChange, onRadioChange
+            onTextChange, onInvoiceQuoteDateChange, isLoading, onClick, onSelectChange, onAmountChange, onPaymentDateChange, onAssociateSignDateChange, onCheckboxChange
         } = this.props;
         const invoiceTotalAmount = order.invoiceLabourAmount + order.invoiceTaxAmount;
         return (
@@ -71,9 +72,6 @@ class InvoiceCreateStep2Component extends Component {
                             <strong>
                                 <span className="num">3.</span><span className="">Third Section</span>
                             </strong>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <span className="num">4.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -180,15 +178,15 @@ class InvoiceCreateStep2Component extends Component {
                                 error={errors.invoiceQuoteDate}
                             />
 
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.invoiceCustomersApproval}
                                 label="Customer Approval: (*)"
+                                onChange={onTextChange}
+                                value={invoiceCustomersApproval}
                                 name="invoiceCustomersApproval"
-                                onChange={onRadioChange}
-                                selectedValue={invoiceCustomersApproval}
-                                options={CUSTOMER_APPROVAL_RADIO_CHOICES}
+                                type="text"
                             />
 
                             <BootstrapInput
@@ -317,8 +315,8 @@ class InvoiceCreateStep2Component extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
-                                    Next&nbsp;<i className="fas fa-chevron-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
                                 <Link to={`/financial/${orderId}/invoice/create/step-2`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back

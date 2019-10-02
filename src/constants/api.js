@@ -1142,3 +1142,22 @@ export const ROLE_RADIO_CHOICES = [
         label: "Frontline Staff"
     }
 ];
+
+export const CUSTOMER_APPROVAL_RADIO_CHOICES = [
+    {
+        id: 'invoiceCustomersApproval-m-choice',
+        name: "invoiceCustomersApproval",
+        value: "Signature",
+        label: "Signature"
+    },{
+        id: 'invoiceCustomersApproval-f-choice',
+        name: "invoiceCustomersApproval",
+        value: "Verbal",
+        label: "Verbal"
+    },{
+        id: 'invoiceCustomersApproval-pnts-choice',
+        name: "invoiceCustomersApproval",
+        value: "Written",
+        label: "Written"
+    }
+];
