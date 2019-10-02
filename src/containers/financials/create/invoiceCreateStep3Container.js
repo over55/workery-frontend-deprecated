@@ -4,8 +4,7 @@ import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
 import InvoiceCreateStep3Component from "../../../components/financials/create/invoiceCreateStep3Component";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { pullOrderDetail, invoiceOrderOperation } from "../../../actions/orderActions";
+import { pullOrderDetail } from "../../../actions/orderActions";
 import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
 import {
     localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanItem, localStorageRemoveItemsContaining
@@ -25,6 +24,13 @@ class InvoiceCreateStep3Container extends Component {
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
+
+        // Get the number of days this invoice quote is valid for and if nothing
+        // was set then we need to set it to be 30 days.
+        var invoiceQuoteDays = localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays");
+        if (invoiceQuoteDays === undefined || invoiceQuoteDays === null || invoiceQuoteDays === "" || isNaN(invoiceQuoteDays)) {
+            invoiceQuoteDays = 30;
+        }
 
         this.state = {
             // LINE 01
@@ -106,7 +112,7 @@ class InvoiceCreateStep3Container extends Component {
             orderId: parseInt(id),
             invoiceId: localStorageGetIntegerItem("workery-create-invoice-invoiceId"),
             invoiceDate: localStorageGetDateItem("workery-create-invoice-invoiceDate"),
-            invoiceQuoteDays: localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays"),
+            invoiceQuoteDays: invoiceQuoteDays,
             invoiceQuoteDate: localStorageGetDateItem("workery-create-invoice-invoiceQuoteDate"),
             invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-invoiceCustomersApproval"),
             line01Notes: localStorage.getItem("workery-create-invoice-line01Notes"),
@@ -125,7 +131,6 @@ class InvoiceCreateStep3Container extends Component {
             isLoading: false
         }
 
-        this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onAmountChange = this.onAmountChange.bind(this);
         this.onInvoiceQuoteDateChange = this.onInvoiceQuoteDateChange.bind(this);
@@ -133,72 +138,8 @@ class InvoiceCreateStep3Container extends Component {
         this.onAssociateSignDateChange = this.onAssociateSignDateChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onSuccessOrderCallback = this.onSuccessOrderCallback.bind(this);
-    }
-
-    /**
-     *  Utility function used to create the `postData` we will be submitting to
-     *  the API; as a result, this function will structure some dictionary key
-     *  items under different key names to support our API web-service's API.
-     */
-    getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        const invoiceDateMoment = moment(this.state.invoiceDate);
-        postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD");
-
-        postData.line01Qty = this.state.line01Quantity;
-        postData.line01Desc = this.state.line01Description;
-        postData.line01Price = this.state.line01UnitPrice;
-        postData.line01Amount = this.state.line01Amount;
-
-        const invoiceQuoteDateMoment = moment(this.state.invoiceQuoteDate);
-        postData.invoiceQuoteDate = invoiceQuoteDateMoment.format("YYYY-MM-DD");
-
-        const paymentDateMoment = moment(this.state.paymentDate);
-        postData.paymentDate = paymentDateMoment.format("YYYY-MM-DD");
-
-        const associateSignDateMoment = moment(this.state.associateSignDate);
-        postData.associateSignDate = associateSignDateMoment.format("YYYY-MM-DD");
-
-        const cash = this.state.cash;
-        const cheque = this.state.cheque;
-        const debit = this.state.debit;
-        const credit = this.state.credit;
-        const other = this.state.other;
-        if (cash === undefined || cash === null || cash === "") {
-            postData.cash = false;
-        } else {
-            postData.cash = true;
-        }
-        if (cheque === undefined || cheque === null || cheque === "") {
-            postData.cheque = false;
-        } else {
-            postData.cheque = true;
-        }
-        if (debit === undefined || debit === null || debit === "") {
-            postData.debit = false;
-        } else {
-            postData.debit = true;
-        }
-        if (credit === undefined || credit === null || credit === "") {
-            postData.credit = false;
-        } else {
-            postData.credit = true;
-        }
-        if (other === undefined || other === null || other === "") {
-            postData.other = false;
-        } else {
-            postData.other = true;
-        }
-
-        postData.workOrderId = this.state.orderId;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
     }
 
     /**
@@ -233,12 +174,6 @@ class InvoiceCreateStep3Container extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
-    }
-
-    onSuccessCallback(response) {
-        localStorageRemoveItemsContaining("workery-create-invoice-");
-        this.props.setFlashMessage("success", "Invoice has been successfully created.");
-        this.props.history.push("/financial/"+this.state.orderId+"/invoice");
     }
 
     onSuccessOrderCallback(response) {
@@ -324,15 +259,7 @@ class InvoiceCreateStep3Container extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.setState({
-                isLoading: true, errors: {}
-            }, ()=>{
-                this.props.invoiceOrderOperation(
-                    this.getPostData(),
-                    this.onSuccessCallback,
-                    this.onFailureCallback,
-                );
-            })
+            this.props.history.push("/financial/"+this.state.orderId+"/invoice/create/step-4");
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -396,20 +323,12 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setFlashMessage: (typeOf, text) => {
-            dispatch(setFlashMessage(typeOf, text))
-        },
         putStaffContactDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(putStaffContactDetail(data, onSuccessCallback, onFailureCallback))
         },
         pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullOrderDetail(id, onSuccessCallback, onFailureCallback)
-            )
-        },
-        invoiceOrderOperation: (postData, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                invoiceOrderOperation(postData, onSuccessCallback, onFailureCallback)
             )
         },
     }
