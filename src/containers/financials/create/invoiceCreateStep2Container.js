@@ -107,6 +107,7 @@ class InvoiceCreateContainer extends Component {
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onAmountChange = this.onAmountChange.bind(this);
+        this.calculateTotalAmounts = this.calculateTotalAmounts.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -178,7 +179,12 @@ class InvoiceCreateContainer extends Component {
      */
 
     onTextChange(e) {
-        this.setState({ [e.target.name]: e.target.value, });
+        this.setState(
+            { [e.target.name]: e.target.value, },
+            ()=> {
+                this.calculateTotalAmounts();
+            }
+        );
         localStorage.setItem('workery-create-invoice-'+[e.target.name], e.target.value);
     }
 
@@ -191,8 +197,56 @@ class InvoiceCreateContainer extends Component {
         this.setState(
             { [e.target.name]: parseFloat(amount), }, ()=>{
                 localStorage.setItem('workery-create-invoice-'+[e.target.name], parseFloat(amount) );
+                this.calculateTotalAmounts();
             }
         );
+    }
+
+    calculateTotalAmounts() {
+        const line01Amount = this.state.line01Quantity * this.state.line01UnitPrice;
+        const line02Amount = this.state.line02Quantity * this.state.line02UnitPrice;
+        const line03Amount = this.state.line03Quantity * this.state.line03UnitPrice;
+        const line04Amount = this.state.line04Quantity * this.state.line04UnitPrice;
+        const line05Amount = this.state.line05Quantity * this.state.line05UnitPrice;
+        const line06Amount = this.state.line06Quantity * this.state.line06UnitPrice;
+        const line07Amount = this.state.line07Quantity * this.state.line07UnitPrice;
+        const line08Amount = this.state.line08Quantity * this.state.line08UnitPrice;
+        const line09Amount = this.state.line09Quantity * this.state.line09UnitPrice;
+        const line10Amount = this.state.line10Quantity * this.state.line10UnitPrice;
+        const line11Amount = this.state.line11Quantity * this.state.line11UnitPrice;
+        const line12Amount = this.state.line12Quantity * this.state.line12UnitPrice;
+        const line13Amount = this.state.line13Quantity * this.state.line13UnitPrice;
+        const line14Amount = this.state.line14Quantity * this.state.line14UnitPrice;
+        const line15Amount = this.state.line15Quantity * this.state.line15UnitPrice;
+
+        this.setState({
+            line01Amount: line01Amount,
+            line02Amount: line02Amount,
+            line03Amount: line03Amount,
+            line04Amount: line04Amount,
+            line05Amount: line05Amount,
+            line06Amount: line06Amount,
+            line07Amount: line07Amount,
+            line08Amount: line08Amount,
+            line09Amount: line09Amount,
+            line10Amount: line10Amount,
+            line11Amount: line11Amount,
+            line12Amount: line12Amount,
+            line13Amount: line13Amount,
+            line14Amount: line14Amount,
+            line15Amount: line15Amount,
+        })
+
+        localStorage.setItem('workery-create-invoice-line01Amount', line01Amount );
+        localStorage.setItem('workery-create-invoice-line02Amount', line02Amount );
+        localStorage.setItem('workery-create-invoice-line03Amount', line03Amount );
+        localStorage.setItem('workery-create-invoice-line04Amount', line04Amount );
+        localStorage.setItem('workery-create-invoice-line05Amount', line05Amount );
+        localStorage.setItem('workery-create-invoice-line06Amount', line06Amount );
+        localStorage.setItem('workery-create-invoice-line07Amount', line07Amount );
+        localStorage.setItem('workery-create-invoice-line08Amount', line08Amount );
+        localStorage.setItem('workery-create-invoice-line09Amount', line09Amount );
+        localStorage.setItem('workery-create-invoice-line10Amount', line10Amount );
     }
 
     onClick(e) {
@@ -211,7 +265,6 @@ class InvoiceCreateContainer extends Component {
             this.onFailedSubmissionCallback(errors);
         }
     }
-
 
     /**
      *  Main render function

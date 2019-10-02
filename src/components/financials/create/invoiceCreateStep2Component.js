@@ -143,6 +143,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line01Amount}
                                 name="line01Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -191,6 +192,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line02Amount}
                                 name="line02Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -239,6 +241,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line03Amount}
                                 name="line03Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -287,6 +290,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line04Amount}
                                 name="line04Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -335,6 +339,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line05Amount}
                                 name="line05Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -383,6 +388,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line06Amount}
                                 name="line06Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -431,6 +437,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line07Amount}
                                 name="line07Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -479,6 +486,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line08Amount}
                                 name="line08Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -527,6 +535,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line09Amount}
                                 name="line09Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -575,6 +584,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line10Amount}
                                 name="line10Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -623,6 +633,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line11Amount}
                                 name="line11Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -671,6 +682,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line12Amount}
                                 name="line12Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -719,6 +731,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line13Amount}
                                 name="line13Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -767,6 +780,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line14Amount}
                                 name="line14Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -815,6 +829,7 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line15Amount}
                                 name="line15Amount"
                                 helpText=""
+                                disabled={true}
                             />
 
                             <div className="form-group">
