@@ -42,7 +42,7 @@ class InvoiceCreateStep2Component extends Component {
             orderId, order, errors, invoiceId, invoiceDate,
             invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
-            onTextChange, onInvoiceQuoteDateChange, isLoading, onClick, onSelectChange, onAmountChange, onPaymentDateChange, onAssociateSignDateChange, onCheckboxChange
+            isLoading, onClick,
         } = this.props;
         const invoiceSubTotalAmount = parseFloat(order.invoiceLabourAmount) + parseFloat(order.invoiceTaxAmount);
         return (

@@ -71,11 +71,11 @@ export default class InvoiceRetrieveComponent extends Component {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Invoice ID</th>
-                                        <td>---</td>
+                                        <td>{invoice && invoice.invoiceId}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Invoice Date</th>
-                                        <td>---</td>
+                                        <td>{invoice && invoice.invoiceDate}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Name</th>
@@ -114,6 +114,109 @@ export default class InvoiceRetrieveComponent extends Component {
                                             </Link>
                                         </th>
                                     </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 01</th>
+                                        <td>x{invoice.line01Qty} | {invoice.line01Desc} | <NumberFormat value={invoice.line01Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line01Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 02</th>
+                                        {invoice.line02Qty
+                                            ? <td>x{invoice.line02Qty} | {invoice.line02Desc} | <NumberFormat value={invoice.line02Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line02Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 03</th>
+                                        {invoice.line03Qty
+                                            ? <td>x{invoice.line03Qty} | {invoice.line03Desc} | <NumberFormat value={invoice.line03Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line03Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 04</th>
+                                        {invoice.line04Qty
+                                            ? <td>x{invoice.line04Qty} | {invoice.line04Desc} | <NumberFormat value={invoice.line04Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line04Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 05</th>
+                                        {invoice.line05Qty
+                                            ? <td>x{invoice.line05Qty} | {invoice.line05Desc} | <NumberFormat value={invoice.line05Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line05Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 06</th>
+                                        {invoice.line06Qty
+                                            ? <td>x{invoice.line06Qty} | {invoice.line06Desc} | <NumberFormat value={invoice.line06Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line06Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 07</th>
+                                        {invoice.line07Qty
+                                            ? <td>x{invoice.line07Qty} | {invoice.line07Desc} | <NumberFormat value={invoice.line07Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line07Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 08</th>
+                                        {invoice.line08Qty
+                                            ? <td>x{invoice.line08Qty} | {invoice.line08Desc} | <NumberFormat value={invoice.line08Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line08Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 09</th>
+                                        {invoice.line09Qty
+                                            ? <td>x{invoice.line09Qty} | {invoice.line09Desc} | <NumberFormat value={invoice.line09Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line09Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 10</th>
+                                        {invoice.line10Qty
+                                            ? <td>x{invoice.line10Qty} | {invoice.line10Desc} | <NumberFormat value={invoice.line10Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line10Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 11</th>
+                                        {invoice.line11Qty
+                                            ? <td>x{invoice.line11Qty} | {invoice.line11Desc} | <NumberFormat value={invoice.line11Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line11Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 12</th>
+                                        {invoice.line12Qty
+                                            ? <td>x{invoice.line12Qty} | {invoice.line12Desc} | <NumberFormat value={invoice.line12Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line12Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 13</th>
+                                        {invoice.line13Qty
+                                            ? <td>x{invoice.line13Qty} | {invoice.line13Desc} | <NumberFormat value={invoice.line13Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line13Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 14</th>
+                                        {invoice.line14Qty
+                                            ? <td>x{invoice.line14Qty} | {invoice.line14Desc} | <NumberFormat value={invoice.line14Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line14Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 15</th>
+                                        {invoice.line15Qty
+                                            ? <td>x{invoice.line15Qty} | {invoice.line15Desc} | <NumberFormat value={invoice.line15Price} displayType={'text'} thousandSeparator={true} prefix={'$'} /> | <NumberFormat value={invoice.line15Amount} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
+                                            : <td>-</td>
+                                        }
+                                    </tr>
+
 
 
                                     <tr className="bg-dark">
@@ -124,9 +227,6 @@ export default class InvoiceRetrieveComponent extends Component {
                                             </Link>
                                         </th>
                                     </tr>
-
-
-
                                     <tr>
                                         <th scope="row" className="bg-light">Actual Labour</th>
                                         <td>
@@ -141,6 +241,15 @@ export default class InvoiceRetrieveComponent extends Component {
                                         <td>
                                             {invoice.invoiceMaterialAmount
                                                 ?<NumberFormat value={invoice.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                                :"-"
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Waste Removal</th>
+                                        <td>
+                                            {invoice.invoiceWasteRemovalAmount
+                                                ?<NumberFormat value={invoice.invoiceWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -164,41 +273,147 @@ export default class InvoiceRetrieveComponent extends Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" className="bg-light">Service Fee Rate</th>
+                                        <th scope="row" className="bg-light">Associate HST</th>
                                         <td>
-                                            {invoice.prettyInvoiceServiceFee
-                                                ?invoice.prettyInvoiceServiceFee
-                                                :"-"
+                                            {invoice.associateTaxId
+                                                ? invoice.associateTaxId
+                                                : "-"
                                             }
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" className="bg-light">Service Fee</th>
+                                        <th scope="row" className="bg-light">Date of Quote Approval</th>
                                         <td>
-                                            {invoice.invoiceServiceFeeAmount
-                                                ?<NumberFormat value={invoice.invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                                                :"-"
+                                            {invoice.invoiceQuoteDate
+                                                ? <Moment format="MM/DD/YYYY">{invoice.invoiceQuoteDate}</Moment>
+                                                : "-"
                                             }
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" className="bg-light">Service Fee Payment Date</th>
+                                        <th scope="row" className="bg-light">Customer Approval</th>
                                         <td>
-                                            {invoice.invoiceServiceFeePaymentDate
-                                                ?<Moment format="MM/DD/YYYY">{invoice.invoiceServiceFeePaymentDate}</Moment>
-                                                :"-"
+                                            {invoice.invoiceCustomersApproval
+                                                ? invoice.invoiceCustomersApproval
+                                                : "-"
                                             }
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" className="bg-light">Actual Service Fee Paid</th>
+                                        <th scope="row" className="bg-light">Line 01 - Notes or Extras</th>
                                         <td>
-                                            {invoice.invoiceActualServiceFeeAmountPaid
-                                                ?<NumberFormat value={invoice.invoiceActualServiceFeeAmountPaid} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                                                :"-"
+                                            {invoice.line01Notes
+                                                ? invoice.line01Notes
+                                                : "-"
                                             }
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Line 02 - Notes or Extras</th>
+                                        <td>
+                                            {invoice.line02Notes
+                                                ? invoice.line02Notes
+                                                : "-"
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Payment Amount</th>
+                                        <td>
+                                            {invoice.paymentAmount
+                                                ? <NumberFormat value={invoice.paymentAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                                : "-"
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Payment Date</th>
+                                        <td>
+                                            {invoice.invoiceQuoteDate
+                                                ? <Moment format="MM/DD/YYYY">{invoice.invoiceQuoteDate}</Moment>
+                                                : "-"
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Cash</th>
+                                        <td>
+                                            {invoice.cash ? "X" : "-"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Cheque</th>
+                                        <td>
+                                            {invoice.cheque ? "X" : "-"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Debit</th>
+                                        <td>
+                                            {invoice.debit ? "X" : "-"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Credit</th>
+                                        <td>
+                                            {invoice.credit ? "X" : "-"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Other</th>
+                                        <td>
+                                            {invoice.other ? "X" : "-"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Client Signature upon completion</th>
+                                        <td>
+                                            {invoice.clientSignature ? invoice.clientSignature : "-"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Associate Signature Date</th>
+                                        <td>
+                                            {invoice.associateSignDate
+                                                ? <Moment format="MM/DD/YYYY">{invoice.associateSignDate}</Moment>
+                                                : "-"
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Associate Signature</th>
+                                        <td>
+                                            {invoice.associateSignature ? invoice.associateSignature : "-"}
+                                        </td>
+                                    </tr>
+
+
+                                    <tr className="bg-dark">
+                                        <th scope="row" colSpan="2" className="text-light">
+                                            <i className="fas fa-server"></i>&nbsp;System
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Created At</th>
+                                        <td>
+                                             {invoice && <Moment format="MM/DD/YYYY hh:mm:ss a">{invoice.created}</Moment>}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Created By</th>
+                                        <td>{invoice.createdBy}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Modified At</th>
+                                        <td>
+                                            {invoice && <Moment format="MM/DD/YYYY hh:mm:ss a">{invoice.lastModified}</Moment>}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Modified By</th>
+                                        <td>{invoice.lastModifiedBy}</td>
+                                    </tr>
+
 
                                 </tbody>
                             </table>
