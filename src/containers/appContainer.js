@@ -201,6 +201,9 @@ import InvoiceCreateStep1Container from "./financials/create/invoiceCreateStep1C
 import InvoiceCreateStep2Container from "./financials/create/invoiceCreateStep2Container";
 import InvoiceCreateStep3Container from "./financials/create/invoiceCreateStep3Container";
 import InvoiceCreateStep4Container from "./financials/create/invoiceCreateStep4Container";
+import InvoiceFirstSectionUpdateContainer from "./financials/update/invoiceFirstSectionUpdateContainer";
+import InvoiceSecondSectionUpdateContainer from "./financials/update/invoiceSecondSectionUpdateContainer";
+import InvoiceThirdSectionUpdateContainer from "./financials/update/invoiceThirdSectionUpdateContainer";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -501,6 +504,9 @@ class AppContainer extends React.Component {
                                 <Route path="/financial/:id/invoice/create/step-2" exact component={requiresAuth(InvoiceCreateStep2Container)} />
                                 <Route path="/financial/:id/invoice/create/step-3" exact component={requiresAuth(InvoiceCreateStep3Container)} />
                                 <Route path="/financial/:id/invoice/create/step-4" exact component={requiresAuth(InvoiceCreateStep4Container)} />
+                                <Route path="/financial/:id/invoice/update/first-section" exact component={requiresAuth(InvoiceFirstSectionUpdateContainer)} />
+                                <Route path="/financial/:id/invoice/update/second-section" exact component={requiresAuth(InvoiceSecondSectionUpdateContainer)} />
+                                <Route path="/financial/:id/invoice/update/third-section" exact component={requiresAuth(InvoiceThirdSectionUpdateContainer)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
