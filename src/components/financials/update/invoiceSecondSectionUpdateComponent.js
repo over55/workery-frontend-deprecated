@@ -66,27 +66,6 @@ class InvoiceSecondSectionUpdateComponent extends Component {
                 </h1>
 
                 <div className="row">
-                    <div className="step-navigation">
-                        <div id="step-1" className="st-grey">
-                            <Link to={`/financial/${orderId}/invoice/create/step-1`}>
-                                <span className="num">1.</span><span className="">First Section</span>
-                            </Link>
-                        </div>
-                        <div id="step-2" className="st-grey active">
-                            <strong>
-                                <span className="num">2.</span><span className="">Second Section</span>
-                            </strong>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Third Section</span>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <span className="num">4.</span><span className="">Review</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
