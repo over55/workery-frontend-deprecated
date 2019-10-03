@@ -345,23 +345,23 @@ class InvoiceCreateStep2Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Cash</th>
-                                    <td>{cash}</td>
+                                    <td>{cash ? "X" : ""}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">cheque</th>
-                                    <td>{cheque}</td>
+                                    <th scope="row" className="bg-light">Cheque</th>
+                                    <td>{cheque ? "X" : ""}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">debit</th>
-                                    <td>{debit}</td>
+                                    <th scope="row" className="bg-light">Debit</th>
+                                    <td>{debit ? "X" : ""}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">credit</th>
-                                    <td>{credit}</td>
+                                    <th scope="row" className="bg-light">Credit</th>
+                                    <td>{credit ? "X" : ""}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">other</th>
-                                    <td>{other}</td>
+                                    <th scope="row" className="bg-light">Other</th>
+                                    <td>{other ? "X" : ""}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Signature upon completion</th>

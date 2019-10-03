@@ -30,6 +30,7 @@ class InvoiceCreateStep3Container extends Component {
         var invoiceQuoteDays = localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays");
         if (invoiceQuoteDays === undefined || invoiceQuoteDays === null || invoiceQuoteDays === "" || isNaN(invoiceQuoteDays)) {
             invoiceQuoteDays = 30;
+            localStorage.setItem("workery-create-invoice-invoiceQuoteDays", invoiceQuoteDays);
         }
 
         this.state = {
@@ -53,6 +54,7 @@ class InvoiceCreateStep3Container extends Component {
             isLoading: false
         }
 
+        this.onCheckboxChange = this.onCheckboxChange.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onAmountChange = this.onAmountChange.bind(this);
         this.onInvoiceQuoteDateChange = this.onInvoiceQuoteDateChange.bind(this);
@@ -169,6 +171,13 @@ class InvoiceCreateStep3Container extends Component {
         });
     }
 
+    onCheckboxChange(e) {
+        this.setState({
+            [e.target.name]: e.target.checked,
+        });
+        localStorage.setItem('workery-create-invoice-'+[e.target.name], e.target.checked);
+    }
+
     /**
      *  Function will take the currency string and save it as a float value in
      *  the state for the field.
@@ -240,6 +249,7 @@ class InvoiceCreateStep3Container extends Component {
                 onPaymentDateChange={this.onPaymentDateChange}
                 onAssociateSignDateChange={this.onAssociateSignDateChange}
                 onRadioChange={this.onRadioChange}
+                onCheckboxChange={this.onCheckboxChange}
                 onClick={this.onClick}
             />
         );
