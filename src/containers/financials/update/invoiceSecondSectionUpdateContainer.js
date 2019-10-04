@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import InvoiceSecondSectionUpdateComponent from "../../../components/financials/update/invoiceSecondSectionUpdateComponent";
-import { pullOrderDetail } from "../../../actions/orderActions";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { pullOrderDetail, putInvoiceSecondSection } from "../../../actions/orderActions";
 import { validateInvoiceSectionTwoInput } from "../../../validators/orderValidator";
-import { localStorageGetIntegerItem, localStorageGetFloatItem } from '../../../helpers/localStorageUtility';
 import { putStaffContactDetail } from '../../../actions/staffActions';
 
 
@@ -24,80 +24,80 @@ class InvoiceSecondSectionUpdateContainer extends Component {
 
         this.state = {
             // LINE 01
-            line01Quantity: localStorageGetIntegerItem("workery-create-invoice-line01Quantity"),
-            line01Description: localStorage.getItem("workery-create-invoice-line01Description"),
-            line01UnitPrice: localStorageGetFloatItem("workery-create-invoice-line01UnitPrice"),
-            line01Amount: localStorageGetFloatItem("workery-create-invoice-line01Amount"),
+            line01Quantity: this.props.orderDetail.line01Qty,
+            line01Description: this.props.orderDetail.line01Desc,
+            line01UnitPrice: this.props.orderDetail.line01Price,
+            line01Amount: this.props.orderDetail.line01Amount,
             // LINE 02
-            line02Quantity: localStorageGetIntegerItem("workery-create-invoice-line02Quantity"),
-            line02Description: localStorage.getItem("workery-create-invoice-line02Description"),
-            line02UnitPrice: localStorageGetFloatItem("workery-create-invoice-line02UnitPrice"),
-            line02Amount: localStorageGetFloatItem("workery-create-invoice-line02Amount"),
+            line02Quantity: this.props.orderDetail.line02Qty,
+            line02Description: this.props.orderDetail.line02Desc,
+            line02UnitPrice: this.props.orderDetail.line02Price,
+            line02Amount: this.props.orderDetail.line02Amount,
             // LINE 03
-            line03Quantity: localStorageGetIntegerItem("workery-create-invoice-line03Quantity"),
-            line03Description: localStorage.getItem("workery-create-invoice-line03Description"),
-            line03UnitPrice: localStorageGetFloatItem("workery-create-invoice-line03UnitPrice"),
-            line03Amount: localStorageGetFloatItem("workery-create-invoice-line03Amount"),
+            line03Quantity: this.props.orderDetail.line03Qty,
+            line03Description: this.props.orderDetail.line03Desc,
+            line03UnitPrice: this.props.orderDetail.line03Price,
+            line03Amount: this.props.orderDetail.line03Amount,
             // LINE 04
-            line04Quantity: localStorageGetIntegerItem("workery-create-invoice-line04Quantity"),
-            line04Description: localStorage.getItem("workery-create-invoice-line04Description"),
-            line04UnitPrice: localStorageGetFloatItem("workery-create-invoice-line04UnitPrice"),
-            line04Amount: localStorageGetFloatItem("workery-create-invoice-line04Amount"),
+            line04Quantity: this.props.orderDetail.line04Qty,
+            line04Description: this.props.orderDetail.line04Desc,
+            line04UnitPrice: this.props.orderDetail.line04Price,
+            line04Amount: this.props.orderDetail.line04Amount,
             // LINE 05
-            line05Quantity: localStorageGetIntegerItem("workery-create-invoice-line05Quantity"),
-            line05Description: localStorage.getItem("workery-create-invoice-line05Description"),
-            line05UnitPrice: localStorageGetFloatItem("workery-create-invoice-line05UnitPrice"),
-            line05Amount: localStorageGetFloatItem("workery-create-invoice-line05Amount"),
+            line05Quantity: this.props.orderDetail.line05Qty,
+            line05Description: this.props.orderDetail.line05Desc,
+            line05UnitPrice: this.props.orderDetail.line05Price,
+            line05Amount: this.props.orderDetail.line05Amount,
             // LINE 06
-            line06Quantity: localStorageGetIntegerItem("workery-create-invoice-line06Quantity"),
-            line06Description: localStorage.getItem("workery-create-invoice-line06Description"),
-            line06UnitPrice: localStorageGetFloatItem("workery-create-invoice-line06UnitPrice"),
-            line06Amount: localStorageGetFloatItem("workery-create-invoice-line06Amount"),
+            line06Quantity: this.props.orderDetail.line06Qty,
+            line06Description: this.props.orderDetail.line06Desc,
+            line06UnitPrice: this.props.orderDetail.line06Price,
+            line06Amount: this.props.orderDetail.line06Amount,
             // LINE 07
-            line07Quantity: localStorageGetIntegerItem("workery-create-invoice-line07Quantity"),
-            line07Description: localStorage.getItem("workery-create-invoice-line07Description"),
-            line07UnitPrice: localStorageGetFloatItem("workery-create-invoice-line07UnitPrice"),
-            line07Amount: localStorageGetFloatItem("workery-create-invoice-line07Amount"),
+            line07Quantity: this.props.orderDetail.line07Qty,
+            line07Description: this.props.orderDetail.line07Desc,
+            line07UnitPrice: this.props.orderDetail.line07Price,
+            line07Amount: this.props.orderDetail.line07Amount,
             // LINE 08
-            line08Quantity: localStorageGetIntegerItem("workery-create-invoice-line08Quantity"),
-            line08Description: localStorage.getItem("workery-create-invoice-line08Description"),
-            line08UnitPrice: localStorageGetFloatItem("workery-create-invoice-line08UnitPrice"),
-            line08Amount: localStorageGetFloatItem("workery-create-invoice-line08Amount"),
+            line08Quantity: this.props.orderDetail.line08Qty,
+            line08Description: this.props.orderDetail.line08Desc,
+            line08UnitPrice: this.props.orderDetail.line08Price,
+            line08Amount: this.props.orderDetail.line08Amount,
             // LINE 09
-            line09Quantity: localStorageGetIntegerItem("workery-create-invoice-line09Quantity"),
-            line09Description: localStorage.getItem("workery-create-invoice-line09Description"),
-            line09UnitPrice: localStorageGetFloatItem("workery-create-invoice-line09UnitPrice"),
-            line09Amount: localStorageGetFloatItem("workery-create-invoice-line09Amount"),
+            line09Quantity: this.props.orderDetail.line09Qty,
+            line09Description: this.props.orderDetail.line09Desc,
+            line09UnitPrice: this.props.orderDetail.line09Price,
+            line09Amount: this.props.orderDetail.line09Amount,
             // LINE 10
-            line10Quantity: localStorageGetIntegerItem("workery-create-invoice-line10Quantity"),
-            line10Description: localStorage.getItem("workery-create-invoice-line10Description"),
-            line10UnitPrice: localStorageGetFloatItem("workery-create-invoice-line10UnitPrice"),
-            line10Amount: localStorageGetFloatItem("workery-create-invoice-line10Amount"),
+            line10Quantity: this.props.orderDetail.line10Desc,
+            line10Description:  this.props.orderDetail.line10Desc,
+            line10UnitPrice: this.props.orderDetail.line10Price,
+            line10Amount: this.props.orderDetail.line10Amount,
             // LINE 11
-            line11Quantity: localStorageGetIntegerItem("workery-create-invoice-line11Quantity"),
-            line11Description: localStorage.getItem("workery-create-invoice-line11Description"),
-            line11UnitPrice: localStorageGetFloatItem("workery-create-invoice-line11UnitPrice"),
-            line11Amount: localStorageGetFloatItem("workery-create-invoice-line11Amount"),
+            line11Quantity: this.props.orderDetail.line11Qty,
+            line11Description: this.props.orderDetail.line11Desc,
+            line11UnitPrice: this.props.orderDetail.line11Price,
+            line11Amount: this.props.orderDetail.line11Amount,
             // LINE 12
-            line12Quantity: localStorageGetIntegerItem("workery-create-invoice-line12Quantity"),
-            line12Description: localStorage.getItem("workery-create-invoice-line12Description"),
-            line12UnitPrice: localStorageGetFloatItem("workery-create-invoice-line12UnitPrice"),
-            line12Amount: localStorageGetFloatItem("workery-create-invoice-line12Amount"),
+            line12Quantity: this.props.orderDetail.line12Qty,
+            line12Description: this.props.orderDetail.line12Desc,
+            line12UnitPrice: this.props.orderDetail.line12Price,
+            line12Amount: this.props.orderDetail.line12Amount,
             // LINE 13
-            line13Quantity: localStorageGetIntegerItem("workery-create-invoice-line13Quantity"),
-            line13Description: localStorage.getItem("workery-create-invoice-line13Description"),
-            line13UnitPrice: localStorageGetFloatItem("workery-create-invoice-line13UnitPrice"),
-            line13Amount: localStorageGetFloatItem("workery-create-invoice-line13Amount"),
+            line13Quantity: this.props.orderDetail.line13Qty,
+            line13Description: this.props.orderDetail.line13Desc,
+            line13UnitPrice: this.props.orderDetail.line13Price,
+            line13Amount: this.props.orderDetail.line13Amount,
             // LINE 14
-            line14Quantity: localStorageGetIntegerItem("workery-create-invoice-line14Quantity"),
-            line14Description: localStorage.getItem("workery-create-invoice-line14Description"),
-            line14UnitPrice: localStorageGetFloatItem("workery-create-invoice-line14UnitPrice"),
-            line14Amount: localStorageGetFloatItem("workery-create-invoice-line14Amount"),
+            line14Quantity: this.props.orderDetail.line14Qty,
+            line14Description: this.props.orderDetail.line14Desc,
+            line14UnitPrice: this.props.orderDetail.line14Price,
+            line14Amount: this.props.orderDetail.line14Amount,
             // LINE 15
-            line15Quantity: localStorageGetIntegerItem("workery-create-invoice-line15Quantity"),
-            line15Description: localStorage.getItem("workery-create-invoice-line15Description"),
-            line15UnitPrice: localStorageGetFloatItem("workery-create-invoice-line15UnitPrice"),
-            line15Amount: localStorageGetFloatItem("workery-create-invoice-line15Amount"),
+            line15Quantity: this.props.orderDetail.line15Qty,
+            line15Description: this.props.orderDetail.line15Desc,
+            line15UnitPrice: this.props.orderDetail.line15Price,
+            line15Amount: this.props.orderDetail.line15Amount,
             // OTHER
             orderId: parseInt(id),
             errors: {},
@@ -120,6 +120,54 @@ class InvoiceSecondSectionUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        postData.line01Qty = this.state.line01Quantity;
+        postData.line02Qty = this.state.line02Quantity;
+        postData.line03Qty = this.state.line03Quantity;
+        postData.line04Qty = this.state.line04Quantity;
+        postData.line05Qty = this.state.line05Quantity;
+        postData.line06Qty = this.state.line06Quantity;
+        postData.line07Qty = this.state.line07Quantity;
+        postData.line08Qty = this.state.line08Quantity;
+        postData.line09Qty = this.state.line09Quantity;
+        postData.line10Qty = this.state.line10Quantity;
+        postData.line11Qty = this.state.line11Quantity;
+        postData.line12Qty = this.state.line12Quantity;
+        postData.line13Qty = this.state.line13Quantity;
+        postData.line14Qty = this.state.line14Quantity;
+        postData.line15Qty = this.state.line15Quantity;
+
+        postData.line01Desc = this.state.line01Description;
+        postData.line02Desc = this.state.line02Description;
+        postData.line03Desc = this.state.line03Description;
+        postData.line04Desc = this.state.line04Description;
+        postData.line05Desc = this.state.line05Description;
+        postData.line06Desc = this.state.line06Description;
+        postData.line07Desc = this.state.line07Description;
+        postData.line08Desc = this.state.line08Description;
+        postData.line09Desc = this.state.line09Description;
+        postData.line10Desc = this.state.line10Description;
+        postData.line11Desc = this.state.line11Description;
+        postData.line12Desc = this.state.line12Description;
+        postData.line13Desc = this.state.line13Description;
+        postData.line14Desc = this.state.line14Description;
+        postData.line15Desc = this.state.line15Description;
+
+        postData.line01Price = this.state.line01UnitPrice;
+        postData.line02Price = this.state.line02UnitPrice;
+        postData.line03Price = this.state.line03UnitPrice;
+        postData.line04Price = this.state.line04UnitPrice;
+        postData.line05Price = this.state.line05UnitPrice;
+        postData.line06Price = this.state.line06UnitPrice;
+        postData.line07Price = this.state.line07UnitPrice;
+        postData.line08Price = this.state.line08UnitPrice;
+        postData.line09Price = this.state.line09UnitPrice;
+        postData.line10Price = this.state.line10UnitPrice;
+        postData.line11Price = this.state.line11UnitPrice;
+        postData.line12Price = this.state.line12UnitPrice;
+        postData.line13Price = this.state.line13UnitPrice;
+        postData.line14Price = this.state.line14UnitPrice;
+        postData.line15Price = this.state.line15UnitPrice;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -150,8 +198,10 @@ class InvoiceSecondSectionUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(staff) {
-        this.props.history.push("/staff/"+this.state.id+"/full");
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback |", response);
+        this.props.setFlashMessage("success", "Invoice has been successfully update.");
+        this.props.history.push("/financial/"+this.state.orderId+"/invoice");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -165,7 +215,7 @@ class InvoiceSecondSectionUpdateContainer extends Component {
     }
 
     onSuccessCallback(response) {
-        console.log(response);
+        console.log("onSuccessCallback |",response);
         this.setState({ isLoading: false, })
     }
 
@@ -185,7 +235,6 @@ class InvoiceSecondSectionUpdateContainer extends Component {
                 this.calculateTotalAmounts();
             }
         );
-        localStorage.setItem('workery-create-invoice-'+[e.target.name], e.target.value);
     }
 
     /**
@@ -196,7 +245,6 @@ class InvoiceSecondSectionUpdateContainer extends Component {
         const amount = e.target.value.replace("$","").replace(",", "");
         this.setState(
             { [e.target.name]: parseFloat(amount), }, ()=>{
-                localStorage.setItem('workery-create-invoice-'+[e.target.name], parseFloat(amount) );
                 this.calculateTotalAmounts();
             }
         );
@@ -235,18 +283,7 @@ class InvoiceSecondSectionUpdateContainer extends Component {
             line13Amount: line13Amount,
             line14Amount: line14Amount,
             line15Amount: line15Amount,
-        })
-
-        localStorage.setItem('workery-create-invoice-line01Amount', line01Amount );
-        localStorage.setItem('workery-create-invoice-line02Amount', line02Amount );
-        localStorage.setItem('workery-create-invoice-line03Amount', line03Amount );
-        localStorage.setItem('workery-create-invoice-line04Amount', line04Amount );
-        localStorage.setItem('workery-create-invoice-line05Amount', line05Amount );
-        localStorage.setItem('workery-create-invoice-line06Amount', line06Amount );
-        localStorage.setItem('workery-create-invoice-line07Amount', line07Amount );
-        localStorage.setItem('workery-create-invoice-line08Amount', line08Amount );
-        localStorage.setItem('workery-create-invoice-line09Amount', line09Amount );
-        localStorage.setItem('workery-create-invoice-line10Amount', line10Amount );
+        });
     }
 
     onClick(e) {
@@ -258,7 +295,11 @@ class InvoiceSecondSectionUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            alert("TEST");
+            this.props.putInvoiceSecondSection(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -372,6 +413,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
         putStaffContactDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
             dispatch(putStaffContactDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
@@ -379,6 +423,9 @@ const mapDispatchToProps = dispatch => {
             dispatch(
                 pullOrderDetail(id, onSuccessCallback, onFailureCallback)
             )
+        },
+        putInvoiceSecondSection: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(putInvoiceSecondSection(postData, onSuccessCallback, onFailureCallback))
         },
     }
 }
