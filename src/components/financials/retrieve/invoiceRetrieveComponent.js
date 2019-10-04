@@ -413,6 +413,10 @@ export default class InvoiceRetrieveComponent extends Component {
                                         <th scope="row" className="bg-light">Modified By</th>
                                         <td>{invoice.lastModifiedBy}</td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Revision Version</th>
+                                        <td>{invoice && invoice.revisionVersion}</td>
+                                    </tr>
 
 
                                 </tbody>

@@ -200,7 +200,7 @@ class InvoiceThirdSectionUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.history.push("/financial/"+this.state.orderId+"/invoice/create/step-4");
+            alert("TEST");
 
         // CASE 2 OF 2: Validation was a failure.
         } else {

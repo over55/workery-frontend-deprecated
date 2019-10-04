@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import InvoiceFirstSectionUpdateComponent from "../../../components/financials/update/invoiceFirstSectionUpdateComponent";
-import { pullOrderDetail } from "../../../actions/orderActions";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { pullOrderDetail, putInvoiceFirstSection } from "../../../actions/orderActions";
 import { validateInvoiceSectionOneInput } from "../../../validators/orderValidator";
-import { localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
-import { putStaffContactDetail } from '../../../actions/staffActions';
 
 
 class InvoiceFirstSectionUpdateContainer extends Component {
@@ -24,8 +24,8 @@ class InvoiceFirstSectionUpdateContainer extends Component {
 
         this.state = {
             orderId: parseInt(id),
-            invoiceId: localStorageGetIntegerItem("workery-create-invoice-invoiceId"),
-            invoiceDate: localStorageGetDateItem("workery-create-invoice-invoiceDate"),
+            invoiceId: "",
+            invoiceDate: "",
             errors: {},
             isLoading: false
         }
@@ -38,6 +38,8 @@ class InvoiceFirstSectionUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -47,6 +49,9 @@ class InvoiceFirstSectionUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        const invoiceDateMoment = moment(this.state.invoiceDate);
+        postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD");
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -77,8 +82,10 @@ class InvoiceFirstSectionUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(staff) {
-        this.props.history.push("/staff/"+this.state.id+"/full");
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback |", response);
+        this.props.setFlashMessage("success", "Invoice has been successfully update.");
+        this.props.history.push("/financial/"+this.state.orderId+"/invoice");
     }
 
     onFailedSubmissionCallback(errors) {
@@ -92,8 +99,8 @@ class InvoiceFirstSectionUpdateContainer extends Component {
     }
 
     onSuccessCallback(response) {
-        console.log(response);
-        this.setState({ isLoading: false, })
+        console.log("onSuccessCallback |", response);
+        this.setState({ isLoading: false, invoiceId: response.invoiceId, invoiceDate: new Date(response.invoiceDate), });
     }
 
     onFailureCallback(errors) {
@@ -135,8 +142,7 @@ class InvoiceFirstSectionUpdateContainer extends Component {
     onInvoiceDateChange(dateObj) {
         this.setState({
             invoiceDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-invoice-invoiceDate', dateObj);
+        });
     }
 
     onClick(e) {
@@ -148,7 +154,11 @@ class InvoiceFirstSectionUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.history.push("/financial/"+this.state.orderId+"/invoice/create/step-2");
+            this.props.putInvoiceFirstSection(
+                this.getPostData(),
+                this.onSuccessfulSubmissionCallback,
+                this.onFailedSubmissionCallback
+            );
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -192,8 +202,11 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        putStaffContactDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffContactDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
+        putInvoiceFirstSection: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(putInvoiceFirstSection(postData, onSuccessCallback, onFailureCallback))
         },
         pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
