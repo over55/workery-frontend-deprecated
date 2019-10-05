@@ -4,10 +4,16 @@ import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
 import InvoiceThirdSectionUpdateComponent from "../../../components/financials/update/invoiceThirdSectionUpdateComponent";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullOrderDetail, putInvoiceThirdSection } from "../../../actions/orderActions";
 import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
 import {
-    localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanItem, localStorageRemoveItemsContaining
+    localStorageGetIntegerItem,
+    localStorageGetDateItem,
+    localStorageSetObjectOrArrayItem,
+    localStorageGetFloatItem,
+    localStorageGetBooleanItem,
+    localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 import { putStaffContactDetail } from '../../../actions/staffActions';
 
@@ -75,6 +81,15 @@ class InvoiceThirdSectionUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        const invoiceQuoteDateMoment = moment(this.state.invoiceQuoteDate);
+        postData.invoiceQuoteDate = invoiceQuoteDateMoment.format("YYYY-MM-DD");
+
+        const paymentDateMoment = moment(this.state.paymentDate);
+        postData.paymentDate = paymentDateMoment.format("YYYY-MM-DD");
+
+        const associateSignDateMoment = moment(this.state.associateSignDate);
+        postData.associateSignDate = associateSignDateMoment.format("YYYY-MM-DD");
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -296,6 +311,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
         putStaffContactDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(putStaffContactDetail(data, onSuccessCallback, onFailureCallback))
         },
