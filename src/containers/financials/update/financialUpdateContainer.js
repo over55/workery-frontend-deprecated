@@ -10,6 +10,14 @@ import { pullServiceFeeList, getServiceFeeReactSelectOptions, getPercentValueFor
 import { putOrderFinancialDetail } from "../../../actions/orderActions";
 
 
+/**
+ *  Source: https://stackoverflow.com/a/18358056
+ */
+function roundToTwo(num) {
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+
+
 class FinancialUpdateContainer extends Component {
     /**
      *  Initializer & Utility
@@ -33,9 +41,11 @@ class FinancialUpdateContainer extends Component {
             invoiceIds: this.props.orderDetail.invoiceIds,
             invoiceQuotedLabourAmount: parseFloat(this.props.orderDetail.invoiceQuotedLabourAmount),
             invoiceQuotedMaterialAmount: parseFloat(this.props.orderDetail.invoiceQuotedMaterialAmount),
+            invoiceQuotedWasteRemovalAmount: parseFloat(this.props.orderDetail.invoiceQuotedWasteRemovalAmount),
             invoiceTotalQuoteAmount: parseFloat(this.props.orderDetail.invoiceTotalQuoteAmount),
             invoiceLabourAmount: parseFloat(this.props.orderDetail.invoiceLabourAmount),
             invoiceMaterialAmount: parseFloat(this.props.orderDetail.invoiceMaterialAmount),
+            invoiceWasteRemovalAmount: parseFloat(this.props.orderDetail.invoiceWasteRemovalAmount),
             invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
             invoiceServiceFee: parseInt(this.props.orderDetail.invoiceServiceFee),
             invoiceServiceFeeAmount: parseFloat(this.props.orderDetail.invoiceServiceFeeAmount),
@@ -67,8 +77,10 @@ class FinancialUpdateContainer extends Component {
         const {
             invoiceQuotedMaterialAmount,
             invoiceQuotedLabourAmount,
+            invoiceQuotedWasteRemovalAmount,
             invoiceLabourAmount,
             invoiceMaterialAmount,
+            invoiceWasteRemovalAmount,
             invoiceTaxAmount,
             invoiceServiceFee,
             invoiceActualServiceFeeAmountPaid
@@ -77,12 +89,14 @@ class FinancialUpdateContainer extends Component {
         /*
          *  Compute the total quoted amount.
          */
-        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount;
+        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount + invoiceQuotedWasteRemovalAmount;
+        console.log("performCalculation |", invoiceQuotedMaterialAmount, invoiceQuotedLabourAmount, invoiceQuotedWasteRemovalAmount, invoiceTotalQuoteAmount);
 
         /*
          *  Compute the total amount.
          */
-        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
+        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount + invoiceWasteRemovalAmount;
+        console.log("performCalculation |", invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceWasteRemovalAmount, invoiceTotalAmount);
 
         /*
          *  Compute the service fee based on the labour.
@@ -97,10 +111,10 @@ class FinancialUpdateContainer extends Component {
 
         // Update our state.
         this.setState({
-            invoiceTotalQuoteAmount: invoiceTotalQuoteAmount,
-            invoiceTotalAmount: invoiceTotalAmount,
-            invoiceBalanceOwingAmount: invoiceBalanceOwingAmount,
-            invoiceServiceFeeAmount: invoiceServiceFeeAmount,
+            invoiceTotalQuoteAmount: roundToTwo(invoiceTotalQuoteAmount, 2),
+            invoiceTotalAmount: roundToTwo(invoiceTotalAmount, 2),
+            invoiceBalanceOwingAmount: roundToTwo(invoiceBalanceOwingAmount, 2),
+            invoiceServiceFeeAmount: roundToTwo(invoiceServiceFeeAmount, 2),
         });
     }
 
@@ -172,9 +186,7 @@ class FinancialUpdateContainer extends Component {
     }
 
     onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        });
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -291,8 +303,8 @@ class FinancialUpdateContainer extends Component {
     render() {
         const {
             id, errors, isLoading,
-            paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
-            invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee,
+            paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedWasteRemovalAmount,
+            invoiceLabourAmount, invoiceMaterialAmount, invoiceWasteRemovalAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
             visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate,
         } = this.state;
@@ -306,9 +318,11 @@ class FinancialUpdateContainer extends Component {
                 // Amount
                 invoiceQuotedLabourAmount={invoiceQuotedLabourAmount}
                 invoiceQuotedMaterialAmount={invoiceQuotedMaterialAmount}
+                invoiceQuotedWasteRemovalAmount={invoiceQuotedWasteRemovalAmount}
                 invoiceTotalQuoteAmount={invoiceTotalQuoteAmount}
                 invoiceLabourAmount={invoiceLabourAmount}
                 invoiceMaterialAmount={invoiceMaterialAmount}
+                invoiceWasteRemovalAmount={invoiceWasteRemovalAmount}
                 invoiceTaxAmount={invoiceTaxAmount}
                 invoiceTotalAmount={invoiceTotalAmount}
                 invoiceServiceFeeAmount={invoiceServiceFeeAmount}

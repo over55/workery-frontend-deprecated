@@ -149,6 +149,15 @@ export default class FinancialRetrieveComponent extends Component {
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" className="bg-light">Quoted Waste Removal</th>
+                                    <td>
+                                        {order.invoiceQuotedWasteRemovalAmount
+                                            ?<NumberFormat value={order.invoiceQuotedWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row" className="bg-light">Total Quote</th>
                                     <td>
                                         {order.invoiceTotalQuoteAmount
@@ -171,6 +180,15 @@ export default class FinancialRetrieveComponent extends Component {
                                     <td>
                                         {order.invoiceMaterialAmount
                                             ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Actual Waste Removal</th>
+                                    <td>
+                                        {order.invoiceWasteRemovalAmount
+                                            ?<NumberFormat value={order.invoiceWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
                                     </td>

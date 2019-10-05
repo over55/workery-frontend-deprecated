@@ -31,9 +31,11 @@ export default class FinancialUpdateComponent extends Component {
             // AMOUNT
             invoiceQuotedLabourAmount,
             invoiceQuotedMaterialAmount,
+            invoiceQuotedWasteRemovalAmount,
             invoiceLabourAmount,
             invoiceTotalQuoteAmount,
             invoiceMaterialAmount,
+            invoiceWasteRemovalAmount,
             invoiceTaxAmount,
             invoiceTotalAmount,
             invoiceServiceFeeAmount,
@@ -198,6 +200,17 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.invoiceQuotedWasteRemovalAmount}
+                                label="Quoted Waste Removal (*)"
+                                onChange={onAmountChange}
+                                value={invoiceQuotedWasteRemovalAmount}
+                                name="invoiceQuotedWasteRemovalAmount"
+                                helpText="If no waste removal will occur then please enter zero."
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
                                 borderColour="border-success"
                                 error={errors.invoiceTotalQuoteAmount}
                                 label="Total Quoted"
@@ -232,6 +245,17 @@ export default class FinancialUpdateComponent extends Component {
                                 value={invoiceMaterialAmount}
                                 name="invoiceMaterialAmount"
                                 helpText="If no material costs were incurred then please enter zero."
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.invoiceWasteRemovalAmount}
+                                label="Actual Waste Removal (*)"
+                                onChange={onAmountChange}
+                                value={invoiceWasteRemovalAmount}
+                                name="invoiceWasteRemovalAmount"
+                                helpText="If no waste removal will occur then please enter zero."
                             />
 
                             <BootstrapCurrencyInput
