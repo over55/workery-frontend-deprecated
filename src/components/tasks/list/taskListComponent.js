@@ -168,7 +168,7 @@ class RemoteListComponent extends Component {
 
 
 function iconFormatter(cell, row){
-    if (row.associateAwayLog !== undefined && row.associateAwayLog !== null) {
+    if (row && row.associateAwayLog !== undefined && row.associateAwayLog !== null) {
         return <i className="fas fa-sun"></i>;
     }
     switch(row.orderTypeOf) {

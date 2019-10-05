@@ -30,7 +30,7 @@ export default class FollowUpTaskStep2Component extends Component {
 
                 <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - 48 Hour Follow Up</h1>
 
-                {task.associateAwayLog !== undefined && task.associateAwayLog !== null &&
+                {task && task.associateAwayLog !== undefined && task.associateAwayLog !== null &&
                     <div className="alert alert-warning" role="alert">
                         <strong><i className="fas fa-exclamation-triangle"></i>&nbsp;Warning</strong> - The associate assigned to this task is currently away.
                     </div>
