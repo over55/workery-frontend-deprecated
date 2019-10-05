@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
 import InvoiceThirdSectionUpdateComponent from "../../../components/financials/update/invoiceThirdSectionUpdateComponent";
-import { pullOrderDetail } from "../../../actions/orderActions";
+import { pullOrderDetail, putInvoiceThirdSection } from "../../../actions/orderActions";
 import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
 import {
     localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanItem, localStorageRemoveItemsContaining
@@ -64,6 +64,21 @@ class InvoiceThirdSectionUpdateContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onSuccessOrderCallback = this.onSuccessOrderCallback.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    /**
+     *  Utility function used to create the `postData` we will be submitting to
+     *  the API; as a result, this function will structure some dictionary key
+     *  items under different key names to support our API web-service's API.
+     */
+    getPostData() {
+        let postData = Object.assign({}, this.state);
+
+        // Finally: Return our new modified data.
+        console.log("getPostData |", postData);
+        return postData;
     }
 
     /**
@@ -112,6 +127,22 @@ class InvoiceThirdSectionUpdateContainer extends Component {
                 associateSignature: response['associateFullName'],
             });
         }
+    }
+
+    onSuccessfulSubmissionCallback(response) {
+        console.log("onSuccessfulSubmissionCallback |", response);
+        this.props.setFlashMessage("success", "Invoice has been successfully update.");
+        this.props.history.push("/financial/"+this.state.orderId+"/invoice");
+    }
+
+    onFailedSubmissionCallback(errors) {
+        this.setState({ errors: errors, });
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
     }
 
     /**
@@ -200,7 +231,7 @@ class InvoiceThirdSectionUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            alert("TEST");
+            this.props.putInvoiceThirdSection(this.getPostData(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -271,6 +302,11 @@ const mapDispatchToProps = dispatch => {
         pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
+        putInvoiceThirdSection: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                putInvoiceThirdSection(postData, onSuccessCallback, onFailureCallback)
             )
         },
     }
