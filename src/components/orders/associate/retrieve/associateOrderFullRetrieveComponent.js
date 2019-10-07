@@ -28,7 +28,7 @@ export default class AssociateOrderFullRetrieveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Jobs</Link>
+                            <Link to="/jobs"><i className="fas fa-wrench"></i>&nbsp;Jobs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-wrench"></i>&nbsp;Job # {id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
