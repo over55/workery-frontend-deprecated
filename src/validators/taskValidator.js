@@ -42,6 +42,11 @@ export function validateTask2Step2Input(data) {
     if (data.status === undefined || data.status === null || data.status === "") {
         errors.status = 'This field is required';
     }
+    if (data.status === true || data.status === "true") {
+        if (data.meetingDate === undefined || data.meetingDate === null || data.meetingDate === "" || isNaN(data.meetingDate) ) {
+            errors.meetingDate = 'This field is required';
+        }
+    }
     if (data.comment === undefined || data.comment === null || data.comment === "") {
         errors.comment = 'This field is required';
     }

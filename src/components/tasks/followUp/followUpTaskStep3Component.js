@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
@@ -7,7 +9,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 
 export default class FollowUpTaskStep3Component extends Component {
     render() {
-        const { statusLabel, comment, id, task, onBack, onClick, errors, isLoading } = this.props;
+        const { status, statusLabel, meetingDate, comment, id, task, onBack, onClick, errors, isLoading } = this.props;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -95,12 +97,20 @@ export default class FollowUpTaskStep3Component extends Component {
                                     <th scope="row" className="bg-light">Have the Client and Associate Member agreed to meet?</th>
                                     <td>{task && statusLabel}</td>
                                 </tr>
+                                {status === true || status === "true" &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Meeting Date</th>
+                                        <td>
+                                            {task && meetingDate &&
+                                                <Moment format="MM/DD/YYYY">{meetingDate}</Moment>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Comment</th>
                                     <td>{task && comment}</td>
                                 </tr>
-
-
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">

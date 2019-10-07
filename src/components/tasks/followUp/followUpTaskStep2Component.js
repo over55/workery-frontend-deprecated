@@ -5,12 +5,13 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { GENDER_RADIO_CHOICES } from "../../../constants/api";
 
 
 export default class FollowUpTaskStep2Component extends Component {
     render() {
-        const { task, status, id, comment, onClick, onBack, errors, isLoading, onRadioChange, onTextChange } = this.props;
+        const { task, status, id, meetingDate, comment, onClick, onBack, errors, isLoading, onMeetingDateChange, onRadioChange, onTextChange } = this.props;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -74,6 +75,18 @@ export default class FollowUpTaskStep2Component extends Component {
                                 selectedValue={status}
                                 options={STATUS_CHOICES}
                             />
+
+                            {status === true || status === "true" &&
+                                <BootstrapDatePicker
+                                    label="Meeting date (*)"
+                                    name="meetingDate"
+                                    dateObj={meetingDate}
+                                    onTimeChange={onMeetingDateChange}
+                                    datePickerClassName="form-control form-control-lg border"
+                                    divClassName="form-group p-0 col-md-7 mb-4"
+                                    error={errors.meetingDate}
+                                />
+                            }
 
                             <BootstrapTextarea
                                 name="comment"

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import FollowUpTaskStep3Component from "../../../components/tasks/followUp/followUpTaskStep3Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask2Step2Input } from "../../../validators/taskValidator";
 import { postTaskFollowUpDetail } from "../../../actions/taskActions";
-import { localStorageGetIntegerItem, localStorageRemoveItemsContaining } from '../../../helpers/localStorageUtility';
+import { localStorageGetIntegerItem, localStorageRemoveItemsContaining, localStorageGetDateItem } from '../../../helpers/localStorageUtility';
 
 
 class FollowUpTaskStep3Container extends Component {
@@ -30,6 +31,7 @@ class FollowUpTaskStep3Container extends Component {
             id: id,
             statusLabel: localStorage.getItem("workery-task-2-status-label"),
             status: localStorage.getItem("workery-task-2-status"),
+            meetingDate: localStorageGetDateItem("workery-task-2-meetingDate"),
             comment: localStorage.getItem("workery-task-2-comment"),
             associate: localStorageGetIntegerItem("workery-task-2-associateId"),
             errors: {},
@@ -52,6 +54,9 @@ class FollowUpTaskStep3Container extends Component {
 
         postData.task_item = this.state.id;
         postData.hasAgreedToMeet = this.state.status;
+
+        const meetingDateMoment = moment(this.state.meetingDate);
+        postData.meetingDate = meetingDateMoment.format("YYYY-MM-DD");
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -135,13 +140,16 @@ class FollowUpTaskStep3Container extends Component {
     render() {
         return (
             <FollowUpTaskStep3Component
+                status={this.state.status}
                 statusLabel={this.state.statusLabel}
+                meetingDate={this.state.meetingDate}
                 comment={this.state.comment}
                 isLoading={this.state.isLoading}
                 id={this.state.id}
                 task={this.props.taskDetail}
                 onBack={this.onBack}
                 onClick={this.onClick}
+                errors={this.state.errors}
             />
         );
     }

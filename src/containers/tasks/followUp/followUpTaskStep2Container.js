@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import FollowUpTaskStep2Component from "../../../components/tasks/followUp/followUpTaskStep2Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask2Step2Input } from "../../../validators/taskValidator";
-import { localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
+import { localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
 
 
 class FollowUpTaskStep2Container extends Component {
@@ -27,6 +27,7 @@ class FollowUpTaskStep2Container extends Component {
             isLoading: false,
             id: id,
             status: localStorage.getItem("workery-task-2-status"),
+            meetingDate: localStorageGetDateItem("workery-task-2-meetingDate"),
             comment: localStorage.getItem("workery-task-2-comment"),
             associate: localStorageGetIntegerItem("workery-task-2-associateId"),
             errors: {},
@@ -37,6 +38,7 @@ class FollowUpTaskStep2Container extends Component {
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
+        this.onMeetingDateChange = this.onMeetingDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onTaskDetailSuccessFetchCallback = this.onTaskDetailSuccessFetchCallback.bind(this);
     }
@@ -129,6 +131,15 @@ class FollowUpTaskStep2Container extends Component {
         });
     }
 
+    onMeetingDateChange(dateObj) {
+        this.setState(
+            { meetingDate: dateObj, }, ()=> {
+                console.log("meetingDate:", dateObj);
+            }
+        );
+        localStorageSetObjectOrArrayItem('workery-task-2-meetingDate', dateObj);
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -162,6 +173,7 @@ class FollowUpTaskStep2Container extends Component {
             <FollowUpTaskStep2Component
                 id={this.state.id}
                 status={this.state.status}
+                meetingDate={this.state.meetingDate}
                 comment={this.state.comment}
                 isLoading={this.state.isLoading}
                 task={this.props.taskDetail}
@@ -170,6 +182,7 @@ class FollowUpTaskStep2Container extends Component {
                 onClick={this.onClick}
                 onTextChange={this.onTextChange}
                 onRadioChange={this.onRadioChange}
+                onMeetingDateChange={this.onMeetingDateChange}
             />
         );
     }
