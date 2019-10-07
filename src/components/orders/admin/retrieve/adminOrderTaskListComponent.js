@@ -224,7 +224,7 @@ function detailLinkFormatter(cell, row){
     }
     if (row.isClosed === true) { return "Closed"; }
     return (
-        <Link to={`/task/${row.id}`}>
+        <Link to={`/task/${row.typeOf}/${row.id}/step-1`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
