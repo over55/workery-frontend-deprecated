@@ -169,7 +169,7 @@ export default class OrderCompletionTaskStep2Component extends Component {
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
                             <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
-                                ReviewFinancials&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                Financials&nbsp;<i className="fas fa-arrow-circle-right"></i>
                             </button>
 
                             <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-1`}>
