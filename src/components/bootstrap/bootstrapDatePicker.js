@@ -4,7 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import classnames from 'classnames';
 
 
-export const BootstrapDatePicker = ({ label, name, datePickerClassName, divClassName, borderClassname="border-primary", onTimeChange, dateObj, error, helpText }) => {
+export const BootstrapDatePicker = ({
+    label, name, datePickerClassName, divClassName, borderClassname="border-primary", onTimeChange, dateObj, error, helpText, maxDate=null, minDate=null
+}) => {
     return (
         <div className={divClassName}>
             <label htmlFor={name}>{label}</label>
@@ -14,6 +16,8 @@ export const BootstrapDatePicker = ({ label, name, datePickerClassName, divClass
                     selected={dateObj}
                     onChange={onTimeChange}
                     className={classnames(datePickerClassName, { 'border-danger has-error': error }, { 'border-success': !error && borderClassname === 'border-success' }, { 'border-primary': !error && borderClassname === 'border-primary' } )}
+                    maxDate={maxDate}
+                    minDate={minDate}
                 />
                 <div className="input-group-append">
                     <span className={classnames('input-group-text dob-icon', { 'bg-danger border-danger': error }, { 'bg-success border-success': !error && borderClassname === 'border-success' }, { 'bg-primary border-primary': !error && borderClassname === 'border-primary' } )}>
