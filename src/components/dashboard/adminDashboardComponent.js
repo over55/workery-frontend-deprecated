@@ -543,7 +543,7 @@ function commentAboutFormatter(cell, row){
 
 function commentLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.about}`}>
+        <Link to={`/order/${row.about}/comments`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )

@@ -7,6 +7,9 @@ import classnames from 'classnames';
 export const BootstrapDatePicker = ({
     label, name, datePickerClassName, divClassName, borderClassname="border-primary", onTimeChange, dateObj, error, helpText, maxDate=null, minDate=null
 }) => {
+    // DEVELOPERS NOTE:
+    // List of props can be found:
+    // https://github.com/Hacker0x01/react-datepicker/blob/master/docs/datepicker.md
     return (
         <div className={divClassName}>
             <label htmlFor={name}>{label}</label>
