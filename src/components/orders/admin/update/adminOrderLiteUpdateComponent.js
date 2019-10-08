@@ -18,9 +18,9 @@ export default class AdminOrderLiteUpdateComponent extends Component {
             description, isSkillSetsLoading, skillSets, skillSetOptions, onSkillSetMultiChange,
             isTagsLoading, tags, tagOptions, onTagMultiChange, assignmentDate, onAssignmentDateChange, completionDate, onCompletionDateChange,
             homeSupport, onRadioChange,
-            onClick, onTextChange,
+            onClick, onTextChange, user
         } = this.props;
-
+        const isExecutive = user.groupId === 1;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -92,6 +92,7 @@ export default class AdminOrderLiteUpdateComponent extends Component {
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.assignmentDate}
                                 borderClassname="border-success"
+                                disabled={isExecutive === false}
                             />
 
                             <BootstrapDatePicker
@@ -104,6 +105,7 @@ export default class AdminOrderLiteUpdateComponent extends Component {
                                 error={errors.completionDate}
                                 borderClassname="border-success"
                                 maxDate={new Date()}
+                                disabled={isExecutive === false}
                             />
 
                             <BootstrapRadio

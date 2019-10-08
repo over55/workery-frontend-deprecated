@@ -267,6 +267,7 @@ class AdminOrderLiteUpdateContainer extends Component {
                 homeSupport={homeSupport}
 
                 onClick={this.onClick}
+                user={this.props.user}
             />
         );
     }
