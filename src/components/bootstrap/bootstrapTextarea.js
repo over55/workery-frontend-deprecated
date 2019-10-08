@@ -4,7 +4,9 @@ import classnames from 'classnames';
 import shortid from "shortid";
 
 
-export const BootstrapTextarea = ({ name, label, placeholder, rows=1, value, helpText, onChange, error,  borderColour = '' }) => {
+export const BootstrapTextarea = ({
+    name, label, placeholder, rows=1, value, helpText, onChange, error,  borderColour = '', disabled=false
+}) => {
     const id = shortid.generate();
     const helpID = id + "-help";
     return (
@@ -18,6 +20,7 @@ export const BootstrapTextarea = ({ name, label, placeholder, rows=1, value, hel
                 value={value}
                 onChange={onChange}
                 rows={rows}
+                disabled={disabled}
             />
             <small id={helpID} className="form-text text-muted">{helpText}</small>
             {error && <div className="invalid-feedback">{error}</div>}

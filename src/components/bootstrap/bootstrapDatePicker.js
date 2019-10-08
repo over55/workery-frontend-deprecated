@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 
 export const BootstrapDatePicker = ({
-    label, name, datePickerClassName, divClassName, borderClassname="border-primary", onTimeChange, dateObj, error, helpText, maxDate=null, minDate=null
+    label, name, datePickerClassName, divClassName, borderClassname="border-primary", onTimeChange, dateObj, error, helpText, maxDate=null, minDate=null, disabled=false
 }) => {
     // DEVELOPERS NOTE:
     // List of props can be found:
@@ -21,6 +21,7 @@ export const BootstrapDatePicker = ({
                     className={classnames(datePickerClassName, { 'border-danger has-error': error }, { 'border-success': !error && borderClassname === 'border-success' }, { 'border-primary': !error && borderClassname === 'border-primary' } )}
                     maxDate={maxDate}
                     minDate={minDate}
+                    disabled={disabled}
                 />
                 <div className="input-group-append">
                     <span className={classnames('input-group-text dob-icon', { 'bg-danger border-danger': error }, { 'bg-success border-success': !error && borderClassname === 'border-success' }, { 'bg-primary border-primary': !error && borderClassname === 'border-primary' } )}>

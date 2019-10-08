@@ -79,6 +79,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 error={errors.skillSets}
                                 onMultiChange={onSkillSetMultiChange}
                                 isLoading={isSkillSetsLoading}
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -95,6 +96,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 error={errors.insuranceRequirements}
                                 onMultiChange={onInsuranceRequirementMultiChange}
                                 isLoading={isInsuranceRequirementsLoading}
+                                disabled={true}
                             />
 
                             <BootstrapInput
@@ -106,6 +108,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 value={hourlySalaryDesired}
                                 name="hourlySalaryDesired"
                                 type="number"
+                                disabled={true}
                             />
 
                             <BootstrapTextarea
@@ -118,6 +121,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 helpText="This will be used to help better serve our associates."
                                 onChange={onTextChange}
                                 error={errors.limitSpecial}
+                                disabled={true}
                             />
                             <BootstrapDatePicker
                                 label="Member Dues (*)"
@@ -127,6 +131,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.duesDate}
+                                disabled={true}
                             />
 
                             <BootstrapDatePicker
@@ -137,6 +142,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.commercialInsuranceExpiryDate}
+                                disabled={true}
                             />
 
                             <BootstrapDatePicker
@@ -148,6 +154,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.autoInsuranceExpiryDate}
+                                disabled={true}
                             />
 
                             <BootstrapInput
@@ -159,6 +166,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 value={wsibNumber}
                                 name="wsibNumber"
                                 type="number"
+                                disabled={true}
                             />
 
                             <BootstrapDatePicker
@@ -170,6 +178,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.wsibInsuranceDate}
+                                disabled={true}
                             />
 
                             <BootstrapDatePicker
@@ -180,6 +189,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.policeCheck}
+                                disabled={true}
                             />
                             <BootstrapInput
                                 inputClassName="form-control"
@@ -190,6 +200,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 value={taxId}
                                 name="taxId"
                                 type="text"
+                                disabled={true}
                             />
 
                             <BootstrapInput
@@ -201,6 +212,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 value={driversLicenseClass}
                                 name="driversLicenseClass"
                                 type="text"
+                                disabled={true}
                             />
 
                             <BootstrapMultipleSelect
@@ -213,6 +225,7 @@ class AssociateProfileAccountUpdateComponent extends Component {
                                 error={errors.vehicleTypes}
                                 onMultiChange={onVehicleTypeMultiChange}
                                 isLoading={isVehicleTypesLoading}
+                                disabled={true}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">

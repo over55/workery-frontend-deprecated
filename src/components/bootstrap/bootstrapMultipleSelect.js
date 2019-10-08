@@ -18,7 +18,8 @@ export const BootstrapMultipleSelect = ({
     error,
     onMultiChange,
     borderColour="border-primary",
-    isLoading=false
+    isLoading=false,
+    disabled=false
 }) => {
     const id = shortid.generate();
 
@@ -60,6 +61,7 @@ export const BootstrapMultipleSelect = ({
                 options={options}
                 styles={customStyles}
                 isLoading={isLoading}
+                isDisabled={disabled}
             />
             {error && <div className="invalid-feedback" style={{display: 'block'}}>{error}</div>}
         </div>
