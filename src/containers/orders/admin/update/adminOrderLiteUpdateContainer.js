@@ -25,6 +25,13 @@ class AdminOrderLiteUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // Get our dates based on our browsers timezone.
+        // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
+        var assignmentDate = new Date(this.props.orderDetail.assignmentDate);
+        assignmentDate.setMinutes( assignmentDate.getMinutes() + assignmentDate.getTimezoneOffset() );
+        var completionDate = new Date(this.props.orderDetail.completionDate);
+        completionDate.setMinutes( completionDate.getMinutes() + completionDate.getTimezoneOffset() );
+
         this.state = {
             errors: {},
             isLoading: false,
@@ -35,8 +42,8 @@ class AdminOrderLiteUpdateContainer extends Component {
             homeSupport: this.props.orderDetail.isHomeSupportService ? 1 : 0,
             tags: this.props.orderDetail.tags,
             isTagsLoading: true,
-            assignmentDate: this.props.orderDetail.assignmentDate ? new Date(this.props.orderDetail.assignmentDate) : null,
-            completionDate: this.props.orderDetail.completionDate ? new Date(this.props.orderDetail.completionDate) : null,
+            assignmentDate: this.props.orderDetail.assignmentDate ? assignmentDate : null,
+            completionDate: this.props.orderDetail.completionDate ? completionDate : null,
         }
 
         this.getPostData = this.getPostData.bind(this);
