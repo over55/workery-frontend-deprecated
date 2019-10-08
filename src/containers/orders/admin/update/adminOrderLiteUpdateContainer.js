@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import OrderLiteUpdateComponent from "../../../../components/orders/admin/update/adminOrderLiteUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
@@ -31,8 +32,11 @@ class AdminOrderLiteUpdateContainer extends Component {
             description: this.props.orderDetail.description,
             skillSets: this.props.orderDetail.skillSets,
             isSkillSetsLoading: true,
+            homeSupport: this.props.orderDetail.isHomeSupportService ? 1 : 0,
             tags: this.props.orderDetail.tags,
             isTagsLoading: true,
+            assignmentDate: this.props.orderDetail.assignmentDate ? new Date(this.props.orderDetail.assignmentDate) : null,
+            completionDate: this.props.orderDetail.completionDate ? new Date(this.props.orderDetail.completionDate) : null,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -44,6 +48,9 @@ class AdminOrderLiteUpdateContainer extends Component {
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
         this.onSuccessfulTagsFetchCallback = this.onSuccessfulTagsFetchCallback.bind(this);
         this.onSuccessfulSkillSetsFetchCallback = this.onSuccessfulSkillSetsFetchCallback.bind(this);
+        this.onAssignmentDateChange = this.onAssignmentDateChange.bind(this);
+        this.onCompletionDateChange = this.onCompletionDateChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
     }
 
     /**
@@ -53,6 +60,18 @@ class AdminOrderLiteUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        postData.isHomeSupportService = this.state.homeSupport;
+
+        if (this.state.assignmentDate instanceof Date) {
+            const assignmentDateMoment = moment(this.state.assignmentDate);
+            postData.assignmentDate = assignmentDateMoment.format("YYYY-MM-DD")
+        }
+
+        if (this.state.completionDate instanceof Date) {
+            const completionDateMoment = moment(this.state.completionDate);
+            postData.completionDate = completionDateMoment.format("YYYY-MM-DD")
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -89,15 +108,13 @@ class AdminOrderLiteUpdateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(order) {
-        this.setState({ errors: {}, isLoading: true, })
+        this.setState({ errors: {}, isLoading: false, })
         this.props.setFlashMessage("success", "Order has been successfully updated.");
         this.props.history.push("/order/"+this.state.id+"/full");
     }
 
     onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+        this.setState({errors: errors, isLoading: false,});
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -112,6 +129,18 @@ class AdminOrderLiteUpdateContainer extends Component {
 
     onSuccessfulTagsFetchCallback(tags) {
         this.setState({ isTagsLoading: false, });
+    }
+
+    onAssignmentDateChange(dateObj) {
+        this.setState({
+            assignmentDate: dateObj,
+        })
+    }
+
+    onCompletionDateChange(dateObj) {
+        this.setState({
+            completionDate: dateObj,
+        })
     }
 
     /**
@@ -157,6 +186,20 @@ class AdminOrderLiteUpdateContainer extends Component {
         this.setState({ tags: idTags, });
     }
 
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-order-"+[e.target.name];
+        const storageLabelKey =  "workery-create-order-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -166,11 +209,15 @@ class AdminOrderLiteUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putOrderLiteDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({
+                isLoading: true, errors: {},
+            },()=>{
+                this.props.putOrderLiteDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -184,7 +231,9 @@ class AdminOrderLiteUpdateContainer extends Component {
      */
 
     render() {
-        const { id, errors, description, isLoading, isTagsLoading, tags, isSkillSetsLoading, skillSets } = this.state;
+        const {
+            id, errors, description, isLoading, isTagsLoading, tags, isSkillSetsLoading, skillSets, assignmentDate, completionDate, homeSupport
+        } = this.state;
 
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
@@ -208,6 +257,14 @@ class AdminOrderLiteUpdateContainer extends Component {
                 skillSets={transcodedSkillSets}
                 skillSetOptions={skillSetOptions}
                 onSkillSetMultiChange={this.onSkillSetMultiChange}
+
+                onAssignmentDateChange={this.onAssignmentDateChange}
+                assignmentDate={assignmentDate}
+                onCompletionDateChange={this.onCompletionDateChange}
+                completionDate={completionDate}
+
+                onRadioChange={this.onRadioChange}
+                homeSupport={homeSupport}
 
                 onClick={this.onClick}
             />

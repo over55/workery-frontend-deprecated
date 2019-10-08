@@ -3,8 +3,12 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation"
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
+import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
+import { HOME_SUPPORT_CHOICES } from '../../../../constants/api';
 
 
 export default class AdminOrderLiteUpdateComponent extends Component {
@@ -12,12 +16,14 @@ export default class AdminOrderLiteUpdateComponent extends Component {
         const {
             id, isLoading, errors,
             description, isSkillSetsLoading, skillSets, skillSetOptions, onSkillSetMultiChange,
-            isTagsLoading, tags, tagOptions, onTagMultiChange,
+            isTagsLoading, tags, tagOptions, onTagMultiChange, assignmentDate, onAssignmentDateChange, completionDate, onCompletionDateChange,
+            homeSupport, onRadioChange,
             onClick, onTextChange,
         } = this.props;
 
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -75,6 +81,40 @@ export default class AdminOrderLiteUpdateComponent extends Component {
                                 error={errors.skillSets}
                                 onMultiChange={onSkillSetMultiChange}
                                 isLoading={isSkillSetsLoading}
+                            />
+
+                            <BootstrapDatePicker
+                                label="Assignment date"
+                                name="assignmentDate"
+                                dateObj={assignmentDate}
+                                onTimeChange={onAssignmentDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.assignmentDate}
+                                borderClassname="border-success"
+                            />
+
+                            <BootstrapDatePicker
+                                label="Completion date"
+                                name="completionDate"
+                                dateObj={completionDate}
+                                onTimeChange={onCompletionDateChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.completionDate}
+                                borderClassname="border-success"
+                                maxDate={new Date()}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.homeSupport}
+                                label="Is this job a home support service? (*)"
+                                name="homeSupport"
+                                onChange={onRadioChange}
+                                selectedValue={homeSupport}
+                                options={HOME_SUPPORT_CHOICES}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
