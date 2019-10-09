@@ -245,11 +245,11 @@ class AwayLogComponent extends Component {
         if (awayLog === null || awayLog === undefined || isEmpty(awayLog)) {
             return (
                 <div className="jumbotron">
-                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Client News</h1>
+                    <h1 className="display-4"><i className="fas fa-bullhorn"></i>&nbsp;Associate News</h1>
                     <p className="lead">There are no news. Feel free to add one.</p>
 
                     <p className="lead">
-                        <Link className="btn btn-success btn-lg" to="/settings/announcements">
+                        <Link className="btn btn-success btn-lg" to="/settings/away-logs/add">
                             <i className="fas fa-plus"></i>&nbsp;Add
                         </Link>
                     </p>
