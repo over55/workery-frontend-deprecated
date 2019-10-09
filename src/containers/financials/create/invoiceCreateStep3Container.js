@@ -33,12 +33,18 @@ class InvoiceCreateStep3Container extends Component {
             localStorage.setItem("workery-create-invoice-invoiceQuoteDays", invoiceQuoteDays);
         }
 
+        var line01Notes = localStorage.getItem("workery-create-invoice-line01Notes");
+        if (line01Notes === undefined || line01Notes === null || line01Notes === "") {
+            line01Notes = "Work completed as per quote";
+            localStorage.setItem("workery-create-invoice-line01Notes", line01Notes);
+        }        
+
         this.state = {
             orderId: parseInt(id),
             invoiceQuoteDays: invoiceQuoteDays,
             invoiceQuoteDate: localStorageGetDateItem("workery-create-invoice-invoiceQuoteDate"),
             invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-invoiceCustomersApproval"),
-            line01Notes: localStorage.getItem("workery-create-invoice-line01Notes"),
+            line01Notes: line01Notes,
             line02Notes: localStorage.getItem("workery-create-invoice-line02Notes"),
             paymentAmount: localStorageGetFloatItem("workery-create-invoice-paymentAmount"),
             paymentDate: localStorageGetDateItem("workery-create-invoice-paymentDate"),
