@@ -24,7 +24,7 @@ class InvoiceCreateContainer extends Component {
 
         this.state = {
             orderId: parseInt(id),
-            invoiceId: localStorageGetIntegerItem("workery-create-invoice-invoiceId"),
+            invoiceId: localStorage.getItem("workery-create-invoice-invoiceId"),
             invoiceDate: localStorageGetDateItem("workery-create-invoice-invoiceDate"),
             errors: {},
             isLoading: false

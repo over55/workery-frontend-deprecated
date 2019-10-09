@@ -104,7 +104,7 @@ class InvoiceCreateStep4Container extends Component {
             line15Amount: localStorageGetFloatItem("workery-create-invoice-line15Amount"),
             // Everything else.
             orderId: parseInt(id),
-            invoiceId: localStorageGetIntegerItem("workery-create-invoice-invoiceId"),
+            invoiceId: localStorage.getItem("workery-create-invoice-invoiceId"),
             invoiceDate: localStorageGetDateItem("workery-create-invoice-invoiceDate"),
             invoiceQuoteDays: localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays"),
             invoiceQuoteDate: localStorageGetDateItem("workery-create-invoice-invoiceQuoteDate"),

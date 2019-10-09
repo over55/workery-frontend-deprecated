@@ -405,7 +405,7 @@ export function validateSearchInput(data) {
 export function validateInvoiceSectionOneInput(data) {
     let errors = {};
 
-    if (data.invoiceId === undefined || data.invoiceId === null || data.invoiceId === "" || isNaN(data.invoiceId)) {
+    if (data.invoiceId === undefined || data.invoiceId === null || data.invoiceId === "") {
         errors.invoiceId = 'This field is required';
     }
     if (data.invoiceDate === undefined || data.invoiceDate === null || data.invoiceDate === "" || isNaN(data.invoiceDate)) {

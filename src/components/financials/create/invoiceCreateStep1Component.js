@@ -88,7 +88,7 @@ class InvoiceCreateStep1Component extends Component {
                                 onChange={onTextChange}
                                 value={invoiceId}
                                 name="invoiceId"
-                                type="number"
+                                type="text"
                             />
 
                             <BootstrapDatePicker
