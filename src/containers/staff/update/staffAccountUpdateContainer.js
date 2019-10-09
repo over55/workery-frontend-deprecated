@@ -27,6 +27,7 @@ class StaffAccountUpdateContainer extends Component {
         const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
         const isActive = this.props.staffDetail.isActive === true ? 1 : 2;
         const policeCheckObj = new Date(this.props.staffDetail.policeCheck);
+        policeCheckObj.setMinutes( policeCheckObj.getMinutes() + policeCheckObj.getTimezoneOffset() );
 
         this.state = {
             id: id,

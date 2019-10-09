@@ -20,8 +20,12 @@ class AssociateProfileMetricsUpdateContainer extends Component {
     constructor(props) {
         super(props);
 
+        // Get our dates based on our browsers timezone.
+        // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
         const birthdateObj = this.props.user.birthdate ? new Date(this.props.user.birthdate) : null;
+        birthdateObj.setMinutes( birthdateObj.getMinutes() + birthdateObj.getTimezoneOffset() );
         const joinDateObj = new Date(this.props.user.joinDate);
+        joinDateObj.setMinutes( joinDateObj.getMinutes() + joinDateObj.getTimezoneOffset() );
 
         this.state = {
             // STEP 3

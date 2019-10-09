@@ -25,11 +25,18 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // Get our dates based on our browsers timezone.
+        // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
         const duesDateObj = new Date(this.props.associateDetail.duesDate);
+        duesDateObj.setMinutes( duesDateObj.getMinutes() + duesDateObj.getTimezoneOffset() );
         const commercialInsuranceExpiryDateObj = new Date(this.props.associateDetail.commercialInsuranceExpiryDate);
+        commercialInsuranceExpiryDateObj.setMinutes( commercialInsuranceExpiryDateObj.getMinutes() + commercialInsuranceExpiryDateObj.getTimezoneOffset() );
         const autoInsuranceExpiryDateObj = new Date(this.props.associateDetail.autoInsuranceExpiryDate);
+        autoInsuranceExpiryDateObj.setMinutes( autoInsuranceExpiryDateObj.getMinutes() + autoInsuranceExpiryDateObj.getTimezoneOffset() );
         const wsibInsuranceDateObj = new Date(this.props.associateDetail.wsibInsuranceDate);
+        wsibInsuranceDateObj.setMinutes( wsibInsuranceDateObj.getMinutes() + wsibInsuranceDateObj.getTimezoneOffset() );
         const policeCheckObj = new Date(this.props.associateDetail.policeCheck);
+        policeCheckObj.setMinutes( policeCheckObj.getMinutes() + policeCheckObj.getTimezoneOffset() );
 
         this.state = {
             // STEP 3

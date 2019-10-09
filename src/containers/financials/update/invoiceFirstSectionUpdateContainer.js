@@ -22,10 +22,15 @@ class InvoiceFirstSectionUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // Get our dates based on our browsers timezone.
+        // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
+        var invoiceDate = this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null;
+        invoiceDate.setMinutes( invoiceDate.getMinutes() + invoiceDate.getTimezoneOffset() );
+
         this.state = {
             orderId: parseInt(id),
-            invoiceId: "",
-            invoiceDate: "",
+            invoiceId: parseInt(this.orderDetail.invoiceId),
+            invoiceDate: invoiceDate,
             errors: {},
             isLoading: false
         }

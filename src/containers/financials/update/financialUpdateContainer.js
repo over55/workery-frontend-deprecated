@@ -31,6 +31,11 @@ class FinancialUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // Get our dates based on our browsers timezone.
+        // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
+        var invoiceServiceFeePaymentDate = this.props.orderDetail.invoiceServiceFeePaymentDate ? new Date(this.props.orderDetail.invoiceServiceFeePaymentDate) : null;
+        invoiceServiceFeePaymentDate.setMinutes( invoiceServiceFeePaymentDate.getMinutes() + invoiceServiceFeePaymentDate.getTimezoneOffset() );
+
         // Update state.
         this.state = {
             errors: {},
@@ -49,7 +54,7 @@ class FinancialUpdateContainer extends Component {
             invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
             invoiceServiceFee: parseInt(this.props.orderDetail.invoiceServiceFee),
             invoiceServiceFeeAmount: parseFloat(this.props.orderDetail.invoiceServiceFeeAmount),
-            invoiceServiceFeePaymentDate: this.props.orderDetail.invoiceServiceFeePaymentDate ? new Date(this.props.orderDetail.invoiceServiceFeePaymentDate) : null,
+            invoiceServiceFeePaymentDate: invoiceServiceFeePaymentDate,
             invoiceActualServiceFeeAmountPaid: parseFloat(this.props.orderDetail.invoiceActualServiceFeeAmountPaid),
             invoiceBalanceOwingAmount: parseFloat(this.props.orderDetail.invoiceBalanceOwingAmount),
             visits: parseInt(this.props.orderDetail.visits),

@@ -31,31 +31,32 @@ class InvoiceThirdSectionUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        // Get the number of days this invoice quote is valid for and if nothing
-        // was set then we need to set it to be 30 days.
-        var invoiceQuoteDays = localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays");
-        if (invoiceQuoteDays === undefined || invoiceQuoteDays === null || invoiceQuoteDays === "" || isNaN(invoiceQuoteDays)) {
-            invoiceQuoteDays = 30;
-            localStorage.setItem("workery-create-invoice-invoiceQuoteDays", invoiceQuoteDays);
-        }
+        // Get our dates based on our browsers timezone.
+        // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
+        var invoiceQuoteDate = new Date(this.props.orderDetail.invoiceQuoteDate);
+        invoiceQuoteDate.setMinutes( invoiceQuoteDate.getMinutes() + invoiceQuoteDate.getTimezoneOffset() );
+        var paymentDate = new Date(this.props.orderDetail.paymentDate);
+        paymentDate.setMinutes( paymentDate.getMinutes() + paymentDate.getTimezoneOffset() );
+        var associateSignDate = new Date(this.props.orderDetail.associateSignDate);
+        associateSignDate.setMinutes( associateSignDate.getMinutes() + associateSignDate.getTimezoneOffset() );
 
         this.state = {
             orderId: parseInt(id),
-            invoiceQuoteDays: invoiceQuoteDays,
-            invoiceQuoteDate: localStorageGetDateItem("workery-create-invoice-invoiceQuoteDate"),
-            invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-invoiceCustomersApproval"),
-            line01Notes: localStorage.getItem("workery-create-invoice-line01Notes"),
-            line02Notes: localStorage.getItem("workery-create-invoice-line02Notes"),
-            paymentAmount: localStorageGetFloatItem("workery-create-invoice-paymentAmount"),
-            paymentDate: localStorageGetDateItem("workery-create-invoice-paymentDate"),
-            cash: localStorageGetBooleanItem("workery-create-invoice-cash"),
-            cheque: localStorageGetBooleanItem("workery-create-invoice-cheque"),
-            debit: localStorageGetBooleanItem("workery-create-invoice-debit"),
-            credit:localStorageGetBooleanItem("workery-create-invoice-credit"),
-            other: localStorageGetBooleanItem("workery-create-invoice-other"),
-            clientSignature: localStorage.getItem("workery-create-invoice-clientSignature"),
-            associateSignDate: localStorageGetDateItem("workery-create-invoice-associateSignDate"),
-            associateSignature: localStorage.getItem("workery-create-invoice-associateSignature"),
+            invoiceQuoteDays: this.props.orderDetail.invoiceQuoteDays,
+            invoiceQuoteDate: invoiceQuoteDate,
+            invoiceCustomersApproval: this.props.orderDetail.invoiceCustomersApproval,
+            line01Notes: this.props.orderDetail.line01Notes,
+            line02Notes: this.props.orderDetail.line02Notes,
+            paymentAmount: this.props.orderDetail.paymentAmount,
+            paymentDate: paymentDate,
+            cash: this.props.orderDetail.cash,
+            cheque: this.props.orderDetail.cheque,
+            debit: this.props.orderDetail.debit,
+            credit: this.props.orderDetail.credit,
+            other:  this.props.orderDetail.other,
+            clientSignature: this.props.orderDetail.clientSignature,
+            associateSignDate: associateSignDate,
+            associateSignature: this.props.orderDetail.associateSignature,
             errors: {},
             isLoading: false
         }
