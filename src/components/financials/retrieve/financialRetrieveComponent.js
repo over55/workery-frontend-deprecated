@@ -12,7 +12,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class FinancialRetrieveComponent extends Component {
     render() {
-        const { order, errors, flashMessage, isLoading, } = this.props;
+        const { id, order, errors, flashMessage, isLoading, } = this.props;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -42,7 +42,7 @@ export default class FinancialRetrieveComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/financial/${order.id}/invoice`}>
+                            <Link to={`/financial/${id}/invoice`}>
                                 <span className="num"><i className="fas fa-file-invoice"></i>&nbsp;</span><span className="">Invoice</span>
                             </Link>
                         </div>
@@ -312,7 +312,7 @@ export default class FinancialRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
-                                <Link to={`/financial/${order.id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
+                                <Link to={`/financial/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
                                 </Link>
                                 <Link to={`/financials`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">

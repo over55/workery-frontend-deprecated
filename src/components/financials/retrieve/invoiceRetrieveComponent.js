@@ -12,7 +12,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 
 export default class InvoiceRetrieveComponent extends Component {
     render() {
-        const { invoice, errors, flashMessage, isLoading, onDownloadInvoicePDFClick } = this.props;
+        const { id, invoice, errors, flashMessage, isLoading, onDownloadInvoicePDFClick } = this.props;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -37,7 +37,7 @@ export default class InvoiceRetrieveComponent extends Component {
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/financial/${invoice.order}`}>
+                            <Link to={`/financial/${id}`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
@@ -438,7 +438,7 @@ export default class InvoiceRetrieveComponent extends Component {
                         <p className="lead">No invoice has been created, as a result you will need to create it before you are able to download the PDF copy of it.</p>
                         <p>Please click below to begin creating the invoice.</p>
                         <p className="lead">
-                            <Link className="btn btn-primary btn-lg" to={`/financial/${invoice.id}/invoice/create/step-1`}>
+                            <Link className="btn btn-primary btn-lg" to={`/financial/${id}/invoice/create/step-1`}>
                                 Begin Wizard&nbsp;<i className="fas fa-chevron-right"></i>
                             </Link>
                         </p>
