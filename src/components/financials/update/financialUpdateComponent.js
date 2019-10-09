@@ -48,6 +48,7 @@ export default class FinancialUpdateComponent extends Component {
             onSelectChange,
 
             // RADIO
+            invoicePaidTo,
             paymentStatus,
             onRadioChange,
 
@@ -112,6 +113,17 @@ export default class FinancialUpdateComponent extends Component {
                             <p className="border-bottom mb-3 pb-1 text-secondary">
                                 <i className="fas fa-cogs"></i>&nbsp;Status
                             </p>
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.invoicePaidTo}
+                                label="Who was paid for this job? (*)"
+                                name="invoicePaidTo"
+                                onChange={onRadioChange}
+                                selectedValue={invoicePaidTo}
+                                options={PAID_TO_CHOICES}
+                            />
 
                             <BootstrapRadio
                                 inputClassName="form-check-input form-check-input-lg"
@@ -373,5 +385,20 @@ const PAYMENT_STATUS_CHOICES = [
         name: "paymentStatus",
         value: WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
         label: "Unpaid"
+    }
+];
+
+
+const PAID_TO_CHOICES = [
+    {
+        id: 'invoicePaidTo-1-choice',
+        name: "invoicePaidTo",
+        value: 1,
+        label: "Associate"
+    },{
+        id: 'invoicePaidTo-2-choice',
+        name: "invoicePaidTo",
+        value: 2,
+        label: "Organization"
     }
 ];

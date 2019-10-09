@@ -22,6 +22,9 @@ export function validateLiteUpdateInput(data) {
 export function validateFinancialUpdateInput(data) {
     let errors = {};
 
+    if (data.invoicePaidTo === undefined || data.invoicePaidTo === null || data.invoicePaidTo === "" || isNaN(data.invoicePaidTo) ) {
+        errors.invoicePaidTo = 'This field is required';
+    }
     if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "" || isEmpty(data.paymentStatus)) {
         errors.paymentStatus = 'This field is required';
     } else {

@@ -83,7 +83,7 @@ export default class FinancialRetrieveComponent extends Component {
                                 </tr>
                                 {order && order.clonedFrom !== undefined && order.clonedFrom !== null && order.clonedFrom !== "" &&
                                     <tr>
-                                        <th scope="row" className="bg-light"><i className="fas fa-external-link-alt"></i>Cloned from Order #</th>
+                                        <th scope="row" className="bg-light">Cloned from Order #</th>
                                         <td>
                                             <Link to={`/order/${order.clonedFrom}`} target="_blank">
                                                 {order && order.clonedFrom && order.clonedFrom.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
@@ -261,6 +261,20 @@ export default class FinancialRetrieveComponent extends Component {
                                     <td>
                                         {order && order.visits
                                             ? order.visits.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Paid to</th>
+                                    <td>
+                                        {order && order.invoicePaidTo
+                                            ? <div>
+                                            {order.invoicePaidTo === 1
+                                                ? "Associate"
+                                                : "Organization"
+                                            }
+                                            </div>
                                             : "-"
                                         }
                                     </td>

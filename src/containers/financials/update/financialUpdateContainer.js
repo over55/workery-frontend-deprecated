@@ -34,13 +34,16 @@ class FinancialUpdateContainer extends Component {
         // Get our dates based on our browsers timezone.
         // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
         var invoiceServiceFeePaymentDate = this.props.orderDetail.invoiceServiceFeePaymentDate ? new Date(this.props.orderDetail.invoiceServiceFeePaymentDate) : null;
-        invoiceServiceFeePaymentDate.setMinutes( invoiceServiceFeePaymentDate.getMinutes() + invoiceServiceFeePaymentDate.getTimezoneOffset() );
+        if (invoiceServiceFeePaymentDate !== null) {
+            invoiceServiceFeePaymentDate.setMinutes( invoiceServiceFeePaymentDate.getMinutes() + invoiceServiceFeePaymentDate.getTimezoneOffset() );
+        }
 
         // Update state.
         this.state = {
             errors: {},
             isLoading: false,
             id: parseInt(id),
+            invoicePaidTo: this.props.orderDetail.invoicePaidTo,
             paymentStatus: this.props.orderDetail.state,
             invoiceDate: this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null,
             invoiceIds: this.props.orderDetail.invoiceIds,
@@ -308,7 +311,7 @@ class FinancialUpdateContainer extends Component {
     render() {
         const {
             id, errors, isLoading,
-            paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedWasteRemovalAmount,
+            invoicePaidTo, paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedWasteRemovalAmount,
             invoiceLabourAmount, invoiceMaterialAmount, invoiceWasteRemovalAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
             visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate,
@@ -341,6 +344,7 @@ class FinancialUpdateContainer extends Component {
                 onSelectChange={this.onSelectChange}
 
                 // Radio GUI
+                invoicePaidTo={invoicePaidTo}
                 paymentStatus={paymentStatus}
                 onRadioChange={this.onRadioChange}
 
