@@ -27,30 +27,22 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            activitySheetItems,
+            depositList,
 
             // Everything else.
             onTableChange, isLoading
         } = this.props;
 
         const columns = [{
-            dataField: 'job',
-            text: 'Job #',
+            dataField: 'id',
+            text: 'ID #',
             sort: false,
             formatter: jobFormatter,
-        },{
-            dataField: 'state',
-            text: 'Has Accepted?',
-            sort: false
         },{
             dataField: 'createdAt',
             text: 'Created At',
             sort: false,
             formatter: createdAtFormatter,
-        },{
-            dataField: 'comment',
-            text: 'Reason',
-            sort: false
         }];
 
         const defaultSorted = [{
@@ -89,7 +81,7 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ activitySheetItems }
+                data={ depositList }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
@@ -158,7 +150,7 @@ export default class AdminOrderActivitySheetListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            activitySheetItems,
+            depositList,
 
             // Everything else...
             flashMessage, onTableChange, isLoading, id, order, invoice
@@ -209,14 +201,24 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                         <h2>
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
+
                         <RemoteListComponent
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            activitySheetItems={activitySheetItems}
+                            depositList={depositList}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
+
+                        <form>
+                            <div className="form-group">
+                            <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" to={`/financial/${id}/deposit/add/step-1`}>
+                                <i className="fas fa-plus"></i>&nbsp;Add Deposit
+                            </Link>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>

@@ -17,6 +17,7 @@ import {
     SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
     PARTNER_LIST_SUCCESS, PARTNER_COMMENT_LIST_SUCCESS, PARTNER_DETAIL_SUCCESS,
     ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS,
+    DEPOSIT_LIST_SUCCESS, DEPOSIT_DETAIL_SUCCESS,
     STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
     ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
     COMMENT_LIST_SUCCESS, COMMENT_DETAIL_SUCCESS, ASSOCIATE_FILE_LIST_SUCCESS, ORDER_FILE_LIST_SUCCESS,
@@ -34,6 +35,7 @@ import { clientFileListReducer } from "./reducers/clientFileUploadReducers";
 import { commentListReducer } from "./reducers/commentReducers";
 import dashboardReducer from "./reducers/dashboardReducer";
 import deactivatedClientListReducer from "./reducers/deactivatedClientReducers";
+import { depositListReducer, depositDetailReducer } from "./reducers/depositReducers";
 import flashMessageReducer from "./reducers/flashMessageReducer";
 import { howHearListReducer, howHearDetailReducer } from "./reducers/howHearReducers";
 import { insuranceRequirementListReducer, insuranceRequirementDetailReducer } from "./reducers/insuranceRequirementReducers";
@@ -73,6 +75,7 @@ const appReducer = combineReducers({
     clientFileListState: clientFileListReducer,
     dashboardState: dashboardReducer,
     deactivatedClientListState: deactivatedClientListReducer,
+    depositListState: depositListReducer, depositDetailState: depositDetailReducer,
     flashMessageState: flashMessageReducer,
     howHearListState: howHearListReducer, howHearDetailState: howHearDetailReducer,
     insuranceRequirementListState: insuranceRequirementListReducer, insuranceRequirementDetailState: insuranceRequirementDetailReducer,
@@ -135,6 +138,7 @@ const localStorageMiddleware = ({ getState }) => {
             TAG_LIST_SUCCESS, TAG_DETAIL_SUCCESS,
             ASSOCIATE_LIST_SUCCESS, ASSOCIATE_DETAIL_SUCCESS, ASSOCIATE_COMMENT_LIST_REQUEST,
             ACTIVITY_SHEET_LIST_SUCCESS,  ACTIVITY_SHEET_DETAIL_SUCCESS,
+            DEPOSIT_LIST_SUCCESS,  DEPOSIT_DETAIL_SUCCESS,
             STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
             PARTNER_LIST_SUCCESS, PARTNER_COMMENT_LIST_SUCCESS, PARTNER_DETAIL_SUCCESS,
             ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,

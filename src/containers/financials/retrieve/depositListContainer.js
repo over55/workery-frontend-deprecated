@@ -4,7 +4,7 @@ import { camelizeKeys, decamelize } from 'humps';
 
 import DepositListComponent from "../../../components/financials/retrieve/depositListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { pullActivitySheetList } from "../../../actions/activitySheetActions";
+import { pullDepositList } from "../../../actions/depositActions";
 import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 
@@ -47,7 +47,8 @@ class DepositListContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        this.props.pullActivitySheetList(
+        this.props.pullDepositList(
+            this.state.id,
             this.state.page,
             this.state.sizePerPage,
             this.state.parametersMap,
@@ -122,7 +123,7 @@ class DepositListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullActivitySheetList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullDepositList(this.state.id, this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -132,7 +133,7 @@ class DepositListContainer extends Component {
             this.setState(
                 { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullActivitySheetList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullDepositList(this.state.id, page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -149,7 +150,7 @@ class DepositListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullActivitySheetList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullDepositList(this.state.id, this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -165,13 +166,13 @@ class DepositListContainer extends Component {
     render() {
         const { page, sizePerPage, totalSize, isLoading, id } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
-        const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
+        const depositList = (this.props.depositList && this.props.depositList.results) ? this.props.depositList.results : [];
         return (
             <DepositListComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-                activitySheetItems={activitySheetItems}
+                depositList={depositList}
                 onTableChange={this.onTableChange}
                 id={id}
                 order={order}
@@ -186,7 +187,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        activitySheetItemList: store.activitySheetItemListState,
+        depositList: store.depositListState,
         orderDetail: store.orderDetailState,
     };
 }
@@ -196,9 +197,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullActivitySheetList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullDepositList: (orderId, page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullActivitySheetList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullDepositList(orderId, page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
