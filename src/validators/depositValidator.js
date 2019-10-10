@@ -20,6 +20,9 @@ export function validateDepositInput(data) {
     if (data.paidFor === undefined || data.paidFor === null || data.paidFor === "" || isNaN(data.paidFor)) {
         errors.paidFor = 'This field is required';
     }
+    if (data.amount === undefined || data.amount === null || data.amount === "" || isNaN(data.amount)) {
+        errors.amount = 'This field is required';
+    }
 
     return {
         errors,

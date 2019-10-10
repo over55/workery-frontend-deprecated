@@ -12,6 +12,7 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
 import {
     IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
@@ -21,8 +22,10 @@ import {
 class DepositCreateStep1Component extends Component {
     render() {
         const {
-            orderId, order, paidAt, onPaidAtChange, onRadioChange,
-            depositMethod, invoicePaidTo, paidTo, paidFor,
+            orderId, order,
+            paidAt, onPaidAtChange,
+            depositMethod, paidTo, paidFor, onRadioChange,
+            amount, onAmountChange,
             errors,
             isLoading, onClick, onSelectChange
         } = this.props;
@@ -118,6 +121,17 @@ class DepositCreateStep1Component extends Component {
                                 options={PAID_FOR_CHOICES}
                             />
 
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.amount}
+                                label="Amount (*)"
+                                onChange={onAmountChange}
+                                value={amount}
+                                name="amount"
+                                helpText=""
+                            />
+
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Next&nbsp;<i className="fas fa-chevron-right"></i>
@@ -166,13 +180,13 @@ const DEPOSIT_METHOD_TO_CHOICES = [
 
 const PAID_TO_CHOICES = [
     {
-        id: 'invoicePaidTo-1-choice',
-        name: "invoicePaidTo",
+        id: 'paidTo-1-choice',
+        name: "paidTo",
         value: 1,
         label: "Associate"
     },{
-        id: 'invoicePaidTo-2-choice',
-        name: "invoicePaidTo",
+        id: 'paidTo-2-choice',
+        name: "paidTo",
         value: 2,
         label: "Organization"
     }
