@@ -124,8 +124,10 @@ export function postDepositDetail(postData, successCallback, failedCallback) {
         // Encode from JS Object to MessagePack (Buffer)
         var buffer = msgpack.encode(decamelizedData);
 
+        const aURL = WORKERY_DEPOSIT_LIST_API_ENDPOINT.replace("XXX", postData.order);
+
         // Perform our API submission.
-        customAxios.post(WORKERY_DEPOSIT_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
+        customAxios.post(aURL, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 

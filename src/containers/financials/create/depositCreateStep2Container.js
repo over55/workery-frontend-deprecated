@@ -5,8 +5,7 @@ import * as moment from 'moment';
 
 import DepositCreateStep2Component from "../../../components/financials/create/depositCreateStep2Component";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { pullOrderDetail, invoiceOrderOperation } from "../../../actions/orderActions";
-import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
+import { postDepositDetail } from "../../../actions/depositActions";
 import {
     localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanItem, localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
@@ -55,8 +54,10 @@ class DepositCreateStep2Container extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // const invoiceDateMoment = moment(this.state.invoiceDate);
-        // postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD");
+        const paidAtMoment = moment(this.state.paidAt);
+        postData.paidAt = paidAtMoment.format("YYYY-MM-DD");
+
+        postData.order = this.state.orderId;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -70,7 +71,6 @@ class DepositCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullOrderDetail(this.state.orderId, this.onSuccessOrderCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -98,9 +98,9 @@ class DepositCreateStep2Container extends Component {
     }
 
     onSuccessCallback(response) {
-        localStorageRemoveItemsContaining("workery-create-invoice-");
-        this.props.setFlashMessage("success", "Invoice has been successfully created.");
-        this.props.history.push("/financial/"+this.state.orderId+"/invoice");
+        localStorageRemoveItemsContaining("workery-create-deposit-");
+        this.props.setFlashMessage("success", "Deposit has been successfully created.");
+        this.props.history.push("/financial/"+this.state.orderId+"/deposits");
     }
 
     onSuccessOrderCallback(response) {
@@ -126,25 +126,15 @@ class DepositCreateStep2Container extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // Perform staff-side validation.
-        const { errors, isValid } = validateInvoiceSectionThirdInput(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.setState({
-                isLoading: true, errors: {}
-            }, ()=>{
-                this.props.invoiceOrderOperation(
-                    this.getPostData(),
-                    this.onSuccessCallback,
-                    this.onFailureCallback,
-                );
-            })
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailureCallback(errors);
-        }
+        this.setState({
+            isLoading: true, errors: {}
+        }, ()=>{
+            this.props.postDepositDetail(
+                this.getPostData(),
+                this.onSuccessCallback,
+                this.onFailureCallback,
+            );
+        });
     }
 
 
@@ -155,7 +145,7 @@ class DepositCreateStep2Container extends Component {
 
     render() {
         const {
-            orderId, errors, invoiceId, paidAt, depositMethod, depositMethodLabel, paidTo, paidToLabel, paidFor, paidForLabel, amount
+            orderId, errors, isLoading, invoiceId, paidAt, depositMethod, depositMethodLabel, paidTo, paidToLabel, paidFor, paidForLabel, amount
         } = this.state;
         return (
             <DepositCreateStep2Component
@@ -170,6 +160,7 @@ class DepositCreateStep2Container extends Component {
                 paidForLabel={paidForLabel}
                 amount={amount}
                 errors={errors}
+                isLoading={isLoading}
                 onRadioChange={this.onRadioChange}
                 onPaidAtChange={this.onPaidAtChange}
                 onAmountChange={this.onAmountChange}
@@ -194,14 +185,9 @@ const mapDispatchToProps = dispatch => {
         putStaffContactDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(putStaffContactDetail(data, onSuccessCallback, onFailureCallback))
         },
-        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+        postDepositDetail: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
-            )
-        },
-        invoiceOrderOperation: (postData, onSuccessCallback, onFailureCallback) => {
-            dispatch(
-                invoiceOrderOperation(postData, onSuccessCallback, onFailureCallback)
+                postDepositDetail(postData, onSuccessCallback, onFailureCallback)
             )
         },
     }

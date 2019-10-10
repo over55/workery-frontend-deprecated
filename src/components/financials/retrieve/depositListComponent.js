@@ -10,6 +10,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 import Moment from 'react-moment';
 // import 'moment-timezone';
+import NumberFormat from 'react-number-format';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
@@ -34,20 +35,27 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const columns = [{
-            dataField: 'id',
-            text: 'ID #',
+            dataField: 'paidToLabel',
+            text: 'Paid to',
             sort: false,
-            formatter: jobFormatter,
         },{
-            dataField: 'createdAt',
-            text: 'Created At',
+            dataField: 'paidForLabel',
+            text: 'Paid for',
             sort: false,
-            formatter: createdAtFormatter,
-        }];
-
-        const defaultSorted = [{
-            dataField: 'id',
-            order: 'desc'
+        },{
+            dataField: 'paidAt',
+            text: 'Paid at',
+            sort: false,
+            formatter: paidAtFormatter,
+        },{
+            dataField: 'depositMethodLabel',
+            text: 'Deposit method',
+            sort: false,
+        },{
+            dataField: 'amount',
+            text: 'Amount',
+            sort: false,
+            formatter: amountFormatter,
         }];
 
         const paginationOption = {
@@ -83,7 +91,6 @@ class RemoteListComponent extends Component {
                 keyField='id'
                 data={ depositList }
                 columns={ columns }
-                defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
                 noDataIndication="There are no activity sheets at the moment"
@@ -134,12 +141,12 @@ function orderNameFormatter(cell, row){
 }
 
 
-function statusFormatter(cell, row){
-    return row.prettyState;
+function amountFormatter(cell, row){
+    return <NumberFormat value={row.amount} displayType={'text'} thousandSeparator={true} prefix={'$'} />;
 }
 
-function createdAtFormatter(cell, row){
-    return <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>;
+function paidAtFormatter(cell, row){
+    return <Moment format="MM/DD/YYYY">{row.paidAt}</Moment>;
 }
 
 
