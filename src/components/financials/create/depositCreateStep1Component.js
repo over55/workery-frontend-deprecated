@@ -22,8 +22,7 @@ class DepositCreateStep1Component extends Component {
     render() {
         const {
             orderId, order, errors,
-            invoiceId, invoiceDate,
-            onTextChange, onRadioChange, onInvoiceDateChange, isLoading, onClick, onSelectChange
+            isLoading, onClick, onSelectChange
         } = this.props;
         return (
             <main id="main" role="main">
@@ -36,7 +35,7 @@ class DepositCreateStep1Component extends Component {
                             <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/financial/${orderId}/invoice`}>
+                            <Link to={`/financial/${orderId}/deposits`}>
                                 <i className="fas fa-money-check-alt"></i>&nbsp;Order #{orderId && orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                             </Link>
                         </li>
@@ -54,17 +53,11 @@ class DepositCreateStep1Component extends Component {
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey active">
                             <strong>
-                                <span className="num">1.</span><span className="">First Section</span>
+                                <span className="num">1.</span><span className="">Decision</span>
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <span className="num">2.</span><span className="">Second Section</span>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Third Section</span>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <span className="num">4.</span><span className="">Review</span>
+                            <span className="num">2.</span><span className="">Review</span>
                         </div>
                     </div>
                 </div>
@@ -80,93 +73,13 @@ class DepositCreateStep1Component extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.invoiceId}
-                                label="Invoice ID (*)"
-                                onChange={onTextChange}
-                                value={invoiceId}
-                                name="invoiceId"
-                                type="text"
-                            />
-
-                            <BootstrapDatePicker
-                                label="Invoice Date(*)"
-                                name="invoiceDate"
-                                dateObj={invoiceDate}
-                                onTimeChange={onInvoiceDateChange}
-                                datePickerClassName="form-control form-control-lg border"
-                                divClassName="form-group p-0 col-md-7 mb-4"
-                                error={errors.invoiceDate}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Associate Name"
-                                value={order && order.associateFullName}
-                                name="associateFullName"
-                                type="string"
-                                disabled={true}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Associate Telephone"
-                                value={order && order.associateTelephone}
-                                name="associateTelephone"
-                                type="string"
-                                disabled={true}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Associate Tax ID"
-                                value={order && order.associateTaxId}
-                                name="associateTaxId"
-                                type="string"
-                                disabled={true}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Client Name"
-                                value={order && order.customerFullName}
-                                name="customerFullName"
-                                type="string"
-                                disabled={true}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Client Address"
-                                value={order && order.customerAddress}
-                                name="customerAddress"
-                                type="string"
-                                disabled={true}
-                            />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                label="Client Email"
-                                value={order && order.customerEmail}
-                                name="customerEmail"
-                                type="string"
-                                disabled={true}
-                            />
 
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Next&nbsp;<i className="fas fa-chevron-right"></i>
                                 </button>
-                                <Link to={`/financial/${orderId}/invoice`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/financial/${orderId}/deposits`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

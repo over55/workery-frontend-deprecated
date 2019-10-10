@@ -31,10 +31,6 @@ class DepositCreateStep1Container extends Component {
         }
 
         this.getPostData = this.getPostData.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
-        this.onSelectChange = this.onSelectChange.bind(this);
-        this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -105,40 +101,6 @@ class DepositCreateStep1Container extends Component {
      *------------------------------------------------------------
      */
 
-    onTextChange(e) {
-        this.setState({ [e.target.name]: e.target.value, });
-        localStorage.setItem('workery-create-invoice-'+[e.target.name], e.target.value);
-    }
-
-    onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            [optionKey]: option,
-        });
-    }
-
-    onRadioChange(e) {
-        // Get the values.
-        const storageValueKey = "workery-create-staff-"+[e.target.name];
-        const storageLabelKey =  "workery-create-staff-"+[e.target.name].toString()+"-label";
-        const value = e.target.value;
-        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
-        const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
-
-        // Save the data.
-        this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
-    }
-
-    onInvoiceDateChange(dateObj) {
-        this.setState({
-            invoiceDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-invoice-invoiceDate', dateObj);
-    }
-
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -170,13 +132,7 @@ class DepositCreateStep1Container extends Component {
             <DepositCreateComponent
                 orderId={orderId}
                 order={this.props.orderDetail}
-                invoiceId={invoiceId}
-                invoiceDate={invoiceDate}
                 errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onInvoiceDateChange={this.onInvoiceDateChange}
                 onClick={this.onClick}
             />
         );
