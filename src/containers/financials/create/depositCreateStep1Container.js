@@ -24,13 +24,15 @@ class DepositCreateStep1Container extends Component {
 
         this.state = {
             orderId: parseInt(id),
-            invoiceId: localStorage.getItem("workery-create-invoice-invoiceId"),
-            invoiceDate: localStorageGetDateItem("workery-create-invoice-invoiceDate"),
+            invoiceId: localStorage.getItem("workery-create-deposit-invoiceId"),
+            paidAt: localStorageGetDateItem("workery-create-deposit-paidAt"),
             errors: {},
             isLoading: false
         }
 
         this.getPostData = this.getPostData.bind(this);
+        this.onPaidAtChange = this.onPaidAtChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -101,6 +103,27 @@ class DepositCreateStep1Container extends Component {
      *------------------------------------------------------------
      */
 
+    onPaidAtChange(dateObj) {
+        this.setState({
+            paidAt: dateObj,
+        })
+        localStorageSetObjectOrArrayItem('workery-create-deposit-paidAt', dateObj);
+    }
+
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-deposit-"+[e.target.name];
+        const storageLabelKey =  "workery-create-deposit-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -126,13 +149,17 @@ class DepositCreateStep1Container extends Component {
 
     render() {
         const {
-            orderId, errors, invoiceId, invoiceDate
+            orderId, errors, invoiceId, paidAt, depositMethod
         } = this.state;
         return (
             <DepositCreateComponent
                 orderId={orderId}
                 order={this.props.orderDetail}
+                paidAt={paidAt}
+                depositMethod={depositMethod}
                 errors={errors}
+                onRadioChange={this.onRadioChange}
+                onPaidAtChange={this.onPaidAtChange}
                 onClick={this.onClick}
             />
         );

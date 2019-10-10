@@ -21,7 +21,9 @@ import {
 class DepositCreateStep1Component extends Component {
     render() {
         const {
-            orderId, order, errors,
+            orderId, order, paidAt, onPaidAtChange, onRadioChange,
+            depositMethod, invoicePaidTo, paidTo, paidFor,
+            errors,
             isLoading, onClick, onSelectChange
         } = this.props;
         return (
@@ -73,7 +75,48 @@ class DepositCreateStep1Component extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
+                            <BootstrapDatePicker
+                                label="When was this deposit paid? (*)"
+                                name="paidAt"
+                                dateObj={paidAt}
+                                onTimeChange={onPaidAtChange}
+                                datePickerClassName="form-control form-control-lg border"
+                                divClassName="form-group p-0 col-md-7 mb-4"
+                                error={errors.paidAt}
+                            />
 
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.depositMethod}
+                                label="How was this deposit paid? (*)"
+                                name="depositMethod"
+                                onChange={onRadioChange}
+                                selectedValue={depositMethod}
+                                options={DEPOSIT_METHOD_TO_CHOICES}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.paidTo}
+                                label="To whom was the deposit paid? (*)"
+                                name="paidTo"
+                                onChange={onRadioChange}
+                                selectedValue={paidTo}
+                                options={PAID_TO_CHOICES}
+                            />
+
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
+                                borderColour="border-primary"
+                                error={errors.paidFor}
+                                label="What is this deposit for? (*)"
+                                name="paidFor"
+                                onChange={onRadioChange}
+                                selectedValue={paidFor}
+                                options={PAID_FOR_CHOICES}
+                            />
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
@@ -94,3 +137,63 @@ class DepositCreateStep1Component extends Component {
 }
 
 export default DepositCreateStep1Component;
+
+
+const DEPOSIT_METHOD_TO_CHOICES = [
+    {
+        id: 'depositMethod-1-choice',
+        name: "depositMethod",
+        value: 1,
+        label: "Cash"
+    },{
+        id: 'depositMethod-2-choice',
+        name: "depositMethod",
+        value: 2,
+        label: "Cheque"
+    },{
+        id: 'depositMethod-3-choice',
+        name: "depositMethod",
+        value: 3,
+        label: "Credit"
+    },{
+        id: 'depositMethod-4-choice',
+        name: "depositMethod",
+        value: 4,
+        label: "Debit"
+    }
+];
+
+
+const PAID_TO_CHOICES = [
+    {
+        id: 'invoicePaidTo-1-choice',
+        name: "invoicePaidTo",
+        value: 1,
+        label: "Associate"
+    },{
+        id: 'invoicePaidTo-2-choice',
+        name: "invoicePaidTo",
+        value: 2,
+        label: "Organization"
+    }
+];
+
+
+const PAID_FOR_CHOICES = [
+    {
+        id: 'paidFor-1-choice',
+        name: "paidFor",
+        value: 1,
+        label: "Labour"
+    },{
+        id: 'paidFor-2-choice',
+        name: "paidFor",
+        value: 2,
+        label: "Materials"
+    },{
+        id: 'paidFor-3-choice',
+        name: "paidFor",
+        value: 3,
+        label: "Waste Removal"
+    }
+];
