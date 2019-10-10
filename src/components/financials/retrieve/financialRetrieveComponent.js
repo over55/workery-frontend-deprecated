@@ -136,6 +136,15 @@ export default class FinancialRetrieveComponent extends Component {
                                     <td>{order.invoiceIds}</td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" className="bg-light">Deposit</th>
+                                    <td>
+                                        {order.invoiceDepositAmount
+                                            ?<NumberFormat value={order.invoiceDepositAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row" className="bg-light">Quoted Labour</th>
                                     <td>
                                         {order.invoiceQuotedLabourAmount
