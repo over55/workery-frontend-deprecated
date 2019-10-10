@@ -167,7 +167,7 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                             <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{invoice && invoice.order && invoice.order.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
@@ -213,7 +213,7 @@ export default class AdminOrderActivitySheetListComponent extends Component {
 
                         <form>
                             <div className="form-group">
-                            <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" to={`/financial/${id}/deposit/add/step-1`}>
+                            <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" to={`/financial/${id}/deposit/create/step-1`}>
                                 <i className="fas fa-plus"></i>&nbsp;Add Deposit
                             </Link>
                             </div>

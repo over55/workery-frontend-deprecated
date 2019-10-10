@@ -25,7 +25,7 @@ export default class InvoiceRetrieveComponent extends Component {
                             <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{invoice && invoice.order && invoice.order.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-money-check-alt"></i>&nbsp;Order #{id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
