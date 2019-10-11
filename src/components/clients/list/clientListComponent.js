@@ -74,11 +74,6 @@ class RemoteListComponent extends Component {
             sort: true,
             formatter: emailFormatter,
         },{
-            dataField: 'slug',
-            text: 'Financials',
-            sort: false,
-            formatter: financialExternalLinkFormatter
-        },{
             dataField: 'id',
             text: 'Details',
             sort: false,
@@ -188,15 +183,6 @@ function emailFormatter(cell, row){
             </a>
         )
     }
-}
-
-
-function financialExternalLinkFormatter(cell, row){
-    return (
-        <a target="_blank" href={`/financial/${row.id}`}>
-            View&nbsp;<i className="fas fa-external-link-alt"></i>
-        </a>
-    )
 }
 
 
