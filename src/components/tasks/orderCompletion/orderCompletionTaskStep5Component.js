@@ -300,9 +300,13 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Text</th>
-                                    <td>{comment}</td>
+                                    <td>
+                                        {comment
+                                            ? comment
+                                            : "-"
+                                        }
+                                    </td>
                                 </tr>
-
 
                             </tbody>
                         </table>

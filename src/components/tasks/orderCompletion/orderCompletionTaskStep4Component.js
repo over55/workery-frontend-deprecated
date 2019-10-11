@@ -87,12 +87,12 @@ export default class OrderCompletionTaskStep4Component extends Component {
 
                             <BootstrapTextarea
                                 name="comment"
-                                borderColour="border-primary"
-                                label="Comment (*)"
+                                borderColour="border-success"
+                                label="Comment"
                                 placeholder="Write any additional comments here."
                                 rows="5"
                                 value={comment}
-                                helpText="This is the comment will be attached to the order."
+                                helpText="This field is optional. Comment text will be attached to the order."
                                 onChange={onTextChange}
                                 error={errors.comment}
                             />
