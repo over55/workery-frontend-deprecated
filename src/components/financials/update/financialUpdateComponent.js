@@ -40,6 +40,7 @@ export default class FinancialUpdateComponent extends Component {
             invoiceTotalAmount,
             invoiceServiceFeeAmount,
             invoiceBalanceOwingAmount,
+            invoiceAmountDue,
             onAmountChange,
 
             // SELECT
@@ -62,7 +63,7 @@ export default class FinancialUpdateComponent extends Component {
             onCompletionDate,
 
             // EVERYTHING ELSE
-            onClick, id, isLoading, errors,
+            onClick, id, isLoading, errors, orderDetail
         } = this.props;
 
         // Generate our list of choices from 1 to 30.
@@ -291,6 +292,25 @@ export default class FinancialUpdateComponent extends Component {
                                 name="invoiceTotalAmount"
                                 helpText=""
                                 disabled={true}
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                label="Deposit"
+                                value={orderDetail.invoiceDepositAmount}
+                                name="invoiceDepositAmount"
+                                disabled={true}
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                label="Amount Due"
+                                value={invoiceAmountDue}
+                                name="invoiceAmountDue"
+                                disabled={true}
+                                helpText="This is the total amount subtracted by the deposit amount."
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">

@@ -55,11 +55,13 @@ class FinancialUpdateContainer extends Component {
             invoiceMaterialAmount: parseFloat(this.props.orderDetail.invoiceMaterialAmount),
             invoiceWasteRemovalAmount: parseFloat(this.props.orderDetail.invoiceWasteRemovalAmount),
             invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
+            invoiceDepositAmount: parseFloat(this.props.orderDetail.invoiceDepositAmount),
             invoiceServiceFee: parseInt(this.props.orderDetail.invoiceServiceFee),
             invoiceServiceFeeAmount: parseFloat(this.props.orderDetail.invoiceServiceFeeAmount),
             invoiceServiceFeePaymentDate: invoiceServiceFeePaymentDate,
             invoiceActualServiceFeeAmountPaid: parseFloat(this.props.orderDetail.invoiceActualServiceFeeAmountPaid),
             invoiceBalanceOwingAmount: parseFloat(this.props.orderDetail.invoiceBalanceOwingAmount),
+            invoiceAmountDue: parseFloat(this.props.orderDetail.invoiceAmountDue),
             visits: parseInt(this.props.orderDetail.visits),
             completionDate: this.props.orderDetail.completionDate ? new Date(this.props.orderDetail.completionDate) : null,
         }
@@ -83,6 +85,7 @@ class FinancialUpdateContainer extends Component {
     performCalculation() {
         // Get the variables we are going to use to perform our calculations.
         const {
+            invoiceDepositAmount,
             invoiceQuotedMaterialAmount,
             invoiceQuotedLabourAmount,
             invoiceQuotedWasteRemovalAmount,
@@ -117,12 +120,18 @@ class FinancialUpdateContainer extends Component {
          */
         const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
 
+        /*
+         *
+         */
+        const invoiceAmountDue = invoiceTotalAmount - invoiceDepositAmount;
+        
         // Update our state.
         this.setState({
             invoiceTotalQuoteAmount: roundToTwo(invoiceTotalQuoteAmount, 2),
             invoiceTotalAmount: roundToTwo(invoiceTotalAmount, 2),
             invoiceBalanceOwingAmount: roundToTwo(invoiceBalanceOwingAmount, 2),
             invoiceServiceFeeAmount: roundToTwo(invoiceServiceFeeAmount, 2),
+            invoiceAmountDue: roundToTwo(invoiceAmountDue, 2),
         });
     }
 
@@ -314,7 +323,7 @@ class FinancialUpdateContainer extends Component {
             invoicePaidTo, paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedWasteRemovalAmount,
             invoiceLabourAmount, invoiceMaterialAmount, invoiceWasteRemovalAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
-            visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate,
+            visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate, invoiceAmountDue
         } = this.state;
         const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList, "invoiceServiceFee");
         return (
@@ -335,6 +344,7 @@ class FinancialUpdateContainer extends Component {
                 invoiceTotalAmount={invoiceTotalAmount}
                 invoiceServiceFeeAmount={invoiceServiceFeeAmount}
                 invoiceBalanceOwingAmount={invoiceBalanceOwingAmount}
+                invoiceAmountDue={invoiceAmountDue}
                 onAmountChange={this.onAmountChange}
 
                 // Select
@@ -359,6 +369,7 @@ class FinancialUpdateContainer extends Component {
 
                 // Other GUI
                 id={id}
+                orderDetail={this.props.orderDetail}
                 isLoading={isLoading}
                 errors={errors}
                 onClick={this.onClick}

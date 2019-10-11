@@ -107,7 +107,9 @@ class DepositCreateStep2Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Amount</th>
-                                    <td>{amount}</td>
+                                    <td>
+                                        <NumberFormat value={amount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -136,15 +136,6 @@ export default class FinancialRetrieveComponent extends Component {
                                     <td>{order.invoiceIds}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Deposit</th>
-                                    <td>
-                                        {order.invoiceDepositAmount
-                                            ?<NumberFormat value={order.invoiceDepositAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                                            :"-"
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Quoted Labour</th>
                                     <td>
                                         {order.invoiceQuotedLabourAmount
@@ -221,6 +212,24 @@ export default class FinancialRetrieveComponent extends Component {
                                     <td>
                                         {order.invoiceTotalAmount
                                             ?<NumberFormat value={order.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Deposit</th>
+                                    <td>
+                                        {order.invoiceDepositAmount
+                                            ?<NumberFormat value={order.invoiceDepositAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Amount due</th>
+                                    <td>
+                                        {order.invoiceAmountDue
+                                            ?<NumberFormat value={order.invoiceAmountDue} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
                                     </td>
