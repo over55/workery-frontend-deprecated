@@ -122,16 +122,6 @@ class InvoiceCreateStep2Component extends Component {
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
                                 borderColour="border-success"
-                                label="Subtotal"
-                                value={invoiceTotalAmount}
-                                name="invoiceTotalAmount"
-                                helpText=""
-                                disabled={true}
-                            />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-success"
                                 label="HST (13%)"
                                 value={order && order.invoiceTaxAmount}
                                 name="invoiceTaxAmount"
@@ -145,6 +135,26 @@ class InvoiceCreateStep2Component extends Component {
                                 label="Total"
                                 value={order && order.invoiceTotalAmount}
                                 name="invoiceTotalAmount"
+                                helpText=""
+                                disabled={true}
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                label="Deposit"
+                                value={order && order.invoiceDepositAmount}
+                                name="invoiceDepositAmount"
+                                helpText=""
+                                disabled={true}
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                label="Amount Due"
+                                value={order && order.invoiceAmountDue}
+                                name="invoiceAmountDue"
                                 helpText=""
                                 disabled={true}
                             />

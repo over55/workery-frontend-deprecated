@@ -308,8 +308,16 @@ class InvoiceCreateStep2Component extends Component {
                                     <td>{order && order.invoiceTaxAmount}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Grand Total</th>
+                                    <th scope="row" className="bg-light">Total</th>
                                     <td>{order && order.invoiceTotalAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Deposit</th>
+                                    <td>{order && order.invoiceDepositAmount}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Amount Due</th>
+                                    <td>{order && order.invoiceAmountDue}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">This quote is valid for the following number of days</th>
