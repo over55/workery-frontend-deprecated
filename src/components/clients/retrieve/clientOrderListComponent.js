@@ -84,6 +84,11 @@ class RemoteListComponent extends Component {
             }),
             formatter: statusFormatter
         },{
+            dataField: 'invoice',
+            text: 'Invoice (PDF)',
+            sort: false,
+            formatter: invoiceLinkFormatter
+        },{
             dataField: 'slug',
             text: 'Details',
             sort: false,
@@ -200,6 +205,18 @@ function detailLinkFormatter(cell, row){
     return (
         <Link to={`/order/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
+        </Link>
+    )
+}
+
+
+function invoiceLinkFormatter(cell, row){
+    if (row.invoice === null || row.invoice === undefined) {
+        return "-";
+    }
+    return (
+        <Link to={`/financial/${row.id}/download-invoice`} target="_blank">
+            <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
         </Link>
     )
 }
