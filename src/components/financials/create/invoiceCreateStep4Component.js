@@ -44,7 +44,7 @@ class InvoiceCreateStep2Component extends Component {
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
             isLoading, onClick,
         } = this.props;
-        const invoiceSubTotalAmount = parseFloat(order.invoiceLabourAmount) + parseFloat(order.invoiceTaxAmount);
+        const invoiceSubTotalAmount = parseFloat(order.invoiceLabourAmount) + parseFloat(order.invoiceMaterialAmount) + parseFloat(order.invoiceWasteRemovalAmount);
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -289,35 +289,75 @@ class InvoiceCreateStep2Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Labour Amount</th>
-                                    <td>{order && order.invoiceLabourAmount}</td>
+                                    <td>
+                                        {order.invoiceLabourAmount
+                                            ?<NumberFormat value={order.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Labour Materials</th>
-                                    <td>{order && order.invoiceMaterialAmount}</td>
+                                    <td>
+                                        {order.invoiceMaterialAmount
+                                            ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Waste Removal</th>
-                                    <td>{order && order.invoiceWasteRemovalAmount}</td>
+                                    <td>
+                                        {order.invoiceWasteRemovalAmount
+                                            ?<NumberFormat value={order.invoiceWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Subtotal</th>
-                                    <td>{invoiceSubTotalAmount}</td>
+                                    <td>
+                                        {invoiceSubTotalAmount
+                                            ?<NumberFormat value={invoiceSubTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">HST (13%)</th>
-                                    <td>{order && order.invoiceTaxAmount}</td>
+                                    <td>
+                                        {order.invoiceTaxAmount
+                                            ?<NumberFormat value={order.invoiceTaxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Total</th>
-                                    <td>{order && order.invoiceTotalAmount}</td>
+                                    <td>
+                                        {order.invoiceTotalAmount
+                                            ?<NumberFormat value={order.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Deposit</th>
-                                    <td>{order && order.invoiceDepositAmount}</td>
+                                    <td>
+                                        {order.invoiceDepositAmount
+                                            ?<NumberFormat value={order.invoiceDepositAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Amount Due</th>
-                                    <td>{order && order.invoiceAmountDue}</td>
+                                    <td>
+                                        {order.invoiceAmountDue
+                                            ?<NumberFormat value={order.invoiceAmountDue} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">This quote is valid for the following number of days</th>
@@ -345,7 +385,12 @@ class InvoiceCreateStep2Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Payment Amount</th>
-                                    <td>{paymentAmount}</td>
+                                    <td>
+                                        {paymentAmount
+                                            ?<NumberFormat value={paymentAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            :"-"
+                                        }
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Payment Date</th>
