@@ -7,7 +7,7 @@ import FinancialUpdateComponent from "../../../components/financials/update/fina
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateFinancialUpdateInput } from "../../../validators/orderValidator";
 import { pullServiceFeeList, getServiceFeeReactSelectOptions, getPercentValueForServiceFeeId } from '../../../actions/serviceFeeActions';
-import { putOrderFinancialDetail } from "../../../actions/orderActions";
+import { putOrderFinancialDetail, pullOrderDetail } from "../../../actions/orderActions";
 
 
 /**
@@ -124,7 +124,7 @@ class FinancialUpdateContainer extends Component {
          *
          */
         const invoiceAmountDue = invoiceTotalAmount - invoiceDepositAmount;
-        
+
         // Update our state.
         this.setState({
             invoiceTotalQuoteAmount: roundToTwo(invoiceTotalQuoteAmount, 2),
@@ -169,6 +169,7 @@ class FinancialUpdateContainer extends Component {
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
         this.props.pullServiceFeeList(1, 1000, parametersMap);
+        this.props.pullOrderDetail(this.state.id);
         this.performCalculation();
     }
 
@@ -399,6 +400,11 @@ const mapDispatchToProps = dispatch => {
         putOrderFinancialDetail: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 putOrderFinancialDetail(postData, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
             )
         },
     }
