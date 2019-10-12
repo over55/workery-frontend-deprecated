@@ -183,6 +183,7 @@ class AdminAssociateCreateStep6Component extends Component {
                                 dateObj={autoInsuranceExpiryDate}
                                 onTimeChange={onAutoInsuranceExpiryDateChange}
                                 datePickerClassName="form-control form-control-lg border"
+                                borderClassname="border-success"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.autoInsuranceExpiryDate}
                             />
@@ -193,6 +194,7 @@ class AdminAssociateCreateStep6Component extends Component {
                                 name="wsibInsuranceDate"
                                 dateObj={wsibInsuranceDate}
                                 onTimeChange={onWsibInsuranceDateChange}
+                                borderClassname="border-success"
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.wsibInsuranceDate}

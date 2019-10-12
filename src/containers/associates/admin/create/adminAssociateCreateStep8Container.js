@@ -112,28 +112,40 @@ class AdminAssociateCreateStep8Container extends Component {
         postData.middleName = this.state.middleName;
 
         // (3) Join date - We need to format as per required API format.
-        const joinDateMoment = moment(this.state.joinDate);
-        postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
+        if (this.state.joinDate !== undefined && this.state.joinDate !== null && this.state.joinDate !== "") {
+            const joinDateMoment = moment(this.state.joinDate);
+            postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
+        }
 
         // (2) Dues date - We need to format as per required API format.
-        const duesDateMoment = moment(this.state.duesDate);
-        postData.duesDate = duesDateMoment.format("YYYY-MM-DD")
+        if (this.state.duesDate !== undefined && this.state.duesDate !== null && this.state.duesDate !== "") {
+            const duesDateMoment = moment(this.state.duesDate);
+            postData.duesDate = duesDateMoment.format("YYYY-MM-DD")
+        }
 
         // (2) commercialInsuranceExpiry date - We need to format as per required API format.
-        const commercialInsuranceExpiryDateMoment = moment(this.state.commercialInsuranceExpiryDate);
-        postData.commercialInsuranceExpiryDate = commercialInsuranceExpiryDateMoment.format("YYYY-MM-DD")
+        if (this.state.commercialInsuranceExpiryDate !== undefined && this.state.commercialInsuranceExpiryDate !== null && this.state.commercialInsuranceExpiryDate !== "") {
+            const commercialInsuranceExpiryDateMoment = moment(this.state.commercialInsuranceExpiryDate);
+            postData.commercialInsuranceExpiryDate = commercialInsuranceExpiryDateMoment.format("YYYY-MM-DD")
+        }
 
         // (2) autoInsuranceExpiryDate - We need to format as per required API format.
-        const autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
-        postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD")
+        if (this.state.autoInsuranceExpiryDate !== undefined && this.state.autoInsuranceExpiryDate !== null && this.state.autoInsuranceExpiryDate !== "") {
+            const autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
+            postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD")
+        }
 
         // (2) wsibInsuranceDate date - We need to format as per required API format.
-        const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDate);
-        postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD")
+        if (this.state.wsibInsuranceDate !== undefined && this.state.wsibInsuranceDate !== null && this.state.wsibInsuranceDate !== "") {
+            const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDate);
+            postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD")
+        }
 
         // (2) Join date - We need to format as per required API format.
-        const policeCheckMoment = moment(this.state.policeCheck);
-        postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD")
+        if (this.state.policeCheck !== undefined && this.state.policeCheck !== null && this.state.duesDate !== "") {
+            const policeCheckMoment = moment(this.state.policeCheck);
+            postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD")
+        }
 
         // (3) skillSets - We need to only return our `id` values.
         let idSkillSets = [];

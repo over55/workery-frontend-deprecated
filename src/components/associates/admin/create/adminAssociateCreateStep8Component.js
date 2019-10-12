@@ -267,31 +267,46 @@ export default class AdminAssociateCreateStep8Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Member Dues</th>
                                     <td>
-                                        <Moment format="MM/DD/YYYY">{duesDate}</Moment>
+                                        {duesDate
+                                            ? <Moment format="MM/DD/YYYY">{duesDate}</Moment>
+                                            : "-"
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Commercial Insurance Expiry Date</th>
                                     <td>
-                                        <Moment format="MM/DD/YYYY">{commercialInsuranceExpiryDate}</Moment>
+                                        {commercialInsuranceExpiryDate
+                                            ? <Moment format="MM/DD/YYYY">{commercialInsuranceExpiryDate}</Moment>
+                                            : "-"
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Auto Insurance Expiry Date</th>
                                     <td>
-                                        <Moment format="MM/DD/YYYY">{autoInsuranceExpiryDate}</Moment>
+                                        {autoInsuranceExpiryDate
+                                            ? <Moment format="MM/DD/YYYY">{autoInsuranceExpiryDate}</Moment>
+                                            : "-"
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB Insurance Date</th>
                                     <td>
-                                        <Moment format="MM/DD/YYYY">{wsibInsuranceDate}</Moment>
+                                        {wsibInsuranceDate
+                                            ? <Moment format="MM/DD/YYYY">{wsibInsuranceDate}</Moment>
+                                            : "-"
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Police Check Expiry</th>
                                     <td>
-                                        <Moment format="MM/DD/YYYY">{policeCheck}</Moment>
+                                        {policeCheck
+                                            ? <Moment format="MM/DD/YYYY">{policeCheck}</Moment>
+                                            : "-"
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
