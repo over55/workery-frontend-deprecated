@@ -40,6 +40,7 @@ class AdminAssociateCreateStep6Container extends Component {
             duesDate: localStorageGetDateItem("workery-create-associate-duesDate"),
             commercialInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-commercialInsuranceExpiryDate"),
             autoInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-autoInsuranceExpiryDate"),
+            wsibNumber: localStorage.getItem("workery-create-associate-wsibNumber"),
             wsibInsuranceDate: localStorageGetDateItem("workery-create-associate-wsibInsuranceDate"),
             policeCheck: localStorageGetDateItem("workery-create-associate-policeCheck"),
             taxId: localStorage.getItem("workery-create-associate-taxId"),
@@ -289,7 +290,7 @@ class AdminAssociateCreateStep6Container extends Component {
 
     render() {
         const {
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, wsibNumber,
             isSkillsetLoading, skillSets,
             insuranceRequirements,
             vehicleTypes,
@@ -312,6 +313,7 @@ class AdminAssociateCreateStep6Container extends Component {
                 emergencyContactRelationship={emergencyContactRelationship}
                 emergencyContactTelephone={emergencyContactTelephone}
                 emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
+                wsibNumber={wsibNumber}
                 onTextChange={this.onTextChange}
 
                 isSkillsetLoading={isSkillsetLoading}

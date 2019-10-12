@@ -46,6 +46,7 @@ export default class AdminAssociateCreateStep8Component extends Component {
             duesDate,
             commercialInsuranceExpiryDate,
             autoInsuranceExpiryDate,
+            wsibNumber,
             wsibInsuranceDate,
             policeCheck,
 
@@ -287,6 +288,15 @@ export default class AdminAssociateCreateStep8Component extends Component {
                                     <td>
                                         {autoInsuranceExpiryDate
                                             ? <Moment format="MM/DD/YYYY">{autoInsuranceExpiryDate}</Moment>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">WSIB #</th>
+                                    <td>
+                                        {wsibNumber
+                                            ? wsibNumber
                                             : "-"
                                         }
                                     </td>

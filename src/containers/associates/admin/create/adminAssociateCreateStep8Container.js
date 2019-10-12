@@ -61,6 +61,7 @@ class AdminAssociateCreateStep8Container extends Component {
             duesDate: localStorageGetDateItem("workery-create-associate-duesDate"),
             commercialInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-commercialInsuranceExpiryDate"),
             autoInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-autoInsuranceExpiryDate"),
+            wsibNumber: localStorage.getItem("workery-create-associate-wsibNumber"),
             wsibInsuranceDate: localStorageGetDateItem("workery-create-associate-wsibInsuranceDate"),
             policeCheck: localStorageGetDateItem("workery-create-associate-policeCheck"),
             taxId: localStorage.getItem("workery-create-associate-taxId"),
@@ -358,6 +359,7 @@ class AdminAssociateCreateStep8Container extends Component {
             duesDate,
             commercialInsuranceExpiryDate,
             autoInsuranceExpiryDate,
+            wsibNumber,
             wsibInsuranceDate,
             policeCheck,
             taxId,
@@ -422,6 +424,7 @@ class AdminAssociateCreateStep8Container extends Component {
                 duesDate={duesDate}
                 commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
                 autoInsuranceExpiryDate={autoInsuranceExpiryDate}
+                wsibNumber={wsibNumber}
                 wsibInsuranceDate={wsibInsuranceDate}
                 policeCheck={policeCheck}
                 taxId={taxId}

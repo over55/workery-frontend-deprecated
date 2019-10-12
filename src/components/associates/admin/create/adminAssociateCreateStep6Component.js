@@ -17,7 +17,7 @@ class AdminAssociateCreateStep6Component extends Component {
     render() {
         const {
             errors, isLoading, onNextClick, onSelectChange,
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, onTextChange,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, wsibNumber, onTextChange,
             insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
             isActive, onRadioChange,
             skillSets, skillSetOptions, onSkillSetMultiChange,
@@ -186,6 +186,17 @@ class AdminAssociateCreateStep6Component extends Component {
                                 borderClassname="border-success"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.autoInsuranceExpiryDate}
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.wsibNumber}
+                                label="WSIB #"
+                                onChange={onTextChange}
+                                value={wsibNumber}
+                                name="wsibNumber"
+                                type="number"
                             />
 
                             <BootstrapDatePicker
