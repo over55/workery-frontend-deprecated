@@ -108,35 +108,35 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 {isCommercial &&
                                     <tr>
                                         <th scope="row" className="bg-light">Company Name</th>
-                                        <td>{associate.organizationName}</td>
+                                        <td>{associate && associate.organizationName}</td>
                                     </tr>
                                 }
                                 {isCommercial &&
                                     <tr>
                                         <th scope="row" className="bg-light">Company Type</th>
-                                        <td>{associate.organizationTypeOfLabel}</td>
+                                        <td>{associate && associate.organizationTypeOfLabel}</td>
                                     </tr>
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
-                                    <td>{associate.fullName}</td>
+                                    <td>{associate && associate.fullName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Primary Telephone</th>
-                                    <td><a href={`tel:${associate.e164Telephone}`}>{associate.telephone}</a></td>
+                                    <td><a href={`tel:${associate && associate.e164Telephone}`}>{associate && associate.telephone}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Secondary Telephone</th>
-                                    <td><a href={`tel:${associate.e164OtherTelephone}`}>{associate.otherTelephone}</a></td>
+                                    <td><a href={`tel:${associate && associate.e164OtherTelephone}`}>{associate && associate.otherTelephone}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Email</th>
-                                    <td><a href={`mailto:${associate.email}`}>{associate.email}</a></td>
+                                    <td><a href={`mailto:${associate && associate.email}`}>{associate && associate.email}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Ok to Email?</th>
                                     <td>
-                                        {associate.isOkToEmail
+                                        {associate && associate.isOkToEmail
                                             ?"Yes"
                                             :"No"
                                         }
@@ -145,7 +145,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Ok to Text?</th>
                                     <td>
-                                        {associate.isOkToText
+                                        {associate && associate.isOkToText
                                             ?"Yes"
                                             :"No"
                                         }
@@ -165,7 +165,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={associate.addressUrl} target="_blank">{associate.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
+                                        <a href={associate && associate.addressUrl} target="_blank">{associate && associate.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
 
@@ -190,18 +190,18 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Insurance Requirement(s)</th>
                                     <td>
-                                        {associate.prettyInsuranceRequirements && associate.prettyInsuranceRequirements.map(
+                                        {associate && associate.prettyInsuranceRequirements && associate.prettyInsuranceRequirements.map(
                                             (ir) => <InsuranceRequirementItem ir={ir} key={`ir-${ir.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Hourly salary desired</th>
-                                    <td>{associate.hourlySalaryDesired}</td>
+                                    <td>{associate && associate.hourlySalaryDesired}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Limit Special</th>
-                                    <td>{associate.limitSpecial}</td>
+                                    <td>{associate && associate.limitSpecial}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Member Dues Expiry</th>
@@ -224,13 +224,13 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB #</th>
                                     <td>
-                                        {associate.wsibNumber}
+                                        {associate && associate.wsibNumber}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB Insurance Date</th>
                                     <td>
-                                        {associate && <Moment format="MM/DD/YYYY">{associate.wsibInsuranceDate}</Moment>}
+                                        {associate && associate && <Moment format="MM/DD/YYYY">{associate.wsibInsuranceDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -241,23 +241,23 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">HST #</th>
-                                    <td>{associate.taxId}</td>
+                                    <td>{associate && associate.taxId}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Drivers license class(es)</th>
-                                    <td>{associate.driversLicenseClass}</td>
+                                    <td>{associate && associate.driversLicenseClass}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Vehicle(s)</th>
                                     <td>
-                                        {associate.prettyVehicleTypes && associate.prettyVehicleTypes.map(
+                                        {associate && associate.prettyVehicleTypes && associate.prettyVehicleTypes.map(
                                             (vt) => <VehicleTypeItem vt={vt} key={`vt-${vt.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Account Balance</th>
-                                    <td>{associate.balanceOwingAmount}</td>
+                                    <td>{associate && associate.balanceOwingAmount}</td>
                                 </tr>
 
                                 <tr className="bg-dark">
@@ -276,16 +276,16 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
-                                    <td>{associate.gender}</td>
+                                    <td>{associate && associate.gender}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
-                                    <td>{associate.description}</td>
+                                    <td>{associate && associate.description}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {associate.prettyTags && associate.prettyTags.map(
+                                        {associate && associate.prettyTags && associate.prettyTags.map(
                                             (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                                         }
                                     </td>
@@ -316,7 +316,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Account #</th>
-                                    <td>{associate.id}</td>
+                                    <td>{associate && associate.id}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
@@ -326,7 +326,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
-                                    <td>{associate.createdBy}</td>
+                                    <td>{associate && associate.createdBy}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
@@ -336,7 +336,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>
-                                    <td>{associate.lastModifiedBy}</td>
+                                    <td>{associate && associate.lastModifiedBy}</td>
                                 </tr>
 
                                 <tr className="bg-dark">

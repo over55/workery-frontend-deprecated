@@ -81,30 +81,30 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                             </div>
                             <div className="col-sm-7 px-4 py-3">
                                 {isCommercial &&
-                                    <h1>{associate.organizationName}</h1>
+                                    <h1>{associate && associate.organizationName}</h1>
                                 }
                                 <h3>{associate && associate.fullName}</h3>
                                 {associate && associate.address &&
                                     <p className="text-muted">
-                                        <a href={associate.addressUrl}><i className="fas fa-map-marker-alt"></i>&nbsp;{associate.address}</a>
+                                        <a href={associate && associate.addressUrl}><i className="fas fa-map-marker-alt"></i>&nbsp;{associate && associate.address}</a>
                                     </p>
                                 }
                                 {associate && associate.email &&
                                     <p>
-                                        <a href={`mailto:${associate.email}`}><i className="fas fa-envelope"></i>&nbsp;{associate.email}</a>
+                                        <a href={`mailto:${associate && associate.email}`}><i className="fas fa-envelope"></i>&nbsp;{associate && associate.email}</a>
                                     </p>
                                 }
                                 {associate && associate.telephone &&
                                     <p>
-                                        <a href={`tel:${associate.e164Telephone}`}>
-                                            <i className="fas fa-phone-square"></i>&nbsp;{associate.telephone}
+                                        <a href={`tel:${associate && associate.e164Telephone}`}>
+                                            <i className="fas fa-phone-square"></i>&nbsp;{associate && associate.telephone}
                                         </a>
                                     </p>
                                 }
                                 <p className="m-0"><strong>Skill sets:</strong></p>
                                 {associate &&
                                     <p>
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                        {associate && associate.prettySkillSets && associate.prettySkillSets.map(
                                             (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
                                         }
                                     </p>
@@ -112,7 +112,7 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                                 <p className="m-0"><strong>Tags:</strong></p>
                                 {associate &&
                                     <p>
-                                        {associate.tags && associate.tags.map(
+                                        {associate && associate.tags && associate.tags.map(
                                             (tag) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </p>
@@ -127,16 +127,16 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                                 <p class="m-0"><strong>Notes:</strong></p>
                                 <p class="mb-2">
                                     <ul>
-                                    {associate.commercialInsuranceExpiryDate &&
+                                    {associate && associate.commercialInsuranceExpiryDate &&
                                         <li>Commercial Insurance Expiry: <Moment format="MM/DD/YYYY">{associate.commercialInsuranceExpiryDate}</Moment></li>
                                     }
-                                    {associate.wsibNumber &&
+                                    {associate && associate.wsibNumber &&
                                         <li>WSIB # {associate.wsibNumber}</li>
                                     }
-                                    {associate.wsibInsuranceDate &&
+                                    {associate && associate.wsibInsuranceDate &&
                                         <li>WSIB Expiry: <Moment format="MM/DD/YYYY">{associate.wsibInsuranceDate}</Moment></li>
                                     }
-                                    {associate.latestCompletedAndPaidOrder && associate.latestCompletedAndPaidOrder.paidAt &&
+                                    {associate && associate.latestCompletedAndPaidOrder && associate.latestCompletedAndPaidOrder.paidAt &&
                                         <li>
                                         Last service fee paid on <Moment format="MM/DD/YYYY">{associate.latestCompletedAndPaidOrder.paidAt}</Moment> in work order #<Link to={`/order/${associate.latestCompletedAndPaidOrder.id}`}>{associate.latestCompletedAndPaidOrder.id}&nbsp;<i className="fas fa-external-link-alt"></i></Link>.
                                         </li>
