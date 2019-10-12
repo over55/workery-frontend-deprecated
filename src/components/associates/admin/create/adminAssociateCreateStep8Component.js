@@ -122,7 +122,7 @@ export default class AdminAssociateCreateStep8Component extends Component {
                         </div>
                         <div id="step-7" className="st-grey">
                             <Link to="/associates/add/step-7">
-                                <span className="num">6.</span><span className="">Metrics</span>
+                                <span className="num">7.</span><span className="">Metrics</span>
                             </Link>
                         </div>
                         <div id="step-8" className="st-grey active">
