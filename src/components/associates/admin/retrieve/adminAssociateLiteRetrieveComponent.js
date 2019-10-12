@@ -11,7 +11,7 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
     render() {
         const { id, associate, flashMessage } = this.props;
         const { typeOf } = associate;
-        const isCommercial = typeOf === 3;
+        const isCommercial = typeOf === 3 || typeOf === 1; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID or UNASSIGNED_ASSOCIATE_TYPE_OF_ID
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -81,7 +81,9 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                             </div>
                             <div className="col-sm-7 px-4 py-3">
                                 {isCommercial &&
-                                    <h1>{associate && associate.organizationName}</h1>
+                                    <h1>
+                                        {associate && associate.organizationName}
+                                    </h1>
                                 }
                                 <h3>{associate && associate.fullName}</h3>
                                 {associate && associate.address &&

@@ -20,7 +20,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
         const { id, associate, flashMessage, errors } = this.props;
         const { typeOf } = associate;
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial";
-        const isCommercial = typeOf === 3;
+        const isCommercial = typeOf === 3 || typeOf === 1; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID or UNASSIGNED_ASSOCIATE_TYPE_OF_ID
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -108,7 +108,12 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 {isCommercial &&
                                     <tr>
                                         <th scope="row" className="bg-light">Company Name</th>
-                                        <td>{associate && associate.organizationName}</td>
+                                        <td>
+                                            {associate && associate.organizationName
+                                                ? associate.organizationName
+                                                : "-"
+                                            }
+                                        </td>
                                     </tr>
                                 }
                                 {isCommercial &&

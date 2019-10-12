@@ -32,7 +32,7 @@ class AdminAssociateContactUpdateComponent extends Component {
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
             onSelectChange,
         } = this.props;
-        const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
+        const isCommercial = typeOf === 3 || typeOf === 1; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID or UNASSIGNED_ASSOCIATE_TYPE_OF_ID
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -78,6 +78,7 @@ class AdminAssociateContactUpdateComponent extends Component {
                                         value={organizationName}
                                         name="organizationName"
                                         type="text"
+                                        helpText="If the associate has no official company name, please re-enter their name here."
                                     />
 
                                     <BootstrapSingleSelect
