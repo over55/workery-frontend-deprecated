@@ -148,6 +148,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
                                 name="autoInsuranceExpiryDate"
                                 dateObj={autoInsuranceExpiryDate}
                                 onTimeChange={onAutoInsuranceExpiryDateChange}
+                                borderClassname="border-success"
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.autoInsuranceExpiryDate}
@@ -169,6 +170,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
                                 label="WSIB Insurance Date"
                                 name="wsibInsuranceDate"
                                 dateObj={wsibInsuranceDate}
+                                borderClassname="border-success"
                                 onTimeChange={onWsibInsuranceDateChange}
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
