@@ -533,7 +533,7 @@ table.custom-cell-w tr th{width:35% !important;}
 	display: inline-block;
 	padding: 1rem;
 	border-radius: .3rem;
-	min-width: 160px;
+	min-width: 140px;
 	margin: 5px;
 	color: #6c757d !important;
 }

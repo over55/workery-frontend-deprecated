@@ -198,7 +198,7 @@ export default class AdminAssociateActivitySheetListComponent extends Component 
                         </div>
                         <div id="step-3" className="st-grey active">
                             <strong>
-                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
+                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity</span>
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">

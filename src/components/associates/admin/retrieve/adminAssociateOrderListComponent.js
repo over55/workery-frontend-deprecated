@@ -259,7 +259,7 @@ export default class AdminAssociateOrderListComponent extends Component {
                         </div>
                         <div id="step-3" className="st-grey">
                             <Link to={`/associate/${id}/activity-sheets`}>
-                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity Sheets</span>
+                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey active">
