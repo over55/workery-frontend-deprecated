@@ -83,6 +83,10 @@ class SurveyTaskStep3Container extends Component {
             postData.wouldCustomerReferOurOrganization = false;
         }
 
+        if (this.state.noSurveyConductedReason === undefined || this.state.noSurveyConductedReason === null || this.state.noSurveyConductedReason === "" || isNaN(this.state.noSurveyConductedReason) ) {
+            postData.noSurveyConductedReason = null;
+        }
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
