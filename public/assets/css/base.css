@@ -557,7 +557,7 @@ table.custom-cell-w tr th{width:35% !important;}
 .step-navigation .st-grey {
 	padding: 0.875rem !important;
 	font-size: 1.1rem !important;
-	min-width: 160px !important;
+	min-width: 140px !important;
 	display: inherit;
 }
 .step-navigation .st-grey .num {
