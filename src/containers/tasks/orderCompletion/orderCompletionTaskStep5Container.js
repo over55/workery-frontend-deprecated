@@ -90,12 +90,12 @@ class OrderCompletionTaskStep5Container extends Component {
 
         if (this.state.completionDate !== undefined && this.state.completionDate !== null) {
             const completionDateMoment = moment(this.state.completionDate);
-            postData.completionDate = completionDateMoment.format("YYYY-MM-DD")
+            postData.completionDate = completionDateMoment.format("YYYY-MM-DD");
         }
 
         if (this.state.invoiceDate !== undefined && this.state.invoiceDate !== null) {
             const invoiceDateMoment = moment(this.state.invoiceDate);
-            postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD")
+            postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD");
         }
 
         const invoiceServiceFeePaymentDateMoment = moment(this.state.invoiceServiceFeePaymentDate);
