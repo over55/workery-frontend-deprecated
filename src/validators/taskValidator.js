@@ -215,7 +215,11 @@ export function validateTask7Step2Input(data) {
         }
 
     }
-    
+
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>",data);
+    if (data.comment === undefined || data.comment === null || data.comment === "") {
+        errors.comment = 'This field is required';
+    }
 
     return {
         errors,

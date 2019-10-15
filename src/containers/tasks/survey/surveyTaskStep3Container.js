@@ -67,6 +67,25 @@ class SurveyTaskStep3Container extends Component {
 
         postData.task_item = this.state.id;
 
+        if (this.state.wasJobSatisfactory === undefined || this.state.wasJobSatisfactory === null || this.state.wasJobSatisfactory === "") {
+            postData.wasJobSatisfactory = false;
+        }
+        if (this.state.wasJobFinishedOnTimeAndOnBudget === undefined || this.state.wasJobFinishedOnTimeAndOnBudget === null || this.state.wasJobFinishedOnTimeAndOnBudget === "") {
+            postData.wasJobFinishedOnTimeAndOnBudget = false;
+        }
+        if (this.state.wasAssociatePunctual === undefined || this.state.wasAssociatePunctual === null || this.state.wasAssociatePunctual === "") {
+            postData.wasAssociatePunctual = false;
+        }
+        if (this.state.wasAssociateProfessional === undefined || this.state.wasAssociateProfessional === null || this.state.wasAssociateProfessional === "") {
+            postData.wasAssociateProfessional = false;
+        }
+        if (this.state.wouldCustomerReferOurOrganization === undefined || this.state.wouldCustomerReferOurOrganization === null || this.state.wouldCustomerReferOurOrganization === "") {
+            postData.wouldCustomerReferOurOrganization = false;
+        }
+
+        if (this.state.noSurveyConductedReason === undefined || this.state.noSurveyConductedReason === null || this.state.noSurveyConductedReason === "" || isNaN(this.state.noSurveyConductedReason) ) {
+            postData.noSurveyConductedReason = null;
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
