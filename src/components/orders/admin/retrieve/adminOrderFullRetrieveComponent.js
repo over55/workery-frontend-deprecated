@@ -59,7 +59,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                         </div>
                         <div id="step-4" className="st-grey">
                             <Link to={`/order/${id}/activity-sheets`}>
-                                <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity Sheets</span>
+                                <span className="num"><i className="fas fa-id-badge"></i>&nbsp;</span><span className="">Activity</span>
                             </Link>
                         </div>
                         <div id="step-5" className="st-grey">
