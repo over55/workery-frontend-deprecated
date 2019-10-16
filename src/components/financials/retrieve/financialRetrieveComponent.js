@@ -51,6 +51,11 @@ export default class FinancialRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-file-invoice"></i>&nbsp;</span><span className="">Invoice</span>
                             </Link>
                         </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/financial/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
@@ -63,7 +68,7 @@ export default class FinancialRetrieveComponent extends Component {
 
                         <BootstrapErrorsProcessingAlert errors={errors} />
 
-                        <table className="table table-bordered custom-cell-w">
+                        <table className="table table-bordered custom-cell-w" id={`id-${id}-financials-table`}>
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">

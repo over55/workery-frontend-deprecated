@@ -200,6 +200,11 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                                 <span className="num"><i className="fas fa-file-invoice"></i>&nbsp;</span><span className="">Invoice</span>
                             </Link>
                         </div>
+                        <div id="step-4" className="st-grey">
+                            <Link to={`/financial/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 

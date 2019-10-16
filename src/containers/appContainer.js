@@ -198,6 +198,7 @@ import FinancialUpdateContainer from "./financials/update/financialUpdateContain
 import FinancialCloneOperationContainer from "./financials/operations/financialCloneOperationContainer";
 import DownloadInvoicePDFOperationContainer from "./financials/operations/downloadInvoicePDFContainer";
 import InvoiceRetrieveContainer from "./financials/retrieve/invoiceRetrieveContainer";
+import FinancialOperationsContainer from "./financials/retrieve/financialOperationsContainer";
 import DepositListContainer from "./financials/retrieve/depositListContainer";
 import InvoiceCreateStep1Container from "./financials/create/invoiceCreateStep1Container";
 import InvoiceCreateStep2Container from "./financials/create/invoiceCreateStep2Container";
@@ -507,6 +508,7 @@ class AppContainer extends React.Component {
                                 <Route path="/financial/:id/download-invoice" exact component={requiresAuth(DownloadInvoicePDFOperationContainer)} />
                                 <Route path="/financial/:id/deposits" exact component={requiresAuth(DepositListContainer)} />
                                 <Route path="/financial/:id/invoice" exact component={requiresAuth(InvoiceRetrieveContainer)} />
+                                <Route path="/financial/:id/operations" exact component={requiresAuth(FinancialOperationsContainer)} />
                                 <Route path="/financial/:id/invoice/create/step-1" exact component={requiresAuth(InvoiceCreateStep1Container)} />
                                 <Route path="/financial/:id/invoice/create/step-2" exact component={requiresAuth(InvoiceCreateStep2Container)} />
                                 <Route path="/financial/:id/invoice/create/step-3" exact component={requiresAuth(InvoiceCreateStep3Container)} />
