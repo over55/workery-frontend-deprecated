@@ -7,7 +7,7 @@ import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask7Step2Input } from "../../../validators/taskValidator";
 import { postTaskSurveyDetail } from "../../../actions/taskActions";
 import {
-    localStorageGetIntegerItem, localStorageGetBooleanItem, localStorageSetObjectOrArrayItem
+    localStorageGetIntegerItem, localStorageGetBooleanOrNullItem, localStorageSetObjectOrArrayItem
 } from '../../../helpers/localStorageUtility';
 
 
@@ -29,20 +29,20 @@ class SurveyTaskStep2Container extends Component {
             errors: {},
             isLoading: false,
             id: id,
-            wasSurveyConducted: localStorageGetBooleanItem("workery-task-7-wasSurveyConducted"),
+            wasSurveyConducted: localStorageGetBooleanOrNullItem("workery-task-7-wasSurveyConducted"),
             noSurveyConductedReason: localStorageGetIntegerItem("workery-task-7-noSurveyConductedReason"),
             noSurveyConductedReasonOther: localStorage.getItem("workery-task-7-noSurveyConductedReasonOther"),
             comment: localStorage.getItem("workery-task-7-comment"),
             wasJobSatisfactoryLabel: localStorage.getItem("workery-task-7-wasJobSatisfactory-label"),
-            wasJobSatisfactory: localStorageGetBooleanItem("workery-task-7-wasJobSatisfactory"),
+            wasJobSatisfactory: localStorageGetBooleanOrNullItem("workery-task-7-wasJobSatisfactory"),
             wasJobFinishedOnTimeAndOnBudgetLabel: localStorage.getItem("workery-task-7-wasJobFinishedOnTimeAndOnBudget-label"),
-            wasJobFinishedOnTimeAndOnBudget: localStorageGetBooleanItem("workery-task-7-wasJobFinishedOnTimeAndOnBudget"),
+            wasJobFinishedOnTimeAndOnBudget: localStorageGetBooleanOrNullItem("workery-task-7-wasJobFinishedOnTimeAndOnBudget"),
             wasAssociatePunctualLabel: localStorage.getItem("workery-task-7-wasAssociatePunctual-label"),
-            wasAssociatePunctual: localStorageGetBooleanItem("workery-task-7-wasAssociatePunctual"),
+            wasAssociatePunctual: localStorageGetBooleanOrNullItem("workery-task-7-wasAssociatePunctual"),
             wasAssociateProfessionalLabel: localStorage.getItem("workery-task-7-wasAssociateProfessional-label"),
-            wasAssociateProfessional: localStorageGetBooleanItem("workery-task-7-wasAssociateProfessional"),
+            wasAssociateProfessional: localStorageGetBooleanOrNullItem("workery-task-7-wasAssociateProfessional"),
             wouldCustomerReferOurOrganizationLabel: localStorage.getItem("workery-task-7-wouldCustomerReferOurOrganization-label"),
-            wouldCustomerReferOurOrganization: localStorageGetBooleanItem("workery-task-7-wouldCustomerReferOurOrganization"),
+            wouldCustomerReferOurOrganization: localStorageGetBooleanOrNullItem("workery-task-7-wouldCustomerReferOurOrganization"),
         }
 
         this.getPostData = this.getPostData.bind(this);

@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import RegisterStep6Component from "../../../components/account/register/registerStep6Component";
 import { validateStep6CreateInput } from "../../../validators/registerValidator";
-import { localStorageGetBooleanItem } from '../../../helpers/localStorageUtility';
+import { localStorageGetBooleanOrNullItem } from '../../../helpers/localStorageUtility';
 import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
@@ -31,7 +31,7 @@ class RegisterStep6Container extends Component {
             returnURL = "/register/step-2-biz";
         }
 
-        const agreement = localStorageGetBooleanItem("nwapp-register-agreement");
+        const agreement = localStorageGetBooleanOrNullItem("nwapp-register-agreement");
 
         this.state = {
             returnURL: returnURL,

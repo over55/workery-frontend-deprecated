@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import RegisterStep7Component from "../../../components/account/register/registerStep7Component";
 import {
-    localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetBooleanItem
+    localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetBooleanOrNullItem
 } from '../../../helpers/localStorageUtility';
 import {
     RESIDENCE_TYPE_OF,
@@ -74,7 +74,7 @@ class RegisterStep7Container extends Component {
             companyEmployeeCount: parseInt(localStorage.getItem("nwapp-register-companyEmployeeCount")),
             companyYearsInOperation: parseInt(localStorage.getItem("nwapp-register-companyYearsInOperation")),
             companyType: localStorage.getItem("nwapp-register-companyType"),
-            agreement: localStorageGetBooleanItem("nwapp-register-agreement"),
+            agreement: localStorageGetBooleanOrNullItem("nwapp-register-agreement"),
             errors: {},
             isLoading: false
         }

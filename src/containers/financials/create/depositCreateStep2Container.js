@@ -7,7 +7,7 @@ import DepositCreateStep2Component from "../../../components/financials/create/d
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { postDepositDetail } from "../../../actions/depositActions";
 import {
-    localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanItem, localStorageRemoveItemsContaining
+    localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanOrNullItem, localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 import { putStaffContactDetail } from '../../../actions/staffActions';
 

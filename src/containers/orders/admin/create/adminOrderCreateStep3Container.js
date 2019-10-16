@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import  AdminOrderCreateStep3Component from "../../../../components/orders/admin/create/adminOrderCreateStep3Component";
 import {
-    localStorageSetObjectOrArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageGetBooleanItem
+    localStorageSetObjectOrArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageGetBooleanOrNullItem
 } from '../../../../helpers/localStorageUtility';
 import { validateStep3CreateInput } from "../../../../validators/orderValidator";
 
@@ -18,7 +18,7 @@ class  AdminOrderCreateStep3Container extends Component {
         super(props);
         this.state = {
             startDate: localStorageGetDateItem("workery-create-order-startDate"),
-            jobType: localStorageGetBooleanItem("workery-create-order-jobType"),
+            jobType: localStorageGetBooleanOrNullItem("workery-create-order-jobType"),
             homeSupport: localStorageGetIntegerItem("workery-create-order-homeSupport"),
             isLoading: true,
             errors: {},

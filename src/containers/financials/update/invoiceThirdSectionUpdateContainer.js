@@ -12,7 +12,7 @@ import {
     localStorageGetDateItem,
     localStorageSetObjectOrArrayItem,
     localStorageGetFloatItem,
-    localStorageGetBooleanItem,
+    localStorageGetBooleanOrNullItem,
     localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 import { putStaffContactDetail } from '../../../actions/staffActions';

@@ -47,10 +47,15 @@ export function localStorageGetDateItem(key) {
     }
 }
 
-export function localStorageGetBooleanItem(key) {
+
+/**
+ *  Function will return either a boolean value saved in local storage or return
+ *  a `null` value if nothing was found in the storage.
+ */
+export function localStorageGetBooleanOrNullItem(key) {
     const str = localStorage.getItem(key);
     if (str === "undefined" || str === "null") { // Defensive Code: Error.
-        console.error("localStorageGetBooleanItem: Detected `undefined` string, could be potential error.");
+        console.error("localStorageGetBooleanOrNullItem: Detected `undefined` string, could be potential error.");
         return null;
     }
     if (str === "false" || str === "False" || str === "0" || str === "no" || str === "No") {
@@ -61,6 +66,17 @@ export function localStorageGetBooleanItem(key) {
         return null;
     }
 }
+
+
+/**
+ *  Function will return either a boolean value saved in local storage or return
+ *  a `False` value if nothing was found in the storage.
+ */
+export function localStorageGetBooleanItem(key) {
+    const result = localStorageGetBooleanOrNullItem(key);
+    return (result === null) ? false : result;
+}
+
 
 export function localStorageGetIntegerItem(key) {
     const str = localStorage.getItem(key);

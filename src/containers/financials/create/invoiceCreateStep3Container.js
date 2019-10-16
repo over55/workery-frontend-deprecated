@@ -7,7 +7,7 @@ import InvoiceCreateStep3Component from "../../../components/financials/create/i
 import { pullOrderDetail } from "../../../actions/orderActions";
 import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
 import {
-    localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanItem, localStorageRemoveItemsContaining
+    localStorageGetIntegerItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem, localStorageGetFloatItem, localStorageGetBooleanOrNullItem, localStorageRemoveItemsContaining
 } from '../../../helpers/localStorageUtility';
 import { putStaffContactDetail } from '../../../actions/staffActions';
 
@@ -48,11 +48,11 @@ class InvoiceCreateStep3Container extends Component {
             line02Notes: localStorage.getItem("workery-create-invoice-line02Notes"),
             paymentAmount: localStorageGetFloatItem("workery-create-invoice-paymentAmount"),
             paymentDate: localStorageGetDateItem("workery-create-invoice-paymentDate"),
-            cash: localStorageGetBooleanItem("workery-create-invoice-cash"),
-            cheque: localStorageGetBooleanItem("workery-create-invoice-cheque"),
-            debit: localStorageGetBooleanItem("workery-create-invoice-debit"),
-            credit:localStorageGetBooleanItem("workery-create-invoice-credit"),
-            other: localStorageGetBooleanItem("workery-create-invoice-other"),
+            cash: localStorageGetBooleanOrNullItem("workery-create-invoice-cash"),
+            cheque: localStorageGetBooleanOrNullItem("workery-create-invoice-cheque"),
+            debit: localStorageGetBooleanOrNullItem("workery-create-invoice-debit"),
+            credit:localStorageGetBooleanOrNullItem("workery-create-invoice-credit"),
+            other: localStorageGetBooleanOrNullItem("workery-create-invoice-other"),
             clientSignature: localStorage.getItem("workery-create-invoice-clientSignature"),
             associateSignDate: localStorageGetDateItem("workery-create-invoice-associateSignDate"),
             associateSignature: localStorage.getItem("workery-create-invoice-associateSignature"),
