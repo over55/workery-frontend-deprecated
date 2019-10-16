@@ -30,72 +30,72 @@ class InvoiceSecondSectionUpdateContainer extends Component {
             line01Amount: this.props.orderDetail.line01Amount,
             // LINE 02
             line02Quantity: this.props.orderDetail.line02Qty,
-            line02Description: this.props.orderDetail.line02Desc,
+            line02Description: this.getCleanValue(this.props.orderDetail.line02Desc),
             line02UnitPrice: this.props.orderDetail.line02Price,
             line02Amount: this.props.orderDetail.line02Amount,
             // LINE 03
             line03Quantity: this.props.orderDetail.line03Qty,
-            line03Description: this.props.orderDetail.line03Desc,
+            line03Description: this.getCleanValue(this.props.orderDetail.line03Desc),
             line03UnitPrice: this.props.orderDetail.line03Price,
             line03Amount: this.props.orderDetail.line03Amount,
             // LINE 04
             line04Quantity: this.props.orderDetail.line04Qty,
-            line04Description: this.props.orderDetail.line04Desc,
+            line04Description: this.getCleanValue(this.props.orderDetail.line04Desc),
             line04UnitPrice: this.props.orderDetail.line04Price,
             line04Amount: this.props.orderDetail.line04Amount,
             // LINE 05
             line05Quantity: this.props.orderDetail.line05Qty,
-            line05Description: this.props.orderDetail.line05Desc,
+            line05Description: this.getCleanValue(this.props.orderDetail.line05Desc),
             line05UnitPrice: this.props.orderDetail.line05Price,
             line05Amount: this.props.orderDetail.line05Amount,
             // LINE 06
             line06Quantity: this.props.orderDetail.line06Qty,
-            line06Description: this.props.orderDetail.line06Desc,
+            line06Description: this.getCleanValue(this.props.orderDetail.line06Desc),
             line06UnitPrice: this.props.orderDetail.line06Price,
             line06Amount: this.props.orderDetail.line06Amount,
             // LINE 07
             line07Quantity: this.props.orderDetail.line07Qty,
-            line07Description: this.props.orderDetail.line07Desc,
+            line07Description: this.getCleanValue(this.props.orderDetail.line07Desc),
             line07UnitPrice: this.props.orderDetail.line07Price,
             line07Amount: this.props.orderDetail.line07Amount,
             // LINE 08
             line08Quantity: this.props.orderDetail.line08Qty,
-            line08Description: this.props.orderDetail.line08Desc,
+            line08Description: this.getCleanValue(this.props.orderDetail.line08Desc),
             line08UnitPrice: this.props.orderDetail.line08Price,
             line08Amount: this.props.orderDetail.line08Amount,
             // LINE 09
             line09Quantity: this.props.orderDetail.line09Qty,
-            line09Description: this.props.orderDetail.line09Desc,
+            line09Description: this.getCleanValue(this.props.orderDetail.line09Desc),
             line09UnitPrice: this.props.orderDetail.line09Price,
             line09Amount: this.props.orderDetail.line09Amount,
             // LINE 10
             line10Quantity: this.props.orderDetail.line10Desc,
-            line10Description:  this.props.orderDetail.line10Desc,
+            line10Description:  this.getCleanValue(this.props.orderDetail.line10Desc),
             line10UnitPrice: this.props.orderDetail.line10Price,
             line10Amount: this.props.orderDetail.line10Amount,
             // LINE 11
             line11Quantity: this.props.orderDetail.line11Qty,
-            line11Description: this.props.orderDetail.line11Desc,
+            line11Description: this.getCleanValue(this.props.orderDetail.line11Desc),
             line11UnitPrice: this.props.orderDetail.line11Price,
             line11Amount: this.props.orderDetail.line11Amount,
             // LINE 12
             line12Quantity: this.props.orderDetail.line12Qty,
-            line12Description: this.props.orderDetail.line12Desc,
+            line12Description: this.getCleanValue(this.props.orderDetail.line12Desc),
             line12UnitPrice: this.props.orderDetail.line12Price,
             line12Amount: this.props.orderDetail.line12Amount,
             // LINE 13
             line13Quantity: this.props.orderDetail.line13Qty,
-            line13Description: this.props.orderDetail.line13Desc,
+            line13Description: this.getCleanValue(this.props.orderDetail.line13Desc),
             line13UnitPrice: this.props.orderDetail.line13Price,
             line13Amount: this.props.orderDetail.line13Amount,
             // LINE 14
             line14Quantity: this.props.orderDetail.line14Qty,
-            line14Description: this.props.orderDetail.line14Desc,
+            line14Description: this.getCleanValue(this.props.orderDetail.line14Desc),
             line14UnitPrice: this.props.orderDetail.line14Price,
             line14Amount: this.props.orderDetail.line14Amount,
             // LINE 15
             line15Quantity: this.props.orderDetail.line15Qty,
-            line15Description: this.props.orderDetail.line15Desc,
+            line15Description: this.getCleanValue(this.props.orderDetail.line15Desc),
             line15UnitPrice: this.props.orderDetail.line15Price,
             line15Amount: this.props.orderDetail.line15Amount,
             // OTHER
@@ -105,12 +105,20 @@ class InvoiceSecondSectionUpdateContainer extends Component {
         }
 
         this.getPostData = this.getPostData.bind(this);
+        this.getCleanValue = this.getCleanValue.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onAmountChange = this.onAmountChange.bind(this);
         this.calculateTotalAmounts = this.calculateTotalAmounts.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+    }
+
+    /**
+     *  Returns a clean string.
+     */
+    getCleanValue(dirtyString) {
+        return (dirtyString !== undefined && dirtyString !== null && dirtyString !== "None") ? dirtyString : "";
     }
 
     /**
