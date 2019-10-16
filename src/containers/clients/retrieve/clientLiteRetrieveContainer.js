@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import ClientLiteRetrieveComponent from "../../../components/clients/retrieve/clientLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullClientDetail } from "../../../actions/clientActions";
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../helpers/localStorageUtility';
 
 
 class ClientLiteRetrieveContainer extends Component {
@@ -17,10 +21,16 @@ class ClientLiteRetrieveContainer extends Component {
 
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const client = localStorageGetObjectItem("workery-admin-retrieve-client-"+id.toString() );
+        const isLoading = isEmpty(client);
+
         // Update state.
         this.state = {
             id: id,
-            client: {}
+            client: client,
+            isLoading: isLoading,
         }
 
         // Update functions.
@@ -57,7 +67,12 @@ class ClientLiteRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log("onSuccessCallback | Fetched:", response);
+        console.log(response);
+        this.setState({ isLoading: false, client: response, });
+
+        // The following code will save the object to the browser's local
+        // storage to be retrieved later more quickly.
+        localStorageSetObjectOrArrayItem("workery-admin-retrieve-client-"+this.state.id.toString(), response);
     }
 
     onFailureCallback(errors) {
@@ -83,11 +98,12 @@ class ClientLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
-        const client = this.props.clientDetail ? this.props.clientDetail : [];
+        const { id, isLoading } = this.state;
+        const client = isEmpty(this.state.client) ? {} : this.state.client;
         return (
             <ClientLiteRetrieveComponent
                 id={id}
+                isLoading={isLoading}
                 client={client}
                 flashMessage={this.props.flashMessage}
                 onClientClick={this.onClientClick}

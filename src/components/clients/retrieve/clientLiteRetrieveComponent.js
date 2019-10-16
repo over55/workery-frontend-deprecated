@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 
+
 export default class ClientLiteRetrieveComponent extends Component {
     render() {
-        const { id, client, flashMessage, onClientClick } = this.props;
+        const { id, isLoading, client, flashMessage, onClientClick } = this.props;
         const isCompany = client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">

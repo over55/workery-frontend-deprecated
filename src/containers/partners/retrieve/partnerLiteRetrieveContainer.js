@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import PartnerLiteRetrieveComponent from "../../../components/partners/retrieve/partnerLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullPartnerDetail } from "../../../actions/partnerActions";
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../helpers/localStorageUtility';
 
 
 class PartnerLiteRetrieveContainer extends Component {
@@ -17,10 +21,16 @@ class PartnerLiteRetrieveContainer extends Component {
 
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const partner = localStorageGetObjectItem("workery-admin-retrieve-partner-"+id.toString() );
+        const isLoading = isEmpty(partner);
+
         // Update state.
         this.state = {
             id: id,
-            partner: {}
+            partner: partner,
+            isLoading: isLoading,
         }
 
         // Update functions.
@@ -56,7 +66,13 @@ class PartnerLiteRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log("onSuccessCallback | Fetched:", response);
+        console.log(response);
+        this.setState({ isLoading: false, partner: response, });
+
+        // The following code will save the object to the browser's local
+        // storage to be retrieved later more quickly.
+        localStorageSetObjectOrArrayItem("workery-admin-retrieve-partner-"+this.state.id.toString(), response);
+
     }
 
     onFailureCallback(errors) {
@@ -75,11 +91,12 @@ class PartnerLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
-        const partner = this.props.partnerDetail ? this.props.partnerDetail : [];
+        const { id, isLoading } = this.state;
+        const partner = isEmpty(this.state.partner) ? {} : this.state.partner;
         return (
             <PartnerLiteRetrieveComponent
                 id={id}
+                isLoading={isLoading}
                 partner={partner}
                 flashMessage={this.props.flashMessage}
             />

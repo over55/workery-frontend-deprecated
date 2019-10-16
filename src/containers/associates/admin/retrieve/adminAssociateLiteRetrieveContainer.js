@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import AdminAssociateLiteRetrieveComponent from "../../../../components/associates/admin/retrieve/adminAssociateLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateDetail } from "../../../../actions/associateActions";
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../../helpers/localStorageUtility';
 
 
 class AdminAssociateLiteRetrieveContainer extends Component {
@@ -17,10 +21,16 @@ class AdminAssociateLiteRetrieveContainer extends Component {
 
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const associate = localStorageGetObjectItem("workery-admin-retrieve-associate-"+id.toString() );
+        const isLoading = isEmpty(associate);
+
         // Update state.
         this.state = {
             id: id,
-            associate: {}
+            associate: associate,
+            isLoading: isLoading,
         }
 
         // Update functions.
@@ -56,7 +66,13 @@ class AdminAssociateLiteRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log("onSuccessCallback | Fetched:", response);
+        console.log(response);
+        this.setState({ isLoading: false, associate: response, });
+
+        // The following code will save the object to the browser's local
+        // storage to be retrieved later more quickly.
+        localStorageSetObjectOrArrayItem("workery-admin-retrieve-associate-"+this.state.id.toString(), response);
+
     }
 
     onFailureCallback(errors) {
@@ -75,11 +91,12 @@ class AdminAssociateLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
-        const associate = this.props.associateDetail ? this.props.associateDetail : [];
+        const { id, isLoading } = this.state;
+        const associate = isEmpty(this.state.associate) ? {} : this.state.associate;
         return (
             <AdminAssociateLiteRetrieveComponent
                 id={id}
+                isLoading={isLoading}
                 associate={associate}
                 flashMessage={this.props.flashMessage}
             />

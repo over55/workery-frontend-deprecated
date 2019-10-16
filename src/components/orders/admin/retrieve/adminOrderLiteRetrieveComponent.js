@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 
 export default class AdminOrderLiteRetrieveComponent extends Component {
     render() {
-        const { id, order, flashMessage } = this.props;
+        const { id, isLoading, order, flashMessage } = this.props;
         const isCancelled = order.state === "cancelled";
         return (
             <div>
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">

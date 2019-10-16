@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import AdminOrderLiteRetrieveComponent from "../../../../components/orders/admin/retrieve/adminOrderLiteRetrieveComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullOrderDetail } from "../../../../actions/orderActions";
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../../helpers/localStorageUtility';
 
 
 class OrderLiteRetrieveContainer extends Component {
@@ -17,10 +21,16 @@ class OrderLiteRetrieveContainer extends Component {
 
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const order = localStorageGetObjectItem("workery-admin-retrieve-order-"+id.toString() );
+        const isLoading = isEmpty(order);
+
         // Update state.
         this.state = {
             id: parseInt(id),
-            order: {}
+            order: order,
+            isLoading: isLoading,
         }
 
         // Update functions.
@@ -56,7 +66,12 @@ class OrderLiteRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log("onSuccessCallback | Fetched:", response);
+        console.log(response);
+        this.setState({ isLoading: false, order: response, });
+
+        // The following code will save the object to the browser's local
+        // storage to be retrieved later more quickly.
+        localStorageSetObjectOrArrayItem("workery-admin-retrieve-order-"+this.state.id.toString(), response);
     }
 
     onFailureCallback(errors) {
@@ -75,10 +90,11 @@ class OrderLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const order = this.props.orderDetail ? this.props.orderDetail : {};
+        const order = isEmpty(this.state.order) ? {} : this.state.order;
         return (
             <AdminOrderLiteRetrieveComponent
                 id={this.state.id}
+                isLoading={this.state.isLoading}
                 order={order}
                 flashMessage={this.props.flashMessage}
             />
