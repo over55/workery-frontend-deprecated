@@ -54,14 +54,14 @@ class InvoiceCreateStep1Component extends Component {
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey active">
                             <strong>
-                                <span className="num">1.</span><span className="">First Section</span>
+                                <span className="num">1.</span><span className="">Review</span>
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <span className="num">2.</span><span className="">Second Section</span>
+                            <span className="num">2.</span><span className="">Details</span>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Third Section</span>
+                            <span className="num">3.</span><span className="">Financials</span>
                         </div>
                         <div id="step-4" className="st-grey">
                             <span className="num">4.</span><span className="">Review</span>
@@ -73,7 +73,7 @@ class InvoiceCreateStep1Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;First Section
+                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;Review
                             </h2>
 
                             <p>All fields which have the (*) symbol are required to be filled out.</p>

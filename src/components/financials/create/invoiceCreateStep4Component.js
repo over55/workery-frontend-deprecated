@@ -75,17 +75,17 @@ class InvoiceCreateStep2Component extends Component {
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
                             <Link to={`/financial/${orderId}/invoice/create/step-1`}>
-                                <span className="num">1.</span><span className="">First Section</span>
+                                <span className="num">1.</span><span className="">Review</span>
                             </Link>
                         </div>
                         <div id="step-2" className="st-grey">
                             <Link to={`/financial/${orderId}/invoice/create/step-2`}>
-                                <span className="num">2.</span><span className="">Second Section</span>
+                                <span className="num">2.</span><span className="">Details</span>
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
                             <Link to={`/financial/${orderId}/invoice/create/step-3`}>
-                                <span className="num">3.</span><span className="">Third Section</span>
+                                <span className="num">3.</span><span className="">Financials</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey active">
@@ -109,7 +109,7 @@ class InvoiceCreateStep2Component extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;First Section
+                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Review
                                     </th>
                                 </tr>
                                 <tr>
@@ -147,7 +147,7 @@ class InvoiceCreateStep2Component extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Second Section
+                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Details
                                     </th>
                                 </tr>
                                 <tr>
@@ -284,7 +284,7 @@ class InvoiceCreateStep2Component extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Third Section
+                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Financials
                                     </th>
                                 </tr>
                                 <tr>

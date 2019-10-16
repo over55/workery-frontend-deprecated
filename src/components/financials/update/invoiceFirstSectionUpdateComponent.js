@@ -54,7 +54,7 @@ class InvoiceCreateStep1Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;First Section
+                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;Review
                             </h2>
 
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
