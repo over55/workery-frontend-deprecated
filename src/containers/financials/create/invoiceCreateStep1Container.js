@@ -22,10 +22,12 @@ class InvoiceCreateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        const invoiceDateObj = new Date(this.props.orderDetail.invoiceDate);
+
         this.state = {
             orderId: parseInt(id),
             invoiceId: localStorage.getItem("workery-create-invoice-invoiceId"),
-            invoiceDate: localStorageGetDateItem("workery-create-invoice-invoiceDate"),
+            invoiceDate: invoiceDateObj,
             errors: {},
             isLoading: false
         }
@@ -34,10 +36,11 @@ class InvoiceCreateContainer extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.onInvoiceDateChange = this.onInvoiceDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -47,6 +50,8 @@ class InvoiceCreateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        postData.invoiceDate = new Date(this.props.orderDetail.invoiceDate);
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -93,7 +98,8 @@ class InvoiceCreateContainer extends Component {
 
     onSuccessCallback(response) {
         console.log(response);
-        this.setState({ isLoading: false, })
+        const invoiceDateObj = new Date(response.invoiceDate);
+        this.setState({ isLoading: false, invoiceDate: invoiceDateObj, })
     }
 
     onFailureCallback(errors) {
@@ -132,13 +138,6 @@ class InvoiceCreateContainer extends Component {
         this.setState({ storeLabelKey: label, }); // Save to store.
     }
 
-    onInvoiceDateChange(dateObj) {
-        this.setState({
-            invoiceDate: dateObj,
-        })
-        localStorageSetObjectOrArrayItem('workery-create-invoice-invoiceDate', dateObj);
-    }
-
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -171,12 +170,10 @@ class InvoiceCreateContainer extends Component {
                 orderId={orderId}
                 order={this.props.orderDetail}
                 invoiceId={invoiceId}
-                invoiceDate={invoiceDate}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onRadioChange={this.onRadioChange}
                 onSelectChange={this.onSelectChange}
-                onInvoiceDateChange={this.onInvoiceDateChange}
                 onClick={this.onClick}
             />
         );
