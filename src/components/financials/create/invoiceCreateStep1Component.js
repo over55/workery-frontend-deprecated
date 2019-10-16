@@ -98,6 +98,7 @@ class InvoiceCreateStep1Component extends Component {
                                 name="invoiceDate"
                                 dateObj={invoiceDateObj}
                                 datePickerClassName="form-control form-control-lg border"
+                                borderClassname="border-success"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.invoiceDate}
                                 disabled={true}
