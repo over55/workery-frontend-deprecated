@@ -557,7 +557,7 @@ class InvoiceSecondSectionUpdateComponent extends Component {
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
                                 borderColour="border-success"
-                                error={errors.line10UnitPrice}
+                                error={errors.line10Amount}
                                 label="Line 10 Amount"
                                 onChange={onAmountChange}
                                 value={line10Amount}

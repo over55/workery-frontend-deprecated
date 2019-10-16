@@ -129,21 +129,21 @@ class InvoiceSecondSectionUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.line01Qty = this.state.line01Quantity;
-        postData.line02Qty = this.state.line02Quantity;
-        postData.line03Qty = this.state.line03Quantity;
-        postData.line04Qty = this.state.line04Quantity;
-        postData.line05Qty = this.state.line05Quantity;
-        postData.line06Qty = this.state.line06Quantity;
-        postData.line07Qty = this.state.line07Quantity;
-        postData.line08Qty = this.state.line08Quantity;
-        postData.line09Qty = this.state.line09Quantity;
-        postData.line10Qty = this.state.line10Quantity;
-        postData.line11Qty = this.state.line11Quantity;
-        postData.line12Qty = this.state.line12Quantity;
-        postData.line13Qty = this.state.line13Quantity;
-        postData.line14Qty = this.state.line14Quantity;
-        postData.line15Qty = this.state.line15Quantity;
+        postData.line01Qty = (this.state.line01Quantity !== undefined && this.state.line01Quantity !== "None") ? this.state.line01Quantity : null;
+        postData.line02Qty = (this.state.line02Quantity !== undefined && this.state.line02Quantity !== "None") ? this.state.line02Quantity : null;
+        postData.line03Qty = (this.state.line03Quantity !== undefined && this.state.line03Quantity !== "None") ? this.state.line03Quantity : null;
+        postData.line04Qty = (this.state.line04Quantity !== undefined && this.state.line04Quantity !== "None") ? this.state.line04Quantity : null;
+        postData.line05Qty = (this.state.line05Quantity !== undefined && this.state.line05Quantity !== "None") ? this.state.line05Quantity : null;
+        postData.line06Qty = (this.state.line06Quantity !== undefined && this.state.line06Quantity !== "None") ? this.state.line06Quantity : null;
+        postData.line07Qty = (this.state.line07Quantity !== undefined && this.state.line07Quantity !== "None") ? this.state.line07Quantity : null;
+        postData.line08Qty = (this.state.line08Quantity !== undefined && this.state.line08Quantity !== "None") ? this.state.line08Quantity : null;
+        postData.line09Qty = (this.state.line09Quantity !== undefined && this.state.line09Quantity !== "None") ? this.state.line09Quantity : null;
+        postData.line10Qty = (this.state.line10Quantity !== undefined && this.state.line10Quantity !== "None") ? this.state.line10Quantity : null;
+        postData.line11Qty = (this.state.line11Quantity !== undefined && this.state.line11Quantity !== "None") ? this.state.line11Quantity : null;
+        postData.line12Qty = (this.state.line12Quantity !== undefined && this.state.line12Quantity !== "None") ? this.state.line12Quantity : null;
+        postData.line13Qty = (this.state.line13Quantity !== undefined && this.state.line13Quantity !== "None") ? this.state.line13Quantity : null;
+        postData.line14Qty = (this.state.line14Quantity !== undefined && this.state.line14Quantity !== "None") ? this.state.line14Quantity : null;
+        postData.line15Qty = (this.state.line15Quantity !== undefined && this.state.line15Quantity !== "None") ? this.state.line15Quantity : null;
 
         postData.line01Desc = this.state.line01Description;
         postData.line02Desc = this.state.line02Description;
