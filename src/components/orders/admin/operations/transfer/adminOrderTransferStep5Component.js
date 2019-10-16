@@ -82,7 +82,7 @@ class AdminOrderTransferStep5Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Order #</th>
-                                    <td>{orderDetail.id}</td>
+                                    <td>{id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
@@ -93,6 +93,10 @@ class AdminOrderTransferStep5Component extends Component {
                                     <th scope="row" className="bg-light">Full-Name</th>
                                     <td>{clientGivenName}&nbsp;{clientLastName}</td>
                                 </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client ID</th>
+                                    <td>{client && client.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
+                                </tr>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-crown"></i>&nbsp;Associate
@@ -101,6 +105,10 @@ class AdminOrderTransferStep5Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Full-Name</th>
                                     <td>{associateGivenName}&nbsp;{associateLastName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Associate ID</th>
+                                    <td>{associate && associate.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                             </tbody>
                         </table>

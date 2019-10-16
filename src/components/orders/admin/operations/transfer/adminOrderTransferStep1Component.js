@@ -8,7 +8,7 @@ import { BootstrapTelephoneInput } from "../../../../bootstrap/bootstrapTelephon
 
 class AdminOrderTransferStep1Component extends Component {
     render() {
-        const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange, orderDetail } = this.props;
+        const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange, orderDetail, onSkipClick } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
         return (
             <div>
@@ -103,6 +103,11 @@ class AdminOrderTransferStep1Component extends Component {
                             <Link to={`/order/${orderDetail.id}/full`} className="btn btn-secondary btn-lg mt-4 pl-4 pr-4">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
+                        </div>
+                        <div className="col-md-12 text-center">
+                            <button className="btn btn-warning btn-lg mt-4 pl-4 pr-4" type="button" onClick={onSkipClick}>
+                                Use existing Client&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

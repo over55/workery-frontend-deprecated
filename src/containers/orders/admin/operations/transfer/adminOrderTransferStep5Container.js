@@ -15,7 +15,7 @@ import {
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../../../../actions/associateActions";
 import { pullClientList, getClientReactSelectOptions } from "../../../../../actions/clientActions";
 import { postOrderTransfer } from "../../../../../actions/orderActions";
-
+import { localStorageGetIntegerItem } from '../../../../../helpers/localStorageUtility';
 
 
 class AdminOrderTransferStep5Container extends Component {
@@ -32,10 +32,10 @@ class AdminOrderTransferStep5Container extends Component {
         const { id } = this.props.match.params;
 
         this.state = {
-            client: localStorage.getItem("workery-transfer-order-clientId"),
+            client: localStorageGetIntegerItem("workery-transfer-order-clientId"),
             clientGivenName: localStorage.getItem("workery-transfer-order-clientGivenName"),
             clientLastName: localStorage.getItem("workery-transfer-order-clientLastName"),
-            associate: localStorage.getItem("workery-transfer-order-associateId"),
+            associate: localStorageGetIntegerItem("workery-transfer-order-associateId"),
             associateGivenName: localStorage.getItem("workery-transfer-order-associateGivenName"),
             associateLastName: localStorage.getItem("workery-transfer-order-associateLastName"),
             reason: "Transfered work order.",

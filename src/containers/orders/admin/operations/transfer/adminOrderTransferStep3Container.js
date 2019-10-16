@@ -28,6 +28,7 @@ class AssociateListContainer extends Component {
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
         this.onAdvancedSearchClick = this.onAdvancedSearchClick.bind(this);
+        this.onSkipClick = this.onSkipClick.bind(this);
     }
 
     /**
@@ -118,6 +119,19 @@ class AssociateListContainer extends Component {
         });
     }
 
+    onSkipClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        // Set the default associate.
+        localStorage.setItem("workery-transfer-order-associateId", this.props.orderDetail.associate);
+        localStorage.setItem("workery-transfer-order-associateGivenName", this.props.orderDetail.associateFirstName);
+        localStorage.setItem("workery-transfer-order-associateLastName", this.props.orderDetail.associateLastName);
+
+        // Redirect to the review page.
+        this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-5");
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -136,6 +150,7 @@ class AssociateListContainer extends Component {
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}
                 onAdvancedSearchClick={this.onAdvancedSearchClick}
+                onSkipClick={this.onSkipClick}
                 errors={this.state.errors}
                 orderDetail={this.props.orderDetail}
             />

@@ -26,6 +26,7 @@ class AdminOrderTransferStep1Container extends Component {
         }
         this.onTextChange = this.onTextChange.bind(this);
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
+        this.onSkipClick = this.onSkipClick.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
         this.onAdvancedSearchClick = this.onAdvancedSearchClick.bind(this);
     }
@@ -118,6 +119,19 @@ class AdminOrderTransferStep1Container extends Component {
         });
     }
 
+    onSkipClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        // Set the default customer.
+        localStorage.setItem("workery-transfer-order-clientId", this.props.orderDetail.customer);
+        localStorage.setItem("workery-transfer-order-clientGivenName", this.props.orderDetail.customerFirstName);
+        localStorage.setItem("workery-transfer-order-clientLastName", this.props.orderDetail.customerLastName);
+
+        // Redirect to the associate search page.
+        this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-3");
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -136,6 +150,7 @@ class AdminOrderTransferStep1Container extends Component {
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}
                 onAdvancedSearchClick={this.onAdvancedSearchClick}
+                onSkipClick={this.onSkipClick}
                 errors={this.state.errors}
                 orderDetail={this.props.orderDetail}
             />
