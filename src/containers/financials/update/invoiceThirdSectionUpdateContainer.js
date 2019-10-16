@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 import InvoiceThirdSectionUpdateComponent from "../../../components/financials/update/invoiceThirdSectionUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { pullOrderDetail, putInvoiceThirdSection } from "../../../actions/orderActions";
+import { pullOrderInvoice, putInvoiceThirdSection } from "../../../actions/orderActions";
 import { validateInvoiceSectionThirdInput } from "../../../validators/orderValidator";
 import {
     localStorageGetIntegerItem,
@@ -104,7 +104,7 @@ class InvoiceThirdSectionUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullOrderDetail(this.state.orderId, this.onSuccessOrderCallback, this.onFailureCallback);
+        this.props.pullOrderInvoice(this.state.orderId, this.onSuccessOrderCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -318,9 +318,9 @@ const mapDispatchToProps = dispatch => {
         putStaffContactDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(putStaffContactDetail(data, onSuccessCallback, onFailureCallback))
         },
-        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+        pullOrderInvoice: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+                pullOrderInvoice(id, onSuccessCallback, onFailureCallback)
             )
         },
         putInvoiceThirdSection: (postData, onSuccessCallback, onFailureCallback) => {

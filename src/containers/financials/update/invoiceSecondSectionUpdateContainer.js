@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import InvoiceSecondSectionUpdateComponent from "../../../components/financials/update/invoiceSecondSectionUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { pullOrderDetail, putInvoiceSecondSection } from "../../../actions/orderActions";
+import { pullOrderInvoice, putInvoiceSecondSection } from "../../../actions/orderActions";
 import { validateInvoiceSectionTwoInput } from "../../../validators/orderValidator";
 import { putStaffContactDetail } from '../../../actions/staffActions';
 
@@ -189,7 +189,7 @@ class InvoiceSecondSectionUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullOrderDetail(this.state.orderId, this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullOrderInvoice(this.state.orderId, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -427,9 +427,9 @@ const mapDispatchToProps = dispatch => {
         putStaffContactDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
             dispatch(putStaffContactDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
-        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+        pullOrderInvoice: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+                pullOrderInvoice(id, onSuccessCallback, onFailureCallback)
             )
         },
         putInvoiceSecondSection: (postData, onSuccessCallback, onFailureCallback) => {

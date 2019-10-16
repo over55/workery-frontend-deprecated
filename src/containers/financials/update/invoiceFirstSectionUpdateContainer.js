@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 import InvoiceFirstSectionUpdateComponent from "../../../components/financials/update/invoiceFirstSectionUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { pullOrderDetail, putInvoiceFirstSection } from "../../../actions/orderActions";
+import { pullOrderInvoice, putInvoiceFirstSection } from "../../../actions/orderActions";
 import { validateInvoiceSectionOneInput } from "../../../validators/orderValidator";
 
 
@@ -70,7 +70,7 @@ class InvoiceFirstSectionUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullOrderDetail(this.state.orderId, this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullOrderInvoice(this.state.orderId, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -213,9 +213,9 @@ const mapDispatchToProps = dispatch => {
         putInvoiceFirstSection: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(putInvoiceFirstSection(postData, onSuccessCallback, onFailureCallback))
         },
-        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+        pullOrderInvoice: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+                pullOrderInvoice(id, onSuccessCallback, onFailureCallback)
             )
         },
     }
