@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import FinancialRetrieveComponent from "../../../components/financials/retrieve/financialRetrieveComponent";
 import { pullOrderDetail } from "../../../actions/orderActions";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
-import { localStorageGetBooleanItem } from '../../../helpers/localStorageUtility';
 
 
 class FinancialRetrieveContainer extends Component {
@@ -21,7 +20,7 @@ class FinancialRetrieveContainer extends Component {
         // Update state.
         this.state = {
             id: parseInt(id),
-            isLoading: localStorageGetBooleanItem("workery-retrieve-financial-"+id+"-cache") === false,
+            isLoading: true,
             order: {}
         }
 
@@ -60,7 +59,6 @@ class FinancialRetrieveContainer extends Component {
     onSuccessCallback(response) {
         console.log(response);
         this.setState({ isLoading: false, });
-        localStorage.setItem("workery-retrieve-financial-"+this.state.id+"-cache", true);
     }
 
     onFailureCallback(errors) {
