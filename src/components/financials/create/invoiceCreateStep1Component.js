@@ -42,7 +42,7 @@ class InvoiceCreateStep1Component extends Component {
                             </Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-money-check-alt"></i>&nbsp;Create
+                            <i className="fas fa-plus"></i>&nbsp;Create Invoice
                         </li>
                     </ol>
                 </nav>
@@ -83,13 +83,14 @@ class InvoiceCreateStep1Component extends Component {
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
+                                borderColour="border-success"
                                 error={errors.invoiceId}
-                                label="Invoice ID (*)"
+                                label="Invoice ID"
                                 onChange={onTextChange}
                                 value={invoiceId}
                                 name="invoiceId"
                                 type="text"
+                                disabled={true}
                                 helpText="If you need to this values, please update the financials screen for this job."
                             />
 

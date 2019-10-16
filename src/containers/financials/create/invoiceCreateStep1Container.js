@@ -23,10 +23,11 @@ class InvoiceCreateContainer extends Component {
         const { id } = this.props.match.params;
 
         const invoiceDateObj = new Date(this.props.orderDetail.invoiceDate);
+        const invoiceIds = this.props.orderDetail.invoiceIds;
 
         this.state = {
             orderId: parseInt(id),
-            invoiceId: localStorage.getItem("workery-create-invoice-invoiceId"),
+            invoiceId: invoiceIds,
             invoiceDate: invoiceDateObj,
             errors: {},
             isLoading: false

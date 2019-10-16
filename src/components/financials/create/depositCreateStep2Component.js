@@ -49,13 +49,13 @@ class DepositCreateStep2Component extends Component {
                             </Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-money-check-alt"></i>&nbsp;Create
+                            <i className="fas fa-plus"></i>&nbsp;Create Deposit
                         </li>
                     </ol>
                 </nav>
 
                 <h1>
-                    <i className="fas fa-file-invoice-dollar"></i>&nbsp;Create Invoice
+                    <i className="fas fa-file-invoice-dollar"></i>&nbsp;Create Deposit
                 </h1>
 
                 <div className="row">

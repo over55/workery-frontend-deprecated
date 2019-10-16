@@ -104,8 +104,8 @@ class InvoiceCreateStep4Container extends Component {
             line15Amount: localStorageGetFloatItem("workery-create-invoice-line15Amount"),
             // Everything else.
             orderId: parseInt(id),
-            invoiceId: localStorage.getItem("workery-create-invoice-invoiceId"),
-            invoiceDate: localStorageGetDateItem("workery-create-invoice-invoiceDate"),
+            invoiceId: this.props.orderDetail.invoiceIds,
+            invoiceDate: new Date(this.props.orderDetail.invoiceDate),
             invoiceQuoteDays: localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays"),
             invoiceQuoteDate: localStorageGetDateItem("workery-create-invoice-invoiceQuoteDate"),
             invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-invoiceCustomersApproval"),

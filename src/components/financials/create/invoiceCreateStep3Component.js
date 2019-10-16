@@ -46,7 +46,7 @@ class InvoiceCreateStep2Component extends Component {
                             </Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-money-check-alt"></i>&nbsp;Create
+                            <i className="fas fa-plus"></i>&nbsp;Create Invoice
                         </li>
                     </ol>
                 </nav>

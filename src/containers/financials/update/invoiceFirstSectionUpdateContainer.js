@@ -29,7 +29,7 @@ class InvoiceFirstSectionUpdateContainer extends Component {
 
         this.state = {
             orderId: parseInt(id),
-            invoiceId: parseInt(this.orderDetail.invoiceId),
+            invoiceId: this.props.orderDetail.invoiceId,
             invoiceDate: invoiceDate,
             errors: {},
             isLoading: false
