@@ -144,10 +144,81 @@ class InvoiceCreateStep4Container extends Component {
         const invoiceDateMoment = moment(this.state.invoiceDate);
         postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD");
 
+        // LINE 1 OF 15
         postData.line01Qty = this.state.line01Quantity;
         postData.line01Desc = this.state.line01Description;
         postData.line01Price = this.state.line01UnitPrice;
         postData.line01Amount = this.state.line01Amount;
+        // LINE 2 OF 15
+        postData.line02Qty = this.state.line02Quantity;
+        postData.line02Desc = this.state.line02Description;
+        postData.line02Price = this.state.line02UnitPrice;
+        postData.line02Amount = this.state.line02Amount;
+        // LINE 3 OF 15
+        postData.line03Qty = this.state.line03Quantity;
+        postData.line03Desc = this.state.line03Description;
+        postData.line03Price = this.state.line03UnitPrice;
+        postData.line03Amount = this.state.line03Amount;
+        // LINE 4 OF 15
+        postData.line04Qty = this.state.line04Quantity;
+        postData.line04Desc = this.state.line04Description;
+        postData.line04Price = this.state.line04UnitPrice;
+        postData.line04Amount = this.state.line04Amount;
+        // LINE 5 OF 15
+        postData.line05Qty = this.state.line05Quantity;
+        postData.line05Desc = this.state.line05Description;
+        postData.line05Price = this.state.line05UnitPrice;
+        postData.line05Amount = this.state.line05Amount;
+        // LINE 6 OF 15
+        postData.line06Qty = this.state.line06Quantity;
+        postData.line06Desc = this.state.line06Description;
+        postData.line06Price = this.state.line06UnitPrice;
+        postData.line06Amount = this.state.line06Amount;
+        // LINE 7 OF 15
+        postData.line07Qty = this.state.line07Quantity;
+        postData.line07Desc = this.state.line07Description;
+        postData.line07Price = this.state.line07UnitPrice;
+        postData.line07Amount = this.state.line07Amount;
+        // LINE 8 OF 15
+        postData.line08Qty = this.state.line08Quantity;
+        postData.line08Desc = this.state.line08Description;
+        postData.line08Price = this.state.line08UnitPrice;
+        postData.line08Amount = this.state.line08Amount;
+        // LINE 9 OF 15
+        postData.line09Qty = this.state.line09Quantity;
+        postData.line09Desc = this.state.line09Description;
+        postData.line09Price = this.state.line09UnitPrice;
+        postData.line09Amount = this.state.line09Amount;
+        // LINE 10 OF 15
+        postData.line10Qty = this.state.line10Quantity;
+        postData.line10Desc = this.state.line10Description;
+        postData.line10Price = this.state.line10UnitPrice;
+        postData.line10Amount = this.state.line10Amount;
+        // LINE 11 OF 15
+        postData.line11Qty = this.state.line11Quantity;
+        postData.line11Desc = this.state.line11Description;
+        postData.line11Price = this.state.line11UnitPrice;
+        postData.line11Amount = this.state.line11Amount;
+        // LINE 12 OF 15
+        postData.line12Qty = this.state.line12Quantity;
+        postData.line12Desc = this.state.line12Description;
+        postData.line12Price = this.state.line12UnitPrice;
+        postData.line12Amount = this.state.line12Amount;
+        // LINE 13 OF 15
+        postData.line13Qty = this.state.line13Quantity;
+        postData.line13Desc = this.state.line13Description;
+        postData.line13Price = this.state.line13UnitPrice;
+        postData.line13Amount = this.state.line13Amount;
+        // LINE 14 OF 15
+        postData.line14Qty = this.state.line14Quantity;
+        postData.line14Desc = this.state.line14Description;
+        postData.line14Price = this.state.line14UnitPrice;
+        postData.line14Amount = this.state.line14Amount;
+        // LINE 15 OF 15
+        postData.line15Qty = this.state.line15Quantity;
+        postData.line15Desc = this.state.line15Description;
+        postData.line15Price = this.state.line15UnitPrice;
+        postData.line15Amount = this.state.line15Amount;
 
         const invoiceQuoteDateMoment = moment(this.state.invoiceQuoteDate);
         postData.invoiceQuoteDate = invoiceQuoteDateMoment.format("YYYY-MM-DD");

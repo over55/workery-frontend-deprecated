@@ -247,6 +247,11 @@ class InvoiceCreateContainer extends Component {
         localStorage.setItem('workery-create-invoice-line08Amount', line08Amount );
         localStorage.setItem('workery-create-invoice-line09Amount', line09Amount );
         localStorage.setItem('workery-create-invoice-line10Amount', line10Amount );
+        localStorage.setItem('workery-create-invoice-line11Amount', line11Amount );
+        localStorage.setItem('workery-create-invoice-line12Amount', line12Amount );
+        localStorage.setItem('workery-create-invoice-line13Amount', line13Amount );
+        localStorage.setItem('workery-create-invoice-line14Amount', line14Amount );
+        localStorage.setItem('workery-create-invoice-line15Amount', line15Amount );
     }
 
     onClick(e) {
