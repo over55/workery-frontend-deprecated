@@ -15,6 +15,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { FRONTLINE_GROUP_ID } from "../../../../constants/api";
 
+
 const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
 );

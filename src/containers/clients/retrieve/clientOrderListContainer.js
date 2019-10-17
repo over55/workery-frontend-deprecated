@@ -166,6 +166,7 @@ class ClientOrderListContainer extends Component {
                 client={client}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
+                user={this.props.user}
             />
         );
     }
