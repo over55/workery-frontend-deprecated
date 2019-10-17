@@ -92,7 +92,7 @@ class AdminOrderTransferStep5Container extends Component {
     onSuccessfulSubmissionCallback(order) {
         this.setState({ errors: {}, isLoading: false, })
         this.props.setFlashMessage("success", "Order has been successfully transfered.");
-        this.props.history.push("/order/"+this.state.id+"/full");
+        this.props.history.push("/order/"+this.state.id+"/operations");
     }
 
     onFailedSubmissionCallback(errors) {

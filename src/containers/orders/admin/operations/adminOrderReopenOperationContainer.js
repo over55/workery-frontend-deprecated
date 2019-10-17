@@ -79,7 +79,7 @@ class AdminOrderReopenOperationContainer extends Component {
     onSuccessfulSubmissionCallback(order) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Order has been successfully re-opened.");
-        this.props.history.push("/order/"+this.state.id+"/full");
+        this.props.history.push("/order/"+this.state.id+"/operations");
     }
 
     onFailedSubmissionCallback(errors) {

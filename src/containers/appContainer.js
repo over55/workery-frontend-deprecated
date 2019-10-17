@@ -98,6 +98,7 @@ import AdminOrderCommentContainer from "./orders/admin/retrieve/adminOrderCommen
 import AdminOrderFileUploadAddContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadAddContainer";
 import AdminOrderFileUploadArchiveContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadArchiveContainer";
 import AdminOrderFileUploadListContainer from "./orders/admin/retrieve/file_upload/adminOrderFileUploadListContainer";
+import AdminOrderOperationsContainer from "./orders/admin/retrieve/adminOrderOperationsContainer";
 import AdminOrderUnassignAssociateOperationContainer from "./orders/admin/operations/adminOrderUnassignAssociateOperationContainer";
 import AdminOrderPostponeOperationContainer from "./orders/admin/operations/adminOrderPostponeOperationContainer";
 import AdminOrderCloseOperationContainer from "./orders/admin/operations/adminOrderCloseOperationContainer";
@@ -415,6 +416,7 @@ class AppContainer extends React.Component {
                                 <Route path="/order/:id/file/add" exact component={requiresAuth(AdminOrderFileUploadAddContainer)} />
                                 <Route path="/order/:id/file/archive/:fileId" exact component={requiresAuth(AdminOrderFileUploadArchiveContainer)} />
                                 <Route path="/order/:id/files" exact component={requiresAuth(AdminOrderFileUploadListContainer)} />
+                                <Route path="/order/:id/operations" exact component={requiresAuth(AdminOrderOperationsContainer)} />
                                 <Route path="/order/:id/postpone" exact component={requiresAuth(AdminOrderPostponeOperationContainer)} />
                                 <Route path="/order/:id/unassign-associate" exact component={requiresAuth(AdminOrderUnassignAssociateOperationContainer)} />
                                 <Route path="/order/:id/close" exact component={requiresAuth(AdminOrderCloseOperationContainer)} />
