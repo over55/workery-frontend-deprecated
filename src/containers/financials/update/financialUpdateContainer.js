@@ -38,6 +38,8 @@ class FinancialUpdateContainer extends Component {
             invoiceServiceFeePaymentDate.setMinutes( invoiceServiceFeePaymentDate.getMinutes() + invoiceServiceFeePaymentDate.getTimezoneOffset() );
         }
 
+        const hasNoIDs = this.props.orderDetail.invoiceIds === undefined || this.props.orderDetail.invoiceIds === null || this.props.orderDetail.invoiceIds === "";
+
         // Update state.
         this.state = {
             errors: {},
@@ -46,7 +48,7 @@ class FinancialUpdateContainer extends Component {
             invoicePaidTo: this.props.orderDetail.invoicePaidTo,
             paymentStatus: this.props.orderDetail.state,
             invoiceDate: this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null,
-            invoiceIds: this.props.orderDetail.invoiceIds,
+            invoiceIds: hasNoIDs ? id : this.props.orderDetail.invoiceIds,
             invoiceQuotedLabourAmount: parseFloat(this.props.orderDetail.invoiceQuotedLabourAmount),
             invoiceQuotedMaterialAmount: parseFloat(this.props.orderDetail.invoiceQuotedMaterialAmount),
             invoiceQuotedWasteRemovalAmount: parseFloat(this.props.orderDetail.invoiceQuotedWasteRemovalAmount),

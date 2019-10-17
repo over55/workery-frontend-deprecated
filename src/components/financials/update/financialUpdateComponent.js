@@ -169,7 +169,7 @@ export default class FinancialUpdateComponent extends Component {
                                 value={invoiceIds}
                                 name="invoiceIds"
                                 type="text"
-                                helpText="Please note, you are able to input multiple invoice ID values if you want, just separate them by commas. Ex.: 123, 456."
+                                helpText="Please note, the system automatically generates an ID, however you are able to edit it if you wish."
                             />
 
                             <BootstrapSingleSelect
