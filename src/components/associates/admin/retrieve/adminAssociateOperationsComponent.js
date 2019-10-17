@@ -42,7 +42,7 @@ export default class AdminAssociateOperationsComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-money-check-alt"></i>&nbsp;View Financial Details</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{associateDetail && associateDetail.fullName}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -86,11 +86,11 @@ export default class AdminAssociateOperationsComponent extends Component {
                             <div className="col-sm-3 mb-4">
                                 <div className="card box-shadow text-center mx-auto h-100">
                                     <div className="card-custom-top-2">
-                                        <i className="fas fa-table fa-3x"></i>
+                                        <i className="fas fa-file-invoice-dollar fa-3x"></i>
                                     </div>
                                     <div className="card-body">
                                         <h3 className="card-title">Account Balance</h3>
-                                        <p className="card-text">View the account balance for the associate.</p>
+                                        <p className="card-text">View Associate Account Balance.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
                                         <Link className="btn btn-success btn-lg" to={`/associate/${id}/operations/balance`}>
@@ -106,7 +106,7 @@ export default class AdminAssociateOperationsComponent extends Component {
                                     </div>
                                     <div className="card-body">
                                         <h3 className="card-title">Password</h3>
-                                        <p className="card-text">Change the password account.</p>
+                                        <p className="card-text">Reset password for this Associate.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
                                         <Link className="btn btn-success btn-lg" to={`/associate/${id}/operations/password`}>
