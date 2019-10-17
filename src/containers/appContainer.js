@@ -70,6 +70,7 @@ import AdminAssociateAvatarOperationContainer from "./associates/admin/operation
 import AdminAssociateFileUploadAddContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadAddContainer";
 import AdminAssociateFileUploadArchiveContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadArchiveContainer";
 import AdminAssociateFileUploadListContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadListContainer";
+import AdminAssociateOperationsContainer from "./associates/admin/retrieve/adminAssociateOperationsContainer";
 import AdminAssociateCreateStep1Container from "./associates/admin/create/adminAssociateCreateStep1Container";
 import AdminAssociateCreateStep2Container from "./associates/admin/create/adminAssociateCreateStep2Container";
 import AdminAssociateCreateStep3Container from "./associates/admin/create/adminAssociateCreateStep3Container";
@@ -387,6 +388,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/file/add" exact component={requiresAuth(AdminAssociateFileUploadAddContainer)} />
                                 <Route path="/associate/:id/file/archive/:fileId" exact component={requiresAuth(AdminAssociateFileUploadArchiveContainer)} />
                                 <Route path="/associate/:id/files" exact component={requiresAuth(AdminAssociateFileUploadListContainer)} />
+                                <Route path="/associate/:id/operations" exact component={requiresAuth(AdminAssociateOperationsContainer)} />
                                 <Route path="/associate/:id/activity-sheets" exact component={requiresAuth(AdminAssociateActivitySheetListContainer)} />
                                 <Route path="/associate/:id/update/account" exact component={requiresAuth(AdminAssociateAccountUpdateContainer)} />
                                 <Route path="/associate/:id/update/address" exact component={requiresAuth(AdminAssociateAddressUpdateContainer)} />

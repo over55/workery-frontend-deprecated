@@ -75,7 +75,7 @@ class AdminAssociateAvatarOperationContainer extends Component {
         console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
         this.setState({ errors: {}, isLoading: false, })
         this.props.setFlashMessage("success", "Associate's password has been successfully updated.");
-        this.props.history.push("/associate/"+this.state.id+"/full");
+        this.props.history.push("/associate/"+this.state.id+"/operations");
     }
 
     onFailureCallback(errors) {

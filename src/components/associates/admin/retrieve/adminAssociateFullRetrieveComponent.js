@@ -73,6 +73,11 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
+                        <div id="step-7" className="st-grey">
+                            <Link to={`/associate/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
@@ -354,12 +359,12 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link to={`/associate/${id}/operations/balance`}>
+                                                <Link to={`/associate/${id}/operations`}>
                                                     View Account Balance&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link to={`/associate/${id}/operations/password`}>
+                                                <Link to={`/associate/${id}/operations`}>
                                                     Change Password&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
