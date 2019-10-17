@@ -6,7 +6,7 @@ import Scroll from 'react-scroll';
 import PartnerSearchResultComponent from "../../../components/partners/search/partnerSearchResultComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullPartnerList } from "../../../actions/partnerActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 import { localStorageGetObjectItem } from '../../../helpers/localStorageUtility';
 
 

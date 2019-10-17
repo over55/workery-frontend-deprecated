@@ -5,7 +5,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import AdminAssociateBalanceOperationComponent from "../../../../components/associates/admin/operations/adminAssociateBalanceOperationComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateBalanceOperation } from "../../../../actions/associateOperationActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class AdminAssociateBalanceOperationContainer extends Component {

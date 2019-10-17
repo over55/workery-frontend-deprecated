@@ -5,7 +5,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import ClientListComponent from "../../../components/clients/list/clientListComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullClientList } from "../../../actions/clientActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 
 class ClientListContainer extends Component {
@@ -19,7 +19,7 @@ class ClientListContainer extends Component {
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching

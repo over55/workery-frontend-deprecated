@@ -6,7 +6,7 @@ import Scroll from 'react-scroll';
 import AdminAssociateSearchResultComponent from "../../../../components/associates/admin/search/adminAssociateSearchResultComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateList } from "../../../../actions/associateActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 import { localStorageGetObjectItem } from '../../../../helpers/localStorageUtility';
 
 

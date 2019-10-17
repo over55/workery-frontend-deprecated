@@ -4,7 +4,7 @@ import { camelizeKeys, decamelize } from 'humps';
 
 import CommentListComponent from "../../components/general/commentListComponent";
 import { pullOrderCommentList } from "../../actions/orderCommentActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../constants/api";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../constants/api";
 
 
 class CommentListContainer extends Component {
@@ -18,7 +18,7 @@ class CommentListContainer extends Component {
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching

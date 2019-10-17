@@ -5,7 +5,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import InsuranceRequirementListComponent from "../../../../components/settings/insuranceRequirements/list/insuranceRequirementListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class InsuranceRequirementListContainer extends Component {
@@ -19,7 +19,7 @@ class InsuranceRequirementListContainer extends Component {
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching

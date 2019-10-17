@@ -6,7 +6,7 @@ import Scroll from 'react-scroll';
 import StaffSearchResultComponent from "../../../components/staff/search/staffSearchResultComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullStaffList } from "../../../actions/staffActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 import { localStorageGetObjectItem } from '../../../helpers/localStorageUtility';
 
 

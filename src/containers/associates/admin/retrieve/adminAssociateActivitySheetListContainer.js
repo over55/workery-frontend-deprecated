@@ -5,7 +5,7 @@ import { camelizeKeys, decamelize } from 'humps';
 import AdminAssociateActivitySheetListComponent from "../../../../components/associates/admin/retrieve/adminAssociateActivitySheetListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullActivitySheetList } from "../../../../actions/activitySheetActions";
-import { TINY_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class AdminAssociateActivitySheetListContainer extends Component {
@@ -22,7 +22,7 @@ class AdminAssociateActivitySheetListContainer extends Component {
         this.state = {
             // Pagination
             page: 1,
-            sizePerPage: TINY_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
