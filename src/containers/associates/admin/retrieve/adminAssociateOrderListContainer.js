@@ -167,6 +167,7 @@ class AdminAssociateOrderListContainer extends Component {
                 associate={associate}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
+                user={this.props.user}
             />
         );
     }

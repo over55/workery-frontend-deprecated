@@ -13,7 +13,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
-
+import { FRONTLINE_GROUP_ID } from "../../../../constants/api";
 
 const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
@@ -30,7 +30,7 @@ class RemoteListComponent extends Component {
             orders,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, user
         } = this.props;
 
         const selectOptions = {
@@ -94,6 +94,12 @@ class RemoteListComponent extends Component {
             sort: false,
             formatter: detailLinkFormatter
         }];
+
+        // The following code will hide the financial details if the
+        // authenticated user belongs to the frontline staff.
+        if (user && user.groupId === FRONTLINE_GROUP_ID) {
+            columns.splice(7, 1);
+        }
 
         const defaultSorted = [{
             dataField: 'id',
@@ -216,7 +222,7 @@ function detailLinkFormatter(cell, row){
 
 function externalFinancialLinkFormatter(cell, row){
     return (
-        <Link to={`/financial/${row.id}`} target="_blank">
+        <Link to={`/financial/${row.id}`} target="_blank" rel='noopener'>
             View&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
@@ -233,7 +239,7 @@ export default class AdminAssociateOrderListComponent extends Component {
             orderList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id, associate
+            flashMessage, onTableChange, isLoading, id, associate, user
         } = this.props;
 
         const orders = orderList.results ? orderList.results : [];
@@ -306,6 +312,7 @@ export default class AdminAssociateOrderListComponent extends Component {
                             orders={orders}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
+                            user={user}
                         />
                     </div>
                 </div>
