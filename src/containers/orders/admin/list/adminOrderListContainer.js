@@ -164,6 +164,7 @@ class AdminOrderListContainer extends Component {
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
+                user={this.props.user}
             />
         );
     }

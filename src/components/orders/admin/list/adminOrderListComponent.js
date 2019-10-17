@@ -13,6 +13,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
+import { FRONTLINE_GROUP_ID } from "../../../../constants/api";
 
 
 const customTotal = (from, to, size) => (
@@ -30,7 +31,7 @@ class RemoteListComponent extends Component {
             orders,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, user
         } = this.props;
 
         const selectOptions = {
@@ -84,10 +85,21 @@ class RemoteListComponent extends Component {
             formatter: statusFormatter
         },{
             dataField: 'slug',
+            text: 'Financial',
+            sort: false,
+            formatter: externalFinancialLinkFormatter
+        },{
+            dataField: 'slug',
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
         }];
+
+        // The following code will hide the financial details if the
+        // authenticated user belongs to the frontline staff.
+        if (user && user.groupId === FRONTLINE_GROUP_ID) {
+            columns.splice(7, 1);
+        }
 
         const defaultSorted = [{
             dataField: 'id',
@@ -194,6 +206,15 @@ function assignmentDateFormatter(cell, row){
 }
 
 
+function externalFinancialLinkFormatter(cell, row){
+    return (
+        <Link to={`/financial/${row.id}`} target="_blank" rel='noopener'>
+            View&nbsp;<i className="fas fa-external-link-alt"></i>
+        </Link>
+    )
+}
+
+
 function detailLinkFormatter(cell, row){
     return (
         <Link to={`/order/${row.id}`}>
@@ -213,7 +234,7 @@ class AdminOrderListComponent extends Component {
             orderList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, user
         } = this.props;
 
         const orders = orderList.results ? orderList.results : [];
@@ -273,6 +294,7 @@ class AdminOrderListComponent extends Component {
                             orders={orders}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
+                            user={user}
                         />
                     </div>
                 </div>
