@@ -85,6 +85,11 @@ class RemoteListComponent extends Component {
             formatter: statusFormatter
         },{
             dataField: 'slug',
+            text: 'Financial',
+            sort: false,
+            formatter: externalFinancialLinkFormatter
+        },{
+            dataField: 'slug',
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
@@ -204,6 +209,15 @@ function detailLinkFormatter(cell, row){
     return (
         <Link to={`/order/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
+        </Link>
+    )
+}
+
+
+function externalFinancialLinkFormatter(cell, row){
+    return (
+        <Link to={`/financial/${row.id}`} target="_blank">
+            View&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
