@@ -34,7 +34,7 @@ class ClientRezUpgradeOperationComponent extends Component {
                             <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/client/${client.id}/full`}><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</Link>
+                            <Link to={`/client/${client.id}/operations`}><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-building"></i>&nbsp;Client Residential Upgrade to Business Client
@@ -139,7 +139,7 @@ class ClientRezUpgradeOperationComponent extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/client/${client.id}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/client/${client.id}/operations`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>

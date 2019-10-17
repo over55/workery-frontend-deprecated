@@ -78,6 +78,11 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/client/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
@@ -260,17 +265,17 @@ export default class ClientFullRetrieveComponent extends Component {
                                                     ? <div>
                                                         <i className="fas fa-lock"></i>&nbsp;Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </div>
-                                                    : <Link onClick={onClientClick}>
+                                                    : <Link to={`/client/${id}/operations`}>
                                                         Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                 }
                                             </li>
                                             <li>
                                                 {isActiveState
-                                                    ?<Link to={`/client/${id}/archive`}>
+                                                    ?<Link to={`/client/${id}/operations`}>
                                                         Archive&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
-                                                    :<Link to={`/client/${id}/unarchive`}>
+                                                    :<Link to={`/client/${id}/operations`}>
                                                         Unarchive&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                 }
@@ -278,14 +283,14 @@ export default class ClientFullRetrieveComponent extends Component {
                                             </li>
                                             {isRezClient &&
                                                 <li>
-                                                    <Link to={`/client/${id}/rez-upgrade`}>
+                                                    <Link to={`/client/${id}/operations`}>
                                                         Upgrade Client&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                 </li>
                                             }
                                             {canDeleteClient &&
                                                 <li>
-                                                    <Link to={`/client/${id}/delete`}>
+                                                    <Link to={`/client/${id}/operations`}>
                                                         Permanently Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                 </li>

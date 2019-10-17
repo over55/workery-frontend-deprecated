@@ -83,7 +83,7 @@ class ClientUnarchiveOperationContainer extends Component {
     onSuccessCallback(response) {
         console.log("onSuccessCallback | Fetched:", response);
         this.props.setFlashMessage("success", "Client has been successfully activated.");
-        this.props.history.push("/clients");
+        this.props.history.push("/client/"+this.props.clientDetail.id+"/operations");
     }
 
     onFailureCallback(errors) {

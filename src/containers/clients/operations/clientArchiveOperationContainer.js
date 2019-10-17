@@ -83,7 +83,7 @@ class ClientArchiveOperationContainer extends Component {
     onSuccessCallback(response) {
         console.log("onSuccessCallback | Fetched:", response);
         this.props.setFlashMessage("success", "Client has been successfully deactivated.");
-        this.props.history.push("/client/"+this.props.clientDetail.id+"/full");
+        this.props.history.push("/client/"+this.props.clientDetail.id+"/operations");
     }
 
     onFailureCallback(errors) {

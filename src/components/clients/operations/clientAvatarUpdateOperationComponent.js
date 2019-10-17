@@ -54,7 +54,7 @@ export default class ClientAvatarUpdateOperationComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/client/${id}/full`}>
+                            <Link to={`/client/${id}/operations`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
