@@ -183,7 +183,7 @@ function idFormatter(cell, row){
 function customerNameFormatter(cell, row){
     if (row.customerName === null || row.customerName === undefined || row.customerName === "None") { return "-"; }
     return (
-        <Link to={`/associate/${row.associate}`} target="_blank">
+        <Link to={`/client/${row.customer}`} target="_blank">
             {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
