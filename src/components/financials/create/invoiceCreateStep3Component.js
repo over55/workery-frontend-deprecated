@@ -24,7 +24,7 @@ class InvoiceCreateStep2Component extends Component {
     render() {
         const {
             orderId, order, errors,
-            invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
+            invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentDate,
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
             onTextChange, onInvoiceQuoteDateChange, isLoading, onClick, onSelectChange, onAmountChange, onPaymentDateChange, onAssociateSignDateChange, onCheckboxChange, onRadioChange
         } = this.props;
@@ -221,17 +221,6 @@ class InvoiceCreateStep2Component extends Component {
                                 value={line02Notes}
                                 name="line02Notes"
                                 type="text"
-                            />
-
-                            <BootstrapCurrencyInput
-                                inputClassName="form-control"
-                                borderColour="border-primary"
-                                error={errors.paymentAmount}
-                                label="Payment Amount (*)"
-                                onChange={onAmountChange}
-                                value={paymentAmount}
-                                name="paymentAmount"
-                                helpText=""
                             />
 
                             <BootstrapDatePicker

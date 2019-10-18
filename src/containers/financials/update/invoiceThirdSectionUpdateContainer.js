@@ -47,7 +47,6 @@ class InvoiceThirdSectionUpdateContainer extends Component {
             invoiceCustomersApproval: this.props.orderDetail.invoiceCustomersApproval,
             line01Notes: this.props.orderDetail.line01Notes,
             line02Notes: this.props.orderDetail.line02Notes,
-            paymentAmount: this.props.orderDetail.paymentAmount,
             paymentDate: paymentDate,
             cash: this.props.orderDetail.cash,
             cheque: this.props.orderDetail.cheque,
@@ -263,7 +262,7 @@ class InvoiceThirdSectionUpdateContainer extends Component {
 
     render() {
         const {
-            orderId, errors, isLoading, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
+            orderId, errors, isLoading, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentDate,
             cash, cheque, debit, credit, other,
             clientSignature, associateSignDate, associateSignature
         } = this.state;
@@ -276,7 +275,6 @@ class InvoiceThirdSectionUpdateContainer extends Component {
                 invoiceCustomersApproval={invoiceCustomersApproval}
                 line01Notes={line01Notes}
                 line02Notes={line02Notes}
-                paymentAmount={paymentAmount}
                 onAmountChange={this.onAmountChange}
                 paymentDate={paymentDate}
                 cash={cash}

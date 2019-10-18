@@ -112,7 +112,6 @@ class InvoiceCreateStep4Container extends Component {
             gender: localStorage.getItem("workery-create-invoice-gender"),
             line01Notes: localStorage.getItem("workery-create-invoice-line01Notes"),
             line02Notes: localStorage.getItem("workery-create-invoice-line02Notes"),
-            paymentAmount: localStorageGetFloatItem("workery-create-invoice-paymentAmount"),
             paymentDate: localStorageGetDateItem("workery-create-invoice-paymentDate"),
             cash: localStorageGetBooleanOrNullItem("workery-create-invoice-cash"),
             cheque: localStorageGetBooleanOrNullItem("workery-create-invoice-cheque"),
@@ -359,7 +358,7 @@ class InvoiceCreateStep4Container extends Component {
 
     render() {
         const {
-            orderId, errors, isLoading, invoiceId, invoiceDate, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
+            orderId, errors, isLoading, invoiceId, invoiceDate, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentDate,
             cash, cheque, debit, credit, other, gender,
             clientSignature, associateSignDate, associateSignature
         } = this.state;
@@ -391,7 +390,6 @@ class InvoiceCreateStep4Container extends Component {
                 invoiceCustomersApproval={invoiceCustomersApproval}
                 line01Notes={line01Notes}
                 line02Notes={line02Notes}
-                paymentAmount={paymentAmount}
                 onAmountChange={this.onAmountChange}
                 paymentDate={paymentDate}
                 cash={cash}

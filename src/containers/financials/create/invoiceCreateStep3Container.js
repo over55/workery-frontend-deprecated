@@ -37,7 +37,7 @@ class InvoiceCreateStep3Container extends Component {
         if (line01Notes === undefined || line01Notes === null || line01Notes === "") {
             line01Notes = "Work completed as per quote";
             localStorage.setItem("workery-create-invoice-line01Notes", line01Notes);
-        }        
+        }
 
         this.state = {
             orderId: parseInt(id),
@@ -46,7 +46,6 @@ class InvoiceCreateStep3Container extends Component {
             invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-invoiceCustomersApproval"),
             line01Notes: line01Notes,
             line02Notes: localStorage.getItem("workery-create-invoice-line02Notes"),
-            paymentAmount: localStorageGetFloatItem("workery-create-invoice-paymentAmount"),
             paymentDate: localStorageGetDateItem("workery-create-invoice-paymentDate"),
             cash: localStorageGetBooleanOrNullItem("workery-create-invoice-cash"),
             cheque: localStorageGetBooleanOrNullItem("workery-create-invoice-cheque"),
@@ -222,7 +221,7 @@ class InvoiceCreateStep3Container extends Component {
 
     render() {
         const {
-            orderId, errors, isLoading, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
+            orderId, errors, isLoading, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentDate,
             cash, cheque, debit, credit, other,
             clientSignature, associateSignDate, associateSignature
         } = this.state;
@@ -235,7 +234,6 @@ class InvoiceCreateStep3Container extends Component {
                 invoiceCustomersApproval={invoiceCustomersApproval}
                 line01Notes={line01Notes}
                 line02Notes={line02Notes}
-                paymentAmount={paymentAmount}
                 onAmountChange={this.onAmountChange}
                 paymentDate={paymentDate}
                 cash={cash}

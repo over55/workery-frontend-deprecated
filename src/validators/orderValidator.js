@@ -457,9 +457,6 @@ export function validateInvoiceSectionThirdInput(data) {
     if (data.line01Notes === undefined || data.line01Notes === null || data.line01Notes === "") {
         errors.line01Notes = 'This field is required';
     }
-    if (data.paymentAmount === undefined || data.paymentAmount === null || data.paymentAmount === "" || isNaN(data.paymentAmount)) {
-        errors.paymentAmount = 'This field is required';
-    }
     if (data.paymentDate === undefined || data.paymentDate === null || data.paymentDate === "" || isNaN(data.paymentDate)) {
         errors.paymentDate = 'This field is required';
     }

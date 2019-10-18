@@ -334,15 +334,6 @@ export default class InvoiceRetrieveComponent extends Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" className="bg-light">Payment Amount</th>
-                                        <td>
-                                            {invoice.paymentAmount
-                                                ? <NumberFormat value={invoice.paymentAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                                                : "-"
-                                            }
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <th scope="row" className="bg-light">Payment Date</th>
                                         <td>
                                             {invoice.invoiceQuoteDate

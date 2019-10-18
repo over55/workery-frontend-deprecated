@@ -40,7 +40,7 @@ class InvoiceCreateStep2Component extends Component {
             line14Quantity, line14Description, line14UnitPrice, line14Amount,
             line15Quantity, line15Description, line15UnitPrice, line15Amount,
             orderId, order, errors, invoiceId, invoiceDate,
-            invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentAmount, paymentDate,
+            invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentDate,
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
             isLoading, onClick,
         } = this.props;
@@ -382,15 +382,6 @@ class InvoiceCreateStep2Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Line 02 - Notes or Extras</th>
                                     <td>{line02Notes}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Payment Amount</th>
-                                    <td>
-                                        {paymentAmount
-                                            ?<NumberFormat value={paymentAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                                            :"-"
-                                        }
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Payment Date</th>
