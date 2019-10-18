@@ -156,6 +156,8 @@ class FinancialUpdateContainer extends Component {
         const invoiceServiceFeePaymentDateMoment = moment(this.state.invoiceServiceFeePaymentDate);
         postData.invoiceServiceFeePaymentDate = invoiceServiceFeePaymentDateMoment.format("YYYY-MM-DD")
 
+        postData.state = this.state.paymentStatus;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;

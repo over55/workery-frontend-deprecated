@@ -8,6 +8,7 @@ import NumberFormat from 'react-number-format';
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import { WORK_ORDER_COMPLETED_AND_PAID_STATE } from "../../../constants/api";
 
 
 export default class FinancialRetrieveComponent extends Component {
@@ -301,6 +302,20 @@ export default class FinancialRetrieveComponent extends Component {
                                             {order.invoicePaidTo === 1
                                                 ? "Associate"
                                                 : "Organization"
+                                            }
+                                            </div>
+                                            : "-"
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Status</th>
+                                    <td>
+                                        {order && order.state
+                                            ? <div>
+                                            {order.state === WORK_ORDER_COMPLETED_AND_PAID_STATE
+                                                ? "Paid"
+                                                : "Not paid"
                                             }
                                             </div>
                                             : "-"
