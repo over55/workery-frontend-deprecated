@@ -185,7 +185,7 @@ export const GROUP_MEMBERSHIP_CHOICES = [
 /**
  *  The pagination values we use.
  */
-export const STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION = 25;
+export const STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION = 50;
 
 /**
  *  The generic type of that we can use in the system.
