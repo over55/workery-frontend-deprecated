@@ -190,7 +190,7 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                         </div>
                         <div id="step-2" className="st-grey active">
                             <strong>
-                                <span className="num"><i className="fas fa-hand-holding-usd"></i>&nbsp;</span><span className="">Deposits</span>
+                                <span className="num"><i className="fas fa-hand-holding-usd"></i>&nbsp;</span><span className="">Payments</span>
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
@@ -224,7 +224,7 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                         <form>
                             <div className="form-group">
                             <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" to={`/financial/${id}/deposit/create/step-1`}>
-                                <i className="fas fa-plus"></i>&nbsp;Add Deposit
+                                <i className="fas fa-plus"></i>&nbsp;Add Payment
                             </Link>
                             </div>
                         </form>

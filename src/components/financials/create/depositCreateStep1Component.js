@@ -45,13 +45,13 @@ class DepositCreateStep1Component extends Component {
                             </Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-plus"></i>&nbsp;Create Deposit
+                            <i className="fas fa-plus"></i>&nbsp;Create Payment
                         </li>
                     </ol>
                 </nav>
 
                 <h1>
-                    <i className="fas fa-file-invoice-dollar"></i>&nbsp;Create Deposit
+                    <i className="fas fa-file-invoice-dollar"></i>&nbsp;Create Payment
                 </h1>
 
                 <div className="row">
@@ -71,7 +71,7 @@ class DepositCreateStep1Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;Deposit Details
+                                <i className="fas fa-file-invoice-dollar"></i>&nbsp;Payment Details
                             </h2>
 
                             <p>All fields which have the (*) symbol are required to be filled out.</p>

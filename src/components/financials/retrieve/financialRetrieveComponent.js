@@ -43,7 +43,7 @@ export default class FinancialRetrieveComponent extends Component {
                         </div>
                         <div id="step-2" className="st-grey">
                             <Link to={`/financial/${id}/deposits`}>
-                                <span className="num"><i className="fas fa-hand-holding-usd"></i>&nbsp;</span><span className="">Deposits</span>
+                                <span className="num"><i className="fas fa-hand-holding-usd"></i>&nbsp;</span><span className="">Payments</span>
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
@@ -222,7 +222,7 @@ export default class FinancialRetrieveComponent extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Deposit</th>
+                                    <th scope="row" className="bg-light">Payment</th>
                                     <td>
                                         {order.invoiceDepositAmount
                                             ?<NumberFormat value={order.invoiceDepositAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />

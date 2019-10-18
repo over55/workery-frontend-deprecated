@@ -49,13 +49,13 @@ class DepositCreateStep2Component extends Component {
                             </Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-plus"></i>&nbsp;Create Deposit
+                            <i className="fas fa-plus"></i>&nbsp;Create Payment
                         </li>
                     </ol>
                 </nav>
 
                 <h1>
-                    <i className="fas fa-file-invoice-dollar"></i>&nbsp;Create Deposit
+                    <i className="fas fa-file-invoice-dollar"></i>&nbsp;Create Payment
                 </h1>
 
                 <div className="row">
@@ -86,7 +86,7 @@ class DepositCreateStep2Component extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Deposit Detail
+                                        <i className="fas fa-file-invoice-dollar"></i>&nbsp;Payment Detail
                                     </th>
                                 </tr>
                                 <tr>
@@ -94,7 +94,7 @@ class DepositCreateStep2Component extends Component {
                                     <td><Moment format="MM/DD/YYYY">{paidAt}</Moment></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Deposit Method</th>
+                                    <th scope="row" className="bg-light">Payment Method</th>
                                     <td>{depositMethodLabel}</td>
                                 </tr>
                                 <tr>

@@ -45,7 +45,7 @@ export default class InvoiceRetrieveComponent extends Component {
                         </div>
                         <div id="step-2" className="st-grey">
                             <Link to={`/financial/${id}/deposits`}>
-                                <span className="num"><i className="fas fa-hand-holding-usd"></i>&nbsp;</span><span className="">Deposits</span>
+                                <span className="num"><i className="fas fa-hand-holding-usd"></i>&nbsp;</span><span className="">Payments</span>
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
