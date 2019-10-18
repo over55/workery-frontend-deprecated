@@ -56,6 +56,11 @@ class RemoteListComponent extends Component {
             text: 'Amount',
             sort: false,
             formatter: amountFormatter,
+        },{
+            dataField: 'id',
+            text: '',
+            sort: false,
+            formatter: functionsFormatter,
         }];
 
         const paginationOption = {
@@ -138,13 +143,18 @@ function orderNameFormatter(cell, row){
     )
 }
 
-
 function amountFormatter(cell, row){
     return <NumberFormat value={row.amount} displayType={'text'} thousandSeparator={true} prefix={'$'} />;
 }
 
 function paidAtFormatter(cell, row){
     return <Moment format="MM/DD/YYYY">{row.paidAt}</Moment>;
+}
+
+function functionsFormatter(cell, row){
+    return <Link className="btn btn-danger btn-xs" to={`/payment/${row.id}/delete`}>
+        <i className="fas fa-trash"></i>&nbsp;Delete
+    </Link>
 }
 
 

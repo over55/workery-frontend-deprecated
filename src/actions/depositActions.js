@@ -323,6 +323,79 @@ export function putDepositDetail(user, data, successCallback, failedCallback) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//                                RETRIEVE                                    //
+////////////////////////////////////////////////////////////////////////////////
+
+export function deleteDepositDetail(orderId, paymentId, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to fetch latest user details.
+        store.dispatch(
+            setDepositDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        const aURL = WORKERY_DEPOSIT_DETAIL_API_ENDPOINT.replace("XXX", orderId).replace("YYY", paymentId);
+
+        customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = msgpack.decode(Buffer(successResponse.data));
+            // console.log(successResult); // For debugging purposes.
+
+            let profile = camelizeKeys(responseData);
+
+            // Extra.
+            profile['isAPIRequestRunning'] = false;
+            profile['errors'] = {};
+
+            console.log("pullDepositDetail | Success:", profile); // For debugging purposes.
+
+            // Update the global state of the application to store our
+            // user profile for the application.
+            store.dispatch(
+                setDepositDetailSuccess(profile)
+            );
+
+            if (onSuccessCallback) {
+                onSuccessCallback(profile);
+            }
+
+        }).catch( (exception) => { // ERROR
+            if (exception.response) {
+                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = msgpack.decode(Buffer(responseBinaryData));
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("pullDepositDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setDepositDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => { // FINALLY
+            // Do nothing.
+        });
+
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //                                REDUX ACTIONS                               //
 ////////////////////////////////////////////////////////////////////////////////
 
