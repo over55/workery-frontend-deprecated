@@ -27,7 +27,7 @@ class ZeroAmountDueStep2Component extends Component {
             orderId, order,
             paidAt, onPaidAtChange,
             depositMethod, depositMethodLabel, paidToLabel, paidForLabel, onRadioChange,
-            amount, onAmountChange,
+            amount, onAmountChange, invoiceAmountDue,
             errors,
             isLoading, onClick, onSelectChange
         } = this.props;

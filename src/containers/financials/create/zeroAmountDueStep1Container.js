@@ -26,39 +26,48 @@ class ZeroAmountDueStep1Container extends Component {
         // Either use from financials date or the previously created
         // date that was inputted in these forms.
         const currentPaidAt = new Date(this.props.orderDetail.invoiceDate);
-        const previousPaidAt = localStorageGetDateItem("workery-create-deposit-paidAt")
+        const previousPaidAt = localStorageGetDateItem("workery-create-zero-amount-deposit-paidAt")
         let paidAt;
         if (previousPaidAt === null || previousPaidAt === undefined) {
-            paidAt = currentPaidAt;
+            paidAt = new Date(currentPaidAt);
+            localStorageSetObjectOrArrayItem('workery-create-zero-amount-deposit-paidAt', paidAt);
         } else {
             paidAt = previousPaidAt;
         }
 
         const currentPaidTo = this.props.orderDetail.invoicePaidTo;
-        const previousPaidTo = localStorageGetIntegerItem("workery-create-deposit-paidTo")
+        const previousPaidTo = localStorageGetIntegerItem("workery-create-zero-amount-deposit-paidTo")
         let paidTo;
         if (previousPaidTo === null || previousPaidTo === undefined || isNaN(previousPaidTo)) {
             paidTo = currentPaidTo;
-            localStorage.setItem("workery-create-deposit-paidTo", paidTo);
+            localStorage.setItem("workery-create-zero-amount-deposit-paidTo", paidTo);
         } else {
             paidTo = previousPaidTo;
         }
 
         // Assign the label.
         if (paidTo === 1) {
-            localStorage.setItem("workery-create-deposit-paidTo-label", "Associate");
+            localStorage.setItem("workery-create-zero-amount-deposit-paidTo-label", "Associate");
         } else {
-            localStorage.setItem("workery-create-deposit-paidTo-label", "Organization");
+            localStorage.setItem("workery-create-zero-amount-deposit-paidTo-label", "Organization");
         }
+
+        let invoiceAmountDue = parseFloat(this.props.orderDetail.invoiceAmountDue);
+        let amount = localStorageGetFloatItem("workery-create-zero-amount-deposit-amount");
+        if (isNaN(amount)) {
+            amount = 0;
+        }
+        invoiceAmountDue -= amount;
 
         // Update the state.
         this.state = {
             orderId: parseInt(id),
             paidAt: paidAt,
-            depositMethod: localStorageGetIntegerItem("workery-create-deposit-depositMethod"),
+            depositMethod: localStorageGetIntegerItem("workery-create-zero-amount-deposit-depositMethod"),
             paidTo: paidTo,
-            paidFor: localStorageGetIntegerItem("workery-create-deposit-paidFor"),
-            amount: localStorageGetFloatItem("workery-create-deposit-amount"),
+            paidFor: localStorageGetIntegerItem("workery-create-zero-amount-deposit-paidFor"),
+            amount: amount,
+            invoiceAmountDue: invoiceAmountDue,
             errors: {},
             isLoading: false
         }
@@ -126,13 +135,13 @@ class ZeroAmountDueStep1Container extends Component {
         this.setState({
             paidAt: dateObj,
         })
-        localStorageSetObjectOrArrayItem('workery-create-deposit-paidAt', dateObj);
+        localStorageSetObjectOrArrayItem('workery-create-zero-amount-deposit-paidAt', dateObj);
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-deposit-"+[e.target.name];
-        const storageLabelKey =  "workery-create-deposit-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "workery-create-zero-amount-deposit-"+[e.target.name];
+        const storageLabelKey =  "workery-create-zero-amount-deposit-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
@@ -163,10 +172,23 @@ class ZeroAmountDueStep1Container extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        const amount = e.target.value.replace("$","").replace(",", "");
+        // The purpose of this code is to fetch the amount due and subtract
+        // it from the amount being paid in hopes to communicate to the user
+        // that they have zeroed the results.
+        let invoiceAmountDue = parseFloat(this.props.orderDetail.invoiceAmountDue);
+        let amount = parseFloat(e.target.value.replace("$","").replace(",", ""));
+        if (isNaN(amount)) {
+            amount = 0;
+        }
+        invoiceAmountDue -= amount;
+
+        // Update the state with our amount change and our calculated amount.
         this.setState(
-            { [e.target.name]: parseFloat(amount), }, ()=>{
-                localStorage.setItem('workery-create-deposit-'+[e.target.name], parseFloat(amount) );
+            {
+                [e.target.name]: amount,
+                invoiceAmountDue: invoiceAmountDue,
+            }, ()=>{
+                localStorage.setItem('workery-create-zero-amount-deposit-'+[e.target.name], parseFloat(amount) );
             }
         );
     }
@@ -202,7 +224,7 @@ class ZeroAmountDueStep1Container extends Component {
 
     render() {
         const {
-            orderId, errors, invoiceId, paidAt, depositMethod, paidTo, paidFor, amount
+            orderId, errors, invoiceId, paidAt, depositMethod, paidTo, paidFor, amount, invoiceAmountDue
         } = this.state;
         return (
             <ZeroAmountDueStep1Component
@@ -218,6 +240,7 @@ class ZeroAmountDueStep1Container extends Component {
                 onPaidAtChange={this.onPaidAtChange}
                 onAmountChange={this.onAmountChange}
                 onClick={this.onClick}
+                invoiceAmountDue={invoiceAmountDue}
             />
         );
     }

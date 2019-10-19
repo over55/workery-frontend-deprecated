@@ -27,7 +27,8 @@ class ZeroAmountDueStep1Component extends Component {
             depositMethod, paidTo, paidFor, onRadioChange,
             amount, onAmountChange,
             errors,
-            isLoading, onClick, onSelectChange
+            isLoading, onClick, onSelectChange,
+            invoiceAmountDue
         } = this.props;
         return (
             <main id="main" role="main">
@@ -131,7 +132,19 @@ class ZeroAmountDueStep1Component extends Component {
                                 onChange={onAmountChange}
                                 value={amount}
                                 name="amount"
-                                helpText=""
+                                helpText="This is the amount that will be given to pay of the remaining amount."
+                            />
+
+                            <BootstrapCurrencyInput
+                                inputClassName="form-control"
+                                borderColour="border-success"
+                                error={errors.invoiceAmountDue}
+                                label="Amount Due"
+                                onChange={onAmountChange}
+                                value={invoiceAmountDue}
+                                name="invoiceAmountDue"
+                                helpText="This is the amount remaining that needs to be paid. If possible, please make sure this value is zero."
+                                disabled={true}
                             />
 
                             <div className="form-group">

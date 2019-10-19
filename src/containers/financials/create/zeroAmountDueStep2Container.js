@@ -27,17 +27,18 @@ class ZeroAmountDueStep2Container extends Component {
 
         this.state = {
             orderId: parseInt(id),
-            paidAt: localStorageGetDateItem("workery-create-deposit-paidAt"),
-            depositMethod: localStorageGetIntegerItem("workery-create-deposit-depositMethod"),
-            depositMethodLabel: localStorage.getItem("workery-create-deposit-depositMethod-label"),
-            paidTo: localStorageGetIntegerItem("workery-create-deposit-paidTo"),
-            paidToLabel: localStorage.getItem("workery-create-deposit-paidTo-label"),
-            paidFor: localStorageGetIntegerItem("workery-create-deposit-paidFor"),
-            paidForLabel: localStorage.getItem("workery-create-deposit-paidFor-label"),
-            amount: localStorageGetFloatItem("workery-create-deposit-amount"),
+            paidAt: localStorageGetDateItem("workery-create-zero-amount-deposit-paidAt"),
+            depositMethod: localStorageGetIntegerItem("workery-create-zero-amount-deposit-depositMethod"),
+            depositMethodLabel: localStorage.getItem("workery-create-zero-amount-deposit-depositMethod-label"),
+            paidTo: localStorageGetIntegerItem("workery-create-zero-amount-deposit-paidTo"),
+            paidToLabel: localStorage.getItem("workery-create-zero-amount-deposit-paidTo-label"),
+            paidFor: localStorageGetIntegerItem("workery-create-zero-amount-deposit-paidFor"),
+            paidForLabel: localStorage.getItem("workery-create-zero-amount-deposit-paidFor-label"),
+            amount: localStorageGetFloatItem("workery-create-zero-amount-deposit-amount"),
+            invoiceAmountDue: localStorageGetFloatItem("workery-create-zero-amount-deposit-invoiceAmountDue"),
             errors: {},
             isLoading: false
-        }
+        };
 
         this.getPostData = this.getPostData.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -98,7 +99,7 @@ class ZeroAmountDueStep2Container extends Component {
     }
 
     onSuccessCallback(response) {
-        localStorageRemoveItemsContaining("workery-create-deposit-");
+        localStorageRemoveItemsContaining("workery-create-zero-amount-deposit-");
         this.props.history.push("/financial/"+this.state.orderId);
     }
 
@@ -144,7 +145,7 @@ class ZeroAmountDueStep2Container extends Component {
 
     render() {
         const {
-            orderId, errors, isLoading, invoiceId, paidAt, depositMethod, depositMethodLabel, paidTo, paidToLabel, paidFor, paidForLabel, amount
+            orderId, errors, isLoading, invoiceId, paidAt, depositMethod, depositMethodLabel, paidTo, paidToLabel, paidFor, paidForLabel, amount, invoiceAmountDue
         } = this.state;
         return (
             <ZeroAmountDueStep2Component
@@ -158,6 +159,7 @@ class ZeroAmountDueStep2Container extends Component {
                 paidFor={paidFor}
                 paidForLabel={paidForLabel}
                 amount={amount}
+                invoiceAmountDue={invoiceAmountDue}
                 errors={errors}
                 isLoading={isLoading}
                 onRadioChange={this.onRadioChange}
