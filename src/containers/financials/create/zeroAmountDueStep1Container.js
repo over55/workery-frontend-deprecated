@@ -8,6 +8,7 @@ import { validateDepositInput } from "../../../validators/depositValidator";
 import {
     localStorageGetIntegerItem, localStorageGetFloatItem, localStorageGetDateItem, localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
 import { putStaffContactDetail } from '../../../actions/staffActions';
+import { clearFlashMessage } from "../../../actions/flashMessageActions";
 
 
 class ZeroAmountDueStep1Container extends Component {
@@ -110,6 +111,9 @@ class ZeroAmountDueStep1Container extends Component {
         this.setState = (state,callback)=>{
             return;
         };
+
+        // Clear any and all flash messages in our queue to be rendered.
+        this.props.clearFlashMessage();
     }
 
     /**
@@ -241,6 +245,7 @@ class ZeroAmountDueStep1Container extends Component {
                 onAmountChange={this.onAmountChange}
                 onClick={this.onClick}
                 invoiceAmountDue={invoiceAmountDue}
+                flashMessage={this.props.flashMessage}
             />
         );
     }
@@ -249,12 +254,16 @@ class ZeroAmountDueStep1Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        flashMessage: store.flashMessageState,
         orderDetail: store.orderDetailState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        clearFlashMessage: () => {
+            dispatch(clearFlashMessage())
+        },
         pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullOrderDetail(id, onSuccessCallback, onFailureCallback)

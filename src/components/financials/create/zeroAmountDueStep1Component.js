@@ -17,6 +17,7 @@ import {
     IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
 } from "../../../constants/api";
+import { FlashMessageComponent } from "../../flashMessageComponent";
 
 
 class ZeroAmountDueStep1Component extends Component {
@@ -28,7 +29,7 @@ class ZeroAmountDueStep1Component extends Component {
             amount, onAmountChange,
             errors,
             isLoading, onClick, onSelectChange,
-            invoiceAmountDue
+            invoiceAmountDue, flashMessage
         } = this.props;
         return (
             <main id="main" role="main">
@@ -50,6 +51,8 @@ class ZeroAmountDueStep1Component extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <FlashMessageComponent object={flashMessage} />
 
                 <h1>
                     <i className="fas fa-coins"></i>&nbsp;Zero Amount Due

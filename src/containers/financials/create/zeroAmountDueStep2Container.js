@@ -100,6 +100,7 @@ class ZeroAmountDueStep2Container extends Component {
 
     onSuccessCallback(response) {
         localStorageRemoveItemsContaining("workery-create-zero-amount-deposit-");
+        this.props.setFlashMessage("success", "Order has been successfully updated with payment.");
         this.props.history.push("/financial/"+this.state.orderId);
     }
 
