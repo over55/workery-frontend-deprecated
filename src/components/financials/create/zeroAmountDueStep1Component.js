@@ -52,11 +52,11 @@ class ZeroAmountDueStep1Component extends Component {
                     </ol>
                 </nav>
 
-                <FlashMessageComponent object={flashMessage} />
-
                 <h1>
                     <i className="fas fa-coins"></i>&nbsp;Zero Amount Due
                 </h1>
+
+                <FlashMessageComponent object={flashMessage} />
 
                 <div className="row">
                     <div className="step-navigation">
@@ -227,5 +227,10 @@ const PAID_FOR_CHOICES = [
         name: "paidFor",
         value: 3,
         label: "Waste Removal"
+    },{
+        id: 'paidFor-4-choice',
+        name: "paidFor",
+        value: 4,
+        label: "Amount Due"
     }
 ];
