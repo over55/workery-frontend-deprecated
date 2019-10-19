@@ -45,6 +45,12 @@ class FinancialUpdateContainer extends Component {
 
         const hasNoIDs = this.props.orderDetail.invoiceIds === undefined || this.props.orderDetail.invoiceIds === null || this.props.orderDetail.invoiceIds === "";
 
+        const associateServiceFee = this.props.orderDetail.associateServiceFee;
+        let invoiceServiceFee = parseInt(this.props.orderDetail.invoiceServiceFee);
+        if (invoiceServiceFee === undefined || invoiceServiceFee === null || isNaN(invoiceServiceFee)) {
+            invoiceServiceFee = associateServiceFee;
+        }
+
         // Update state.
         this.state = {
             errors: {},
@@ -63,7 +69,7 @@ class FinancialUpdateContainer extends Component {
             invoiceWasteRemovalAmount: parseFloat(this.props.orderDetail.invoiceWasteRemovalAmount),
             invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
             invoiceDepositAmount: parseFloat(this.props.orderDetail.invoiceDepositAmount),
-            invoiceServiceFee: parseInt(this.props.orderDetail.invoiceServiceFee),
+            invoiceServiceFee: invoiceServiceFee,
             invoiceServiceFeeAmount: parseFloat(this.props.orderDetail.invoiceServiceFeeAmount),
             invoiceServiceFeePaymentDate: invoiceServiceFeePaymentDate,
             invoiceActualServiceFeeAmountPaid: parseFloat(this.props.orderDetail.invoiceActualServiceFeeAmountPaid),

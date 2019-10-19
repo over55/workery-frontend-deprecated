@@ -31,7 +31,7 @@ export const BootstrapSingleSelect = ({
     options,
     defaultOptionLabel=null,
     value = null,
-    helpText,
+    helpText = null,
     error,
     onSelectChange,
     borderColour="border-primary",
@@ -64,6 +64,7 @@ export const BootstrapSingleSelect = ({
         })
     }
     // console.log("error: ", error);
+    // console.log(helpText);
 
     // Render our output for this component.
     return (

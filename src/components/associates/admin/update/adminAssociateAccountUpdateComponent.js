@@ -230,6 +230,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
                                 error={errors.serviceFee}
                                 onSelectChange={onSelectChange}
                                 isLoading={isServiceFeeLoading}
+                                helpText={"Note: Service fee is automatically set from associate profile, however you can override it here if needed."}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
