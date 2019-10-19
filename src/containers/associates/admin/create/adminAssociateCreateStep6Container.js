@@ -18,6 +18,7 @@ import {
 import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
 import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
 import { getVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../../actions/vehicleTypeActions";
+import { pullServiceFeeList, getServiceFeeReactSelectOptions } from "../../../../actions/serviceFeeActions";
 
 
 class AdminAssociateCreateStep6Container extends Component {
@@ -47,6 +48,8 @@ class AdminAssociateCreateStep6Container extends Component {
             driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
             isVehicleTypesLoading: true,
             vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
+            isServiceFeeLoading: true,
+            serviceFee: localStorageGetIntegerItem("workery-create-associate-serviceFee"),
             emergencyContactName: localStorage.getItem("workery-create-associate-emergencyContactName"),
             emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
@@ -73,6 +76,7 @@ class AdminAssociateCreateStep6Container extends Component {
         this.onSkillSetSuccessFetch = this.onSkillSetSuccessFetch.bind(this);
         this.onInsuranceRequirementsSuccessFetch = this.onInsuranceRequirementsSuccessFetch.bind(this);
         this.onVehicleTypesSuccessFetch = this.onVehicleTypesSuccessFetch.bind(this);
+        this.onFetchedServiceFeeCallback = this.onFetchedServiceFeeCallback.bind(this);
     }
 
     /**
@@ -89,6 +93,7 @@ class AdminAssociateCreateStep6Container extends Component {
         this.props.pullSkillSetList(1, 1000, parametersMap, this.onSkillSetSuccessFetch);
         this.props.pullInsuranceRequirementList(1, 1000, parametersMap, this.onInsuranceRequirementsSuccessFetch);
         this.props.pullVehicleTypeList(1, 1000, parametersMap, this.onVehicleTypesSuccessFetch);
+        this.props.pullServiceFeeList(1, 1000, parametersMap, this.onFetchedServiceFeeCallback);
     }
 
     componentWillUnmount() {
@@ -132,6 +137,10 @@ class AdminAssociateCreateStep6Container extends Component {
 
     onVehicleTypesSuccessFetch(response) {
         this.setState({ isVehicleTypesLoading: false, });
+    }
+
+    onFetchedServiceFeeCallback(response) {
+        this.setState({ isServiceFeeLoading: false, });
     }
 
     /**
@@ -296,7 +305,7 @@ class AdminAssociateCreateStep6Container extends Component {
             vehicleTypes,
             duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
             emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-            isInsuranceRequirementsLoading, isVehicleTypesLoading,
+            isInsuranceRequirementsLoading, isVehicleTypesLoading, serviceFee, isServiceFeeLoading,
             isActive,
             errors, isLoading
         } = this.state;
@@ -331,6 +340,10 @@ class AdminAssociateCreateStep6Container extends Component {
                 vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
                 onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
 
+                isServiceFeeLoading={isServiceFeeLoading}
+                serviceFee={serviceFee}
+                serviceFeeOptions={getServiceFeeReactSelectOptions(this.props.serviceFeeList)}
+
                 duesDate={duesDate}
                 onDuesDateChange={this.onDuesDateChange}
                 commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
@@ -361,6 +374,7 @@ const mapStateToProps = function(store) {
         skillSetList: store.skillSetListState,
         insuranceRequirementList: store.insuranceRequirementListState,
         vehicleTypeList: store.vehicleTypeListState,
+        serviceFeeList: store.serviceFeeListState,
     };
 }
 
@@ -379,6 +393,11 @@ const mapDispatchToProps = dispatch => {
         pullVehicleTypeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullVehicleTypeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullServiceFeeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullServiceFeeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

@@ -269,6 +269,12 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Account Balance</th>
                                     <td>{associate && associate.balanceOwingAmount}</td>
                                 </tr>
+                                {associate && associate.serviceFee !== undefined && associate.serviceFee !== null &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Service Fee</th>
+                                        <td>{associate && associate.serviceFeeLabel}</td>
+                                    </tr>
+                                }
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">

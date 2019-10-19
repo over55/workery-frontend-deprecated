@@ -27,7 +27,8 @@ class AdminAssociateCreateStep6Component extends Component {
             autoInsuranceExpiryDate, onAutoInsuranceExpiryDateChange,
             wsibInsuranceDate, onWsibInsuranceDateChange,
             policeCheck, onPoliceCheckDateChange,
-            isVehicleTypesLoading, isInsuranceRequirementsLoading, isSkillsetLoading
+            isVehicleTypesLoading, isInsuranceRequirementsLoading, isSkillsetLoading,
+            isServiceFeeLoading, serviceFee, serviceFeeOptions
         } = this.props;
 
         return (
@@ -253,6 +254,18 @@ class AdminAssociateCreateStep6Component extends Component {
                                 error={errors.vehicleTypes}
                                 onMultiChange={onVehicleTypeMultiChange}
                                 isLoading={isVehicleTypesLoading}
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Service Fee (*)"
+                                name="serviceFee"
+                                defaultOptionLabel="Please select the service fee."
+                                options={serviceFeeOptions}
+                                value={serviceFee}
+                                error={errors.serviceFee}
+                                onSelectChange={onSelectChange}
+                                isLoading={isServiceFeeLoading}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">

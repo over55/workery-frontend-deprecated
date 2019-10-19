@@ -10,6 +10,7 @@ import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pul
 import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
 import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../../actions/vehicleTypeActions";
 import { putAssociateAccountDetail } from "../../../../actions/associateActions";
+import { pullServiceFeeList, getServiceFeeReactSelectOptions } from "../../../../actions/serviceFeeActions";
 
 
 class AdminAssociateAccountUpdateContainer extends Component {
@@ -59,6 +60,8 @@ class AdminAssociateAccountUpdateContainer extends Component {
             taxId: this.props.associateDetail.taxId,
             driversLicenseClass: this.props.associateDetail.driversLicenseClass,
             isVehicleTypesLoading: true,
+            isServiceFeeLoading: true,
+            serviceFee: this.props.associateDetail.serviceFee,
             vehicleTypes: this.props.associateDetail.vehicleTypes,
             emergencyContactName: this.props.associateDetail.emergencyContactName,
             emergencyContactRelationship: this.props.associateDetail.emergencyContactRelationship,
@@ -90,6 +93,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
         this.onFetchedSkillSetsCallback = this.onFetchedSkillSetsCallback.bind(this);
         this.onFetchedInsuranceRequirementsCallback = this.onFetchedInsuranceRequirementsCallback.bind(this);
         this.onFetchedVehicleTypesCallback = this.onFetchedVehicleTypesCallback.bind(this);
+        this.onFetchedServiceFeeCallback = this.onFetchedServiceFeeCallback.bind(this);
     }
 
     /**
@@ -179,6 +183,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
         this.props.pullSkillSetList(1, 1000, parametersMap, this.onFetchedSkillSetsCallback);
         this.props.pullInsuranceRequirementList(1, 1000, parametersMap, this.onFetchedInsuranceRequirementsCallback);
         this.props.pullVehicleTypeList(1, 1000, parametersMap, this.onFetchedVehicleTypesCallback);
+        this.props.pullServiceFeeList(1, 1000, parametersMap, this.onFetchedServiceFeeCallback);
     }
 
     componentWillUnmount() {
@@ -221,6 +226,10 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
     onFetchedVehicleTypesCallback(response) {
         this.setState({ isVehicleTypesLoading: false, });
+    }
+
+    onFetchedServiceFeeCallback(response) {
+        this.setState({ isServiceFeeLoading: false, });
     }
 
     /**
@@ -393,7 +402,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
             country, region, locality, postalCode, streetAddress,
 
             // Step 6
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, isSkillSetsLoading, skillSets, isInsuranceRequirementsLoading, insuranceRequirements, isVehicleTypesLoading, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, isSkillSetsLoading, skillSets, isInsuranceRequirementsLoading, insuranceRequirements, isVehicleTypesLoading, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, serviceFee, isServiceFeeLoading,
 
             // Step 7
             tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
@@ -447,6 +456,9 @@ class AdminAssociateAccountUpdateContainer extends Component {
                 onWsibInsuranceDateChange={this.onWsibInsuranceDateChange}
                 policeCheck={policeCheck}
                 onPoliceCheckDateChange={this.onPoliceCheckDateChange}
+                isServiceFeeLoading={isServiceFeeLoading}
+                serviceFee={serviceFee}
+                serviceFeeOptions={getServiceFeeReactSelectOptions(this.props.serviceFeeList)}
 
                 // Everything else...
                 id={id}
@@ -473,6 +485,7 @@ const mapStateToProps = function(store) {
         skillSetList: store.skillSetListState,
         insuranceRequirementList: store.insuranceRequirementListState,
         vehicleTypeList: store.vehicleTypeListState,
+        serviceFeeList: store.serviceFeeListState,
     };
 }
 
@@ -499,6 +512,11 @@ const mapDispatchToProps = dispatch => {
         putAssociateAccountDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 putAssociateAccountDetail(data, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullServiceFeeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullServiceFeeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

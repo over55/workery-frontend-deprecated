@@ -67,6 +67,7 @@ class AdminAssociateCreateStep8Container extends Component {
             taxId: localStorage.getItem("workery-create-associate-taxId"),
             driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
             vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
+            serviceFee: localStorageGetIntegerItem("workery-create-associate-serviceFee"),
             emergencyContactName: localStorage.getItem("workery-create-associate-emergencyContactName"),
             emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),

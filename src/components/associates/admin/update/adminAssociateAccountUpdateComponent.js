@@ -36,7 +36,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
             onSkillSetMultiChange, onDuesDateChange, onCommercialInsuranceExpiryDate,
             onAutoInsuranceExpiryDateChange, onWsibInsuranceDateChange, onPoliceCheckDateChange,
             onVehicleTypeMultiChange, onInsuranceRequirementMultiChange, onTagMultiChange, onJoinDateChange,
-            onDateOfBirthChange,
+            onDateOfBirthChange, isServiceFeeLoading, serviceFee, serviceFeeOptions
         } = this.props;
         return (
             <main id="main" role="main">
@@ -218,6 +218,18 @@ class AdminAssociateAccountUpdateComponent extends Component {
                                 error={errors.vehicleTypes}
                                 onMultiChange={onVehicleTypeMultiChange}
                                 isLoading={isVehicleTypesLoading}
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Service Fee (*)"
+                                name="serviceFee"
+                                defaultOptionLabel="Please select the service fee."
+                                options={serviceFeeOptions}
+                                value={serviceFee}
+                                error={errors.serviceFee}
+                                onSelectChange={onSelectChange}
+                                isLoading={isServiceFeeLoading}
                             />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
