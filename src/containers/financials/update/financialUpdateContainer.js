@@ -8,6 +8,11 @@ import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateFinancialUpdateInput } from "../../../validators/orderValidator";
 import { pullServiceFeeList, getServiceFeeReactSelectOptions, getPercentValueForServiceFeeId } from '../../../actions/serviceFeeActions';
 import { putOrderFinancialDetail, pullOrderDetail } from "../../../actions/orderActions";
+import {
+    WORK_ORDER_COMPLETED_AND_PAID_STATE,
+    WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
+    IS_OK_TO_EMAIL_CHOICES
+} from "../../../constants/api";
 
 
 /**
@@ -202,9 +207,19 @@ class FinancialUpdateContainer extends Component {
     }
 
     onSuccessfulSubmissionCallback(order) {
-        this.setState({ errors: {}, isLoading: false, })
+        this.setState({ errors: {}, isLoading: false, });
         this.props.setFlashMessage("success", "Order has been successfully updated.");
-        this.props.history.push("/financial/"+this.state.id);
+
+        // According to the following ticket (https://github.com/over55/workery-front/issues/212)
+        // we are to redirect to a different page where the user can handle
+        // zeroing the amount owing.
+        const invoiceAmountDue = order['invoiceAmountDue'];
+        const paymentStatus = order['state'];
+        if (paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE && invoiceAmountDue > 0) {
+            this.props.history.push("/financial/"+this.state.id+"/zero-amount-due/create/step-1");
+        } else {
+            this.props.history.push("/financial/"+this.state.id);
+        }
     }
 
     onFailedSubmissionCallback(errors) {

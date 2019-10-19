@@ -213,7 +213,8 @@ import InvoiceThirdSectionUpdateContainer from "./financials/update/invoiceThird
 import DepositCreateStep1Container from "./financials/create/depositCreateStep1Container";
 import DepositCreateStep2Container from "./financials/create/depositCreateStep2Container";
 import PaymentDeleteContainer from "./financials/delete/paymentDeleteContainer";
-
+import ZeroAmountDueStep1Container from "./financials/create/zeroAmountDueStep1Container";
+import ZeroAmountDueStep2Container from "./financials/create/zeroAmountDueStep2Container";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -526,6 +527,8 @@ class AppContainer extends React.Component {
                                 <Route path="/financial/:id/invoice/update/third-section" exact component={requiresAuth(InvoiceThirdSectionUpdateContainer)} />
                                 <Route path="/financial/:id/deposit/create/step-1" exact component={requiresAuth(DepositCreateStep1Container)} />
                                 <Route path="/financial/:id/deposit/create/step-2" exact component={requiresAuth(DepositCreateStep2Container)} />
+                                <Route path="/financial/:id/zero-amount-due/create/step-1" exact component={requiresAuth(ZeroAmountDueStep1Container)} />
+                                <Route path="/financial/:id/zero-amount-due/create/step-2" exact component={requiresAuth(ZeroAmountDueStep2Container)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
