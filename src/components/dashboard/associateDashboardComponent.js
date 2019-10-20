@@ -6,9 +6,28 @@ import isEmpty from 'lodash/isEmpty';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
+import { FlashMessageComponent } from "../flashMessageComponent";
+
 
 export default class AssociateDashboardComponent extends Component {
     render() {
+        const { dashboard } = this.props;
+
+        // The following code will generate a balance warning banner if the
+        // associate has a balance besides zero in the sytem.
+        let flashMessage;
+        const balanceOwingAmount = parseFloat(dashboard.balanceOwingAmount);
+        if (balanceOwingAmount > 0) {
+            flashMessage = {
+                typeOf: "warning", text: "Your account balance is $"+dashboard.balanceOwingAmount+"."
+            };
+        } else if (balanceOwingAmount < 0) {
+            flashMessage = {
+                typeOf: "success", text: "Your account balance is $"+dashboard.balanceOwingAmount+"."
+            };
+        }
+
+        // Render the associate dashboard.
         return (
             <div className="container-fluid">
                 <div className="d-flex align-items-stretch">
@@ -17,7 +36,9 @@ export default class AssociateDashboardComponent extends Component {
 
                         <div className="row">
                             <div className="col-md-12">
-
+                                {flashMessage &&
+                                    <FlashMessageComponent object={flashMessage} />
+                                }
                                 <div className="card-group row">
                                     <div className="col-sm-3 mb-4">
                                         <div className="card box-shadow text-center mx-auto h-100">

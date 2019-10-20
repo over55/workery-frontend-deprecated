@@ -65,11 +65,6 @@ class RemoteListComponent extends Component {
             sort: true,
             formatter: assignmentDateFormatter,
         },{
-            dataField: 'startDate',
-            text: 'Start Date',
-            sort: true,
-            formatter: startDateFormatter,
-        },{
             dataField: 'completionDate',
             text: 'Completion Date',
             sort: true,
@@ -82,6 +77,11 @@ class RemoteListComponent extends Component {
                 options: selectOptions
             }),
             formatter: statusFormatter
+        },{
+            dataField: 'invoice',
+            text: 'Invoice (PDF)',
+            sort: false,
+            formatter: invoiceLinkFormatter
         },{
             dataField: 'slug',
             text: 'Details',
@@ -184,6 +184,18 @@ function completionDateFormatter(cell, row){
 
 function statusFormatter(cell, row){
     return row.prettyState;
+}
+
+
+function invoiceLinkFormatter(cell, row){
+    if (row.invoice === null || row.invoice === undefined) {
+        return "-";
+    }
+    return (
+        <Link to={`/financial/${row.id}/download-invoice`} target="_blank">
+            <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+        </Link>
+    )
 }
 
 
