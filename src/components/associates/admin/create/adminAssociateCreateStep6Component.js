@@ -348,7 +348,7 @@ class AdminAssociateCreateStep6Component extends Component {
 
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
-                                    Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                    Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to="/associates/add/step-5" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
