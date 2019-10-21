@@ -10,12 +10,6 @@ class AdminAssociateSearchComponent extends Component {
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
-		
-			enterKeyPress(target) {
-			  if(target.charCode==13){
-				onSearchClick;
-			  }
-			}
         return (
             <div>
                 <nav aria-label="breadcrumb">
