@@ -22,7 +22,6 @@ export default class OrderCompletionTaskStep3Component extends Component {
         const {
             // TEXT
             invoiceIds,
-            visits,
             onTextChange,
 
             // AMOUNT
@@ -66,17 +65,6 @@ export default class OrderCompletionTaskStep3Component extends Component {
         const isNotInputted = hasInputtedFinancials === false || hasInputtedFinancials === "false";
         const isInputted = hasInputtedFinancials === true || hasInputtedFinancials === "true";
         // const isOtherHowDidYouHearSelected = reason === 'Other';
-
-        // Generate our list of choices from 1 to 30.
-        let visitChoices = [];
-        for (let i = 1; i <= 30; i++) {
-            visitChoices.push({
-                id: 'visits-t-choice',
-                name: "visits",
-                value: i,
-                label: i
-            });
-        }
 
         return (
             <div>
@@ -230,18 +218,6 @@ export default class OrderCompletionTaskStep3Component extends Component {
                                         name="invoiceIds"
                                         type="text"
                                         helpText="Please note, the system automatically generates an ID, however you are able to edit it if you wish."
-                                    />
-
-                                    <BootstrapSingleSelect
-                                        borderColour="border-primary"
-                                        label="# of Visit(s) (*)"
-                                        name="invoiceServiceFee"
-                                        defaultOptionLabel="Please select the service fee."
-                                        options={visitChoices}
-                                        value={visits}
-                                        error={errors.visits}
-                                        onSelectChange={onSelectChange}
-                                        helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 30."
                                     />
 
                                     <p className="border-bottom mb-3 pb-1 text-secondary">

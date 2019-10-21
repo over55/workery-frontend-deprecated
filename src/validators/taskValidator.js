@@ -171,9 +171,6 @@ export function validateTask6Step3Input(data) {
         if (data.invoiceActualServiceFeeAmountPaid === undefined || data.invoiceActualServiceFeeAmountPaid === null || data.invoiceActualServiceFeeAmountPaid === "" || isNaN(data.invoiceActualServiceFeeAmountPaid) ) {
             errors.invoiceActualServiceFeeAmountPaid = 'This field is required';
         }
-        if (data.visits === undefined || data.visits === null || data.visits === "" || isNaN(data.visits) ) {
-            errors.visits = 'This field is required';
-        }
     }
 
     return {

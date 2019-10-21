@@ -68,7 +68,6 @@ class OrderCompletionTaskStep3Container extends Component {
             invoiceActualServiceFeeAmountPaid: localStorageGetFloatItem("workery-task-6-invoiceActualServiceFeeAmountPaid"),
             invoiceBalanceOwingAmount: localStorageGetFloatItem("workery-task-6-invoiceBalanceOwingAmount"),
             invoiceAmountDue: localStorageGetFloatItem("workery-task-6-invoiceAmountDue"),
-            visits: localStorageGetIntegerItem("workery-task-6-visits"),
             completionDate: localStorageGetDateItem("workery-task-6-completionDate"),
             errors: {},
         }
@@ -125,7 +124,11 @@ class OrderCompletionTaskStep3Container extends Component {
         /*
          *  Compute balance owing.
          */
-        const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
+        let invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
+        invoiceBalanceOwingAmount = roundToTwo(invoiceBalanceOwingAmount, 2);
+        if (isNaN(invoiceBalanceOwingAmount)) {
+            invoiceBalanceOwingAmount = 0;
+        }
 
         /*
          *
@@ -136,10 +139,12 @@ class OrderCompletionTaskStep3Container extends Component {
         this.setState({
             invoiceTotalQuoteAmount: roundToTwo(invoiceTotalQuoteAmount, 2),
             invoiceTotalAmount: roundToTwo(invoiceTotalAmount, 2),
-            invoiceBalanceOwingAmount: roundToTwo(invoiceBalanceOwingAmount, 2),
+            invoiceBalanceOwingAmount: invoiceBalanceOwingAmount,
             invoiceServiceFeeAmount: roundToTwo(invoiceServiceFeeAmount, 2),
             invoiceAmountDue: roundToTwo(invoiceAmountDue, 2),
         });
+
+        console.log(">>>", invoiceBalanceOwingAmount);
 
         // Update our persistent storage.
         localStorage.setItem("workery-task-6-invoiceTotalQuoteAmount", invoiceTotalQuoteAmount);
@@ -273,7 +278,6 @@ class OrderCompletionTaskStep3Container extends Component {
         console.log("onSelectChange |", option);
         const optionKey = [option.selectName]+"Option";
         const key = [option.selectName];
-        console.log(">>>>>", key);
         this.setState(
             { key: option.value, [optionKey]: option, },
             ()=>{
@@ -341,7 +345,7 @@ class OrderCompletionTaskStep3Container extends Component {
             hasInputtedFinancials, invoicePaidTo, paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedWasteRemovalAmount,
             invoiceLabourAmount, invoiceMaterialAmount, invoiceWasteRemovalAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
-            visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate, invoiceAmountDue
+            invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate, invoiceAmountDue
         } = this.state;
         const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList, "invoiceServiceFee");
         return (
@@ -368,7 +372,6 @@ class OrderCompletionTaskStep3Container extends Component {
                 // Select
                 invoiceServiceFee={invoiceServiceFee}
                 invoiceServiceFeeOptions={invoiceServiceFeeOptions}
-                visits={visits}
                 onSelectChange={this.onSelectChange}
 
                 // Radio GUI
@@ -392,6 +395,7 @@ class OrderCompletionTaskStep3Container extends Component {
                 isLoading={isLoading}
                 errors={errors}
                 onClick={this.onClick}
+                task={this.props.taskDetail}
             />
         );
     }
