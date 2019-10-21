@@ -47,21 +47,27 @@ class OrderCompletionTaskStep5Container extends Component {
 
             // Step 3
             hasInputtedFinancials: localStorage.getItem("workery-task-6-hasInputtedFinancials"),
+            invoicePaidTo: localStorageGetIntegerItem("workery-task-6-invoicePaidTo"),
+            paymentStatus: localStorage.getItem("workery-task-6-paymentStatus"),
             invoiceDate: localStorageGetDateItem("workery-task-6-invoiceDate"),
             invoiceIds: localStorage.getItem("workery-task-6-invoiceIds"),
             invoiceQuotedLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedLabourAmount"),
             invoiceQuotedMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedMaterialAmount"),
+            invoiceQuotedWasteRemovalAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedWasteRemovalAmount"),
             invoiceTotalQuoteAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalQuoteAmount"),
             invoiceLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceLabourAmount"),
             invoiceMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceMaterialAmount"),
+            invoiceWasteRemovalAmount: localStorageGetFloatItem("workery-task-6-invoiceWasteRemovalAmount"),
             invoiceTaxAmount: localStorageGetFloatItem("workery-task-6-invoiceTaxAmount"),
+            invoiceDepositAmount: 0.00,
             invoiceTotalAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalAmount"),
             invoiceServiceFee: localStorageGetIntegerItem("workery-task-6-invoiceServiceFee"),
             invoiceServiceFeeAmount: localStorageGetFloatItem("workery-task-6-invoiceServiceFeeAmount"),
             invoiceServiceFeePaymentDate:localStorageGetDateItem("workery-task-6-invoiceServiceFeePaymentDate"),
             invoiceActualServiceFeeAmountPaid: localStorageGetFloatItem("workery-task-6-invoiceActualServiceFeeAmountPaid"),
             invoiceBalanceOwingAmount: localStorageGetFloatItem("workery-task-6-invoiceBalanceOwingAmount"),
-            visits: localStorageGetIntegerItem("workery-task-6-visits"),
+            invoiceAmountDue: localStorageGetFloatItem("workery-task-6-invoiceAmountDue"),
+            completionDate: localStorageGetDateItem("workery-task-6-completionDate"),
 
             // Step 4
             comment: localStorage.getItem("workery-task-6-comment"),
@@ -194,7 +200,6 @@ class OrderCompletionTaskStep5Container extends Component {
 
                 // Step 3
                 invoiceIds={this.state.invoiceIds}
-                visits={this.state.visits}
                 invoiceQuotedLabourAmount={this.state.invoiceQuotedLabourAmount}
                 invoiceQuotedMaterialAmount={this.state.invoiceQuotedMaterialAmount}
                 invoiceTotalQuoteAmount={this.state.invoiceTotalQuoteAmount}
@@ -208,6 +213,13 @@ class OrderCompletionTaskStep5Container extends Component {
                 hasInputtedFinancials={this.state.hasInputtedFinancials}
                 invoiceDate={this.state.invoiceDate}
                 invoiceActualServiceFeeAmountPaid={this.state.invoiceActualServiceFeeAmountPaid}
+                invoicePaidTo={this.state.invoicePaidTo}
+                paymentStatus={this.state.paymentStatus}
+                invoiceQuotedWasteRemovalAmount={this.state.invoiceQuotedWasteRemovalAmount}
+                invoiceWasteRemovalAmount={this.state.invoiceWasteRemovalAmount}
+                invoiceDepositAmount={this.state.invoiceDepositAmount}
+                invoiceAmountDue={this.invoiceAmountDue}
+                completionDate={this.completionDate}
 
                 // Step 4
                 comment={this.state.comment}
