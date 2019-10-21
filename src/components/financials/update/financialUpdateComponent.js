@@ -213,9 +213,9 @@ export default class FinancialUpdateComponent extends Component {
 
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
-                                borderColour="border-primary"
+                                borderColour="border-success"
                                 error={errors.invoiceQuotedWasteRemovalAmount}
-                                label="Quoted Waste Removal (*)"
+                                label="Quoted Waste Removal"
                                 onChange={onAmountChange}
                                 value={invoiceQuotedWasteRemovalAmount}
                                 name="invoiceQuotedWasteRemovalAmount"

@@ -1,6 +1,10 @@
 import validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
+import {
+    WORK_ORDER_COMPLETED_AND_PAID_STATE
+} from '../constants/api';
+
 
 /**
  *  Validator will validate step 2 of `Assign Watch Associate` (#1) task.
@@ -119,6 +123,18 @@ export function validateTask6Step3Input(data) {
 
     const isCompleted = data.hasInputtedFinancials === true || data.hasInputtedFinancials === "true";
     if (isCompleted) {
+        if (data.invoicePaidTo === undefined || data.invoicePaidTo === null || data.invoicePaidTo === "" || isNaN(data.invoicePaidTo) ) {
+            errors.invoicePaidTo = 'This field is required';
+        }
+        if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "" || isEmpty(data.paymentStatus)) {
+            errors.paymentStatus = 'This field is required';
+        } else {
+            if (data.paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE) {
+                if (data.completionDate === undefined || data.completionDate === null || data.completionDate === "" || isNaN(data.completionDate) ) {
+                    errors.completionDate = 'This field is required';
+                }
+            }
+        }
         if (data.invoiceDate === undefined || data.invoiceDate === null || data.invoiceDate === "" || isNaN(data.invoiceDate) ) {
             errors.invoiceDate = 'This field is required';
         }
@@ -137,11 +153,17 @@ export function validateTask6Step3Input(data) {
         if (data.invoiceMaterialAmount === undefined || data.invoiceMaterialAmount === null || data.invoiceMaterialAmount === "" || isNaN(data.invoiceMaterialAmount) ) {
             errors.invoiceMaterialAmount = 'This field is required';
         }
+        if (data.invoiceWasteRemovalAmount === undefined || data.invoiceWasteRemovalAmount === null || data.invoiceWasteRemovalAmount === "" || isNaN(data.invoiceWasteRemovalAmount) ) {
+            errors.invoiceWasteRemovalAmount = 'This field is required';
+        }
         if (data.invoiceTaxAmount === undefined || data.invoiceTaxAmount === null || data.invoiceTaxAmount === "" || isNaN(data.invoiceTaxAmount) ) {
             errors.invoiceTaxAmount = 'This field is required';
         }
         if (data.invoiceServiceFee === undefined || data.invoiceServiceFee === null || data.invoiceServiceFee === "" || isNaN(data.invoiceServiceFee) ) {
             errors.invoiceServiceFee = 'This field is required';
+        }
+        if (data.invoiceServiceFeeAmount === undefined || data.invoiceServiceFeeAmount === null || data.invoiceServiceFeeAmount === "" || isNaN(data.invoiceServiceFeeAmount) ) {
+            errors.invoiceServiceFeeAmount = 'This field is required';
         }
         if (data.invoiceServiceFeePaymentDate === undefined || data.invoiceServiceFeePaymentDate === null || data.invoiceServiceFeePaymentDate === "" || isNaN(data.invoiceServiceFeePaymentDate) ) {
             errors.invoiceServiceFeePaymentDate = 'This field is required';
@@ -216,7 +238,6 @@ export function validateTask7Step2Input(data) {
 
     }
 
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>",data);
     if (data.comment === undefined || data.comment === null || data.comment === "") {
         errors.comment = 'This field is required';
     }

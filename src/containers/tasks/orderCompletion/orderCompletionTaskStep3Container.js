@@ -7,12 +7,26 @@ import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask6Step3Input } from "../../../validators/taskValidator";
 import { pullServiceFeeList, getServiceFeeReactSelectOptions, getPercentValueForServiceFeeId } from '../../../actions/serviceFeeActions';
 import { postTaskOrderCompletionDetail } from "../../../actions/taskActions";
+import { pullOrderDetail } from "../../../actions/orderActions";
 import {
     localStorageSetObjectOrArrayItem,
     localStorageGetDateItem,
     localStorageGetFloatItem,
     localStorageGetIntegerItem
 } from '../../../helpers/localStorageUtility';
+import {
+    WORK_ORDER_COMPLETED_AND_PAID_STATE,
+    WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
+    IS_OK_TO_EMAIL_CHOICES
+} from "../../../constants/api";
+
+
+/**
+ *  Source: https://stackoverflow.com/a/18358056
+ */
+function roundToTwo(num) {
+    return +(Math.round(num + "e+2")  + "e-2");
+}
 
 
 class OrderCompletionTaskStep3Container extends Component {
@@ -34,21 +48,28 @@ class OrderCompletionTaskStep3Container extends Component {
             isLoading: false,
             id: id,
             hasInputtedFinancials: localStorage.getItem("workery-task-6-hasInputtedFinancials"),
+            invoicePaidTo: localStorageGetIntegerItem("workery-task-6-invoicePaidTo"),
+            paymentStatus: localStorage.getItem("workery-task-6-paymentStatus"),
             invoiceDate: localStorageGetDateItem("workery-task-6-invoiceDate"),
             invoiceIds: localStorage.getItem("workery-task-6-invoiceIds"),
             invoiceQuotedLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedLabourAmount"),
             invoiceQuotedMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedMaterialAmount"),
+            invoiceQuotedWasteRemovalAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedWasteRemovalAmount"),
             invoiceTotalQuoteAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalQuoteAmount"),
             invoiceLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceLabourAmount"),
             invoiceMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceMaterialAmount"),
+            invoiceWasteRemovalAmount: localStorageGetFloatItem("workery-task-6-invoiceWasteRemovalAmount"),
             invoiceTaxAmount: localStorageGetFloatItem("workery-task-6-invoiceTaxAmount"),
+            invoiceDepositAmount: 0.00,
             invoiceTotalAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalAmount"),
             invoiceServiceFee: localStorageGetIntegerItem("workery-task-6-invoiceServiceFee"),
             invoiceServiceFeeAmount: localStorageGetFloatItem("workery-task-6-invoiceServiceFeeAmount"),
             invoiceServiceFeePaymentDate:localStorageGetDateItem("workery-task-6-invoiceServiceFeePaymentDate"),
             invoiceActualServiceFeeAmountPaid: localStorageGetFloatItem("workery-task-6-invoiceActualServiceFeeAmountPaid"),
             invoiceBalanceOwingAmount: localStorageGetFloatItem("workery-task-6-invoiceBalanceOwingAmount"),
+            invoiceAmountDue: localStorageGetFloatItem("workery-task-6-invoiceAmountDue"),
             visits: localStorageGetIntegerItem("workery-task-6-visits"),
+            completionDate: localStorageGetDateItem("workery-task-6-completionDate"),
             errors: {},
         }
 
@@ -60,6 +81,9 @@ class OrderCompletionTaskStep3Container extends Component {
         this.onInvoiceServiceFeePaymentDate = this.onInvoiceServiceFeePaymentDate.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
+        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onCompletionDate = this.onCompletionDate.bind(this);
     }
 
     /**
@@ -68,10 +92,13 @@ class OrderCompletionTaskStep3Container extends Component {
     performCalculation() {
         // Get the variables we are going to use to perform our calculations.
         const {
+            invoiceDepositAmount,
             invoiceQuotedMaterialAmount,
             invoiceQuotedLabourAmount,
+            invoiceQuotedWasteRemovalAmount,
             invoiceLabourAmount,
             invoiceMaterialAmount,
+            invoiceWasteRemovalAmount,
             invoiceTaxAmount,
             invoiceServiceFee,
             invoiceActualServiceFeeAmountPaid
@@ -80,12 +107,14 @@ class OrderCompletionTaskStep3Container extends Component {
         /*
          *  Compute the total quoted amount.
          */
-        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount;
+        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount + invoiceQuotedWasteRemovalAmount;
+        console.log("performCalculation |", invoiceQuotedMaterialAmount, invoiceQuotedLabourAmount, invoiceQuotedWasteRemovalAmount, invoiceTotalQuoteAmount);
 
         /*
          *  Compute the total amount.
          */
-        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount;
+        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount + invoiceWasteRemovalAmount;
+        console.log("performCalculation |", invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceWasteRemovalAmount, invoiceTotalAmount);
 
         /*
          *  Compute the service fee based on the labour.
@@ -98,19 +127,26 @@ class OrderCompletionTaskStep3Container extends Component {
          */
         const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
 
+        /*
+         *
+         */
+        const invoiceAmountDue = invoiceTotalAmount - invoiceDepositAmount;
+
         // Update our state.
         this.setState({
-            invoiceTotalQuoteAmount: invoiceTotalQuoteAmount,
-            invoiceTotalAmount: invoiceTotalAmount,
-            invoiceBalanceOwingAmount: invoiceBalanceOwingAmount,
-            invoiceServiceFeeAmount: invoiceServiceFeeAmount,
+            invoiceTotalQuoteAmount: roundToTwo(invoiceTotalQuoteAmount, 2),
+            invoiceTotalAmount: roundToTwo(invoiceTotalAmount, 2),
+            invoiceBalanceOwingAmount: roundToTwo(invoiceBalanceOwingAmount, 2),
+            invoiceServiceFeeAmount: roundToTwo(invoiceServiceFeeAmount, 2),
+            invoiceAmountDue: roundToTwo(invoiceAmountDue, 2),
         });
 
         // Update our persistent storage.
         localStorage.setItem("workery-task-6-invoiceTotalQuoteAmount", invoiceTotalQuoteAmount);
         localStorage.setItem("workery-task-6-invoiceTotalAmount", invoiceTotalAmount);
-        localStorage.setItem("workery-task-6-invoiceServiceFeeAmount", invoiceServiceFeeAmount);
         localStorage.setItem("workery-task-6-invoiceBalanceOwingAmount", invoiceBalanceOwingAmount);
+        localStorage.setItem("workery-task-6-invoiceServiceFeeAmount", invoiceServiceFeeAmount);
+        localStorage.setItem("workery-task-6-invoiceAmountDue", invoiceAmountDue);
     }
 
     /**
@@ -118,20 +154,23 @@ class OrderCompletionTaskStep3Container extends Component {
      *------------------------------------------------------------
      */
 
-     componentDidMount() {
-         window.scrollTo(0, 0);  // Start the page at the top of the page.
-         this.props.pullTaskDetail(this.state.id, this.onTaskDetailSuccessFetchCallback);
-         this.props.pullServiceFeeList(1, 1000);
-     }
+    componentDidMount() {
+        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        const parametersMap = new Map()
+        parametersMap.set("isArchived", 3)
+        this.props.pullServiceFeeList(1, 1000, parametersMap);
+        this.props.pullOrderDetail(this.state.id);
+        this.performCalculation();
+    }
 
-     componentWillUnmount() {
-         // This code will fix the "ReactJS & Redux: Can't perform a React state
-         // update on an unmounted component" issue as explained in:
-         // https://stackoverflow.com/a/53829700
-         this.setState = (state,callback)=>{
-             return;
-         };
-     }
+    componentWillUnmount() {
+        // This code will fix the "ReactJS & Redux: Can't perform a React state
+        // update on an unmounted component" issue as explained in:
+        // https://stackoverflow.com/a/53829700
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
 
     /**
      *  API callback functions
@@ -146,6 +185,32 @@ class OrderCompletionTaskStep3Container extends Component {
                 this.props.history.push("/tasks");
             }
         }
+    }
+
+    onSuccessfulSubmissionCallback(order) {
+        this.setState({ errors: {}, isLoading: false, });
+        this.props.setFlashMessage("success", "Order has been successfully updated.");
+
+        // According to the following ticket (https://github.com/over55/workery-front/issues/212)
+        // we are to redirect to a different page where the user can handle
+        // zeroing the amount owing.
+        const invoiceAmountDue = order['invoiceAmountDue'];
+        const paymentStatus = order['state'];
+        if (paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE && invoiceAmountDue > 0) {
+            this.props.history.push("/financial/"+this.state.id+"/zero-amount-due/create/step-1");
+        } else {
+            this.props.history.push("/financial/"+this.state.id);
+        }
+    }
+
+    onFailedSubmissionCallback(errors) {
+        this.setState({ errors: errors, isLoading: false, });
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
     }
 
     /**
@@ -205,15 +270,17 @@ class OrderCompletionTaskStep3Container extends Component {
     }
 
     onSelectChange(option) {
-        console.log(option);
+        console.log("onSelectChange |", option);
         const optionKey = [option.selectName]+"Option";
+        const key = [option.selectName];
+        console.log(">>>>>", key);
         this.setState(
-            { [option.selectName]: option.value, [optionKey]: option, },
+            { key: option.value, [optionKey]: option, },
             ()=>{
                 localStorage.setItem('workery-task-6-'+[option.selectName].toString(), option.value);
                 localStorage.setItem('workery-task-6-'+[option.selectName].toString()+"Label", option.label);
                 localStorageSetObjectOrArrayItem('workery-task-6-'+optionKey, option);
-                console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+                console.log("onSelectChange | Post Saved |", [option.selectName], optionKey, "|", this.state); // For debugging purposes only.
 
                 // Since the only dropdown field we are using affects calculations,
                 // therefore perform our calculation.
@@ -230,6 +297,10 @@ class OrderCompletionTaskStep3Container extends Component {
     onInvoiceServiceFeePaymentDate(dateObj) {
         this.setState({ invoiceServiceFeePaymentDate: dateObj, });
         localStorageSetObjectOrArrayItem('workery-task-6-invoiceServiceFeePaymentDate', dateObj);
+    }
+
+    onCompletionDate(dateObj) {
+        this.setState({ completionDate: dateObj, });
     }
 
     onClick(e) {
@@ -267,38 +338,43 @@ class OrderCompletionTaskStep3Container extends Component {
     render() {
         const {
             id, errors, isLoading,
-            hasInputtedFinancials, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount,
-            invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceServiceFee,
+            hasInputtedFinancials, invoicePaidTo, paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedWasteRemovalAmount,
+            invoiceLabourAmount, invoiceMaterialAmount, invoiceWasteRemovalAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
-            visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount
+            visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate, invoiceAmountDue
         } = this.state;
         const invoiceServiceFeeOptions = getServiceFeeReactSelectOptions(this.props.serviceFeeList, "invoiceServiceFee");
         return (
             <OrderCompletionTaskStep3Component
                 // Text
                 invoiceIds={invoiceIds}
-                visits={visits}
                 onTextChange={this.onTextChange}
 
                 // Amount
                 invoiceQuotedLabourAmount={invoiceQuotedLabourAmount}
                 invoiceQuotedMaterialAmount={invoiceQuotedMaterialAmount}
+                invoiceQuotedWasteRemovalAmount={invoiceQuotedWasteRemovalAmount}
                 invoiceTotalQuoteAmount={invoiceTotalQuoteAmount}
                 invoiceLabourAmount={invoiceLabourAmount}
                 invoiceMaterialAmount={invoiceMaterialAmount}
+                invoiceWasteRemovalAmount={invoiceWasteRemovalAmount}
                 invoiceTaxAmount={invoiceTaxAmount}
                 invoiceTotalAmount={invoiceTotalAmount}
                 invoiceServiceFeeAmount={invoiceServiceFeeAmount}
                 invoiceBalanceOwingAmount={invoiceBalanceOwingAmount}
+                invoiceAmountDue={invoiceAmountDue}
                 onAmountChange={this.onAmountChange}
 
                 // Select
                 invoiceServiceFee={invoiceServiceFee}
                 invoiceServiceFeeOptions={invoiceServiceFeeOptions}
+                visits={visits}
                 onSelectChange={this.onSelectChange}
 
                 // Radio GUI
                 hasInputtedFinancials={hasInputtedFinancials}
+                invoicePaidTo={invoicePaidTo}
+                paymentStatus={paymentStatus}
                 onRadioChange={this.onRadioChange}
 
                 // Date GUI
@@ -307,9 +383,12 @@ class OrderCompletionTaskStep3Container extends Component {
                 invoiceServiceFeePaymentDate={invoiceServiceFeePaymentDate}
                 onInvoiceServiceFeePaymentDate={this.onInvoiceServiceFeePaymentDate}
                 invoiceActualServiceFeeAmountPaid={invoiceActualServiceFeeAmountPaid}
+                completionDate={completionDate}
+                onCompletionDate={this.onCompletionDate}
 
                 // Other GUI
                 id={id}
+                orderDetail={this.props.orderDetail}
                 isLoading={isLoading}
                 errors={errors}
                 onClick={this.onClick}
@@ -321,6 +400,7 @@ class OrderCompletionTaskStep3Container extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        orderDetail: store.orderDetailState,
         taskDetail: store.taskDetailState,
         serviceFeeList: store.serviceFeeListState,
     };
@@ -341,6 +421,11 @@ const mapDispatchToProps = dispatch => {
         pullTaskDetail: (id, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullTaskDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
             )
         },
     }

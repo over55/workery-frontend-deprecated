@@ -9,7 +9,12 @@ import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
-import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
+import {
+    WORK_ORDER_COMPLETED_AND_PAID_STATE,
+    WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
+    IS_OK_TO_EMAIL_CHOICES,
+    ORDER_CANCEL_REASON_CHOICES
+} from "../../../constants/api";
 
 
 export default class OrderCompletionTaskStep3Component extends Component {
@@ -23,13 +28,16 @@ export default class OrderCompletionTaskStep3Component extends Component {
             // AMOUNT
             invoiceQuotedLabourAmount,
             invoiceQuotedMaterialAmount,
+            invoiceQuotedWasteRemovalAmount,
             invoiceLabourAmount,
             invoiceTotalQuoteAmount,
             invoiceMaterialAmount,
+            invoiceWasteRemovalAmount,
             invoiceTaxAmount,
             invoiceTotalAmount,
             invoiceServiceFeeAmount,
             invoiceBalanceOwingAmount,
+            invoiceAmountDue,
             onAmountChange,
 
             // SELECT
@@ -39,6 +47,8 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
             // RADIO
             hasInputtedFinancials,
+            invoicePaidTo,
+            paymentStatus,
             onRadioChange,
 
             // DATE
@@ -47,13 +57,27 @@ export default class OrderCompletionTaskStep3Component extends Component {
             invoiceServiceFeePaymentDate,
             onInvoiceServiceFeePaymentDate,
             invoiceActualServiceFeeAmountPaid,
+            completionDate,
+            onCompletionDate,
 
             // EVERYTHING ELSE
-            onClick, onBack, id, isLoading, errors, task
+            onClick, id, isLoading, errors, orderDetail, task
         } = this.props;
         const isNotInputted = hasInputtedFinancials === false || hasInputtedFinancials === "false";
         const isInputted = hasInputtedFinancials === true || hasInputtedFinancials === "true";
         // const isOtherHowDidYouHearSelected = reason === 'Other';
+
+        // Generate our list of choices from 1 to 30.
+        let visitChoices = [];
+        for (let i = 1; i <= 30; i++) {
+            visitChoices.push({
+                id: 'visits-t-choice',
+                name: "visits",
+                value: i,
+                label: i
+            });
+        }
+
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -147,6 +171,45 @@ export default class OrderCompletionTaskStep3Component extends Component {
 
                             {isInputted &&
                                 <div>
+                                    <p className="border-bottom mb-3 pb-1 text-secondary">
+                                        <i className="fas fa-cogs"></i>&nbsp;Status
+                                    </p>
+
+                                    <BootstrapRadio
+                                        inputClassName="form-check-input form-check-input-lg"
+                                        borderColour="border-primary"
+                                        error={errors.invoicePaidTo}
+                                        label="Who was paid for this job? (*)"
+                                        name="invoicePaidTo"
+                                        onChange={onRadioChange}
+                                        selectedValue={invoicePaidTo}
+                                        options={PAID_TO_CHOICES}
+                                    />
+
+                                    <BootstrapRadio
+                                        inputClassName="form-check-input form-check-input-lg"
+                                        borderColour="border-primary"
+                                        error={errors.paymentStatus}
+                                        label="What is the payment status of this job? (*)"
+                                        name="paymentStatus"
+                                        onChange={onRadioChange}
+                                        selectedValue={paymentStatus}
+                                        options={PAYMENT_STATUS_CHOICES}
+                                        helpText='Selecting "yes" will result in job being paid.'
+                                    />
+
+                                    {paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE &&
+                                        <BootstrapDatePicker
+                                            label="Completion date (*)"
+                                            name="completionDate"
+                                            dateObj={completionDate}
+                                            onTimeChange={onCompletionDate}
+                                            datePickerClassName="form-control form-control-lg border"
+                                            divClassName="form-group p-0 col-md-7 mb-4"
+                                            error={errors.completionDate}
+                                        />
+                                    }
+
                                     <BootstrapDatePicker
                                         label="Invoice date (*)"
                                         name="invoiceDate"
@@ -166,19 +229,19 @@ export default class OrderCompletionTaskStep3Component extends Component {
                                         value={invoiceIds}
                                         name="invoiceIds"
                                         type="text"
-                                        helpText="Please note, you are able to input multiple invoice ID values if you want, just separate them by commas. Ex.: 123, 456."
+                                        helpText="Please note, the system automatically generates an ID, however you are able to edit it if you wish."
                                     />
 
-                                    <BootstrapInput
-                                        inputClassName="form-control"
+                                    <BootstrapSingleSelect
                                         borderColour="border-primary"
-                                        error={errors.visits}
                                         label="# of Visit(s) (*)"
-                                        onChange={onTextChange}
+                                        name="invoiceServiceFee"
+                                        defaultOptionLabel="Please select the service fee."
+                                        options={visitChoices}
                                         value={visits}
-                                        name="visits"
-                                        type="number"
-                                        helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 100."
+                                        error={errors.visits}
+                                        onSelectChange={onSelectChange}
+                                        helpText="The the number of visits that were made between the customer and associate for this particular work order. The minimum visit(s) needs to be 1 and maximum is 30."
                                     />
 
                                     <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -205,6 +268,17 @@ export default class OrderCompletionTaskStep3Component extends Component {
                                         value={invoiceQuotedMaterialAmount}
                                         name="invoiceQuotedMaterialAmount"
                                         helpText="If no material costs will occur then please enter zero."
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        error={errors.invoiceQuotedWasteRemovalAmount}
+                                        label="Quoted Waste Removal"
+                                        onChange={onAmountChange}
+                                        value={invoiceQuotedWasteRemovalAmount}
+                                        name="invoiceQuotedWasteRemovalAmount"
+                                        helpText="If no waste removal will occur then please enter zero."
                                     />
 
                                     <BootstrapCurrencyInput
@@ -248,6 +322,17 @@ export default class OrderCompletionTaskStep3Component extends Component {
                                     <BootstrapCurrencyInput
                                         inputClassName="form-control"
                                         borderColour="border-primary"
+                                        error={errors.invoiceWasteRemovalAmount}
+                                        label="Actual Waste Removal (*)"
+                                        onChange={onAmountChange}
+                                        value={invoiceWasteRemovalAmount}
+                                        name="invoiceWasteRemovalAmount"
+                                        helpText="If no waste removal will occur then please enter zero."
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-primary"
                                         error={errors.invoiceTaxAmount}
                                         label="Tax (*)"
                                         onChange={onAmountChange}
@@ -266,6 +351,25 @@ export default class OrderCompletionTaskStep3Component extends Component {
                                         name="invoiceTotalAmount"
                                         helpText=""
                                         disabled={true}
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        label="Deposit"
+                                        value={orderDetail.invoiceDepositAmount}
+                                        name="invoiceDepositAmount"
+                                        disabled={true}
+                                    />
+
+                                    <BootstrapCurrencyInput
+                                        inputClassName="form-control"
+                                        borderColour="border-success"
+                                        label="Amount Due"
+                                        value={invoiceAmountDue}
+                                        name="invoiceAmountDue"
+                                        disabled={true}
+                                        helpText="This is the total amount subtracted by the deposit amount."
                                     />
 
                                     <p className="border-bottom mb-3 pb-1 text-secondary">
@@ -368,5 +472,35 @@ const HAS_INPUTTED_FINANCIALS_CHOICES = [
         name: "hasInputtedFinancials",
         value: false,
         label: "No"
+    }
+];
+
+
+const PAYMENT_STATUS_CHOICES = [
+    {
+        id: 'paymentStatus-t-choice',
+        name: "paymentStatus",
+        value: WORK_ORDER_COMPLETED_AND_PAID_STATE,
+        label: "Paid"
+    },{
+        id: 'paymentStatus-f-choice',
+        name: "paymentStatus",
+        value: WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
+        label: "Unpaid"
+    }
+];
+
+
+const PAID_TO_CHOICES = [
+    {
+        id: 'invoicePaidTo-1-choice',
+        name: "invoicePaidTo",
+        value: 1,
+        label: "Associate"
+    },{
+        id: 'invoicePaidTo-2-choice',
+        name: "invoicePaidTo",
+        value: 2,
+        label: "Organization"
     }
 ];
