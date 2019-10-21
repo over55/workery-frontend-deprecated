@@ -15,7 +15,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
             wasCompleted, wasCompletedLabel, completionDate, reason, reasonLabel, reasonOther,
 
             // Step 3
-            invoiceIds, visits, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceTotalQuoteAmount, invoiceLabourAmount,
+            invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceTotalQuoteAmount, invoiceLabourAmount,
             invoiceMaterialAmount, invoiceTaxAmount, invoiceTotalAmount, invoiceServiceFeeAmount, invoiceBalanceOwingAmount,
             invoiceServiceFee, hasInputtedFinancials, invoiceDate, invoiceActualServiceFeeAmountPaid, invoiceServiceFeePaymentDate,
 
@@ -179,15 +179,6 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                     <td>
                                         {hasFinancials
                                             ? invoiceIds
-                                            : "-"
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Visits</th>
-                                    <td>
-                                        {hasFinancials
-                                            ? visits
                                             : "-"
                                         }
                                     </td>
