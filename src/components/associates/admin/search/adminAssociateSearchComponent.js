@@ -10,6 +10,12 @@ class AdminAssociateSearchComponent extends Component {
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
+		
+			enterKeyPress(target) {
+			  if(target.charCode==13){
+				onSearchClick;
+			  }
+			}
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -48,7 +54,7 @@ class AdminAssociateSearchComponent extends Component {
                             />
 
                             <div className="input-group-append">
-                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick}>
+                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} onKeyPress={this.enterKeyPress} >
                                     <i className="fas fa-search"></i>
                                 </button>
                             </div>
