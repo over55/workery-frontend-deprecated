@@ -24,41 +24,10 @@ class ZeroAmountDueStep1Container extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        // Either use from financials date or the previously created
-        // date that was inputted in these forms.
-        const currentPaidAt = new Date(this.props.orderDetail.invoiceDate);
-        const previousPaidAt = localStorageGetDateItem("workery-create-zero-amount-deposit-paidAt")
-        let paidAt;
-        if (previousPaidAt === null || previousPaidAt === undefined) {
-            paidAt = new Date(currentPaidAt);
-            localStorageSetObjectOrArrayItem('workery-create-zero-amount-deposit-paidAt', paidAt);
-        } else {
-            paidAt = previousPaidAt;
-        }
-
-        const currentPaidTo = this.props.orderDetail.invoicePaidTo;
-        const previousPaidTo = localStorageGetIntegerItem("workery-create-zero-amount-deposit-paidTo")
-        let paidTo;
-        if (previousPaidTo === null || previousPaidTo === undefined || isNaN(previousPaidTo)) {
-            paidTo = currentPaidTo;
-            localStorage.setItem("workery-create-zero-amount-deposit-paidTo", paidTo);
-        } else {
-            paidTo = previousPaidTo;
-        }
-
-        // Assign the label.
-        if (paidTo === 1) {
-            localStorage.setItem("workery-create-zero-amount-deposit-paidTo-label", "Associate");
-        } else {
-            localStorage.setItem("workery-create-zero-amount-deposit-paidTo-label", "Organization");
-        }
-
-        let invoiceAmountDue = parseFloat(this.props.orderDetail.invoiceAmountDue);
-        let amount = localStorageGetFloatItem("workery-create-zero-amount-deposit-amount");
-        if (isNaN(amount)) {
-            amount = 0;
-        }
-        invoiceAmountDue -= amount;
+        const paidAt = localStorageGetDateItem("workery-create-zero-amount-deposit-paidAt")
+        const paidTo = localStorageGetIntegerItem("workery-create-zero-amount-deposit-paidTo")
+        const amount = localStorageGetFloatItem("workery-create-zero-amount-deposit-amount");
+        const invoiceAmountDue = localStorageGetFloatItem("workery-create-zero-amount-deposit-invoiceAmountDue");
 
         // Update the state.
         this.state = {
@@ -67,6 +36,7 @@ class ZeroAmountDueStep1Container extends Component {
             depositMethod: localStorageGetIntegerItem("workery-create-zero-amount-deposit-depositMethod"),
             paidTo: paidTo,
             paidFor: localStorageGetIntegerItem("workery-create-zero-amount-deposit-paidFor"),
+            paidForLabel: localStorageGetIntegerItem("workery-create-zero-amount-deposit-paidFor-label"),
             amount: amount,
             invoiceAmountDue: invoiceAmountDue,
             errors: {},
