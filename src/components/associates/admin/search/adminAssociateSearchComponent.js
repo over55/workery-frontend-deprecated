@@ -7,9 +7,17 @@ import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneIn
 
 
 class AdminAssociateSearchComponent extends Component {
+	enterKeyPress(target) {
+			  if(target.charCode==13){
+				this.onSearchClick()
+			  }
+	}
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
+		
+		const 
+			
         return (
             <div>
                 <nav aria-label="breadcrumb">
