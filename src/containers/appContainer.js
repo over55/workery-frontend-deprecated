@@ -195,26 +195,26 @@ import SkillsetSearchContainer from "./skillsets/skillsetSearchContainer";
 import SkillsetSearchResultsContainer from "./skillsets/skillsetSearchResultsContainer";
 
 // Financials
-import FinancialListContainer from "./financials/list/financialListContainer";
-import FinancialRetrieveContainer from "./financials/retrieve/financialRetrieveContainer";
-import FinancialUpdateContainer from "./financials/update/financialUpdateContainer";
-import FinancialCloneOperationContainer from "./financials/operations/financialCloneOperationContainer";
-import DownloadInvoicePDFOperationContainer from "./financials/operations/downloadInvoicePDFContainer";
-import InvoiceRetrieveContainer from "./financials/retrieve/invoiceRetrieveContainer";
-import FinancialOperationsContainer from "./financials/retrieve/financialOperationsContainer";
-import DepositListContainer from "./financials/retrieve/depositListContainer";
-import InvoiceCreateStep1Container from "./financials/create/invoiceCreateStep1Container";
-import InvoiceCreateStep2Container from "./financials/create/invoiceCreateStep2Container";
-import InvoiceCreateStep3Container from "./financials/create/invoiceCreateStep3Container";
-import InvoiceCreateStep4Container from "./financials/create/invoiceCreateStep4Container";
-import InvoiceFirstSectionUpdateContainer from "./financials/update/invoiceFirstSectionUpdateContainer";
-import InvoiceSecondSectionUpdateContainer from "./financials/update/invoiceSecondSectionUpdateContainer";
-import InvoiceThirdSectionUpdateContainer from "./financials/update/invoiceThirdSectionUpdateContainer";
-import DepositCreateStep1Container from "./financials/create/depositCreateStep1Container";
-import DepositCreateStep2Container from "./financials/create/depositCreateStep2Container";
-import PaymentDeleteContainer from "./financials/delete/paymentDeleteContainer";
-import ZeroAmountDueStep1Container from "./financials/create/zeroAmountDueStep1Container";
-import ZeroAmountDueStep2Container from "./financials/create/zeroAmountDueStep2Container";
+import AdminFinancialListContainer from "./financials/admin/list/adminFinancialListContainer";
+import AdminFinancialRetrieveContainer from "./financials/admin/retrieve/adminFinancialRetrieveContainer";
+import AdminFinancialUpdateContainer from "./financials/admin/update/adminFinancialUpdateContainer";
+import AdminFinancialCloneOperationContainer from "./financials/admin/operations/adminFinancialCloneOperationContainer";
+import AdminDownloadInvoicePDFOperationContainer from "./financials/admin/operations/adminDownloadInvoicePDFContainer";
+import AdminInvoiceRetrieveContainer from "./financials/admin/retrieve/adminInvoiceRetrieveContainer";
+import AdminFinancialOperationsContainer from "./financials/admin/retrieve/adminFinancialOperationsContainer";
+import AdminDepositListContainer from "./financials/admin/retrieve/adminDepositListContainer";
+import AdminInvoiceCreateStep1Container from "./financials/admin/create/adminInvoiceCreateStep1Container";
+import AdminInvoiceCreateStep2Container from "./financials/admin/create/adminInvoiceCreateStep2Container";
+import AdminInvoiceCreateStep3Container from "./financials/admin/create/adminInvoiceCreateStep3Container";
+import AdminInvoiceCreateStep4Container from "./financials/admin/create/adminInvoiceCreateStep4Container";
+import AdminInvoiceFirstSectionUpdateContainer from "./financials/admin/update/adminInvoiceFirstSectionUpdateContainer";
+import AdminInvoiceSecondSectionUpdateContainer from "./financials/admin/update/adminInvoiceSecondSectionUpdateContainer";
+import AdminInvoiceThirdSectionUpdateContainer from "./financials/admin/update/adminInvoiceThirdSectionUpdateContainer";
+import AdminDepositCreateStep1Container from "./financials/admin/create/adminDepositCreateStep1Container";
+import AdminDepositCreateStep2Container from "./financials/admin/create/adminDepositCreateStep2Container";
+import AdminPaymentDeleteContainer from "./financials/admin/delete/adminPaymentDeleteContainer";
+import AdminZeroAmountDueStep1Container from "./financials/admin/create/adminZeroAmountDueStep1Container";
+import AdminZeroAmountDueStep2Container from "./financials/admin/create/adminZeroAmountDueStep2Container";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -509,26 +509,26 @@ class AppContainer extends React.Component {
                                 <Route path="/skill-sets/results" exact component={requiresAuth(SkillsetSearchResultsContainer)} />
 
                                 { /* FINANCIALS */ }
-                                <Route path="/financials" exact component={requiresAuth(FinancialListContainer)} />
-                                <Route path="/financial/:id" exact component={requiresAuth(FinancialRetrieveContainer)} />
-                                <Route path="/financial/:id/update" exact component={requiresAuth(FinancialUpdateContainer)} />
-                                <Route path="/financial/:id/clone" exact component={requiresAuth(FinancialCloneOperationContainer)} />
-                                <Route path="/financial/:id/download-invoice" exact component={requiresAuth(DownloadInvoicePDFOperationContainer)} />
-                                <Route path="/financial/:id/deposits" exact component={requiresAuth(DepositListContainer)} />
-                                <Route path="/financial/:id/invoice" exact component={requiresAuth(InvoiceRetrieveContainer)} />
-                                <Route path="/financial/:id/operations" exact component={requiresAuth(FinancialOperationsContainer)} />
-                                <Route path="/payment/:id/delete" exact component={requiresAuth(PaymentDeleteContainer)} />
-                                <Route path="/financial/:id/invoice/create/step-1" exact component={requiresAuth(InvoiceCreateStep1Container)} />
-                                <Route path="/financial/:id/invoice/create/step-2" exact component={requiresAuth(InvoiceCreateStep2Container)} />
-                                <Route path="/financial/:id/invoice/create/step-3" exact component={requiresAuth(InvoiceCreateStep3Container)} />
-                                <Route path="/financial/:id/invoice/create/step-4" exact component={requiresAuth(InvoiceCreateStep4Container)} />
-                                <Route path="/financial/:id/invoice/update/first-section" exact component={requiresAuth(InvoiceFirstSectionUpdateContainer)} />
-                                <Route path="/financial/:id/invoice/update/second-section" exact component={requiresAuth(InvoiceSecondSectionUpdateContainer)} />
-                                <Route path="/financial/:id/invoice/update/third-section" exact component={requiresAuth(InvoiceThirdSectionUpdateContainer)} />
-                                <Route path="/financial/:id/deposit/create/step-1" exact component={requiresAuth(DepositCreateStep1Container)} />
-                                <Route path="/financial/:id/deposit/create/step-2" exact component={requiresAuth(DepositCreateStep2Container)} />
-                                <Route path="/financial/:id/zero-amount-due/create/step-1" exact component={requiresAuth(ZeroAmountDueStep1Container)} />
-                                <Route path="/financial/:id/zero-amount-due/create/step-2" exact component={requiresAuth(ZeroAmountDueStep2Container)} />
+                                <Route path="/financials" exact component={requiresAuth(AdminFinancialListContainer)} />
+                                <Route path="/financial/:id" exact component={requiresAuth(AdminFinancialRetrieveContainer)} />
+                                <Route path="/financial/:id/update" exact component={requiresAuth(AdminFinancialUpdateContainer)} />
+                                <Route path="/financial/:id/clone" exact component={requiresAuth(AdminFinancialCloneOperationContainer)} />
+                                <Route path="/financial/:id/download-invoice" exact component={requiresAuth(AdminDownloadInvoicePDFOperationContainer)} />
+                                <Route path="/financial/:id/deposits" exact component={requiresAuth(AdminDepositListContainer)} />
+                                <Route path="/financial/:id/invoice" exact component={requiresAuth(AdminInvoiceRetrieveContainer)} />
+                                <Route path="/financial/:id/operations" exact component={requiresAuth(AdminFinancialOperationsContainer)} />
+                                <Route path="/payment/:id/delete" exact component={requiresAuth(AdminPaymentDeleteContainer)} />
+                                <Route path="/financial/:id/invoice/create/step-1" exact component={requiresAuth(AdminInvoiceCreateStep1Container)} />
+                                <Route path="/financial/:id/invoice/create/step-2" exact component={requiresAuth(AdminInvoiceCreateStep2Container)} />
+                                <Route path="/financial/:id/invoice/create/step-3" exact component={requiresAuth(AdminInvoiceCreateStep3Container)} />
+                                <Route path="/financial/:id/invoice/create/step-4" exact component={requiresAuth(AdminInvoiceCreateStep4Container)} />
+                                <Route path="/financial/:id/invoice/update/first-section" exact component={requiresAuth(AdminInvoiceFirstSectionUpdateContainer)} />
+                                <Route path="/financial/:id/invoice/update/second-section" exact component={requiresAuth(AdminInvoiceSecondSectionUpdateContainer)} />
+                                <Route path="/financial/:id/invoice/update/third-section" exact component={requiresAuth(AdminInvoiceThirdSectionUpdateContainer)} />
+                                <Route path="/financial/:id/deposit/create/step-1" exact component={requiresAuth(AdminDepositCreateStep1Container)} />
+                                <Route path="/financial/:id/deposit/create/step-2" exact component={requiresAuth(AdminDepositCreateStep2Container)} />
+                                <Route path="/financial/:id/zero-amount-due/create/step-1" exact component={requiresAuth(AdminZeroAmountDueStep1Container)} />
+                                <Route path="/financial/:id/zero-amount-due/create/step-2" exact component={requiresAuth(AdminZeroAmountDueStep2Container)} />
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
