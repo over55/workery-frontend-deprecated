@@ -14,10 +14,7 @@ class AdminAssociateSearchComponent extends Component {
 	}
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
-        const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
-		
-		const 
-			
+        const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;	
         return (
             <div>
                 <nav aria-label="breadcrumb">
