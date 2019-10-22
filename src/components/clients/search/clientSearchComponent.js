@@ -7,6 +7,11 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 
 
 class ClientSearchComponent extends Component {
+	enterKeyPress(target) {
+			  if(target.charCode==13){
+				this.onSearchClick()
+			  }
+	}
     render() {
         const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
@@ -48,7 +53,7 @@ class ClientSearchComponent extends Component {
                             />
 
                             <div className="input-group-append">
-                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick}>
+                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} onKeyPress={this.enterKeyPress}>
                                     <i className="fas fa-search"></i>
                                 </button>
                             </div>
