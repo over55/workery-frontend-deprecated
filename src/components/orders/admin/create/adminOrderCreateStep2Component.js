@@ -14,10 +14,18 @@ class CardComponent extends Component {
                     <div className="card-body">
                         <h5 className="card-title">
                             <Link to={`/client/${client.id}`}>
-                                <strong>
-                                    <i className="fas fa-home"></i>&nbsp;{client.givenName}&nbsp;{client.lastName}
-                                    {client.state === 'inactive' && <div>(<i className="fas fa-frown"></i>&nbsp;Deactived)</div>}
-                                </strong>
+                                {client.typeOf === 3 &&
+                                    <strong>
+                                        <i className="fas fa-building"></i>&nbsp;{client.organizationName}
+                                        {client.state === 'inactive' && <div>(<i className="fas fa-frown"></i>&nbsp;Deactived)</div>}
+                                    </strong>
+                                }
+                                {client.typeOf === 2 &&
+                                    <strong>
+                                        <i className="fas fa-home"></i>&nbsp;{client.givenName}&nbsp;{client.lastName}
+                                        {client.state === 'inactive' && <div>(<i className="fas fa-frown"></i>&nbsp;Deactived)</div>}
+                                    </strong>
+                                }
                             </Link>
                         </h5>
                         <p className="card-text">
@@ -54,7 +62,7 @@ export default class AdminOrderCreateStep2Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-user-circle"></i>&nbsp;Orders</Link>
+                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add

@@ -14,7 +14,12 @@ class CardComponent extends Component {
                     <div className="card-body">
                         <h5 className="card-title">
                             <Link to={`/associate/${associate.id}`}>
-                                <strong><i className="fas fa-home"></i>&nbsp;{associate.givenName}&nbsp;{associate.lastName}</strong>
+                                {associate.typeOf === 1 &&
+                                    <strong><i className="fas fa-building"></i>&nbsp;{associate.organizationName}</strong>
+                                }
+                                {associate.typeOf === 2 &&
+                                    <strong><i className="fas fa-home"></i>&nbsp;{associate.givenName}&nbsp;{associate.lastName}</strong>
+                                }
                             </Link>
                         </h5>
                         <p className="card-text">
