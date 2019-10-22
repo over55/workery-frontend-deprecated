@@ -229,6 +229,7 @@ class FinancialUpdateContainer extends Component {
             localStorageSetObjectOrArrayItem('workery-create-zero-amount-deposit-paidAt', this.state.invoiceDate);
             localStorage.setItem("workery-create-zero-amount-deposit-paidTo", this.state.invoicePaidTo);
             localStorage.setItem("workery-create-zero-amount-deposit-paidFor", 4); // A.k.a. "Amount Due".
+            localStorage.setItem("workery-create-zero-amount-deposit-paidFor", "Amount Due");
             if (this.state.invoicePaidTo === 1) {
                 localStorage.setItem("workery-create-zero-amount-deposit-paidTo-label", "Associate");
             } else {
