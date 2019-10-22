@@ -52,10 +52,6 @@ class RemoteListComponent extends Component {
             text: 'Client',
             sort: true
         },{
-            dataField: 'associateName',
-            text: 'Associate',
-            sort: true
-        },{
             dataField: 'invoiceServiceFeePaymentDate',
             text: 'Payment Date',
             sort: true,
@@ -163,7 +159,7 @@ function paymentDateFormatter(cell, row) {
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/financial/${row.id}`}>
+        <Link to={`/company-financial/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
@@ -203,19 +199,11 @@ class AssociateFinancialListComponent extends Component {
 
                 <h1><i className="fas fa-credit-card"></i>&nbsp;Financials</h1>
 
+                { /*
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
-                            <div className="col-sm-6 placeholder">
-                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to="/orders/add/step-1" className="d-block link-ndecor" title="Job">
-                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
-                                    </Link>
-                                </div>
-                                <h4>Add</h4>
-                                <div className="text-muted">Add Job</div>
-                            </div>
-                            <div className="col-sm-6 placeholder">
+                            <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
                                     <Link to="/orders/search" className="d-block link-ndecor" title="Search">
                                         <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
@@ -227,6 +215,7 @@ class AssociateFinancialListComponent extends Component {
                         </section>
                     </div>
                 </div>
+                */}
 
                 <div className="row">
                     <div className="col-md-12">
