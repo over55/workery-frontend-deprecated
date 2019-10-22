@@ -3,21 +3,21 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 
-import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
+import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { BootstrapDatePicker } from "../../bootstrap/bootstrapDatePicker";
-import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
+import { BootstrapDatePicker } from "../../../bootstrap/bootstrapDatePicker";
+import { BootstrapCurrencyInput } from "../../../bootstrap/bootstrapCurrencyInput";
 import {
     WORK_ORDER_COMPLETED_AND_PAID_STATE,
     WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
     IS_OK_TO_EMAIL_CHOICES
-} from "../../../constants/api";
+} from "../../../../constants/api";
 
 
 export default class AdminFinancialUpdateComponent extends Component {

@@ -5,19 +5,19 @@ import NumberFormat from 'react-number-format';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
-import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
-import { BootstrapCurrencyInput } from "../../bootstrap/bootstrapCurrencyInput";
-import { BootstrapCheckbox } from "../../bootstrap/bootstrapCheckbox";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
+import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
+import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
+import { BootstrapCurrencyInput } from "../../../bootstrap/bootstrapCurrencyInput";
+import { BootstrapCheckbox } from "../../../bootstrap/bootstrapCheckbox";
 import {
     CUSTOMER_APPROVAL_RADIO_CHOICES
-} from "../../../constants/api";
+} from "../../../../constants/api";
 
 
 class AdminInvoiceCreateStep2Component extends Component {

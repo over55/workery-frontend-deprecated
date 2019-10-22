@@ -5,17 +5,17 @@ import NumberFormat from 'react-number-format';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
-import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
-import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
-import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
+import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
+import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
 import {
     IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
-} from "../../../constants/api";
+} from "../../../../constants/api";
 
 
 class AdminInvoiceCreateStep1Component extends Component {

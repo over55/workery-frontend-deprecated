@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
-import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import { BootstrapInput } from "../../bootstrap/bootstrapInput";
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 import {
     ARCHIVE_REASON_CHOICES
-} from '../../../constants/api';
+} from '../../../../constants/api';
 
 
 export default class AdminPaymentDeleteComponent extends Component {
