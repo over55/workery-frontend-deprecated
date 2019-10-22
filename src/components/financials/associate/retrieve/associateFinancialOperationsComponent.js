@@ -22,10 +22,10 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
+                            <Link to="/company-financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/financial/${id}/operations`}>
+                            <Link to={`/company-financial/${id}/operations`}>
                                 <i className="fas fa-money-check-alt"></i>&nbsp;Order #{id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                             </Link>
                         </li>
@@ -39,17 +39,17 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/financial/${id}`}>
+                            <Link to={`/company-financial/${id}`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/financial/${id}/deposits`}>
+                            <Link to={`/company-financial/${id}/deposits`}>
                                 <span className="num"><i className="fas fa-hand-holding-usd"></i>&nbsp;</span><span className="">Payments</span>
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <Link to={`/financial/${id}/invoice`}>
+                            <Link to={`/company-financial/${id}/invoice`}>
                                 <span className="num"><i className="fas fa-file-invoice"></i>&nbsp;</span><span className="">Invoice</span>
                             </Link>
                         </div>
@@ -75,7 +75,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                                         <p className="card-text">Create a duplicate of this job.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
-                                        <Link to={`/financial/${id}/clone`} className="btn btn-success btn-lg">
+                                        <Link to={`/company-financial/${id}/clone`} className="btn btn-success btn-lg">
                                             Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                         </Link>
                                     </div>

@@ -48,10 +48,10 @@ class AssociateInvoiceCreateStep2Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
+                            <Link to="/company-financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/financial/${orderId}/invoice`}>
+                            <Link to={`/company-financial/${orderId}/invoice`}>
                                 <i className="fas fa-money-check-alt"></i>&nbsp;Order #{orderId && orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                             </Link>
                         </li>
@@ -68,7 +68,7 @@ class AssociateInvoiceCreateStep2Component extends Component {
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/financial/${orderId}/invoice/create/step-1`}>
+                            <Link to={`/company-financial/${orderId}/invoice/create/step-1`}>
                                 <span className="num">1.</span><span className="">Review</span>
                             </Link>
                         </div>
@@ -836,7 +836,7 @@ class AssociateInvoiceCreateStep2Component extends Component {
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Next&nbsp;<i className="fas fa-chevron-right"></i>
                                 </button>
-                                <Link to={`/financial/${orderId}/invoice/create/step-1`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/company-financial/${orderId}/invoice/create/step-1`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

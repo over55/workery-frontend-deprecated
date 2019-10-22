@@ -23,10 +23,10 @@ export default class AssociateFinancialCloneOperationComponent extends Component
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/financials`}><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
+                            <Link to={`/company-financials`}><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/financial/${orderId}`}><i className="fas fa-money-check-alt"></i>&nbsp;Order #{orderId && orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</Link>
+                            <Link to={`/company-financial/${orderId}`}><i className="fas fa-money-check-alt"></i>&nbsp;Order #{orderId && orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-code-branch"></i>&nbsp;Clone
@@ -53,7 +53,7 @@ export default class AssociateFinancialCloneOperationComponent extends Component
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/financial/${orderId}`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/company-financial/${orderId}`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>

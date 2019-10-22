@@ -22,7 +22,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
+                            <Link to="/company-financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-money-check-alt"></i>&nbsp;Order #{id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
@@ -37,12 +37,12 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/financial/${id}`}>
+                            <Link to={`/company-financial/${id}`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/financial/${id}/deposits`}>
+                            <Link to={`/company-financial/${id}/deposits`}>
                                 <span className="num"><i className="fas fa-hand-holding-usd"></i>&nbsp;</span><span className="">Payments</span>
                             </Link>
                         </div>
@@ -52,7 +52,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <Link to={`/financial/${id}/operations`}>
+                            <Link to={`/company-financial/${id}/operations`}>
                                 <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
                             </Link>
                         </div>
@@ -116,7 +116,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-file-invoice"></i>&nbsp;Invoice Description
-                                            <Link to={`/financial/${invoice.order}/invoice/update/second-section`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <Link to={`/company-financial/${invoice.order}/invoice/update/second-section`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                                 <i className="fas fa-edit"></i>&nbsp;
                                             </Link>
                                         </th>
@@ -229,7 +229,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-file-invoice"></i>&nbsp;Invoice Financials
-                                            <Link to={`/financial/${invoice.order}/invoice/update/third-section`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <Link to={`/company-financial/${invoice.order}/invoice/update/third-section`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                                 <i className="fas fa-edit"></i>&nbsp;
                                             </Link>
                                         </th>
@@ -433,7 +433,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                                     <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onDownloadInvoicePDFClick}>
                                         <i className="fas fa-cloud-download-alt"></i>&nbsp;Download PDF
                                     </button>
-                                    <Link to={`/financials`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                    <Link to={`/company-financials`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                         <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                     </Link>
                                 </div>
@@ -445,7 +445,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                         <p className="lead">No invoice has been created, as a result you will need to create it before you are able to download the PDF copy of it.</p>
                         <p>Please click below to begin creating the invoice.</p>
                         <p className="lead">
-                            <Link className="btn btn-primary btn-lg" to={`/financial/${id}/invoice/create/step-1`}>
+                            <Link className="btn btn-primary btn-lg" to={`/company-financial/${id}/invoice/create/step-1`}>
                                 Begin Wizard&nbsp;<i className="fas fa-chevron-right"></i>
                             </Link>
                         </p>

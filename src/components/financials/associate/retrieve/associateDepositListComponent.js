@@ -179,7 +179,7 @@ export default class AssociateOrderActivitySheetListComponent extends Component 
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
+                            <Link to="/company-financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-money-check-alt"></i>&nbsp;Order #{id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
@@ -194,7 +194,7 @@ export default class AssociateOrderActivitySheetListComponent extends Component 
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
-                            <Link to={`/financial/${id}`}>
+                            <Link to={`/company-financial/${id}`}>
                                 <span className="num"><i className="fas fa-portrait"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
@@ -204,12 +204,12 @@ export default class AssociateOrderActivitySheetListComponent extends Component 
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <Link to={`/financial/${id}/invoice`}>
+                            <Link to={`/company-financial/${id}/invoice`}>
                                 <span className="num"><i className="fas fa-file-invoice"></i>&nbsp;</span><span className="">Invoice</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
-                            <Link to={`/financial/${id}/operations`}>
+                            <Link to={`/company-financial/${id}/operations`}>
                                 <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
                             </Link>
                         </div>
@@ -233,7 +233,7 @@ export default class AssociateOrderActivitySheetListComponent extends Component 
 
                         <form>
                             <div className="form-group">
-                            <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" to={`/financial/${id}/deposit/create/step-1`}>
+                            <Link className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" to={`/company-financial/${id}/deposit/create/step-1`}>
                                 <i className="fas fa-plus"></i>&nbsp;Add Payment
                             </Link>
                             </div>
