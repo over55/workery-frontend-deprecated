@@ -194,7 +194,7 @@ import Report17Container from "./reports/report17Container";
 import SkillsetSearchContainer from "./skillsets/skillsetSearchContainer";
 import SkillsetSearchResultsContainer from "./skillsets/skillsetSearchResultsContainer";
 
-// Financials
+// (Admin) Financials
 import AdminFinancialListContainer from "./financials/admin/list/adminFinancialListContainer";
 import AdminFinancialRetrieveContainer from "./financials/admin/retrieve/adminFinancialRetrieveContainer";
 import AdminFinancialUpdateContainer from "./financials/admin/update/adminFinancialUpdateContainer";
@@ -215,6 +215,28 @@ import AdminDepositCreateStep2Container from "./financials/admin/create/adminDep
 import AdminPaymentDeleteContainer from "./financials/admin/delete/adminPaymentDeleteContainer";
 import AdminZeroAmountDueStep1Container from "./financials/admin/create/adminZeroAmountDueStep1Container";
 import AdminZeroAmountDueStep2Container from "./financials/admin/create/adminZeroAmountDueStep2Container";
+
+// (Associate) Financials
+import AssociateFinancialListContainer from "./financials/associate/list/associateFinancialListContainer";
+import AssociateFinancialRetrieveContainer from "./financials/associate/retrieve/associateFinancialRetrieveContainer";
+import AssociateFinancialUpdateContainer from "./financials/associate/update/associateFinancialUpdateContainer";
+import AssociateFinancialCloneOperationContainer from "./financials/associate/operations/associateFinancialCloneOperationContainer";
+import AssociateDownloadInvoicePDFOperationContainer from "./financials/associate/operations/associateDownloadInvoicePDFContainer";
+import AssociateInvoiceRetrieveContainer from "./financials/associate/retrieve/associateInvoiceRetrieveContainer";
+import AssociateFinancialOperationsContainer from "./financials/associate/retrieve/associateFinancialOperationsContainer";
+import AssociateDepositListContainer from "./financials/associate/retrieve/associateDepositListContainer";
+import AssociateInvoiceCreateStep1Container from "./financials/associate/create/associateInvoiceCreateStep1Container";
+import AssociateInvoiceCreateStep2Container from "./financials/associate/create/associateInvoiceCreateStep2Container";
+import AssociateInvoiceCreateStep3Container from "./financials/associate/create/associateInvoiceCreateStep3Container";
+import AssociateInvoiceCreateStep4Container from "./financials/associate/create/associateInvoiceCreateStep4Container";
+import AssociateInvoiceFirstSectionUpdateContainer from "./financials/associate/update/associateInvoiceFirstSectionUpdateContainer";
+import AssociateInvoiceSecondSectionUpdateContainer from "./financials/associate/update/associateInvoiceSecondSectionUpdateContainer";
+import AssociateInvoiceThirdSectionUpdateContainer from "./financials/associate/update/associateInvoiceThirdSectionUpdateContainer";
+import AssociateDepositCreateStep1Container from "./financials/associate/create/associateDepositCreateStep1Container";
+import AssociateDepositCreateStep2Container from "./financials/associate/create/associateDepositCreateStep2Container";
+import AssociatePaymentDeleteContainer from "./financials/associate/delete/associatePaymentDeleteContainer";
+import AssociateZeroAmountDueStep1Container from "./financials/associate/create/associateZeroAmountDueStep1Container";
+import AssociateZeroAmountDueStep2Container from "./financials/associate/create/associateZeroAmountDueStep2Container";
 
 // Settings
 import SettingListContainer from "./settings/settingListContainer";
@@ -508,7 +530,7 @@ class AppContainer extends React.Component {
                                 <Route path="/skill-sets" exact component={requiresAuth(SkillsetSearchContainer)} />
                                 <Route path="/skill-sets/results" exact component={requiresAuth(SkillsetSearchResultsContainer)} />
 
-                                { /* FINANCIALS */ }
+                                { /* (ADMIN) FINANCIALS */ }
                                 <Route path="/financials" exact component={requiresAuth(AdminFinancialListContainer)} />
                                 <Route path="/financial/:id" exact component={requiresAuth(AdminFinancialRetrieveContainer)} />
                                 <Route path="/financial/:id/update" exact component={requiresAuth(AdminFinancialUpdateContainer)} />
@@ -529,6 +551,29 @@ class AppContainer extends React.Component {
                                 <Route path="/financial/:id/deposit/create/step-2" exact component={requiresAuth(AdminDepositCreateStep2Container)} />
                                 <Route path="/financial/:id/zero-amount-due/create/step-1" exact component={requiresAuth(AdminZeroAmountDueStep1Container)} />
                                 <Route path="/financial/:id/zero-amount-due/create/step-2" exact component={requiresAuth(AdminZeroAmountDueStep2Container)} />
+
+                                { /* (ASSOCIATE) FINANCIALS */ }
+                                <Route path="/company-financials" exact component={requiresAuth(AssociateFinancialListContainer)} />
+                                <Route path="/company-financial/:id" exact component={requiresAuth(AssociateFinancialRetrieveContainer)} />
+                                <Route path="/company-financial/:id/update" exact component={requiresAuth(AssociateFinancialUpdateContainer)} />
+                                <Route path="/company-financial/:id/clone" exact component={requiresAuth(AssociateFinancialCloneOperationContainer)} />
+                                <Route path="/company-financial/:id/download-invoice" exact component={requiresAuth(AssociateDownloadInvoicePDFOperationContainer)} />
+                                <Route path="/company-financial/:id/deposits" exact component={requiresAuth(AssociateDepositListContainer)} />
+                                <Route path="/company-financial/:id/invoice" exact component={requiresAuth(AssociateInvoiceRetrieveContainer)} />
+                                <Route path="/company-financial/:id/operations" exact component={requiresAuth(AssociateFinancialOperationsContainer)} />
+                                <Route path="/company-payment/:id/delete" exact component={requiresAuth(AssociatePaymentDeleteContainer)} />
+                                <Route path="/company-financial/:id/invoice/create/step-1" exact component={requiresAuth(AssociateInvoiceCreateStep1Container)} />
+                                <Route path="/company-financial/:id/invoice/create/step-2" exact component={requiresAuth(AssociateInvoiceCreateStep2Container)} />
+                                <Route path="/company-financial/:id/invoice/create/step-3" exact component={requiresAuth(AssociateInvoiceCreateStep3Container)} />
+                                <Route path="/company-financial/:id/invoice/create/step-4" exact component={requiresAuth(AssociateInvoiceCreateStep4Container)} />
+                                <Route path="/company-financial/:id/invoice/update/first-section" exact component={requiresAuth(AssociateInvoiceFirstSectionUpdateContainer)} />
+                                <Route path="/company-financial/:id/invoice/update/second-section" exact component={requiresAuth(AssociateInvoiceSecondSectionUpdateContainer)} />
+                                <Route path="/company-financial/:id/invoice/update/third-section" exact component={requiresAuth(AssociateInvoiceThirdSectionUpdateContainer)} />
+                                <Route path="/company-financial/:id/deposit/create/step-1" exact component={requiresAuth(AssociateDepositCreateStep1Container)} />
+                                <Route path="/company-financial/:id/deposit/create/step-2" exact component={requiresAuth(AssociateDepositCreateStep2Container)} />
+                                <Route path="/company-financial/:id/zero-amount-due/create/step-1" exact component={requiresAuth(AssociateZeroAmountDueStep1Container)} />
+                                <Route path="/company-financial/:id/zero-amount-due/create/step-2" exact component={requiresAuth(AssociateZeroAmountDueStep2Container)} />
+
 
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
