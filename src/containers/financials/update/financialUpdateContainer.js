@@ -13,6 +13,7 @@ import {
     WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
     IS_OK_TO_EMAIL_CHOICES
 } from "../../../constants/api";
+import { localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
 
 
 /**
@@ -222,6 +223,23 @@ class FinancialUpdateContainer extends Component {
         const invoiceAmountDue = order['invoiceAmountDue'];
         const paymentStatus = order['state'];
         if (paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE && invoiceAmountDue > 0) {
+            //
+            // Let use set a few pre-set values.
+            //
+            localStorageSetObjectOrArrayItem('workery-create-zero-amount-deposit-paidAt', this.state.invoiceDate);
+            localStorage.setItem("workery-create-zero-amount-deposit-paidTo", this.state.invoicePaidTo);
+            localStorage.setItem("workery-create-zero-amount-deposit-paidFor", 4); // A.k.a. "Amount Due".
+            if (this.state.invoicePaidTo === 1) {
+                localStorage.setItem("workery-create-zero-amount-deposit-paidTo-label", "Associate");
+            } else {
+                localStorage.setItem("workery-create-zero-amount-deposit-paidTo-label", "Organization");
+            }
+            localStorage.setItem("workery-create-zero-amount-deposit-amount", this.state.invoiceAmountDue);
+            localStorage.setItem("workery-create-zero-amount-deposit-invoiceAmountDue", 0.00);
+
+            //
+            // Redirect to the new page.
+            //
             this.props.history.push("/financial/"+this.state.id+"/zero-amount-due/create/step-1");
         } else {
             this.props.history.push("/financial/"+this.state.id);
