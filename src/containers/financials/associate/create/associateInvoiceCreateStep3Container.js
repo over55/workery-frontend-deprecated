@@ -205,7 +205,7 @@ class AssociateInvoiceCreateStep3Container extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.history.push("/financial/"+this.state.orderId+"/invoice/create/step-4");
+            this.props.history.push("/company-financial/"+this.state.orderId+"/invoice/create/step-4");
 
         // CASE 2 OF 2: Validation was a failure.
         } else {

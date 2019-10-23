@@ -303,7 +303,7 @@ class AssociateInvoiceCreateStep4Container extends Component {
     onSuccessCallback(response) {
         localStorageRemoveItemsContaining("workery-create-invoice-");
         this.props.setFlashMessage("success", "Invoice has been successfully created.");
-        this.props.history.push("/financial/"+this.state.orderId+"/invoice");
+        this.props.history.push("/company-financial/"+this.state.orderId+"/invoice");
     }
 
     onSuccessOrderCallback(response) {

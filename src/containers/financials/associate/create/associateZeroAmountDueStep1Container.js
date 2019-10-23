@@ -176,7 +176,7 @@ class AssociateZeroAmountDueStep1Container extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.history.push("/financial/"+this.state.orderId+"/zero-amount-due/create/step-2");
+            this.props.history.push("/company-financial/"+this.state.orderId+"/zero-amount-due/create/step-2");
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
