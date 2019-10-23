@@ -326,6 +326,7 @@ export default class AssociateFinancialUpdateComponent extends Component {
                                 value={invoiceServiceFee}
                                 error={errors.invoiceServiceFee}
                                 onSelectChange={onSelectChange}
+                                disabled={true}
                             />
 
                             <BootstrapCurrencyInput
