@@ -78,7 +78,7 @@ export default class AdminOrderCreateStep4Component extends Component {
                             <BootstrapTextarea
                                 name="description"
                                 borderColour="border-primary"
-                                label="Describe the Job:"
+                                label="Describe the Job: (*)"
                                 placeholder="Describe here."
                                 rows="5"
                                 value={description}
@@ -89,9 +89,9 @@ export default class AdminOrderCreateStep4Component extends Component {
 
                             <BootstrapMultipleSelect
                                 borderColour="border-primary"
-                                label="Skill Set (*)"
+                                label="Please select the required Job Skills: (*)"
                                 name="skillSets"
-                                defaultOptionLabel="Please select the required Job Skills:"
+                                defaultOptionLabel="Please select the skills."
                                 options={skillSetOptions}
                                 selectedOptions={skillSets}
                                 error={errors.skillSets}

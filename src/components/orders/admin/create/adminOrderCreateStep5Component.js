@@ -58,7 +58,7 @@ export default class AdminOrderCreateStep5Component extends Component {
                         </div>
                         <div id="step-5" className="st-grey active">
                             <strong>
-                                <span className="num">5.</span><span className="">Metrics</span>
+                                <span className="num">5.</span><span className="">Comments</span>
                             </strong>
                         </div>
                         <div id="step-6" className="st-grey">
@@ -71,7 +71,7 @@ export default class AdminOrderCreateStep5Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                <i className="fas fa-chart-pie"></i>&nbsp;Comments
                             </h2>
                             <p className="text-secondary font-italic">All fields which have the (*) symbol are required to be filled out.</p>
 
@@ -105,7 +105,7 @@ export default class AdminOrderCreateStep5Component extends Component {
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
                                     Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/orders/add/step-4" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/orders/add/step-4" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
