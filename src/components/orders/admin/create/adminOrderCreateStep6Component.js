@@ -134,7 +134,7 @@ export default class AdminOrderCreateStep6Component extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-chart-pie"></i>&nbsp;Metrics
+                                        <i className="fas fa-chart-pie"></i>&nbsp;Comments
                                     </th>
                                 </tr>
                                 <tr>
@@ -156,7 +156,7 @@ export default class AdminOrderCreateStep6Component extends Component {
                             <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onSubmitClick}>
                                 <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
-                            <Link to="/orders/add/step-5" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                            <Link to="/orders/add/step-5" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>
