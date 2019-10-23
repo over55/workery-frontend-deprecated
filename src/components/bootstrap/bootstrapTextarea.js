@@ -11,7 +11,7 @@ export const BootstrapTextarea = ({
     const helpID = id + "-help";
     return (
         <div className={classnames('form-group', { 'has-error': error })}>
-            <label htmlFor={name} className="control-label">{label}</label>
+            <label className="font-weight-bold" htmlFor={name} className="control-label">{label}</label>
             <textarea
                 aria-describedby={helpID}
                 placeholder={placeholder}
