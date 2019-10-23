@@ -23,7 +23,7 @@ export const BootstrapRadio = ({
 }) => {
     const id = shortid.generate();
     return (
-        <div className="form-group mt-2 mb-4" id={id} onChange={ (event)=>{ onChange(event) }  }>
+        <div className="form-group mt-2 mb-4 font-weight-bold" id={id} onChange={ (event)=>{ onChange(event) }  }>
             <p className="mb-1">{label}</p>
             {options && options.map(
                 (optionDatum, i) => <RadioChoiceOption name={name} error={error} selectedValue={selectedValue} choiceOption={optionDatum} key={i+shortid.generate()} />)
@@ -50,7 +50,7 @@ export const RadioChoiceOption = ({
     // - We can call these custom attributes in our container using `dataset`,
     //   for more details see this link via // Note: https://stackoverflow.com/a/20383295.
     return (
-        <div className={classnames('form-radio custom-control custom-radio custom-control-inline', { 'has-error': error })}>
+        <div className={classnames('form-radio custom-control custom-radio', { 'has-error': error })}>
             <input data-label={choiceOption.label} defaultChecked={defaultChecked} type="radio" id={choiceOption.id} name={name} value={choiceOption.value} className={classnames('custom-control-input form-check-input', { 'is-invalid': error })} required />
             <label className="custom-control-label form-check-label" htmlFor={choiceOption.id}>
                 {choiceOption.label}

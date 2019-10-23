@@ -12,7 +12,7 @@ export const BootstrapDatePicker = ({
     // https://github.com/Hacker0x01/react-datepicker/blob/master/docs/datepicker.md
     return (
         <div className={divClassName}>
-            <label htmlFor={name}>{label}</label>
+            <label className="font-weight-bold" htmlFor={name}>{label}</label>
             <div className="input-group input-group-lg date-picker-group">
                 <DatePicker
                     name={name}

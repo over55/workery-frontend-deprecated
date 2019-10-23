@@ -74,10 +74,10 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                     </div>
                 </div>
 
-                <div className="row mt-4 pt-3 mb-4 pb-2">
-                    <div className="col-md-10 mx-auto rounded bg-light border p-2">
+                <div className="row mt-0 pt-3 mb-4 pb-2">
+                    <div className="col-md-9 mx-auto rounded bg-light border p-2">
                         <div className="row">
-                            <div className="col-sm-5">
+                            <div className="col-sm-4">
                                 <Link to={`/associate/${id}/avatar`}>
                                     {associate && associate.avatarUrl !== undefined && associate.avatarUrl !== null
                                         ? <img src={associate.avatarUrl} className="img-fluid rounded" alt="Profile" id={`associate-avatar-${id}`} />
@@ -86,7 +86,7 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                                     <p><i className="fas fa-edit"></i>Click here to change photo</p>
                                 </Link>
                             </div>
-                            <div className="col-sm-7 px-4 py-3">
+                            <div className="col-sm-8 px-4 py-3">
                                 {isCommercial &&
                                     <h1>
                                         {associate && associate.organizationName}

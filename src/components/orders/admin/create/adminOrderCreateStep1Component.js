@@ -92,7 +92,7 @@ export default class AdminOrderCreateStep1Component extends Component {
                                 value={phone}
                                 name="phone"
                                 type="text"
-                                placeholder="+1 (xxx) xxx-xxxx"
+                                placeholder="(xxx) xxx-xxxx"
                             />
 
                             <BootstrapInput
@@ -120,7 +120,7 @@ export default class AdminOrderCreateStep1Component extends Component {
                 </div>
                 <div className="col-md-12 text-center">
                     <h3 className="p-2">- or -</h3>
-                    <a className="btn btn-primary btn-lg mt-4" href="/clients/add/step-3" role="button" target="_blank">
+                    <a className="btn btn-success btn-lg mt-4" href="/clients/add/step-3" role="button" target="_blank">
                         <i className="fas fa-plus"></i>&nbsp;Add Client
                     </a>
                 </div>

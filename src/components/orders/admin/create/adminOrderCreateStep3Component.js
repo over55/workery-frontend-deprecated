@@ -53,7 +53,7 @@ export default class AdminOrderCreateStep3Component extends Component {
                         </div>
                         <div id="step-3" className="st-grey active">
                             <strong>
-                                <span className="num">3.</span><span className="">Job Type</span>
+                                <span className="num">3.</span><span className="">Add Job</span>
                             </strong>
                         </div>
                         <div id="step-4" className="st-grey">
@@ -72,7 +72,7 @@ export default class AdminOrderCreateStep3Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-cog"></i>&nbsp;Job Type
+                                <i className="fas fa-cog"></i>&nbsp;Add Job
                             </h2>
                             <p className="text-secondary font-italic">All fields which have the (*) symbol are required to be filled out.</p>
 
@@ -83,7 +83,7 @@ export default class AdminOrderCreateStep3Component extends Component {
                             </p> */}
 
                             <BootstrapDatePicker
-                                label="Start date"
+                                label="When should the job start?"
                                 name="startDate"
                                 dateObj={startDate}
                                 onTimeChange={onStartDateChange}
