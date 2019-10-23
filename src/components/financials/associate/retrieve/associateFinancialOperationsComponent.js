@@ -68,22 +68,6 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                             <div className="col-sm-4 mb-4">
                                 <div className="card box-shadow text-center mx-auto h-100">
                                     <div className="card-custom-top-2">
-                                        <i className="fas fa-copy fa-3x"></i>
-                                    </div>
-                                    <div className="card-body">
-                                        <h3 className="card-title">Clone</h3>
-                                        <p className="card-text">Create a duplicate of this job.</p>
-                                    </div>
-                                    <div className="card-footer bg-transparent border-0">
-                                        <Link to={`/company-financial/${id}/clone`} className="btn btn-success btn-lg">
-                                            Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-4 mb-4">
-                                <div className="card box-shadow text-center mx-auto h-100">
-                                    <div className="card-custom-top-2">
                                         <i className="fas fa-window-close fa-3x"></i>
                                     </div>
                                     <div className="card-body">
@@ -91,7 +75,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                                         <p className="card-text">Cancel this job.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
-                                        <Link to={`/order/${id}/close`} className="btn btn-success btn-lg" target="_blank">
+                                        <Link to={`/job/${id}/close`} className="btn btn-success btn-lg" target="_blank">
                                             Go&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </div>
@@ -107,7 +91,7 @@ export default class AssociateInvoiceRetrieveComponent extends Component {
                                         <p className="card-text">Unassign this job.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
-                                        <Link to={`/order/${id}/unassign-associate`} className="btn btn-success btn-lg" target="_blank">
+                                        <Link to={`/job/${id}/unassign-associate`} className="btn btn-success btn-lg" target="_blank">
                                             Go&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </div>

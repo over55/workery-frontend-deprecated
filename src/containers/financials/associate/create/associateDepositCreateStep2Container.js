@@ -100,7 +100,7 @@ class AssociateDepositCreateStep2Container extends Component {
     onSuccessCallback(response) {
         localStorageRemoveItemsContaining("workery-create-deposit-");
         this.props.setFlashMessage("success", "Deposit has been successfully created.");
-        this.props.history.push("/financial/"+this.state.orderId+"/deposits");
+        this.props.history.push("/company-financial/"+this.state.orderId+"/deposits");
     }
 
     onSuccessOrderCallback(response) {

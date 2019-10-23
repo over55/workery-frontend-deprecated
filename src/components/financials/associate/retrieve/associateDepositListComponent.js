@@ -152,7 +152,7 @@ function paidAtFormatter(cell, row){
 }
 
 function functionsFormatter(cell, row){
-    return <Link className="btn btn-danger btn-xs" to={`/payment/${row.id}/delete`}>
+    return <Link className="btn btn-danger btn-xs" to={`/company-payment/${row.id}/delete`}>
         <i className="fas fa-trash"></i>&nbsp;Delete
     </Link>
 }

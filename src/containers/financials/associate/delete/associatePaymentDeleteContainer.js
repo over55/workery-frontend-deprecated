@@ -74,7 +74,7 @@ class AssociatePaymentDeleteContainer extends Component {
     onSuccessCallback(response) {
         console.log("onSuccessCallback | Fetched:", response);
         this.props.setFlashMessage("success", "Word order has been successfully cloned.");
-        this.props.history.push("/financial/"+this.props.orderDetail.id+"/deposits");
+        this.props.history.push("/company-financial/"+this.props.orderDetail.id+"/deposits");
     }
 
     onFailureCallback(errors) {
