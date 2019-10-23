@@ -241,9 +241,9 @@ class AssociateFinancialUpdateContainer extends Component {
             //
             // Redirect to the new page.
             //
-            this.props.history.push("/financial/"+this.state.id+"/zero-amount-due/create/step-1");
+            this.props.history.push("/company-financial/"+this.state.id+"/zero-amount-due/create/step-1");
         } else {
-            this.props.history.push("/financial/"+this.state.id);
+            this.props.history.push("/company-financial/"+this.state.id);
         }
     }
 
