@@ -5,9 +5,6 @@ import Scroll from 'react-scroll';
 import AdminOrderCloseOperationComponent from "../../../../components/orders/admin/operations/adminOrderCloseOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateCloseInput } from "../../../../validators/orderValidator";
-import {
-    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
-} from '../../../../constants/api';
 import { postOrderClose } from "../../../../actions/orderActions";
 
 
@@ -31,6 +28,7 @@ class AdminOrderCloseOperationContainer extends Component {
             reason: "",
             reasonOther: "",
             comment: "",
+            showModal: false,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -39,6 +37,9 @@ class AdminOrderCloseOperationContainer extends Component {
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onShowModalClick = this.onShowModalClick.bind(this);
+        this.onCloseModalClick = this.onCloseModalClick.bind(this);
+        this.onAgreeModalClick = this.onAgreeModalClick.bind(this);
     }
 
     /**
@@ -177,13 +178,36 @@ class AdminOrderCloseOperationContainer extends Component {
         });
     }
 
+    onShowModalClick(e) {
+        e.preventDefault();
+        this.setState({
+            showModal: true,
+        })
+    }
+
+    onCloseModalClick(e) {
+        e.preventDefault();
+        this.setState({
+            showModal: false
+        })
+    }
+
+    onAgreeModalClick(e) {
+        e.preventDefault();
+        this.setState({
+            showModal: false
+        }, ()=>{
+            this.onClick(e);
+        });
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
-        const { id, errors, reason, reasonOther, comment, isLoading } = this.state;
+        const { id, errors, reason, reasonOther, comment, isLoading, showModal } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
             <AdminOrderCloseOperationComponent
@@ -197,7 +221,10 @@ class AdminOrderCloseOperationContainer extends Component {
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
                 isLoading={isLoading}
-                onClick={this.onClick}
+                showModal={showModal}
+                onShowModalClick={this.onShowModalClick}
+                onCloseModalClick={this.onCloseModalClick}
+                onAgreeModalClick={this.onAgreeModalClick}
             />
         );
     }

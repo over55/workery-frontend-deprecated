@@ -1,6 +1,7 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import ReactModal from 'react-modal';
 
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
@@ -13,8 +14,24 @@ import { WORK_ORDER_CLOSE_REASON_CHOICES } from "../../../../constants/api";
 class AdminOrderCloseOperationComponent extends Component {
     render() {
         // Common
-        const { id, errors, reason, reasonOther, comment, isLoading, onClick, onTextChange, onSelectChange, order } = this.props;
+        const {
+            id, errors, reason, reasonOther, comment, isLoading, onClick, onTextChange, onSelectChange, order,
+            showModal, onShowModalClick, onCloseModalClick, onAgreeModalClick
+        } = this.props;
         const isReasonOther = reason === 1;
+
+        // Apply our styling for our modal component.
+        const customStyles = {
+            content : {
+                top                   : '50%',
+                left                  : '50%',
+                right                 : 'auto',
+                bottom                : 'auto',
+                marginRight           : '-50%',
+                transform             : 'translate(-50%, -50%)'
+            }
+        };
+
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -34,6 +51,44 @@ class AdminOrderCloseOperationComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <ReactModal
+                   isOpen={showModal}
+                    style={customStyles}
+             contentLabel="Minimal Modal Example"
+           onRequestClose={onCloseModalClick}>
+                   <div>
+
+                        <h1>
+                            <i className="fas fa-exclamation-triangle"></i>&nbsp;Confirmation Required
+                           <button type="button" className="btn btn-secondary btn-lg float-right" onClick={onCloseModalClick}>
+                               <span className="fa fa-times"></span>
+                           </button>
+                        </h1>
+                        <div className="row">
+                            <div className="col-md-8 mx-auto mt-2">
+
+                                <form className="needs-validation" noValidate>
+
+                                   <p>This will cancel the job. Do you want to continue?</p>
+
+                                   <button
+                                       onClick={onCloseModalClick}
+                                       type="button"
+                                       className="btn btn-lg btn-danger float-left">
+                                       <i className="fas fa-times"></i>&nbsp;No
+                                   </button>
+                                   <button
+                                       onClick={onAgreeModalClick}
+                                       type="button"
+                                       className="btn btn-lg btn-success float-right">
+                                       <i className="fas fa-check-circle"></i>&nbsp;Yes
+                                   </button>
+                               </form>
+                           </div>
+                       </div>
+                   </div>
+                </ReactModal>
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
@@ -122,7 +177,7 @@ class AdminOrderCloseOperationComponent extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onShowModalClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
                                 <Link to={`/order/${id}/operations`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">

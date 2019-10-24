@@ -6,11 +6,6 @@ import * as moment from 'moment';
 import  AdminOrderCreateStep6Component from "../../../../components/orders/admin/create/adminOrderCreateStep6Component";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
-} from '../../../../constants/api';
-import {
     localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining, localStorageGetBooleanOrNullItem
 } from '../../../../helpers/localStorageUtility';
 import { validateStep6CreateInput } from "../../../../validators/orderValidator";
