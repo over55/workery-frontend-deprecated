@@ -39,12 +39,16 @@ class  AdminOrderCreateStep6Container extends Component {
             description: localStorage.getItem("workery-create-order-description"),
             tags: localStorageGetArrayItem("workery-create-order-tags"),
             comment: localStorage.getItem("workery-create-order-comment"),
+            showModal: false,
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onSubmitClick = this.onSubmitClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onShowModalClick = this.onShowModalClick.bind(this);
+        this.onCloseModalClick = this.onCloseModalClick.bind(this);
+        this.onAgreeModalClick = this.onAgreeModalClick.bind(this);
     }
 
     /**
@@ -156,6 +160,25 @@ class  AdminOrderCreateStep6Container extends Component {
      *------------------------------------------------------------
      */
 
+    onShowModalClick(e) {
+        e.preventDefault();
+        this.setState({
+            showModal: true,
+        })
+    }
+
+    onCloseModalClick(e) {
+        e.preventDefault();
+        this.setState({
+            showModal: false
+        })
+    }
+
+    onAgreeModalClick(e) {
+        e.preventDefault();
+        this.onSubmitClick(e);
+    }
+
     onSubmitClick(e) {
         e.preventDefault();
 
@@ -196,7 +219,7 @@ class  AdminOrderCreateStep6Container extends Component {
 
     render() {
         const {
-            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, tags, comment, isLoading, errors,
+            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, tags, comment, isLoading, errors, showModal,
         } = this.state;
         return (
             < AdminOrderCreateStep6Component
@@ -212,6 +235,10 @@ class  AdminOrderCreateStep6Container extends Component {
                 isLoading={isLoading}
                 errors={errors}
                 onSubmitClick={this.onSubmitClick}
+                showModal={showModal}
+                onShowModalClick={this.onShowModalClick}
+                onCloseModalClick={this.onCloseModalClick}
+                onAgreeModalClick={this.onAgreeModalClick}
             />
         );
     }
