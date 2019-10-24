@@ -13,6 +13,17 @@ export default class AssignAssociateTaskStep1Component extends Component {
         const {
             task, associates, activitySheetItems, id, errors, isLoading, onClick
         } = this.props;
+
+        let associate;
+        const insuredAssociates = [];
+        const uninsuredAssociates = [];
+        for (associate of associates) {
+            if (associate.wsibNumber !== undefined && associate.wsibNumber !== null && associate.wsibNumber !== "") {
+                insuredAssociates.push(associate);
+            } else {
+                uninsuredAssociates.push(associate)
+            }
+        }
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -124,7 +135,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                 <div className="col-sm-12 mx-auto mt-4 pt-4">
                     <h2>
-                        <i className="fas fa-user-check"></i>&nbsp;Available Associates
+                        <i className="fas fa-user-shield"></i>&nbsp;Available Insured Associates
                     </h2>
                     <div className="table-responsive">
                         <table className="table table-striped">
@@ -140,8 +151,34 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             </tr>
                             </thead>
                             <tbody>
-                                {associates && associates.map(
-                                    (associate) => <AssociateItem associate={associate} onClick={onClick} key={`act-${associate.id}`} />)
+                                {associates && insuredAssociates.map(
+                                    (associate) => <InsuredAssociateItem associate={associate} onClick={onClick} key={`act-${associate.id}`} />)
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div className="col-sm-12 mx-auto mt-4 pt-4">
+                    <h2>
+                        <i className="fas fa-user"></i>&nbsp;Available Uninsured Associates
+                    </h2>
+                    <div className="table-responsive">
+                        <table className="table table-striped">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Full Name</th>
+                                <th>Phone</th>
+                                <th>E-Mail</th>
+                                <th>WSIB #</th>
+                                <th>Rate ($/h)</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {associates && uninsuredAssociates.map(
+                                    (associate) => <UninsuredAssociateItem associate={associate} onClick={onClick} key={`act-${associate.id}`} />)
                                 }
                             </tbody>
                         </table>
@@ -214,7 +251,7 @@ class ActivitySheetItem extends Component {
 }
 
 
-class AssociateItem extends Component {
+class InsuredAssociateItem extends Component {
     render() {
         const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired } = this.props.associate;
         const { onClick } = this.props;
@@ -238,6 +275,48 @@ class AssociateItem extends Component {
                 </td>
                 <td>
                     {wsibNumber}
+                </td>
+                <td>
+                    <NumberFormat
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        value={hourlySalaryDesired}
+                        fixedDecimalScale={true}
+                        decimalScale={2}
+                        displayType={'text'}
+                    />
+                </td>
+                <td>
+                    <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                </td>
+            </tr>
+        );
+    };
+}
+
+
+
+class UninsuredAssociateItem extends Component {
+    render() {
+        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired } = this.props.associate;
+        const { onClick } = this.props;
+        const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
+        return (
+            <tr>
+                <td>
+                    {isCommercial
+                        ? <i className="fas fa-building"></i>
+                        : <i className="fas fa-home"></i>
+                    }
+                </td>
+                <td>
+                    <Link to={`/associate/${id}`} target="_blank">{fullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                </td>
+                <td>
+                    <a href={`tel:${e164Telephone}`}>{telephone}</a>
+                </td>
+                <td>
+                    <a href={`mailto:${email}`}>{email}</a>
                 </td>
                 <td>
                     <NumberFormat
