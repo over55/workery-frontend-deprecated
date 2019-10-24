@@ -254,6 +254,7 @@ class AdminOrderLiteUpdateContainer extends Component {
                 isLoading={isLoading}
                 errors={errors}
                 description={description}
+                onTextChange={this.onTextChange}
 
                 isTagsLoading={isTagsLoading}
                 tags={transcodedTags}
