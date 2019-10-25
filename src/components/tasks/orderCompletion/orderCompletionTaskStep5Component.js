@@ -310,7 +310,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
 
-                                <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-4`}>
+                                <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to={`/task/6/${id}/step-4`}>
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

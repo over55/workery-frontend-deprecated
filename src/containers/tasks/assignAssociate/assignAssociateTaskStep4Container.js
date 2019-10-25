@@ -102,7 +102,7 @@ class AssignAssociateTaskStep4Container extends Component {
         if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
             if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
-                this.props.history.push("/tasks");
+                this.props.history.push("/order/"+this.props.taskDetail.job);
             }
         }
     }
