@@ -526,3 +526,20 @@ export function validateChangePasswordOperationInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateUpgradeOperationInput(data) {
+    let errors = {};
+
+    if (data.organization_name === undefined || data.organization_name === null || data.organization_name === "") {
+        errors.organization_name = 'This field is required';
+    }
+    if (data.organization_type_of === undefined || data.organization_type_of === null || data.organization_type_of === "") {
+        errors.organization_type_of = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

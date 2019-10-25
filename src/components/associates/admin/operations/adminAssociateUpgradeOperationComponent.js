@@ -16,10 +16,10 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 
 
-export default class AdminAssociateChangePasswordOperationComponent extends Component {
+export default class AdminAssociateUpgradeOperationComponent extends Component {
     render() {
         const {
-            isLoading, id, associate, errors, onClick, onTextChange, password, repeatPassword,
+            isLoading, id, associate, errors, onClick, onTextChange, organizationName, organizationTypeOf,
         } = this.props;
         return (
             <div>
@@ -49,7 +49,7 @@ export default class AdminAssociateChangePasswordOperationComponent extends Comp
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Change Password</h1>
+                            <h1>Upgrade Associate</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -57,23 +57,23 @@ export default class AdminAssociateChangePasswordOperationComponent extends Comp
                             <BootstrapInput
                                 inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.password}
-                                label="Password (*)"
+                                error={errors.organizationName}
+                                label="Organization Name (*)"
                                 onChange={onTextChange}
-                                value={password}
-                                name="password"
-                                type="password"
+                                value={organizationName}
+                                name="organizationName"
+                                type="text"
                             />
 
                             <BootstrapInput
                                 inputClassName="form-control"
                                 borderColour="border-primary"
-                                error={errors.repeatPassword}
-                                label="Repeat Password (*)"
+                                error={errors.organizationTypeOf}
+                                label="Organization Type of (*)"
                                 onChange={onTextChange}
-                                value={repeatPassword}
-                                name="repeatPassword"
-                                type="password"
+                                value={organizationTypeOf}
+                                name="organizationTypeOf"
+                                type="text"
                             />
 
 

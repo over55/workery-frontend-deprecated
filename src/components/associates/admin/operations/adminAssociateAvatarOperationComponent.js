@@ -38,7 +38,7 @@ export default class AdminAssociateAvatarOperationComponentOperationComponent ex
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Associate</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
 
                 {associate.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

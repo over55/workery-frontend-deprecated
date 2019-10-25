@@ -67,6 +67,7 @@ import AdminAssociateOrderListContainer from "./associates/admin/retrieve/adminA
 import AdminAssociateActivitySheetListContainer from "./associates/admin/retrieve/adminAssociateActivitySheetListContainer";
 import AdminAssociateCommentContainer from "./associates/admin/retrieve/adminAssociateCommentContainer";
 import AdminAssociateAvatarOperationContainer from "./associates/admin/operations/adminAssociateAvatarOperationContainer";
+import AdminAssociateUpgradeOperationContainer from "./associates/admin/operations/adminAssociateUpgradeOperationContainer";
 import AdminAssociateFileUploadAddContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadAddContainer";
 import AdminAssociateFileUploadArchiveContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadArchiveContainer";
 import AdminAssociateFileUploadListContainer from "./associates/admin/retrieve/file_upload/adminAssociateFileUploadListContainer";
@@ -421,6 +422,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/update/metrics" exact component={requiresAuth(AdminAssociateMetricsUpdateContainer)} />
                                 <Route path="/associate/:id/operations/balance" exact component={requiresAuth(AdminAssociateBalanceOperationContainer)} />
                                 <Route path="/associate/:id/operations/password" exact component={requiresAuth(AdminAssociateChangePasswordOperationContainer)} />
+                                <Route path="/associate/:id/operations/upgrade" exact component={requiresAuth(AdminAssociateUpgradeOperationContainer)} />
 
                                 { /* WORK ORDER */}
                                 <Route path="/orders/add/step-1" exact component={requiresAuth(AdminOrderCreateStep1Container)} />
