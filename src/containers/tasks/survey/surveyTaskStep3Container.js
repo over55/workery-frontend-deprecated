@@ -119,7 +119,7 @@ class SurveyTaskStep3Container extends Component {
     onSuccessCallback(profile) {
         localStorageRemoveItemsContaining("workery-task-7-");
         this.props.setFlashMessage("success", "Survey task has been successfully closed.");
-        this.props.history.push("/tasks");
+        this.props.history.push("/order/"+this.props.taskDetail.job);
     }
 
     onFailureCallback(errors) {
@@ -138,7 +138,7 @@ class SurveyTaskStep3Container extends Component {
         if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
             if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
-                this.props.history.push("/tasks");
+                this.props.history.push("/order/"+this.props.taskDetail.job);
             }
         }
     }
