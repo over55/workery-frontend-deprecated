@@ -53,11 +53,11 @@ export default class AdminOrderCreateStep4Component extends Component {
                         </div>
                         <div id="step-4" className="st-grey active">
                             <strong>
-                                <span className="num">4.</span><span className="">Skills and Description</span>
+                                <span className="num">4.</span><span className="">Skills</span>
                             </strong>
                         </div>
                         <div id="step-5" className="st-grey">
-                            <span className="num">5.</span><span className="">Metrics</span>
+                            <span className="num">5.</span><span className="">Comments</span>
                         </div>
                         <div id="step-6" className="st-grey">
                             <span className="num">6.</span><span className="">Review</span>
