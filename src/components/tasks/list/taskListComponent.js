@@ -42,6 +42,7 @@ class RemoteListComponent extends Component {
         };
 
         const typeOfSelectOptions = {
+            0: 'All',
             1: 'Assign associate',
             2: '48 hour follow up',
             3: 'Follow up customer survey',
@@ -83,8 +84,8 @@ class RemoteListComponent extends Component {
             sort: true,
             filter: selectFilter({
                 options: typeOfSelectOptions,
-                // defaultValue: 4, // Note: `4` is `pending`.
-                // withoutEmptyOption: true
+                defaultValue: 0,
+                withoutEmptyOption: true
             }),
             formatter: typeOfFormatter,
         },{

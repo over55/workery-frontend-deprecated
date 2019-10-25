@@ -132,8 +132,15 @@ class TaskListContainer extends Component {
             if (filters.typeOf === undefined) {
                 parametersMap.delete("typeOf");
             } else {
-                const filterVal = filters.typeOf.filterVal;
-                parametersMap.set("typeOf", filterVal);
+                const filterVal = parseInt(filters.typeOf.filterVal);
+
+                // If we select the "ALL" option, else we filter down
+                // to specific value.
+                if (filterVal === 0) {
+                    parametersMap.delete("typeOf"); // "ALL" basically has no limit.
+                } else {
+                    parametersMap.set("typeOf", filterVal);
+                }
             }
 
             this.setState(
