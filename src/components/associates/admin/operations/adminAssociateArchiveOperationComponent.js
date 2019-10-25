@@ -15,7 +15,7 @@ import {
 export default class AdminAssociateArchiveOperationComponent extends Component {
     render() {
         // Common
-        const { reason, reasonOther, comment, id, errors, onTextChange, onSelectChange, isLoading, onClick, client } = this.props;
+        const { reason, reasonOther, comment, id, errors, onTextChange, onSelectChange, isLoading, onClick, associate } = this.props;
         const isReasonOther = reason === 1;
         return (
             <main id="main" role="main">
@@ -26,10 +26,10 @@ export default class AdminAssociateArchiveOperationComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
+                            <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/client/${id}/operations`}><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</Link>
+                            <Link to={`/associate/${id}/operations`}><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-archive"></i>&nbsp;Archive
@@ -40,8 +40,8 @@ export default class AdminAssociateArchiveOperationComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1><i className="fas fa-archive"></i>&nbsp;Archive Client</h1>
-                            <p>You are about to <strong>archive the client</strong> this means the client will be in a read-only state and the client cannot create work orders for our associates. Please explain why. All fields which have the (*) symbol are required to be filled out.</p>
+                            <h1><i className="fas fa-archive"></i>&nbsp;Archive Associate</h1>
+                            <p>You are about to <strong>archive the associate</strong> this means the associate will be in a read-only state and the associate cannot create work orders for our associates. Please explain why. All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
@@ -86,7 +86,7 @@ export default class AdminAssociateArchiveOperationComponent extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/client/${id}/operations`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/associate/${id}/operations`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>

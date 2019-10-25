@@ -46,7 +46,7 @@ class AdminAssociateArchiveOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.customer = this.props.associateDetail.id;
+        postData.associate = this.props.associateDetail.id;
         postData.state = "inactive";
         postData.deactivationReason = this.state.reason;
         postData.deactivationReasonOther = this.state.reasonOther;
