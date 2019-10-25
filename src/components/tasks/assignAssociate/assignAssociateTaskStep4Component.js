@@ -41,7 +41,7 @@ export default class AssignAssociateTaskStep4Component extends Component {
                         </div>
                         <div id="step-3" className="st-grey">
                             <Link to={`/task/1/${id}/step-3`}>
-                                <span className="num">3.</span><span className="">Decision</span>
+                                <span className="num">3.</span><span className="">Assignment</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey active">
@@ -130,7 +130,7 @@ export default class AssignAssociateTaskStep4Component extends Component {
                                 <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/1/${id}/step-3`}>
+                            <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to={`/task/1/${id}/step-3`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>
