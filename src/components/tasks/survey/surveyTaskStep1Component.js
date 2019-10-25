@@ -85,16 +85,6 @@ export default class SurveyTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Client Location</th>
-                                    <td>
-                                        {task &&
-                                            <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
-                                                {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Associate Name</th>
                                     <td>
                                         <Link to={`/associate/${task.jobAssociate}`} target="_blank">
@@ -113,16 +103,6 @@ export default class SurveyTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Associate Location</th>
-                                    <td>
-                                        {task &&
-                                            <a href={task.jobAssociateLocationGoogleUrl} target="_blank">
-                                                {task.jobAssociateLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Job Description</th>
                                     <td>{task && task.jobDescription}</td>
                                 </tr>
@@ -135,14 +115,6 @@ export default class SurveyTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Tag(s)</th>
-                                    <td>
-                                        {task.jobPrettyTags && task.jobPrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Comments</th>
                                     <td>
                                         <Link to={`/order/${task.job}/comments`} target="_blank">
@@ -150,27 +122,40 @@ export default class SurveyTaskStep1Component extends Component {
                                         </Link>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Created:</th>
+                                    <td>
+                                        At {task && task.createdAt &&
+                                            <Moment format="MM/DD/YYYY">{task.createdAt}</Moment>
+                                        } by {task && task.createdByLabel}
+                                    </td>
+                                </tr>
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
+                                        <i className="fas fa-clipboard-list"></i>&nbsp;Requied Tasks
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        <ul>
-                                            <li>
-                                                <Link to={`/order/${task.job}/postpone`}>
-                                                    Postpone Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                        <div className="row">
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <Link className="btn btn-orange btn-lg" to={`/order/${task.job}/postpone`}>
+                                                    <i className="fas fa-clock"></i>&nbsp;Postpone Order
                                                 </Link>
-                                                </li>
-                                            <li>
-                                                <Link to={`/order/${task.job}/close`}>
-                                                    Close Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                            </div>
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <Link className="btn btn-danger btn-lg" to={`/order/${task.job}/close`}>
+                                                    <i className="fas fa-window-close"></i>&nbsp;Cancel Job
                                                 </Link>
-                                            </li>
-                                        </ul>
+                                            </div>
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <button className="btn btn-success btn-lg" onClick={onClick}>
+                                                    Begin&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
 
@@ -178,11 +163,7 @@ export default class SurveyTaskStep1Component extends Component {
                         </table>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
-                                Survey&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                            </button>
-
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">
+                            <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>
@@ -194,16 +175,6 @@ export default class SurveyTaskStep1Component extends Component {
             </div>
         );
     }
-}
-
-
-class TagItem extends Component {
-    render() {
-        const { id, text } = this.props.tag;
-        return (
-            <span className="badge badge-info badge-lg" value={id}>{text}</span>
-        );
-    };
 }
 
 
