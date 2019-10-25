@@ -83,7 +83,7 @@ class AssignAssociateTaskStep4Container extends Component {
     onSuccessCallback(profile) {
         localStorageRemoveItemsContaining("workery-task-1-");
         this.props.setFlashMessage("success", "Assign associate task has been successfully closed.");
-        this.props.history.push("/tasks");
+        this.props.history.push("/order/"+this.props.taskDetail.job);
     }
 
     onFailureCallback(errors) {

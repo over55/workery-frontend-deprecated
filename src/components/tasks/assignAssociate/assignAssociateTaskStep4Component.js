@@ -112,7 +112,7 @@ export default class AssignAssociateTaskStep4Component extends Component {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <th scope="row" className="bg-light">Notes:</th>
                                     <td>
                                         <ul>
                                             <li>
