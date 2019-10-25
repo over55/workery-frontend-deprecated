@@ -46,7 +46,7 @@ export default class FollowUpTaskStep2Component extends Component {
                         </div>
                         <div id="step-2" className="st-grey active">
                             <strong>
-                                <span className="num">2.</span><span className="">Decision</span>
+                                <span className="num">2.</span><span className="">Meeting</span>
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
@@ -59,7 +59,7 @@ export default class FollowUpTaskStep2Component extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-calendar-alt"></i>&nbsp;Decision
+                                <i className="fas fa-calendar-alt"></i>&nbsp;Meeting
                             </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
@@ -103,11 +103,11 @@ export default class FollowUpTaskStep2Component extends Component {
                         </form>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
-                                Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick} isLoading={isLoading}>
+                                Next&nbsp;<i className="fas fa-arrow-circle-right"></i>
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/2/${id}/step-1`}>
+                            <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to={`/task/2/${id}/step-1`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>

@@ -44,7 +44,7 @@ export default class FollowUpTaskStep3Component extends Component {
                         </div>
                         <div id="step-2" className="st-grey">
                             <Link to={`/task/2/${id}/step-2`}>
-                                <span className="num">2.</span><span className="">Decision</span>
+                                <span className="num">2.</span><span className="">Meeting</span>
                             </Link>
                         </div>
                         <div id="step-3" className="st-grey active">
@@ -135,7 +135,7 @@ export default class FollowUpTaskStep3Component extends Component {
                                 <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/2/${id}/step-2`}>
+                            <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to={`/task/2/${id}/step-2`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>

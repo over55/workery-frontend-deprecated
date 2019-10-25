@@ -126,16 +126,11 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Created at:</th>
+                                    <th scope="row" className="bg-light">Created:</th>
                                     <td>
-                                        {task && task.createdAt &&
+                                        At {task && task.createdAt &&
                                             <Moment format="MM/DD/YYYY">{task.createdAt}</Moment>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Created by:</th>
-                                    <td>{task && task.createdByLabel}
+                                        } for {task && task.createdByLabel}
                                     </td>
                                 </tr>
 
