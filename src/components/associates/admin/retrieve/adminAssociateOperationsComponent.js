@@ -169,7 +169,7 @@ export default class AdminAssociateOperationsComponent extends Component {
                                 :<div className="col-sm-3 mb-4">
                                     <div className="card box-shadow text-center mx-auto h-100">
                                         <div className="card-custom-top-2">
-                                            <i className="fas fa-archive fa-3x"></i>
+                                            <i className="fas fa-box-open fa-3x"></i>
                                         </div>
                                         <div className="card-body">
                                             <h3 className="card-title">Unarchive Associate</h3>

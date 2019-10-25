@@ -936,6 +936,36 @@ export const ARCHIVE_REASON_CHOICES = [
 ];
 
 
+export const ASSOCIATE_ARCHIVE_REASON_CHOICES = [
+    {
+        id: 'archive-reason-2-choice',
+        selectName: "reason",
+        value: 2,
+        label: "Associate is blacklisted"
+    },{
+        id: 'archive-reason-2-choice',
+        selectName: "reason",
+        value: 3,
+        label: "Associate has moved"
+    },{
+        id: 'archive-reason-2-choice',
+        selectName: "reason",
+        value: 4,
+        label: "Associate is deceased"
+    },{
+        id: 'archive-reason-2-choice',
+        selectName: "reason",
+        value: 5,
+        label: "Associate does not want us to contact them"
+    },{
+        id: 'archive-reason-1-choice',
+        selectName: "reason",
+        value: 1,
+        label: "Other"
+    }
+];
+
+
 export const WORK_ORDER_CLOSE_REASON_CHOICES = [
     {
         id: 'reason-2-choice',
