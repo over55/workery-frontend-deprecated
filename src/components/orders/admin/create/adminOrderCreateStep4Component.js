@@ -100,7 +100,7 @@ export default class AdminOrderCreateStep4Component extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
                                     Next&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to="/orders/add/step-3" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">

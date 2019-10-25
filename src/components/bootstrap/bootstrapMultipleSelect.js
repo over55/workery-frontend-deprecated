@@ -49,7 +49,7 @@ export const BootstrapMultipleSelect = ({
     // Render our output for this component.
     return (
         <div className={classnames("form-group", { 'has-error': error } )}>
-            <label className="font-weight-bold" className="control-label">{label}</label>
+            <label className="control-label font-weight-bold">{label}</label>
 
             <Select
                 isMulti={true}
