@@ -33,7 +33,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <span className="num">2.</span><span className="">Selection</span>
+                            <span className="num">2.</span><span className="">Activity</span>
                         </div>
                         <div id="step-3" className="st-grey">
                             <span className="num">3.</span><span className="">Decision</span>
@@ -50,7 +50,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-table"></i>&nbsp;Task Details
+                                        <i className="fas fa-table"></i>&nbsp;Assign Associate
                                     </th>
                                 </tr>
                                 <tr>
@@ -137,8 +137,8 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                         <Link className="btn btn-orange btn-lg btn-fxw mr-3" to={`/order/${task.job}/postpone`}>
                                             <i className="fas fa-clock"></i>&nbsp;Postpone Order
                                         </Link>
-                                        <Link className="btn btn-warning btn-lg btn-fxw" to={`/order/${task.job}/close`}>
-                                            <i className="fas fa-window-close"></i>&nbsp;Close Order
+                                        <Link className="btn btn-danger btn-lg btn-fxw" to={`/order/${task.job}/close`}>
+                                            <i className="fas fa-window-close"></i>&nbsp;Cancel Job
                                         </Link>
                                     </td>
                                 </tr>

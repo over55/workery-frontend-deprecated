@@ -51,7 +51,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                         </div>
                         <div id="step-2" className="st-grey active">
                             <strong>
-                                <span className="num">2.</span><span className="">Selection</span>
+                                <span className="num">2.</span><span className="">Activity</span>
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
@@ -69,7 +69,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-table"></i>&nbsp;Task Details
+                                        <i className="fas fa-table"></i>&nbsp;Assign Associate
                                     </th>
                                 </tr>
                                 <tr>
