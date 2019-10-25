@@ -170,7 +170,7 @@ export default class AdminOrderOperationsComponent extends Component {
                                             <i className="fas fa-window-close fa-3x"></i>
                                         </div>
                                         <div className="card-body">
-                                            <h3 className="card-title">Close</h3>
+                                            <h3 className="card-title">Cancel</h3>
                                             <p className="card-text">Cancel this job or end it early.</p>
                                         </div>
                                         <div className="card-footer bg-transparent border-0">

@@ -425,7 +425,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                                             Re-open&nbsp;<i className="fas fa-chevron-right"></i>
                                                         </Link>
                                                         :<Link to={`/order/${order.id}/close`}>
-                                                            Close&nbsp;<i className="fas fa-chevron-right"></i>
+                                                            Cancel&nbsp;<i className="fas fa-chevron-right"></i>
                                                         </Link>
                                                     }
                                                 </li>
