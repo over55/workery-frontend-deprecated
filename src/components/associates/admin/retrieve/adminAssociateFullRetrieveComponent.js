@@ -379,6 +379,16 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                                     Upgrade&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
+                                            <li>
+                                                <Link to={`/associate/${id}/operations`}>
+                                                    Archive&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to={`/associate/${id}/operations`}>
+                                                    Unarchive&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </li>
                                         </ul>
                                     </td>
                                 </tr>

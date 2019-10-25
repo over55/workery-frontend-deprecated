@@ -20,7 +20,7 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 export default class AdminAssociateOperationsComponent extends Component {
     render() {
         const { id, associateDetail, user, errors, flashMessage, isLoading, onAddJobClick } = this.props;
-        const isActiveState = associateDetail.state === "active";
+        const isActiveState = associateDetail.state === 1;
         const isCompany = associateDetail && associateDetail.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         const canDeleteAssociate = user.groupId === EXECUTIVE_GROUP_ID;
         return (
@@ -144,6 +144,40 @@ export default class AdminAssociateOperationsComponent extends Component {
                                         <div className="card-footer bg-transparent border-0">
                                             <Link className="btn btn-success btn-lg" to={`/associate/${id}/operations/downgrade`}>
                                                 Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            {isActiveState
+                                ?<div className="col-sm-3 mb-4">
+                                    <div className="card box-shadow text-center mx-auto h-100">
+                                        <div className="card-custom-top-2">
+                                            <i className="fas fa-archive fa-3x"></i>
+                                        </div>
+                                        <div className="card-body">
+                                            <h3 className="card-title">Archive Associate</h3>
+                                            <p className="card-text">This will make the associate inactive.</p>
+                                        </div>
+                                        <div className="card-footer bg-transparent border-0">
+                                            <Link to={`/associate/${id}/operations/archive`} className="btn btn-success btn-lg">
+                                                Go&nbsp;<i className="fas fa-chevron-right"></i>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                                :<div className="col-sm-3 mb-4">
+                                    <div className="card box-shadow text-center mx-auto h-100">
+                                        <div className="card-custom-top-2">
+                                            <i className="fas fa-archive fa-3x"></i>
+                                        </div>
+                                        <div className="card-body">
+                                            <h3 className="card-title">Unarchive Associate</h3>
+                                            <p className="card-text">This will make the associate active.</p>
+                                        </div>
+                                        <div className="card-footer bg-transparent border-0">
+                                            <Link to={`/associate/${id}/operations/unarchive`} className="btn btn-success btn-lg">
+                                                Go&nbsp;<i className="fas fa-chevron-right"></i>
                                             </Link>
                                         </div>
                                     </div>

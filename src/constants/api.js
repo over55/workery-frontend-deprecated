@@ -63,6 +63,7 @@ export const WORKERY_ASSOCIATE_BALANCE_OPERATION_API_ENDPOINT = '/associates/ope
 export const WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_ENDPOINT = '/associates/operation/password';
 export const WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_ENDPOINT = '/associates/operation/upgrade';
 export const WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_ENDPOINT = '/associates/operation/downgrade';
+export const WORKERY_ASSOCIATE_ARCHIVE_API_ENDPOINT = '/associates/operation/archive';
 export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
 export const WORKERY_TASK_DETAIL_API_ENDPOINT = '/task/';
 export const WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT = '/task/XXX/available-associates';
