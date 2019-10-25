@@ -55,8 +55,10 @@ class FollowUpTaskStep3Container extends Component {
         postData.task_item = this.state.id;
         postData.hasAgreedToMeet = this.state.status;
 
-        const meetingDateMoment = moment(this.state.meetingDate);
-        postData.meetingDate = meetingDateMoment.format("YYYY-MM-DD");
+        if (this.state.meetingDate !== undefined && this.state.meetingDate !== null) {
+            const meetingDateMoment = moment(this.state.meetingDate);
+            postData.meetingDate = meetingDateMoment.format("YYYY-MM-DD");
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
