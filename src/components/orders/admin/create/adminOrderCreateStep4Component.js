@@ -53,11 +53,11 @@ export default class AdminOrderCreateStep4Component extends Component {
                         </div>
                         <div id="step-4" className="st-grey active">
                             <strong>
-                                <span className="num">4.</span><span className="">Skills and Description</span>
+                                <span className="num">4.</span><span className="">Skills</span>
                             </strong>
                         </div>
                         <div id="step-5" className="st-grey">
-                            <span className="num">5.</span><span className="">Metrics</span>
+                            <span className="num">5.</span><span className="">Comments</span>
                         </div>
                         <div id="step-6" className="st-grey">
                             <span className="num">6.</span><span className="">Review</span>
@@ -100,7 +100,7 @@ export default class AdminOrderCreateStep4Component extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
                                     Next&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to="/orders/add/step-3" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">

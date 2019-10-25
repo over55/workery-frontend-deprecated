@@ -531,9 +531,9 @@ table.custom-cell-w tr th{width:35% !important;}
 .step-navigation .st-grey {
 	background: #e9ecef;
 	display: inline-block;
-	padding: 1rem;
+	padding: 0.8rem;
 	border-radius: .3rem;
-	min-width: 140px;
+	/*min-width: 140px;*/
 	margin: 5px;
 	color: #6c757d !important;
 }
@@ -549,19 +549,19 @@ table.custom-cell-w tr th{width:35% !important;}
 	font-size: 1.5rem;
 	font-weight: 600;
 	padding-right: 5px;
-	float: left;
+	/*float: left;*/
 	margin-top: -5px;
 	height: 100%;
 }
 @media (min-width: 952px) and (max-width: 1024px) {
 .step-navigation .st-grey {
-	padding: 0.875rem !important;
-	font-size: 1.1rem !important;
-	min-width: 140px !important;
+	padding: 0.8rem !important;
+	font-size: 1rem !important;
+	/*min-width: 140px !important;*/
 	display: inherit;
 }
 .step-navigation .st-grey .num {
-	font-size: 1.2rem !important;
+	font-size: 1.1rem !important;
 	margin-top: -3px !important;
 }
 }

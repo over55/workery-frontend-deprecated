@@ -68,7 +68,7 @@ export default class AdminOrderCreateStep6Component extends Component {
                         </div>
                         <div id="step-4" className="st-grey">
                             <Link to="/orders/add/step-4">
-                                <span className="num">4.</span><span className="">Skills and Description</span>
+                                <span className="num">4.</span><span className="">Skills</span>
                             </Link>
                         </div>
                         <div id="step-5" className="st-grey">
