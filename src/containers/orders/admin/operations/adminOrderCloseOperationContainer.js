@@ -83,7 +83,7 @@ class AdminOrderCloseOperationContainer extends Component {
     onSuccessfulSubmissionCallback(order) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Order has been successfully closed.");
-        this.props.history.push("/order/"+this.state.id+"/operations");
+        this.props.history.push("/order/"+this.state.id+"");
     }
 
     onFailedSubmissionCallback(errors) {
