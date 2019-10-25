@@ -115,22 +115,40 @@ export default class AdminAssociateOperationsComponent extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-sm-3 mb-4">
-                                <div className="card box-shadow text-center mx-auto h-100">
-                                    <div className="card-custom-top-2">
-                                        <i className="fas fa-user-plus fa-3x"></i>
-                                    </div>
-                                    <div className="card-body">
-                                        <h3 className="card-title">Upgrade</h3>
-                                        <p className="card-text">Upgrade residential associate to be a commericial associate.</p>
-                                    </div>
-                                    <div className="card-footer bg-transparent border-0">
-                                        <Link className="btn btn-success btn-lg" to={`/associate/${id}/operations/upgrade`}>
-                                            Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                        </Link>
+                            {associateDetail.typeOf === 2
+                                ?<div className="col-sm-3 mb-4">
+                                    <div className="card box-shadow text-center mx-auto h-100">
+                                        <div className="card-custom-top-2">
+                                            <i className="fas fa-user-plus fa-3x"></i>
+                                        </div>
+                                        <div className="card-body">
+                                            <h3 className="card-title">Upgrade</h3>
+                                            <p className="card-text">Upgrade residential associate to be a commericial associate.</p>
+                                        </div>
+                                        <div className="card-footer bg-transparent border-0">
+                                            <Link className="btn btn-success btn-lg" to={`/associate/${id}/operations/upgrade`}>
+                                                Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                :<div className="col-sm-3 mb-4">
+                                    <div className="card box-shadow text-center mx-auto h-100">
+                                        <div className="card-custom-top-2">
+                                            <i className="fas fa-user-minus fa-3x"></i>
+                                        </div>
+                                        <div className="card-body">
+                                            <h3 className="card-title">Downgrade</h3>
+                                            <p className="card-text">Downgrade commercial associate to be a residential associate.</p>
+                                        </div>
+                                        <div className="card-footer bg-transparent border-0">
+                                            <Link className="btn btn-success btn-lg" to={`/associate/${id}/operations/downgrade`}>
+                                                Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
 
                     </div>

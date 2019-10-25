@@ -14,12 +14,15 @@ import Moment from 'react-moment';
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapSingleSelect } from '../../../bootstrap/bootstrapSingleSelect';
+import { ORGANIZATION_TYPE_OF_CHOICES } from "../../../../constants/api";
 
 
 export default class AdminAssociateUpgradeOperationComponent extends Component {
     render() {
         const {
             isLoading, id, associate, errors, onClick, onTextChange, organizationName, organizationTypeOf,
+            onSelectChange,
         } = this.props;
         return (
             <div>
@@ -65,17 +68,16 @@ export default class AdminAssociateUpgradeOperationComponent extends Component {
                                 type="text"
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control"
+                            <BootstrapSingleSelect
                                 borderColour="border-primary"
-                                error={errors.organizationTypeOf}
-                                label="Organization Type of (*)"
-                                onChange={onTextChange}
-                                value={organizationTypeOf}
+                                label="Organization Type (*)"
                                 name="organizationTypeOf"
-                                type="text"
+                                defaultOptionLabel="Please select a telephone type."
+                                options={ORGANIZATION_TYPE_OF_CHOICES}
+                                value={organizationTypeOf}
+                                error={errors.organizationTypeOf}
+                                onSelectChange={onSelectChange}
                             />
-
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>

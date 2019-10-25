@@ -30,6 +30,7 @@ class AdminAssociateUpgradeOperationContainer extends Component {
         }
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -42,6 +43,11 @@ class AdminAssociateUpgradeOperationContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        // (6) Organization Type Of - This field may not be null, therefore make blank.
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+            postData.organizationTypeOf = "";
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -100,6 +106,14 @@ class AdminAssociateUpgradeOperationContainer extends Component {
         });
     }
 
+    onSelectChange(option) {
+        const optionKey = [option.selectName]+"Option";
+        this.setState({
+            [option.selectName]: option.value,
+            [optionKey]: option,
+        });
+    }
+
     onClick(e) {
         e.preventDefault();
 
@@ -146,6 +160,7 @@ class AdminAssociateUpgradeOperationContainer extends Component {
                 errors={errors}
                 onClick={this.onClick}
                 onTextChange={this.onTextChange}
+                onSelectChange={this.onSelectChange}
             />
         );
     }
