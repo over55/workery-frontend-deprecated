@@ -91,16 +91,6 @@ export default class FollowUpTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Client Location</th>
-                                    <td>
-                                        {task &&
-                                            <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
-                                                {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Associate Name</th>
                                     <td>
                                         <Link to={`/associate/${task.jobAssociate}`} target="_blank">
@@ -119,16 +109,6 @@ export default class FollowUpTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Associate Location</th>
-                                    <td>
-                                        {task &&
-                                            <a href={task.jobAssociateLocationGoogleUrl} target="_blank">
-                                                {task.jobAssociateLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Job Description</th>
                                     <td>{task && task.jobDescription}</td>
                                 </tr>
@@ -141,14 +121,6 @@ export default class FollowUpTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Tag(s)</th>
-                                    <td>
-                                        {task.jobPrettyTags && task.jobPrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Comments</th>
                                     <td>
                                         <Link to={`/order/${task.job}/comments`} target="_blank">
@@ -157,16 +129,11 @@ export default class FollowUpTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Created at:</th>
+                                    <th scope="row" className="bg-light">Created:</th>
                                     <td>
-                                        {task && task.createdAt &&
+                                        At {task && task.createdAt &&
                                             <Moment format="MM/DD/YYYY">{task.createdAt}</Moment>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Created by:</th>
-                                    <td>{task && task.createdByLabel}
+                                        } by {task && task.createdByLabel}
                                     </td>
                                 </tr>
 
