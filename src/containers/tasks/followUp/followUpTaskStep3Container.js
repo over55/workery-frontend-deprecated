@@ -90,7 +90,7 @@ class FollowUpTaskStep3Container extends Component {
     onSuccessCallback(profile) {
         localStorageRemoveItemsContaining("workery-task-2-");
         this.props.setFlashMessage("success", "48 hour follow-up task has been successfully closed.");
-        this.props.history.push("/tasks");
+        this.props.history.push("/order/"+this.props.taskDetail.job);
     }
 
     onFailureCallback(errors) {
@@ -109,7 +109,7 @@ class FollowUpTaskStep3Container extends Component {
         if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
             if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
-                this.props.history.push("/tasks");
+                this.props.history.push("/order/"+this.props.taskDetail.job);
             }
         }
     }
