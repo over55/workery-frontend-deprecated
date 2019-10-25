@@ -114,7 +114,7 @@ class ClientCreateStep4Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.givenName}
-                                label="Given Name (*)"
+                                label="First Name (*)"
                                 onChange={onTextChange}
                                 value={givenName}
                                 name="givenName"
