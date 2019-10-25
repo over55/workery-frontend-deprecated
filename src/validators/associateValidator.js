@@ -543,3 +543,20 @@ export function validateUpgradeOperationInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+
+export function validateDowngradeOperationInput(data) {
+    let errors = {};
+
+    // if (data.organizationName === undefined || data.organizationName === null || data.organizationName === "") {
+    //     errors.organizationName = 'This field is required';
+    // }
+    // if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "") {
+    //     errors.organizationTypeOf = 'This field is required';
+    // }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
