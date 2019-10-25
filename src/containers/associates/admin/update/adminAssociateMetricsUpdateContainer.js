@@ -26,8 +26,12 @@ class AdminAssociateMetricsUpdateContainer extends Component {
 
         // Get our dates based on our browsers timezone.
         // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
-        const birthdateObj = this.props.associateDetail.birthdate ? new Date(this.props.associateDetail.birthdate) : null;
-        birthdateObj.setMinutes( birthdateObj.getMinutes() + birthdateObj.getTimezoneOffset() );
+        const birthdate = this.props.associateDetail.birthdate;
+        const birthdateObj = birthdate === undefined || birthdate === null ? null : new Date(birthdate);
+        if (birthdateObj) {
+            birthdateObj.setMinutes( birthdateObj.getMinutes() + birthdateObj.getTimezoneOffset() );
+        }
+
         const joinDateObj = new Date(this.props.associateDetail.joinDate);
         joinDateObj.setMinutes( joinDateObj.getMinutes() + joinDateObj.getTimezoneOffset() );
 

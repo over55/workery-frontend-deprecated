@@ -187,7 +187,10 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
                                     <td>
-                                        {client && <Moment format="MM/DD/YYYY">{client.birthdate}</Moment>}
+                                        {client && client.birthdate
+                                            ?<Moment format="MM/DD/YYYY">{client.birthdate}</Moment>
+                                            :"-"
+                                        }
                                     </td>
                                 </tr>
                                 <tr>

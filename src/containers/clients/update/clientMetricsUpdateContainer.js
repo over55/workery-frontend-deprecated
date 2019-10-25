@@ -29,8 +29,12 @@ class ClientMetricsUpdateContainer extends Component {
 
         // Get our dates based on our browsers timezone.
         // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
-        const birthdateObj = new Date(this.props.clientDetail.birthdate);
-        birthdateObj.setMinutes( birthdateObj.getMinutes() + birthdateObj.getTimezoneOffset() );
+        const birthdate = this.props.clientDetail.birthdate;
+        const birthdateObj = birthdate === undefined || birthdate === null ? null : new Date(birthdate);
+        if (birthdateObj) {
+            birthdateObj.setMinutes( birthdateObj.getMinutes() + birthdateObj.getTimezoneOffset() );
+        }
+
         const joinDateObj = new Date(this.props.clientDetail.joinDate);
         joinDateObj.setMinutes( joinDateObj.getMinutes() + joinDateObj.getTimezoneOffset() );
 

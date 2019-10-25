@@ -287,7 +287,10 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
                                     <td>
-                                        {associate && associate.birthdate && <Moment format="MM/DD/YYYY">{associate.birthdate}</Moment>}
+                                        {associate && associate.birthdate
+                                            ?<Moment format="MM/DD/YYYY">{associate.birthdate}</Moment>
+                                            :"-"
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
