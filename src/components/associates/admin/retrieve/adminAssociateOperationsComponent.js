@@ -56,6 +56,11 @@ export default class AdminAssociateOperationsComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
+						<div id="step-3" className="st-grey">
+                            <Link to={`/associate/${id}/activity-sheets`}>
+                                <span className="num"><i className="fas fa-id-card-alt"></i>&nbsp;</span><span className="">Activity</span>
+                            </Link>
+                        </div>
                         <div id="step-3" className="st-grey">
                             <Link to={`/associate/${id}/orders`}>
                                 <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
