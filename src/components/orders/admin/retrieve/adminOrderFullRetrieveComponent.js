@@ -398,7 +398,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                             <ul>
                                                 {order.associate &&
                                                     <li>
-                                                        <Link to={`/order/${order.id}/unassign-associate`}>
+                                                        <Link className="btn btn-warning btn-lg" to={`/order/${order.id}/unassign-associate`}>
                                                             Unassign Associate&nbsp;<i className="fas fa-chevron-right"></i>
                                                         </Link>
                                                     </li>
@@ -406,7 +406,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                                 {isCancelled
                                                     ?""
                                                     :<li>
-                                                        <Link to={`/order/${order.id}/transfer-step-1`}>
+                                                        <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/transfer-step-1`}>
                                                             Transfer&nbsp;<i className="fas fa-chevron-right"></i>
                                                         </Link>
                                                     </li>
@@ -414,17 +414,17 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                                 {isCancelled
                                                     ?""
                                                     :<li>
-                                                        <Link to={`/order/${order.id}/postpone`}>
+                                                        <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/postpone`}>
                                                             Postpone&nbsp;<i className="fas fa-chevron-right"></i>
                                                         </Link>
                                                     </li>
                                                 }
                                                 <li>
                                                     {isCancelled
-                                                        ?<Link to={`/order/${order.id}/reopen`}>
+                                                        ?<Link className="btn btn-primary btn-lg" to={`/order/${order.id}/reopen`}>
                                                             Re-open&nbsp;<i className="fas fa-chevron-right"></i>
                                                         </Link>
-                                                        :<Link to={`/order/${order.id}/close`}>
+                                                        :<Link className="btn btn-danger btn-lg" to={`/order/${order.id}/close`}>
                                                             Cancel&nbsp;<i className="fas fa-chevron-right"></i>
                                                         </Link>
                                                     }

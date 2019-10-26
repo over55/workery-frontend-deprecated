@@ -31,6 +31,9 @@ body.active{
 }
 }
 
+a {
+	text-decoration: none !important;
+}
 .link-ndecor {
   text-decoration: none !important;
   outline: 0;
@@ -1196,4 +1199,6 @@ aside.ScrollUpButton__Container:focus {
     text-align: center;
     background: #f8f9fa!important;
 }
-
+a {
+	text-decoration: none !important;
+}
