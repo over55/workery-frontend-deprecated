@@ -92,7 +92,7 @@ export default class FollowUpPendingTaskStep2Component extends Component {
                                 <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to={`/task/4/${id}/step-1`}>
+                            <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to={`/task/4/${id}/step-1`}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>

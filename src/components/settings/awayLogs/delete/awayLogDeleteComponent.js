@@ -58,7 +58,7 @@ class AwayLogDeleteComponent extends Component {
                                 <i className="fas fa-check-circle"></i>&nbsp;Confirm & Submit
                             </button>
 
-                            <button className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" onClick={onBack}>
+                            <button className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" onClick={onBack}>
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </button>
                         </div>

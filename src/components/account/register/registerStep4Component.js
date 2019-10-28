@@ -69,7 +69,7 @@ export default class RegisterStep4Component extends Component {
 
                         <h1>
                             <i className="fas fa-exclamation-triangle"></i>&nbsp;Confirmation Required
-                           <button type="button" className="btn btn-secondary btn-lg float-right" onClick={onCloseModalClick}>
+                           <button type="button" className="btn btn-orange btn-lg float-right" onClick={onCloseModalClick}>
                                <span className="fa fa-times"></span>
                            </button>
                         </h1>
@@ -128,7 +128,7 @@ export default class RegisterStep4Component extends Component {
                                 <button className="btn btn-warning btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onShowModalClick}>
                                     I don't know and proceed to metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/register/step-3" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/register/step-3" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

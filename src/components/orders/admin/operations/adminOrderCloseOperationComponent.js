@@ -61,7 +61,7 @@ class AdminOrderCloseOperationComponent extends Component {
 
                         <h1>
                             <i className="fas fa-exclamation-triangle"></i>&nbsp;Confirmation Required
-                           <button type="button" className="btn btn-secondary btn-lg float-right" onClick={onCloseModalClick}>
+                           <button type="button" className="btn btn-orange btn-lg float-right" onClick={onCloseModalClick}>
                                <span className="fa fa-times"></span>
                            </button>
                         </h1>
@@ -180,7 +180,7 @@ class AdminOrderCloseOperationComponent extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onShowModalClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/order/${id}/operations`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/order/${id}/operations`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>

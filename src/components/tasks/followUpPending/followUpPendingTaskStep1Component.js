@@ -185,7 +185,7 @@ export default class FollowUpPendingTaskStep1Component extends Component {
                                 Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
                             </button>
 
-                            <Link className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">
+                            <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>

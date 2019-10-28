@@ -102,7 +102,7 @@ export default class StaffCreateStep3Component extends Component {
 
                 <div className="form-group">
 
-                    <Link to="/staff/add/step-2" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                    <Link to="/staff/add/step-2" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                         <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </Link>
                 </div>

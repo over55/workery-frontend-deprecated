@@ -121,7 +121,7 @@ export default class AdminOrderCreateStep3Component extends Component {
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onNextClick}>
                                     Skills&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/orders/add/step-2" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/orders/add/step-2" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

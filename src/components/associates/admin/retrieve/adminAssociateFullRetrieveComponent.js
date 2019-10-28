@@ -403,7 +403,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 {/*<Link to={`/associate/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
                                 </Link>*/}
-                                <Link to={`/associates`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/associates`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

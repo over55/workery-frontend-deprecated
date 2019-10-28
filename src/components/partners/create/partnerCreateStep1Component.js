@@ -110,7 +110,7 @@ export default class PartnerCreateStep1Component extends Component {
                                 <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-search"></i>&nbsp;Search
                                 </button>
-                                <Link to="/partners" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/partners" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>

@@ -118,7 +118,7 @@ class DistrictSearchResultComponent extends Component {
                 </div>
 
                 <div className="form-group">
-                    <Link to="/settings/districts/search" className="btn btn-secondary btn-lg">
+                    <Link to="/settings/districts/search" className="btn btn-orange btn-lg">
                         <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </Link>
                 </div>

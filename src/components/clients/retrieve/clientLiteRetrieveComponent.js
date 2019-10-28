@@ -121,7 +121,7 @@ export default class ClientLiteRetrieveComponent extends Component {
                     </div>
 					<div className="col-sm-12 mx-auto text-center mt-4">
 						{client.state === 'inactive'
-                            ? <button className="btn btn-secondary btn-lg">
+                            ? <button className="btn btn-orange btn-lg">
                                 <i className="fas fa-lock"></i>&nbsp;Add Job
                               </button>
                             : <Link className="btn btn-success btn-lg" onClick={onClientClick}>

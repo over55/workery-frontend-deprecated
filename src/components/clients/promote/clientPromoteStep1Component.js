@@ -79,7 +79,7 @@ export default class ClientPromoteStep1Component extends Component {
 
                 <div className="row">
                     <div className="col-md-12">
-                        <Link to={`/client/${slug}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                        <Link to={`/client/${slug}/full`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                             <i className="fas fa-arrow-circle-left"></i> Back
                         </Link>
                     </div>

@@ -80,7 +80,7 @@ class AdminAssociateSearchComponent extends Component {
                             <i className="fas fa-times"></i> Advanced Search
                         </button>
                         <div className="col-md-12 text-center">
-                            <Link to="/associates" className="btn btn-secondary btn-lg mt-4 pl-4 pr-4">
+                            <Link to="/associates" className="btn btn-orange btn-lg mt-4 pl-4 pr-4">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
                         </div>

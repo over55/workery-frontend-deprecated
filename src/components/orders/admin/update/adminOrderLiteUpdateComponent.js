@@ -139,7 +139,7 @@ export default class AdminOrderLiteUpdateComponent extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/order/${id}/full`} className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/order/${id}/full`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>
