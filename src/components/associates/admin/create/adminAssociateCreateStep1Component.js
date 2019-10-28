@@ -113,10 +113,10 @@ export default class AdminAssociateCreateStep1Component extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-search"></i>&nbsp;Search
                                 </button>
-                                <Link to="/associates" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/associates" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
@@ -126,7 +126,7 @@ export default class AdminAssociateCreateStep1Component extends Component {
                 </div>
                 <div className="col-md-12 text-center">
                     <h3 className="p-2">- or -</h3>
-                    <a className="btn btn-primary btn-lg mt-4" href="/associates/add/step-3" role="button">
+                    <a className="btn btn-success btn-lg mt-4" href="/associates/add/step-3" role="button">
                         <i className="fas fa-plus"></i>&nbsp;Add Associate
                     </a>
                 </div>

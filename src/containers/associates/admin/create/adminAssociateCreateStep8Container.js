@@ -8,7 +8,7 @@ import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import {
     localStorageGetObjectItem, localStorageGetArrayItem, localStorageGetDateItem, localStorageGetIntegerItem, localStorageRemoveItemsContaining
 } from '../../../../helpers/localStorageUtility';
-import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from '../../../../constants/api';
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, IS_ACTIVE_TYPE, IS_INACTIVE_TYPE_OF } from '../../../../constants/api';
 import { postAssociateDetail } from '../../../../actions/associateActions';
 import { validateStep8CreateInput } from "../../../../validators/associateValidator";
 
@@ -160,7 +160,7 @@ class AdminAssociateCreateStep8Container extends Component {
         // (3) Tags - We need to only return our `id` values.
         let idVehicleTypes = [];
         for (let i = 0; i < this.state.vehicleTypes.length; i++) {
-            let vehicle = this.state.tags[i];
+            let vehicle = this.state.vehicleTypes[i];
             idVehicleTypes.push(vehicle.value);
         }
         postData.vehicleTypes = idVehicleTypes;
@@ -232,6 +232,14 @@ class AdminAssociateCreateStep8Container extends Component {
             postData.givenName = this.state.givenName;
             postData.givenName = this.state.givenName;
             postData.lastName = this.state.lastName;
+        }
+
+        // Handle the `isActive` field.
+        if (this.state.isActive === IS_INACTIVE_TYPE_OF) {
+            postData.isActive = false;
+        }
+        if (this.state.isActive === IS_ACTIVE_TYPE) {
+            postData.isActive = true;
         }
 
         // Finally: Return our new modified data.

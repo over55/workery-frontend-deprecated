@@ -74,7 +74,7 @@ export default class AdminAssociateCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Residential</h3>
                                 <p className="card-text">Add a residential associate</p>
-                                <Link className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, 2, "Residential") } }>
+                                <Link className="btn btn-success btn-lg" onClick={ (event)=>{ onClick(event, 2, "Residential") } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </Link>
                             </div>
@@ -88,7 +88,7 @@ export default class AdminAssociateCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Business</h3>
                                 <p className="card-text">Add a business associate</p>
-                                <Link className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, 3, "Commercial") } }>
+                                <Link className="btn btn-success btn-lg" onClick={ (event)=>{ onClick(event, 3, "Commercial") } }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </Link>
                             </div>
@@ -98,7 +98,7 @@ export default class AdminAssociateCreateStep3Component extends Component {
 
                 <div className="form-group">
 
-                    <Link to="/associates/add/step-2" className="btn btn-secondary btn-lg mt-4 float-left pl-4 pr-4">
+                    <Link to="/associates/add/step-2" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                         <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                     </Link>
                 </div>
