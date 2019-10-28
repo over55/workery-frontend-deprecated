@@ -343,7 +343,7 @@ class AdminAssociateCreateStep6Component extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isActive}
                                 options={IS_ACTIVE_TYPE_OF_CHOICES}
-                                helpText='Selecting "yes" will grant the associate login ability.'
+                                helpText='Selecting "yes" allows this Associate to begin receiving jobs.'
                             />
 
                             <div className="form-group">
