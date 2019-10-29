@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';
+import isEmpty from 'lodash/isEmpty';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 // import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
@@ -17,13 +18,17 @@ export default class AssignAssociateTaskStep1Component extends Component {
         let associate;
         const insuredAssociates = [];
         const uninsuredAssociates = [];
-        for (associate of associates) {
-            if (associate.wsibNumber !== undefined && associate.wsibNumber !== null && associate.wsibNumber !== "") {
-                insuredAssociates.push(associate);
-            } else {
-                uninsuredAssociates.push(associate)
+
+        if (isEmpty(associates) === false) { // Defensive Code.
+            for (associate of associates) {
+                if (associate.wsibNumber !== undefined && associate.wsibNumber !== null && associate.wsibNumber !== "") {
+                    insuredAssociates.push(associate);
+                } else {
+                    uninsuredAssociates.push(associate)
+                }
             }
         }
+
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
