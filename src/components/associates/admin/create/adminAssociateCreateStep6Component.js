@@ -197,7 +197,7 @@ class AdminAssociateCreateStep6Component extends Component {
                                 onChange={onTextChange}
                                 value={wsibNumber}
                                 name="wsibNumber"
-                                type="number"
+                                type="text"
                             />
 
                             <BootstrapDatePicker
