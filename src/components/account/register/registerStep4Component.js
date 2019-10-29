@@ -69,9 +69,9 @@ export default class RegisterStep4Component extends Component {
 
                         <h1>
                             <i className="fas fa-exclamation-triangle"></i>&nbsp;Confirmation Required
-                           <button type="button" className="btn btn-orange btn-lg float-right" onClick={onCloseModalClick}>
+                           { /* <button type="button" className="btn btn-orange btn-lg float-right" onClick={onCloseModalClick}>
                                <span className="fa fa-times"></span>
-                           </button>
+                           </button> */}
                         </h1>
 
                         <div className="row">
