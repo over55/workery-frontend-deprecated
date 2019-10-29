@@ -207,41 +207,43 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        <ul>
-                                            {order.associate &&
-                                                <li>
-                                                    <Link className="btn btn-warning btn-lg" to={`/order/${order.id}/operations`}>
-                                                        Unassign Associate&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            {isCancelled
-                                                ?""
-                                                :<li>
-                                                    <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/transfer-step-1`}>
-                                                        Transfer&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            {isCancelled
-                                                ?""
-                                                :<li>
-                                                    <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/postpone`}>
-                                                        Postpone&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            <li>
-                                                {isCancelled
-                                                    ?<Link className="btn btn-primary btn-lg" to={`/order/${order.id}/reopen`}>
-                                                        Re-open&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                    :<Link className="btn btn-danger btn-lg" to={`/order/${order.id}/close`}>
-                                                        Cancel&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                }
-                                            </li>
-                                        </ul>
+                                        {order.associate &&
+                                            <div>
+                                                <Link className="btn btn-warning btn-lg" to={`/order/${order.id}/unassign-associate`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                    Unassign Associate&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </div>
+                                        }
+                                        {isCancelled
+                                            ?""
+                                            :<div>
+                                                <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/transfer-step-1`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                    Transfer&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </div>
+                                        }
+                                        {isCancelled
+                                            ?""
+                                            :<div>
+                                                <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/postpone`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                   Postpone&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </div>
+                                        }
+                                        {isCancelled
+                                            ?<div>
+                                                <Link className="btn btn-primary btn-lg" to={`/order/${order.id}/reopen`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                    Re-open&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </div>
+                                            :<div>
+                                                <Link className="btn btn-danger btn-lg" to={`/order/${order.id}/close`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                    Cancel&nbsp;<i className="fas fa-chevron-right"></i>
+                                                </Link>
+                                            </div>
+                                        }
+                                        <p><br/>Please note these buttons are deprecated and will be deleted in the future, please use the operations tab</p>
+
                                     </td>
                                 </tr>
 
