@@ -122,12 +122,18 @@ class TaskListContainer extends Component {
 
         } else if (type === "filter") {
             console.log(type, filters); // For debugging purposes only.
-            if (filters.isClosed === undefined) {
-                parametersMap.delete("isClosed");
-            } else {
-                const filterVal = filters.isClosed.filterVal;
-                parametersMap.set("isClosed", filterVal);
-            }
+
+            // DEVELOPERS NOTE:
+            // (1) We are commenting out this code because of the following
+            //     issue in github: https://github.com/over55/workery-front/issues/259
+            // (2) We will automatically set `isClosed` to be `3`.
+            // if (filters.isClosed === undefined) {
+            //     parametersMap.delete("isClosed");
+            // } else {
+            //     const filterVal = filters.isClosed.filterVal;
+            //     parametersMap.set("isClosed", filterVal);
+            // }
+            parametersMap.set("isClosed", 3);
 
             if (filters.typeOf === undefined) {
                 parametersMap.delete("typeOf");
