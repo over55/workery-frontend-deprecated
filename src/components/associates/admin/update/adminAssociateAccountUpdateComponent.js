@@ -162,7 +162,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
                                 onChange={onTextChange}
                                 value={wsibNumber}
                                 name="wsibNumber"
-                                type="number"
+                                type="text"
                             />
 
                             <BootstrapDatePicker
