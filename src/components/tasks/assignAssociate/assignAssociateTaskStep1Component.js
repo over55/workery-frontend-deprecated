@@ -136,7 +136,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-clipboard-list"></i>&nbsp;Requied Tasks
+                                        <i className="fas fa-clipboard-list"></i>&nbsp;Required Tasks
                                     </th>
                                 </tr>
                                 <tr>
