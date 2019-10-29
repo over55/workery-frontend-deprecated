@@ -218,18 +218,26 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
                                             {isCancelled
                                                 ?""
                                                 :<li>
-                                                    <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/operations`}>
-                                                        Postpone Job&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/transfer-step-1`}>
+                                                        Transfer&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    </Link>
+                                                </li>
+                                            }
+                                            {isCancelled
+                                                ?""
+                                                :<li>
+                                                    <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/postpone`}>
+                                                        Postpone&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                 </li>
                                             }
                                             <li>
                                                 {isCancelled
-                                                    ?<Link className="btn btn-primary btn-lg" to={`/order/${order.id}/operations`}>
-                                                        Re-open Job&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    ?<Link className="btn btn-primary btn-lg" to={`/order/${order.id}/reopen`}>
+                                                        Re-open&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
-                                                    :<Link className="btn btn-danger btn-lg" to={`/order/${order.id}/operations`}>
-                                                        Cancel Job&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    :<Link className="btn btn-danger btn-lg" to={`/order/${order.id}/close`}>
+                                                        Cancel&nbsp;<i className="fas fa-chevron-right"></i>
                                                     </Link>
                                                 }
                                             </li>
