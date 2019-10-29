@@ -331,23 +331,16 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        <ul>
-                                            <li>
-                                                <Link to={`/financial/${order.id}/clone`}>
-                                                    Clone&nbsp;<i className="fas fa-chevron-right"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/order/${order.id}/close`} target="_blank">
-                                                    Cancel&nbsp;<i className="fas fa-external-link-alt"></i>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to={`/order/${order.id}/unassign-associate`} target="_blank">
-                                                    Unassign&nbsp;<i className="fas fa-external-link-alt"></i>
-                                                </Link>
-                                            </li>
-                                        </ul>
+                                        <Link to={`/financial/${order.id}/clone`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                            Clone&nbsp;<i className="fas fa-chevron-right"></i>
+                                        </Link>&nbsp;&nbsp;&nbsp;
+                                        <Link to={`/order/${order.id}/close`} target="_blank" className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                            Cancel&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link>&nbsp;&nbsp;&nbsp;
+                                        <Link to={`/order/${order.id}/unassign-associate`} target="_blank" className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                            Unassign&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        </Link><br /><br />
+                                        <p>Please note these buttons are deprecated and will be deleted in the future, please use the operations tab</p>
                                     </td>
                                 </tr>
 
