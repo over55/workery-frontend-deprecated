@@ -78,7 +78,7 @@ export default class AssociateOrderLiteRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
                                         <td>
-                                            <Link to={`/associate/${order.associate}`} target="_blank">
+                                            <Link to={`/profile/associate/lite`} target="_blank">
                                                 {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
