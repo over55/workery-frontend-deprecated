@@ -121,9 +121,11 @@ class LoginContainer extends Component {
             // Clear any and all flash messages in our queue to be rendered.
             this.props.clearFlashMessage();
 
+            const email = this.state.email.toLowerCase();
+
             this.setState({ errors: {}, isLoading: true, })
             this.props.postLogin(
-                this.state.email,
+                email,
                 this.state.password,
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
