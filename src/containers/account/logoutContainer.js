@@ -45,8 +45,10 @@ class LogoutContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
         const { user } = this.props;
         if (user !== undefined && user.token !== undefined && user.token !== null) {
-            // Call the API endpoint to log out.
-            this.props.postLogout(
+            // DEVELOPERS NOTE:
+            // Regardless of any server related errors, the client browser will
+            // automatically clear the storage pertaining to the user session.
+            this.props.postLogout( // Call the API endpoint to log out. 
                 this.props.user,
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
@@ -69,7 +71,6 @@ class LogoutContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(member) {
-        console.log(member);
         // CLEAR THE LOCAL STORAGE IF WE SUCCESSFULLY LOGGED OUT!
         localStorage.removeItem(APP_STATE) // Clear the state data of the app.
         localStorage.clear(); // Clear any remaining items.
@@ -81,19 +82,34 @@ class LogoutContainer extends Component {
         // as a result we will redirect to the login page.
         this.setState({
             isLoading: false,
-        })
+        });
     }
 
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+    // onFailedSubmissionCallback(errors) {
+    //     this.setState({
+    //         errors: errors
+    //     })
+    //
+    //     // The following code will cause the screen to scroll to the top of
+    //     // the page. Please see ``react-scroll`` for more information:
+    //     // https://github.com/fisshy/react-scroll
+    //     var scroll = Scroll.animateScroll;
+    //     scroll.scrollToTop();
+    // }
 
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
+    onFailedSubmissionCallback(errors) {
+        // CLEAR THE LOCAL STORAGE IF WE SUCCESSFULLY LOGGED OUT!
+        localStorage.removeItem(APP_STATE) // Clear the state data of the app.
+        localStorage.clear(); // Clear any remaining items.
+
+        // Create a flash message telling the user that they successfully logged out.
+        this.props.setFlashMessage("success", "You have successfully logged out.");
+
+        // Tell the state that we've successfully finished loading this page
+        // as a result we will redirect to the login page.
+        this.setState({
+            isLoading: false,
+        });
     }
 
     /**
