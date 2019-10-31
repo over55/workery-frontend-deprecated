@@ -150,6 +150,19 @@ class AdminTaskSearchResultContainer extends Component {
                 const filterVal = filters.state.filterVal;
                 parametersMap.set("state", filterVal);
             }
+
+            // DEVELOPERS NOTE:
+            // (1) We are commenting out this code because of the following
+            //     issue in github: https://github.com/over55/workery-front/issues/259
+            // (2) We will automatically set `isClosed` to be `3`.
+            // if (filters.isClosed === undefined) {
+            //     parametersMap.delete("isClosed");
+            // } else {
+            //     const filterVal = filters.isClosed.filterVal;
+            //     parametersMap.set("isClosed", filterVal);
+            // }
+            parametersMap.set("isClosed", 3);
+            
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },
                 ()=>{

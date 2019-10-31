@@ -33,18 +33,6 @@ class RemoteListComponent extends Component {
             onTableChange, isLoading
         } = this.props;
 
-        const selectOptions = {
-            "new": 'New',
-            "declined": 'Declined',
-            "pending": 'Pending',
-            "cancelled": 'Cancelled',
-            "ongoing": 'Ongoing',
-            "in_progress": 'In-progress',
-            "completed_and_unpaid": 'Completed and Unpaid',
-            "completed_and_paid": 'Completed and Paid',
-            "archived": 'Archived',
-        };
-
         const columns = [{
             dataField: 'typeOf',
             text: '',
@@ -52,9 +40,18 @@ class RemoteListComponent extends Component {
             formatter: iconFormatter
         },{
             dataField: 'id',
-            text: 'Job #',
+            text: 'Id #',
             sort: true,
             formatter: idFormatter,
+        },{
+            dataField: 'title',
+            text: 'Title',
+            sort: true,
+        },{
+            dataField: 'job',
+            text: 'Job #',
+            sort: true,
+            formatter: jobFormatter,
         },{
             dataField: 'customerName',
             text: 'Client',
@@ -66,33 +63,15 @@ class RemoteListComponent extends Component {
             sort: true,
             formatter: associateNameFormatter,
         },{
-            dataField: 'assignmentDate',
-            text: 'Assign Date',
-            sort: true,
-            formatter: assignmentDateFormatter,
-        },{
-            dataField: 'completionDate',
-            text: 'Completion Date',
-            sort: true,
-            formatter: completionDateFormatter,
-        },{
-            dataField: 'state',
+            dataField: 'isClosed',
             text: 'Status',
             sort: false,
-            filter: selectFilter({
-                options: selectOptions
-            }),
             formatter: statusFormatter
         },{
-            dataField: 'slug',
+            dataField: 'id',
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
-        },{
-            dataField: 'slug',
-            text: 'Financials',
-            sort: false,
-            formatter: financialsLinkFormatter
         }];
 
         const defaultSorted = [{
@@ -154,6 +133,15 @@ function idFormatter(cell, row){
 }
 
 
+function jobFormatter(cell, row){
+    return (
+        <Link to={`/order/${row.job}`} target="_blank">
+            {row.job && row.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+        </Link>
+    );
+}
+
+
 function iconFormatter(cell, row){
     switch(row.typeOf) {
         case 2:
@@ -179,28 +167,6 @@ function associateNameFormatter(cell, row){
 }
 
 
-function completionDateFormatter(cell, row) {
-    if (row.completionDate === undefined || row.completionDate === null || row.completionDate === "") {
-        return "-";
-    } else {
-        return (
-            <Moment format="MM/DD/YYYY">{row.completionDate}</Moment>
-        );
-    }
-}
-
-
-function assignmentDateFormatter(cell, row) {
-    if (row.assignmentDate === undefined || row.assignmentDate === null || row.assignmentDate === "") {
-        return "-";
-    } else {
-        return (
-            <Moment format="MM/DD/YYYY">{row.assignmentDate}</Moment>
-        );
-    }
-}
-
-
 function clientFormatter(cell, row){
     if (row.customerName === null || row.customerName === undefined || row.customerName === "None") { return "-"; }
     return (
@@ -213,22 +179,32 @@ function clientFormatter(cell, row){
 
 
 function statusFormatter(cell, row){
-    return row.prettyState;
+    switch(row.isClosed) {
+        case false:
+            return <i className="fas fa-clock"></i>;
+            break;
+        case true:
+            return <i className="fas fa-check-circle"></i>;
+            break;
+        default:
+        return <i className="fas fa-question-circle"></i>;
+            break;
+    }
 }
 
 
 function detailLinkFormatter(cell, row){
+    if (row.typeOf === 3) { // Add code to prevent the deprecated task from being accessible.
+        return (
+            <div>
+                <i className="fas fa-lock"></i>&nbsp;Locked
+            </div>
+        );
+    }
+    if (row.isClosed === true) { return "Closed"; }
     return (
-        <Link to={`/task/${row.id}`} target="_blank">
-            <i className="fa fa-id-card"></i>
-        </Link>
-    )
-}
-
-function financialsLinkFormatter(cell, row){
-    return (
-        <Link to={`/financial/${row.id}`} target="_blank">
-            <i className="fa fa-dollar-sign"></i>
+        <Link to={`/task/${row.typeOf}/${row.id}/step-1`}>
+            View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
 }
