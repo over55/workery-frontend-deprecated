@@ -127,8 +127,8 @@ import AssociateOrderFullRetrieveContainer from "./orders/associate/retrieve/ass
 
 // Tasks
 import TaskListContainer from "./tasks/list/taskListContainer";
-import TaskSearchContainer from "./tasks/search/taskSearchContainer";
-import TaskSearchResultContainer from "./tasks/search/taskSearchResultContainer";
+import AdminTaskSearchContainer from "./tasks/search/admin/adminTaskSearchContainer";
+import AdminTaskSearchResultContainer from "./tasks/search/admin/adminTaskSearchResultContainer";
 import AssignAssociateTaskStep1Container from "./tasks/assignAssociate/assignAssociateTaskStep1Container";
 import AssignAssociateTaskStep2Container from "./tasks/assignAssociate/assignAssociateTaskStep2Container";
 import AssignAssociateTaskStep3Container from "./tasks/assignAssociate/assignAssociateTaskStep3Container";
@@ -467,8 +467,8 @@ class AppContainer extends React.Component {
 
                                 { /* TASKS */ }
                                 <Route path="/tasks" exact component={requiresAuth(TaskListContainer)} />
-                                <Route path="/tasks/search" exact component={requiresAuth(TaskSearchContainer)} />
-                                <Route path="/tasks/search-results" exact component={requiresAuth(TaskSearchResultContainer)} />
+                                <Route path="/tasks/search" exact component={requiresAuth(AdminTaskSearchContainer)} />
+                                <Route path="/tasks/search-results" exact component={requiresAuth(AdminTaskSearchResultContainer)} />
                                 <Route path="/task/1/:id/step-1" exact component={requiresAuth(AssignAssociateTaskStep1Container)} />
                                 <Route path="/task/1/:id/step-2" exact component={requiresAuth(AssignAssociateTaskStep2Container)} />
                                 <Route path="/task/1/:id/step-3" exact component={requiresAuth(AssignAssociateTaskStep3Container)} />
