@@ -6,6 +6,7 @@ import AdminOrderCloseOperationComponent from "../../../../components/orders/adm
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateCloseInput } from "../../../../validators/orderValidator";
 import { postOrderClose } from "../../../../actions/orderActions";
+import { pullOrderDetail } from "../../../../actions/orderActions";
 
 
 class AdminOrderCloseOperationContainer extends Component {
@@ -40,6 +41,8 @@ class AdminOrderCloseOperationContainer extends Component {
         this.onShowModalClick = this.onShowModalClick.bind(this);
         this.onCloseModalClick = this.onCloseModalClick.bind(this);
         this.onAgreeModalClick = this.onAgreeModalClick.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -64,6 +67,7 @@ class AdminOrderCloseOperationContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullOrderDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -96,6 +100,14 @@ class AdminOrderCloseOperationContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onSuccessCallback(profile) {
+        console.log(profile);
+    }
+
+    onFailureCallback(errors) {
+        console.log(errors);
     }
 
     /**
@@ -244,7 +256,12 @@ const mapDispatchToProps = dispatch => {
         },
         postOrderClose: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(postOrderClose(postData, onSuccessCallback, onFailureCallback))
-        }
+        },
+        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 

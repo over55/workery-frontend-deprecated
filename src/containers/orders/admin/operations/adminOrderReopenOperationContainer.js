@@ -9,6 +9,7 @@ import {
     RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
 } from '../../../../constants/api';
 import { postOrderReopen } from "../../../../actions/orderActions";
+import { pullOrderDetail } from "../../../../actions/orderActions";
 
 
 class AdminOrderReopenOperationContainer extends Component {
@@ -36,6 +37,8 @@ class AdminOrderReopenOperationContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -60,6 +63,7 @@ class AdminOrderReopenOperationContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        // this.props.pullOrderDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -92,6 +96,14 @@ class AdminOrderReopenOperationContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onSuccessCallback(profile) {
+        console.log(profile);
+    }
+
+    onFailureCallback(errors) {
+        console.log(errors);
     }
 
     /**
@@ -158,6 +170,11 @@ const mapDispatchToProps = dispatch => {
         },
         postOrderReopen: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(postOrderReopen(postData, onSuccessCallback, onFailureCallback))
+        },
+        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+            )
         },
     }
 }

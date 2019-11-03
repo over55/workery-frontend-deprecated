@@ -143,7 +143,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 </tr>
                                 {order.associateFullName && order.associateFullName &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Name</th>
+                                        <th scope="row" className="bg-light">Associate Full Name</th>
                                         <td>
                                             <Link to={`/associate/${order.associate}`} target="_blank">
                                                 {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>

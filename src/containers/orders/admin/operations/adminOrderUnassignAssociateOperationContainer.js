@@ -9,6 +9,7 @@ import {
     RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
 } from '../../../../constants/api';
 import { postOrderUnassignAssociate } from "../../../../actions/orderActions";
+import { pullOrderDetail } from "../../../../actions/orderActions";
 
 
 class AdminOrderUnassignAssociateOperationContainer extends Component {
@@ -36,6 +37,8 @@ class AdminOrderUnassignAssociateOperationContainer extends Component {
         this.onClick = this.onClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
     }
 
     /**
@@ -60,6 +63,7 @@ class AdminOrderUnassignAssociateOperationContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        // this.props.pullOrderDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -92,6 +96,14 @@ class AdminOrderUnassignAssociateOperationContainer extends Component {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
+    }
+
+    onSuccessCallback(profile) {
+        console.log(profile);
+    }
+
+    onFailureCallback(errors) {
+        console.log(errors);
     }
 
     /**
@@ -149,6 +161,7 @@ class AdminOrderUnassignAssociateOperationContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        orderDetail: store.orderDetailState,
     };
 }
 
@@ -159,6 +172,11 @@ const mapDispatchToProps = dispatch => {
         },
         postOrderUnassignAssociate: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(postOrderUnassignAssociate(postData, onSuccessCallback, onFailureCallback))
+        },
+        pullOrderDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullOrderDetail(id, onSuccessCallback, onFailureCallback)
+            )
         },
     }
 }
