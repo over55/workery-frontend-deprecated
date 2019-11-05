@@ -197,7 +197,9 @@ function statusFormatter(cell, row){
 function customerFormatter(cell, row){
     return (
         <a target="_blank" href={`/client/${row.customer}`}>
-            {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
+            <strong>
+                {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
+            </strong>
         </a>
     )
 }
@@ -206,7 +208,9 @@ function customerFormatter(cell, row){
 function associateFormatter(cell, row){
     return (
         <a target="_blank" href={`/associate/${row.associate}`}>
-            {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
+            <strong>
+                {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
+            </strong>
         </a>
     )
 }
