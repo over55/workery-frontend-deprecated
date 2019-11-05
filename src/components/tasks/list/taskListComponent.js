@@ -73,10 +73,12 @@ class RemoteListComponent extends Component {
             dataField: 'customerName',
             text: 'Client',
             sort: true,
+            formatter: customerFormatter,
         },{
             dataField: 'associateName',
             text: 'Associate',
             sort: true,
+            formatter: associateFormatter,
         },
         // {
         //     dataField: 'isClosed',
@@ -189,6 +191,24 @@ function statusFormatter(cell, row){
         return <i className="fas fa-question-circle"></i>;
             break;
     }
+}
+
+
+function customerFormatter(cell, row){
+    return (
+        <a target="_blank" href={`/client/${row.customer}`}>
+            {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
+        </a>
+    )
+}
+
+
+function associateFormatter(cell, row){
+    return (
+        <a target="_blank" href={`/associate/${row.associate}`}>
+            {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
+        </a>
+    )
 }
 
 
