@@ -123,7 +123,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
         const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDatej);
         postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD");
 
-        const policeCheckMoment = moment(this.state.policeCheckj);
+        const policeCheckMoment = moment(this.state.policeCheck);
         postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD");
 
         // (4) How Hear Other - This field may not be null, therefore make blank.
