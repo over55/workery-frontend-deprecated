@@ -14,7 +14,7 @@ class ClientSearchComponent extends Component {
 	timer = null
 
 	handleKeyDown = e => {
-		if (e.keyCode === ENTER_KEY) {
+		if (e.keyCode === 13) {
 		  clearTimeout(this.timer)
 		  this.triggerChange()
 		}
@@ -22,7 +22,7 @@ class ClientSearchComponent extends Component {
 
 	triggerChange = () => {
 		const { value } = this.state
-		
+
 		this.props.onClick(value)
 	}
     render() {
