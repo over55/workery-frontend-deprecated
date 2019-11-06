@@ -32,10 +32,10 @@ class RemoteListComponent extends Component {
             onTableChange, isLoading
         } = this.props;
 
-        const selectOptions = {
-            1: 'Active',
-            0: 'Inactive',
-        };
+        // const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-front/issues/298
+        //     1: 'Active',
+        //     0: 'Inactive',
+        // };
 
         const columns = [{
             dataField: 'icon',
@@ -46,11 +46,11 @@ class RemoteListComponent extends Component {
             dataField: 'state',
             text: 'Status',
             sort: false,
-            filter: selectFilter({
-                options: selectOptions,
-                defaultValue: 1,
-                withoutEmptyOption: true
-            }),
+            // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/298
+            //     options: selectOptions,
+            //     defaultValue: 1,
+            //     withoutEmptyOption: true
+            // }),
             formatter: statusFormatter
         },{
             dataField: 'givenName',

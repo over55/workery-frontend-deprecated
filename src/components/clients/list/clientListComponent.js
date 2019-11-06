@@ -35,10 +35,10 @@ class RemoteListComponent extends Component {
             onTableChange, isLoading
         } = this.props;
 
-        const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
-            "active": 'Active',
-            "inactive": 'Archived',
-        };
+        // const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
+        //     "active": 'Active',
+        //     "inactive": 'Archived',
+        // };
 
         const columns = [{
             dataField: 'icon',
