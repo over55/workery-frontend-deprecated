@@ -195,6 +195,9 @@ function statusFormatter(cell, row){
 
 
 function customerFormatter(cell, row){
+    if (row.customer === "" || row.customer === null || row.customer === "null" || row.customer === undefined) {
+        return "-";
+    }
     return (
         <a target="_blank" href={`/client/${row.customer}`}>
             <strong>
@@ -206,6 +209,9 @@ function customerFormatter(cell, row){
 
 
 function associateFormatter(cell, row){
+    if (row.associate === "" || row.associate === null || row.associate === "null" || row.associate === undefined) {
+        return "-";
+    }
     return (
         <a target="_blank" href={`/associate/${row.associate}`}>
             <strong>
