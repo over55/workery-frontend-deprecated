@@ -15,6 +15,11 @@ class StaffListContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        // Force active users as per issue via https://github.com/over55/workery-front/issues/297
+        var parametersMap = new Map();
+        parametersMap.set("state", 1);
+
         this.state = {
             // Pagination
             page: 1,
@@ -22,7 +27,7 @@ class StaffListContainer extends Component {
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
-            parametersMap: new Map(),
+            parametersMap: parametersMap,
 
             // Overaly
             isLoading: true,
@@ -121,21 +126,24 @@ class StaffListContainer extends Component {
             );
 
         } else if (type === "filter") {
-            console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
-            } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
-            }
-            this.setState(
-                { parametersMap: parametersMap, isLoading: true, },
-                ()=>{
-                    // STEP 3:
-                    // SUBMIT TO OUR API.
-                    this.props.pullStaffList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
+            // //
+            // // DEPRECATED VIA https://github.com/over55/workery-front/issues/297
+            // //
+            // console.log(type, filters); // For debugging purposes only.
+            // if (filters.state === undefined) {
+            //     parametersMap.delete("state");
+            // } else {
+            //     const filterVal = filters.state.filterVal;
+            //     parametersMap.set("state", filterVal);
+            // }
+            // this.setState(
+            //     { parametersMap: parametersMap, isLoading: true, },
+            //     ()=>{
+            //         // STEP 3:
+            //         // SUBMIT TO OUR API.
+            //         this.props.pullStaffList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+            //     }
+            // );
         }else {
             alert("Unsupported feature detected!!"+type);
         }
