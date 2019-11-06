@@ -5,32 +5,10 @@ import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAler
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
 
-const WAIT_INTERVAL = 1000
-const ENTER_KEY = 13
-
 class AdminAssociateSearchComponent extends Component {
-
-	state = {
-		value: ''
-	}
-
-	timer = null
-
-	handleKeyDown = e => {
-		if (e.keyCode === ENTER_KEY) {
-		  clearTimeout(this.timer)
-		  this.triggerChange()
-		}
-	}
-
-	triggerChange = () => {
-		const { value } = this.state
-		
-		this.props.onClick(value)
-	}
 	
     render() {
-        const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
+        const { onSearchClick, handleKeyDown, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;	
         return (
             <div>
@@ -70,7 +48,7 @@ class AdminAssociateSearchComponent extends Component {
                             />
 
                             <div className="input-group-append">
-                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} onKeyDown={this.handleKeyDown} >
+                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} onKeyDown={handleKeyDown} >
                                     <i className="fas fa-search"></i>
                                 </button>
                             </div>

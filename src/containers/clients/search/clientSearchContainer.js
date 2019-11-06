@@ -27,6 +27,7 @@ class ClientListContainer extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
         this.onAdvancedSearchClick = this.onAdvancedSearchClick.bind(this);
     }
 
@@ -57,7 +58,35 @@ class ClientListContainer extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
+	handleKeyDown(e) {
+		// Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+		if (e.keyCode === 13) {
+			this.setState({ advancedSearchActive: false, }, ()=> {
+				// Perform client-side validation.
+				const { errors, isValid } = validateSearchInput(this.state);
 
+				// CASE 1 OF 2: Validation passed successfully.
+				if (isValid) {
+
+						localStorageSetObjectOrArrayItem('workery-search-client-details', this.state);
+						this.props.history.push("/clients/search-results");
+
+
+				// CASE 2 OF 2: Validation was a failure.
+				} else {
+					this.setState({ errors: errors });
+
+					// The following code will cause the screen to scroll to the top of
+					// the page. Please see ``react-scroll`` for more information:
+					// https://github.com/fisshy/react-scroll
+					var scroll = Scroll.animateScroll;
+					scroll.scrollToTop();
+				}
+			});
+		}
+	}
+	
     onTextChange(e) {
         this.setState({ [e.target.name]: e.target.value, });
     }
@@ -137,6 +166,7 @@ class ClientListContainer extends Component {
                 advancedSearchActive={this.state.advancedSearchActive}
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}
+				handleKeyDown={this.handleKeyDown}
                 onAdvancedSearchClick={this.onAdvancedSearchClick}
                 errors={this.state.errors}
             />

@@ -7,26 +7,9 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 
 
 class ClientSearchComponent extends Component {
-	state = {
-		value: ''
-	}
-
-	timer = null
-
-	handleKeyDown = e => {
-		if (e.keyCode === 13) {
-		  clearTimeout(this.timer)
-		  this.triggerChange()
-		}
-	}
-
-	triggerChange = () => {
-		const { value } = this.state
-
-		this.props.onClick(value)
-	}
+	
     render() {
-        const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
+        const { onSearchClick, handleKeyDown, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
         return (
             <div>
@@ -66,7 +49,7 @@ class ClientSearchComponent extends Component {
                             />
 
                             <div className="input-group-append">
-                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} onKeyDown={this.handleKeyDown} >
+                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} onKeyDown={handleKeyDown} >
                                     <i className="fas fa-search"></i>
                                 </button>
                             </div>
