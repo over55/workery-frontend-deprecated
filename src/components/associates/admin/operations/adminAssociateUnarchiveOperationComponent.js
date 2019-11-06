@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
-import {
-    ARCHIVE_REASON_CHOICES
-} from '../../../../constants/api';
 
 
 export default class AdminAssociateUnarchiveOperationComponent extends Component {

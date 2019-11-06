@@ -5,9 +5,6 @@ import Scroll from 'react-scroll';
 import AdminOrderReopenOperationComponent from "../../../../components/orders/admin/operations/adminOrderReopenOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateReopenInput } from "../../../../validators/orderValidator";
-import {
-    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
-} from '../../../../constants/api';
 import { postOrderReopen } from "../../../../actions/orderActions";
 import { pullOrderDetail } from "../../../../actions/orderActions";
 

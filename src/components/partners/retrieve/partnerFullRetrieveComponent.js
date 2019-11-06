@@ -5,11 +5,6 @@ import Moment from 'react-moment';
 // import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF
-} from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
 

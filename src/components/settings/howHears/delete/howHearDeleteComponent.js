@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 
 
@@ -9,7 +10,7 @@ class HowHearDeleteComponent extends Component {
         const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors, isLoading, onClick } = this.props;
         return (
             <div>
-                <BootstrapErrorsProcessingAlert isLoading={isLoading} />
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -31,6 +32,7 @@ class HowHearDeleteComponent extends Component {
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
                         <p><strong>Please confirm these details before deleting the how did you hear about us option.</strong></p>
+                        <BootstrapErrorsProcessingAlert errors={errors} />
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                             <tr className="bg-dark">

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 
 
 class TagDeleteComponent extends Component {
@@ -31,6 +32,7 @@ class TagDeleteComponent extends Component {
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
                         <p><strong>Please confirm these details before deleting the tag</strong></p>
+                        <BootstrapErrorsProcessingAlert errors={errors} />
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
                                 <tr className="bg-dark">

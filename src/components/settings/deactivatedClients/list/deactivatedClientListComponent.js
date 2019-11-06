@@ -6,7 +6,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";

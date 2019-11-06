@@ -5,13 +5,6 @@ import Scroll from 'react-scroll';
 import AdminOrderTransferStep5Component from "../../../../../components/orders/admin/operations/transfer/adminOrderTransferStep5Component";
 import { setFlashMessage } from "../../../../../actions/flashMessageActions";
 import { validateTransferInput } from "../../../../../validators/orderValidator";
-import {
-    RESIDENCE_TYPE_OF,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF,
-    BASIC_STREET_TYPE_CHOICES,
-    STREET_DIRECTION_CHOICES
-} from '../../../../../constants/api';
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../../../../actions/associateActions";
 import { pullClientList, getClientReactSelectOptions } from "../../../../../actions/clientActions";
 import { postOrderTransfer } from "../../../../../actions/orderActions";

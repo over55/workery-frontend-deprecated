@@ -6,9 +6,6 @@ import * as moment from 'moment';
 import AdminOrderReopenOperationComponent from "../../../../components/orders/admin/operations/adminOrderPostponeOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validatePostponeInput } from "../../../../validators/orderValidator";
-import {
-    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
-} from '../../../../constants/api';
 import { postOrderPostpone } from "../../../../actions/orderActions";
 import { pullOrderDetail } from "../../../../actions/orderActions";
 

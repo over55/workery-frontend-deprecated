@@ -6,7 +6,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 
 class StaffArchiveComponent extends Component {
     render() {
-        const { id, givenName, lastName, errors, isLoading, onClick, isArchived } = this.props;
+        const { id, givenName, lastName, isLoading, onClick, isArchived } = this.props;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

@@ -5,9 +5,7 @@ import Scroll from 'react-scroll';
 import ClientRezUpgradeOperationComponent from "../../../components/clients/operations/clientRezUpgradeOperationComponent";
 import { validateResidentialUpgradeInput } from "../../../validators/clientValidator";
 import {
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
-    SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
 import { localStorageSetObjectOrArrayItem, localStorageGetIntegerItem } from '../../../helpers/localStorageUtility';
 import { postClientResidentialUpgradeDetail } from "../../../actions/clientActions";

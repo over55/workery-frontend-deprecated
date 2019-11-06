@@ -6,12 +6,9 @@ import PartnerContactUpdateComponent from "../../../components/partners/update/p
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateContactInput } from "../../../validators/partnerValidator";
 import {
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
     PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
     SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
 } from '../../../constants/api';
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
 import { putPartnerContactDetail } from "../../../actions/partnerActions";
 
 
@@ -201,7 +198,7 @@ class PartnerContactUpdateContainer extends Component {
      */
 
     render() {
-        const { isLoading, typeOf, errors, id } = this.state;
+        const { isLoading, errors, id } = this.state;
         const {
             // STEP 3
             organizationName, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail,

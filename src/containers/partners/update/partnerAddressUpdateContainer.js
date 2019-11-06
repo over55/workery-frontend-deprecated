@@ -5,13 +5,6 @@ import Scroll from 'react-scroll';
 import PartnerAddressUpdateComponent from "../../../components/partners/update/partnerAddressUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateAddressInput } from "../../../validators/partnerValidator";
-import {
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
-    SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
-} from '../../../constants/api';
-import { getHowHearReactSelectOptions } from "../../../actions/howHearActions";
-import { getTagReactSelectOptions } from "../../../actions/tagActions";
 import { putPartnerAddressDetail } from "../../../actions/partnerActions";
 
 
@@ -202,7 +195,7 @@ class PartnerAddressUpdateContainer extends Component {
      */
 
     render() {
-        const { isLoading, typeOf, errors, id } = this.state;
+        const { isLoading, errors, id } = this.state;
         const {
             // STEP 3
             organizationName, givenName, lastName,

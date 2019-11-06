@@ -8,9 +8,6 @@ import NumberFormat from 'react-number-format';
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    BUSINESS_TYPE_OF,
-    COMMUNITY_CARES_TYPE_OF,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
     EXECUTIVE_GROUP_ID
 } from '../../../constants/api';

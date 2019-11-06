@@ -5,9 +5,6 @@ import Scroll from 'react-scroll';
 import AdminOrderUnassignAssociateOperationComponent from "../../../../components/orders/admin/operations/adminOrderUnassignAssociateOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateUnassignAssociateInput } from "../../../../validators/orderValidator";
-import {
-    RESIDENCE_TYPE_OF, BUSINESS_TYPE_OF, COMMUNITY_CARES_TYPE_OF, BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES
-} from '../../../../constants/api';
 import { postOrderUnassignAssociate } from "../../../../actions/orderActions";
 import { pullOrderDetail } from "../../../../actions/orderActions";
 
