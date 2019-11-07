@@ -46,10 +46,11 @@ class ClientSearchComponent extends Component {
                                 required=""
                                 value={keyword}
                                 onChange={onTextChange}
+								onKeyDown={handleKeyDown}
                             />
 
                             <div className="input-group-append">
-                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} onKeyDown={handleKeyDown} >
+                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} >
                                     <i className="fas fa-search"></i>
                                 </button>
                             </div>
