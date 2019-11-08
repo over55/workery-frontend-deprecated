@@ -52,17 +52,19 @@ class RemoteListComponent extends Component {
             dataField: 'email',
             text: 'Email',
             sort: true
-        },{
-            dataField: 'state',
-            text: 'Status',
-            sort: false,
-            // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/297
-            //     options: selectOptions,
-            //     defaultValue: 1,
-            //     withoutEmptyOption: true
-            // }),
-            formatter: statusFormatter
-        },{
+        },
+        // {
+        //     dataField: 'state',
+        //     text: 'Status',
+        //     sort: false,
+        //     // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/297
+        //     //     options: selectOptions,
+        //     //     defaultValue: 1,
+        //     //     withoutEmptyOption: true
+        //     // }),
+        //     formatter: statusFormatter
+        // },
+        {
             dataField: 'id',
             text: 'Details',
             sort: false,
