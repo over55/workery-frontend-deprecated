@@ -59,8 +59,7 @@ class ClientListContainer extends Component {
      *------------------------------------------------------------
      */
 	handleKeyDown(e) {
-		// Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
+		
 		if (e.keyCode === 13) {
 			this.setState({ advancedSearchActive: false, }, ()=> {
 				// Perform client-side validation.
