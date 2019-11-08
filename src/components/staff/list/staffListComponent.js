@@ -47,22 +47,26 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'telephone',
             text: 'Phone',
-            sort: true
+            sort: true,
+            formatter: telephoneFormatter
         },{
             dataField: 'email',
             text: 'Email',
-            sort: true
-        },{
-            dataField: 'state',
-            text: 'Status',
-            sort: false,
-            // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/297
-            //     options: selectOptions,
-            //     defaultValue: 1,
-            //     withoutEmptyOption: true
-            // }),
-            formatter: statusFormatter
-        },{
+            sort: true,
+            formatter: emailFormatter,
+        },
+        // {
+        //     dataField: 'state',
+        //     text: 'Status',
+        //     sort: false,
+        //     // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/297
+        //     //     options: selectOptions,
+        //     //     defaultValue: 1,
+        //     //     withoutEmptyOption: true
+        //     // }),
+        //     formatter: statusFormatter
+        // },
+        {
             dataField: 'id',
             text: 'Details',
             sort: false,
@@ -135,6 +139,25 @@ function statusFormatter(cell, row){
     }
 }
 
+function telephoneFormatter(cell, row){
+    return (
+        <a href={`tel:${row.e164Telephone}`}>
+            {row.telephone}
+        </a>
+    )
+}
+
+function emailFormatter(cell, row){
+    if (row.email === undefined || row.email === null) {
+        return ("-");
+    } else {
+        return (
+            <a href={`mailto:${row.email}`}>
+                {row.email}
+            </a>
+        )
+    }
+}
 
 function detailLinkFormatter(cell, row){
     return (

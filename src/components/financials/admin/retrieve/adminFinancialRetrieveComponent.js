@@ -339,8 +339,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                         </Link>&nbsp;&nbsp;&nbsp;
                                         <Link to={`/order/${order.id}/unassign-associate`} target="_blank" className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
                                             Unassign&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link><br /><br />
-                                        <p>Please note these buttons are deprecated and will be deleted in the future, please use the operations tab</p>
+                                        </Link>
                                     </td>
                                 </tr>
 

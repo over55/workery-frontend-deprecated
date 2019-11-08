@@ -140,7 +140,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                 <div className="col-sm-12 mx-auto mt-4 pt-4">
                     <h2>
-                        <i className="fas fa-user-shield"></i>&nbsp;Available Insured Associates
+                        <i className="fas fa-user-shield"></i>&nbsp;Associates with WSIB coverage
                     </h2>
                     <div className="table-responsive">
                         <table className="table table-striped">
@@ -152,6 +152,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <th>E-Mail</th>
                                 <th>WSIB #</th>
                                 <th>Rate ($/h)</th>
+                                <th>Contacts (30 Days)</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -166,7 +167,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                 <div className="col-sm-12 mx-auto mt-4 pt-4">
                     <h2>
-                        <i className="fas fa-user"></i>&nbsp;Available Uninsured Associates
+                        <i className="fas fa-user"></i>&nbsp;Associates without WSIB coverage
                     </h2>
                     <div className="table-responsive">
                         <table className="table table-striped">
@@ -177,7 +178,8 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <th>Phone</th>
                                 <th>E-Mail</th>
                                 <th>WSIB #</th>
-                                <th>Rate ($/h)</th>
+                                <th>Contacts (30 Days)</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -258,7 +260,7 @@ class ActivitySheetItem extends Component {
 
 class InsuredAssociateItem extends Component {
     render() {
-        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired } = this.props.associate;
+        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount } = this.props.associate;
         const { onClick } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
@@ -292,6 +294,9 @@ class InsuredAssociateItem extends Component {
                     />
                 </td>
                 <td>
+                    {past30DaysActivitySheetCount}
+                </td>
+                <td>
                     <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
@@ -303,7 +308,7 @@ class InsuredAssociateItem extends Component {
 
 class UninsuredAssociateItem extends Component {
     render() {
-        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired } = this.props.associate;
+        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount } = this.props.associate;
         const { onClick } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
@@ -332,6 +337,9 @@ class UninsuredAssociateItem extends Component {
                         decimalScale={2}
                         displayType={'text'}
                     />
+                </td>
+                <td>
+                    {past30DaysActivitySheetCount}
                 </td>
                 <td>
                     <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>

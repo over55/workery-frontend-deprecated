@@ -42,17 +42,19 @@ class RemoteListComponent extends Component {
             text: '',
             sort: false,
             formatter: iconFormatter
-        },{
-            dataField: 'state',
-            text: 'Status',
-            sort: false,
-            // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/298
-            //     options: selectOptions,
-            //     defaultValue: 1,
-            //     withoutEmptyOption: true
-            // }),
-            formatter: statusFormatter
-        },{
+        },
+        // {
+        //     dataField: 'state',
+        //     text: 'Status',
+        //     sort: false,
+        //     // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/298
+        //     //     options: selectOptions,
+        //     //     defaultValue: 1,
+        //     //     withoutEmptyOption: true
+        //     // }),
+        //     formatter: statusFormatter
+        // }
+        ,{
             dataField: 'givenName',
             text: 'First Name',
             sort: true

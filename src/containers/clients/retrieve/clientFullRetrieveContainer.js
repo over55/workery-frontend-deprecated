@@ -27,6 +27,7 @@ class ClientFullRetrieveContainer extends Component {
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onClientClick = this.onClientClick.bind(this);
+        this.onAddJobClick = this.onAddJobClick.bind(this);
     }
 
     /**
@@ -64,6 +65,14 @@ class ClientFullRetrieveContainer extends Component {
         console.log("onFailureCallback | errors:", errors);
     }
 
+    onAddJobClick(e) {
+        e.preventDefault();
+        localStorage.setItem("workery-create-order-clientId", this.props.clientDetail.id);
+        localStorage.setItem("workery-create-order-clientGivenName", this.props.clientDetail.givenName);
+        localStorage.setItem("workery-create-order-clientLastName", this.props.clientDetail.lastName);
+        this.props.history.push("/orders/add/step-3");
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
@@ -93,6 +102,7 @@ class ClientFullRetrieveContainer extends Component {
                 flashMessage={this.props.flashMessage}
                 onClientClick={this.onClientClick}
                 user={this.props.user}
+                onAddJobClick={this.onAddJobClick}
             />
         );
     }
