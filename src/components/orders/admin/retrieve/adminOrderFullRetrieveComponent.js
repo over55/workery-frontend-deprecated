@@ -401,41 +401,39 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                         <td>
                                             {order.associate &&
                                                 <div>
-                                                    <Link className="btn btn-warning btn-lg" to={`/order/${order.id}/unassign-associate`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
-                                                        Unassign Associate&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    <Link to={`/order/${order.id}/unassign-associate`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
+                                                        <i className="fas fa-user-slash"></i>&nbsp;Unassign Associate
                                                     </Link>
                                                 </div>
                                             }
                                             {isCancelled
                                                 ?""
                                                 :<div>
-                                                    <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/transfer-step-1`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
-                                                        Transfer&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    <Link to={`/order/${order.id}/transfer-step-1`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
+                                                        <i className="fas fa-exchange-alt"></i>&nbsp;Transfer
                                                     </Link>
                                                 </div>
                                             }
                                             {isCancelled
                                                 ?""
                                                 :<div>
-                                                    <Link className="btn btn-orange btn-lg" to={`/order/${order.id}/postpone`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
-                                                       Postpone&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    <Link to={`/order/${order.id}/postpone`} className="btn btn-orange btn-lg mt-4 pl-4 pr-4">
+                                                       <i className="fas fa-clock"></i>&nbsp;Postpone
                                                     </Link>
                                                 </div>
                                             }
                                             {isCancelled
                                                 ?<div>
-                                                    <Link className="btn btn-primary btn-lg" to={`/order/${order.id}/reopen`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
-                                                        Re-open&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    <Link to={`/order/${order.id}/reopen`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                        <i className="fas fa-window-restore"></i>&nbsp;Re-open
                                                     </Link>
                                                 </div>
                                                 :<div>
-                                                    <Link className="btn btn-danger btn-lg" to={`/order/${order.id}/close`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
-                                                        Cancel&nbsp;<i className="fas fa-chevron-right"></i>
+                                                    <Link to={`/order/${order.id}/close`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                        <i className="fas fa-window-close"></i>&nbsp;Cancel
                                                     </Link>
                                                 </div>
                                             }
-                                            <p><br/>Please note these buttons are deprecated and will be deleted in the future, please use the operations tab</p>
-
                                         </td>
                                     </tr>
                                 }
