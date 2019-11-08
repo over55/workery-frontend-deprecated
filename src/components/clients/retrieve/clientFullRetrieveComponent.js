@@ -226,7 +226,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Account #</th>
-                                    <td>{client && client.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
+                                    <td>{client && client.id && client.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
