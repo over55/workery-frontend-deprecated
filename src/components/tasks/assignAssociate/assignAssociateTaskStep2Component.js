@@ -140,7 +140,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                 <div className="col-sm-12 mx-auto mt-4 pt-4">
                     <h2>
-                        <i className="fas fa-user-shield"></i>&nbsp;Available Insured Associates
+                        <i className="fas fa-user-shield"></i>&nbsp;Associates with WSIB coverage
                     </h2>
                     <div className="table-responsive">
                         <table className="table table-striped">
@@ -166,7 +166,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                 <div className="col-sm-12 mx-auto mt-4 pt-4">
                     <h2>
-                        <i className="fas fa-user"></i>&nbsp;Available Uninsured Associates
+                        <i className="fas fa-user"></i>&nbsp;Associates without WSIB coverage
                     </h2>
                     <div className="table-responsive">
                         <table className="table table-striped">
