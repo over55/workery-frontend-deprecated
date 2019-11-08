@@ -121,8 +121,8 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                                 <p className="m-0"><strong>Tags:</strong></p>
                                 {associate &&
                                     <p>
-                                        {associate && associate.tags && associate.tags.map(
-                                            (tag) => <TagItem tag={tag} key={tag.id} />)
+                                        {associate && associate.prettyTags && associate.prettyTags.map(
+                                            (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                                         }
                                     </p>
                                 }
@@ -167,9 +167,9 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { text, id } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }
