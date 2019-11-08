@@ -153,6 +153,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <th>WSIB #</th>
                                 <th>Rate ($/h)</th>
                                 <th>Contacts (30 Days)</th>
+                                <th>Tags</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -177,8 +178,9 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <th>Full Name</th>
                                 <th>Phone</th>
                                 <th>E-Mail</th>
-                                <th>WSIB #</th>
+                                <th>Rate ($/h)</th>
                                 <th>Contacts (30 Days)</th>
+                                <th>Tags</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -260,7 +262,7 @@ class ActivitySheetItem extends Component {
 
 class InsuredAssociateItem extends Component {
     render() {
-        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount } = this.props.associate;
+        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, prettyTags } = this.props.associate;
         const { onClick } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
@@ -297,6 +299,13 @@ class InsuredAssociateItem extends Component {
                     {past30DaysActivitySheetCount}
                 </td>
                 <td>
+                    {isEmpty(prettyTags)
+                        ? "-"
+                        : prettyTags.map(
+                        (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
+                    }
+                </td>
+                <td>
                     <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
@@ -308,7 +317,7 @@ class InsuredAssociateItem extends Component {
 
 class UninsuredAssociateItem extends Component {
     render() {
-        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount } = this.props.associate;
+        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, prettyTags } = this.props.associate;
         const { onClick } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
@@ -342,9 +351,27 @@ class UninsuredAssociateItem extends Component {
                     {past30DaysActivitySheetCount}
                 </td>
                 <td>
+                    {isEmpty(prettyTags)
+                        ? "-"
+                        : prettyTags.map(
+                            (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>
+                        )
+                    }
+                </td>
+                <td>
                     <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
+        );
+    };
+}
+
+
+class TagItem extends Component {
+    render() {
+        const { text, id } = this.props.tag;
+        return (
+            <span className="badge badge-danger badge-lg" value={id}>{text}</span>
         );
     };
 }
