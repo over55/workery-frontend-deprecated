@@ -177,7 +177,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <th>Phone</th>
                                 <th>E-Mail</th>
                                 <th>WSIB #</th>
-                                <th>Rate ($/h)</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                             </thead>
