@@ -15,7 +15,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class ClientFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, client, flashMessage, errors, onClientClick, user } = this.props;
+        const { id, client, flashMessage, errors, onClientClick, user, onAddJobClick } = this.props;
         const { typeOf } = client;
         const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
         const isActiveState = client.state === "active";
@@ -259,43 +259,42 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        <ul>
-                                            <li>
-                                                {client.state === 'inactive'
-                                                    ? <div>
-                                                        <i className="fas fa-lock"></i>&nbsp;Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </div>
-                                                    : <Link to={`/client/${id}/operations`}>
-                                                        Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                }
-                                            </li>
-                                            <li>
-                                                {isActiveState
-                                                    ?<Link to={`/client/${id}/operations`}>
-                                                        Archive&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                    :<Link to={`/client/${id}/operations`}>
-                                                        Unarchive&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                }
-
-                                            </li>
-                                            {isRezClient &&
-                                                <li>
-                                                    <Link to={`/client/${id}/operations`}>
-                                                        Upgrade Client&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            {canDeleteClient &&
-                                                <li>
-                                                    <Link to={`/client/${id}/operations`}>
-                                                        Permanently Delete Client&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                        </ul>
+                                        {client.state === 'inactive'
+                                            ?<div>
+                                                <i className="fas fa-lock"></i>&nbsp;Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                            </div>
+                                            :<div>
+                                                <Link onClick={onAddJobClick} className="btn btn-success btn-lg mt-4 pl-4 pr-4">
+                                                    <i className="fas fa-plus"></i>&nbsp;Add Job
+                                                </Link>
+                                            </div>
+                                        }
+                                        {isActiveState
+                                            ?<div>
+                                                <Link to={`/client/${id}/archive`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                    <i className="fas fa-archive"></i>&nbsp;Archive
+                                                </Link>
+                                            </div>
+                                            :<div>
+                                                <Link to={`/client/${id}/unarchive`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                    Unarchive&nbsp;<i className="fas fa-box-open"></i>
+                                                </Link>
+                                            </div>
+                                        }
+                                        {isRezClient &&
+                                            <div>
+                                                <Link to={`/client/${id}/rez-upgrade`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
+                                                    <i className="fas fa-bolt"></i>&nbsp;Upgrade Client
+                                                </Link>
+                                            </div>
+                                        }
+                                        {canDeleteClient &&
+                                            <div>
+                                                <Link to={`/client/${id}/delete`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                    <i className="fas fa-trash"></i>&nbsp;Permanently Delete Client
+                                                </Link>
+                                            </div>
+                                        }
                                     </td>
                                 </tr>
 
