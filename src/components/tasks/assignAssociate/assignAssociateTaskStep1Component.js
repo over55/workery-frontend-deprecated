@@ -136,7 +136,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-clipboard-list"></i>&nbsp;Required Tasks
+                                        <i className="fas fa-clipboard-list"></i>&nbsp;Optional
                                     </th>
                                 </tr>
                                 <tr>
@@ -153,6 +153,19 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                                     <i className="fas fa-window-close"></i>&nbsp;Cancel Job
                                                 </Link>
                                             </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-clipboard-list"></i>&nbsp;Required
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <td>
+                                        <div className="row">
                                             <div className="col-md-4 mx-auto p-2">
                                                 <button className="btn btn-success btn-lg" onClick={onClick}>
                                                     Begin&nbsp;<i className="fas fa-arrow-circle-right"></i>
