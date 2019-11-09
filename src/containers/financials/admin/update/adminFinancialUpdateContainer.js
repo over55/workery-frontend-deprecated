@@ -19,8 +19,8 @@ import { localStorageSetObjectOrArrayItem } from '../../../../helpers/localStora
 /**
  *  Source: https://stackoverflow.com/a/18358056
  */
-function roundToTwo(num) {
-    return +(Math.round(num + "e+2")  + "e-2");
+function roundToTwo(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 
@@ -135,17 +135,35 @@ class AdminFinancialUpdateContainer extends Component {
         const invoiceBalanceOwingAmount = invoiceServiceFeeAmount - invoiceActualServiceFeeAmountPaid;
 
         /*
-         *
+         * Compute amount due.
          */
         const invoiceAmountDue = invoiceTotalAmount - invoiceDepositAmount;
 
+        /*
+         *  Convert to currency decimal places.
+         */
+        const invoiceTotalQuoteAmountRounded = roundToTwo(invoiceTotalQuoteAmount, 2);
+        const invoiceTotalAmountRounded =  roundToTwo(invoiceTotalAmount, 2);
+        const invoiceBalanceOwingAmountRounded = roundToTwo(invoiceBalanceOwingAmount, 2);
+        const invoiceServiceFeeAmountRounded = roundToTwo(invoiceServiceFeeAmount, 2);
+        const invoiceAmountDueRounded = roundToTwo(invoiceAmountDue, 2);
+
+        /*
+         *  Handle NaN values.
+         */
+        const invoiceTotalQuoteAmountSanitized = isNaN(invoiceTotalQuoteAmountRounded) ? 0 : invoiceTotalQuoteAmountRounded;
+        const invoiceTotalAmountRoundedSanitized = isNaN(invoiceTotalAmountRounded) ? 0 : invoiceTotalAmountRounded;
+        const invoiceBalanceOwingAmountSanitized = isNaN(invoiceBalanceOwingAmountRounded) ? 0 : invoiceBalanceOwingAmountRounded;
+        const invoiceServiceFeeAmountSanitized = isNaN(invoiceServiceFeeAmountRounded) ? 0 : invoiceServiceFeeAmountRounded;
+        const invoiceAmountDueSanitized = isNaN(invoiceAmountDueRounded) ? 0 : invoiceAmountDueRounded;
+
         // Update our state.
         this.setState({
-            invoiceTotalQuoteAmount: roundToTwo(invoiceTotalQuoteAmount, 2),
-            invoiceTotalAmount: roundToTwo(invoiceTotalAmount, 2),
-            invoiceBalanceOwingAmount: roundToTwo(invoiceBalanceOwingAmount, 2),
-            invoiceServiceFeeAmount: roundToTwo(invoiceServiceFeeAmount, 2),
-            invoiceAmountDue: roundToTwo(invoiceAmountDue, 2),
+            invoiceTotalQuoteAmount: invoiceTotalQuoteAmountSanitized,
+            invoiceTotalAmount: invoiceTotalAmountRoundedSanitized,
+            invoiceBalanceOwingAmount: invoiceBalanceOwingAmountSanitized,
+            invoiceServiceFeeAmount: invoiceServiceFeeAmountSanitized,
+            invoiceAmountDue: invoiceAmountDueSanitized,
         });
     }
 
