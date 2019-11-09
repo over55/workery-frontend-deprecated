@@ -331,15 +331,21 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        <Link to={`/financial/${order.id}/clone`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
-                                            Clone&nbsp;<i className="fas fa-chevron-right"></i>
-                                        </Link>&nbsp;&nbsp;&nbsp;
-                                        <Link to={`/order/${order.id}/close`} target="_blank" className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
-                                            Cancel&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link>&nbsp;&nbsp;&nbsp;
-                                        <Link to={`/order/${order.id}/unassign-associate`} target="_blank" className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
-                                            Unassign&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link>
+                                        <div>
+                                            <Link to={`/financial/${order.id}/clone`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
+                                                Clone&nbsp;<i className="fas fa-chevron-right"></i>
+                                            </Link>&nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div>
+                                            <Link to={`/order/${order.id}/unassign-associate`} target="_blank" className="btn btn-orange btn-lg mt-4 pl-4 pr-4">
+                                                Unassign&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        </div>
+                                        <div>
+                                            <Link to={`/order/${order.id}/close`} target="_blank" className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                Cancel&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>&nbsp;&nbsp;&nbsp;
+                                        </div>                                        
                                     </td>
                                 </tr>
 
