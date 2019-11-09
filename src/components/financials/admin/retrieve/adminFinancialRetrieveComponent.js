@@ -160,10 +160,10 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Quoted Waste Removal</th>
+                                    <th scope="row" className="bg-light">Quoted Other Costs</th>
                                     <td>
-                                        {order.invoiceQuotedWasteRemovalAmount
-                                            ?<NumberFormat value={order.invoiceQuotedWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                        {order.invoiceQuotedOtherCostsAmount
+                                            ?<NumberFormat value={order.invoiceQuotedOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
                                     </td>
@@ -196,10 +196,10 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Actual Waste Removal</th>
+                                    <th scope="row" className="bg-light">Actual Other Costs</th>
                                     <td>
-                                        {order.invoiceWasteRemovalAmount
-                                            ?<NumberFormat value={order.invoiceWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                        {order.invoiceOtherCostsAmount
+                                            ?<NumberFormat value={order.invoiceOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
                                     </td>
@@ -345,7 +345,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                             <Link to={`/order/${order.id}/close`} target="_blank" className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
                                                 Cancel&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>&nbsp;&nbsp;&nbsp;
-                                        </div>                                        
+                                        </div>
                                     </td>
                                 </tr>
 

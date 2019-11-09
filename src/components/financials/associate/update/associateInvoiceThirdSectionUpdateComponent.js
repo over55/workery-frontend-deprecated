@@ -89,9 +89,9 @@ class AssociateInvoiceThirdSectionUpdateComponent extends Component {
                             <BootstrapCurrencyInput
                                 inputClassName="form-control"
                                 borderColour="border-success"
-                                label="Waste Removal"
-                                value={order && order.invoiceWasteRemovalAmount}
-                                name="invoiceWasteRemovalAmount"
+                                label="Other Costs"
+                                value={order && order.invoiceOtherCostsAmount}
+                                name="invoiceOtherCostsAmount"
                                 helpText=""
                                 disabled={true}
                             />

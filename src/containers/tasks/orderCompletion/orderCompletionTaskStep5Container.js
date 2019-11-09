@@ -53,11 +53,11 @@ class OrderCompletionTaskStep5Container extends Component {
             invoiceIds: localStorage.getItem("workery-task-6-invoiceIds"),
             invoiceQuotedLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedLabourAmount"),
             invoiceQuotedMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedMaterialAmount"),
-            invoiceQuotedWasteRemovalAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedWasteRemovalAmount"),
+            invoiceQuotedOtherCostsAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedOtherCostsAmount"),
             invoiceTotalQuoteAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalQuoteAmount"),
             invoiceLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceLabourAmount"),
             invoiceMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceMaterialAmount"),
-            invoiceWasteRemovalAmount: localStorageGetFloatItem("workery-task-6-invoiceWasteRemovalAmount"),
+            invoiceOtherCostsAmount: localStorageGetFloatItem("workery-task-6-invoiceOtherCostsAmount"),
             invoiceTaxAmount: localStorageGetFloatItem("workery-task-6-invoiceTaxAmount"),
             invoiceDepositAmount: 0.00,
             invoiceTotalAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalAmount"),
@@ -215,8 +215,8 @@ class OrderCompletionTaskStep5Container extends Component {
                 invoiceActualServiceFeeAmountPaid={this.state.invoiceActualServiceFeeAmountPaid}
                 invoicePaidTo={this.state.invoicePaidTo}
                 paymentStatus={this.state.paymentStatus}
-                invoiceQuotedWasteRemovalAmount={this.state.invoiceQuotedWasteRemovalAmount}
-                invoiceWasteRemovalAmount={this.state.invoiceWasteRemovalAmount}
+                invoiceQuotedOtherCostsAmount={this.state.invoiceQuotedOtherCostsAmount}
+                invoiceOtherCostsAmount={this.state.invoiceOtherCostsAmount}
                 invoiceDepositAmount={this.state.invoiceDepositAmount}
                 invoiceAmountDue={this.invoiceAmountDue}
                 completionDate={this.completionDate}

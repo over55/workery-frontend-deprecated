@@ -150,10 +150,10 @@ export default class AssociateFinancialRetrieveComponent extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Quoted Waste Removal</th>
+                                    <th scope="row" className="bg-light">Quoted Other Costs</th>
                                     <td>
-                                        {order.invoiceQuotedWasteRemovalAmount
-                                            ?<NumberFormat value={order.invoiceQuotedWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                        {order.invoiceQuotedOtherCostsAmount
+                                            ?<NumberFormat value={order.invoiceQuotedOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
                                     </td>
@@ -186,10 +186,10 @@ export default class AssociateFinancialRetrieveComponent extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Actual Waste Removal</th>
+                                    <th scope="row" className="bg-light">Actual Other Costs</th>
                                     <td>
-                                        {order.invoiceWasteRemovalAmount
-                                            ?<NumberFormat value={order.invoiceWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                        {order.invoiceOtherCostsAmount
+                                            ?<NumberFormat value={order.invoiceOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
                                     </td>

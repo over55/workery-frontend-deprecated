@@ -44,7 +44,7 @@ class AdminInvoiceCreateStep2Component extends Component {
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
             isLoading, onClick,
         } = this.props;
-        const invoiceSubTotalAmount = parseFloat(order.invoiceLabourAmount) + parseFloat(order.invoiceMaterialAmount) + parseFloat(order.invoiceWasteRemovalAmount);
+        const invoiceSubTotalAmount = parseFloat(order.invoiceLabourAmount) + parseFloat(order.invoiceMaterialAmount) + parseFloat(order.invoiceOtherCostsAmount);
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -306,10 +306,10 @@ class AdminInvoiceCreateStep2Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Waste Removal</th>
+                                    <th scope="row" className="bg-light">Other Costs</th>
                                     <td>
-                                        {order.invoiceWasteRemovalAmount
-                                            ?<NumberFormat value={order.invoiceWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                        {order.invoiceOtherCostsAmount
+                                            ?<NumberFormat value={order.invoiceOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
                                     </td>

@@ -153,8 +153,8 @@ export function validateTask6Step3Input(data) {
         if (data.invoiceMaterialAmount === undefined || data.invoiceMaterialAmount === null || data.invoiceMaterialAmount === "" || isNaN(data.invoiceMaterialAmount) ) {
             errors.invoiceMaterialAmount = 'This field is required';
         }
-        if (data.invoiceWasteRemovalAmount === undefined || data.invoiceWasteRemovalAmount === null || data.invoiceWasteRemovalAmount === "" || isNaN(data.invoiceWasteRemovalAmount) ) {
-            errors.invoiceWasteRemovalAmount = 'This field is required';
+        if (data.invoiceOtherCostsAmount === undefined || data.invoiceOtherCostsAmount === null || data.invoiceOtherCostsAmount === "" || isNaN(data.invoiceOtherCostsAmount) ) {
+            errors.invoiceOtherCostsAmount = 'This field is required';
         }
         if (data.invoiceTaxAmount === undefined || data.invoiceTaxAmount === null || data.invoiceTaxAmount === "" || isNaN(data.invoiceTaxAmount) ) {
             errors.invoiceTaxAmount = 'This field is required';

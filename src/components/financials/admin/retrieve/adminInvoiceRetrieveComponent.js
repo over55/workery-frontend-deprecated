@@ -262,10 +262,10 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" className="bg-light">Waste Removal</th>
+                                        <th scope="row" className="bg-light">Other Costs</th>
                                         <td>
-                                            {invoice.invoiceWasteRemovalAmount
-                                                ?<NumberFormat value={invoice.invoiceWasteRemovalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice.invoiceOtherCostsAmount
+                                                ?<NumberFormat value={invoice.invoiceOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>

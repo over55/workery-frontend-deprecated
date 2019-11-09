@@ -208,6 +208,6 @@ const PAID_FOR_CHOICES = [
         id: 'paidFor-3-choice',
         name: "paidFor",
         value: 3,
-        label: "Waste Removal"
+        label: "Other Costs"
     }
 ];

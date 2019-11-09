@@ -63,11 +63,11 @@ class AdminFinancialUpdateContainer extends Component {
             invoiceIds: hasNoIDs ? id : this.props.orderDetail.invoiceIds,
             invoiceQuotedLabourAmount: parseFloat(this.props.orderDetail.invoiceQuotedLabourAmount),
             invoiceQuotedMaterialAmount: parseFloat(this.props.orderDetail.invoiceQuotedMaterialAmount),
-            invoiceQuotedWasteRemovalAmount: parseFloat(this.props.orderDetail.invoiceQuotedWasteRemovalAmount),
+            invoiceQuotedOtherCostsAmount: parseFloat(this.props.orderDetail.invoiceQuotedOtherCostsAmount),
             invoiceTotalQuoteAmount: parseFloat(this.props.orderDetail.invoiceTotalQuoteAmount),
             invoiceLabourAmount: parseFloat(this.props.orderDetail.invoiceLabourAmount),
             invoiceMaterialAmount: parseFloat(this.props.orderDetail.invoiceMaterialAmount),
-            invoiceWasteRemovalAmount: parseFloat(this.props.orderDetail.invoiceWasteRemovalAmount),
+            invoiceOtherCostsAmount: parseFloat(this.props.orderDetail.invoiceOtherCostsAmount),
             invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
             invoiceDepositAmount: parseFloat(this.props.orderDetail.invoiceDepositAmount),
             invoiceServiceFee: invoiceServiceFee,
@@ -102,10 +102,10 @@ class AdminFinancialUpdateContainer extends Component {
             invoiceDepositAmount,
             invoiceQuotedMaterialAmount,
             invoiceQuotedLabourAmount,
-            invoiceQuotedWasteRemovalAmount,
+            invoiceQuotedOtherCostsAmount,
             invoiceLabourAmount,
             invoiceMaterialAmount,
-            invoiceWasteRemovalAmount,
+            invoiceOtherCostsAmount,
             invoiceTaxAmount,
             invoiceServiceFee,
             invoiceActualServiceFeeAmountPaid
@@ -114,14 +114,14 @@ class AdminFinancialUpdateContainer extends Component {
         /*
          *  Compute the total quoted amount.
          */
-        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount + invoiceQuotedWasteRemovalAmount;
-        console.log("performCalculation |", invoiceQuotedMaterialAmount, invoiceQuotedLabourAmount, invoiceQuotedWasteRemovalAmount, invoiceTotalQuoteAmount);
+        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount + invoiceQuotedOtherCostsAmount;
+        console.log("performCalculation |", invoiceQuotedMaterialAmount, invoiceQuotedLabourAmount, invoiceQuotedOtherCostsAmount, invoiceTotalQuoteAmount);
 
         /*
          *  Compute the total amount.
          */
-        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount + invoiceWasteRemovalAmount;
-        console.log("performCalculation |", invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceWasteRemovalAmount, invoiceTotalAmount);
+        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount + invoiceOtherCostsAmount;
+        console.log("performCalculation |", invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceOtherCostsAmount, invoiceTotalAmount);
 
         /*
          *  Compute the service fee based on the labour.
@@ -383,8 +383,8 @@ class AdminFinancialUpdateContainer extends Component {
     render() {
         const {
             id, errors, isLoading,
-            invoicePaidTo, paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedWasteRemovalAmount,
-            invoiceLabourAmount, invoiceMaterialAmount, invoiceWasteRemovalAmount, invoiceTaxAmount, invoiceServiceFee,
+            invoicePaidTo, paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedOtherCostsAmount,
+            invoiceLabourAmount, invoiceMaterialAmount, invoiceOtherCostsAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
             visits, invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate, invoiceAmountDue
         } = this.state;
@@ -398,11 +398,11 @@ class AdminFinancialUpdateContainer extends Component {
                 // Amount
                 invoiceQuotedLabourAmount={invoiceQuotedLabourAmount}
                 invoiceQuotedMaterialAmount={invoiceQuotedMaterialAmount}
-                invoiceQuotedWasteRemovalAmount={invoiceQuotedWasteRemovalAmount}
+                invoiceQuotedOtherCostsAmount={invoiceQuotedOtherCostsAmount}
                 invoiceTotalQuoteAmount={invoiceTotalQuoteAmount}
                 invoiceLabourAmount={invoiceLabourAmount}
                 invoiceMaterialAmount={invoiceMaterialAmount}
-                invoiceWasteRemovalAmount={invoiceWasteRemovalAmount}
+                invoiceOtherCostsAmount={invoiceOtherCostsAmount}
                 invoiceTaxAmount={invoiceTaxAmount}
                 invoiceTotalAmount={invoiceTotalAmount}
                 invoiceServiceFeeAmount={invoiceServiceFeeAmount}

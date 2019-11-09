@@ -54,11 +54,11 @@ class OrderCompletionTaskStep3Container extends Component {
             invoiceIds: localStorage.getItem("workery-task-6-invoiceIds"),
             invoiceQuotedLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedLabourAmount"),
             invoiceQuotedMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedMaterialAmount"),
-            invoiceQuotedWasteRemovalAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedWasteRemovalAmount"),
+            invoiceQuotedOtherCostsAmount: localStorageGetFloatItem("workery-task-6-invoiceQuotedOtherCostsAmount"),
             invoiceTotalQuoteAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalQuoteAmount"),
             invoiceLabourAmount: localStorageGetFloatItem("workery-task-6-invoiceLabourAmount"),
             invoiceMaterialAmount: localStorageGetFloatItem("workery-task-6-invoiceMaterialAmount"),
-            invoiceWasteRemovalAmount: localStorageGetFloatItem("workery-task-6-invoiceWasteRemovalAmount"),
+            invoiceOtherCostsAmount: localStorageGetFloatItem("workery-task-6-invoiceOtherCostsAmount"),
             invoiceTaxAmount: localStorageGetFloatItem("workery-task-6-invoiceTaxAmount"),
             invoiceDepositAmount: 0.00,
             invoiceTotalAmount: localStorageGetFloatItem("workery-task-6-invoiceTotalAmount"),
@@ -94,10 +94,10 @@ class OrderCompletionTaskStep3Container extends Component {
             invoiceDepositAmount,
             invoiceQuotedMaterialAmount,
             invoiceQuotedLabourAmount,
-            invoiceQuotedWasteRemovalAmount,
+            invoiceQuotedOtherCostsAmount,
             invoiceLabourAmount,
             invoiceMaterialAmount,
-            invoiceWasteRemovalAmount,
+            invoiceOtherCostsAmount,
             invoiceTaxAmount,
             invoiceServiceFee,
             invoiceActualServiceFeeAmountPaid
@@ -106,14 +106,14 @@ class OrderCompletionTaskStep3Container extends Component {
         /*
          *  Compute the total quoted amount.
          */
-        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount + invoiceQuotedWasteRemovalAmount;
-        console.log("performCalculation |", invoiceQuotedMaterialAmount, invoiceQuotedLabourAmount, invoiceQuotedWasteRemovalAmount, invoiceTotalQuoteAmount);
+        const invoiceTotalQuoteAmount = invoiceQuotedMaterialAmount + invoiceQuotedLabourAmount + invoiceQuotedOtherCostsAmount;
+        console.log("performCalculation |", invoiceQuotedMaterialAmount, invoiceQuotedLabourAmount, invoiceQuotedOtherCostsAmount, invoiceTotalQuoteAmount);
 
         /*
          *  Compute the total amount.
          */
-        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount + invoiceWasteRemovalAmount;
-        console.log("performCalculation |", invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceWasteRemovalAmount, invoiceTotalAmount);
+        const invoiceTotalAmount = invoiceLabourAmount + invoiceMaterialAmount + invoiceTaxAmount + invoiceOtherCostsAmount;
+        console.log("performCalculation |", invoiceLabourAmount, invoiceMaterialAmount, invoiceTaxAmount, invoiceOtherCostsAmount, invoiceTotalAmount);
 
         /*
          *  Compute the service fee based on the labour.
@@ -342,8 +342,8 @@ class OrderCompletionTaskStep3Container extends Component {
     render() {
         const {
             id, errors, isLoading,
-            hasInputtedFinancials, invoicePaidTo, paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedWasteRemovalAmount,
-            invoiceLabourAmount, invoiceMaterialAmount, invoiceWasteRemovalAmount, invoiceTaxAmount, invoiceServiceFee,
+            hasInputtedFinancials, invoicePaidTo, paymentStatus, invoiceDate, invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceQuotedOtherCostsAmount,
+            invoiceLabourAmount, invoiceMaterialAmount, invoiceOtherCostsAmount, invoiceTaxAmount, invoiceServiceFee,
             invoiceServiceFeeAmount, invoiceServiceFeePaymentDate, invoiceActualServiceFeeAmountPaid,
             invoiceTotalQuoteAmount, invoiceTotalAmount, invoiceBalanceOwingAmount, completionDate, invoiceAmountDue
         } = this.state;
@@ -357,11 +357,11 @@ class OrderCompletionTaskStep3Container extends Component {
                 // Amount
                 invoiceQuotedLabourAmount={invoiceQuotedLabourAmount}
                 invoiceQuotedMaterialAmount={invoiceQuotedMaterialAmount}
-                invoiceQuotedWasteRemovalAmount={invoiceQuotedWasteRemovalAmount}
+                invoiceQuotedOtherCostsAmount={invoiceQuotedOtherCostsAmount}
                 invoiceTotalQuoteAmount={invoiceTotalQuoteAmount}
                 invoiceLabourAmount={invoiceLabourAmount}
                 invoiceMaterialAmount={invoiceMaterialAmount}
-                invoiceWasteRemovalAmount={invoiceWasteRemovalAmount}
+                invoiceOtherCostsAmount={invoiceOtherCostsAmount}
                 invoiceTaxAmount={invoiceTaxAmount}
                 invoiceTotalAmount={invoiceTotalAmount}
                 invoiceServiceFeeAmount={invoiceServiceFeeAmount}

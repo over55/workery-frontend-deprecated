@@ -18,7 +18,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
             invoiceIds, invoiceQuotedLabourAmount, invoiceQuotedMaterialAmount, invoiceTotalQuoteAmount, invoiceLabourAmount,
             invoiceMaterialAmount, invoiceTaxAmount, invoiceTotalAmount, invoiceServiceFeeAmount, invoiceBalanceOwingAmount,
             invoiceServiceFee, hasInputtedFinancials, invoiceDate, invoiceActualServiceFeeAmountPaid, invoiceServiceFeePaymentDate,
-            invoicePaidTo, paymentStatus, invoiceQuotedWasteRemovalAmountinvoiceWasteRemovalAmount,
+            invoicePaidTo, paymentStatus, invoiceQuotedOtherCostsAmountinvoiceOtherCostsAmount,
             invoiceDepositAmount, invoiceAmountDue,
 
             // Step 4
