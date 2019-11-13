@@ -325,7 +325,6 @@ class AdminFinancialUpdateContainer extends Component {
     }
 
     onSelectChange(option) {
-        console.log(option);
         const optionKey = [option.selectName]+"Option";
         this.setState(
             { [option.selectName]: option.value, [optionKey]: option, },

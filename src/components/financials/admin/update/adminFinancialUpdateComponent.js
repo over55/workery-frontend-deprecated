@@ -72,6 +72,7 @@ export default class AdminFinancialUpdateComponent extends Component {
             visitChoices.push({
                 id: 'visits-t-choice',
                 name: "visits",
+                selectName: "visits",
                 value: i,
                 label: i
             });
