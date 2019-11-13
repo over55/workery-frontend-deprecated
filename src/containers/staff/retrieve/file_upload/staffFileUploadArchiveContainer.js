@@ -103,6 +103,7 @@ class StaffFileUploadArchiveContainer extends Component {
         return (
             <StaffFileUploadArchiveComponent
                 id={id}
+                user={this.props.user}
                 staff={staff}
                 isLoading={isLoading}
                 errors={errors}

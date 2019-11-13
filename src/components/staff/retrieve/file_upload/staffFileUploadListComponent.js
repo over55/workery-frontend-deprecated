@@ -16,6 +16,8 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    EXECUTIVE_GROUP_ID,
+    MANAGEMENT_GROUP_ID,
 } from '../../../../constants/api';
 
 
@@ -205,9 +207,10 @@ class StaffFileUploadListComponent extends Component {
             staffFiles, staff, id,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, user
         } = this.props;
 
+        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -250,6 +253,13 @@ class StaffFileUploadListComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </strong>
                         </div>
+                        {canViewFunctions &&
+                            <div id="step-5" className="st-grey">
+                                <Link to={`/staff/${id}/operations`}>
+                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                                </Link>
+                            </div>
+                        }
                     </div>
                 </div>
 

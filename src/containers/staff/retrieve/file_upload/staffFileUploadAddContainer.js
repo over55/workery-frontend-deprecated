@@ -282,6 +282,7 @@ class StaffFileUploadAddContainer extends Component {
                 tags={tags}
                 tagOptions={tagOptions}
                 is_archived={is_archived}
+                user={this.props.user}
                 staff={staff}
                 staffFiles={staffFiles}
                 flashMessage={this.props.flashMessage}

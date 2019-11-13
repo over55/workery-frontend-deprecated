@@ -15,13 +15,18 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import {
+    EXECUTIVE_GROUP_ID,
+    MANAGEMENT_GROUP_ID
+} from '../../../constants/api';
 
 
 export default class StaffCommentComponent extends Component {
     render() {
         const {
-            staffComments, flashMessage, isLoading, id, staff, text, onTextChange, errors, onClick
+            user, staffComments, flashMessage, isLoading, id, staff, text, onTextChange, errors, onClick
         } = this.props;
+        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -65,6 +70,13 @@ export default class StaffCommentComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
+                        {canViewFunctions &&
+                            <div id="step-5" className="st-grey">
+                                <Link to={`/staff/${id}/operations`}>
+                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                                </Link>
+                            </div>
+                        }
                     </div>
                 </div>
 

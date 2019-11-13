@@ -13,13 +13,18 @@ import Moment from 'react-moment';
 
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import {
+    EXECUTIVE_GROUP_ID,
+    MANAGEMENT_GROUP_ID,
+} from '../../../../constants/api';
 
 
 export default class StaffFileUploadArchiveComponent extends Component {
     render() {
         const {
-            isLoading, id, staff, errors, onClick
+            user, isLoading, id, staff, errors, onClick
         } = this.props;
+        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -67,6 +72,13 @@ export default class StaffFileUploadArchiveComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </strong>
                         </div>
+                        {canViewFunctions &&
+                            <div id="step-5" className="st-grey">
+                                <Link to={`/staff/${id}/operations`}>
+                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                                </Link>
+                            </div>
+                        }
                     </div>
                 </div>
 

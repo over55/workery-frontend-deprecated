@@ -261,6 +261,7 @@ class StaffFileUploadListContainer extends Component {
         return (
             <OrderListComponent
                 id={id}
+                user={this.props.user}
                 staff={staff}
                 staffFiles={staffFileList}
                 flashMessage={this.props.flashMessage}

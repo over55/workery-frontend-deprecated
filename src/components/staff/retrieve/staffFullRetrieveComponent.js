@@ -61,6 +61,13 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
+                        {canViewFunctions &&
+                            <div id="step-5" className="st-grey">
+                                <Link to={`/staff/${id}/operations`}>
+                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                                </Link>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -165,7 +172,7 @@ export default class StaffFullRetrieveComponent extends Component {
                                         {staff.policeCheck
                                             ? <Moment format="MM/DD/YYYY">{staff.policeCheck}</Moment>
                                             : "-"
-                                        }                                        
+                                        }
                                     </td>
                                 </tr>
                                 <tr>

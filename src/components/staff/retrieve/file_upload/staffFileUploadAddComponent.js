@@ -18,6 +18,10 @@ import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSel
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { BootstrapSingleFileUploadAndPreview } from "../../../bootstrap/bootstrapSingleFileUploadAndPreview";
+import {
+    EXECUTIVE_GROUP_ID,
+    MANAGEMENT_GROUP_ID,
+} from '../../../../constants/api';
 
 
 export default class StaffFileUploadAddComponent extends Component {
@@ -25,8 +29,9 @@ export default class StaffFileUploadAddComponent extends Component {
         const {
             title, description, tags, tagOptions, isTagSetsLoading, file, isArchived,
             flashMessage, isLoading, id, staff, onTextChange, onMultiChange, errors, onClick,
-            onFileDrop, onRemoveFileUploadClick
+            onFileDrop, onRemoveFileUploadClick, user
         } = this.props;
+        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -76,6 +81,13 @@ export default class StaffFileUploadAddComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </strong>
                         </div>
+                        {canViewFunctions &&
+                            <div id="step-5" className="st-grey">
+                                <Link to={`/staff/${id}/operations`}>
+                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                                </Link>
+                            </div>
+                        }
                     </div>
                 </div>
 

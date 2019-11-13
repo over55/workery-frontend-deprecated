@@ -210,6 +210,7 @@ class StaffCommentContainer extends Component {
             <OrderListComponent
                 id={id}
                 text={text}
+                user={this.props.user}
                 staff={staff}
                 staffComments={staffComments}
                 flashMessage={this.props.flashMessage}

@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import {
+    EXECUTIVE_GROUP_ID,
+    MANAGEMENT_GROUP_ID
+} from '../../../constants/api';
 
 
 export default class StaffLiteRetrieveComponent extends Component {
     render() {
-        const { id, isLoading, staff, flashMessage } = this.props;
+        const { user, id, isLoading, staff, flashMessage } = this.props;
+        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -51,6 +56,13 @@ export default class StaffLiteRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
+                        {canViewFunctions &&
+                            <div id="step-5" className="st-grey">
+                                <Link to={`/staff/${id}/operations`}>
+                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                                </Link>
+                            </div>
+                        }
                     </div>
                 </div>
 
