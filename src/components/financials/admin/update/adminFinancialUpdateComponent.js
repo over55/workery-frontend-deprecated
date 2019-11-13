@@ -175,7 +175,7 @@ export default class AdminFinancialUpdateComponent extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="# of Visit(s) (*)"
-                                name="invoiceServiceFee"
+                                name="visits"
                                 defaultOptionLabel="Please select the service fee."
                                 options={visitChoices}
                                 value={visits}
@@ -298,6 +298,7 @@ export default class AdminFinancialUpdateComponent extends Component {
                                 inputClassName="form-control"
                                 borderColour="border-success"
                                 label="Deposit"
+                                onChange={onAmountChange}
                                 value={orderDetail.invoiceDepositAmount}
                                 name="invoiceDepositAmount"
                                 disabled={true}
@@ -307,6 +308,7 @@ export default class AdminFinancialUpdateComponent extends Component {
                                 inputClassName="form-control"
                                 borderColour="border-success"
                                 label="Amount Due"
+                                onChange={onAmountChange}
                                 value={invoiceAmountDue}
                                 name="invoiceAmountDue"
                                 disabled={true}
