@@ -270,44 +270,6 @@ export default class StaffFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Modified By</th>
                                     <td>{staff.lastModifiedBy}</td>
                                 </tr>
-
-
-
-                                {canViewFunctions &&
-                                    <tr className="bg-dark">
-                                        <th scope="row" colSpan="2" className="text-light">
-                                            <i className="fas fa-project-diagram"></i>&nbsp;Functions
-                                        </th>
-                                    </tr>
-                                }
-                                {canViewFunctions &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Available Choices</th>
-                                        <td>
-                                            <ul>
-                                                <li>
-                                                    <Link to={`/staff/${id}/archive`}>
-                                                    {staff.isArchived
-                                                        ? <div>Unarchive&nbsp;<i className="fas fa-chevron-right"></i></div>
-                                                        : <div>Archive&nbsp;<i className="fas fa-chevron-right"></i></div>
-                                                    }
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to={`/staff/${id}/password`}>
-                                                        <div>Change Password&nbsp;<i className="fas fa-chevron-right"></i></div>
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to={`/staff/${id}/role`}>
-                                                        <div>Change Role&nbsp;<i className="fas fa-chevron-right"></i></div>
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                }
-
                             </tbody>
                         </table>
                         <form>
