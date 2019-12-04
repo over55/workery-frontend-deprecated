@@ -79,6 +79,8 @@ export default class SurveyTaskStep2Component extends Component {
                                 options={WAS_SURVEY_CONDUCTED_CHOICES}
                             />
 
+                            <hr />
+
                             {isCancelled &&
                                 <div>
                                     <BootstrapSingleSelect
@@ -143,7 +145,7 @@ export default class SurveyTaskStep2Component extends Component {
                                         inputClassName="form-check-input form-check-input-lg"
                                         borderColour="border-primary"
                                         error={errors.wasAssociateProfessional}
-                                        label="Was the Associate Member punctual? (*)"
+                                        label="Was the Associate Member professional? (*)"
                                         name="wasAssociateProfessional"
                                         onChange={onRadioChange}
                                         selectedValue={wasAssociateProfessional}
@@ -153,7 +155,7 @@ export default class SurveyTaskStep2Component extends Component {
                                         inputClassName="form-check-input form-check-input-lg"
                                         borderColour="border-primary"
                                         error={errors.wouldCustomerReferOurOrganization}
-                                        label="Was the Associate Member punctual? (*)"
+                                        label="Would you refer Over55 to a friend of family member? (*)"
                                         name="wouldCustomerReferOurOrganization"
                                         onChange={onRadioChange}
                                         selectedValue={wouldCustomerReferOurOrganization}
