@@ -78,6 +78,9 @@ export default class AdminFinancialUpdateComponent extends Component {
             });
         }
 
+        // Generate the custom labels based on the `paymentStatus` of the form.
+        const invoiceServiceFeePaymentDateLabel = paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE ? "Invoice service fee payment date (*)" : "Invoice service fee payment date";
+
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -344,7 +347,7 @@ export default class AdminFinancialUpdateComponent extends Component {
                             />
 
                             <BootstrapDatePicker
-                                label="Invoice service fee payment date (*)"
+                                label={invoiceServiceFeePaymentDateLabel}
                                 name="invoiceServiceFeePaymentDate"
                                 dateObj={invoiceServiceFeePaymentDate}
                                 onTimeChange={onInvoiceServiceFeePaymentDate}

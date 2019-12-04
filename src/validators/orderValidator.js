@@ -32,6 +32,9 @@ export function validateFinancialUpdateInput(data) {
             if (data.completionDate === undefined || data.completionDate === null || data.completionDate === "" || isNaN(data.completionDate) ) {
                 errors.completionDate = 'This field is required';
             }
+            if (data.invoiceServiceFeePaymentDate === undefined || data.invoiceServiceFeePaymentDate === null || data.invoiceServiceFeePaymentDate === "" || isNaN(data.invoiceServiceFeePaymentDate) ) {
+                errors.invoiceServiceFeePaymentDate = 'This field is required';
+            }
         }
     }
     if (data.invoiceDate === undefined || data.invoiceDate === null || data.invoiceDate === "" || isNaN(data.invoiceDate) ) {
@@ -60,9 +63,6 @@ export function validateFinancialUpdateInput(data) {
     }
     if (data.invoiceServiceFeeAmount === undefined || data.invoiceServiceFeeAmount === null || data.invoiceServiceFeeAmount === "" || isNaN(data.invoiceServiceFeeAmount) ) {
         errors.invoiceServiceFeeAmount = 'This field is required';
-    }
-    if (data.invoiceServiceFeePaymentDate === undefined || data.invoiceServiceFeePaymentDate === null || data.invoiceServiceFeePaymentDate === "" || isNaN(data.invoiceServiceFeePaymentDate) ) {
-        errors.invoiceServiceFeePaymentDate = 'This field is required';
     }
     if (data.invoiceActualServiceFeeAmountPaid === undefined || data.invoiceActualServiceFeeAmountPaid === null || data.invoiceActualServiceFeeAmountPaid === "" || isNaN(data.invoiceActualServiceFeeAmountPaid) ) {
         errors.invoiceActualServiceFeeAmountPaid = 'This field is required';

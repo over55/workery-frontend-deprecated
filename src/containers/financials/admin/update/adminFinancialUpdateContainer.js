@@ -183,8 +183,10 @@ class AdminFinancialUpdateContainer extends Component {
         const invoiceDateMoment = moment(this.state.invoiceDate);
         postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD")
 
-        const invoiceServiceFeePaymentDateMoment = moment(this.state.invoiceServiceFeePaymentDate);
-        postData.invoiceServiceFeePaymentDate = invoiceServiceFeePaymentDateMoment.format("YYYY-MM-DD")
+        if (this.state.invoiceServiceFeePaymentDate !== undefined && this.state.invoiceServiceFeePaymentDate !== null) {
+            const invoiceServiceFeePaymentDateMoment = moment(this.state.invoiceServiceFeePaymentDate);
+            postData.invoiceServiceFeePaymentDate = invoiceServiceFeePaymentDateMoment.format("YYYY-MM-DD");
+        }
 
         postData.state = this.state.paymentStatus;
 
