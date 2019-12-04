@@ -5,7 +5,8 @@ import {
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF,
     ASSOCIATE_GROUP_ID,
-    WORK_ORDER_COMPLETED_AND_PAID_STATE
+    WORK_ORDER_COMPLETED_AND_PAID_STATE,
+    WORK_ORDER_COMPLETED_BUT_UNPAID_STATE
 } from '../constants/api';
 
 
@@ -35,6 +36,10 @@ export function validateFinancialUpdateInput(data) {
             if (data.invoiceServiceFeePaymentDate === undefined || data.invoiceServiceFeePaymentDate === null || data.invoiceServiceFeePaymentDate === "" || isNaN(data.invoiceServiceFeePaymentDate) ) {
                 errors.invoiceServiceFeePaymentDate = 'This field is required';
             }
+        }
+        // NOTE: Only accept two options during the financials screen: unpaid or paid.
+        if (data.paymentStatus !== WORK_ORDER_COMPLETED_AND_PAID_STATE && data.paymentStatus !== WORK_ORDER_COMPLETED_BUT_UNPAID_STATE) {
+            errors.paymentStatus = 'This field is required';
         }
     }
     if (data.invoiceDate === undefined || data.invoiceDate === null || data.invoiceDate === "" || isNaN(data.invoiceDate) ) {
