@@ -98,7 +98,7 @@ class RemoteListComponent extends Component {
             dataField: 'slug',
             text: 'Details',
             sort: false,
-            formatter: detailLinkFormatter
+            formatter: externalDetailLinkFormatter
         }];
 
         // The following code will hide the financial details if the
@@ -220,10 +220,10 @@ function externalFinancialLinkFormatter(cell, row){
 }
 
 
-function detailLinkFormatter(cell, row){
+function externalDetailLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
+        <Link to={`/order/${row.id}`} target="_blank" rel='noopener'>
+            View&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
