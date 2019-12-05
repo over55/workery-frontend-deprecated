@@ -91,7 +91,7 @@ export default class AdminOrderOperationsComponent extends Component {
 
 
                         <div className="card-group row">
-                            {order.associate &&
+                            {order.associate && isCompleted === false &&
                                 <div className="col-sm-3 mb-4">
                                     <div className="card box-shadow text-center mx-auto h-100">
                                         <div className="card-custom-top-2">

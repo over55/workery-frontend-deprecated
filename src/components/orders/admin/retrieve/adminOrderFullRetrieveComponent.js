@@ -399,7 +399,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                     :<tr>
                                         <th scope="row" className="bg-light">Available Choices</th>
                                         <td>
-                                            {order.associate &&
+                                            {order.associate && isCompleted === false &&
                                                 <div>
                                                     <Link to={`/order/${order.id}/unassign-associate`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
                                                         <i className="fas fa-user-slash"></i>&nbsp;Unassign Associate

@@ -9,6 +9,7 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
     render() {
         const { id, isLoading, order, flashMessage } = this.props;
         const isCancelled = order.state === "cancelled";
+        const isCompleted = order.state === "completed_and_unpaid" || order.state === "completed_and_paid" || isCancelled;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -207,7 +208,7 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        {order.associate &&
+                                        {order.associate && isCompleted === false &&
                                             <div>
                                                 <Link to={`/order/${order.id}/unassign-associate`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
                                                     <i className="fas fa-user-slash"></i>&nbsp;Unassign Associate
