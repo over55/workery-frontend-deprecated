@@ -184,9 +184,12 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
                                         <th scope="row" className="bg-light">Required Task</th>
                                         <td>
                                             <strong>
-                                                <Link to={`/task/${order.latestPendingTaskTypeOf}/${order.latestPendingTask}/step-1`} target="_blank">
-                                                    {order.prettyLatestPendingTask}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                                </Link>
+                                                {order.prettyLatestPendingTask !== "None"
+                                                    ?<Link to={`/task/${order.latestPendingTaskTypeOf}/${order.latestPendingTask}/step-1`} target="_blank">
+                                                        {order.prettyLatestPendingTask}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                                    </Link>
+                                                    :"-"
+                                                }
                                             </strong>
                                         </td>
                                     </tr>

@@ -1198,3 +1198,18 @@ export const CUSTOMER_APPROVAL_RADIO_CHOICES = [
         label: "Written"
     }
 ];
+
+
+export const WAS_SUCCESSFULLY_FINISHED_CHOICES = [
+    {
+        id: 'wasSuccessfullyFinished-m-choice',
+        name: "wasSuccessfullyFinished",
+        value: "1",
+        label: "Yes"
+    },{
+        id: 'wasSuccessfullyFinished-f-choice',
+        name: "wasSuccessfullyFinished",
+        value: "0",
+        label: "No"
+    }
+];

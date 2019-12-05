@@ -6,17 +6,21 @@ import ReactModal from 'react-modal';
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import { BootstrapDatePicker } from "../../../bootstrap/bootstrapDatePicker";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
-import { WORK_ORDER_CLOSE_REASON_CHOICES } from "../../../../constants/api";
+import {
+    WORK_ORDER_CLOSE_REASON_CHOICES, WAS_SUCCESSFULLY_FINISHED_CHOICES
+} from "../../../../constants/api";
 
 
 class AdminOrderCloseOperationComponent extends Component {
     render() {
         // Common
         const {
-            id, errors, reason, reasonOther, comment, isLoading, onClick, onTextChange, onSelectChange, order,
-            showModal, onShowModalClick, onCloseModalClick, onAgreeModalClick
+            id, errors, wasSuccessfullyFinished, completionDate, reason, reasonOther, comment, isLoading, onClick, onTextChange, onSelectChange, order,
+            showModal, onShowModalClick, onCloseModalClick, onAgreeModalClick, onRadioChange, onCompletionDate
         } = this.props;
         const isReasonOther = reason === 1;
 
@@ -70,7 +74,7 @@ class AdminOrderCloseOperationComponent extends Component {
 
                                 <form className="needs-validation" noValidate>
 
-                                   <p>This will cancel the job. Do you want to continue?</p>
+                                   <p>This will close the job. Do you want to continue?</p>
 
                                    <button
                                        onClick={onCloseModalClick}
@@ -140,41 +144,73 @@ class AdminOrderCloseOperationComponent extends Component {
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
-                            <BootstrapSingleSelect
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
-                                label="Reason (*)"
-                                name="reason"
-                                defaultOptionLabel="Please select the reason."
-                                options={WORK_ORDER_CLOSE_REASON_CHOICES}
-                                value={reason}
-                                error={errors.reason}
-                                onSelectChange={onSelectChange}
+                                error={errors.wasSuccessfullyFinished}
+                                label="Was this job successfully completed by the Associate? (*)"
+                                name="wasSuccessfullyFinished"
+                                onChange={onRadioChange}
+                                selectedValue={wasSuccessfullyFinished}
+                                options={WAS_SUCCESSFULLY_FINISHED_CHOICES}
+                                helpText="Selecting 'yes' will close this job as success."
                             />
 
-                            {isReasonOther &&
-                                <BootstrapInput
-                                    inputClassName="form-control form-control-lg"
-                                    borderColour="border-primary"
-                                    error={errors.reasonOther}
-                                    label="Reason (Other) (*)"
-                                    onChange={onTextChange}
-                                    value={reasonOther}
-                                    name="reasonOther"
-                                    type="text"
-                                />
+                            {wasSuccessfullyFinished === 1 || wasSuccessfullyFinished === "1" &&
+                                <div>
+                                    <BootstrapDatePicker
+                                        label="Completion date (*)"
+                                        name="completionDate"
+                                        dateObj={completionDate}
+                                        onTimeChange={onCompletionDate}
+                                        datePickerClassName="form-control form-control-lg border"
+                                        divClassName="form-group p-0 col-md-7 mb-4"
+                                        error={errors.completionDate}
+                                    />
+                                </div>
                             }
 
-                            <BootstrapTextarea
-                                name="comment"
-                                borderColour="border-primary"
-                                label="Describe the comment (*)"
-                                placeholder="Describe here."
-                                rows="5"
-                                value={comment}
-                                helpText="Maximum 1,000 characters."
-                                onChange={onTextChange}
-                                error={errors.comment}
-                            />
+                            {wasSuccessfullyFinished === 0 || wasSuccessfullyFinished === "0" &&
+                                <div>
+                                    <BootstrapSingleSelect
+                                        borderColour="border-primary"
+                                        label="Reason (*)"
+                                        name="reason"
+                                        defaultOptionLabel="Please select the reason."
+                                        options={WORK_ORDER_CLOSE_REASON_CHOICES}
+                                        value={reason}
+                                        error={errors.reason}
+                                        onSelectChange={onSelectChange}
+                                    />
+
+                                    {isReasonOther &&
+                                        <BootstrapInput
+                                            inputClassName="form-control form-control-lg"
+                                            borderColour="border-primary"
+                                            error={errors.reasonOther}
+                                            label="Reason (Other) (*)"
+                                            onChange={onTextChange}
+                                            value={reasonOther}
+                                            name="reasonOther"
+                                            type="text"
+                                        />
+                                    }
+
+                                    <BootstrapTextarea
+                                        name="comment"
+                                        borderColour="border-primary"
+                                        label="Describe the comment (*)"
+                                        placeholder="Describe here."
+                                        rows="5"
+                                        value={comment}
+                                        helpText="Maximum 1,000 characters."
+                                        onChange={onTextChange}
+                                        error={errors.comment}
+                                    />
+                                </div>
+                            }
+
+
 
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onShowModalClick}>

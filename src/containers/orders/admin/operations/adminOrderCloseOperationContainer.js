@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import AdminOrderCloseOperationComponent from "../../../../components/orders/admin/operations/adminOrderCloseOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
@@ -26,6 +27,8 @@ class AdminOrderCloseOperationContainer extends Component {
             id: parseInt(id),
             errors: {},
             isLoading: false,
+            completionDate: "",
+            wasSuccessfullyFinished: "",
             reason: "",
             reasonOther: "",
             comment: "",
@@ -35,6 +38,8 @@ class AdminOrderCloseOperationContainer extends Component {
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
+        this.onCompletionDate = this.onCompletionDate.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -55,7 +60,20 @@ class AdminOrderCloseOperationContainer extends Component {
 
         postData.job = this.state.id;
 
+        if (this.state.completionDate !== undefined && this.state.completionDate !== null && !isNaN(this.state.completionDate) && this.state.completionDate !== "" ) {
+            const completionDateMoment = moment(this.state.completionDate);
+            postData.completionDate = completionDateMoment.format("YYYY-MM-DD")
+        } else {
+            postData.completionDate = null;
+        }
+
+        // Set default reason if was successfully closed.
+        if (this.state.wasSuccessfullyFinished === 1 || this.state.wasSuccessfullyFinished === "1") {
+            postData.reason = 1;
+        }
+
         // Finally: Return our new modified data.
+        console.log("state |", this.state);
         console.log("getPostData |", postData);
         return postData;
     }
@@ -153,15 +171,18 @@ class AdminOrderCloseOperationContainer extends Component {
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "nwapp-create-order-"+[e.target.name];
+        const storageValueKey = "workery-create-client-"+[e.target.name];
+        const storageLabelKey =  "workery-create-client-"+[e.target.name].toString()+"-label";
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"-label";
+        const storeLabelKey = [e.target.name].toString()+"Label";
 
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
         localStorage.setItem(storageValueKey, value) // Save to storage.
+        localStorage.setItem(storageLabelKey, label) // Save to storage.
 
         // For the debugging purposes only.
         console.log({
@@ -213,25 +234,35 @@ class AdminOrderCloseOperationContainer extends Component {
         });
     }
 
+    onCompletionDate(dateObj) {
+        this.setState({ completionDate: dateObj, }, ()=> {
+            console.log("onCompletionDate | state:", this.state);
+        });
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
-        const { id, errors, reason, reasonOther, comment, isLoading, showModal } = this.state;
+        const { id, errors, wasSuccessfullyFinished, completionDate, reason, reasonOther, comment, isLoading, showModal, onCompletionDate } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
             <AdminOrderCloseOperationComponent
                 id={id}
                 order={order}
                 errors={errors}
+                wasSuccessfullyFinished={wasSuccessfullyFinished}
+                completionDate={completionDate}
                 reason={reason}
                 reasonOther={reasonOther}
                 comment={comment}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
+                onRadioChange={this.onRadioChange}
+                onCompletionDate={this.onCompletionDate}
                 isLoading={isLoading}
                 showModal={showModal}
                 onShowModalClick={this.onShowModalClick}

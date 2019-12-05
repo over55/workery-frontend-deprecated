@@ -310,17 +310,32 @@ export function validateUnassignAssociateInput(data) {
 export function validateCloseInput(data) {
     let errors = {};
 
-    if (data.reason === undefined || data.reason === null || data.reason === "" || isNaN(data.reason) ) {
-        errors.reason = 'This field is required';
+    if (data.wasSuccessfullyFinished === undefined || data.wasSuccessfullyFinished === null || data.wasSuccessfullyFinished === "" ) {
+        errors.wasSuccessfullyFinished = 'This field is required';
     } else {
-        if (data.reason === 1) {
-            if (data.reasonOther === undefined || data.reasonOther === null || data.reasonOther === "" ) {
-                errors.reasonOther = 'This field is required';
+        // --- JOB WAS CANCELLED --- //
+        if (data.wasSuccessfullyFinished === 0 || data.wasSuccessfullyFinished === "0") {
+            if (data.reason === undefined || data.reason === null || data.reason === "" || isNaN(data.reason) ) {
+                errors.reason = 'This field is required';
+            } else {
+                if (data.reason === 1) {
+                    if (data.reasonOther === undefined || data.reasonOther === null || data.reasonOther === "" ) {
+                        errors.reasonOther = 'This field is required';
+                    }
+                }
+            }
+            if (data.comment === undefined || data.comment === null || data.comment === "" ) {
+                errors.comment = 'This field is required';
             }
         }
-    }
-    if (data.comment === undefined || data.comment === null || data.comment === "" ) {
-        errors.comment = 'This field is required';
+
+        // --- JOB WAS SUCCESSFULLY COMPLETED --- //
+        if (data.wasSuccessfullyFinished === 1 || data.wasSuccessfullyFinished === "1") {
+            if (data.completionDate === undefined || data.completionDate === null || data.completionDate === "" || isNaN(data.completionDate) ) {
+                errors.completionDate = 'This field is required';
+            }
+        }
+
     }
 
     return {
