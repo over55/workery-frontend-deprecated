@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Moment from 'react-moment';
+// import 'moment-timezone';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -54,6 +56,11 @@ class RemoteListComponent extends Component {
             text: 'Email',
             sort: true,
             formatter: emailFormatter,
+        },{
+            dataField: 'joinDate',
+            text: 'Joined',
+            sort: true,
+            formatter: joinDateFormatter,
         },
         // {
         //     dataField: 'state',
@@ -158,6 +165,14 @@ function emailFormatter(cell, row){
         )
     }
 }
+
+
+function joinDateFormatter(cell, row){
+    return (
+        row && row.joinDate ? <Moment format="MM/DD/YYYY">{row.joinDate}</Moment> :"-"
+    )
+}
+
 
 function detailLinkFormatter(cell, row){
     return (
