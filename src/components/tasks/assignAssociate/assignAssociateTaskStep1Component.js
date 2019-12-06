@@ -66,10 +66,6 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Job Start Date</th>
-                                    <td>{task && <Moment format="MM/DD/YYYY">{task.jobStartDate}</Moment>}</td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
                                     <td>
                                         <Link to={`/client/${task.jobCustomer}`} target="_blank">
@@ -94,6 +90,14 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                             <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
                                                 {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </a>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Client Tag(s)</th>
+                                    <td>
+                                        {task.jobCustomerPrettyTags && task.jobCustomerPrettyTags.map(
+                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
                                         }
                                     </td>
                                 </tr>

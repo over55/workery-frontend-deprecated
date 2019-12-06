@@ -66,8 +66,11 @@ class StaffMetricsUpdateContainer extends Component {
         let postData = Object.assign({}, this.state);
 
         // (1) birthdate - We need to format as per required API format.
-        const birthdateMoment = moment(this.state.dateOfBirth);
-        postData.birthdate = birthdateMoment.format("YYYY-MM-DD");
+        const dateOfBirth = this.state.dateOfBirth;
+        if (dateOfBirth === undefined || dateOfBirth === null || dateOfBirth === "" || isNaN(dateOfBirth) ) {
+            const dateOfBirthMoment = moment(dateOfBirth);
+            postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD")
+        }
 
         // (2) Join date - We need to format as per required API format.
         const joinDateMoment = moment(this.state.joinDate);

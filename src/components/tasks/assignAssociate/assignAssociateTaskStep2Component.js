@@ -114,6 +114,14 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" className="bg-light">Client Tag(s)</th>
+                                    <td>
+                                        {task.jobCustomerPrettyTags && task.jobCustomerPrettyTags.map(
+                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row" className="bg-light">Job Description</th>
                                     <td>{task && task.jobDescription}</td>
                                 </tr>
@@ -122,6 +130,14 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                     <td>
                                         {task.jobPrettySkillSets && task.jobPrettySkillSets.map(
                                             (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Tag(s)</th>
+                                    <td>
+                                        {task.jobPrettyTags && task.jobPrettyTags.map(
+                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
                                         }
                                     </td>
                                 </tr>
