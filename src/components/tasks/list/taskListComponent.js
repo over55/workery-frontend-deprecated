@@ -45,6 +45,7 @@ class RemoteListComponent extends Component {
             0: 'All',
             1: 'Unassigned',
             2: '48 Hour Follow Ups',
+            4: 'Pending',
             6: 'Completion',
             7: 'Survey',
         };
