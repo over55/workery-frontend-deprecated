@@ -156,24 +156,42 @@ export default class FollowUpPendingTaskStep1Component extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-project-diagram"></i>&nbsp;Functions
+                                        <i className="fas fa-clipboard-list"></i>&nbsp;Optional
                                     </th>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        <ul>
-                                            <li>
-                                                <Link to={`/order/${task.job}/postpone`}>
-                                                    Postpone Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                        <div className="row">
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <Link className="btn btn-orange btn-lg" to={`/order/${task.job}/postpone`}>
+                                                    <i className="fas fa-clock"></i>&nbsp;Postpone Order
                                                 </Link>
-                                                </li>
-                                            <li>
-                                                <Link to={`/order/${task.job}/close`}>
-                                                    Close Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                            </div>
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <Link className="btn btn-danger btn-lg" to={`/order/${task.job}/close`}>
+                                                    <i className="fas fa-window-close"></i>&nbsp;Cancel Job
                                                 </Link>
-                                            </li>
-                                        </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-clipboard-list"></i>&nbsp;Required
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <td>
+                                        <div className="row">
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <button className="btn btn-success btn-lg" onClick={onClick}>
+                                                    Begin&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
 
@@ -181,10 +199,6 @@ export default class FollowUpPendingTaskStep1Component extends Component {
                         </table>
 
                         <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
-                                Review&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                            </button>
-
                             <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to="/tasks">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
