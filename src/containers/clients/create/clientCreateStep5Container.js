@@ -24,9 +24,20 @@ class ClientCreateStep5Container extends Component {
     constructor(props) {
         super(props);
 
+        // Auto-fill the `country` and `region` fields.
+        let country = localStorage.getItem("workery-create-client-country");
+        if (country === null || country === "") {
+            country = "Canada";
+        }
+        let region = localStorage.getItem("workery-create-client-region");
+        if (region === null || region === "") {
+            region = "Ontario";
+        }
+
+        // Initialize our containers state.
         this.state = {
-            country: localStorage.getItem("workery-create-client-country"),
-            region: localStorage.getItem("workery-create-client-region"),
+            country: country,
+            region: region,
             locality: localStorage.getItem("workery-create-client-locality"),
             postalCode: localStorage.getItem("workery-create-client-postalCode"),
             streetAddress: localStorage.getItem("workery-create-client-streetAddress"),

@@ -24,10 +24,20 @@ class StaffCreateStep5Container extends Component {
     constructor(props) {
         super(props);
 
+        // Auto-fill the `country` and `region` fields.
+        let country = localStorage.getItem("workery-create-staff-country");
+        if (country === null || country === "") {
+            country = "Canada";
+        }
+        let region = localStorage.getItem("workery-create-staff-region");
+        if (region === null || region === "") {
+            region = "Ontario";
+        }
 
+        // Initialize our containers state.
         this.state = {
-            country: localStorage.getItem("workery-create-staff-country"),
-            region: localStorage.getItem("workery-create-staff-region"),
+            country: country,
+            region: region,
             locality: localStorage.getItem("workery-create-staff-locality"),
             postalCode: localStorage.getItem("workery-create-staff-postalCode"),
             streetAddress: localStorage.getItem("workery-create-staff-streetAddress"),
