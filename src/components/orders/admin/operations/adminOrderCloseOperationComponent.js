@@ -166,6 +166,8 @@ class AdminOrderCloseOperationComponent extends Component {
                                         datePickerClassName="form-control form-control-lg border"
                                         divClassName="form-group p-0 col-md-7 mb-4"
                                         error={errors.completionDate}
+                                        helpText="If associate promises to complete in a future date, then postpone this order."
+                                        maxDate={new Date()}
                                     />
                                 </div>
                             }

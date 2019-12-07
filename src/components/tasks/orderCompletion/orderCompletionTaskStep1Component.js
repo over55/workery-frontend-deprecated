@@ -75,10 +75,6 @@ export default class OrderCompletionTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Job Start Date</th>
-                                    <td>{task && <Moment format="MM/DD/YYYY">{task.jobStartDate}</Moment>}</td>
-                                </tr>
-                                <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
                                     <td>
                                         <Link to={`/client/${task.jobCustomer}`} target="_blank">
@@ -107,6 +103,14 @@ export default class OrderCompletionTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row" className="bg-light">Client Tag(s)</th>
+                                    <td>
+                                        {task.jobCustomerPrettyTags && task.jobCustomerPrettyTags.map(
+                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row" className="bg-light">Associate Name</th>
                                     <td>
                                         <Link to={`/associate/${task.jobAssociate}`} target="_blank">
@@ -125,12 +129,10 @@ export default class OrderCompletionTaskStep1Component extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Associate Location</th>
+                                    <th scope="row" className="bg-light">Associate Tag(s)</th>
                                     <td>
-                                        {task &&
-                                            <a href={task.jobAssociateLocationGoogleUrl} target="_blank">
-                                                {task.jobAssociateLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                            </a>
+                                        {task.jobAssociatePrettyTags && task.jobAssociatePrettyTags.map(
+                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
                                         }
                                     </td>
                                 </tr>
