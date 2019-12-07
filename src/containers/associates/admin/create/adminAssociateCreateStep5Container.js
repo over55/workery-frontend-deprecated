@@ -28,10 +28,12 @@ class AdminAssociateCreateStep5Container extends Component {
         let country = localStorage.getItem("workery-create-associate-country");
         if (country === null || country === "") {
             country = "Canada";
+            localStorage.setItem('workery-create-associate-country', country);
         }
         let region = localStorage.getItem("workery-create-associate-region");
         if (region === null || region === "") {
             region = "Ontario";
+            localStorage.setItem('workery-create-associate-region', region);
         }
 
         // Initialize our containers state.

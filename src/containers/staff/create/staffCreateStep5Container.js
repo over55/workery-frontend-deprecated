@@ -28,10 +28,12 @@ class StaffCreateStep5Container extends Component {
         let country = localStorage.getItem("workery-create-staff-country");
         if (country === null || country === "") {
             country = "Canada";
+            localStorage.setItem('workery-create-staff-country', country);
         }
         let region = localStorage.getItem("workery-create-staff-region");
         if (region === null || region === "") {
             region = "Ontario";
+            localStorage.setItem('workery-create-staff-region', region);
         }
 
         // Initialize our containers state.

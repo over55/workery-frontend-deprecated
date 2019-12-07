@@ -28,10 +28,12 @@ class ClientCreateStep5Container extends Component {
         let country = localStorage.getItem("workery-create-client-country");
         if (country === null || country === "") {
             country = "Canada";
+            localStorage.setItem('workery-create-client-country', country);
         }
         let region = localStorage.getItem("workery-create-client-region");
         if (region === null || region === "") {
             region = "Ontario";
+            localStorage.setItem('workery-create-client-region', region);
         }
 
         // Initialize our containers state.
