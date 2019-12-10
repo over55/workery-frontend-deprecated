@@ -64,7 +64,7 @@ export default class AdminOrderCreateStep6Component extends Component {
 
                                 <form className="needs-validation" noValidate>
 
-                                   <p>This will create a new job, which will need to be assigned to a member. Do you want to continue?</p>
+                                   <p></p>
 
                                    <button
                                        onClick={onCloseModalClick}
@@ -118,7 +118,7 @@ export default class AdminOrderCreateStep6Component extends Component {
                                 </tbody>
                             </table>
                             <hr />
-                            <p>Please click <strong>save</strong> to proceed.</p>
+                            <p>Please click <strong>save</strong> to proceed. This will create a new job, which will need to be assigned to a member. Do you want to continue?</p>
                             <p>
                             <Link to="/orders/add/step-5" className="btn btn-orange btn-lg  float-left">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
