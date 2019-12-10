@@ -75,9 +75,6 @@ export default class ClientCreateStep6Component extends Component {
                                 <span className="num">6.</span><span className="">Metrics</span>
                             </strong>
                         </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Review</span>
-                        </div>
                     </div>
                 </div>
 
