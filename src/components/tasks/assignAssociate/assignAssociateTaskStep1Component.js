@@ -140,7 +140,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-clipboard-list"></i>&nbsp;Optional
+                                        <i className="fas fa-clipboard-list"></i>&nbsp;Functions
                                     </th>
                                 </tr>
                                 <tr>
@@ -149,12 +149,12 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                         <div className="row">
                                             <div className="col-md-4 mx-auto p-2">
                                                 <Link className="btn btn-orange btn-lg" to={`/order/${task.job}/postpone`}>
-                                                    <i className="fas fa-clock"></i>&nbsp;Postpone Order
+                                                    <i className="fas fa-clock"></i>&nbsp;Postpone
                                                 </Link>
                                             </div>
                                             <div className="col-md-4 mx-auto p-2">
                                                 <Link className="btn btn-danger btn-lg" to={`/order/${task.job}/close`}>
-                                                    <i className="fas fa-window-close"></i>&nbsp;Cancel Job
+                                                    <i className="fas fa-window-close"></i>&nbsp;Cancel
                                                 </Link>
                                             </div>
                                         </div>
