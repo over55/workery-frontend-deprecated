@@ -70,9 +70,6 @@ class PartnerCreateStep4Component extends Component {
                         <div id="step-5" className="st-grey">
                             <span className="num">5.</span><span className="">Metrics</span>
                         </div>
-                        <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Review</span>
-                        </div>
                     </div>
                 </div>
 
@@ -141,8 +138,8 @@ class PartnerCreateStep4Component extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
-                                    Proceed to Metrics&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
+                                    Next&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to="/partners/add/step-3" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
