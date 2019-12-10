@@ -62,9 +62,6 @@ export default class AdminOrderCreateStep3Component extends Component {
                         <div id="step-5" className="st-grey">
                             <span className="num">5.</span><span className="">Comments</span>
                         </div>
-                        <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Review</span>
-                        </div>
                     </div>
                 </div>
 

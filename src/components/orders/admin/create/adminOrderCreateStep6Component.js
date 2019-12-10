@@ -12,7 +12,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 export default class AdminOrderCreateStep6Component extends Component {
     render() {
         const {
-            clientGivenName, clientLastName, startDate, jobTypeLabel, homeSupportLabel, skillSets, description, tags, comment, isLoading, errors, onSubmitClick,
+            clientGivenName, clientLastName, skillSets, description, isLoading, errors, onSubmitClick,
             showModal, onShowModalClick, onCloseModalClick, onAgreeModalClick
         } = this.props;
 
@@ -48,41 +48,6 @@ export default class AdminOrderCreateStep6Component extends Component {
                 <h1>
                     <i className="fas fa-plus"></i>&nbsp;Add Order
                 </h1>
-
-                <div className="row">
-                    <div className="step-navigation">
-                        <div id="step-1" className="st-grey">
-                            <Link to="/orders/add/step-1">
-                                <span className="num">1.</span><span className="">Search</span>
-                            </Link>
-                        </div>
-                        <div id="step-2" className="st-grey">
-                            <Link to="/orders/add/step-2">
-                                <span className="num">2.</span><span className="">Results</span>
-                            </Link>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to="/orders/add/step-3">
-                                <span className="num">3.</span><span className="">Job Type</span>
-                            </Link>
-                        </div>
-                        <div id="step-4" className="st-grey">
-                            <Link to="/orders/add/step-4">
-                                <span className="num">4.</span><span className="">Skills</span>
-                            </Link>
-                        </div>
-                        <div id="step-5" className="st-grey">
-                            <Link to="/orders/add/step-5">
-                                <span className="num">5.</span><span className="">Comments</span>
-                            </Link>
-                        </div>
-                        <div id="step-6" className="st-grey active">
-                            <strong>
-                                <span className="num">6.</span><span className="">Review</span>
-                            </strong>
-                        </div>
-                    </div>
-                </div>
 
                 <ReactModal
                    isOpen={showModal}
@@ -122,99 +87,51 @@ export default class AdminOrderCreateStep6Component extends Component {
                 <div className="row pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
 
-                        <h2>
-                            <i className="fas fa-table"></i>&nbsp;Review
-                        </h2>
-
                         <BootstrapErrorsProcessingAlert errors={errors} />
-                        <p><strong>Please confirm these details before adding the order:</strong></p>
-                        <table className="table table-bordered custom-cell-w">
-                            <tbody>
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-user-circle"></i>&nbsp;Client
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Full-Name</th>
-                                    <td>{clientGivenName}&nbsp;{clientLastName}</td>
-                                </tr>
 
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-cog"></i>&nbsp;Job Type
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Start Date</th>
-                                    <td>
-                                        {startDate
-                                            ? <Moment format="MM/DD/YYYY">{startDate}</Moment>
-                                            : "-"
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Job Type</th>
-                                    <td>{jobTypeLabel}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Home Support?</th>
-                                    <td>{homeSupportLabel}</td>
-                                </tr>
+                        <div className="jumbotron">
+                            <h1 className="display-4"><i className="fas fa-exclamation-triangle"></i>&nbsp;Confirmation - Add Job</h1>
 
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-graduation-cap"></i>&nbsp;Skills and Description
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Skill sets</th>
-                                    <td>
-                                        {skillSets && skillSets.map(
-                                            (skill) => <SkillItem tag={skill} key={skill.id} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Description</th>
-                                    <td>{description}</td>
-                                </tr>
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-chart-pie"></i>&nbsp;Comments
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Tags</th>
-                                    <td>
-                                        {tags && tags.map(
-                                            (tag) => <TagItem tag={tag} key={tag.id} />)
-                                        }
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Additional Comment(s)</th>
-                                    <td>{comment}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div className="form-group">
-                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onShowModalClick}>
-                                <i className="fas fa-check-circle"></i>&nbsp;Save
-                            </button>
-                            <Link to="/orders/add/step-5" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
+                            <table className="table table-bordered custom-cell-w">
+                                <tbody>
+                                    <tr className="bg-dark">
+                                        <th scope="row" colSpan="2" className="text-light">
+                                            <i className="fas fa-user-circle"></i>&nbsp;Summary
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Client</th>
+                                        <td>{clientGivenName}&nbsp;{clientLastName}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Description</th>
+                                        <td>{description}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Skill sets</th>
+                                        <td>
+                                            {skillSets && skillSets.map(
+                                                (skill) => <SkillItem tag={skill} key={skill.id} />)
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr />
+                            <p>Please click <strong>save</strong> to proceed.</p>
+                            <p>
+                            <Link to="/orders/add/step-5" className="btn btn-orange btn-lg  float-left">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                             </Link>
+                            &nbsp;&nbsp;&nbsp;
+                                <button className="btn btn-success btn-lg" disabled={isLoading} onClick={onSubmitClick}>
+                                    <i className="fas fa-check-circle"></i>&nbsp;Save
+                                </button>
+                            </p>
                         </div>
 
                     </div>
                 </div>
-
-
 
             </main>
         );

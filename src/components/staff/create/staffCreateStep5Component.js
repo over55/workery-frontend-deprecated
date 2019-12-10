@@ -78,9 +78,6 @@ class StaffCreateStep5Component extends Component {
                         <div id="step-7" className="st-grey">
                             <span className="num">7.</span><span className="">Metrics</span>
                         </div>
-                        <div id="step-8" className="st-grey">
-                            <span className="num">8.</span><span className="">Review</span>
-                        </div>
                     </div>
                 </div>
 
@@ -149,8 +146,8 @@ class StaffCreateStep5Component extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
-                                    Proceed to Account&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
+                                    Next&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                                 <Link to="/staff/add/step-4" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
