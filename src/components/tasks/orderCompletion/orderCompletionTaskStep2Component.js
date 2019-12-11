@@ -110,7 +110,7 @@ export default class OrderCompletionTaskStep2Component extends Component {
                                 <div>
                                     <BootstrapSingleSelect
                                         borderColour="border-primary"
-                                        label="How did you hear about us? (*)"
+                                        label="Reason for cancellation (*)"
                                         name="reason"
                                         defaultOptionLabel="Please select how you heard about us."
                                         options={ORDER_CANCEL_REASON_CHOICES}
