@@ -167,6 +167,24 @@ class SurveyTaskStep3Container extends Component {
      */
 
     render() {
+        const {
+            wasSurveyConducted,
+            wasJobSatisfactory,
+            wasJobFinishedOnTimeAndOnBudget,
+            wasAssociatePunctual,
+            wasAssociateProfessional,
+            wouldCustomerReferOurOrganization
+        } = this.state;
+
+        let score = 0;
+        if (wasSurveyConducted) {
+            score += wasJobSatisfactory;
+            score += wasJobFinishedOnTimeAndOnBudget;
+            score += wasAssociatePunctual;
+            score += wasAssociateProfessional;
+            score += wouldCustomerReferOurOrganization;
+        }
+
         return (
             <SurveyTaskStep3Component
                 wasSurveyConducted={this.state.wasSurveyConducted}
@@ -180,6 +198,7 @@ class SurveyTaskStep3Container extends Component {
                 wasAssociatePunctualLabel={this.state.wasAssociatePunctualLabel}
                 wasAssociateProfessionalLabel={this.state.wasAssociateProfessionalLabel}
                 wouldCustomerReferOurOrganizationLabel={this.state.wouldCustomerReferOurOrganizationLabel}
+                score={score}
                 id={this.state.id}
                 isLoading={this.state.isLoading}
                 errors={this.state.errors}
