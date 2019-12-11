@@ -65,7 +65,7 @@ export default class AssignAssociateTaskStep4Component extends Component {
                                 </tbody>
                             </table>
                             <hr />
-                            <p>Please click <strong>save</strong> to proceed. This will create a new job, which will need to be assigned to a member. Do you want to continue?</p>
+                            <p>Please click <strong>save</strong> to proceed.</p>
                             <p>
                             <Link to={`/task/1/${id}/step-3`} className="btn btn-orange btn-lg  float-left">
                                 <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
