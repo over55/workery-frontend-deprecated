@@ -219,7 +219,6 @@ class OrderCompletionTaskStep5Container extends Component {
                 invoiceOtherCostsAmount={this.state.invoiceOtherCostsAmount}
                 invoiceDepositAmount={this.state.invoiceDepositAmount}
                 invoiceAmountDue={this.invoiceAmountDue}
-                completionDate={this.completionDate}
 
                 // Step 4
                 comment={this.state.comment}
