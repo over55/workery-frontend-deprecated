@@ -154,7 +154,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                             </div>
                                             <div className="col-md-4 mx-auto p-2">
                                                 <Link className="btn btn-danger btn-lg" to={`/order/${task.job}/close`}>
-                                                    <i className="fas fa-window-close"></i>&nbsp;Cancel
+                                                    <i className="fas fa-window-close"></i>&nbsp;Close
                                                 </Link>
                                             </div>
                                         </div>
