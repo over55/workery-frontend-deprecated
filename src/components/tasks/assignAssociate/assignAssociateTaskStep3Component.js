@@ -47,9 +47,6 @@ export default class AssignAssociateTaskStep3Component extends Component {
                                 <span className="num">3.</span><span className="">Assignment</span>
                             </strong>
                         </div>
-                        <div id="step-4" className="st-grey">
-                            <span className="num">4.</span><span className="">Review</span>
-                        </div>
                     </div>
                 </div>
 
