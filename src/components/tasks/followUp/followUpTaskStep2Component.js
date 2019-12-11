@@ -49,9 +49,6 @@ export default class FollowUpTaskStep2Component extends Component {
                                 <span className="num">2.</span><span className="">Meeting</span>
                             </strong>
                         </div>
-                        <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Review</span>
-                        </div>
                     </div>
                 </div>
 

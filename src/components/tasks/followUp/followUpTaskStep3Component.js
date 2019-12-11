@@ -35,114 +35,60 @@ export default class FollowUpTaskStep3Component extends Component {
                     </div>
                 }
 
-                <div className="row">
-                    <div className="step-navigation">
-                        <div id="step-1" className="st-grey">
-                            <Link to={`/task/2/${id}/step-1`}>
-                                <span className="num">1.</span><span className="">Info</span>
-                            </Link>
-                        </div>
-                        <div id="step-2" className="st-grey">
-                            <Link to={`/task/2/${id}/step-2`}>
-                                <span className="num">2.</span><span className="">Meeting</span>
-                            </Link>
-                        </div>
-                        <div id="step-3" className="st-grey active">
-                            <strong>
-                                <span className="num">3.</span><span className="">Review</span>
-                            </strong>
-                        </div>
-                    </div>
+                <div className="jumbotron">
+                    <h1 className="display-4"><i className="fas fa-exclamation-triangle"></i>&nbsp;Confirmation - 48 Hour Follow Up</h1>
+
+                    <table className="table table-bordered custom-cell-w">
+                        <tbody>
+                            <tr className="bg-dark">
+                                <th scope="row" colSpan="2" className="text-light">
+                                    <i className="fas fa-user-circle"></i>&nbsp;Summary
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="row" className="bg-light">Associate Name</th>
+                                <td>
+                                    <Link to={`/associate/${task.jobAssociate}`} target="_blank">
+                                        {task && task.jobAssociateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                    </Link>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" className="bg-light">Client Name</th>
+                                <td>
+                                    <Link to={`/client/${task.jobCustomer}`} target="_blank">
+                                        {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                    </Link>
+                                </td>
+                            </tr>
+                            {status === true || status === "true" &&
+                                <tr>
+                                    <th scope="row" className="bg-light">Meeting Date</th>
+                                    <td>
+                                        {task && meetingDate &&
+                                            <Moment format="MM/DD/YYYY">{meetingDate}</Moment>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <th scope="row" className="bg-light">Please contact the Associate to confirm if they want the job.</th>
+                                <td>{task && statusLabel}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
+                    <p>Please click <strong>save</strong> to proceed. This will create a new job, which will need to be assigned to a member. Do you want to continue?</p>
+                    <p>
+                    <Link to={`/task/2/${id}/step-2`} className="btn btn-orange btn-lg  float-left">
+                        <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                    </Link>
+                    &nbsp;&nbsp;&nbsp;
+                        <button className="btn btn-success btn-lg" disabled={isLoading} onClick={onClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Save
+                        </button>
+                    </p>
                 </div>
-
-                <div className="row">
-                    <div className="col-md-10 mx-auto p-2">
-                        <BootstrapErrorsProcessingAlert errors={errors} />
-                        <table className="table table-bordered custom-cell-w">
-                            <tbody>
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-wrench"></i>&nbsp;Order
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Job #</th>
-                                    <td>
-                                        <Link to={`/order/${task.job}`} target="_blank">
-                                            {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Client Name</th>
-                                    <td>
-                                        <Link to={`/client/${task.jobCustomer}`} target="_blank">
-                                            {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link>
-                                    </td>
-                                </tr>
-
-
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-calendar-alt"></i>&nbsp;48 Hour Follow Up
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Description</th>
-                                    <td>{task && task.description}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Please contact the Associate to confirm if they want the job.</th>
-                                    <td>{task && statusLabel}</td>
-                                </tr>
-                                {status === true || status === "true" &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Meeting Date</th>
-                                        <td>
-                                            {task && meetingDate &&
-                                                <Moment format="MM/DD/YYYY">{meetingDate}</Moment>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                                <tr>
-                                    <th scope="row" className="bg-light">Comment</th>
-                                    <td>{task && comment}</td>
-                                </tr>
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-info-circle"></i>&nbsp;Misc
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Notes:</th>
-                                    <td>
-                                        <ul>
-                                            <li>Please note if Associate and Client agreed then a completion task will be created.</li>
-                                            <li>If you leave a message then a 24 hour follow up task will be created.</li>
-                                        </ul>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-                        <div className="form-group col-md-12 mb-3 p-0 mx-auto text-center">
-                            <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" onClick={onClick}>
-                                <i className="fas fa-check-circle"></i>&nbsp;Save
-                            </button>
-
-                            <Link className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" to={`/task/2/${id}/step-2`}>
-                                <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
-                            </Link>
-                        </div>
-
-                    </div>
-                </div>
-
 
             </div>
         );
