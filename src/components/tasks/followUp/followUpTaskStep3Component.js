@@ -63,6 +63,16 @@ export default class FollowUpTaskStep3Component extends Component {
                                             </Link>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row" className="bg-light">Client Location</th>
+                                        <td>
+                                            {task &&
+                                                <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
+                                                    {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
                                     {status === true || status === "true" &&
                                         <tr>
                                             <th scope="row" className="bg-light">Meeting Date</th>

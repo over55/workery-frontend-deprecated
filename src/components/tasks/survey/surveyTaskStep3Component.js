@@ -59,6 +59,16 @@ export default class SurveyTaskStep3Component extends Component {
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th scope="row" className="bg-light">Client Location</th>
+                                        <td>
+                                            {task &&
+                                                <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
+                                                    {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th scope="row" className="bg-light">Associate Name</th>
                                         <td>
                                             <Link to={`/associate/${task.jobAssociate}`} target="_blank">
