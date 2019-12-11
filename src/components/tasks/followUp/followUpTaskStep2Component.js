@@ -69,7 +69,7 @@ export default class FollowUpTaskStep2Component extends Component {
                                 inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
                                 error={errors.status}
-                                label="Please contact the Associate to confirm if they want the job. (*)"
+                                label="Have the Associate and Client agreed to meet? (*)"
                                 name="status"
                                 onChange={onRadioChange}
                                 selectedValue={status}
