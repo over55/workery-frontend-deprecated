@@ -25,8 +25,6 @@ export default class AssignAssociateTaskStep4Component extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Assign Associate</h1>
-
                 <div className="row pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
 

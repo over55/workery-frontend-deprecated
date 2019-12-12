@@ -48,8 +48,6 @@ export default class OrderCompletionTaskStep5Component extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Order Completion</h1>
-
                 {task && task.associateAwayLog !== undefined && task.associateAwayLog !== null &&
                     <div className="alert alert-warning" role="alert">
                         <strong><i className="fas fa-exclamation-triangle"></i>&nbsp;Warning</strong> - The associate assigned to this task is currently away.
@@ -58,10 +56,6 @@ export default class OrderCompletionTaskStep5Component extends Component {
 
                 <div className="row pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
-
-                        <h2>
-                            <i className="fas fa-table"></i>&nbsp;Review
-                        </h2>
 
                         <BootstrapErrorsProcessingAlert errors={errors} />
 
