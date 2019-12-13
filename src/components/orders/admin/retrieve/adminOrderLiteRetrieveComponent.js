@@ -242,7 +242,7 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
                                             </div>
                                             :<div>
                                                 <Link to={`/order/${order.id}/close`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
-                                                    <i className="fas fa-window-close"></i>&nbsp;Cancel
+                                                    <i className="fas fa-window-close"></i>&nbsp;Close
                                                 </Link>
                                             </div>
                                         }

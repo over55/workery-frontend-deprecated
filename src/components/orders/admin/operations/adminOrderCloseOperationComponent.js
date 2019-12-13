@@ -51,7 +51,7 @@ class AdminOrderCloseOperationComponent extends Component {
                             <Link to={`/order/${id}/full`}><i className="fas fa-wrench"></i>&nbsp;Order # {id && id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-times"></i>&nbsp;Cancel Order
+                            <i className="fas fa-times"></i>&nbsp;Close Order
                         </li>
                     </ol>
                 </nav>
@@ -139,7 +139,7 @@ class AdminOrderCloseOperationComponent extends Component {
                         <br />
 
                         <form>
-                            <h1><i className="fas fa-times"></i>&nbsp;Cancel Order</h1>
+                            <h1><i className="fas fa-times"></i>&nbsp;Close Order</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
