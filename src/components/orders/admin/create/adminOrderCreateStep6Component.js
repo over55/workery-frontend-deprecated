@@ -45,10 +45,6 @@ export default class AdminOrderCreateStep6Component extends Component {
                     </ol>
                 </nav>
 
-                <h1>
-                    <i className="fas fa-plus"></i>&nbsp;Add Order
-                </h1>
-
                 <ReactModal
                    isOpen={showModal}
                     style={customStyles}
