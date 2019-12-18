@@ -95,6 +95,14 @@ class ClientCreateStep7Container extends Component {
         // (2) Middle name (API ISSUE)
         postData.middleName = this.state.middleName;
 
+        const dateOfBirth = this.state.dateOfBirth;
+        const dateOfBirthMoment = moment(dateOfBirth);
+        if (dateOfBirthMoment.isValid()) {
+            postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD");
+        } else {
+            postData.birthdate = null;
+        }
+
         // (2) Join date - We need to format as per required API format.
         const joinDateMoment = moment(this.state.joinDate);
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
