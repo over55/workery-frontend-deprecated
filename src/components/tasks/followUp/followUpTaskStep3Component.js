@@ -82,7 +82,7 @@ export default class FollowUpTaskStep3Component extends Component {
                                         </tr>
                                     }
                                     <tr>
-                                        <th scope="row" className="bg-light">Please contact the Associate to confirm if they want the job.</th>
+                                        <th scope="row" className="bg-light">Have the Associate and Client agreed to meet?</th>
                                         <td>{task && statusLabel}</td>
                                     </tr>
                                 </tbody>
