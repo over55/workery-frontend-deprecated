@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import Report17Component from "../../components/reports/report17Component";
-import { validateReport17Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import Report18Component from "../../components/reports/report18Component";
+import { pullAssociateList, getAssociateReactSelectOptions } from "../../actions/associateActions";
+import { validateReport2Input } from "../../validators/reportValidator";
+import { WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 
 
-class Report17Container extends Component {
+class Report18Container extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -17,9 +18,12 @@ class Report17Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            associate: "",
+            associateOptions: [],
+            isAssociatesLoading: true,
             fromDate: "",
             toDate: "",
-            userType: "",
+            jobState: "",
             errors: {},
             isLoading: false
         }
@@ -28,6 +32,7 @@ class Report17Container extends Component {
         this.onFromDateChange = this.onFromDateChange.bind(this);
         this.onToDateChange = this.onToDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onAssociatesListCallback = this.onAssociatesListCallback.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -39,6 +44,10 @@ class Report17Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        const parametersMap = new Map();
+        parametersMap.set('state', 0);
+        this.props.pullAssociateList(1, 100, parametersMap, this.onAssociatesListCallback, null);
     }
 
     componentWillUnmount() {
@@ -54,6 +63,13 @@ class Report17Container extends Component {
      *  API callback functions
      *------------------------------------------------------------
      */
+
+    onAssociatesListCallback(associateList) {
+        this.setState({
+            associateOptions: getAssociateReactSelectOptions(associateList),
+            isAssociatesLoading: false,
+        });
+    }
 
     onSuccessfulSubmissionCallback(staff) {
         // --- Update the GUI ---
@@ -101,7 +117,7 @@ class Report17Container extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateReport17Input(this.state);
+        const { errors, isValid } = validateReport2Input(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
@@ -116,10 +132,10 @@ class Report17Container extends Component {
 
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
-            const { fromDate, toDate, userType } = this.state;
+            const { associate, fromDate, toDate, jobState } = this.state;
             const toDateString = toDate.toISOString().slice(0, 10);
             const fromDateString = fromDate.toISOString().slice(0, 10);
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&user_type="+userType;
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate;
             console.log(url);
 
             // The following code will open up a new browser tab and load up the
@@ -146,16 +162,19 @@ class Report17Container extends Component {
 
     render() {
         const {
-            fromDate, toDate, userType,
+            associate, associateOptions, isAssociatesLoading, fromDate, toDate, jobState,
             errors, isLoading
         } = this.state;
 
 
         return (
-            <Report17Component
+            <Report18Component
+                associate={associate}
+                associateOptions={associateOptions}
+                isAssociatesLoading={isAssociatesLoading}
                 fromDate={fromDate}
                 toDate={toDate}
-                userType={userType}
+                jobState={jobState}
                 isLoading={isLoading}
                 errors={errors}
                 onSelectChange={this.onSelectChange}
@@ -177,9 +196,11 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // setFlashMessage: (typeOf, text) => {
-        //     dispatch(setFlashMessage(typeOf, text))
-        // }
+        pullAssociateList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullAssociateList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
     }
 }
 
@@ -187,4 +208,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Report17Container);
+)(Report18Container);
