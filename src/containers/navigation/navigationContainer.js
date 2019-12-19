@@ -91,6 +91,11 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         title: "Staff",
         url: "/staff"
     },{
+        id: "full-search",
+        icon: "search",
+        title: "Search",
+        url: "/search"
+    },{
         id: "full-settings",
         icon: "cogs",
         title: "Settings",
@@ -145,6 +150,11 @@ const AUTH_FRONTLINE_STAFF_MENU_DATA = [
         icon: "toolbox",
         title: "Skill Sets",
         url: "/skill-sets"
+    },{
+        id: "full-search",
+        icon: "search",
+        title: "Search",
+        url: "/search"
     },{
         id: "full-help",
         icon: "question-circle",

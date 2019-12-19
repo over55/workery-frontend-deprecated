@@ -137,6 +137,7 @@ export const WORKERY_COMMENT_LIST_API_ENDPOINT = '/comments';
 export const WORKERY_STAFF_ARCHIVE_API_ENDPOINT = '/staff/XXX/archive'
 export const WORKERY_STAFF_FILE_LIST_API_ENDPOINT = '/staff-files';
 export const WORKERY_STAFF_FILE_ARCHIVE_API_ENDPOINT = '/staff-file/XXX/';
+export const WORKERY_UNIFIED_SEARCH_ITEM_LIST_API_ENDPOINT = '/v1/search';
 
 // OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';

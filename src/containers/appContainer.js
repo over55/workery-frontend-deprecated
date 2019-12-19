@@ -330,6 +330,10 @@ import AssociateProfileAddressUpdateContainer from "./account/associateProfile/u
 import AssociateProfileContactUpdateContainer from "./account/associateProfile/update/associateProfileContactUpdateContainer";
 import AssociateProfileMetricsUpdateContainer from "./account/associateProfile/update/associateProfileMetricsUpdateContainer";
 
+// Unified Search
+import UnifiedSearchContainer from "./unifiedSearch/unifiedSearchContainer";
+import UnifiedSearchResultsContainer from "./unifiedSearch/unifiedSearchResultsContainer";
+
 
 class AppContainer extends React.Component {
     render() {
@@ -586,7 +590,6 @@ class AppContainer extends React.Component {
                                 <Route path="/company-financial/:id/zero-amount-due/create/step-1" exact component={requiresAuth(AssociateZeroAmountDueStep1Container)} />
                                 <Route path="/company-financial/:id/zero-amount-due/create/step-2" exact component={requiresAuth(AssociateZeroAmountDueStep2Container)} />
 
-
                                 { /* SETTINGS */ }
                                 <Route path="/settings" exact component={requiresAuth(SettingListContainer)} />
                                 <Route path="/settings/tags" exact component={requiresAuth(TagsListContainer)} />
@@ -655,6 +658,10 @@ class AppContainer extends React.Component {
                                 <Route path="/ongoing-order/:id/full" exact component={requiresAuth(OngoingOrderFullRetrieveContainer)} />
                                 <Route path="/ongoing-order/:id/comments" exact component={requiresAuth(OngoingOrderCommentContainer)} />
                                 <Route path="/ongoing-order/:id/update/lite" exact component={requiresAuth(OngoingOrderUpdateContainer)} />
+
+                                { /* UNIFIED SEARCH */ }
+                                <Route path="/search" exact component={requiresAuth(UnifiedSearchContainer)} />
+                                <Route path="/search/results" exact component={requiresAuth(UnifiedSearchResultsContainer)} />
 
                                 { /* EVERYTHING ELSE... */ }
                                 <Route component={NotFound404Container} />
