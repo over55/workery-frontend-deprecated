@@ -28,6 +28,7 @@ class UnifiedSearchResultsContainer extends Component {
 
             // Everything else.
             isLoading: true,
+            keyword: localStorage.getItem("workery-search-keyword"),
             tags: localStorageGetArrayItem("workery-search-tags"),
         }
         this.onTableChange = this.onTableChange.bind(this);
@@ -56,6 +57,10 @@ class UnifiedSearchResultsContainer extends Component {
         tagPKs = tagPKs.slice(0, -1); // Note: Remove last character in string.
         console.log(tagPKs); // For debugging purposes only.
         parametersMap.set("tags", tagPKs);
+
+        if (this.state.keyword !== "" && this.state.keyword !== undefined && this.state.keyword !== null && this.state.keyword !== "null") {
+            parametersMap.set("keyword", this.state.keyword);
+        }
 
         this.props.pullUnifiedSearchItemList(
             this.state.page,

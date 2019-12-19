@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import UnifiedSearchComponent from "../../components/unifiedSearch/unifiedSearchComponent";
-import { localStorageGetArrayItem, localStorageSetObjectOrArrayItem } from '../../helpers/localStorageUtility';
+import { localStorageRemoveItemsContaining, localStorageSetObjectOrArrayItem } from '../../helpers/localStorageUtility';
 import { validateInput } from "../../validators/unifiedSearchValidator";
 
 import { getTagReactSelectOptions, pullTagList } from "../../actions/tagActions";
@@ -19,6 +19,7 @@ class UnifiedSearchContainer extends Component {
         super(props);
 
         this.state = {
+            keyword: "",
             tags: [],
             errors: {},
             isLoading: false,
@@ -26,6 +27,7 @@ class UnifiedSearchContainer extends Component {
         }
 
         this.onClick = this.onClick.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
         this.onTagMultiChange = this.onTagMultiChange.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
     }
@@ -36,6 +38,8 @@ class UnifiedSearchContainer extends Component {
      */
 
     componentDidMount() {
+        localStorageRemoveItemsContaining("workery-search-");
+
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
@@ -64,6 +68,14 @@ class UnifiedSearchContainer extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
+
+    onTextChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
+        const key = "workery-search-"+[e.target.name].toString();
+        localStorage.setItem(key, e.target.value);
+    }
 
     onTagMultiChange(...args) {
         // Extract the select options from the parameter.
@@ -111,16 +123,17 @@ class UnifiedSearchContainer extends Component {
 
     render() {
         const {
-            tags,
-            errors, isLoading, isTagsLoading
+            keyword, tags, errors, isLoading, isTagsLoading
         } = this.state;
 
         const { user } = this.props;
         return (
             <UnifiedSearchComponent
+                keyword={keyword}
                 tags={tags}
                 tagOptions={getTagReactSelectOptions(this.props.tagList)}
                 onTagMultiChange={this.onTagMultiChange}
+                onTextChange={this.onTextChange}
                 isTagsLoading={isTagsLoading}
 
                 onClick={this.onClick}

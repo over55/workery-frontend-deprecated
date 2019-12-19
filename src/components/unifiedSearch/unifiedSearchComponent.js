@@ -3,14 +3,15 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../bootstrap/bootstrapAlert";
+import { BootstrapInput } from "../bootstrap/bootstrapInput";
 import { BootstrapMultipleSelect } from "../bootstrap/bootstrapMultipleSelect";
 
 
 class UnifiedSearchComponent extends Component {
     render() {
         const {
-            errors, isLoading, onClick,
-            tags, tagOptions, onTagMultiChange, isTagsLoading,
+            keyword, errors, isLoading, onClick,
+            tags, tagOptions, onTagMultiChange, isTagsLoading, onTextChange,
         } = this.props;
 
         return (
@@ -39,6 +40,17 @@ class UnifiedSearchComponent extends Component {
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
+
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
+                                borderColour="border-success"
+                                error={errors.keyword}
+                                label="Keyword"
+                                onChange={onTextChange}
+                                value={keyword}
+                                name="keyword"
+                                type="text"
+                            />
 
                             <BootstrapMultipleSelect
                                 borderColour="border-success"

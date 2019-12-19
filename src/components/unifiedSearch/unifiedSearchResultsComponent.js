@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import * as moment from 'moment';
+
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -40,6 +42,11 @@ class RemoteListComponent extends Component {
             dataField: 'description',
             text: 'Description',
             sort: false
+        },{
+            dataField: 'lastModifiedAt',
+            text: 'Last Modified',
+            sort: false,
+            formatter: lastModifiedAtFormatter
         },{
             dataField: 'tags',
             text: 'Tags',
@@ -171,6 +178,22 @@ class TagItem extends Component {
         );
     };
 }
+
+
+function lastModifiedAtFormatter(cell, row){
+    const lastModifiedAtMoment = moment(row.lastModifiedAt);
+    if (lastModifiedAtMoment.isValid()) {
+        const lastModifiedAt = lastModifiedAtMoment.format("YYYY-MM-DD hh:mm:ss");
+        return (
+            lastModifiedAt
+        );
+    } else {
+        return (
+            "-"
+        );
+    }
+}
+
 
 
 function detailLinkFormatter(cell, row){
