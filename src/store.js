@@ -21,7 +21,7 @@ import {
     STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
     ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
     COMMENT_LIST_SUCCESS, COMMENT_DETAIL_SUCCESS, ASSOCIATE_FILE_LIST_SUCCESS, ORDER_FILE_LIST_SUCCESS,
-    STAFF_FILE_LIST_SUCCESS, PARTNER_FILE_LIST_SUCCESS, UNIFIED_SEARCH_ITEM_LIST_REQUEST
+    STAFF_FILE_LIST_SUCCESS, PARTNER_FILE_LIST_SUCCESS, TAG_ITEM_SEARCH_LIST_REQUEST
 } from "./constants/actionTypes";
 import { activitySheetItemListReducer, activitySheetItemDetailReducer } from "./reducers/activitySheetItemReducers";
 import { associateCommentListReducer } from "./reducers/associateCommentReducers";
@@ -59,7 +59,7 @@ import userReducer from "./reducers/userReducer";
 import { taskListReducer, taskDetailReducer } from "./reducers/taskReducers";
 import financialListReducer from "./reducers/financialReducers";
 import { vehicleTypeListReducer, vehicleTypeDetailReducer } from "./reducers/vehicleTypeReducers";
-import { unifiedSearchItemListReducer } from "./reducers/unifiedSearchItemReducers";
+import { tagItemSearchListReducer } from "./reducers/tagItemSearchReducers";
 
 
 // Combine Reducers
@@ -100,7 +100,7 @@ const appReducer = combineReducers({
     userState: userReducer,
     financialListState: financialListReducer,
     vehicleTypeListState: vehicleTypeListReducer, vehicleTypeDetailState: vehicleTypeDetailReducer,
-    unifiedSearchItemListState: unifiedSearchItemListReducer,
+    tagItemListState: tagItemSearchListReducer,
 });
 
 
@@ -145,7 +145,7 @@ const localStorageMiddleware = ({ getState }) => {
             PARTNER_LIST_SUCCESS, PARTNER_COMMENT_LIST_SUCCESS, PARTNER_DETAIL_SUCCESS,
             ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
             CLIENT_FILE_LIST_SUCCESS, ASSOCIATE_FILE_LIST_SUCCESS, ORDER_FILE_LIST_SUCCESS,
-            STAFF_FILE_LIST_SUCCESS, PARTNER_FILE_LIST_SUCCESS, UNIFIED_SEARCH_ITEM_LIST_REQUEST
+            STAFF_FILE_LIST_SUCCESS, PARTNER_FILE_LIST_SUCCESS, TAG_ITEM_SEARCH_LIST_REQUEST
         ].includes(result.type)) {
             // console.log("De-hydrating store...");
             localStorage.setItem(APP_STATE, JSON.stringify(getState()))

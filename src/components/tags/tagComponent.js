@@ -7,7 +7,7 @@ import { BootstrapInput } from "../bootstrap/bootstrapInput";
 import { BootstrapMultipleSelect } from "../bootstrap/bootstrapMultipleSelect";
 
 
-class UnifiedSearchComponent extends Component {
+class TagComponent extends Component {
     render() {
         const {
             keyword, errors, isLoading, onClick,
@@ -22,13 +22,13 @@ class UnifiedSearchComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-search"></i>&nbsp;Search
+                            <i className="fas fa-tags"></i>&nbsp;Search Tags
                         </li>
                     </ol>
                 </nav>
 
                 <h1>
-                    <i className="fas fa-search"></i>&nbsp;Search
+                    <i className="fas fa-tags"></i>&nbsp;Search Tags
                 </h1>
 
                 <div className="row">
@@ -79,4 +79,4 @@ class UnifiedSearchComponent extends Component {
     }
 }
 
-export default UnifiedSearchComponent;
+export default TagComponent;

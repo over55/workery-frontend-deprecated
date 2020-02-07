@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import UnifiedSearchResultsComponent from "../../components/unifiedSearch/unifiedSearchResultsComponent";
+import TagResultsComponent from "../../components/tags/tagResultsComponent";
 import { localStorageGetArrayItem } from '../../helpers/localStorageUtility';
 import { clearFlashMessage } from "../../actions/flashMessageActions";
-import { pullUnifiedSearchItemList } from "../../actions/unifiedSearchItemActions";
+import { pullTagItemList } from "../../actions/tagItemSearchActions";
 import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../constants/api";
 
 
-class UnifiedSearchResultsContainer extends Component {
+class TagResultsContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -62,7 +62,7 @@ class UnifiedSearchResultsContainer extends Component {
             parametersMap.set("keyword", this.state.keyword);
         }
 
-        this.props.pullUnifiedSearchItemList(
+        this.props.pullTagItemList(
             this.state.page,
             this.state.sizePerPage,
             parametersMap,
@@ -148,7 +148,7 @@ class UnifiedSearchResultsContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullUnifiedSearchItemList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTagItemList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -158,7 +158,7 @@ class UnifiedSearchResultsContainer extends Component {
             this.setState(
                 { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullUnifiedSearchItemList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTagItemList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -175,7 +175,7 @@ class UnifiedSearchResultsContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullUnifiedSearchItemList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTagItemList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -191,11 +191,11 @@ class UnifiedSearchResultsContainer extends Component {
     render() {
         const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
-            <UnifiedSearchResultsComponent
+            <TagResultsComponent
                 page={page}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
-                unifiedSearchItemList={this.props.unifiedSearchItemList}
+                tagItemList={this.props.tagItemList}
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
@@ -208,7 +208,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        unifiedSearchItemList: store.unifiedSearchItemListState,
+        tagItemList: store.tagItemListState,
     };
 }
 
@@ -217,9 +217,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullUnifiedSearchItemList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullTagItemList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullUnifiedSearchItemList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullTagItemList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
@@ -229,4 +229,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(UnifiedSearchResultsContainer);
+)(TagResultsContainer);

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import UnifiedSearchComponent from "../../components/unifiedSearch/unifiedSearchComponent";
+import TagComponent from "../../components/tags/tagComponent";
 import { localStorageRemoveItemsContaining, localStorageSetObjectOrArrayItem } from '../../helpers/localStorageUtility';
-import { validateInput } from "../../validators/unifiedSearchValidator";
+import { validateInput } from "../../validators/tagSearchValidator";
 
 import { getTagReactSelectOptions, pullTagList } from "../../actions/tagActions";
 
 
-class UnifiedSearchContainer extends Component {
+class TagContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -101,7 +101,7 @@ class UnifiedSearchContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ errors: {}, isLoading: true, })
-            this.props.history.push("/search/results");
+            this.props.history.push("/tag/results");
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
@@ -128,7 +128,7 @@ class UnifiedSearchContainer extends Component {
 
         const { user } = this.props;
         return (
-            <UnifiedSearchComponent
+            <TagComponent
                 keyword={keyword}
                 tags={tags}
                 tagOptions={getTagReactSelectOptions(this.props.tagList)}
@@ -164,4 +164,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(UnifiedSearchContainer);
+)(TagContainer);

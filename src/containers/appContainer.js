@@ -330,9 +330,9 @@ import AssociateProfileAddressUpdateContainer from "./account/associateProfile/u
 import AssociateProfileContactUpdateContainer from "./account/associateProfile/update/associateProfileContactUpdateContainer";
 import AssociateProfileMetricsUpdateContainer from "./account/associateProfile/update/associateProfileMetricsUpdateContainer";
 
-// Unified Search
-import UnifiedSearchContainer from "./unifiedSearch/unifiedSearchContainer";
-import UnifiedSearchResultsContainer from "./unifiedSearch/unifiedSearchResultsContainer";
+// Tag Search
+import TagContainer from "./tags/tagContainer";
+import TagResultsContainer from "./tags/tagResultsContainer";
 
 
 class AppContainer extends React.Component {
@@ -660,8 +660,8 @@ class AppContainer extends React.Component {
                                 <Route path="/ongoing-order/:id/update/lite" exact component={requiresAuth(OngoingOrderUpdateContainer)} />
 
                                 { /* UNIFIED SEARCH */ }
-                                <Route path="/search" exact component={requiresAuth(UnifiedSearchContainer)} />
-                                <Route path="/search/results" exact component={requiresAuth(UnifiedSearchResultsContainer)} />
+                                <Route path="/tags" exact component={requiresAuth(TagContainer)} />
+                                <Route path="/tag/results" exact component={requiresAuth(TagResultsContainer)} />
 
                                 { /* EVERYTHING ELSE... */ }
                                 <Route component={NotFound404Container} />

@@ -27,7 +27,7 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            unifiedSearchItems,
+            tagItems,
 
             // Everything else.
             onTableChange, isLoading
@@ -93,7 +93,7 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ unifiedSearchItems }
+                data={ tagItems }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
@@ -239,20 +239,20 @@ function detailLinkFormatter(cell, row){
 }
 
 
-class UnifiedSearchResultsComponent extends Component {
+class TagResultsComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            unifiedSearchItemList,
+            tagItemList,
 
             // Everything else...
             flashMessage, onTableChange, isLoading
         } = this.props;
 
-        const unifiedSearchItems = unifiedSearchItemList.results ? unifiedSearchItemList.results : [];
+        const tagItems = tagItemList.results ? tagItemList.results : [];
 
         return (
             <div>
@@ -263,12 +263,12 @@ class UnifiedSearchResultsComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/search">
-                                <i className="fas fa-search"></i>&nbsp;Search
+                            <Link to="/tags">
+                                <i className="fas fa-tags"></i>&nbsp;Search Tags
                             </Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-list"></i>&nbsp;Results
+                            <i className="fas fa-tag"></i>&nbsp;Tag Results
                         </li>
                     </ol>
                 </nav>
@@ -276,7 +276,7 @@ class UnifiedSearchResultsComponent extends Component {
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1>
-                    <i className="fas fa-search"></i>&nbsp;Search
+                    <i className="fas fa-search"></i>&nbsp;Search Tag Results
                 </h1>
 
                 <div className="row">
@@ -288,7 +288,7 @@ class UnifiedSearchResultsComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            unifiedSearchItems={unifiedSearchItems}
+                            tagItems={tagItems}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
@@ -299,4 +299,4 @@ class UnifiedSearchResultsComponent extends Component {
     }
 }
 
-export default UnifiedSearchResultsComponent;
+export default TagResultsComponent;

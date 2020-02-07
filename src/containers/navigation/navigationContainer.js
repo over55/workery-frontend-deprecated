@@ -76,6 +76,11 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         title: "Skill Sets",
         url: "/skill-sets"
     },{
+        id: "full-tags",
+        icon: "tags",
+        title: "Tags",
+        url: "/tags"
+    },{
         id: "full-partners",
         icon: "handshake",
         title: "Partners",
@@ -90,11 +95,6 @@ const AUTH_MANAGEMENT_STAFF_MENU_DATA = [
         icon: "user-tie",
         title: "Staff",
         url: "/staff"
-    },{
-        id: "full-search",
-        icon: "search",
-        title: "Search",
-        url: "/search"
     },{
         id: "full-settings",
         icon: "cogs",

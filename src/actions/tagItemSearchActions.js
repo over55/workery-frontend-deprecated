@@ -5,9 +5,9 @@ import isEmpty from 'lodash/isEmpty';
 import msgpack from 'msgpack-lite';
 
 import {
-    UNIFIED_SEARCH_ITEM_LIST_REQUEST, UNIFIED_SEARCH_ITEM_LIST_FAILURE, UNIFIED_SEARCH_ITEM_LIST_SUCCESS
+    TAG_ITEM_SEARCH_LIST_REQUEST, TAG_ITEM_SEARCH_LIST_FAILURE, TAG_ITEM_SEARCH_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_UNIFIED_SEARCH_ITEM_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_TAG_ITEM_SEARCH_LIST_API_ENDPOINT } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -15,11 +15,11 @@ import getCustomAxios from '../helpers/customAxios';
 //                                 LIST                                       //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullUnifiedSearchItemList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullTagItemList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
-            setUnifiedSearchItemListRequest()
+            setTagItemListRequest()
         );
 
         console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback);
@@ -29,7 +29,7 @@ export function pullUnifiedSearchItemList(page=1, sizePerPage=10, filtersMap=new
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_UNIFIED_SEARCH_ITEM_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_TAG_ITEM_SEARCH_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -56,7 +56,7 @@ export function pullUnifiedSearchItemList(page=1, sizePerPage=10, filtersMap=new
             // Update the global state of the application to store our
             // user data for the application.
             store.dispatch(
-                setUnifiedSearchItemListSuccess(data)
+                setTagItemListSuccess(data)
             );
 
             // DEVELOPERS NOTE:
@@ -75,11 +75,11 @@ export function pullUnifiedSearchItemList(page=1, sizePerPage=10, filtersMap=new
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("pullUnifiedSearchItemList | error:", errors); // For debuggin purposes only.
+                console.log("pullTagItemList | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
-                    setUnifiedSearchItemListFailure({
+                    setTagItemListFailure({
                         isAPIRequestRunning: false,
                         errors: errors
                     })
@@ -104,8 +104,8 @@ export function pullUnifiedSearchItemList(page=1, sizePerPage=10, filtersMap=new
 //                                REDUX ACTIONS                               //
 ////////////////////////////////////////////////////////////////////////////////
 
-export const setUnifiedSearchItemListRequest = () => ({
-    type: UNIFIED_SEARCH_ITEM_LIST_REQUEST,
+export const setTagItemListRequest = () => ({
+    type: TAG_ITEM_SEARCH_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
         page: 1,
@@ -114,13 +114,13 @@ export const setUnifiedSearchItemListRequest = () => ({
 });
 
 
-export const setUnifiedSearchItemListFailure = (info) => ({
-    type: UNIFIED_SEARCH_ITEM_LIST_FAILURE,
+export const setTagItemListFailure = (info) => ({
+    type: TAG_ITEM_SEARCH_LIST_FAILURE,
     payload: info,
 });
 
 
-export const setUnifiedSearchItemListSuccess = (info) => ({
-    type: UNIFIED_SEARCH_ITEM_LIST_SUCCESS,
+export const setTagItemListSuccess = (info) => ({
+    type: TAG_ITEM_SEARCH_LIST_SUCCESS,
     payload: info,
 });
