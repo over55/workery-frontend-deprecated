@@ -7,6 +7,11 @@ import Moment from 'react-moment';
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { BootstrapFiveStarRatingLabel } from "../../../bootstrap/bootstrapFiveStarRatingLabel";
+import {
+    UNASSIGNED_ASSOCIATE_TYPE_OF_ID,
+    COMMERCIAL_ASSOCIATE_TYPE_OF_ID,
+    RESIDENTIAL_ASSOCIATE_TYPE_OF_ID
+} from '../../../../constants/api';
 
 
 export default class AdminAssociateFullRetrieveComponent extends Component {
@@ -14,8 +19,8 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
     render() {
         const { id, associate, flashMessage, errors } = this.props;
         const { typeOf } = associate;
-        const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial";
-        const isCommercial = typeOf === 3 || typeOf === 1; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID or UNASSIGNED_ASSOCIATE_TYPE_OF_ID
+        const typeOfLabel = typeOf === RESIDENTIAL_ASSOCIATE_TYPE_OF_ID ? "Residential" : "Commercial";
+        const isCommercial = typeOf === COMMERCIAL_ASSOCIATE_TYPE_OF_ID || typeOf === UNASSIGNED_ASSOCIATE_TYPE_OF_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -279,7 +284,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                         </Link>
                                     </th>
                                 </tr>
-                                <tr>
+                                {isCommercial === false && <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
                                     <td>
                                         {associate && associate.birthdate
@@ -287,7 +292,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                             :"-"
                                         }
                                     </td>
-                                </tr>
+                                </tr>}
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
                                     <td>{associate && associate.gender}</td>

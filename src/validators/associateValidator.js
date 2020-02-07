@@ -1,8 +1,8 @@
 import validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    RESIDENTIAL_ASSOCIATE_TYPE_OF_ID,
+    COMMERCIAL_ASSOCIATE_TYPE_OF_ID,
     ASSOCIATE_GROUP_ID,
     OTHER_DEMOTION_REASON
 } from '../constants/api';
@@ -11,8 +11,10 @@ import {
 export function validateMetricsInput(data) {
     let errors = {};
 
-    if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
-        errors.dateOfBirth = 'This field is required';
+    if (data.typeOf === RESIDENTIAL_ASSOCIATE_TYPE_OF_ID) {
+        if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
+            errors.dateOfBirth = 'This field is required';
+        }
     }
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
@@ -85,7 +87,7 @@ export function validateContactInput(data) {
         errors.isOkToText = 'This field is required';
     }
 
-    if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+    if (data.typeOf === COMMERCIAL_ASSOCIATE_TYPE_OF_ID) {
 
         if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
             errors.organizationName = 'This field is required';
@@ -168,7 +170,7 @@ export function validateInput(data) {
         errors.isOkToText = 'This field is required';
     }
 
-    if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+    if (data.typeOf === COMMERCIAL_ASSOCIATE_TYPE_OF_ID) {
 
         if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
             errors.organizationName = 'This field is required';
@@ -233,8 +235,10 @@ export function validateInput(data) {
 
     // --- METRICS --- //
 
-    if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
-        errors.dateOfBirth = 'This field is required';
+    if (data.typeOf === RESIDENTIAL_ASSOCIATE_TYPE_OF_ID) {
+        if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
+            errors.dateOfBirth = 'This field is required';
+        }
     }
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
@@ -415,8 +419,10 @@ export function validateStep6CreateInput(data) {
 export function validateStep7CreateInput(data) {
     let errors = {};
 
-    if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
-        errors.dateOfBirth = 'This field is required';
+    if (data.typeOf === RESIDENTIAL_ASSOCIATE_TYPE_OF_ID) {
+        if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
+            errors.dateOfBirth = 'This field is required';
+        }
     }
     if (data.gender === undefined || data.gender === null || data.gender === "") {
         errors.gender = 'This field is required';

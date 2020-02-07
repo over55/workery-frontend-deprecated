@@ -14,14 +14,18 @@ import { BootstrapRegionSelect } from '../../../bootstrap/bootstrapRegionSelect'
 import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES } from "../../../../constants/api";
+import {
+    IS_OK_TO_EMAIL_CHOICES,
+    IS_OK_TO_TEXT_CHOICES,
+    GENDER_RADIO_CHOICES,
+    COMMERCIAL_ASSOCIATE_TYPE_OF_ID
+} from "../../../../constants/api";
 
 
 class AdminAssociateMetricsUpdateComponent extends Component {
     render() {
         const {
-            // Step 4
-            givenName, lastName,
+            typeOf, givenName, lastName,
 
             // Step 7
             isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOther, joinDate, description,
@@ -85,7 +89,7 @@ class AdminAssociateMetricsUpdateComponent extends Component {
                                 options={GENDER_RADIO_CHOICES}
                             />
 
-                            <BootstrapDatePicker
+                            {typeOf !== COMMERCIAL_ASSOCIATE_TYPE_OF_ID && <BootstrapDatePicker
                                 label="Date of Birth (*)"
                                 name="dateOfBirth"
                                 dateObj={dateOfBirth}
@@ -93,7 +97,7 @@ class AdminAssociateMetricsUpdateComponent extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.dateOfBirth}
-                            />
+                            />}
 
                             <BootstrapSingleSelect
                                 borderColour="border-primary"

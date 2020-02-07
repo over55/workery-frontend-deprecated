@@ -28,6 +28,7 @@ class ClientCreateStep6Container extends Component {
         const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
 
         this.state = {
+            typeOf: localStorageGetIntegerItem("workery-create-client-typeOf"),
             isTagsLoading: true,
             tags: localStorageGetArrayItem("workery-create-client-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
@@ -213,7 +214,7 @@ class ClientCreateStep6Container extends Component {
 
     render() {
         const {
-            isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate, comment,
+            typeOf, isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate, comment,
             errors
         } = this.state;
 
@@ -222,6 +223,7 @@ class ClientCreateStep6Container extends Component {
 
         return (
             <ClientCreateStep6Component
+                typeOf={typeOf}
                 isTagsLoading={isTagsLoading}
                 tags={tags}
                 tagOptions={tagOptions}

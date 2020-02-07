@@ -9,7 +9,7 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
+import { COMMERCIAL_ASSOCIATE_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
 
 
 export default class ClientCreateStep6Component extends Component {
@@ -21,7 +21,7 @@ export default class ClientCreateStep6Component extends Component {
         } = this.props;
         const isOtherHowDidYouHearSelected = howHear === 'Other';
 
-        const isBizTypeOf = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID || typeOf === toString(COMMERCIAL_CUSTOMER_TYPE_OF_ID);
+        const isBizTypeOf = typeOf === COMMERCIAL_ASSOCIATE_TYPE_OF_ID || typeOf === toString(COMMERCIAL_ASSOCIATE_TYPE_OF_ID);
 
         return (
             <main id="main" role="main">
@@ -152,7 +152,7 @@ export default class ClientCreateStep6Component extends Component {
                                 />
                             }
 
-                            <BootstrapDatePicker
+                            {typeOf !== COMMERCIAL_ASSOCIATE_TYPE_OF_ID && <BootstrapDatePicker
                                 label="Join date (*)"
                                 name="joinDate"
                                 dateObj={joinDate}
@@ -160,7 +160,7 @@ export default class ClientCreateStep6Component extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.joinDate}
-                            />
+                            />}
 
                             <BootstrapTextarea
                                 name="comment"

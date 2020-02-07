@@ -9,6 +9,7 @@ import { validateMetricsInput } from "../../../../validators/associateValidator"
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../../actions/howHearActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
 import { putAssociateMetricsDetail } from "../../../../actions/associateActions";
+import { COMMERCIAL_ASSOCIATE_TYPE_OF_ID } from '../../../../constants/api';
 
 
 class AdminAssociateMetricsUpdateContainer extends Component {
@@ -37,7 +38,7 @@ class AdminAssociateMetricsUpdateContainer extends Component {
 
         this.state = {
             // STEP 3
-            // typeOf: typeOf,
+            typeOf: this.props.associateDetail.typeOf,
 
             // STEP 4
             givenName: this.props.associateDetail.givenName,
@@ -88,11 +89,15 @@ class AdminAssociateMetricsUpdateContainer extends Component {
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
 
         // (2) Birthdate date - We need to format as per required API format.
-        const dateOfBirth = this.state.dateOfBirth;
-        if (dateOfBirth === undefined || dateOfBirth === null || dateOfBirth === "" || isNaN(dateOfBirth) ) {
-            const dateOfBirthMoment = moment(dateOfBirth);
-            postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD")
-        }
+        if (this.state.typeOf !== COMMERCIAL_ASSOCIATE_TYPE_OF_ID) {
+            const dateOfBirth = this.state.dateOfBirth;
+            if (dateOfBirth === undefined || dateOfBirth === null || dateOfBirth === "" || isNaN(dateOfBirth) ) {
+                const dateOfBirthMoment = moment(dateOfBirth);
+                postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD")
+            }
+        } else {
+            postData.dateOfBirth = null;
+        }        
 
         // (4) How Hear Other - This field may not be null, therefore make blank.
         if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
@@ -249,6 +254,9 @@ class AdminAssociateMetricsUpdateContainer extends Component {
 
     render() {
         const {
+            // STEP 3
+            typeOf,
+
             // Step 4
             givenName, lastName,
 
@@ -265,6 +273,9 @@ class AdminAssociateMetricsUpdateContainer extends Component {
 
         return (
             <AdminAssociateMetricsUpdateComponent
+                // Step 3
+                typeOf={typeOf}
+
                 // Step 4
                 givenName={givenName}
                 lastName={lastName}

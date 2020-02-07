@@ -92,12 +92,14 @@ class ClientMetricsUpdateContainer extends Component {
         const joinDateMoment = moment(this.state.joinDate);
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
 
-        const dateOfBirth = this.state.dateOfBirth;
-        const dateOfBirthMoment = moment(dateOfBirth);
-        if (dateOfBirthMoment.isValid()) {
-            postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD");
+        if (this.state.typeOf !== COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            const dateOfBirth = this.state.dateOfBirth;
+            if (dateOfBirth === undefined || dateOfBirth === null || dateOfBirth === "" || isNaN(dateOfBirth) ) {
+                const dateOfBirthMoment = moment(dateOfBirth);
+                postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD")
+            }
         } else {
-            postData.birthdate = null;
+            postData.dateOfBirth = null;
         }
 
         // (4) How Hear Other - This field may not be null, therefore make blank.

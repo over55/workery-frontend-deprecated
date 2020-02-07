@@ -28,6 +28,7 @@ class AdminAssociateCreateStep7Container extends Component {
         const joinDate = (rawJoinDate !== undefined && rawJoinDate !== null) ? rawJoinDate : new Date();
 
         this.state = {
+            typeOf: localStorageGetIntegerItem("workery-create-associate-typeOf"),
             isTagsLoading: true,
             tags: localStorageGetArrayItem("workery-create-associate-tags"),
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),

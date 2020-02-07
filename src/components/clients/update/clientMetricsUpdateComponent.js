@@ -16,15 +16,15 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 import {
     IS_OK_TO_EMAIL_CHOICES,
     IS_OK_TO_TEXT_CHOICES,
-    GENDER_RADIO_CHOICES
+    GENDER_RADIO_CHOICES,
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID
 } from "../../../constants/api";
 
 
 export default class ClientRezUpdateComponent extends Component {
     render() {
         const {
-            // STEP 6
-            isTagsLoading, tags, tagOptions, onTagMultiChange, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOption, howHearOther, joinDate, description,
+            typeOf, isTagsLoading, tags, tagOptions, onTagMultiChange, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOption, howHearOther, joinDate, description,
 
             // EVERYTHING ELSE
             givenName, lastName, id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
@@ -82,7 +82,7 @@ export default class ClientRezUpdateComponent extends Component {
                                 options={GENDER_RADIO_CHOICES}
                             />
 
-                            <BootstrapDatePicker
+                            {typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID && <BootstrapDatePicker
                                 label="Date of Birth"
                                 name="dateOfBirth"
                                 dateObj={dateOfBirth}
@@ -92,7 +92,7 @@ export default class ClientRezUpdateComponent extends Component {
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.dateOfBirth}
                                 helpText="This field is optional as start date can be set at a later task."
-                            />
+                            />}
 
                             <BootstrapSingleSelect
                                 borderColour="border-primary"

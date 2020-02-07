@@ -181,7 +181,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                         </Link>
                                     </th>
                                 </tr>
-                                <tr>
+                                {typeOf !== COMMERCIAL_CUSTOMER_TYPE_OF_ID && <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
                                     <td>
                                         {client && client.birthdate
@@ -189,7 +189,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                             :"-"
                                         }
                                     </td>
-                                </tr>
+                                </tr>}
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
                                     <td>{client.gender}</td>
