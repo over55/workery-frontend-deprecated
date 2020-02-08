@@ -142,6 +142,7 @@ class AdminFinancialUpdateContainer extends Component {
             completionDate: this.props.orderDetail.completionDate ? new Date(this.props.orderDetail.completionDate) : null,
         }
 
+        this.onSuccessfullyFetchedOrderDetail = this.onSuccessfullyFetchedOrderDetail.bind(this);
         this.performCalculation = this.performCalculation.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onAmountChange = this.onAmountChange.bind(this);
@@ -271,7 +272,7 @@ class AdminFinancialUpdateContainer extends Component {
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
         this.props.pullServiceFeeList(1, 1000, parametersMap);
-        this.props.pullOrderDetail(this.state.id);
+        this.props.pullOrderDetail(this.state.id, this.onSuccessfullyFetchedOrderDetail);
         this.performCalculation();
     }
 
@@ -288,6 +289,13 @@ class AdminFinancialUpdateContainer extends Component {
      *  API callback functions
      *------------------------------------------------------------
      */
+
+    onSuccessfullyFetchedOrderDetail(orderDetail) {
+        // // console.log(orderDetail);
+        // this.setState({
+        //     isLoading: false,
+        // });
+    }
 
     onTaskDetailSuccessFetchCallback(taskDetail) {
         console.log("onTaskDetailSuccessFetchCallback | taskDetail:", taskDetail); // For debugging purposes only.
