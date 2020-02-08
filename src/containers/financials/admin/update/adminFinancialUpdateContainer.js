@@ -52,6 +52,68 @@ class AdminFinancialUpdateContainer extends Component {
             invoiceServiceFee = associateServiceFee;
         }
 
+        // The following code will set "zero" value if any issues exist with the data.
+        // Start ...
+        //----------------------------------------------------------------------
+        let invoiceQuotedLabourAmount = parseFloat(this.props.orderDetail.invoiceQuotedLabourAmount)
+        if (invoiceServiceFee === undefined || invoiceServiceFee === null || isNaN(invoiceServiceFee)) {
+            invoiceQuotedLabourAmount = 0;
+        }
+        let invoiceQuotedMaterialAmount = parseFloat(this.props.orderDetail.invoiceQuotedMaterialAmount)
+        if (invoiceQuotedMaterialAmount === undefined || invoiceQuotedMaterialAmount === null || isNaN(invoiceQuotedMaterialAmount)) {
+            invoiceQuotedMaterialAmount = 0;
+        }
+        let invoiceQuotedOtherCostsAmount = parseFloat(this.props.orderDetail.invoiceQuotedOtherCostsAmount)
+        if (invoiceQuotedOtherCostsAmount === undefined || invoiceQuotedOtherCostsAmount === null || isNaN(invoiceQuotedOtherCostsAmount)) {
+            invoiceQuotedOtherCostsAmount = 0;
+        }
+        let invoiceTotalQuoteAmount = parseFloat(this.props.orderDetail.invoiceTotalQuoteAmount)
+        if (invoiceTotalQuoteAmount === undefined || invoiceTotalQuoteAmount === null || isNaN(invoiceTotalQuoteAmount)) {
+            invoiceTotalQuoteAmount = 0;
+        }
+        let invoiceLabourAmount = parseFloat(this.props.orderDetail.invoiceLabourAmount)
+        if (invoiceLabourAmount === undefined || invoiceLabourAmount === null || isNaN(invoiceLabourAmount)) {
+            invoiceLabourAmount = 0;
+        }
+        let invoiceMaterialAmount = parseFloat(this.props.orderDetail.invoiceMaterialAmount)
+        if (invoiceMaterialAmount === undefined || invoiceMaterialAmount === null || isNaN(invoiceMaterialAmount)) {
+            invoiceMaterialAmount = 0;
+        }
+        let invoiceOtherCostsAmount = parseFloat(this.props.orderDetail.invoiceOtherCostsAmount)
+        if (invoiceOtherCostsAmount === undefined || invoiceOtherCostsAmount === null || isNaN(invoiceOtherCostsAmount)) {
+            invoiceOtherCostsAmount = 0;
+        }
+        let invoiceTaxAmount = parseFloat(this.props.orderDetail.invoiceTaxAmount)
+        if (invoiceTaxAmount === undefined || invoiceTaxAmount === null || isNaN(invoiceTaxAmount)) {
+            invoiceTaxAmount = 0;
+        }
+        let invoiceDepositAmount = parseFloat(this.props.orderDetail.invoiceDepositAmount)
+        if (invoiceDepositAmount === undefined || invoiceDepositAmount === null || isNaN(invoiceDepositAmount)) {
+            invoiceDepositAmount = 0;
+        }
+        let invoiceServiceFeeAmount = parseFloat(this.props.orderDetail.invoiceServiceFeeAmount)
+        if (invoiceServiceFeeAmount === undefined || invoiceServiceFeeAmount === null || isNaN(invoiceServiceFeeAmount)) {
+            invoiceServiceFeeAmount = 0;
+        }
+        let invoiceActualServiceFeeAmountPaid = parseFloat(this.props.orderDetail.invoiceActualServiceFeeAmountPaid)
+        if (invoiceActualServiceFeeAmountPaid === undefined || invoiceActualServiceFeeAmountPaid === null || isNaN(invoiceActualServiceFeeAmountPaid)) {
+            invoiceActualServiceFeeAmountPaid = 0;
+        }
+        let invoiceBalanceOwingAmount = parseFloat(this.props.orderDetail.invoiceBalanceOwingAmount)
+        if (invoiceBalanceOwingAmount === undefined || invoiceBalanceOwingAmount === null || isNaN(invoiceBalanceOwingAmount)) {
+            invoiceBalanceOwingAmount = 0;
+        }
+        let invoiceAmountDue = parseFloat(this.props.orderDetail.invoiceAmountDue)
+        if (invoiceAmountDue === undefined || invoiceAmountDue === null || isNaN(invoiceAmountDue)) {
+            invoiceAmountDue = 0;
+        }
+        let visits = parseInt(this.props.orderDetail.visits)
+        if (visits === undefined || visits === null || isNaN(visits)) {
+            visits = 0;
+        }
+        //----------------------------------------------------------------------
+        // ... Finished.
+
         // Update state.
         this.state = {
             errors: {},
@@ -61,22 +123,22 @@ class AdminFinancialUpdateContainer extends Component {
             paymentStatus: this.props.orderDetail.state,
             invoiceDate: this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null,
             invoiceIds: hasNoIDs ? id : this.props.orderDetail.invoiceIds,
-            invoiceQuotedLabourAmount: parseFloat(this.props.orderDetail.invoiceQuotedLabourAmount),
-            invoiceQuotedMaterialAmount: parseFloat(this.props.orderDetail.invoiceQuotedMaterialAmount),
-            invoiceQuotedOtherCostsAmount: parseFloat(this.props.orderDetail.invoiceQuotedOtherCostsAmount),
-            invoiceTotalQuoteAmount: parseFloat(this.props.orderDetail.invoiceTotalQuoteAmount),
-            invoiceLabourAmount: parseFloat(this.props.orderDetail.invoiceLabourAmount),
-            invoiceMaterialAmount: parseFloat(this.props.orderDetail.invoiceMaterialAmount),
-            invoiceOtherCostsAmount: parseFloat(this.props.orderDetail.invoiceOtherCostsAmount),
-            invoiceTaxAmount: parseFloat(this.props.orderDetail.invoiceTaxAmount),
-            invoiceDepositAmount: parseFloat(this.props.orderDetail.invoiceDepositAmount),
+            invoiceQuotedLabourAmount: invoiceQuotedLabourAmount,
+            invoiceQuotedMaterialAmount: invoiceQuotedMaterialAmount,
+            invoiceQuotedOtherCostsAmount: invoiceQuotedOtherCostsAmount,
+            invoiceTotalQuoteAmount: invoiceTotalQuoteAmount,
+            invoiceLabourAmount: invoiceLabourAmount,
+            invoiceMaterialAmount: invoiceMaterialAmount,
+            invoiceOtherCostsAmount: invoiceOtherCostsAmount,
+            invoiceTaxAmount: invoiceTaxAmount,
+            invoiceDepositAmount: invoiceDepositAmount,
             invoiceServiceFee: invoiceServiceFee,
-            invoiceServiceFeeAmount: parseFloat(this.props.orderDetail.invoiceServiceFeeAmount),
+            invoiceServiceFeeAmount: invoiceServiceFeeAmount,
             invoiceServiceFeePaymentDate: invoiceServiceFeePaymentDate,
-            invoiceActualServiceFeeAmountPaid: parseFloat(this.props.orderDetail.invoiceActualServiceFeeAmountPaid),
-            invoiceBalanceOwingAmount: parseFloat(this.props.orderDetail.invoiceBalanceOwingAmount),
-            invoiceAmountDue: parseFloat(this.props.orderDetail.invoiceAmountDue),
-            visits: parseInt(this.props.orderDetail.visits),
+            invoiceActualServiceFeeAmountPaid: invoiceActualServiceFeeAmountPaid,
+            invoiceBalanceOwingAmount: invoiceBalanceOwingAmount,
+            invoiceAmountDue: invoiceAmountDue,
+            visits: visits,
             completionDate: this.props.orderDetail.completionDate ? new Date(this.props.orderDetail.completionDate) : null,
         }
 
