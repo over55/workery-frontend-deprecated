@@ -41,7 +41,7 @@ export default class AdminFinancialCloneOperationComponent extends Component {
                             <p>Warning, you are about to take work order #<strong>{orderId}</strong> to and clone it. Cloning will do the following:
                                 <ul>
                                     <li>A single new work order will be created in the system.</li>
-                                    <li>All data from work order #<strong>{orderId}</strong> will be copied into our new work order.</li>
+                                    <li>All data from work order #<strong>{orderId}</strong> will be copied into our new work order. Pending tasks from the original work order will not be copied to our cloned work order.</li>
                                     <li>The state of the cloned work order will be <strong>completed but unpaid</strong>.</li>
                                     <li>You are responsible for making the necessary edits afterwords.</li>
                                 </ul>
