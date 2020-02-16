@@ -8,7 +8,7 @@ import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneIn
 
 class AdminTaskSearchComponent extends Component {
     render() {
-        const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
+        const { onSearchClick, handleKeyDown, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
         return (
             <div>
@@ -45,6 +45,7 @@ class AdminTaskSearchComponent extends Component {
                                 required=""
                                 value={keyword}
                                 onChange={onTextChange}
+								onKeyDown={handleKeyDown}
                             />
 
                             <div className="input-group-append">
