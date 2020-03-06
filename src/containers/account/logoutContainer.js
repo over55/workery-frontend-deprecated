@@ -48,7 +48,7 @@ class LogoutContainer extends Component {
             // DEVELOPERS NOTE:
             // Regardless of any server related errors, the client browser will
             // automatically clear the storage pertaining to the user session.
-            this.props.postLogout( // Call the API endpoint to log out. 
+            this.props.postLogout( // Call the API endpoint to log out.
                 this.props.user,
                 this.onSuccessfulSubmissionCallback,
                 this.onFailedSubmissionCallback
