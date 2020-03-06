@@ -44,6 +44,7 @@ class OrderCompletionTaskStep5Container extends Component {
             reason: localStorageGetIntegerItem("workery-task-6-reason"),
             reasonLabel: localStorage.getItem("workery-task-6-reasonLabel"),
             reasonOther: localStorage.getItem("workery-task-6-reasonOther"),
+            reasonComment: localStorage.getItem("workery-task-6-reasonComment"),
 
             // Step 3
             hasInputtedFinancials: localStorage.getItem("workery-task-6-hasInputtedFinancials"),

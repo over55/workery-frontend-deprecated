@@ -37,6 +37,7 @@ class OrderCompletionTaskStep2Container extends Component {
             associate: localStorageGetIntegerItem("workery-task-6-associateId"),
             reason: localStorageGetIntegerItem("workery-task-6-reason"),
             reasonOther: localStorage.getItem("workery-task-6-reasonOther"),
+            reasonComment: localStorage.getItem("workery-task-6-reasonComment"),
             errors: {},
         }
 
@@ -194,6 +195,7 @@ class OrderCompletionTaskStep2Container extends Component {
                 onCompletionDateChange={this.onCompletionDateChange}
                 reason={this.state.reason}
                 reasonOther={this.state.reasonOther}
+                reasonComment={this.state.reasonComment}
                 isLoading={this.state.isLoading}
                 task={this.props.taskDetail}
                 errors={this.state.errors}

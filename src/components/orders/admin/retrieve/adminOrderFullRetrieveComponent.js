@@ -194,6 +194,12 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Status</th>
                                     <td>{order.prettyStatus}</td>
                                 </tr>
+                                {order && order.closingReasonComment !== undefined && order.closingReasonComment !== null && order.closingReasonComment !== "" &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Closing Reason</th>
+                                        <td>{order.closingReasonComment}</td>
+                                    </tr>
+                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Start Date</th>
                                     <td>

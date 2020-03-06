@@ -107,6 +107,10 @@ export function validateTask6Step2Input(data) {
         }
     }
 
+    if (data.reasonComment === undefined || data.reasonComment === null || data.reasonComment === "") {
+        errors.reasonComment = 'This field is required';
+    }
+
     return {
         errors,
         isValid: isEmpty(errors)

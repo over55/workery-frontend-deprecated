@@ -7,13 +7,16 @@ import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import { ORDER_CANCEL_REASON_CHOICES } from "../../../constants/api";
 
 
 export default class OrderCompletionTaskStep2Component extends Component {
     render() {
         const {
-            task, wasCompleted, id, reason, reasonOther, onSelectChange, completionDate, onClick, onBack, errors, isLoading, onRadioChange, onTextChange, onCompletionDateChange
+            task, wasCompleted, id, reason, reasonOther, reasonComment,
+            onSelectChange, completionDate, onClick, onBack, errors, isLoading,
+            onRadioChange, onTextChange, onCompletionDateChange
         } = this.props;
         const isCancelled = wasCompleted === false || wasCompleted === "false";
         const isCompleted = wasCompleted === true || wasCompleted === "true";
@@ -163,6 +166,18 @@ export default class OrderCompletionTaskStep2Component extends Component {
                             <!--           end FINANCIAL DATA            -->
                             <!--------------------------------------------->
                             */}
+
+                            <BootstrapTextarea
+                                name="reasonComment"
+                                borderColour="border-primary"
+                                label="Reason Comment (*)"
+                                placeholder="Write details for the decision."
+                                rows="5"
+                                value={reasonComment}
+                                helpText={"The decision must be recorded for auditing purposes."}
+                                onChange={onTextChange}
+                                error={errors.reasonComment}
+                            />
 
                         </form>
 
