@@ -33,7 +33,6 @@ class RemoteListComponent extends Component {
 
         const selectOptions = {
             "running": 'Running',
-            "idle": 'Idle',
             "terminated": 'Terminated',
         };
 

@@ -86,10 +86,6 @@ const STATE_CHOICES = [
         label: "Running"
     },{
         selectName: "status",
-        value: "idle",
-        label: "Idle"
-    },{
-        selectName: "status",
         value: "terminated",
         label: "Terminated"
     }
