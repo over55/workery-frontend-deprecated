@@ -143,7 +143,10 @@ function jobFormatter(cell, row){
 
 
 function iconFormatter(cell, row){
-    switch(row.typeOf) {
+    if (row && row.associateAwayLog !== undefined && row.associateAwayLog !== null) {
+        return <i className="fas fa-sun"></i>;
+    }
+    switch(row.orderTypeOf) {
         case 2:
             return <i className="fas fa-building"></i>;
             break;
