@@ -60,7 +60,7 @@ class AdminTaskSearchContainer extends Component {
      */
 
 	handleKeyDown(e) {
-		
+
 		if (e.keyCode === 13) {
 			this.setState({ advancedSearchActive: false, }, ()=> {
 				// Perform client-side validation.
@@ -69,8 +69,8 @@ class AdminTaskSearchContainer extends Component {
 				// CASE 1 OF 2: Validation passed successfully.
 				if (isValid) {
 
-						localStorageSetObjectOrArrayItem('workery-search-client-details', this.state);
-						this.props.history.push("/clients/search-results");
+					localStorageSetObjectOrArrayItem('workery-search-client-details', this.state);
+					this.props.history.push("/tasks/search-results");
 
 
 				// CASE 2 OF 2: Validation was a failure.
@@ -86,7 +86,7 @@ class AdminTaskSearchContainer extends Component {
 			});
 		}
 	}
-	
+
     onTextChange(e) {
         this.setState({ [e.target.name]: e.target.value, });
     }
