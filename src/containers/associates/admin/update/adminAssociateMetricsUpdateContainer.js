@@ -91,13 +91,13 @@ class AdminAssociateMetricsUpdateContainer extends Component {
         // (2) Birthdate date - We need to format as per required API format.
         if (this.state.typeOf !== COMMERCIAL_ASSOCIATE_TYPE_OF_ID) {
             const dateOfBirth = this.state.dateOfBirth;
-            if (dateOfBirth === undefined || dateOfBirth === null || dateOfBirth === "" || isNaN(dateOfBirth) ) {
+            if (dateOfBirth !== undefined && dateOfBirth !== null && dateOfBirth !== "" ) {
                 const dateOfBirthMoment = moment(dateOfBirth);
                 postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD")
             }
         } else {
             postData.dateOfBirth = null;
-        }        
+        }
 
         // (4) How Hear Other - This field may not be null, therefore make blank.
         if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
