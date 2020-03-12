@@ -166,11 +166,13 @@ export default class SurveyTaskStep1Component extends Component {
                                                     <i className="fas fa-clock"></i>&nbsp;Postpone
                                                 </Link>
                                             </div>
+                                            {/*
                                             <div className="col-md-4 mx-auto p-2">
                                                 <Link className="btn btn-danger btn-lg" to={`/order/${task.job}/close`}>
                                                     <i className="fas fa-window-close"></i>&nbsp;Close
                                                 </Link>
                                             </div>
+                                            */}
                                         </div>
                                     </td>
                                 </tr>
