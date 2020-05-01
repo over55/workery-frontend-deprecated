@@ -10,8 +10,8 @@ import { BootstrapMultipleSelect } from "../bootstrap/bootstrapMultipleSelect";
 class TagComponent extends Component {
     render() {
         const {
-            keyword, errors, isLoading, onClick,
-            tags, tagOptions, onTagMultiChange, isTagsLoading, onTextChange,
+            errors, isLoading, onClick,
+            tags, tagOptions, onTagMultiChange, isTagsLoading,
         } = this.props;
 
         return (
@@ -40,17 +40,6 @@ class TagComponent extends Component {
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
-                                error={errors.keyword}
-                                label="Keyword"
-                                onChange={onTextChange}
-                                value={keyword}
-                                name="keyword"
-                                type="text"
-                            />
 
                             <BootstrapMultipleSelect
                                 borderColour="border-success"

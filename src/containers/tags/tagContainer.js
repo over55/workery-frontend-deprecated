@@ -19,7 +19,6 @@ class TagContainer extends Component {
         super(props);
 
         this.state = {
-            keyword: "",
             tags: [],
             errors: {},
             isLoading: false,
@@ -27,7 +26,6 @@ class TagContainer extends Component {
         }
 
         this.onClick = this.onClick.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
         this.onTagMultiChange = this.onTagMultiChange.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
     }
@@ -68,14 +66,6 @@ class TagContainer extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
-
-    onTextChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-        const key = "workery-search-"+[e.target.name].toString();
-        localStorage.setItem(key, e.target.value);
-    }
 
     onTagMultiChange(...args) {
         // Extract the select options from the parameter.
@@ -123,17 +113,15 @@ class TagContainer extends Component {
 
     render() {
         const {
-            keyword, tags, errors, isLoading, isTagsLoading
+            tags, errors, isLoading, isTagsLoading
         } = this.state;
 
         const { user } = this.props;
         return (
             <TagComponent
-                keyword={keyword}
                 tags={tags}
                 tagOptions={getTagReactSelectOptions(this.props.tagList)}
                 onTagMultiChange={this.onTagMultiChange}
-                onTextChange={this.onTextChange}
                 isTagsLoading={isTagsLoading}
 
                 onClick={this.onClick}

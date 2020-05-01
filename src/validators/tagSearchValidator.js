@@ -16,7 +16,7 @@ export function validateInput(data) {
     }
     // errors.keyword = 'This field is required';
     if (pickedChoice <= 0) {
-        errors.nonFieldError = "Please enter at least keyword or tag before searching.";
+        errors.tags = "Please enter tag before searching.";
     }
     return {
         errors,
