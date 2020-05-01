@@ -17,6 +17,7 @@ import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
 } from '../../../../../constants/api';
+import AwayLogAlertComponent from "../../awayLogAlertComponent";
 
 
 const customTotal = (from, to, size) => (
@@ -224,6 +225,8 @@ class AdminAssociateFileUploadListComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>

@@ -18,6 +18,7 @@ import { BootstrapMultipleSelect } from "../../../../bootstrap/bootstrapMultiple
 import { BootstrapTextarea } from "../../../../bootstrap/bootstrapTextarea";
 import { FlashMessageComponent } from "../../../../flashMessageComponent";
 import { BootstrapSingleFileUploadAndPreview } from "../../../../bootstrap/bootstrapSingleFileUploadAndPreview";
+import AwayLogAlertComponent from "../../awayLogAlertComponent";
 
 
 export default class AdminAssociateFileUploadAddComponent extends Component {
@@ -44,6 +45,7 @@ export default class AdminAssociateFileUploadAddComponent extends Component {
                     </ol>
                 </nav>
 
+                <AwayLogAlertComponent associate={associate} />
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>

@@ -15,6 +15,7 @@ import {
     EXECUTIVE_GROUP_ID
 } from '../../../../constants/api';
 import { FlashMessageComponent } from "../../../flashMessageComponent";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateOperationsComponent extends Component {
@@ -39,6 +40,8 @@ export default class AdminAssociateOperationsComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associateDetail} />
 
                 <FlashMessageComponent object={flashMessage} />
 

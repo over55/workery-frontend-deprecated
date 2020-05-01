@@ -17,6 +17,7 @@ import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
 import {
     IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES, ORGANIZATION_TYPE_OF_CHOICES
 } from "../../../../constants/api";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 class AdminAssociateContactUpdateComponent extends Component {
@@ -30,7 +31,7 @@ class AdminAssociateContactUpdateComponent extends Component {
 
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
-            onSelectChange,
+            onSelectChange, associate
         } = this.props;
         const isCommercial = typeOf === 3 || typeOf === 1; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID or UNASSIGNED_ASSOCIATE_TYPE_OF_ID
         return (
@@ -52,6 +53,8 @@ class AdminAssociateContactUpdateComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">

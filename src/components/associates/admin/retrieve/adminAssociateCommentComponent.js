@@ -15,6 +15,7 @@ import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAler
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateCommentComponent extends Component {
@@ -38,6 +39,8 @@ export default class AdminAssociateCommentComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <FlashMessageComponent object={flashMessage} />
 

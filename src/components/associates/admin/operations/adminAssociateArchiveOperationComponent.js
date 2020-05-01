@@ -10,6 +10,7 @@ import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import {
     ASSOCIATE_ARCHIVE_REASON_CHOICES
 } from '../../../../constants/api';
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateArchiveOperationComponent extends Component {
@@ -36,6 +37,8 @@ export default class AdminAssociateArchiveOperationComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">

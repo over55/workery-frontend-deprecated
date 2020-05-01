@@ -14,6 +14,7 @@ import Moment from 'react-moment';
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapSingleImageUploadAndPreview } from "../../../bootstrap/bootstrapSingleImageUploadAndPreview";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateAvatarOperationComponentOperationComponent extends Component {
@@ -75,6 +76,8 @@ export default class AdminAssociateAvatarOperationComponentOperationComponent ex
                         </div>
                     </div>
                 </div>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">

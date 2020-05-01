@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 // import 'moment-timezone';
 
+import { BootstrapAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { BootstrapFiveStarRatingLabel } from "../../../bootstrap/bootstrapFiveStarRatingLabel";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateLiteRetrieveComponent extends Component {
@@ -29,6 +31,8 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <FlashMessageComponent object={flashMessage} />
 

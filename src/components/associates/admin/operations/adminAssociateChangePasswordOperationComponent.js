@@ -14,6 +14,7 @@ import Moment from 'react-moment';
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateChangePasswordOperationComponent extends Component {
@@ -40,6 +41,7 @@ export default class AdminAssociateChangePasswordOperationComponent extends Comp
 
                 <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
 
+                <AwayLogAlertComponent associate={associate} />
                 {associate.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
                         <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This associate is archived and is read-only.

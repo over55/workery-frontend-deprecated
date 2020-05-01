@@ -473,6 +473,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
                 onClick={this.onClick}
                 fullName={fullName}
                 isLoading={isLoading}
+                associate={this.props.associateDetail}
             />
         );
     }

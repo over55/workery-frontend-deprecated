@@ -12,6 +12,7 @@ import {
     COMMERCIAL_ASSOCIATE_TYPE_OF_ID,
     RESIDENTIAL_ASSOCIATE_TYPE_OF_ID
 } from '../../../../constants/api';
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateFullRetrieveComponent extends Component {
@@ -36,6 +37,8 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <FlashMessageComponent object={flashMessage} />
 

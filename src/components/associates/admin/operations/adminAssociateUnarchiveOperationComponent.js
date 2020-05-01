@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateUnarchiveOperationComponent extends Component {
@@ -30,6 +31,8 @@ export default class AdminAssociateUnarchiveOperationComponent extends Component
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">

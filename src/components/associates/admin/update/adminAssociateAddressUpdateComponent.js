@@ -15,6 +15,7 @@ import { BootstrapMultipleSelect } from "../../../bootstrap/bootstrapMultipleSel
 import { BootstrapTextarea } from "../../../bootstrap/bootstrapTextarea";
 import { BootstrapDatePicker } from '../../../bootstrap/bootstrapDatePicker';
 import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES } from "../../../../constants/api";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 class AdminAssociateAddressUpdateComponent extends Component {
@@ -29,7 +30,7 @@ class AdminAssociateAddressUpdateComponent extends Component {
             onSkillSetMultiChange, onDuesDateChange, onCommercialInsuranceExpiryDate,
             onAutoInsuranceExpiryDateChange, onWsibInsuranceDateChange, onPoliceCheckDateChange,
             onVehicleTypeMultiChange, onInsuranceRequirementMultiChange, onTagMultiChange, onJoinDateChange,
-            onDateOfBirthChange,
+            onDateOfBirthChange, associate,
         } = this.props;
         return (
             <main id="main" role="main">
@@ -50,6 +51,8 @@ class AdminAssociateAddressUpdateComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">

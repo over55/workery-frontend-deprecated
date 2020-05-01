@@ -13,6 +13,7 @@ import Moment from 'react-moment';
 
 import { BootstrapErrorsProcessingAlert } from "../../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../../bootstrap/bootstrapPageLoadingAnimation";
+import AwayLogAlertComponent from "../../awayLogAlertComponent";
 
 
 export default class AdminAssociateFileUploadArchiveComponent extends Component {
@@ -36,6 +37,8 @@ export default class AdminAssociateFileUploadArchiveComponent extends Component 
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
 

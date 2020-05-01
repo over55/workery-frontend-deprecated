@@ -14,6 +14,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { FRONTLINE_GROUP_ID } from "../../../../constants/api";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 const customTotal = (from, to, size) => (
@@ -259,6 +260,8 @@ export default class AdminAssociateOrderListComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <FlashMessageComponent object={flashMessage} />
 

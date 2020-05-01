@@ -13,6 +13,7 @@ import Moment from 'react-moment';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 const customTotal = (from, to, size) => (
@@ -177,6 +178,8 @@ export default class AdminAssociateActivitySheetListComponent extends Component 
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <FlashMessageComponent object={flashMessage} />
 

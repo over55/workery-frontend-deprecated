@@ -245,6 +245,7 @@ class AdminAssociateAddressUpdateContainer extends Component {
                 onClick={this.onClick}
                 fullName={fullName}
                 isLoading={isLoading}
+                associate={this.props.associateDetail}
             />
         );
     }

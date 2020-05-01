@@ -16,6 +16,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from '../../../bootstrap/bootstrapSingleSelect';
 import { ORGANIZATION_TYPE_OF_CHOICES } from "../../../../constants/api";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateUpgradeOperationComponent extends Component {
@@ -42,6 +43,8 @@ export default class AdminAssociateUpgradeOperationComponent extends Component {
                 </nav>
 
                 <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 {associate.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

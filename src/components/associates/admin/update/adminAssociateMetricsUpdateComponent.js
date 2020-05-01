@@ -20,6 +20,7 @@ import {
     GENDER_RADIO_CHOICES,
     COMMERCIAL_ASSOCIATE_TYPE_OF_ID
 } from "../../../../constants/api";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 class AdminAssociateMetricsUpdateComponent extends Component {
@@ -33,7 +34,7 @@ class AdminAssociateMetricsUpdateComponent extends Component {
             // Everything else...
             id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
             onSelectChange, onTagMultiChange, onJoinDateChange,
-            onDateOfBirthChange,
+            onDateOfBirthChange, associate
         } = this.props;
         const isOtherHowDidYouHearSelected = howHear === 'Other';
         return (
@@ -55,6 +56,8 @@ class AdminAssociateMetricsUpdateComponent extends Component {
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">

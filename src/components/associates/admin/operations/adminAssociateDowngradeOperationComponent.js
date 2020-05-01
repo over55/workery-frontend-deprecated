@@ -16,6 +16,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from '../../../bootstrap/bootstrapSingleSelect';
 import { ORGANIZATION_TYPE_OF_CHOICES } from "../../../../constants/api";
+import AwayLogAlertComponent from "../awayLogAlertComponent";
 
 
 export default class AdminAssociateDowngradeOperationComponent extends Component {
@@ -39,6 +40,8 @@ export default class AdminAssociateDowngradeOperationComponent extends Component
                         </li>
                     </ol>
                 </nav>
+
+                <AwayLogAlertComponent associate={associate} />
 
                 <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
 
