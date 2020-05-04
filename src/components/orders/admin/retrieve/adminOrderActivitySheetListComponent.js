@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -227,14 +228,16 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                         <h2>
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
-                        <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
-                            totalSize={totalSize}
-                            activitySheetItems={activitySheetItems}
-                            onTableChange={onTableChange}
-                            isLoading={isLoading}
-                        />
+                        {isEmpty(order)===false &&
+                            <RemoteListComponent
+                                page={page}
+                                sizePerPage={sizePerPage}
+                                totalSize={totalSize}
+                                activitySheetItems={activitySheetItems}
+                                onTableChange={onTableChange}
+                                isLoading={isLoading}
+                            />
+                        }
                     </div>
                 </div>
             </div>

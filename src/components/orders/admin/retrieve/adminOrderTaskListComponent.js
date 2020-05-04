@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -239,7 +240,7 @@ class AdminOrderTaskListComponent extends Component {
             taskList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id
+            flashMessage, onTableChange, isLoading, id, order
         } = this.props;
 
         const tasks = (taskList && taskList.results) ? taskList.results : [];
@@ -310,14 +311,16 @@ class AdminOrderTaskListComponent extends Component {
                         <h2>
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
-                        <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
-                            totalSize={totalSize}
-                            tasks={tasks}
-                            onTableChange={onTableChange}
-                            isLoading={isLoading}
-                        />
+                        {isEmpty(order)===false &&
+                            <RemoteListComponent
+                                page={page}
+                                sizePerPage={sizePerPage}
+                                totalSize={totalSize}
+                                tasks={tasks}
+                                onTableChange={onTableChange}
+                                isLoading={isLoading}
+                            />
+                        }
                     </div>
                 </div>
             </div>

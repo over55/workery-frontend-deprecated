@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
@@ -23,8 +23,17 @@ export default class AdminOrderOperationsComponent extends Component {
         // const isActiveState = order.state === "active";
         // const isCompany = order && order.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         // const canDeleteClient = user.groupId === EXECUTIVE_GROUP_ID;
-        const isCancelled = order.state === "cancelled";
-        const isCompleted = order.state === "completed_and_unpaid" || order.state === "completed_and_paid" || isCancelled;
+
+        let isCancelled = false;
+        if (order && isEmpty(order) === false) {
+            isCancelled = order.state === "cancelled";
+        }
+
+        let isCompleted;
+        if (order && isEmpty(order) === false) {
+            isCompleted = order.state === "completed_and_unpaid" || order.state === "completed_and_paid" || isCancelled;
+        }
+
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -91,7 +100,7 @@ export default class AdminOrderOperationsComponent extends Component {
 
 
                         <div className="card-group row">
-                            {order.associate && isCompleted === false &&
+                            {order && order.associate && isCompleted === false &&
                                 <div className="col-sm-3 mb-4">
                                     <div className="card box-shadow text-center mx-auto h-100">
                                         <div className="card-custom-top-2">
@@ -102,7 +111,7 @@ export default class AdminOrderOperationsComponent extends Component {
                                             <p className="card-text">Unassign the current Associate.</p>
                                         </div>
                                         <div className="card-footer bg-transparent border-0">
-                                            <Link className="btn btn-success btn-lg" to={`/order/${order.id}/unassign-associate`}>
+                                            <Link className="btn btn-success btn-lg" to={`/order/${order && order.id}/unassign-associate`}>
                                                 Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                             </Link>
                                         </div>
@@ -121,7 +130,7 @@ export default class AdminOrderOperationsComponent extends Component {
                                             <p className="card-text">Transfer this job to another Client and/or Associate.</p>
                                         </div>
                                         <div className="card-footer bg-transparent border-0">
-                                            <Link className="btn btn-success btn-lg" to={`/order/${order.id}/transfer-step-1`}>
+                                            <Link className="btn btn-success btn-lg" to={`/order/${order && order.id}/transfer-step-1`}>
                                                 Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                             </Link>
                                         </div>
@@ -140,7 +149,7 @@ export default class AdminOrderOperationsComponent extends Component {
                                             <p className="card-text">Postpone this job to a future date.</p>
                                         </div>
                                         <div className="card-footer bg-transparent border-0">
-                                            <Link className="btn btn-success btn-lg" to={`/order/${order.id}/postpone`}>
+                                            <Link className="btn btn-success btn-lg" to={`/order/${order && order.id}/postpone`}>
                                                 Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                             </Link>
                                         </div>
@@ -158,7 +167,7 @@ export default class AdminOrderOperationsComponent extends Component {
                                             <p className="card-text">Re-open this job.</p>
                                         </div>
                                         <div className="card-footer bg-transparent border-0">
-                                            <Link className="btn btn-success btn-lg" to={`/order/${order.id}/reopen`}>
+                                            <Link className="btn btn-success btn-lg" to={`/order/${order && order.id}/reopen`}>
                                                 Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                             </Link>
                                         </div>
@@ -174,7 +183,7 @@ export default class AdminOrderOperationsComponent extends Component {
                                             <p className="card-text">Close this job or end it early.</p>
                                         </div>
                                         <div className="card-footer bg-transparent border-0">
-                                            <Link className="btn btn-success btn-lg" to={`/order/${order.id}/close`}>
+                                            <Link className="btn btn-success btn-lg" to={`/order/${order && order.id}/close`}>
                                                 Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                             </Link>
                                         </div>
@@ -191,7 +200,7 @@ export default class AdminOrderOperationsComponent extends Component {
                                         <p className="card-text">View this Job Order's Financials.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
-                                        <Link className="btn btn-success btn-lg" to={`/financial/${order.id}`}>
+                                        <Link className="btn btn-success btn-lg" to={`/financial/${order && order.id}`}>
                                             Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                         </Link>
                                     </div>

@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -246,7 +247,10 @@ class AdminOrderListComponent extends Component {
             flashMessage, onTableChange, isLoading, user
         } = this.props;
 
-        const orders = orderList.results ? orderList.results : [];
+        let orders = [];
+        if (orderList && isEmpty(orderList)===false) {
+            orders = orderList.results ? orderList.results : [];
+        }
 
         return (
             <div>
@@ -296,15 +300,17 @@ class AdminOrderListComponent extends Component {
                         <h2>
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
-                        <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
-                            totalSize={totalSize}
-                            orders={orders}
-                            onTableChange={onTableChange}
-                            isLoading={isLoading}
-                            user={user}
-                        />
+                        {isEmpty(orders)===false &&
+                            <RemoteListComponent
+                                page={page}
+                                sizePerPage={sizePerPage}
+                                totalSize={totalSize}
+                                orders={orders}
+                                onTableChange={onTableChange}
+                                isLoading={isLoading}
+                                user={user}
+                            />
+                        }
                     </div>
                 </div>
             </div>

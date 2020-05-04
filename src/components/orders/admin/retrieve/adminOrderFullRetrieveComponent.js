@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
@@ -18,8 +18,17 @@ export default class AdminOrderFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
         const { id, order, errors, flashMessage } = this.props;
-        const isCancelled = order.state === "cancelled";
-        const isCompleted = order.state === "completed_and_unpaid" || order.state === "completed_and_paid" || isCancelled;
+
+        let isCancelled = false;
+        if (order && isEmpty(order) === false) {
+            isCancelled = order.state === "cancelled";
+        }
+
+        let isCompleted;
+        if (order && isEmpty(order) === false) {
+            isCompleted = order.state === "completed_and_unpaid" || order.state === "completed_and_paid" || isCancelled;
+        }
+
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -99,36 +108,36 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Order #</th>
-                                    <td>{order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
+                                    <td>{order && order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Full Name</th>
                                     <td>
-                                        <Link to={`/client/${order.customer}`} target="_blank">
-                                            {order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/client/${order && order.customer}`} target="_blank">
+                                            {order && order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
-                                {order.customerFullName && order.customerTelephone &&
+                                {order && order.customerFullName && order.customerTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Client {order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order.customerTelephone}</td>
+                                        <th scope="row" className="bg-light">Client {order && order.customerPrettyTelephoneTypeOf} #</th>
+                                        <td>{order && order.customerTelephone}</td>
                                     </tr>
                                 }
-                                {order.customerFullName && order.customerOtherTelephone &&
+                                {order && order.customerFullName && order.customerOtherTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Client Other {order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order.customerOtherTelephone}</td>
+                                        <th scope="row" className="bg-light">Client Other {order && order.customerPrettyTelephoneTypeOf} #</th>
+                                        <td>{order && order.customerOtherTelephone}</td>
                                     </tr>
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
-                                    <td>{order.description}</td>
+                                    <td>{order && order.description}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Skill(s)</th>
                                     <td>
-                                        {order.prettySkillSets && order.prettySkillSets.map(
+                                        {order && order.prettySkillSets && order.prettySkillSets.map(
                                             (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
                                         }
                                     </td>
@@ -136,38 +145,38 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Tags(s)</th>
                                     <td>
-                                        {order.prettyTags && order.prettyTags.map(
+                                        {order && order.prettyTags && order.prettyTags.map(
                                             (tag) => <TagItem tag={tag} key={`tag-${tag.id}`} />)
                                         }
                                     </td>
                                 </tr>
-                                {order.associateFullName && order.associateFullName &&
+                                {order && order.associateFullName && order.associateFullName &&
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Full Name</th>
                                         <td>
-                                            <Link to={`/associate/${order.associate}`} target="_blank">
-                                                {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/associate/${order && order.associate}`} target="_blank">
+                                                {order && order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                 }
-                                {order.associateFullName && order.associateTelephone &&
+                                {order && order.associateFullName && order.associateTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">{order.associatePrettyTelephoneTypeOf} #</th>
-                                        <td>{order.associateTelephone}</td>
+                                        <th scope="row" className="bg-light">{order && order.associatePrettyTelephoneTypeOf} #</th>
+                                        <td>{order && order.associateTelephone}</td>
                                     </tr>
                                 }
-                                {order.associateFullName && order.associateOtherTelephone &&
+                                {order && order.associateFullName && order.associateOtherTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Other {order.associatePrettyTelephoneTypeOf} #</th>
-                                        <td>{order.associateOtherTelephone}</td>
+                                        <th scope="row" className="bg-light">Other {order && order.associatePrettyTelephoneTypeOf} #</th>
+                                        <td>{order && order.associateOtherTelephone}</td>
                                     </tr>
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Assignment Date</th>
                                     <td>
-                                        {order.assignmentDate
-                                            ? <Moment format="MM/DD/YYYY">{order.assignmentDate}</Moment>
+                                        {order && order.assignmentDate
+                                            ? <Moment format="MM/DD/YYYY">{order && order.assignmentDate}</Moment>
                                             : "-"
                                         }
                                     </td>
@@ -175,7 +184,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Is Home Support Service</th>
                                     <td>
-                                        {order.isHomeSupportService
+                                        {order && order.isHomeSupportService
                                             ?"Yes"
                                             :"No"
                                         }
@@ -184,7 +193,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Is Ongoing</th>
                                     <td>
-                                        {order.isOngoing
+                                        {order && order.isOngoing
                                             ?"Yes"
                                             :"No"
                                         }
@@ -192,18 +201,18 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Status</th>
-                                    <td>{order.prettyStatus}</td>
+                                    <td>{order && order.prettyStatus}</td>
                                 </tr>
                                 {order && order.closingReasonComment !== undefined && order.closingReasonComment !== null && order.closingReasonComment !== "" &&
                                     <tr>
                                         <th scope="row" className="bg-light">Closing Reason</th>
-                                        <td>{order.closingReasonComment}</td>
+                                        <td>{order && order.closingReasonComment}</td>
                                     </tr>
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Start Date</th>
                                     <td>
-                                        {order.startDate
+                                        {order && order.startDate
                                             ? <Moment format="MM/DD/YYYY">{order.startDate}</Moment>
                                             : "-"
                                         }
@@ -212,7 +221,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Completion Date</th>
                                     <td>
-                                        {order.completionDate
+                                        {order && order.completionDate
                                             ? <Moment format="MM/DD/YYYY">{order.completionDate}</Moment>
                                             : "-"
                                         }
@@ -220,9 +229,9 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Hours</th>
-                                    <td>{order.hours}</td>
+                                    <td>{order && order.hours}</td>
                                 </tr>
-                                {order.prettyLatestPendingTask &&
+                                {order && order.prettyLatestPendingTask &&
                                     <tr>
                                         <th scope="row" className="bg-light">Required Task</th>
                                         <td>
@@ -244,7 +253,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Date</th>
                                     <td>
-                                        {order.invoiceDate
+                                        {order && order.invoiceDate
                                             ? <Moment format="MM/DD/YYYY">{order.invoiceDate}</Moment>
                                             : "-"
                                         }
@@ -253,7 +262,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice ID(s) #</th>
                                     <td>
-                                        {order.invoiceIds
+                                        {order && order.invoiceIds
                                             ? order.invoiceIds
                                             : "-"
                                         }
@@ -262,7 +271,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Quote</th>
                                     <td>
-                                        {order.invoiceQuoteAmount
+                                        {order && order.invoiceQuoteAmount
                                             ?<NumberFormat value={order.invoiceQuoteAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -271,7 +280,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Labour</th>
                                     <td>
-                                        {order.invoiceLabourAmount
+                                        {order && order.invoiceLabourAmount
                                             ?<NumberFormat value={order.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -280,7 +289,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Labour</th>
                                     <td>
-                                        {order.invoiceMaterialAmount
+                                        {order && order.invoiceMaterialAmount
                                             ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -289,7 +298,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Total</th>
                                     <td>
-                                        {order.invoiceTotalAmount
+                                        {order && order.invoiceTotalAmount
                                             ?<NumberFormat value={order.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -298,7 +307,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Service Fee</th>
                                     <td>
-                                        {order.invoiceServiceFeeAmount
+                                        {order && order.invoiceServiceFeeAmount
                                             ?<NumberFormat value={order.invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -307,57 +316,57 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Service Fee Payment Date</th>
                                     <td>
-                                        {order.invoiceServiceFeePaymentDate
+                                        {order && order.invoiceServiceFeePaymentDate
                                             ? <Moment format="MM/DD/YYYY">{order.invoiceServiceFeePaymentDate}</Moment>
                                             : "-"
                                         }
                                     </td>
                                 </tr>
 
-                                {order.wasSurveyConducted &&
+                                {order && order.wasSurveyConducted &&
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-chart-pie"></i>&nbsp;Metrics
                                         </th>
                                     </tr>
                                 }
-                                {order.wasSurveyConducted &&
+                                {order && order.wasSurveyConducted &&
                                     <tr>
                                         <th scope="row" className="bg-light">Was the quality of the work satisfactory?</th>
                                         <td>
-                                            {order.wasJobSatisfactory ? "Yes" : "No"}
+                                            {order && order.wasJobSatisfactory ? "Yes" : "No"}
                                         </td>
                                     </tr>
                                 }
-                                {order.wasSurveyConducted &&
+                                {order && order.wasSurveyConducted &&
                                     <tr>
                                         <th scope="row" className="bg-light">Was the work completed on time and on budget?</th>
-                                        <td>{order.wasJobFinishedOnTimeAndOnBudget ? "Yes" : "No"}</td>
+                                        <td>{order && order.wasJobFinishedOnTimeAndOnBudget ? "Yes" : "No"}</td>
                                     </tr>
                                 }
-                                {order.wasSurveyConducted &&
+                                {order && order.wasSurveyConducted &&
                                     <tr>
                                         <th scope="row" className="bg-light">Was the Associate Member punctual?</th>
-                                        <td>{order.wasAssociatePunctual ? "Yes" : "No"}</td>
+                                        <td>{order && order.wasAssociatePunctual ? "Yes" : "No"}</td>
                                     </tr>
                                 }
-                                {order.wasSurveyConducted &&
+                                {order && order.wasSurveyConducted &&
                                     <tr>
                                         <th scope="row" className="bg-light">Was the Associate Member professional?</th>
-                                        <td>{order.wasAssociateProfessional ? "Yes" : "No"}</td>
+                                        <td>{order && order.wasAssociateProfessional ? "Yes" : "No"}</td>
                                     </tr>
                                 }
-                                {order.wasSurveyConducted &&
+                                {order && order.wasSurveyConducted &&
                                     <tr>
                                         <th scope="row" className="bg-light">Would you refer Over55 to a friend of family member?</th>
-                                        <td>{order.wouldCustomerReferOurOrganization ? "Yes" : "No"}</td>
+                                        <td>{order && order.wouldCustomerReferOurOrganization ? "Yes" : "No"}</td>
                                     </tr>
                                 }
-                                {order.wasSurveyConducted &&
+                                {order && order.wasSurveyConducted &&
                                     <tr>
                                         <th scope="row" className="bg-light">Overall Order Rating</th>
                                         <td>
-                                            {order.score}/5
+                                            {order && order.score}/5
                                         </td>
                                     </tr>
                                 }
@@ -372,23 +381,23 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Created at</th>
                                     <td>
-                                        <Moment format="MM/DD/YYYY hh:mm:ss a">{order.createdAt}</Moment>
+                                        <Moment format="MM/DD/YYYY hh:mm:ss a">{order && order.createdAt}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created by</th>
-                                    <td>{order.createdBy}</td>
+                                    <td>{order && order.createdBy}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified at</th>
                                     <td>
-                                        <Moment format="MM/DD/YYYY hh:mm:ss a">{order.lastModifiedAt}</Moment>
+                                        <Moment format="MM/DD/YYYY hh:mm:ss a">{order && order.lastModifiedAt}</Moment>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified by</th>
                                     <td>
-                                        {order.lastModifiedBy}
+                                        {order && order.lastModifiedBy}
                                     </td>
                                 </tr>
 
@@ -405,9 +414,9 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                     :<tr>
                                         <th scope="row" className="bg-light">Available Choices</th>
                                         <td>
-                                            {order.associate && isCompleted === false &&
+                                            {order && order.associate && isCompleted === false &&
                                                 <div>
-                                                    <Link to={`/order/${order.id}/unassign-associate`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
+                                                    <Link to={`/order/${order && order.id}/unassign-associate`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
                                                         <i className="fas fa-user-slash"></i>&nbsp;Unassign Associate
                                                     </Link>
                                                 </div>
@@ -415,7 +424,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                             {isCancelled
                                                 ?""
                                                 :<div>
-                                                    <Link to={`/order/${order.id}/transfer-step-1`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
+                                                    <Link to={`/order/${order && order.id}/transfer-step-1`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
                                                         <i className="fas fa-exchange-alt"></i>&nbsp;Transfer
                                                     </Link>
                                                 </div>
@@ -423,19 +432,19 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                             {isCancelled
                                                 ?""
                                                 :<div>
-                                                    <Link to={`/order/${order.id}/postpone`} className="btn btn-orange btn-lg mt-4 pl-4 pr-4">
+                                                    <Link to={`/order/${order && order.id}/postpone`} className="btn btn-orange btn-lg mt-4 pl-4 pr-4">
                                                        <i className="fas fa-clock"></i>&nbsp;Postpone
                                                     </Link>
                                                 </div>
                                             }
                                             {isCancelled
                                                 ?<div>
-                                                    <Link to={`/order/${order.id}/reopen`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                    <Link to={`/order/${order && order.id}/reopen`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
                                                         <i className="fas fa-window-restore"></i>&nbsp;Re-open
                                                     </Link>
                                                 </div>
                                                 :<div>
-                                                    <Link to={`/order/${order.id}/close`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                    <Link to={`/order/${order && order.id}/close`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
                                                         <i className="fas fa-window-close"></i>&nbsp;Close
                                                     </Link>
                                                 </div>

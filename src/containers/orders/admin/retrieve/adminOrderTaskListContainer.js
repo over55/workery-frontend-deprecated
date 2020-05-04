@@ -171,6 +171,7 @@ class OrderTaskListContainer extends Component {
                 onTableChange={this.onTableChange}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
+                order={this.props.orderDetail}
             />
         );
     }
@@ -181,6 +182,7 @@ const mapStateToProps = function(store) {
         user: store.userState,
         flashMessage: store.flashMessageState,
         taskList: store.taskListState,
+        orderDetail: store.orderDetailState,
     };
 }
 
