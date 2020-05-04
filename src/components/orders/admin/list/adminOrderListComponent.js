@@ -300,17 +300,15 @@ class AdminOrderListComponent extends Component {
                         <h2>
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
-                        {isEmpty(orders)===false &&
-                            <RemoteListComponent
-                                page={page}
-                                sizePerPage={sizePerPage}
-                                totalSize={totalSize}
-                                orders={orders}
-                                onTableChange={onTableChange}
-                                isLoading={isLoading}
-                                user={user}
-                            />
-                        }
+                        <RemoteListComponent
+                            page={page}
+                            sizePerPage={sizePerPage}
+                            totalSize={totalSize}
+                            orders={orders}
+                            onTableChange={onTableChange}
+                            isLoading={isLoading}
+                            user={user}
+                        />
                     </div>
                 </div>
             </div>

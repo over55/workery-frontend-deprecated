@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
@@ -223,7 +224,10 @@ class ClientListComponent extends Component {
             flashMessage, onTableChange, isLoading
         } = this.props;
 
-        const clients = clientList.results ? clientList.results : [];
+        let clients = [];
+        if (clientList && isEmpty(clientList)===false) {
+            clients = clientList.results ? clientList.results : [];
+        }
 
         return (
             <div>

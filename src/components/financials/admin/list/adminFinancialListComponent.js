@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -183,7 +184,10 @@ class AdminFinancialListComponent extends Component {
             flashMessage, onTableChange, isLoading
         } = this.props;
 
-        const orders = orderList.results ? orderList.results : [];
+        let orders = [];
+        if (orderList && isEmpty(orderList)===false) {
+            orders = orderList.results ? orderList.results : [];
+        }
 
         return (
             <div>

@@ -79,7 +79,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Client</th>
                                     <td>
-                                        <Link to={`/client/${order.customer}`} target="_blank">
+                                        <Link to={`/client/${order && order.customer}`} target="_blank">
                                             {order && order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
@@ -87,7 +87,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Order #</th>
                                     <td>
-                                        <Link to={`/order/${order.id}`} target="_blank">
+                                        <Link to={`/order/${order && order.id}`} target="_blank">
                                             {order && order.id && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
@@ -96,7 +96,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Cloned from Order #</th>
                                         <td>
-                                            <Link to={`/order/${order.clonedFrom}`} target="_blank">
+                                            <Link to={`/order/${order && order.clonedFrom}`} target="_blank">
                                                 {order && order.clonedFrom && order.clonedFrom.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
@@ -105,7 +105,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Order Start Date</th>
                                     <td>
-                                        {order.startDate
+                                        {order && order.startDate
                                             ? <Moment format="MM/DD/YYYY">{order.startDate}</Moment>
                                             : "-"
                                         }
@@ -114,7 +114,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Order Completion Date</th>
                                     <td>
-                                        {order.completionDate
+                                        {order && order.completionDate
                                             ? <Moment format="MM/DD/YYYY">{order.completionDate}</Moment>
                                             : "-"
                                         }
@@ -123,7 +123,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Associate</th>
                                     <td>
-                                        <Link to={`/associate/${order.associate}`} target="_blank">
+                                        <Link to={`/associate/${order && order.associate}`} target="_blank">
                                             {order && order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
@@ -131,7 +131,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice Date</th>
                                     <td>
-                                        {order.invoiceDate
+                                        {order && order.invoiceDate
                                             ? <Moment format="MM/DD/YYYY">{order.invoiceDate}</Moment>
                                             : "-"
                                         }
@@ -139,12 +139,12 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Invoice ID(s) #</th>
-                                    <td>{order.invoiceIds}</td>
+                                    <td>{order && order.invoiceIds}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Quoted Labour</th>
                                     <td>
-                                        {order.invoiceQuotedLabourAmount
+                                        {order && order.invoiceQuotedLabourAmount
                                             ?<NumberFormat value={order.invoiceQuotedLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -153,7 +153,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Quoted Materials</th>
                                     <td>
-                                        {order.invoiceQuotedMaterialAmount
+                                        {order && order.invoiceQuotedMaterialAmount
                                             ?<NumberFormat value={order.invoiceQuotedMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -162,7 +162,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Quoted Other Costs</th>
                                     <td>
-                                        {order.invoiceQuotedOtherCostsAmount
+                                        {order && order.invoiceQuotedOtherCostsAmount
                                             ?<NumberFormat value={order.invoiceQuotedOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -171,7 +171,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Total Quote</th>
                                     <td>
-                                        {order.invoiceTotalQuoteAmount
+                                        {order && order.invoiceTotalQuoteAmount
                                             ?<NumberFormat value={order.invoiceTotalQuoteAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -180,7 +180,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Actual Labour</th>
                                     <td>
-                                        {order.invoiceLabourAmount
+                                        {order && order.invoiceLabourAmount
                                             ?<NumberFormat value={order.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -189,7 +189,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Actual Materials</th>
                                     <td>
-                                        {order.invoiceMaterialAmount
+                                        {order && order.invoiceMaterialAmount
                                             ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -198,7 +198,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Actual Other Costs</th>
                                     <td>
-                                        {order.invoiceOtherCostsAmount
+                                        {order && order.invoiceOtherCostsAmount
                                             ?<NumberFormat value={order.invoiceOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -216,7 +216,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Total</th>
                                     <td>
-                                        {order.invoiceTotalAmount
+                                        {order && order.invoiceTotalAmount
                                             ?<NumberFormat value={order.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -225,7 +225,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Payment</th>
                                     <td>
-                                        {order.invoiceDepositAmount
+                                        {order && order.invoiceDepositAmount
                                             ?<NumberFormat value={order.invoiceDepositAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -234,7 +234,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Amount due</th>
                                     <td>
-                                        {order.invoiceAmountDue
+                                        {order && order.invoiceAmountDue
                                             ?<NumberFormat value={order.invoiceAmountDue} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -243,7 +243,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Service Fee Rate</th>
                                     <td>
-                                        {order.prettyInvoiceServiceFee
+                                        {order && order.prettyInvoiceServiceFee
                                             ?order.prettyInvoiceServiceFee
                                             :"-"
                                         }
@@ -252,7 +252,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Service Fee</th>
                                     <td>
-                                        {order.invoiceServiceFeeAmount
+                                        {order && order.invoiceServiceFeeAmount
                                             ?<NumberFormat value={order.invoiceServiceFeeAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -261,7 +261,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Service Fee Payment Date</th>
                                     <td>
-                                        {order.invoiceServiceFeePaymentDate
+                                        {order && order.invoiceServiceFeePaymentDate
                                             ?<Moment format="MM/DD/YYYY">{order.invoiceServiceFeePaymentDate}</Moment>
                                             :"-"
                                         }
@@ -270,7 +270,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Actual Service Fee Paid</th>
                                     <td>
-                                        {order.invoiceActualServiceFeeAmountPaid
+                                        {order && order.invoiceActualServiceFeeAmountPaid
                                             ?<NumberFormat value={order.invoiceActualServiceFeeAmountPaid} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -279,7 +279,7 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Account Balance</th>
                                     <td>
-                                        {order.invoiceBalanceOwingAmount
+                                        {order && order.invoiceBalanceOwingAmount
                                             ?<NumberFormat value={order.invoiceBalanceOwingAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                             :"-"
                                         }
@@ -332,17 +332,17 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
                                         <div>
-                                            <Link to={`/financial/${order.id}/clone`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
+                                            <Link to={`/financial/${order && order.id}/clone`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
                                                 Clone&nbsp;<i className="fas fa-chevron-right"></i>
                                             </Link>&nbsp;&nbsp;&nbsp;
                                         </div>
                                         <div>
-                                            <Link to={`/order/${order.id}/unassign-associate`} target="_blank" className="btn btn-orange btn-lg mt-4 pl-4 pr-4">
+                                            <Link to={`/order/${order && order.id}/unassign-associate`} target="_blank" className="btn btn-orange btn-lg mt-4 pl-4 pr-4">
                                                 Unassign&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </div>
                                         <div>
-                                            <Link to={`/order/${order.id}/close`} target="_blank" className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                            <Link to={`/order/${order && order.id}/close`} target="_blank" className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
                                                 Cancel&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>&nbsp;&nbsp;&nbsp;
                                         </div>
