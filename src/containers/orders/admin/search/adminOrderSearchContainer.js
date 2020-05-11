@@ -58,9 +58,9 @@ class AdminOrderSearchContainer extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
-	 
+
 	handleKeyDown(e) {
-		
+
 		if (e.keyCode === 13) {
 			this.setState({ advancedSearchActive: false, }, ()=> {
 				// Perform client-side validation.
@@ -69,8 +69,8 @@ class AdminOrderSearchContainer extends Component {
 				// CASE 1 OF 2: Validation passed successfully.
 				if (isValid) {
 
-						localStorageSetObjectOrArrayItem('workery-search-client-details', this.state);
-						this.props.history.push("/clients/search-results");
+                    localStorageSetObjectOrArrayItem('workery-search-order-details', this.state);
+                    this.props.history.push("/orders/search-results");
 
 
 				// CASE 2 OF 2: Validation was a failure.
