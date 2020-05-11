@@ -275,22 +275,20 @@ class OrderCompletionTaskStep3Container extends Component {
     }
 
     onSelectChange(option) {
-        console.log("onSelectChange |", option);
         const optionKey = [option.selectName]+"Option";
-        const key = [option.selectName];
-        this.setState(
-            { key: option.value, [optionKey]: option, },
-            ()=>{
-                localStorage.setItem('workery-task-6-'+[option.selectName].toString(), option.value);
-                localStorage.setItem('workery-task-6-'+[option.selectName].toString()+"Label", option.label);
-                localStorageSetObjectOrArrayItem('workery-task-6-'+optionKey, option);
-                console.log("onSelectChange | Post Saved |", [option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+        this.setState({
+            [option.selectName]: option.value,
+            optionKey: option,
+        },()=>{
+            localStorage.setItem('workery-task-6-'+[option.selectName].toString(), option.value);
+            localStorage.setItem('workery-task-6-'+[option.selectName].toString()+"Label", option.label);
+            localStorageSetObjectOrArrayItem('workery-task-6-'+optionKey, option);
+            console.log("onSelectChange | Post Saved |", [option.selectName], optionKey, "|", this.state); // For debugging purposes only.
 
-                // Since the only dropdown field we are using affects calculations,
-                // therefore perform our calculation.
-                this.performCalculation()
-            }
-        );
+            // Since the only dropdown field we are using affects calculations,
+            // therefore perform our calculation.
+            this.performCalculation()
+        });
     }
 
     onInvoiceDateChange(dateObj) {
