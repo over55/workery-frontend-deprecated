@@ -105,6 +105,7 @@ class PartnerCommentContainer extends Component {
                 page: response.page,
                 totalSize: response.count,
                 isLoading: false,
+                text: "",
             },
             ()=>{
                 console.log("onSuccessListCallback | Fetched:",response); // For debugging purposes only.
@@ -115,7 +116,7 @@ class PartnerCommentContainer extends Component {
 
     onFailureListCallback(errors) {
         console.log(errors);
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false, text: "", });
     }
 
     onSuccessPostCallback(response) {
@@ -125,6 +126,7 @@ class PartnerCommentContainer extends Component {
                 page: response.page,
                 totalSize: response.count,
                 isLoading: false,
+                text: "",
             },
             ()=>{
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
@@ -143,7 +145,7 @@ class PartnerCommentContainer extends Component {
 
     onFailurePostCallback(errors) {
         console.log("onFailurePostCallback |", errors);
-        this.setState({ isLoading: false, errors: errors, });
+        this.setState({ isLoading: false, errors: errors, text: "", });
     }
 
     /**
