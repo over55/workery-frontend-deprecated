@@ -287,7 +287,7 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" className="bg-light">Invoice Labour</th>
+                                    <th scope="row" className="bg-light">Invoice Materials</th>
                                     <td>
                                         {order && order.invoiceMaterialAmount
                                             ?<NumberFormat value={order.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
