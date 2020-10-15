@@ -10,7 +10,7 @@ import { BootstrapMultipleSelect } from "../bootstrap/bootstrapMultipleSelect";
 import { BootstrapPageLoadingAnimation } from "../bootstrap/bootstrapPageLoadingAnimation";
 
 
-export default class Report19Component extends Component {
+export default class Report22Component extends Component {
     render() {
         const {
             tags, tagOptions, onTagMultiChange, isTagsLoading,
@@ -31,7 +31,7 @@ export default class Report19Component extends Component {
                             <Link to={`/reports`}><i className="fas fa-chart-bar"></i>&nbsp;Reports</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-tags"></i>&nbsp;Job Tags by Assignment Dates Report
+                            <i className="fas fa-tags"></i>&nbsp;Job Tags by Completion Dates Report
                         </li>
                     </ol>
                 </nav>
@@ -39,7 +39,7 @@ export default class Report19Component extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1><i className="fas fa-tags"></i>&nbsp;Job Tags by Assignment Dates Report</h1>
+                            <h1><i className="fas fa-tags"></i>&nbsp;Job Tags by Completion Dates Report</h1>
 
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 

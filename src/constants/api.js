@@ -132,6 +132,7 @@ export const WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/17/csv
 export const WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/19/csv-download';
 export const WORKERY_REPORT_TWENTY_CSV_DOWNLOAD_API_ENDPOINT = 'report/20/csv-download';
 export const WORKERY_REPORT_TWENTY_ONE_CSV_DOWNLOAD_API_ENDPOINT = 'report/21/csv-download';
+export const WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_ENDPOINT = 'report/22/csv-download';
 export const WORKERY_ONGOING_ORDER_LIST_API_ENDPOINT = '/ongoing-orders';
 export const WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT = '/ongoing-order/';
 export const WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT = '/ongoing-order-comments';
