@@ -19,7 +19,7 @@ class AdminAssociateFileUploadListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("customer", id);
+        parametersMap.set("associate", id);
         // parametersMap.set("is_archived", 3); // 3 = TRUE | 2 = FALSE
         parametersMap.set("o", "-created_at");
         this.state = {

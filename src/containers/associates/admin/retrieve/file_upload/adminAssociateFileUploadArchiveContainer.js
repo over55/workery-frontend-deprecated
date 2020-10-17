@@ -19,7 +19,7 @@ class AdminAssociateFileUploadArchiveContainer extends Component {
         const { id, fileId } = this.props.match.params;
         this.state = {
             isLoading: false,
-            customer: id,
+            associate: id,
             id: id,
             fileId: fileId,
             errors: {},
