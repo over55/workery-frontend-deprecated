@@ -142,26 +142,15 @@ export default class AdminFinancialUpdateComponent extends Component {
                                 helpText='Selecting "yes" will result in job being paid.'
                             />
 
-                            {paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE &&
-                                <BootstrapDatePicker
-                                    label="Completion date (*)"
-                                    name="completionDate"
-                                    dateObj={completionDate}
-                                    onTimeChange={onCompletionDate}
-                                    datePickerClassName="form-control form-control-lg border"
-                                    divClassName="form-group p-0 col-md-7 mb-4"
-                                    error={errors.completionDate}
-                                />
-                            }
-
                             <BootstrapDatePicker
-                                label="Invoice date (*)"
+                                label={paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE ? "Invoice date (*)" : "Invoice date"}
                                 name="invoiceDate"
                                 dateObj={invoiceDate}
                                 onTimeChange={onInvoiceDateChange}
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.invoiceDate}
+                                helpText={paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE ? "" : "This field is optional."}
                             />
 
                             <BootstrapInput
