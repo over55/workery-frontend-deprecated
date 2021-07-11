@@ -43,6 +43,21 @@ class AdminFinancialUpdateContainer extends Component {
         if (invoiceServiceFeePaymentDate !== null) {
             invoiceServiceFeePaymentDate.setMinutes( invoiceServiceFeePaymentDate.getMinutes() + invoiceServiceFeePaymentDate.getTimezoneOffset() );
         }
+        // var invoiceDate = this.props.orderDetail.invoiceDate
+        //                   ? moment(this.props.orderDetail.invoiceDate, 'YYYY-MM-DD').toDate()
+        //                   : null;
+        // var completionDate = this.props.orderDetail.completionDate
+        //                   ? moment(this.props.orderDetail.completionDate, 'YYYY-MM-DD').toDate()
+        //                   : null;
+        var invoiceDate = this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null;
+        if (invoiceDate !== null) {
+            invoiceDate.setMinutes( invoiceDate.getMinutes() + invoiceDate.getTimezoneOffset() );
+        }
+
+        var completionDate = this.props.orderDetail.completionDate ? new Date(this.props.orderDetail.completionDate) : null;
+        if (completionDate !== null) {
+            completionDate.setMinutes( completionDate.getMinutes() + completionDate.getTimezoneOffset() );
+        }
 
         const hasNoIDs = this.props.orderDetail.invoiceIds === undefined || this.props.orderDetail.invoiceIds === null || this.props.orderDetail.invoiceIds === "";
 
@@ -121,7 +136,7 @@ class AdminFinancialUpdateContainer extends Component {
             id: parseInt(id),
             invoicePaidTo: this.props.orderDetail.invoicePaidTo,
             paymentStatus: this.props.orderDetail.state,
-            invoiceDate: this.props.orderDetail.invoiceDate ? new Date(this.props.orderDetail.invoiceDate) : null,
+            invoiceDate: invoiceDate,
             invoiceIds: hasNoIDs ? id : this.props.orderDetail.invoiceIds,
             invoiceQuotedLabourAmount: invoiceQuotedLabourAmount,
             invoiceQuotedMaterialAmount: invoiceQuotedMaterialAmount,
@@ -139,7 +154,7 @@ class AdminFinancialUpdateContainer extends Component {
             invoiceBalanceOwingAmount: invoiceBalanceOwingAmount,
             invoiceAmountDue: invoiceAmountDue,
             visits: visits,
-            completionDate: this.props.orderDetail.completionDate ? new Date(this.props.orderDetail.completionDate) : null,
+            completionDate: completionDate,
         }
 
         this.onSuccessfullyFetchedOrderDetail = this.onSuccessfullyFetchedOrderDetail.bind(this);
