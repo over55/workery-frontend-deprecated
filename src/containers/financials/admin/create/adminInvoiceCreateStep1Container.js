@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import AdminInvoiceCreateComponent from "../../../../components/financials/admin/create/adminInvoiceCreateStep1Component";
 import { pullOrderDetail } from "../../../../actions/orderActions";
@@ -22,13 +23,16 @@ class AdminInvoiceCreateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        const invoiceDateObj = new Date(this.props.orderDetail.invoiceDate);
+        var invoiceDate = this.props.orderDetail.invoiceDate
+                        ? moment(this.props.orderDetail.invoiceDate, 'YYYY-MM-DD').toDate()
+                        : null;
+
         const invoiceIds = this.props.orderDetail.invoiceIds;
 
         this.state = {
             orderId: parseInt(id),
             invoiceId: invoiceIds,
-            invoiceDate: invoiceDateObj,
+            invoiceDate: invoiceDate,
             errors: {},
             isLoading: false
         }
@@ -52,7 +56,11 @@ class AdminInvoiceCreateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.invoiceDate = new Date(this.props.orderDetail.invoiceDate);
+        if (this.state.invoiceDate !== undefined && this.state.invoiceDate !== null && !isNaN(this.state.invoiceDate) ) {
+            const invoiceDateMoment = moment(this.state.invoiceDate);
+            postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD")
+        }
+
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -99,7 +107,11 @@ class AdminInvoiceCreateContainer extends Component {
 
     onSuccessCallback(response) {
         console.log(response);
-        const invoiceDateObj = new Date(response.invoiceDate);
+
+        var invoiceDateObj = response.invoiceDate
+                           ? moment(response.invoiceDate, 'YYYY-MM-DD').toDate()
+                           : null;
+
         this.setState({ isLoading: false, invoiceDate: invoiceDateObj, })
     }
 
@@ -171,6 +183,7 @@ class AdminInvoiceCreateContainer extends Component {
                 orderId={orderId}
                 order={this.props.orderDetail}
                 invoiceId={invoiceId}
+                invoiceDate={invoiceDate}
                 errors={errors}
                 onTextChange={this.onTextChange}
                 onRadioChange={this.onRadioChange}

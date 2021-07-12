@@ -25,7 +25,6 @@ class AdminInvoiceCreateStep1Component extends Component {
             invoiceId, invoiceDate,
             onTextChange, onRadioChange, onInvoiceDateChange, isLoading, onClick, onSelectChange
         } = this.props;
-        const invoiceDateObj = new Date(order.invoiceDate);
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -97,7 +96,7 @@ class AdminInvoiceCreateStep1Component extends Component {
                             <BootstrapDatePicker
                                 label="Invoice Date"
                                 name="invoiceDate"
-                                dateObj={invoiceDateObj}
+                                dateObj={invoiceDate}
                                 datePickerClassName="form-control form-control-lg border"
                                 borderClassname="border-success"
                                 divClassName="form-group p-0 col-md-7 mb-4"

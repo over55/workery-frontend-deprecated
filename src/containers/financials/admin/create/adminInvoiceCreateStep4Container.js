@@ -26,6 +26,11 @@ class AdminInvoiceCreateStep4Container extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // BUGFIX: Fixed invoice data formatting.
+        var invoiceDate = this.props.orderDetail.invoiceDate
+                        ? moment(this.props.orderDetail.invoiceDate, 'YYYY-MM-DD').toDate()
+                        : null;
+
         this.state = {
             // LINE 01
             line01Quantity: localStorageGetIntegerItem("workery-create-invoice-line01Quantity"),
@@ -105,7 +110,7 @@ class AdminInvoiceCreateStep4Container extends Component {
             // Everything else.
             orderId: parseInt(id),
             invoiceId: this.props.orderDetail.invoiceIds,
-            invoiceDate: new Date(this.props.orderDetail.invoiceDate),
+            invoiceDate: invoiceDate,
             invoiceQuoteDays: localStorageGetIntegerItem("workery-create-invoice-invoiceQuoteDays"),
             invoiceQuoteDate: localStorageGetDateItem("workery-create-invoice-invoiceQuoteDate"),
             invoiceCustomersApproval: localStorage.getItem("workery-create-invoice-invoiceCustomersApproval"),
