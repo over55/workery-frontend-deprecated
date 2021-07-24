@@ -50,12 +50,12 @@ export function postLogin(email, password, successCallback=null, failedCallback=
 
         // Encode from JS Object to MessagePack (Buffer)
         var buffer = msgpack.encode({
-            'email_or_username': email,
+            'email': email,
             'password': password,
         });
 
         var data = {
-            'email_or_username': email,
+            'email': email,
             'password': password,
         };
 

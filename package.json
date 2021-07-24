@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
+    "env-cmd": "^10.1.0",
     "humps": "^2.0.1",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
@@ -43,8 +44,13 @@
     "validator": "^11.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f .env react-scripts start",
+    "start:dev": "env-cmd -f .env react-scripts start",
+    "start:qa": "env-cmd -f .env.qa react-scripts start",
+    "start:prod": "env-cmd -f .env.prod react-scripts start",
     "build": "react-scripts build",
+    "build:qa": "env-cmd -f .env.qa react-scripts build",
+    "build:prod": "env-cmd -f .env.prod react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
