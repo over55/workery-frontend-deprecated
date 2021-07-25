@@ -6,7 +6,7 @@ export const APP_STATE = 'APP_STATE';
 /**
  *  The API web-services endpoints.
  */
-export const WORKERY_API_BASE_PATH = '/en/api'
+export const WORKERY_API_BASE_PATH = '/api/v1'
 export const WORKERY_LOGIN_API_ENDPOINT = '/login';
 export const WORKERY_REFRESH_TOKEN_API_ENDPOINT = '/refresh-token';
 export const WORKERY_PROFILE_API_ENDPOINT = '/profile';

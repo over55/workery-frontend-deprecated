@@ -76,8 +76,8 @@ export function postLogin(email, password, successCallback=null, failedCallback=
 
             // SAVE OUR CREDENTIALS IN PERSISTENT STORAGE. THIS IS AN IMPORTANT
             // STEP BECAUSE OUR TOKEN UTILITY HELPER NEEDS THIS.
-            setAccessTokenInLocalStorage(profile.token);
-            setRefreshTokenInLocalStorage(null);
+            setAccessTokenInLocalStorage(profile.accessToken);
+            setRefreshTokenInLocalStorage(profile.refreshToken);
 
             // Update the global state of the application to store our
             // user profile for the application.
