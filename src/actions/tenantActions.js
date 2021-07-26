@@ -121,19 +121,19 @@ export function postTenantDetail(postData, successCallback, failedCallback) {
         customAxios.post(WORKERY_TENANT_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
-            let device = camelizeKeys(responseData);
+            let tenantData = camelizeKeys(responseData);
 
             // Extra.
-            device['isAPIRequestRunning'] = false;
-            device['errors'] = {};
+            tenantData['isAPIRequestRunning'] = false;
+            tenantData['errors'] = {};
 
             // Run our success callback function.
-            successCallback(device);
+            successCallback(tenantData);
 
             // Update the global state of the application to store our
-            // user device for the application.
+            // tenant data for the application.
             store.dispatch(
-                setTenantDetailSuccess(device)
+                setTenantDetailSuccess(tenantData)
             );
         }).catch( (exception) => {
             if (exception.response) {
@@ -257,25 +257,25 @@ export function putTenantDetail(postData, onSuccessCallback, onFailureCallback) 
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_TENANT_DETAIL_API_ENDPOINT+postData.id+"/", decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_TENANT_DETAIL_API_ENDPOINT+postData.id, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
-            let device = camelizeKeys(responseData);
+            let tenantData = camelizeKeys(responseData);
 
             // Extra.
-            device['isAPIRequestRunning'] = false;
-            device['errors'] = {};
+            tenantData['isAPIRequestRunning'] = false;
+            tenantData['errors'] = {};
 
             // Update the global state of the application to store our
-            // user device for the application.
+            // tenant data for the application.
             store.dispatch(
-                setTenantDetailSuccess(device)
+                setTenantDetailSuccess(tenantData)
             );
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
             // OBJECT WE GOT FROM THE API.
             if (onSuccessCallback) {
-                onSuccessCallback(device);
+                onSuccessCallback(tenantData);
             }
 
         }).catch( (exception) => {
