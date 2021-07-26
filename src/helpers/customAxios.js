@@ -25,23 +25,13 @@ export default function getCustomAxios() {
         baseURL: getAPIBaseURL(),
         headers: {
             'Authorization': "JWT " + accessToken,
-            'Content-Type': 'application/msgpack;',
-            'Accept': 'application/msgpack',
+            'Content-Type': 'application/json;',
+            'Accept': 'application/json',
         },
-        responseType: 'arraybuffer'
     });
 
     // Attach our Axios "refesh token" interceptor.
     attachAxiosRefreshTokenHandler(customAxios);
-
-    // DEVELOPER NOTES:
-    // (1) By setting the value to ``application/msgpack`` we are telling
-    //     ``Django REST Framework`` to use our ``MessagePack`` library.
-    // (2) Same as (1)
-    // (3) We are telling ``Axios`` that the data returned from our server
-    //     needs to be in ``arrayBuffer`` format so our ``msgpack-lite``
-    //     library can decode it. Special thanks to the following link:
-    //     https://blog.notabot.in/posts/how-to-use-protocol-buffers-with-rest
 
     // Return our custom Axios instance for our application.
     return customAxios;

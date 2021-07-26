@@ -1,12 +1,12 @@
 import axios from 'axios';
 import store from '../store';
 import { camelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 
 import { LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../constants/actionTypes"
 import { WORKERY_LOGIN_API_ENDPOINT } from "../constants/api"
 import { setAccessTokenInLocalStorage, setRefreshTokenInLocalStorage } from '../helpers/jwtUtility';
 import { getAPIBaseURL } from '../helpers/urlUtility';
+import getCustomAxios from '../helpers/customAxios';
 
 
 export const setLoginRequest = () => ({
@@ -39,20 +39,7 @@ export function postLogin(email, password, successCallback=null, failedCallback=
 
         // Create a new Axios instance which will be sending and receiving in
         // MessagePack (Buffer) format.
-        const customAxios = axios.create({
-            baseURL: getAPIBaseURL(),
-            headers: {
-                'Content-Type': 'application/json;',
-                'Accept': 'application/json',
-            },
-            // responseType: 'arraybuffer'
-        })
-
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode({
-            'email': email,
-            'password': password,
-        });
+        const customAxios = getCustomAxios();
 
         var data = {
             'email': email,
@@ -61,7 +48,6 @@ export function postLogin(email, password, successCallback=null, failedCallback=
 
         customAxios.post(WORKERY_LOGIN_API_ENDPOINT, data).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
-            // const responseData = msgpack.decode(Buffer(successResponse.data));
             const responseData = successResponse.data;
 
             // Snake-case from API to camel-case for React.
@@ -94,10 +80,6 @@ export function postLogin(email, password, successCallback=null, failedCallback=
 
         }).catch( (exception) => {
             if (exception.response) {
-                // const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                // const responseData = msgpack.decode(Buffer(responseBinaryData));
                 const responseData = exception.response.data
 
                 let errors = camelizeKeys(responseData);
