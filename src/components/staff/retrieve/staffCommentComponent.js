@@ -16,8 +16,8 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
 import {
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID
+    EXECUTIVE_ROLE_ID,
+    MANAGEMENT_ROLE_ID
 } from '../../../constants/api';
 
 
@@ -26,7 +26,7 @@ export default class StaffCommentComponent extends Component {
         const {
             user, staffComments, flashMessage, isLoading, id, staff, text, onTextChange, errors, onClick
         } = this.props;
-        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
+        const canViewFunctions = user.roleId === MANAGEMENT_ROLE_ID || user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

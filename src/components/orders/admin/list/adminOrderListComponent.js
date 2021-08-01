@@ -14,7 +14,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
-import { FRONTLINE_GROUP_ID } from "../../../../constants/api";
+import { FRONTLINE_ROLE_ID } from "../../../../constants/api";
 
 
 const customTotal = (from, to, size) => (
@@ -99,7 +99,7 @@ class RemoteListComponent extends Component {
 
         // The following code will hide the financial details if the
         // authenticated user belongs to the frontline staff.
-        if (user && user.groupId === FRONTLINE_GROUP_ID) {
+        if (user && user.roleId === FRONTLINE_ROLE_ID) {
             columns.splice(7, 1);
         }
 

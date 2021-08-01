@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import {
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID
+    EXECUTIVE_ROLE_ID,
+    MANAGEMENT_ROLE_ID
 } from '../../../constants/api';
 
 
 export default class StaffLiteRetrieveComponent extends Component {
     render() {
         const { user, id, isLoading, staff, flashMessage } = this.props;
-        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
+        const canViewFunctions = user.roleId === MANAGEMENT_ROLE_ID || user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

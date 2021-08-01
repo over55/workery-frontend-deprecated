@@ -9,7 +9,7 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import {
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    EXECUTIVE_GROUP_ID
+    EXECUTIVE_ROLE_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -19,7 +19,7 @@ export default class ClientOperationsComponent extends Component {
         const { id, clientDetail, user, errors, flashMessage, isLoading, onAddJobClick } = this.props;
         const isActiveState = clientDetail.state === "active";
         const isCompany = clientDetail && clientDetail.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
-        const canDeleteClient = user.groupId === EXECUTIVE_GROUP_ID;
+        const canDeleteClient = user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

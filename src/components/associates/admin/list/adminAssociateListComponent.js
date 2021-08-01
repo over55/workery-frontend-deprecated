@@ -13,7 +13,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
-import { FRONTLINE_GROUP_ID } from "../../../../constants/api";
+import { FRONTLINE_ROLE_ID } from "../../../../constants/api";
 
 
 const customTotal = (from, to, size) => (
@@ -220,7 +220,7 @@ class AdminAssociateListComponent extends Component {
         } = this.props;
 
         const associates = associateList.results ? associateList.results : [];
-        const isFrontlineStaffUser = user.groupId === FRONTLINE_GROUP_ID;
+        const isFrontlineStaffUser = user.roleId === FRONTLINE_ROLE_ID;
 
         return (
             <div>

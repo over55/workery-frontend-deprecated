@@ -159,32 +159,32 @@ export const WORKERY_PROFILE_API_URL = process.env.REACT_APP_API_HOST+'/api/prof
  *  The type of choices we have for the `Production` API endpoint for the
  *  `type_of` field.
  */
-export const EXECUTIVE_GROUP_ID = 1
-export const MANAGEMENT_GROUP_ID = 2
-export const FRONTLINE_GROUP_ID = 3
-export const ASSOCIATE_GROUP_ID = 4
-export const CUSTOMER_GROUP_ID = 5
-export const ANONYMOUS_GROUP_ID = 0
+export const EXECUTIVE_ROLE_ID = 1
+export const MANAGEMENT_ROLE_ID = 2
+export const FRONTLINE_ROLE_ID = 3
+export const ASSOCIATE_ROLE_ID = 4
+export const CUSTOMER_ROLE_ID = 5
+export const ANONYMOUS_ROLE_ID = 0
 export const GROUP_MEMBERSHIP_CHOICES = [
     {
         selectName: "group",
-        value: EXECUTIVE_GROUP_ID,
+        value: EXECUTIVE_ROLE_ID,
         label: "Executive"
     },{
         selectName: "group",
-        value: MANAGEMENT_GROUP_ID,
+        value: MANAGEMENT_ROLE_ID,
         label: "Manager"
     },{
         selectName: "group",
-        value: FRONTLINE_GROUP_ID,
+        value: FRONTLINE_ROLE_ID,
         label: "Frontline Staff"
     },{
         selectName: "group",
-        value: ASSOCIATE_GROUP_ID,
+        value: ASSOCIATE_ROLE_ID,
         label: "Associate"
     },{
         selectName: "group",
-        value: CUSTOMER_GROUP_ID,
+        value: CUSTOMER_ROLE_ID,
         label: "Member"
     }
 ];
@@ -562,11 +562,11 @@ export const GENDER_RADIO_CHOICES = [
 export const TENANT_STAFF_GROUP_MEMBERSHIP_CHOICES = [
     {
         selectName: "accountType",
-        value: MANAGEMENT_GROUP_ID,
+        value: MANAGEMENT_ROLE_ID,
         label: "Management"
     },{
         selectName: "accountType",
-        value: FRONTLINE_GROUP_ID,
+        value: FRONTLINE_ROLE_ID,
         label: "Frontline Staff"
     }
 ];
@@ -1179,12 +1179,12 @@ export const ROLE_RADIO_CHOICES = [
     {
         id: 'role-m-choice',
         name: "role",
-        value: MANAGEMENT_GROUP_ID,
+        value: MANAGEMENT_ROLE_ID,
         label: "Management"
     },{
         id: 'role-f-choice',
         name: "role",
-        value: FRONTLINE_GROUP_ID,
+        value: FRONTLINE_ROLE_ID,
         label: "Frontline Staff"
     }
 ];

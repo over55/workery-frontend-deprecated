@@ -8,8 +8,8 @@ import NumberFormat from 'react-number-format';
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import {
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID
+    EXECUTIVE_ROLE_ID,
+    MANAGEMENT_ROLE_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -17,7 +17,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class StaffOperationsComponent extends Component {
     render() {
         const { id, staff, user, errors, flashMessage, isLoading, onAddJobClick } = this.props;
-        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
+        const canViewFunctions = user.roleId === MANAGEMENT_ROLE_ID || user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

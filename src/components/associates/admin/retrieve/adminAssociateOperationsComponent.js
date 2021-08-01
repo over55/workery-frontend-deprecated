@@ -12,7 +12,7 @@ import {
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    EXECUTIVE_GROUP_ID
+    EXECUTIVE_ROLE_ID
 } from '../../../../constants/api';
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import AwayLogAlertComponent from "../awayLogAlertComponent";
@@ -23,7 +23,7 @@ export default class AdminAssociateOperationsComponent extends Component {
         const { id, associateDetail, user, errors, flashMessage, isLoading, onAddJobClick } = this.props;
         const isActiveState = associateDetail.state === 1;
         const isCompany = associateDetail && associateDetail.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
-        const canDeleteAssociate = user.groupId === EXECUTIVE_GROUP_ID;
+        const canDeleteAssociate = user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

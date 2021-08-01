@@ -26,7 +26,7 @@ class StaffChangeRoleContainer extends Component {
             id: id,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
-            role: this.props.staffDetail.groupId,
+            role: this.props.staffDetail.roleId,
             errors: {},
             isLoading: false
         }

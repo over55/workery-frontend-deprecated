@@ -7,7 +7,7 @@ import Moment from 'react-moment';
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    EXECUTIVE_GROUP_ID
+    EXECUTIVE_ROLE_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -21,7 +21,7 @@ export default class ClientFullRetrieveComponent extends Component {
         const isActiveState = client.state === "active";
         const isRezClient = typeOf === 2;
         const isCompany = client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
-        const canDeleteClient = user.groupId === EXECUTIVE_GROUP_ID;
+        const canDeleteClient = user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">

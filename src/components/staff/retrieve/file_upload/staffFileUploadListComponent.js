@@ -16,8 +16,8 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID,
+    EXECUTIVE_ROLE_ID,
+    MANAGEMENT_ROLE_ID,
 } from '../../../../constants/api';
 
 
@@ -210,7 +210,7 @@ class StaffFileUploadListComponent extends Component {
             flashMessage, onTableChange, isLoading, user
         } = this.props;
 
-        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
+        const canViewFunctions = user.roleId === MANAGEMENT_ROLE_ID || user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

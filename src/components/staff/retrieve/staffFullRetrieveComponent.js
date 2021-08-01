@@ -6,9 +6,9 @@ import Moment from 'react-moment';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID,
-    FRONTLINE_GROUP_ID
+    EXECUTIVE_ROLE_ID,
+    MANAGEMENT_ROLE_ID,
+    FRONTLINE_ROLE_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -18,7 +18,7 @@ export default class StaffFullRetrieveComponent extends Component {
     render() {
         const { id, staff, user, flashMessage, errors, onStaffClick } = this.props;
         const { groupDescription } = staff;
-        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
+        const canViewFunctions = user.roleId === MANAGEMENT_ROLE_ID || user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
