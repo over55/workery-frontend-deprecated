@@ -45,8 +45,7 @@ export function pullNavigation(schema, successCallback=null, failedCallback=null
 
         // Make the call to the web-service.
         customAxios.get(WORKERY_NAVIGATION_API_ENDPOINT).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             // console.log(responseData); // For debugging purposes.
 
@@ -71,10 +70,7 @@ export function pullNavigation(schema, successCallback=null, failedCallback=null
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 

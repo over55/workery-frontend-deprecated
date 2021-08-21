@@ -40,8 +40,15 @@ class DashboardContainer extends Component {
      */
 
     componentDidMount() {
-        this.props.pullProfile(this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-        this.props.pullDashboard(getSubdomain(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        this.props.pullProfile(
+            this.onSuccessfulSubmissionCallback,
+            this.onFailedSubmissionCallback
+        );
+        this.props.pullDashboard(
+            getSubdomain(),
+            this.onSuccessfulSubmissionCallback,
+            this.onFailedSubmissionCallback
+        );
         window.scrollTo(0, 0);  // Start the page at the top of the page.
     }
 
@@ -59,8 +66,9 @@ class DashboardContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessfulSubmissionCallback(dashboardObj) {
+        console.log("props.dashboard --->", this.props.dashboard);
+        console.log("dashboardObj    --->", dashboardObj);
     }
 
     onFailedSubmissionCallback(errors) {
