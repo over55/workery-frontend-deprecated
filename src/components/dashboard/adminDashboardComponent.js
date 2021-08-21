@@ -533,10 +533,9 @@ class CommentHistoryComponent extends Component {
 
 
 function commentAboutFormatter(cell, row){
-    console.log("commentAboutFormatter | row:", row);
     return (
         <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
-        {row && row.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+            {row && row.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
         </Link>
     )
 }

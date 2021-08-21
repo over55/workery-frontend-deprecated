@@ -67,8 +67,9 @@ class DashboardContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(dashboardObj) {
-        console.log("props.dashboard --->", this.props.dashboard);
-        console.log("dashboardObj    --->", dashboardObj);
+        console.log("DashboardContainer|onSuccessfulSubmissionCallback|dashboardObj:\n", dashboardObj);
+        // console.log("props.dashboard --->", this.props.dashboard);
+        // console.log("dashboardObj    --->", dashboardObj);
     }
 
     onFailedSubmissionCallback(errors) {

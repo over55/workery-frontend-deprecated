@@ -43,8 +43,6 @@ export function pullDashboard(schema, successCallback=null, failedCallback=null)
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        console.log("pullDashboard: GET");
-
         // Make the call to the web-service.
         customAxios.get(WORKERY_DASHBOARD_API_ENDPOINT).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
