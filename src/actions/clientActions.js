@@ -2,7 +2,6 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     CLIENT_LIST_REQUEST, CLIENT_LIST_FAILURE, CLIENT_LIST_SUCCESS,
@@ -47,8 +46,7 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             console.log(responseData); // For debugging purposes.
 
@@ -76,10 +74,7 @@ export function pullClientList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -126,13 +121,9 @@ export function postClientDetail(postData, onSuccessCallback, onFailureCallback)
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_CLIENT_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let client = camelizeKeys(responseData);
 
@@ -154,10 +145,7 @@ export function postClientDetail(postData, onSuccessCallback, onFailureCallback)
             }
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -203,8 +191,7 @@ export function pullClientDetail(id, onSuccessCallback, onFailureCallback) {
         const aURL = WORKERY_CLIENT_DETAIL_API_ENDPOINT+id+"/";
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
             let client = camelizeKeys(responseData);
@@ -230,10 +217,7 @@ export function pullClientDetail(id, onSuccessCallback, onFailureCallback) {
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -280,13 +264,9 @@ export function putClientContactDetail(data, onSuccessCallback, onFailureCallbac
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(data);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.put(WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT.replace("XXX", data.id), buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.put(WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
             let client = camelizeKeys(responseData);
 
             // Extra.
@@ -308,10 +288,7 @@ export function putClientContactDetail(data, onSuccessCallback, onFailureCallbac
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -355,13 +332,9 @@ export function putClientAddressDetail(data, onSuccessCallback, onFailureCallbac
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(data);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.put(WORKERY_CLIENT_ADDRESS_UPDATE_API_ENDPOINT.replace("XXX", data.id), buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.put(WORKERY_CLIENT_ADDRESS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
             let client = camelizeKeys(responseData);
 
             // Extra.
@@ -383,10 +356,7 @@ export function putClientAddressDetail(data, onSuccessCallback, onFailureCallbac
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -430,13 +400,9 @@ export function putClientMetricsDetail(data, onSuccessCallback, onFailureCallbac
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(data);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.put(WORKERY_CLIENT_METRICS_UPDATE_API_ENDPOINT.replace("XXX", data.id), buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.put(WORKERY_CLIENT_METRICS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
             let client = camelizeKeys(responseData);
 
             // Extra.
@@ -458,10 +424,7 @@ export function putClientMetricsDetail(data, onSuccessCallback, onFailureCallbac
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -506,8 +469,7 @@ export function deleteClientDetail(id, onSuccessCallback, onFailureCallback) {
 
         // Perform our API submission.
         customAxios.delete(WORKERY_CLIENT_DETAIL_API_ENDPOINT + id + "/").then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             let client = camelizeKeys(responseData);
 
             // Extra.
@@ -529,10 +491,8 @@ export function deleteClientDetail(id, onSuccessCallback, onFailureCallback) {
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
                 // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -579,13 +539,10 @@ export function postClientDeactivationDetail(postData, onSuccessCallback, onFail
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_ARCHIVE_API_ENDPOINT, buffer).then( (successResponse) => {
+        customAxios.post(WORKERY_CLIENT_ARCHIVE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             let client = camelizeKeys(responseData);
 
@@ -607,10 +564,7 @@ export function postClientDeactivationDetail(postData, onSuccessCallback, onFail
             }
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -655,13 +609,9 @@ export function postClientResidentialUpgradeDetail(postData, onSuccessCallback, 
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let client = camelizeKeys(responseData);
 
@@ -683,10 +633,7 @@ export function postClientResidentialUpgradeDetail(postData, onSuccessCallback, 
             }
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -730,13 +677,9 @@ export function postClientAvatarCreateOrUpdate(postData, onSuccessCallback, onFa
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let client = camelizeKeys(responseData);
 
@@ -758,10 +701,7 @@ export function postClientAvatarCreateOrUpdate(postData, onSuccessCallback, onFa
             }
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
