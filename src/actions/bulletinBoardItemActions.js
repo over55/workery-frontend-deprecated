@@ -2,7 +2,6 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     BULLETIN_BOARD_ITEM_LIST_REQUEST, BULLETIN_BOARD_ITEM_LIST_FAILURE, BULLETIN_BOARD_ITEM_LIST_SUCCESS,
@@ -40,8 +39,7 @@ export function pullBulletinBoardItemList(page=1, sizePerPage=10, filtersMap=new
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             console.log(responseData); // For debugging purposes.
 
@@ -69,10 +67,7 @@ export function pullBulletinBoardItemList(page=1, sizePerPage=10, filtersMap=new
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -119,13 +114,9 @@ export function postBulletinBoardItemDetail(postData, successCallback, failedCal
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_BULLETIN_BOARD_ITEM_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_BULLETIN_BOARD_ITEM_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
 
@@ -143,10 +134,7 @@ export function postBulletinBoardItemDetail(postData, successCallback, failedCal
             );
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -192,8 +180,7 @@ export function pullBulletinBoardItemDetail(id, successCallback, failedCallback)
         const aURL = WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+id+"/";
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
             let profile = camelizeKeys(responseData);
@@ -219,10 +206,7 @@ export function pullBulletinBoardItemDetail(id, successCallback, failedCallback)
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -269,15 +253,12 @@ export function putBulletinBoardItemDetail(postData, successCallback, failedCall
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         console.log(postData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+postData.id+"/", buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+postData.id+"/", decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
             // Extra.
@@ -297,10 +278,7 @@ export function putBulletinBoardItemDetail(postData, successCallback, failedCall
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -347,7 +325,7 @@ export function deleteBulletinBoardItemDetail(id, successCallback, failedCallbac
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
             let profile = camelizeKeys(responseData);
@@ -373,10 +351,7 @@ export function deleteBulletinBoardItemDetail(id, successCallback, failedCallbac
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
