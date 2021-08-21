@@ -1,7 +1,6 @@
 import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 
 import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILURE } from "../constants/actionTypes";
 import {
@@ -15,6 +14,7 @@ import {
     attachAxiosRefreshTokenHandler
 } from '../helpers/jwtUtility';
 import { getAPIBaseURL } from '../helpers/urlUtility';
+import getCustomAxios from '../helpers/customAxios';
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,26 +55,14 @@ export function pullProfile(successCallback=null, failedCallback=null) {
         // IMPORTANT: THIS IS THE ONLY WAY WE CAN GET THE ACCESS TOKEN.
         const accessToken = getAccessTokenFromLocalStorage();
 
-        // Create a new Axios instance using our oAuth 2.0 bearer token
-        // and various other headers.
-        const customAxios = axios.create({
-            baseURL: getAPIBaseURL(),
-            headers: {
-                'Authorization': "JWT " + accessToken,
-                'Content-Type': 'application/json;',
-                'Accept': 'application/json',
-            },
-            // responseType: 'arraybuffer'
-        })
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
 
         // Attach our Axios "refesh token" interceptor.
         attachAxiosRefreshTokenHandler(customAxios);
 
         // Run our Axios post.
         customAxios.get(WORKERY_PROFILE_API_ENDPOINT).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            // const responseData = msgpack.decode(Buffer(successResponse.data));
-
             const responseData = successResponse.data;
 
             let profile = camelizeKeys(responseData);
@@ -100,11 +88,6 @@ export function pullProfile(successCallback=null, failedCallback=null) {
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                // const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                // const responseData = msgpack.decode(Buffer(responseBinaryData));
-
                 const responseData = exception.response.data
 
                 let errors = camelizeKeys(responseData);
@@ -144,17 +127,8 @@ export function postProfile(data, successCallback, failedCallback) {
 
         const accessToken = getAccessTokenFromLocalStorage();
 
-        // Create a new Axios instance using our oAuth 2.0 bearer token
-        // and various other headers.
-        const customAxios = axios.create({
-            baseURL: getAPIBaseURL(),
-            headers: {
-                'Authorization': "JWT " + accessToken,
-                'Content-Type': 'application/msgpack;',
-                'Accept': 'application/msgpack',
-            },
-            responseType: 'arraybuffer'
-        })
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
 
         // // Attach our Axios "refesh token" interceptor.
         // attachAxiosRefreshTokenHandler(customAxios);
@@ -163,13 +137,9 @@ export function postProfile(data, successCallback, failedCallback) {
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(data);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_PROFILE_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_PROFILE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let profile = camelizeKeys(responseData);
 
@@ -193,10 +163,7 @@ export function postProfile(data, successCallback, failedCallback) {
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -229,24 +196,16 @@ export function postActivateProfile(accessCode, successCallback, failedCallback)
             setProfileRequest()
         );
 
-        // Create a new Axios instance.
-        const customAxios = axios.create({
-            baseURL: getAPIBaseURL(),
-            headers: {
-                'Content-Type': 'application/msgpack;',
-                'Accept': 'application/msgpack',
-            },
-            responseType: 'arraybuffer'
-        })
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode({
+        // Custom dict.
+        var data = {
             'pr_access_code': accessCode  // Set to `snake-case` for API server.
-        });
+        };
 
-        customAxios.post(WORKERY_ACTIVATE_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_ACTIVATE_API_ENDPOINT, data).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let profile = camelizeKeys(responseData);
 
@@ -264,10 +223,7 @@ export function postActivateProfile(accessCode, successCallback, failedCallback)
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -292,9 +248,3 @@ export function postActivateProfile(accessCode, successCallback, failedCallback)
 
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
-//                                 ASSOCIATE                                  //
-////////////////////////////////////////////////////////////////////////////////
-
-//TODO: IMPLEMENT HERE.
