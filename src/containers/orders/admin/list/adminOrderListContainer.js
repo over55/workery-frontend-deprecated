@@ -15,18 +15,29 @@ class AdminOrderListContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        // Force active users as per issue via https://github.com/over55/workery-front/issues/296
+        var parametersMap = new Map();
+        parametersMap.set("sort_order", "DESC"); // Don't forget these same values must be set in the `defaultSorted` var inside `ClientListComponent`.
+        parametersMap.set("sort_field", "id");
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "DESC",
+            sortField: "id",
 
             // Sorting, Filtering, & Searching
-            parametersMap: new Map(),
+            parametersMap: parametersMap,
 
             // Overaly
             isLoading: true,
         }
+
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -45,7 +56,13 @@ class AdminOrderListContainer extends Component {
         // when the page loads the API call does not get made! We need to do it
         // here when the component finished loading. We only write this code
         // here if no filter was selected in the table.
-        this.props.pullOrderList(this.state.page, this.state.sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        this.props.pullOrderList(
+            this.state.offset,
+            this.state.limit,
+            this.state.parametersMap,
+            this.onSuccessfulSubmissionCallback,
+            this.onFailedSubmissionCallback
+        );
     }
 
     componentWillUnmount() {
@@ -69,7 +86,7 @@ class AdminOrderListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -94,7 +111,7 @@ class AdminOrderListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -102,10 +119,12 @@ class AdminOrderListContainer extends Component {
             console.log(type, sortField, sortOrder); // For debugging purposes only.
 
             if (sortOrder === "asc") {
-                parametersMap.set('o', decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "ASC");
             }
             if (sortOrder === "desc") {
-                parametersMap.set('o', "-"+decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "DESC");
             }
 
             this.setState(
@@ -113,17 +132,29 @@ class AdminOrderListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(
+                        this.state.offset,
+                        this.state.limit,
+                        parametersMap,
+                        this.onSuccessfulSubmissionCallback,
+                        this.onFailedSubmissionCallback
+                    );
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(
+                        offset,
+                        limit,
+                        this.state.parametersMap,
+                        this.onSuccessfulSubmissionCallback,
+                        this.onFailedSubmissionCallback
+                    );
                 }
             );
 
@@ -140,12 +171,41 @@ class AdminOrderListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
             alert("Unsupported feature detected!!"+type);
         }
+    }
+
+    onNextClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullOrderList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onPreviousClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullOrderList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     /**
@@ -154,17 +214,11 @@ class AdminOrderListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <AdminOrderListComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                orderList={this.props.orderList}
-                onTableChange={this.onTableChange}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
-                user={this.props.user}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
@@ -183,9 +237,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullOrderList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullOrderList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
