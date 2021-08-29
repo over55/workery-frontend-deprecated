@@ -4,7 +4,7 @@ import { camelizeKeys } from 'humps';
 
 import { LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../constants/actionTypes"
 import { WORKERY_LOGIN_API_ENDPOINT } from "../constants/api"
-import { setAccessTokenInLocalStorage, setRefreshTokenInLocalStorage } from '../helpers/jwtUtility';
+import { setAccessTokenInLocalStorage, setRefreshTokenInLocalStorage, clearAllAccessAndRefreshTokensFromLocalStorage } from '../helpers/jwtUtility';
 import { getAPIBaseURL } from '../helpers/urlUtility';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -36,6 +36,10 @@ export function postLogin(email, password, successCallback=null, failedCallback=
         store.dispatch(
             setLoginRequest()
         );
+
+        // DEVELOPERS NOTE:
+        // WHEN ATTEMPTING TO LOGIN, WE NEED TO CLEAR ANY PREVIOUS SESSION TOKENS.
+        clearAllAccessAndRefreshTokensFromLocalStorage();
 
         // Create a new Axios instance which will be sending and receiving in
         // MessagePack (Buffer) format.

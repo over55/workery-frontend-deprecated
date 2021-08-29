@@ -42,13 +42,20 @@ export function getAccessTokenFromLocalStorage() {
 
 
 /*
- *  Gets our refresh token from persisten storage.
+ *  Gets our refresh token from persistent storage.
  */
 export function getRefreshTokenFromLocalStorage() {
     return localStorage.getItem("WORKERY_TOKEN_UTILITY_REFRESH_TOKEN_DATA");
 }
 
 
+/*
+ *  Clears all the tokens on the user's browsers persistent storage.
+ */
+export function clearAllAccessAndRefreshTokensFromLocalStorage() {
+    localStorage.removeItem("WORKERY_TOKEN_UTILITY_ACCESS_TOKEN_DATA");
+    localStorage.removeItem("WORKERY_TOKEN_UTILITY_REFRESH_TOKEN_DATA");
+}
 
 
 /**
