@@ -127,6 +127,18 @@ class AdminOrderListContainer extends Component {
                 parametersMap.set('sort_order', "DESC");
             }
 
+            // DEVELOPERS NOTE:
+            // THIS IS NOT AN ERROR. THE FRONTEND WILL DISPLAY "WESTERN NAME ORDER"
+            // (EX "Tony Stark") BUT THE ORDERING SHOULD BE DOING USING "LEXICAL
+            // NAME ORDER" (EX: "Stark, Tony"). THEREFORE WE NEED TO MANUALLY
+            // OVERRIDE THE SORTFIELD TO THE FOLLOWING.
+            if (sortField === "customerName") {
+                parametersMap.set('sort_field', "customer_lexical_name");
+            }
+            if (sortField === "associateName") {
+                parametersMap.set('sort_field', "associate_lexical_name");
+            }
+
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
