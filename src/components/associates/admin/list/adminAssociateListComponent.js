@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
@@ -7,13 +8,16 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+// import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
-import { FRONTLINE_ROLE_ID } from "../../../../constants/api";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+} from '../../../../constants/api';
 
 
 const customTotal = (from, to, size) => (
@@ -25,18 +29,18 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             associates,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
-        // const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-front/issues/298
-        //     1: 'Active',
-        //     0: 'Inactive',
+        // const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
+        //     "active": 'Active',
+        //     "inactive": 'Archived',
         // };
 
         const columns = [{
@@ -49,14 +53,14 @@ class RemoteListComponent extends Component {
         //     dataField: 'state',
         //     text: 'Status',
         //     sort: false,
-        //     // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/298
+        //     // filter: selectFilter({ // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
         //     //     options: selectOptions,
         //     //     defaultValue: 1,
         //     //     withoutEmptyOption: true
         //     // }),
         //     formatter: statusFormatter
-        // }
-        ,{
+        // },
+        {
             dataField: 'givenName',
             text: 'First Name',
             sort: true
@@ -91,30 +95,17 @@ class RemoteListComponent extends Component {
             order: 'asc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     page: offset,
+        //     sizePerPage: limit,
+        //     totalSize: totalSize,
+        //     showTotal: true,
+        //
+        //     // paginationTotalRenderer: customTotal,
+        //     withFirstAndLast: false,
+        //     nextPageText: "Next",
+        //     prePageText: "Previous",
+        // };
 
         return (
             <BootstrapTable
@@ -128,7 +119,7 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no associates at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -137,30 +128,29 @@ class RemoteListComponent extends Component {
     }
 }
 
-function iconFormatter(cell, row){
-    if (row.typeOf === 2) {
-        return (
-            <i className="fas fa-home"></i>
-        )
-    } else if (row.typeOf === 3) {
-        return (
-            <i className="fas fa-building"></i>
-        )
-    } else {
-        return (
-            <i className="fas fa-question-circle"></i>
-        )
-    }
 
+function iconFormatter(cell, row){
+    switch(row.typeOf) {
+        case COMMERCIAL_CUSTOMER_TYPE_OF_ID:
+            return <i className="fas fa-building"></i>;
+            break;
+        case RESIDENTIAL_CUSTOMER_TYPE_OF_ID:
+            return <i className="fas fa-home"></i>;
+            break;
+        default:
+            return <i className="fas fa-question"></i>;
+            break;
+    }
 }
+
 
 function statusFormatter(cell, row){
     switch(row.state) {
-        case 1:
+        case "active":
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
-        case 0:
-            return <i className="fas fa-times-circle" style={{ color: 'red' }}></i>;
+        case "inactive":
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
         return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
@@ -190,12 +180,6 @@ function emailFormatter(cell, row){
     }
 }
 
-function joinDateFormatter(cell, row){
-    return (
-        row && row.joinDate ? <Moment format="MM/DD/YYYY">{row.joinDate}</Moment> :"-"
-    )
-}
-
 
 function detailLinkFormatter(cell, row){
     return (
@@ -206,21 +190,31 @@ function detailLinkFormatter(cell, row){
 }
 
 
-class AdminAssociateListComponent extends Component {
+function joinDateFormatter(cell, row){
+    return (
+        row && row.joinDate ? <Moment format="MM/DD/YYYY">{row.joinDate}</Moment> :"-"
+    )
+}
+
+
+
+class AssociateListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             associateList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, user
+            flashMessage, onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
-        const associates = associateList.results ? associateList.results : [];
-        const isFrontlineStaffUser = user.roleId === FRONTLINE_ROLE_ID;
+        let associates = [];
+        if (associateList && isEmpty(associateList)===false) {
+            associates = associateList.results ? associateList.results : [];
+        }
 
         return (
             <div>
@@ -231,39 +225,26 @@ class AdminAssociateListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-crown"></i>&nbsp;Associates
+                            <i className="fas fa-user-circle"></i>&nbsp;Associates
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-crown"></i>&nbsp;Associates</h1>
+                <h1><i className="fas fa-user-circle"></i>&nbsp;Associates</h1>
 
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    {isFrontlineStaffUser
-                                        ? <div><span className="r-circle"><i className="fas fa-plus fa-3x"></i></span></div>
-                                        : <Link to="/associates/add/step-1" className="d-block link-ndecor" title="Associates">
-                                            <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
-                                        </Link>
-                                    }
+                                    <Link to="/associates/add/step-1" className="d-block link-ndecor" title="Associates">
+                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
+                                    </Link>
                                 </div>
-                                <h4>
-                                    {isFrontlineStaffUser
-                                        ?<div><i className="fas fa-lock"></i>&nbsp;Add</div>
-                                        :<div>Add</div>
-                                    }
-                                </h4>
-                                <div className="text-muted">
-                                    {isFrontlineStaffUser
-                                        ? "Locked"
-                                        : "Add Associates"
-                                    }
-                                    </div>
+                                <h4>Add</h4>
+                                <div className="text-muted">Add Associates</div>
                             </div>
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
@@ -284,13 +265,23 @@ class AdminAssociateListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             associates={associates}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
+
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>
@@ -298,4 +289,4 @@ class AdminAssociateListComponent extends Component {
     }
 }
 
-export default AdminAssociateListComponent;
+export default AssociateListComponent;
