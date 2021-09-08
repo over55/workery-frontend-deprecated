@@ -48,11 +48,6 @@ class RemoteListComponent extends Component {
         };
 
         const columns = [{
-            dataField: 'orderTypeOf',
-            text: '',
-            sort: false,
-            formatter: iconFormatter
-        },{
             dataField: 'dueDate',
             text: 'Due Date',
             sort: true,

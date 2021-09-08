@@ -135,7 +135,10 @@ class TaskListContainer extends Component {
             );
 
         } else if (type === "filter") {
-            console.log(type, filters); // For debugging purposes only.
+            ////
+            //// DEPRECATED VIA https://github.com/over55/workery-front/issues/296
+            ////
+            // console.log(type, filters); // For debugging purposes only.
             // if (filters.state === undefined) {
             //     parametersMap.delete("state");
             // } else {

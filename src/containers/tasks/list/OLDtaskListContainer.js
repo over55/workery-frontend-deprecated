@@ -7,7 +7,6 @@ import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskList } from "../../../actions/taskActions";
 import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
-
 class TaskListContainer extends Component {
     /**
      *  Initializer & Utility
@@ -16,30 +15,19 @@ class TaskListContainer extends Component {
 
     constructor(props) {
         super(props);
-
-        // Force active users as per issue via https://github.com/over55/workery-front/issues/296
-        var parametersMap = new Map();
-        parametersMap.set("state", "active");
-        parametersMap.set("sort_order", "DESC"); // Don't forget these same values must be set in the `defaultSorted` var inside `TaskListComponent`.
-        parametersMap.set("sort_field", "due_date");
-
         this.state = {
             // Pagination
-            offset: 0,
-            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            page: 1,
+            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
-            sortOrder: "DESC",
-            sortField: "due_date",
 
             // Sorting, Filtering, & Searching
-            parametersMap: parametersMap,
+            parametersMap: new Map(),
 
             // Overaly
             isLoading: true,
         }
         this.onTableChange = this.onTableChange.bind(this);
-        this.onNextClick = this.onNextClick.bind(this);
-        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -74,7 +62,7 @@ class TaskListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                offset: response.offset,
+                page: response.page,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -99,7 +87,7 @@ class TaskListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -107,12 +95,10 @@ class TaskListContainer extends Component {
             console.log(type, sortField, sortOrder); // For debugging purposes only.
 
             if (sortOrder === "asc") {
-                parametersMap.set('sort_field', decamelize(sortField));
-                parametersMap.set('sort_order', "ASC");
+                parametersMap.set('o', decamelize(sortField));
             }
             if (sortOrder === "desc") {
-                parametersMap.set('sort_field', decamelize(sortField));
-                parametersMap.set('sort_order', "DESC");
+                parametersMap.set('o', "-"+decamelize(sortField));
             }
 
             this.setState(
@@ -120,68 +106,60 @@ class TaskListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullTaskList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTaskList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, offset, limit); // For debugging purposes only.
+            console.log(type, page, sizePerPage); // For debugging purposes only.
 
             this.setState(
-                { offset: offset, limit:limit, isLoading: true, },
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullTaskList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTaskList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "filter") {
             console.log(type, filters); // For debugging purposes only.
-            // if (filters.state === undefined) {
-            //     parametersMap.delete("state");
+
+            // DEVELOPERS NOTE:
+            // (1) We are commenting out this code because of the following
+            //     issue in github: https://github.com/over55/workery-front/issues/259
+            // (2) We will automatically set `isClosed` to be `3`.
+            // if (filters.isClosed === undefined) {
+            //     parametersMap.delete("isClosed");
             // } else {
-            //     const filterVal = filters.state.filterVal;
-            //     parametersMap.set("state", filterVal);
+            //     const filterVal = filters.isClosed.filterVal;
+            //     parametersMap.set("isClosed", filterVal);
             // }
-            // this.setState(
-            //     { parametersMap: parametersMap, isLoading: true, },
-            //     ()=>{
-            //         // STEP 3:
-            //         // SUBMIT TO OUR API.
-            //         this.props.pullTaskList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-            //     }
-            // );
+            parametersMap.set("isClosed", 3);
+
+            if (filters.typeOf === undefined) {
+                parametersMap.delete("typeOf");
+            } else {
+                const filterVal = parseInt(filters.typeOf.filterVal);
+
+                // If we select the "ALL" option, else we filter down
+                // to specific value.
+                if (filterVal === 0) {
+                    parametersMap.delete("typeOf"); // "ALL" basically has no limit.
+                } else {
+                    parametersMap.set("typeOf", filterVal);
+                }
+            }
+
+            this.setState(
+                { parametersMap: parametersMap, isLoading: true, },
+                ()=>{
+                    // STEP 3:
+                    // SUBMIT TO OUR API.
+                    this.props.pullTaskList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                }
+            );
         }else {
             alert("Unsupported feature detected!!"+type);
         }
-    }
-
-    onNextClick(e) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
-
-        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
-
-        // Copy the `parametersMap` that we already have.
-        var parametersMap = this.state.parametersMap;
-
-        this.props.pullTaskList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-    }
-
-    onPreviousClick(e) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
-
-        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
-
-        // Defensive code: Skip this function if it our offset is weird.
-        if (offset < 0) {
-            return;
-        }
-
-        // Copy the `parametersMap` that we already have.
-        var parametersMap = this.state.parametersMap;
-
-        this.props.pullTaskList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     /**
@@ -190,11 +168,16 @@ class TaskListContainer extends Component {
      */
 
     render() {
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <TaskListComponent
-                {...this}
-                {...this.state}
-                {...this.props}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                taskList={this.props.taskList}
+                onTableChange={this.onTableChange}
+                flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -213,9 +196,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullTaskList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
+        pullTaskList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullTaskList(offset, limit, map, onSuccessCallback, onFailureCallback)
+                pullTaskList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
