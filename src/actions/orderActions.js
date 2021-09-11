@@ -1278,7 +1278,7 @@ export const setOrderListRequest = () => ({
     type: ORDER_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
-        offset: 1,
+        offset: 0,
         errors: {}
     },
 });
