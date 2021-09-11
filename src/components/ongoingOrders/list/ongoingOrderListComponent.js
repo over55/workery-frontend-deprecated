@@ -32,8 +32,8 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const selectOptions = {
-            "running": 'Running',
-            "terminated": 'Terminated',
+            1: 'Running',
+            0: 'Terminated',
         };
 
         const columns = [{
@@ -43,7 +43,7 @@ class RemoteListComponent extends Component {
             formatter: iconFormatter
         },{
             dataField: 'id',
-            text: 'Job #',
+            text: 'Id #',
             sort: true,
             formatter: idFormatter,
         },{
@@ -61,12 +61,12 @@ class RemoteListComponent extends Component {
             sort: false,
             filter: selectFilter({
                 options: selectOptions,
-                defaultValue: 'running',
+                defaultValue: 1,
                 withoutEmptyOption: true
             }),
             formatter: statusFormatter
         },{
-            dataField: 'slug',
+            dataField: 'id',
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
