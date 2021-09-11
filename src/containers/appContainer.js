@@ -320,7 +320,7 @@ import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdat
 import PartnerAvatarUpdateOperationContainer from "./partners/operations/partnerAvatarUpdateOperationContainer";
 
 // Ongoing Work Order
-import OngoingOrderListContainer from "./ongoingOrders/list/ongoingOrderListContainer";
+import AdminOngoingOrderListComponent from "./ongoingOrders/admin/list/ongoingOrderListContainer";
 import OngoingOrderLiteRetrieveContainer from "./ongoingOrders/retrieve/ongoingOrderLiteRetrieveContainer";
 import OngoingOrderFullRetrieveContainer from "./ongoingOrders/retrieve/ongoingOrderFullRetrieveContainer";
 import OngoingOrderUpdateContainer from "./ongoingOrders/update/ongoingOrderUpdateContainer";
@@ -661,7 +661,7 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
 
                                 { /* WORK ORDER */}
-                                <Route path="/ongoing-orders" exact component={requiresAuth(OngoingOrderListContainer)} />
+                                <Route path="/ongoing-orders" exact component={requiresAuth(AdminOngoingOrderListComponent)} />
                                 <Route path="/ongoing-order/:id" exact component={requiresAuth(OngoingOrderLiteRetrieveContainer)} />
                                 <Route path="/ongoing-order/:id/full" exact component={requiresAuth(OngoingOrderFullRetrieveContainer)} />
                                 <Route path="/ongoing-order/:id/comments" exact component={requiresAuth(OngoingOrderCommentContainer)} />
