@@ -16,30 +16,19 @@ class TagListContainer extends Component {
 
     constructor(props) {
         super(props);
-
-        // Force active users as per issue via https://github.com/over55/workery-front/issues/296
-        var parametersMap = new Map();
-        parametersMap.set("state", 1);
-        parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `TagListComponent`.
-        parametersMap.set("sort_field", "text");
-
         this.state = {
             // Pagination
-            offset: 0,
-            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            page: 1,
+            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
-            sortOrder: "ASC",
-            sortField: "text",
 
             // Sorting, Filtering, & Searching
-            parametersMap: parametersMap,
+            parametersMap: new Map(),
 
             // Overaly
             isLoading: true,
         }
         this.onTableChange = this.onTableChange.bind(this);
-        this.onNextClick = this.onNextClick.bind(this);
-        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -57,8 +46,8 @@ class TagListContainer extends Component {
         // here when the component finished loading. We only write this code
         // here if no filter was selected in the table.
         this.props.pullTagList(
-            this.state.offset,
-            this.state.limit,
+            this.state.page,
+            this.state.sizePerPage,
             this.state.parametersMap,
             this.onSuccessfulSubmissionCallback,
             this.onFailedSubmissionCallback
@@ -86,7 +75,7 @@ class TagListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                offset: response.offset,
+                page: response.page,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -111,7 +100,7 @@ class TagListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -130,17 +119,17 @@ class TagListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullTagList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTagList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, offset, limit); // For debugging purposes only.
+            console.log(type, page, sizePerPage); // For debugging purposes only.
 
             this.setState(
-                { offset: offset, limit:limit, isLoading: true, },
+                { page: page, sizePerPage:sizePerPage, isLoading: true, },
                 ()=>{
-                    this.props.pullTagList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTagList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -157,45 +146,12 @@ class TagListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullTagList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTagList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
             alert("Unsupported feature detected!!"+type);
         }
-    }
-
-    onNextClick(e) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
-
-        console.log("onNextClick");
-
-        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
-
-        // Copy the `parametersMap` that we already have.
-        var parametersMap = this.state.parametersMap;
-
-        this.props.pullTagList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-    }
-
-    onPreviousClick(e) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
-
-        console.log("onPreviousClick");
-
-        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
-
-        // Defensive code: Skip this function if it our offset is weird.
-        if (offset < 0) {
-            return;
-        }
-
-        // Copy the `parametersMap` that we already have.
-        var parametersMap = this.state.parametersMap;
-
-        this.props.pullTagList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     /**
@@ -204,11 +160,16 @@ class TagListContainer extends Component {
      */
 
     render() {
+        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <TagListComponent
-                {...this}
-                {...this.state}
-                {...this.props}
+                page={page}
+                sizePerPage={sizePerPage}
+                totalSize={totalSize}
+                tagList={this.props.tagList}
+                onTableChange={this.onTableChange}
+                flashMessage={this.props.flashMessage}
+                isLoading={isLoading}
             />
         );
     }
@@ -227,9 +188,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullTagList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
+        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullTagList(offset, limit, map, onSuccessCallback, onFailureCallback)
+                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
