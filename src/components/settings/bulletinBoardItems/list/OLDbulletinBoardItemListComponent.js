@@ -1,23 +1,18 @@
-import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import Moment from 'react-moment';
-// import 'moment-timezone';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-// import paginationFactory from 'react-bootstrap-table2-paginator';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
-import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-} from '../../../../constants/api';
 
 
 const customTotal = (from, to, size) => (
@@ -25,79 +20,79 @@ const customTotal = (from, to, size) => (
 );
 
 
-function isArchivedFormatter(cell, row){
-    if (row.state === 1) {
-        return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>
-    } else {
-        return <i className="fas fa-archive" style={{ color: 'blue' }}></i>
-    }
-}
-
-
 class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            offset, limit, totalSize,
+            page, sizePerPage, totalSize,
 
             // Data
             bulletinBoardItems,
 
             // Everything else.
-            onTableChange, isLoading, onNextClick, onPreviousClick,
+            onTableChange, isLoading
         } = this.props;
-
-        // const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
-        //     "active": 'Active',
-        //     "inactive": 'Archived',
-        // };
 
         const selectOptions = {
             3: 'Active',
             2: 'Archived',
         };
 
+        const defaultSorted = [{
+            dataField: 'createdAt',
+            order: 'desc'
+        }];
+
         const columns = [{
             dataField: 'text',
             text: 'Text',
             sort: true
         },{
-            dataField: 'createdTime',
+            dataField: 'createdAt',
             text: 'Created',
-            sort: true
-        },{
-            dataField: 'state',
-            text: 'State',
             sort: true,
+            formatter: dateTimeFormatter,
+        },{
+            dataField: 'isArchived',
+            text: 'Status',
+            sort: false,
             filter: selectFilter({
                 options: selectOptions,
-                // defaultValue: 3,
-                // withoutEmptyOption: true
+                defaultValue: 3,
+                withoutEmptyOption: true
             }),
             formatter: isArchivedFormatter
         },{
             dataField: 'id',
-            text: 'Details',
+            text: '',
             sort: false,
             formatter: detailLinkFormatter
         }];
 
-        const defaultSorted = [{
-            dataField: 'createdTime',
-            order: 'desc'
-        }];
-
-        // const paginationOption = {
-        //     page: offset,
-        //     sizePerPage: limit,
-        //     totalSize: totalSize,
-        //     showTotal: true,
-        //
-        //     // paginationTotalRenderer: customTotal,
-        //     withFirstAndLast: false,
-        //     nextPageText: "Next",
-        //     prePageText: "Previous",
-        // };
+        const paginationOption = {
+            page: page,
+            sizePerPage: sizePerPage,
+            totalSize: totalSize,
+            sizePerPageList: [{
+                text: '25', value: 25
+            }, {
+                text: '50', value: 50
+            }, {
+                text: '100', value: 100
+            }, {
+                text: 'All', value: totalSize
+            }],
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            firstPageText: 'First',
+            prePageText: 'Back',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+        };
 
         return (
             <BootstrapTable
@@ -108,10 +103,10 @@ class RemoteListComponent extends Component {
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no bulletinBoardItems at the moment"
+                noDataIndication="There is no office news at the moment"
                 remote
                 onTableChange={ onTableChange }
-                // pagination={ paginationFactory(paginationOption) }
+                pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -121,92 +116,59 @@ class RemoteListComponent extends Component {
 }
 
 
-function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case COMMERCIAL_CUSTOMER_TYPE_OF_ID:
-            return <i className="fas fa-building"></i>;
-            break;
-        case RESIDENTIAL_CUSTOMER_TYPE_OF_ID:
-            return <i className="fas fa-home"></i>;
-            break;
-        default:
-            return <i className="fas fa-question"></i>;
-            break;
-    }
-}
-
-
-function statusFormatter(cell, row){
-    switch(row.state) {
-        case "active":
-            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
-            break;
-        case "inactive":
-            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
-            break;
-        default:
-        return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
-            break;
-    }
-}
-
-
-function telephoneFormatter(cell, row){
+function dateTimeFormatter(cell, row){
     return (
-        <a href={`tel:${row.e164Telephone}`}>
-            {row.telephone}
-        </a>
+        <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>
     )
 }
 
 
-function emailFormatter(cell, row){
-    if (row.email === undefined || row.email === null) {
-        return ("-");
+function isArchivedFormatter(cell, row){
+    if (row.isArchived === false) {
+        return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>
     } else {
-        return (
-            <a href={`mailto:${row.email}`}>
-                {row.email}
-            </a>
-        )
+        return <i className="fas fa-archive" style={{ color: 'blue' }}></i>
     }
 }
 
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/bulletinBoardItem/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
-        </Link>
+        <div>
+            {row.isArchived
+                ?<div>
+                    <Link to={`/settings/bulletin-board-item/${row.id}`}>
+                        View&nbsp;<i className="fas fa-chevron-right"></i>
+                    </Link>
+                </div>
+                :<div>
+                    <Link to={`/settings/bulletin-board-item/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
+                        <i className="fas fa-edit"></i>&nbsp;Edit
+                    </Link>&nbsp;&nbsp;&nbsp;
+                    <Link to={`/settings/bulletin-board-item/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
+                        <i className="fas fa-minus"></i>&nbsp;Remove
+                    </Link>
+                </div>
+            }
+        </div>
     )
 }
-
-
-function joinDateFormatter(cell, row){
-    return (
-        row && row.joinDate ? <Moment format="MM/DD/YYYY">{row.joinDate}</Moment> :"-"
-    )
-}
-
 
 
 class BulletinBoardItemListComponent extends Component {
     render() {
         const {
             // Pagination
-            offset, limit, totalSize,
+            page, sizePerPage, totalSize,
 
             // Data
             bulletinBoardItemList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, onNextClick, onPreviousClick,
+            flashMessage, onTableChange, isLoading
         } = this.props;
 
-        let bulletinBoardItems = [];
-        if (bulletinBoardItemList && isEmpty(bulletinBoardItemList)===false) {
-            bulletinBoardItems = bulletinBoardItemList.results ? bulletinBoardItemList.results : [];
-        }
+        const bulletinBoardItems = bulletinBoardItemList.results ? bulletinBoardItemList.results : [];
 
         return (
             <div>
@@ -251,23 +213,13 @@ class BulletinBoardItemListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            offset={offset}
-                            limit={limit}
+                            page={page}
+                            sizePerPage={sizePerPage}
                             totalSize={totalSize}
                             bulletinBoardItems={bulletinBoardItems}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
-
-                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
-
-                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
-                            <i className="fas fa-check-circle"></i>&nbsp;Next
-                        </button>
-
-                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
-                            <i className="fas fa-check-circle"></i>&nbsp;Previous
-                        </button>
                     </div>
                 </div>
             </div>
