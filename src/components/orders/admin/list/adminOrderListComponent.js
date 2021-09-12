@@ -14,6 +14,17 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { FRONTLINE_ROLE_ID } from "../../../../constants/api";
 
+const selectOptions = {
+    0: 'Archived',
+    1: 'New',
+    2: 'Declined',
+    3: 'Pending',
+    4: 'Cancelled',
+    5: 'Ongoing',
+    6: 'In-progress',
+    7: 'Completed and Unpaid',
+    8: 'Completed and Paid',
+};
 
 class RemoteListComponent extends Component {
     render() {
@@ -27,18 +38,6 @@ class RemoteListComponent extends Component {
             // Everything else.
             onTableChange, isLoading, user, onNextClick, onPreviousClick,
         } = this.props;
-
-        const selectOptions = {
-            0: 'Archived',
-            1: 'New',
-            2: 'Declined',
-            3: 'Pending',
-            4: 'Cancelled',
-            5: 'Ongoing',
-            6: 'In-progress',
-            7: 'Completed and Unpaid',
-            8: 'Completed and Paid',
-        };
 
         const columns = [{
             dataField: 'typeOf',
@@ -170,7 +169,7 @@ function associateNameFormatter(cell, row){
 
 
 function statusFormatter(cell, row){
-    return row.prettyState;
+    return selectOptions[row.state];
 }
 
 
