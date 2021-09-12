@@ -111,6 +111,7 @@ class TagListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
+
     onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
@@ -119,10 +120,12 @@ class TagListContainer extends Component {
             console.log(type, sortField, sortOrder); // For debugging purposes only.
 
             if (sortOrder === "asc") {
-                parametersMap.set('o', decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "ASC");
             }
             if (sortOrder === "desc") {
-                parametersMap.set('o', "-"+decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "DESC");
             }
 
             this.setState(
@@ -145,12 +148,15 @@ class TagListContainer extends Component {
             );
 
         } else if (type === "filter") {
+            //
+            // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
+            //
             console.log(type, filters); // For debugging purposes only.
-            if (filters.isArchived === undefined) {
-                parametersMap.delete("isArchived");
+            if (filters.state === undefined) {
+                parametersMap.delete("state");
             } else {
-                const filterVal = filters.isArchived.filterVal;
-                parametersMap.set("isArchived", filterVal);
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
             }
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },

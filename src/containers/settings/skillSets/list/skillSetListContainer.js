@@ -99,9 +99,8 @@ class SkillSetListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
-        console.log("onTableChange");
 
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
