@@ -16,11 +16,20 @@ class ServiceFeeListContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        // Force active users as per issue via https://github.com/over55/workery-front/issues/296
+        var parametersMap = new Map();
+        parametersMap.set("state", 1);
+        parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `BulletinBoardItemListComponent`.
+        parametersMap.set("sort_field", "title");
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "ASC",
+            sortField: "title",
 
             // Sorting, Filtering, & Searching
             parametersMap: new Map(),
@@ -29,6 +38,8 @@ class ServiceFeeListContainer extends Component {
             isLoading: true,
         }
         this.onTableChange = this.onTableChange.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -63,7 +74,7 @@ class ServiceFeeListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -88,7 +99,10 @@ class ServiceFeeListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
+        console.log("onTableChange");
+
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -96,10 +110,12 @@ class ServiceFeeListContainer extends Component {
             console.log(type, sortField, sortOrder); // For debugging purposes only.
 
             if (sortOrder === "asc") {
-                parametersMap.set('o', decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "ASC");
             }
             if (sortOrder === "desc") {
-                parametersMap.set('o', "-"+decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "DESC");
             }
 
             this.setState(
@@ -107,39 +123,75 @@ class ServiceFeeListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullServiceFeeList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullServiceFeeList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullServiceFeeList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullServiceFeeList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "filter") {
+            //
+            // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
+            //
             console.log(type, filters); // For debugging purposes only.
-            if (filters.isArchived === undefined) {
-                parametersMap.delete("isArchived");
+            if (filters.state === undefined) {
+                parametersMap.delete("state");
             } else {
-                const filterVal = filters.isArchived.filterVal;
-                parametersMap.set("isArchived", filterVal);
+                const filterVal = filters.state.filterVal;
+                parametersMap.set("state", filterVal);
             }
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullServiceFeeList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullServiceFeeList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
             alert("Unsupported feature detected!!"+type);
         }
+    }
+
+    onNextClick(e) {
+        console.log("onNextClick");
+
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullServiceFeeList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onPreviousClick(e) {
+        console.log("onPreviousClick");
+
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullServiceFeeList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     /**
@@ -148,16 +200,11 @@ class ServiceFeeListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <ServiceFeeListComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                serviceFeeList={this.props.serviceFeeList}
-                onTableChange={this.onTableChange}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
@@ -176,9 +223,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullServiceFeeList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullServiceFeeList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullServiceFeeList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullServiceFeeList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
