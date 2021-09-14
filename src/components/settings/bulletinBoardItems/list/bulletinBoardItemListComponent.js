@@ -25,7 +25,7 @@ const customTotal = (from, to, size) => (
 );
 
 
-function isArchivedFormatter(cell, row){
+function stateFormatter(cell, row){
     if (row.state === 1) {
         return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>
     } else {
@@ -74,7 +74,7 @@ class RemoteListComponent extends Component {
                 // defaultValue: 3,
                 // withoutEmptyOption: true
             }),
-            formatter: isArchivedFormatter
+            formatter: stateFormatter
         },{
             dataField: 'id',
             text: 'Details',
