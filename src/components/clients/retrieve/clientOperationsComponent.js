@@ -32,7 +32,7 @@ export default class ClientOperationsComponent extends Component {
                             <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{clientDetail && clientDetail.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{clientDetail && clientDetail.name}
                         </li>
                     </ol>
                 </nav>

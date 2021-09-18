@@ -33,14 +33,14 @@ export default class ClientFullRetrieveComponent extends Component {
                             <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{client && client.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{client && client.name}</h1>
 
                 {client.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
@@ -121,19 +121,19 @@ export default class ClientFullRetrieveComponent extends Component {
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
-                                    <td>{client.fullName}</td>
+                                    <td>{client.name}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Primary Telephone</th>
-                                    <td><a href={`tel:${client.e164Telephone}`}>{client.telephone}</a></td>
+                                    <td><a href={`tel:${client.e164Telephone}`}>{client.telephone ? client.telephone : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Secondary Telephone</th>
-                                    <td><a href={`tel:${client.e164OtherTelephone}`}>{client.otherTelephone}</a></td>
+                                    <td><a href={`tel:${client.e164OtherTelephone}`}>{client.otherTelephone ? client.otherTelephone : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Email</th>
-                                    <td><a href={`mailto:${client.email}`}>{client.email}</a></td>
+                                    <td><a href={`mailto:${client.email}`}>{client.email ? client.email : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Ok to Email?</th>
@@ -171,8 +171,6 @@ export default class ClientFullRetrieveComponent extends Component {
                                     </td>
                                 </tr>
 
-
-
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
@@ -192,16 +190,16 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>}
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
-                                    <td>{client.gender}</td>
+                                    <td>{client.gender ? client.gender : "-"}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
-                                    <td>{client.description}</td>
+                                    <td>{client.description ? client.description : "-"}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {client.prettyTags && client.prettyTags.map(
+                                        {client.tags && client.tags.map(
                                             (tag) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </td>
@@ -214,7 +212,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
-                                    <td>{client.howHearPretty}</td>
+                                    <td>{client.howHearText ? client.howHearText : "-"}</td>
                                 </tr>
 
 

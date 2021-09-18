@@ -23,7 +23,7 @@ export default class ClientUnarchiveOperationComponent extends Component {
                             <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/client/${id}/operations`}><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</Link>
+                            <Link to={`/client/${id}/operations`}><i className="fas fa-user"></i>&nbsp;{client && client.name}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-box-open"></i>&nbsp;Unarchive

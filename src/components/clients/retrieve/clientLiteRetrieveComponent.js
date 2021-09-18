@@ -22,14 +22,14 @@ export default class ClientLiteRetrieveComponent extends Component {
                             <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{client && client.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{client && client.name}</h1>
 
                 {client.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
@@ -89,7 +89,7 @@ export default class ClientLiteRetrieveComponent extends Component {
                                     <h1>{client.organizationName}</h1>
                                 }
                                 <h3>
-                                    {client && client.fullName}
+                                    {client && client.name}
                                 </h3>
                                 {client && client.address &&
                                     <p className="text-muted">
@@ -141,9 +141,9 @@ export default class ClientLiteRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { text, id } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }
