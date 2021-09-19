@@ -167,7 +167,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={client.addressUrl} target="_blank">{client.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
+                                        <a href={client.fullAddressUrl} target="_blank">{client.fullAddressWithoutPostalCode}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
 
