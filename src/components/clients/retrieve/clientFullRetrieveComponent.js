@@ -234,7 +234,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
-                                    <td>{client.createdBy}</td>
+                                    <td>{client.createdByName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
@@ -244,7 +244,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>
-                                    <td>{client.lastModifiedBy}</td>
+                                    <td>{client.lastModifiedByName}</td>
                                 </tr>
 
 
