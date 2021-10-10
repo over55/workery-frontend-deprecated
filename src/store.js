@@ -12,6 +12,7 @@ import {
     TASK_LIST_SUCCESS, TASK_DETAIL_SUCCESS,
     FINANCIAL_LIST_SUCCESS,
     TAG_LIST_SUCCESS, TAG_DETAIL_SUCCESS,
+    PRIVATE_FILE_LIST_SUCCESS, PRIVATE_FILE_DETAIL_SUCCESS,
     HOW_HEAR_LIST_SUCCESS, HOW_HEAR_DETAIL_SUCCESS,
     AWAY_LOG_LIST_SUCCESS,
     SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
@@ -54,6 +55,7 @@ import { staffListReducer, staffDetailReducer } from "./reducers/staffReducers";
 import { staffCommentListReducer } from "./reducers/staffCommentReducers";
 import { staffFileListReducer } from "./reducers/staffFileUploadReducers";
 import { tagListReducer, tagDetailReducer } from "./reducers/tagReducers";
+import { privateFileListReducer, privateFileDetailReducer } from "./reducers/privateFileReducers";
 import { tenantListReducer, tenantDetailReducer } from "./reducers/tenantReducer";
 import userReducer from "./reducers/userReducer";
 import { taskListReducer, taskDetailReducer } from "./reducers/taskReducers";
@@ -95,6 +97,7 @@ const appReducer = combineReducers({
     staffCommentListState: staffCommentListReducer,
     staffFileListState: staffFileListReducer,
     tagListState: tagListReducer, tagDetailState: tagDetailReducer,
+    privateFileListState: privateFileListReducer, privateFileDetailState: privateFileDetailReducer,
     taskListState: taskListReducer, taskDetailState: taskDetailReducer,
     tenantListState: tenantListReducer, tenantDetailState: tenantDetailReducer,
     userState: userReducer,
@@ -138,6 +141,7 @@ const localStorageMiddleware = ({ getState }) => {
             ARCHIVED_CLIENT_LIST_SUCCESS,
             HOW_HEAR_LIST_SUCCESS, HOW_HEAR_DETAIL_SUCCESS,
             TAG_LIST_SUCCESS, TAG_DETAIL_SUCCESS,
+            PRIVATE_FILE_LIST_SUCCESS, PRIVATE_FILE_DETAIL_SUCCESS,
             ASSOCIATE_LIST_SUCCESS, ASSOCIATE_DETAIL_SUCCESS, ASSOCIATE_COMMENT_LIST_REQUEST,
             ACTIVITY_SHEET_LIST_SUCCESS,  ACTIVITY_SHEET_DETAIL_SUCCESS,
             DEPOSIT_LIST_SUCCESS,  DEPOSIT_DETAIL_SUCCESS,
