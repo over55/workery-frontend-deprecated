@@ -147,11 +147,11 @@ class RemoteListComponent extends Component {
 
 
 function statusFormatter(cell, row){
-    switch(row.isArchived) {
-        case false:
+    switch(row.state) {
+        case 1:
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
-        case true:
+        case 2:
             return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
@@ -164,23 +164,23 @@ function statusFormatter(cell, row){
 function fileFormatter(cell, row){
     return (
         <div>
-            {row.isArchived === false &&
+            {row.state === 1 &&
                 <a href={row.fileUrl} target="_blank">
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                 </a>
             }
-            {row.isArchived === true &&
+            {row.state === 2 &&
                 <strong>
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                 </strong>
             }
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            {row.isArchived === false &&
+            {row.state === 1 &&
                 <Link to={`/client/${row.customer}/file/archive/${row.id}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archive
                 </Link>
             }
-            {row.isArchived === true &&
+            {row.state === 2 &&
                 <strong>
                     <i className="fas fa-archive"></i>&nbsp;Archived
                 </strong>
