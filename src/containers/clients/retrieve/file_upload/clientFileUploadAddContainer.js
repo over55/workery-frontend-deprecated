@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import OrderListComponent from "../../../../components/clients/retrieve/file_upload/clientFileUploadAddComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { postClientFileUpload } from "../../../../actions/clientFileUploadActions";
+import { postPrivateFileDetail } from "../../../../actions/privateFileActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../validators/fileValidator"
 import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
@@ -30,7 +30,7 @@ class CustomerFileUploadAddContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            customer: id,
+            customerId: id,
             file: null,
             id: id,
             text: "",
@@ -186,7 +186,7 @@ class CustomerFileUploadAddContainer extends Component {
 
             // Once our state has been validated `client-side` then we will
             // make an API request with the server to create our new production.
-            this.props.postClientFileUpload(
+            this.props.postPrivateFileDetail(
                 this.getPostData(),
                 this.onSuccessPostCallback,
                 this.onFailurePostCallback
@@ -317,8 +317,8 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        postClientFileUpload: (postData, successCallback, failedCallback) => {
-            dispatch(postClientFileUpload(postData, successCallback, failedCallback))
+        postPrivateFileDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPrivateFileDetail(postData, successCallback, failedCallback))
         },
         pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
