@@ -44,7 +44,7 @@ class RemoteListComponent extends Component {
 
         const columns = [
         {
-            dataField: 'is_archived',
+            dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
@@ -148,6 +148,9 @@ class RemoteListComponent extends Component {
 
 function statusFormatter(cell, row){
     switch(row.state) {
+        case 0:
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
+            break;
         case 1:
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
@@ -164,6 +167,11 @@ function statusFormatter(cell, row){
 function fileFormatter(cell, row){
     return (
         <div>
+            {row.state === 0 &&
+                <strong>
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </strong>
+            }
             {row.state === 1 &&
                 <a href={row.fileUrl} target="_blank">
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
@@ -175,8 +183,13 @@ function fileFormatter(cell, row){
                 </strong>
             }
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            {row.state === 0 &&
+                <strong>
+                    <i className="fas fa-archive"></i>&nbsp;Archived
+                </strong>
+            }
             {row.state === 1 &&
-                <Link to={`/client/${row.customer}/file/archive/${row.id}`}>
+                <Link to={`/client/${row.customerId}/file/archive/${row.id}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archive
                 </Link>
             }

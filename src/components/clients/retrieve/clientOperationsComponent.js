@@ -17,7 +17,7 @@ import { FlashMessageComponent } from "../../flashMessageComponent";
 export default class ClientOperationsComponent extends Component {
     render() {
         const { id, clientDetail, user, errors, flashMessage, isLoading, onAddJobClick } = this.props;
-        const isActiveState = clientDetail.state === "active";
+        const isActiveState = clientDetail.state === 1;
         const isCompany = clientDetail && clientDetail.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         const canDeleteClient = user.roleId === EXECUTIVE_ROLE_ID;
         return (

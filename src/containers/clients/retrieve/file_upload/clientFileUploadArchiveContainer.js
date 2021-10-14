@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import ClientFileUploadArchiveComponent from "../../../../components/clients/retrieve/file_upload/clientFileUploadArchiveComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { deleteClientFileUpload } from "../../../../actions/clientFileUploadActions";
+import { deletePrivateFileDetail } from "../../../../actions/privateFileActions";
 
 
 class CustomerFileUploadArchiveContainer extends Component {
@@ -88,7 +88,8 @@ class CustomerFileUploadArchiveContainer extends Component {
     onClick(e) {
         e.preventDefault();
         this.setState({ isLoading: true }, ()=>{
-            this.props.deleteClientFileUpload(this.state.fileId, this.onSuccessCallback, this.onFailureCallback);
+            console.log("onClick|pre");
+            this.props.deletePrivateFileDetail(this.state.fileId, this.onSuccessCallback, this.onFailureCallback);
         });
     }
 
@@ -124,8 +125,8 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        deleteClientFileUpload: (id, onSuccessCallback, onFailureCallback) => {
-            dispatch(deleteClientFileUpload(id, onSuccessCallback, onFailureCallback))
+        deletePrivateFileDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(deletePrivateFileDetail(id, onSuccessCallback, onFailureCallback))
         },
     }
 }

@@ -319,31 +319,31 @@ export function deletePrivateFileDetail(id, onSuccessCallback, onFailureCallback
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_PRIVATE_FILE_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_PRIVATE_FILE_DETAIL_API_ENDPOINT+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            const responseData = successResponse.data;
-            // console.log(successResult); // For debugging purposes.
-
-            let profile = camelizeKeys(responseData);
+            // DEVELOPERS NOTE:
+            // 1. Deletions result in `http 204 status` which means no data
+            //    should be returned.
+            let response = {};
 
             // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
+            response['isAPIRequestRunning'] = false;
+            response['errors'] = {};
 
-            console.log("deletePrivateFileDetail | Success:", profile); // For debugging purposes.
+            console.log("deletePrivateFileDetail | Success:", response); // For debugging purposes.
 
             // Update the global state of the application to store our
-            // user profile for the application.
+            // response for the application.
             store.dispatch(
-                setPrivateFileDetailSuccess(profile)
+                setPrivateFileDetailSuccess(response)
             );
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
             // OBJECT WE GOT FROM THE API.
             if (onSuccessCallback) {
-                onSuccessCallback(profile);
+                onSuccessCallback(response);
             }
 
         }).catch( (exception) => { // ERROR
