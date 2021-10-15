@@ -52,7 +52,7 @@ class ClientRezUpgradeOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.customer = this.props.clientDetail.id;
+        postData.customerId = this.props.clientDetail.id;
         postData.organizationName = this.state.organizationName;
         // 'organization_type_of',
         postData.organizationAddressCountry = this.state.country;

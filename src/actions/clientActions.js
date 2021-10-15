@@ -8,8 +8,11 @@ import {
     CLIENT_DETAIL_REQUEST, CLIENT_DETAIL_FAILURE, CLIENT_DETAIL_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_CLIENT_LIST_API_ENDPOINT, WORKERY_CLIENT_DETAIL_API_ENDPOINT,
-    WORKERY_CLIENT_ARCHIVE_API_ENDPOINT, WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT,
+    WORKERY_CLIENT_LIST_API_ENDPOINT,
+    WORKERY_CLIENT_DETAIL_API_ENDPOINT,
+    WORKERY_CLIENT_ARCHIVE_API_ENDPOINT,
+    WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT,
+    WORKERY_CLIENT_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT,
     WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
     WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT,
     WORKERY_CLIENT_ADDRESS_UPDATE_API_ENDPOINT,
@@ -468,13 +471,11 @@ export function deleteClientDetail(id, onSuccessCallback, onFailureCallback) {
         const customAxios = getCustomAxios();
 
         // Perform our API submission.
-        customAxios.delete(WORKERY_CLIENT_DETAIL_API_ENDPOINT + id + "/").then( (successResponse) => {
-            const responseData = successResponse.data;
-            let client = camelizeKeys(responseData);
-
-            // Extra.
-            client['isAPIRequestRunning'] = false;
-            client['errors'] = {};
+        customAxios.post(WORKERY_CLIENT_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT, { "customer_id": id }).then( (successResponse) => {
+            let client = {
+                isAPIRequestRunning: false,
+                errors: {},
+            };
 
             // Update the global state of the application to store our
             // user client for the application.
