@@ -91,6 +91,10 @@ class ClientUpdateContainer extends Component {
             postData.secondaryPhoneTypeOf = 1;
         }
 
+        // Boolean handler.
+        postData.isOkToEmail = this.state.isOkToEmail === 1 ? true : false;
+        postData.isOkToText = this.state.isOkToText === 1 ? true : false;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
