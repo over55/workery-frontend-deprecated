@@ -48,10 +48,10 @@ class ClientUpdateContainer extends Component {
             organizationTypeOf: this.props.clientDetail.organizationTypeOf,
             givenName: this.props.clientDetail.givenName,
             lastName: this.props.clientDetail.lastName,
-            primaryPhone: this.props.clientDetail.telephone,
-            primaryPhoneTypeOf: this.props.clientDetail.telephoneTypeOf,
-            secondaryPhone: this.props.clientDetail.otherTelephone,
-            secondaryPhoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
+            telephone: this.props.clientDetail.telephone,
+            telephoneTypeOf: this.props.clientDetail.telephoneTypeOf,
+            otherTelephone: this.props.clientDetail.otherTelephone,
+            otherTelephoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
             email: this.props.clientDetail.email,
             isOkToEmail: isOkToEmail,
             isOkToText: isOkToText,
@@ -84,11 +84,11 @@ class ClientUpdateContainer extends Component {
         }
 
         // (8) Telephone type: This field is required.;
-        if (this.state.primaryPhoneTypeOf === undefined || this.state.primaryPhoneTypeOf === null || this.state.primaryPhoneTypeOf === "") {
-            postData.primaryPhoneTypeOf = 1;
+        if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
+            postData.telephoneTypeOf = 1;
         }
-        if (this.state.secondaryPhoneTypeOf === undefined || this.state.secondaryPhoneTypeOf === null || this.state.secondaryPhoneTypeOf === "") {
-            postData.secondaryPhoneTypeOf = 1;
+        if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
+            postData.otherTelephoneTypeOf = 1;
         }
 
         // Boolean handler.
@@ -212,7 +212,7 @@ class ClientUpdateContainer extends Component {
             typeOf,
 
             // STEP 4 - REZ
-            givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail,
+            givenName, lastName, telephone, telephoneTypeOf, otherTelephone, otherTelephoneTypeOf, email, isOkToText, isOkToEmail,
 
             // STEP 4 - BIZ
             organizationName, organizationTypeOf,
@@ -228,10 +228,10 @@ class ClientUpdateContainer extends Component {
                 organizationTypeOf={organizationTypeOf}
                 givenName={givenName}
                 lastName={lastName}
-                primaryPhone={primaryPhone}
-                primaryPhoneTypeOf={primaryPhoneTypeOf}
-                secondaryPhone={secondaryPhone}
-                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
+                telephone={telephone}
+                telephoneTypeOf={telephoneTypeOf}
+                otherTelephone={otherTelephone}
+                otherTelephoneTypeOf={otherTelephoneTypeOf}
                 email={email}
                 isOkToText={isOkToText}
                 isOkToEmail={isOkToEmail}
