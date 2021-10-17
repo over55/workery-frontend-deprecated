@@ -56,7 +56,7 @@ class ClientMetricsUpdateContainer extends Component {
             dateOfBirth: birthdateObj,
             gender: this.props.clientDetail.gender,
             isHowHearLoading: true,
-            howHear: this.props.clientDetail.howHear,
+            howHearId: this.props.clientDetail.howHearId,
             howHearOption: this.props.clientDetail.howHearOption,
             howHearOther: this.props.clientDetail.howHearOther,
             joinDate: joinDateObj,
@@ -313,7 +313,7 @@ class ClientMetricsUpdateContainer extends Component {
             errors, id, typeOf, givenName, lastName, isLoading,
 
             // STEP 6
-            isTagsLoading, tags, birthdate, gender, isHowHearLoading, howHear, howHearOption, howHearOther, joinDate, description, dateOfBirth
+            isTagsLoading, tags, birthdate, gender, isHowHearLoading, howHearId, howHearOption, howHearOther, joinDate, description, dateOfBirth
         } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
@@ -337,7 +337,7 @@ class ClientMetricsUpdateContainer extends Component {
                 dateOfBirth={dateOfBirth}
                 gender={gender}
                 isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
+                howHearId={howHearId}
                 howHearOptions={howHearOptions}
                 howHearOption={howHearOption}
                 howHearOther={howHearOther}
