@@ -29,7 +29,7 @@ class ClientAvatarUpdateOperationContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            customer: id,
+            customerId: parseInt(id),
             file: null,
             id: id,
             text: "",
