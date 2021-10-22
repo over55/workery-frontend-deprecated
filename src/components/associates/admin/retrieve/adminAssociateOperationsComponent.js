@@ -36,7 +36,7 @@ export default class AdminAssociateOperationsComponent extends Component {
                             <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{associateDetail && associateDetail.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{associateDetail && associateDetail.name}
                         </li>
                     </ol>
                 </nav>
@@ -45,7 +45,7 @@ export default class AdminAssociateOperationsComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{associateDetail && associateDetail.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{associateDetail && associateDetail.name}</h1>
 
                 <div className="row">
                     <div className="step-navigation">

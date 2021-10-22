@@ -36,7 +36,7 @@ class AssociateUpdateComponent extends Component {
             tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate, comment,
 
             // Everything else...
-            id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
+            id, errors, onTextChange, onRadioChange, isLoading, onClick, name,
             onSelectChange, onBillingCountryChange, onBillingRegionChange,
             onSkillSetMultiChange, onDuesDateChange, onCommercialInsuranceExpiryDate,
             onAutoInsuranceExpiryDateChange, onWsibInsuranceDateChange, onPoliceCheckDateChange,
@@ -56,7 +56,7 @@ class AssociateUpdateComponent extends Component {
                             <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associate</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/associate/${id}/full`}><i className="fas fa-crown"></i>&nbsp;{fullName}</Link>
+                            <Link to={`/associate/${id}/full`}><i className="fas fa-crown"></i>&nbsp;{name}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Update

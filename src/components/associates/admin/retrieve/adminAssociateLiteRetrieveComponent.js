@@ -27,7 +27,7 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                             <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{associate && associate.name}
                         </li>
                     </ol>
                 </nav>
@@ -36,7 +36,7 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.name}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -83,8 +83,8 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                         <div className="row">
                             <div className="col-sm-4">
                                 <Link to={`/associate/${id}/avatar`}>
-                                    {associate && associate.avatarUrl !== undefined && associate.avatarUrl !== null
-                                        ? <img src={associate.avatarUrl} className="img-fluid rounded" alt="Profile" id={`associate-avatar-${id}`} />
+                                    {associate && associate.avatarFileUrl !== undefined && associate.avatarFileUrl !== null
+                                        ? <img src={associate.avatarFileUrl} className="img-fluid rounded" alt="Profile" id={`associate-avatar-${id}`} />
                                         : <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" id={`avatar-placeholder`}/>
                                     }
                                     <p><i className="fas fa-edit"></i>Click here to change photo</p>
@@ -96,10 +96,10 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                                         {associate && associate.organizationName}
                                     </h1>
                                 }
-                                <h3>{associate && associate.fullName}</h3>
-                                {associate && associate.address &&
+                                <h3>{associate && associate.name}</h3>
+                                {associate && associate.fullAddressWithPostalCode &&
                                     <p className="text-muted">
-                                        <a href={associate && associate.addressUrl}><i className="fas fa-map-marker-alt"></i>&nbsp;{associate && associate.address}</a>
+                                        <a href={associate && associate.fullAddressUrl}><i className="fas fa-map-marker-alt"></i>&nbsp;{associate && associate.fullAddressWithPostalCode}</a>
                                     </p>
                                 }
                                 {associate && associate.email &&
@@ -109,7 +109,7 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                                 }
                                 {associate && associate.telephone &&
                                     <p>
-                                        <a href={`tel:${associate && associate.e164Telephone}`}>
+                                        <a href={`tel:${associate && associate.telephone}`}>
                                             <i className="fas fa-phone-square"></i>&nbsp;{associate && associate.telephone}
                                         </a>
                                     </p>
@@ -117,15 +117,15 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                                 <p className="m-0"><strong>Skill sets:</strong></p>
                                 {associate &&
                                     <p>
-                                        {associate && associate.prettySkillSets && associate.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        {associate.skillsets && associate.skillsets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={skillSet.id} />)
                                         }
                                     </p>
                                 }
                                 <p className="m-0"><strong>Tags:</strong></p>
                                 {associate &&
                                     <p>
-                                        {associate && associate.prettyTags && associate.prettyTags.map(
+                                        {associate && associate.tags && associate.tags.map(
                                             (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                                         }
                                     </p>

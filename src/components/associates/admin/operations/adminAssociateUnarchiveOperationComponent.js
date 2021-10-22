@@ -24,7 +24,7 @@ export default class AdminAssociateUnarchiveOperationComponent extends Component
                             <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/associate/${id}/operations`}><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</Link>
+                            <Link to={`/associate/${id}/operations`}><i className="fas fa-user"></i>&nbsp;{associate && associate.name}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-box-open"></i>&nbsp;Unarchive

@@ -129,7 +129,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Secondary Telephone</th>
-                                    <td><a href={`tel:${client.e164OtherTelephone}`}>{client.otherTelephone ? client.otherTelephone : "-"}</a></td>
+                                    <td><a href={`tel:${client.otherTelephone}`}>{client.otherTelephone ? client.otherTelephone : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Email</th>

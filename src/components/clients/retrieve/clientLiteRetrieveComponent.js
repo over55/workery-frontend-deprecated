@@ -91,9 +91,9 @@ export default class ClientLiteRetrieveComponent extends Component {
                                 <h3>
                                     {client && client.name}
                                 </h3>
-                                {client && client.address &&
+                                {client && client.fullAddressWithPostalCode &&
                                     <p className="text-muted">
-                                        <a href={client.addressUrl}>{client.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
+                                        <a href={client.fullAddressUrl}>{client.fullAddressWithPostalCode}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
                                     </p>
                                 }
                                 {client && client.email &&
@@ -103,7 +103,7 @@ export default class ClientLiteRetrieveComponent extends Component {
                                 }
                                 {client && client.telephone &&
                                     <p>
-                                        <a href={`tel:${client.e164Telephone}`}>
+                                        <a href={`tel:${client.telephone}`}>
                                             <i className="fas fa-phone-square"></i>&nbsp;{client.telephone}
                                         </a>
                                     </p>
