@@ -320,7 +320,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
-                                    <td>{associate.howHearPretty}</td>
+                                    <td>{associate.howHearText ? associate.howHearText : "-"}</td>
                                 </tr>
                                 {associate &&
                                     <tr>

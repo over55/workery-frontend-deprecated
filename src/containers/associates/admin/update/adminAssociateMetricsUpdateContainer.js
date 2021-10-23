@@ -49,7 +49,7 @@ class AdminAssociateMetricsUpdateContainer extends Component {
             tags: this.props.associateDetail.tags,
             gender: this.props.associateDetail.gender,
             isHowHearLoading: true,
-            howHear: this.props.associateDetail.howHear,
+            howHearId: this.props.associateDetail.howHearId,
             howHearOption: this.props.associateDetail.howHearOption,
             howHearOther: this.props.associateDetail.howHearOther,
             dateOfBirth: birthdateObj,
@@ -59,7 +59,7 @@ class AdminAssociateMetricsUpdateContainer extends Component {
             errors: {},
             isLoading: false,
             id: id,
-            fullName: this.props.associateDetail.fullName,
+            name: this.props.associateDetail.name,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -261,10 +261,10 @@ class AdminAssociateMetricsUpdateContainer extends Component {
             givenName, lastName,
 
             // Step 7
-            isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate,
+            isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHearId, howHearOther, joinDate,
 
             // Everything else...
-            errors, id, fullName, isLoading,
+            errors, id, name, isLoading,
         } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
@@ -290,7 +290,7 @@ class AdminAssociateMetricsUpdateContainer extends Component {
                 errors={errors}
                 onTextChange={this.onTextChange}
                 isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
+                howHearId={howHearId}
                 howHearOptions={howHearOptions}
                 howHearOther={howHearOther}
 
@@ -304,7 +304,7 @@ class AdminAssociateMetricsUpdateContainer extends Component {
                 onDateOfBirthChange={this.onDateOfBirthChange}
                 onTagMultiChange={this.onTagMultiChange}
                 onClick={this.onClick}
-                fullName={fullName}
+                name={name}
                 isLoading={isLoading}
                 associate={this.props.associateDetail}
             />
