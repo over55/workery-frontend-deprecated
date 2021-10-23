@@ -42,6 +42,7 @@ class AdminAssociateContactUpdateContainer extends Component {
             email: this.props.associateDetail.email,
             isOkToEmail: isOkToEmail,
             isOkToText: isOkToText,
+            name: this.props.associateDetail.name,
 
             // Everything else...
             errors: {},
@@ -128,11 +129,12 @@ class AdminAssociateContactUpdateContainer extends Component {
         postData.isActive = true;
 
         // Boolean handler.
-        postData.isOkToEmail = this.state.isOkToEmail === 1 ? true : false;
-        postData.isOkToText = this.state.isOkToText === 1 ? true : false;
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
 
         // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
+        console.log("getPostData | state:", this.state);
+        console.log("getPostData | postData:", postData);
         return postData;
     }
 
@@ -239,46 +241,11 @@ class AdminAssociateContactUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            // Step 3
-            typeOf,
-
-            // Step 4
-            organizationName, organizationTypeOf, givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
-
-            // Everything else...
-            errors, id, fullName, isLoading,
-        } = this.state;
         return (
             <AdminAssociateContactUpdateComponent
-                // Step 3
-                typeOf={typeOf}
-
-                // Step 4
-                organizationName={organizationName}
-                organizationTypeOf={organizationTypeOf}
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
-
-                // Everything else...
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
-                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onClick={this.onClick}
-                fullName={fullName}
-                isLoading={isLoading}
-                associate={this.props.associateDetail}
+                {...this.props}
+                {...this}
+                {...this.state}
             />
         );
     }

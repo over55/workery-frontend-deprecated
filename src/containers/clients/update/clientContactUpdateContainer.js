@@ -92,8 +92,8 @@ class ClientUpdateContainer extends Component {
         }
 
         // Boolean handler.
-        postData.isOkToEmail = this.state.isOkToEmail === 1 ? true : false;
-        postData.isOkToText = this.state.isOkToText === 1 ? true : false;
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
