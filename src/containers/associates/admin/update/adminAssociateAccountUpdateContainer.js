@@ -61,7 +61,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
             driversLicenseClass: this.props.associateDetail.driversLicenseClass,
             isVehicleTypesLoading: true,
             isServiceFeeLoading: true,
-            serviceFee: this.props.associateDetail.serviceFee,
+            serviceFeeId: this.props.associateDetail.serviceFeeId,
             vehicleTypes: this.props.associateDetail.vehicleTypes,
             emergencyContactName: this.props.associateDetail.emergencyContactName,
             emergencyContactRelationship: this.props.associateDetail.emergencyContactRelationship,
@@ -163,6 +163,8 @@ class AdminAssociateAccountUpdateContainer extends Component {
         postData.addressRegion = this.state.region
 
         postData.isActive = true;
+
+        postData.hourlySalaryDesired = parseInt(this.state.hourlySalaryDesired);
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -402,7 +404,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
             country, region, locality, postalCode, streetAddress,
 
             // Step 6
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, isSkillSetsLoading, skillSets, isInsuranceRequirementsLoading, insuranceRequirements, isVehicleTypesLoading, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, serviceFee, isServiceFeeLoading,
+            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, isSkillSetsLoading, skillSets, isInsuranceRequirementsLoading, insuranceRequirements, isVehicleTypesLoading, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, serviceFeeId, isServiceFeeLoading,
 
             // Step 7
             tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
@@ -457,7 +459,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
                 policeCheck={policeCheck}
                 onPoliceCheckDateChange={this.onPoliceCheckDateChange}
                 isServiceFeeLoading={isServiceFeeLoading}
-                serviceFee={serviceFee}
+                serviceFeeId={serviceFeeId}
                 serviceFeeOptions={getServiceFeeReactSelectOptions(this.props.serviceFeeList)}
 
                 // Everything else...

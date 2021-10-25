@@ -135,8 +135,8 @@ export function validateAccountInput(data) {
     // if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
     //     errors.isActive = 'This field is required';
     // }
-    if (data.serviceFee === undefined || data.serviceFee === null ||data.serviceFee === "" || isNaN(data.serviceFee) ) {
-        errors.serviceFee = 'This field is required';
+    if (data.serviceFeeId === undefined || data.serviceFeeId === null ||data.serviceFeeId === "" || isNaN(data.serviceFeeId) ) {
+        errors.serviceFeeId = 'This field is required';
     }
 
     return {
@@ -229,8 +229,8 @@ export function validateInput(data) {
     //     errors.isActive = 'This field is required';
     // }
 
-    if (data.serviceFee === undefined || data.serviceFee === null ||data.serviceFee === "" || isNaN(data.serviceFee) ) {
-        errors.serviceFee = 'This field is required';
+    if (data.serviceFeeId === undefined || data.serviceFeeId === null ||data.serviceFeeId === "" || isNaN(data.serviceFeeId) ) {
+        errors.serviceFeeId = 'This field is required';
     }
 
     // --- METRICS --- //
@@ -400,8 +400,8 @@ export function validateStep6CreateInput(data) {
     if (data.policeCheck === undefined || data.policeCheck === null || data.policeCheck === "" || isNaN(data.policeCheck) ) {
         errors.policeCheck = 'This field is required';
     }
-    if (data.serviceFee === undefined || data.serviceFee === null ||data.serviceFee === "" || isNaN(data.serviceFee) ) {
-        errors.serviceFee = 'This field is required';
+    if (data.serviceFeeId === undefined || data.serviceFeeId === null ||data.serviceFeeId === "" || isNaN(data.serviceFeeId) ) {
+        errors.serviceFeeId = 'This field is required';
     }
     if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
         errors.isActive = 'This field is required';

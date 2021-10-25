@@ -37,7 +37,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
             onSkillSetMultiChange, onDuesDateChange, onCommercialInsuranceExpiryDate,
             onAutoInsuranceExpiryDateChange, onWsibInsuranceDateChange, onPoliceCheckDateChange,
             onVehicleTypeMultiChange, onInsuranceRequirementMultiChange, onTagMultiChange, onJoinDateChange,
-            onDateOfBirthChange, isServiceFeeLoading, serviceFee, serviceFeeOptions, associate
+            onDateOfBirthChange, isServiceFeeLoading, serviceFeeId, serviceFeeOptions, associate
         } = this.props;
         return (
             <main id="main" role="main">
@@ -226,11 +226,11 @@ class AdminAssociateAccountUpdateComponent extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="Service Fee (*)"
-                                name="serviceFee"
+                                name="serviceFeeId"
                                 defaultOptionLabel="Please select the service fee."
                                 options={serviceFeeOptions}
-                                value={serviceFee}
-                                error={errors.serviceFee}
+                                value={serviceFeeId}
+                                error={errors.serviceFeeId}
                                 onSelectChange={onSelectChange}
                                 isLoading={isServiceFeeLoading}
                                 helpText={"Note: Service fee is automatically set from associate profile, however you can override it here if needed."}
