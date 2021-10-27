@@ -168,15 +168,11 @@ class AdminAssociateActivitySheetListContainer extends Component {
         const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
         return (
             <AdminAssociateActivitySheetListComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
+                {...this}
+                {...this.state}
+                {...this.props}
                 activitySheetItems={activitySheetItems}
-                onTableChange={this.onTableChange}
-                id={id}
                 associate={associate}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
             />
         );
     }

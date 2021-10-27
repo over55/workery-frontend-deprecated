@@ -714,21 +714,21 @@ export function getTaskReactSelectOptions(taskList=[], selectName="task") {
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedTaskReactSelectOptions(taskPKsArray, taskList=[], selectName="task") {
+export function getPickedTaskReactSelectOptions(pickedTasksArray, taskList=[], selectName="task") {
     const taskOptions = [];
     const isAPIResponseNotEmpty = isEmpty(taskList) === false;
-    const isPKsArrayNotEmpty = isEmpty(taskPKsArray) === false;
-    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+    const isPickedArrayNotEmpty = isEmpty(pickedTasksArray) === false;
+    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
         const results = taskList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
-            for (let i = 0; i < taskPKsArray.length; i++) {
-                let taskPK = taskPKsArray[i];
+            for (let i = 0; i < pickedTasksArray.length; i++) {
+                let pickedTask = pickedTasksArray[i];
 
                 for (let j = 0; j < results.length; j++) {
                     let task = results[j];
 
-                    if (task.id === taskPK) {
+                    if (task.id === pickedTask.taskId) {
                         taskOptions.push({
                             selectName: selectName,
                             value: task.id,

@@ -456,21 +456,21 @@ export function getServiceFeeReactSelectOptions(serviceFeeList=[], selectName="s
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedServiceFeeReactSelectOptions(serviceFeePKsArray, serviceFeeList=[], selectName="serviceFee") {
+export function getPickedServiceFeeReactSelectOptions(pickedServiceFeesArray, serviceFeeList=[], selectName="serviceFee") {
     const serviceFeeOptions = [];
     const isAPIResponseNotEmpty = isEmpty(serviceFeeList) === false;
-    const isPKsArrayNotEmpty = isEmpty(serviceFeePKsArray) === false;
-    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+    const isPickedArrayNotEmpty = isEmpty(pickedServiceFeesArray) === false;
+    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
         const results = serviceFeeList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
-            for (let i = 0; i < serviceFeePKsArray.length; i++) {
-                let serviceFeePK = serviceFeePKsArray[i];
+            for (let i = 0; i < pickedServiceFeesArray.length; i++) {
+                let pickedServiceFee = pickedServiceFeesArray[i];
 
                 for (let j = 0; j < results.length; j++) {
                     let serviceFee = results[j];
 
-                    if (serviceFee.id === serviceFeePK) {
+                    if (serviceFee.id === pickedServiceFee.serviceFeeId) {
                         serviceFeeOptions.push({
                             selectName: selectName,
                             value: serviceFee.id,

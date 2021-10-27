@@ -455,21 +455,21 @@ export function getInsuranceRequirementReactSelectOptions(insuranceRequirementLi
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedInsuranceRequirementReactSelectOptions(insuranceRequirementPKsArray, insuranceRequirementList=[], selectName="insuranceRequirement") {
+export function getPickedInsuranceRequirementReactSelectOptions(pickedInsuranceRequirementsArray, insuranceRequirementList=[], selectName="insuranceRequirement") {
     const insuranceRequirementOptions = [];
     const isAPIResponseNotEmpty = isEmpty(insuranceRequirementList) === false;
-    const isPKsArrayNotEmpty = isEmpty(insuranceRequirementPKsArray) === false;
-    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+    const isPickedArrayNotEmpty = isEmpty(pickedInsuranceRequirementsArray) === false;
+    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
         const results = insuranceRequirementList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
-            for (let i = 0; i < insuranceRequirementPKsArray.length; i++) {
-                let insuranceRequirementPK = insuranceRequirementPKsArray[i];
+            for (let i = 0; i < pickedInsuranceRequirementsArray.length; i++) {
+                let pickedInsuranceRequirement = pickedInsuranceRequirementsArray[i];
 
                 for (let j = 0; j < results.length; j++) {
                     let insuranceRequirement = results[j];
 
-                    if (insuranceRequirement.id === insuranceRequirementPK) {
+                    if (insuranceRequirement.id === pickedInsuranceRequirement.insuranceRequirementId) {
                         insuranceRequirementOptions.push({
                             selectName: selectName,
                             value: insuranceRequirement.id,

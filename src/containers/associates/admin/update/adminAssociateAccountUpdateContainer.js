@@ -275,14 +275,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idSkillSets = [];
+        let pickedSkillSets = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idSkillSets.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.skillSetId = pickedOption.value;
+                pickedSkillSets.push(pickedOption);
             }
         }
-        this.setState({ skillSets: idSkillSets, });
+        this.setState({ skillSets: pickedSkillSets, });
     }
 
     onInsuranceRequirementMultiChange(...args) {
@@ -292,14 +293,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idInsuranceRequirements = [];
+        let pickedInsuranceRequirements = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idInsuranceRequirements.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.insuranceRequirementId = pickedOption.value;
+                pickedInsuranceRequirements.push(pickedOption);
             }
         }
-        this.setState({ insuranceRequirements: idInsuranceRequirements, });
+        this.setState({ insuranceRequirements: pickedInsuranceRequirements, });
     }
 
     onVehicleTypeMultiChange(...args) {
@@ -309,14 +311,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idVehicleTypes = [];
+        let pickedVehicleTypes = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idVehicleTypes.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.vehicleTypeId = pickedOption.value;
+                pickedVehicleTypes.push(pickedOption);
             }
         }
-        this.setState({ vehicleTypes: idVehicleTypes, });
+        this.setState({ vehicleTypes: pickedVehicleTypes, });
     }
 
     onTagMultiChange(...args) {
@@ -326,14 +329,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
     onDuesDateChange(dateObj) {
@@ -397,20 +401,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
     render() {
         const {
-            // Step 4
-            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
-
-            // Step 5
-            country, region, locality, postalCode, streetAddress,
-
-            // Step 6
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, isSkillSetsLoading, skillSets, isInsuranceRequirementsLoading, insuranceRequirements, isVehicleTypesLoading, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, serviceFeeId, isServiceFeeLoading,
-
-            // Step 7
-            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
-
-            // Everything else...
-            errors, id, fullName, isLoading,
+            skillSets, insuranceRequirements, vehicleTypes,
         } = this.state;
 
         const skillSetOptions = getSkillSetReactSelectOptions(this.props.skillSetList);
@@ -424,58 +415,16 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
         return (
             <AdminAssociateAccountUpdateComponent
-                // Step 4
-                givenName={givenName}
-                lastName={lastName}
-
-                // Step 6
-                description={description}
-                hourlySalaryDesired={hourlySalaryDesired}
-                limitSpecial={limitSpecial}
-                taxId={taxId}
-                driversLicenseClass={driversLicenseClass}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                isSkillSetsLoading={isSkillSetsLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 skillSets={transcodedSkillSets}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
-                isInsuranceRequirementsLoading={isInsuranceRequirementsLoading}
                 insuranceRequirements={transcodedInsuranceRequirements}
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
-                isVehicleTypesLoading={isVehicleTypesLoading}
                 vehicleTypes={transcodedVehicleTypes}
                 vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
-                duesDate={duesDate}
-                onDuesDateChange={this.onDuesDateChange}
-                commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
-                onCommercialInsuranceExpiryDate={this.onCommercialInsuranceExpiryDate}
-                autoInsuranceExpiryDate={autoInsuranceExpiryDate}
-                onAutoInsuranceExpiryDateChange={this.onAutoInsuranceExpiryDateChange}
-                wsibNumber={wsibNumber}
-                wsibInsuranceDate={wsibInsuranceDate}
-                onWsibInsuranceDateChange={this.onWsibInsuranceDateChange}
-                policeCheck={policeCheck}
-                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
-                isServiceFeeLoading={isServiceFeeLoading}
-                serviceFeeId={serviceFeeId}
                 serviceFeeOptions={getServiceFeeReactSelectOptions(this.props.serviceFeeList)}
-
-                // Everything else...
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
-                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onClick={this.onClick}
-                fullName={fullName}
-                isLoading={isLoading}
-                associate={this.props.associateDetail}
             />
         );
     }

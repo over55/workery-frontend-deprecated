@@ -91,14 +91,13 @@ class AdminAssociateLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id, isLoading } = this.state;
         const associate = isEmpty(this.state.associate) ? {} : this.state.associate;
         return (
             <AdminAssociateLiteRetrieveComponent
-                id={id}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associate={associate}
-                flashMessage={this.props.flashMessage}
             />
         );
     }

@@ -453,21 +453,21 @@ export function getSkillSetReactSelectOptions(skillSetList=[], selectName="skill
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedSkillSetReactSelectOptions(skillSetPKsArray, skillSetList=[], selectName="skillSet") {
+export function getPickedSkillSetReactSelectOptions(pickedSkillSetArray, skillSetList=[], selectName="skillSet") {
     const skillSetOptions = [];
     const isAPIResponseNotEmpty = isEmpty(skillSetList) === false;
-    const isPKsArrayNotEmpty = isEmpty(skillSetPKsArray) === false;
-    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+    const isPickedArrayNotEmpty = isEmpty(pickedSkillSetArray) === false;
+    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
         const results = skillSetList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
-            for (let i = 0; i < skillSetPKsArray.length; i++) {
-                let skillSetPK = skillSetPKsArray[i];
+            for (let i = 0; i < pickedSkillSetArray.length; i++) {
+                let pickedSkillSet = pickedSkillSetArray[i];
 
                 for (let j = 0; j < results.length; j++) {
                     let skillSet = results[j];
 
-                    if (skillSet.id === skillSetPK) {
+                    if (skillSet.id === pickedSkillSet.skillSetId) {
                         skillSetOptions.push({
                             selectName: selectName,
                             value: skillSet.id,

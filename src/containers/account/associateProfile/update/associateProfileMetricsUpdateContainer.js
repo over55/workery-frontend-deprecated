@@ -188,14 +188,15 @@ class AssociateProfileMetricsUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
     onJoinDateChange(dateObj) {
@@ -238,16 +239,7 @@ class AssociateProfileMetricsUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            // Step 4
-            givenName, lastName,
-
-            // Step 7
-            isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate,
-
-            // Everything else...
-            errors, id, fullName, isLoading,
-        } = this.state;
+        const { tags } = this.state;
 
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
@@ -255,36 +247,12 @@ class AssociateProfileMetricsUpdateContainer extends Component {
 
         return (
             <AssociateProfileMetricsUpdateComponent
-                // Step 4
-                givenName={givenName}
-                lastName={lastName}
-
-                // Step 7
-                isTagsLoading={isTagsLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 tags={transcodedTags}
                 tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
                 howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-
-                // Everything else...
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onJoinDateChange={this.onJoinDateChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onClick={this.onClick}
-                fullName={fullName}
-                isLoading={isLoading}
             />
         );
     }

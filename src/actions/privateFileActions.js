@@ -459,21 +459,21 @@ export function getPrivateFileReactSelectOptions(privateFileList=[], selectName=
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedPrivateFileReactSelectOptions(privateFilePKsArray, privateFileList=[], selectName="privateFile") {
+export function getPickedPrivateFileReactSelectOptions(pickedPrivateFilesArray, privateFileList=[], selectName="privateFile") {
     const privateFileOptions = [];
     const isAPIResponseNotEmpty = isEmpty(privateFileList) === false;
-    const isPKsArrayNotEmpty = isEmpty(privateFilePKsArray) === false;
-    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+    const isPickedArrayNotEmpty = isEmpty(pickedPrivateFilesArray) === false;
+    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
         const results = privateFileList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
-            for (let i = 0; i < privateFilePKsArray.length; i++) {
-                let privateFilePK = privateFilePKsArray[i];
+            for (let i = 0; i < pickedPrivateFilesArray.length; i++) {
+                let pickedPrivateFile = pickedPrivateFilesArray[i];
 
                 for (let j = 0; j < results.length; j++) {
                     let privateFile = results[j];
 
-                    if (privateFile.id === privateFilePK) {
+                    if (privateFile.id === pickedPrivateFile.privateFileId) {
                         privateFileOptions.push({
                             selectName: selectName,
                             value: privateFile.id,

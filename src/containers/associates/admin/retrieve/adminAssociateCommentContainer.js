@@ -205,20 +205,15 @@ class AdminAssociateCommentContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, text, errors } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         const associateComments = this.props.associateCommentList ? this.props.associateCommentList.results : [];
         return (
             <AdminAssociateCommentComponent
-                id={id}
-                text={text}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associate={associate}
                 associateComments={associateComments}
-                flashMessage={this.props.flashMessage}
-                onTextChange={this.onTextChange}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
             />
         );
     }

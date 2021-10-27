@@ -276,14 +276,15 @@ class AssociateUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idSkillSets = [];
+        let pickedSkillSets = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idSkillSets.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.skillSetId = pickedOption.value;
+                pickedSkillSets.push(pickedOption);
             }
         }
-        this.setState({ skillSets: idSkillSets, });
+        this.setState({ skillSets: pickedSkillSets, });
     }
 
     onInsuranceRequirementMultiChange(...args) {
@@ -293,14 +294,15 @@ class AssociateUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idInsuranceRequirements = [];
+        let pickedInsuranceRequirements = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idInsuranceRequirements.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.insuranceRequirementId = pickedOption.value;
+                pickedInsuranceRequirements.push(pickedOption);
             }
         }
-        this.setState({ insuranceRequirements: idInsuranceRequirements, });
+        this.setState({ insuranceRequirements: pickedInsuranceRequirements, });
     }
 
     onVehicleTypeMultiChange(...args) {
@@ -327,14 +329,15 @@ class AssociateUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
     onDuesDateChange(dateObj) {

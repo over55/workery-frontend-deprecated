@@ -232,45 +232,11 @@ class AssociateProfileContactUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            // Step 3
-            typeOf,
-
-            // Step 4
-            organizationName, organizationTypeOf, givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
-
-            // Everything else...
-            errors, id, fullName, isLoading,
-        } = this.state;
         return (
             <AssociateProfileContactUpdateComponent
-                // Step 3
-                typeOf={typeOf}
-
-                // Step 4
-                organizationName={organizationName}
-                organizationTypeOf={organizationTypeOf}
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
-
-                // Everything else...
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
-                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onClick={this.onClick}
-                fullName={fullName}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

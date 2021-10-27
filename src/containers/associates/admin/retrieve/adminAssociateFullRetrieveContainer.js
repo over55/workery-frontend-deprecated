@@ -75,13 +75,13 @@ class AdminAssociateFullRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
             <AdminAssociateFullRetrieveComponent
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associate={associate}
-                flashMessage={this.props.flashMessage}
             />
         );
     }

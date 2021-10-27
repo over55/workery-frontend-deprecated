@@ -154,20 +154,13 @@ class AdminAssociateOrderListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, id } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
             <AdminAssociateOrderListComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                orderList={this.props.orderList}
-                onTableChange={this.onTableChange}
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associate={associate}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
-                user={this.props.user}
             />
         );
     }

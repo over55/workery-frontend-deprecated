@@ -457,21 +457,21 @@ export function getVehicleTypeReactSelectOptions(vehicleTypeList=[], selectName=
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedVehicleTypeReactSelectOptions(vehicleTypePKsArray, vehicleTypeList=[], selectName="vehicleType") {
+export function getPickedVehicleTypeReactSelectOptions(pickedVehicleTypeArray, vehicleTypeList=[], selectName="vehicleType") {
     const vehicleTypeOptions = [];
     const isAPIResponseNotEmpty = isEmpty(vehicleTypeList) === false;
-    const isPKsArrayNotEmpty = isEmpty(vehicleTypePKsArray) === false;
-    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+    const isPickedArrayNotEmpty = isEmpty(pickedVehicleTypeArray) === false;
+    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
         const results = vehicleTypeList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
-            for (let i = 0; i < vehicleTypePKsArray.length; i++) {
-                let vehicleTypePK = vehicleTypePKsArray[i];
+            for (let i = 0; i < pickedVehicleTypeArray.length; i++) {
+                let pickedVehicleType = pickedVehicleTypeArray[i];
 
                 for (let j = 0; j < results.length; j++) {
                     let vehicleType = results[j];
 
-                    if (vehicleType.id === vehicleTypePK) {
+                    if (vehicleType.id === pickedVehicleType.vehicleTypeId) {
                         vehicleTypeOptions.push({
                             selectName: selectName,
                             value: vehicleType.id,
