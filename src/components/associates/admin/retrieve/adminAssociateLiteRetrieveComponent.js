@@ -117,7 +117,7 @@ export default class AdminAssociateLiteRetrieveComponent extends Component {
                                 <p className="m-0"><strong>Skill sets:</strong></p>
                                 {associate &&
                                     <p>
-                                        {associate.skillsets && associate.skillsets.map(
+                                        {associate.skillSets && associate.skillSets.map(
                                             (skillSet) => <SkillSetItem skillSet={skillSet} key={skillSet.id} />)
                                         }
                                     </p>

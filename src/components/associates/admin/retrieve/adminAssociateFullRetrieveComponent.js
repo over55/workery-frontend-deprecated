@@ -195,7 +195,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Skill sets</th>
                                     <td>
-                                        {associate.skillsets && associate.skillsets.map(
+                                        {associate.skillSets && associate.skillSets.map(
                                             (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
                                         }
                                     </td>

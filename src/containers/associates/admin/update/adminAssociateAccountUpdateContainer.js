@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../../helpers/localStorageUtility';
 
 import AdminAssociateAccountUpdateComponent from "../../../../components/associates/admin/update/adminAssociateAccountUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
@@ -26,53 +30,58 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const associate = localStorageGetObjectItem("workery-admin-retrieve-associate-"+id.toString() );
+        const isLoading = isEmpty(associate);
+
         // Get our dates based on our browsers timezone.
         // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
-        const duesDateObj = new Date(this.props.associateDetail.duesDate);
+        const duesDateObj = new Date(associate.duesDate);
         duesDateObj.setMinutes( duesDateObj.getMinutes() + duesDateObj.getTimezoneOffset() );
-        const commercialInsuranceExpiryDateObj = new Date(this.props.associateDetail.commercialInsuranceExpiryDate);
+        const commercialInsuranceExpiryDateObj = new Date(associate.commercialInsuranceExpiryDate);
         commercialInsuranceExpiryDateObj.setMinutes( commercialInsuranceExpiryDateObj.getMinutes() + commercialInsuranceExpiryDateObj.getTimezoneOffset() );
-        const autoInsuranceExpiryDateObj = new Date(this.props.associateDetail.autoInsuranceExpiryDate);
+        const autoInsuranceExpiryDateObj = new Date(associate.autoInsuranceExpiryDate);
         autoInsuranceExpiryDateObj.setMinutes( autoInsuranceExpiryDateObj.getMinutes() + autoInsuranceExpiryDateObj.getTimezoneOffset() );
-        const wsibInsuranceDateObj = new Date(this.props.associateDetail.wsibInsuranceDate);
+        const wsibInsuranceDateObj = new Date(associate.wsibInsuranceDate);
         wsibInsuranceDateObj.setMinutes( wsibInsuranceDateObj.getMinutes() + wsibInsuranceDateObj.getTimezoneOffset() );
-        const policeCheckObj = new Date(this.props.associateDetail.policeCheck);
+        const policeCheckObj = new Date(associate.policeCheck);
         policeCheckObj.setMinutes( policeCheckObj.getMinutes() + policeCheckObj.getTimezoneOffset() );
 
         this.state = {
             // STEP 3
             // typeOf: typeOf,
 
-            // STEP 6
+            name: associate.name,
             isSkillSetsLoading: true,
-            skillSets: this.props.associateDetail.skillSets,
-            insuranceRequirements: this.props.associateDetail.insuranceRequirements,
+            skillSets: associate.skillSets,
+            insuranceRequirements: associate.insuranceRequirements,
             isInsuranceRequirementsLoading: true,
-            description: this.props.associateDetail.description,
-            hourlySalaryDesired: this.props.associateDetail.hourlySalaryDesired,
-            limitSpecial: this.props.associateDetail.limitSpecial,
+            description: associate.description,
+            hourlySalaryDesired: associate.hourlySalaryDesired,
+            limitSpecial: associate.limitSpecial,
             duesDate: duesDateObj,
             commercialInsuranceExpiryDate: commercialInsuranceExpiryDateObj,
             autoInsuranceExpiryDate: autoInsuranceExpiryDateObj,
-            wsibNumber: this.props.associateDetail.wsibNumber,
+            wsibNumber: associate.wsibNumber,
             wsibInsuranceDate: wsibInsuranceDateObj,
             policeCheck: policeCheckObj,
-            taxId: this.props.associateDetail.taxId,
-            driversLicenseClass: this.props.associateDetail.driversLicenseClass,
+            taxId: associate.taxId,
+            driversLicenseClass: associate.driversLicenseClass,
             isVehicleTypesLoading: true,
             isServiceFeeLoading: true,
-            serviceFeeId: this.props.associateDetail.serviceFeeId,
-            vehicleTypes: this.props.associateDetail.vehicleTypes,
-            emergencyContactName: this.props.associateDetail.emergencyContactName,
-            emergencyContactRelationship: this.props.associateDetail.emergencyContactRelationship,
-            emergencyContactTelephone: this.props.associateDetail.emergencyContactTelephone,
-            emergencyContactAlternativeTelephone: this.props.associateDetail.emergencyContactAlternativeTelephone,
+            serviceFeeId: associate.serviceFeeId,
+            vehicleTypes: associate.vehicleTypes,
+            emergencyContactName: associate.emergencyContactName,
+            emergencyContactRelationship: associate.emergencyContactRelationship,
+            emergencyContactTelephone: associate.emergencyContactTelephone,
+            emergencyContactAlternativeTelephone: associate.emergencyContactAlternativeTelephone,
 
             // Everything else...
             errors: {},
             isLoading: false,
             id: id,
-            fullName: this.props.associateDetail.fullName,
+            fullName: associate.fullName,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -166,6 +175,28 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
         postData.hourlySalaryDesired = parseInt(this.state.hourlySalaryDesired);
 
+        //
+        // Generate our PKs.
+        //
+
+        let ssPKs = [];
+        for (let ss of this.state.skillSets) {
+            ssPKs.push(ss.skillSetId);
+        }
+        postData.skillSets = ssPKs;
+
+        let iiPKs = [];
+        for (let ii of this.state.insuranceRequirements) {
+            iiPKs.push(ii.insuranceRequirementId);
+        }
+        postData.insuranceRequirements = iiPKs;
+
+        let vtPKs = [];
+        for (let vt of this.state.vehicleTypes) {
+            vtPKs.push(vt.vehicleTypeId);
+        }
+        postData.vehicleTypes = vtPKs;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
@@ -186,6 +217,11 @@ class AdminAssociateAccountUpdateContainer extends Component {
         this.props.pullInsuranceRequirementList(1, 1000, parametersMap, this.onFetchedInsuranceRequirementsCallback);
         this.props.pullVehicleTypeList(1, 1000, parametersMap, this.onFetchedVehicleTypesCallback);
         this.props.pullServiceFeeList(1, 1000, parametersMap, this.onFetchedServiceFeeCallback);
+
+        console.log("LOG|associateId", this.state.id);
+        console.log("LOG|skillSets", this.state.skillSets);
+        console.log("LOG|insuranceRequirements", this.state.insuranceRequirements);
+        console.log("LOG|vehicleTypes", this.state.vehicleTypes);
     }
 
     componentWillUnmount() {
@@ -203,7 +239,13 @@ class AdminAssociateAccountUpdateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(associate) {
-        this.setState({ errors: {}, isLoading: true, })
+        console.log("onSuccessfulSubmissionCallback | associate:", associate);
+
+        // The following code will save the object to the browser's local
+        // storage to be retrieved later more quickly.
+        localStorageSetObjectOrArrayItem("workery-admin-retrieve-associate-"+this.state.id.toString(), associate);
+
+        this.setState({ isLoading: false, associate: associate, errors:{} });
         this.props.setFlashMessage("success", "Associate has been successfully updated.");
         this.props.history.push("/associate/"+this.state.id+"/full");
     }

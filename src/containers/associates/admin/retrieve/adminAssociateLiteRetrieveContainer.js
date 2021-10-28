@@ -66,8 +66,8 @@ class AdminAssociateLiteRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log(response);
-        this.setState({ isLoading: false, associate: response, });
+        console.log("onSuccessCallback | response:", response);
+        this.setState({ isLoading: false, associate: response });
 
         // The following code will save the object to the browser's local
         // storage to be retrieved later more quickly.
@@ -91,13 +91,11 @@ class AdminAssociateLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const associate = isEmpty(this.state.associate) ? {} : this.state.associate;
         return (
             <AdminAssociateLiteRetrieveComponent
                 {...this}
                 {...this.state}
                 {...this.props}
-                associate={associate}
             />
         );
     }
