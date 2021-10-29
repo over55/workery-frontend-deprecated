@@ -310,53 +310,18 @@ class ClientMetricsUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            errors, id, typeOf, givenName, lastName, isLoading,
-
-            // STEP 6
-            isTagsLoading, tags, birthdate, gender, isHowHearLoading, howHearId, howHearOption, howHearOther, joinDate, description, dateOfBirth
-        } = this.state;
-
+        const { tags } = this.state;
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
-
         return (
             <ClientMetricsUpdateComponent
-                // STEP 3
-                typeOf={typeOf}
-
-                // STEP 4
-                givenName={givenName}
-                lastName={lastName}
-
-                // STEP 6
-                isTagsLoading={isTagsLoading}
-                tags={transcodedTags}
-                tagOptions={tagOptions}
-                onTagMultiChange={this.onTagMultiChange}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                isHowHearLoading={isHowHearLoading}
-                howHearId={howHearId}
+                {...this}
+                {...this.state}
+                {...this.props}
                 howHearOptions={howHearOptions}
-                howHearOption={howHearOption}
-                howHearOther={howHearOther}
-                joinDate={joinDate}
-                description={description}
-
-                // EVERYTHING ELSE
-                isLoading={isLoading}
-                givenName={givenName}
-                lastName={lastName}
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onJoinDateChange={this.onJoinDateChange}
+                tagOptions={tagOptions}
+                tags={transcodedTags}
             />
         );
     }

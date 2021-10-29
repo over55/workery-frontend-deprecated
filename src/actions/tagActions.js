@@ -477,7 +477,8 @@ export function getPickedTagReactSelectOptions(pickedTagsArray, tagList=[], sele
                         tagOptions.push({
                             selectName: selectName,
                             value: tag.id,
-                            label: tag.text
+                            label: tag.text,
+                            tagId: tag.id,
                         });
                         // console.log(tag);
                     } // end IF

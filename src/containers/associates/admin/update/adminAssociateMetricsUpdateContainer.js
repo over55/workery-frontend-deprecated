@@ -104,6 +104,13 @@ class AdminAssociateMetricsUpdateContainer extends Component {
             postData.howHearOther = "";
         }
 
+        // (5) Process tags.
+        let tagPKs = [];
+        for (let t of this.state.tags) {
+            tagPKs.push(t.tagId);
+        }
+        postData.tags = tagPKs;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
@@ -254,60 +261,19 @@ class AdminAssociateMetricsUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            // STEP 3
-            typeOf,
-
-            // Step 4
-            givenName, lastName,
-
-            // Step 7
-            isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHearId, howHearOther, joinDate,
-
-            // Everything else...
-            errors, id, name, isLoading,
-        } = this.state;
-
+        const { tags } = this.state;
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList);
 
         return (
             <AdminAssociateMetricsUpdateComponent
-                // Step 3
-                typeOf={typeOf}
-
-                // Step 4
-                givenName={givenName}
-                lastName={lastName}
-
-                // Step 7
-                isTagsLoading={isTagsLoading}
-                tags={transcodedTags}
-                tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                isHowHearLoading={isHowHearLoading}
-                howHearId={howHearId}
+                {...this}
+                {...this.state}
+                {...this.props}
                 howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-
-                // Everything else...
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onJoinDateChange={this.onJoinDateChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onClick={this.onClick}
-                name={name}
-                isLoading={isLoading}
-                associate={this.props.associateDetail}
+                tagOptions={tagOptions}
+                tags={transcodedTags}
             />
         );
     }
