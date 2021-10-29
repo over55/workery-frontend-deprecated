@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
@@ -17,8 +18,14 @@ class AdminAssociateOrderListContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
+
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const associate = this.props.associateDetail;
+        const isLoading = isEmpty(associate);
+
         const parametersMap = new Map();
-        parametersMap.set("associate", id);
+        parametersMap.set("associateId", id);
         this.state = {
             // Pagination
             page: 1,
@@ -29,10 +36,11 @@ class AdminAssociateOrderListContainer extends Component {
             parametersMap: parametersMap,
 
             // Overaly
-            isLoading: true,
+            isLoading: isLoading,
 
             // Everything else...
             id: id,
+            associate: associate,
         }
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
@@ -154,13 +162,11 @@ class AdminAssociateOrderListContainer extends Component {
      */
 
     render() {
-        const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
             <AdminAssociateOrderListComponent
                 {...this}
                 {...this.state}
                 {...this.props}
-                associate={associate}
             />
         );
     }

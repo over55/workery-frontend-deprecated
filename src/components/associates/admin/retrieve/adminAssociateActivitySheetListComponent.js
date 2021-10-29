@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -20,18 +21,22 @@ const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
 );
 
+const selectOptions = {
+    0: 'Rejected',
+    1: 'Accepted',
+};
 
 class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             activitySheetItems,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
         const columns = [{
@@ -42,7 +47,11 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'state',
             text: 'Has Accepted?',
-            sort: false
+            sort: false,
+            filter: selectFilter({
+                options: selectOptions
+            }),
+            formatter: stateFormatter,
         },{
             dataField: 'createdAt',
             text: 'Created At',
@@ -59,31 +68,6 @@ class RemoteListComponent extends Component {
             order: 'desc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
-
         return (
             <BootstrapTable
                 bootstrap4
@@ -96,7 +80,6 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no activity sheets at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -107,7 +90,17 @@ class RemoteListComponent extends Component {
 
 
 function jobFormatter(cell, row){
-    if (row.job === null || row.orderId === undefined || row.orderId === "None" || row.orderId === "") { return "-"; }
+    if (row.orderId === null || row.orderId === undefined || row.orderId === "None" || row.orderId === "") {
+        if (row.ongoingOrderId === null || row.ongoingOrderId === undefined || row.orderId === "None" || row.ongoingOrderId === "") {
+            return "-";
+        }
+        return (
+            <Link to={`/ongoing-order/${row.ongoingOrderId}`} target="_blank">
+                (<i className="fas fa-redo-alt"></i>)&nbsp;
+                {row.ongoingOrderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+            </Link>
+        )
+    }
     return (
         <Link to={`/order/${row.orderId}`} target="_blank">
             {row.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
@@ -115,6 +108,24 @@ function jobFormatter(cell, row){
     )
 }
 
+
+
+function stateFormatter(cell, row){
+    switch(row.state) {
+        case 2:
+            return <><i className="fas fa-thumbs-down"></i>&nbsp;Rejected</>;
+            break;
+        case 1:
+            return <><i className="fas fa-thumbs-up"></i>&nbsp;Accepted</>;
+            break;
+        case 0:
+            return <><i className="fas fa-thumbs-down"></i>&nbsp;Rejected</>;
+            break;
+        default:
+            return <><i className="fas fa-question"></i></>;
+            break;
+    }
+}
 
 function iconFormatter(cell, row){
     switch(row.typeOf) {
@@ -149,19 +160,21 @@ function createdAtFormatter(cell, row){
     return <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdAt}</Moment>;
 }
 
-
 export default class AdminAssociateActivitySheetListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
-            activitySheetItems,
+            activitySheetItemList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id, associate
+            flashMessage, onTableChange, isLoading, id, associate, onNextClick, onPreviousClick,
         } = this.props;
+
+        const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
+
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -231,13 +244,23 @@ export default class AdminAssociateActivitySheetListComponent extends Component 
                             <i className="fas fa-chart-line"></i>&nbsp;Activity
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             activitySheetItems={activitySheetItems}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
+
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>
