@@ -32,7 +32,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
         // The following code will extract our financial data from the local
         // storage if the financial data was previously saved.
-        const associate = localStorageGetObjectItem("workery-admin-retrieve-associate-"+id.toString() );
+        const associate = this.props.associateDetail;
         const isLoading = isEmpty(associate);
 
         // Get our dates based on our browsers timezone.
