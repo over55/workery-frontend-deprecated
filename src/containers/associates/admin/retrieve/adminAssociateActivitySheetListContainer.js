@@ -18,7 +18,7 @@ class AdminAssociateActivitySheetListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("associate", id);
+        parametersMap.set("associateId", id);
         this.state = {
             // Pagination
             page: 1,

@@ -35,7 +35,7 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const columns = [{
-            dataField: 'job',
+            dataField: 'orderId',
             text: 'Job #',
             sort: false,
             formatter: jobFormatter,
@@ -107,10 +107,10 @@ class RemoteListComponent extends Component {
 
 
 function jobFormatter(cell, row){
-    if (row.job === null || row.job === undefined || row.job === "None") { return "-"; }
+    if (row.job === null || row.orderId === undefined || row.orderId === "None" || row.orderId === "") { return "-"; }
     return (
-        <Link to={`/order/${row.job}`} target="_blank">
-            {row.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+        <Link to={`/order/${row.orderId}`} target="_blank">
+            {row.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
