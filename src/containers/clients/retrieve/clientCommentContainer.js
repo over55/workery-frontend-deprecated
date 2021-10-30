@@ -240,20 +240,15 @@ class ClientCommentContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, text, errors } = this.state;
         const client = this.props.clientDetail ? this.props.clientDetail : {};
         const clientComments = this.props.clientCommentList ? this.props.clientCommentList.results : [];
         return (
             <OrderListComponent
-                id={id}
-                text={text}
+                {...this}
+                {...this.state}
+                {...this.props}
                 client={client}
                 clientComments={clientComments}
-                flashMessage={this.props.flashMessage}
-                onTextChange={this.onTextChange}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
             />
         );
     }
