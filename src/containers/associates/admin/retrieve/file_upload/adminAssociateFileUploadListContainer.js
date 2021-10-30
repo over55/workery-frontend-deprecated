@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
-import AdminOrderListComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadListComponent";
+import AdminAssociateFileUploadListComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadListComponent";
 import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
-import { pullAssociateFileUploadList, postAssociateFileUpload } from "../../../../../actions/associateFileUploadActions";
+import { pullPrivateFileList, postPrivateFileDetail } from "../../../../../actions/privateFileActions";
 import { validateInput } from "../../../../../validators/fileValidator"
 
 
@@ -18,15 +18,19 @@ class AdminAssociateFileUploadListContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
+
         const parametersMap = new Map();
-        parametersMap.set("associate", id);
-        // parametersMap.set("is_archived", 3); // 3 = TRUE | 2 = FALSE
-        parametersMap.set("o", "-created_at");
+        parametersMap.set("sort_order", "DESC"); // Don't forget these same values must be set in the `defaultSorted` var inside `ClientListComponent`.
+        parametersMap.set("sort_field", "id");
+        parametersMap.set("associate_id", id);
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 10000,
+            offset: 0,
+            limit: 10000,
             totalSize: 0,
+            sortOrder: "DESC",
+            sortField: "id",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
@@ -56,7 +60,7 @@ class AdminAssociateFileUploadListContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.about = this.state.id;
+        postData.associateId = this.state.id;
         postData.extraText = this.state.text;
 
         // Finally: Return our new modified data.
@@ -73,9 +77,9 @@ class AdminAssociateFileUploadListContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Get our data.
-        this.props.pullAssociateFileUploadList(
-            this.state.page,
-            this.state.sizePerPage,
+        this.props.pullPrivateFileList(
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessListCallback,
             this.onFailureListCallback
@@ -103,7 +107,7 @@ class AdminAssociateFileUploadListContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -123,7 +127,7 @@ class AdminAssociateFileUploadListContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -131,9 +135,9 @@ class AdminAssociateFileUploadListContainer extends Component {
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
-                this.props.pullAssociateFileUploadList(
-                    this.state.page,
-                    this.state.sizePerPage,
+                this.props.pullPrivateFileList(
+                    this.state.offset,
+                    this.state.limit,
                     this.state.parametersMap,
                     this.onSuccessListCallback,
                     this.onFailureListCallback
@@ -171,7 +175,7 @@ class AdminAssociateFileUploadListContainer extends Component {
 
                 // Once our state has been validated `associate-side` then we will
                 // make an API request with the server to create our new production.
-                this.props.postAssociateFileUpload(
+                this.props.postPrivateFileDetail(
                     this.getPostData(),
                     this.onSuccessPostCallback,
                     this.onFailurePostCallback
@@ -195,7 +199,7 @@ class AdminAssociateFileUploadListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -214,17 +218,17 @@ class AdminAssociateFileUploadListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullAssociateFileUploadList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(this.state.offset, this.state.limit, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullAssociateFileUploadList(page, sizePerPage, this.state.parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(offset, limit, this.state.parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
 
@@ -241,7 +245,7 @@ class AdminAssociateFileUploadListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullAssociateFileUploadList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(this.state.offset, this.state.limit, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
         }else {
@@ -255,19 +259,15 @@ class AdminAssociateFileUploadListContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, text, errors } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
-        const associateFileList = this.props.associateFileList && this.props.associateFileList.results ? this.props.associateFileList.results : [];
+        const privateFileList = this.props.privateFileList && this.props.privateFileList.results ? this.props.privateFileList.results : [];
         return (
-            <AdminOrderListComponent
-                id={id}
+            <AdminAssociateFileUploadListComponent
+                {...this}
+                {...this.state}
+                {...this.props}
                 associate={associate}
-                associateFiles={associateFileList}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
-                onTableChange={this.onTableChange}
+                associateFiles={privateFileList}
             />
         );
     }
@@ -277,7 +277,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        associateFileList: store.associateFileListState,
+        privateFileList: store.privateFileListState,
         associateDetail: store.associateDetailState,
     };
 }
@@ -287,13 +287,13 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullAssociateFileUploadList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
+        pullPrivateFileList: (offset, limit, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullAssociateFileUploadList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
+                pullPrivateFileList(offset, limit, map, onSuccessListCallback, onFailureListCallback)
             )
         },
-        postAssociateFileUpload: (postData, successCallback, failedCallback) => {
-            dispatch(postAssociateFileUpload(postData, successCallback, failedCallback))
+        postPrivateFileDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPrivateFileDetail(postData, successCallback, failedCallback))
         },
     }
 }

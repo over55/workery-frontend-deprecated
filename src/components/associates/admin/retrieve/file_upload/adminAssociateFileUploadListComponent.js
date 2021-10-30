@@ -45,7 +45,7 @@ class RemoteListComponent extends Component {
 
         const columns = [
         {
-            dataField: 'is_archived',
+            dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
@@ -148,11 +148,14 @@ class RemoteListComponent extends Component {
 
 
 function statusFormatter(cell, row){
-    switch(row.isArchived) {
-        case false:
+    switch(row.state) {
+        case 0:
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
+            break;
+        case 1:
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
-        case true:
+        case 2:
             return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
@@ -165,23 +168,33 @@ function statusFormatter(cell, row){
 function fileFormatter(cell, row){
     return (
         <div>
-            {row.isArchived === false &&
+            {row.state === 0 &&
+                <strong>
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </strong>
+            }
+            {row.state === 1 &&
                 <a href={row.fileUrl} target="_blank">
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                 </a>
             }
-            {row.isArchived === true &&
+            {row.state === 2 &&
                 <strong>
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                 </strong>
             }
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            {row.isArchived === false &&
-                <Link to={`/associate/${row.associate}/file/archive/${row.id}`}>
+            {row.state === 0 &&
+                <strong>
+                    <i className="fas fa-archive"></i>&nbsp;Archived
+                </strong>
+            }
+            {row.state === 1 &&
+                <Link to={`/associate/${row.associateId}/file/archive/${row.id}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archive
                 </Link>
             }
-            {row.isArchived === true &&
+            {row.state === 2 &&
                 <strong>
                     <i className="fas fa-archive"></i>&nbsp;Archived
                 </strong>
@@ -208,6 +221,8 @@ class AdminAssociateFileUploadListComponent extends Component {
             // Everything else...
             flashMessage, onTableChange, isLoading
         } = this.props;
+
+        console.log("->>>", associateFiles);
 
         return (
             <div>

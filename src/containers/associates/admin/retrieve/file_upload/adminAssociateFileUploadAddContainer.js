@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import AdminAssociateFileUploadAddComponent from "../../../../../components/associates/admin/retrieve/file_upload/adminAssociateFileUploadAddComponent";
 import { setFlashMessage } from "../../../../../actions/flashMessageActions";
-import { postAssociateFileUpload } from "../../../../../actions/associateFileUploadActions";
+import { postPrivateFileDetail } from "../../../../../actions/privateFileActions";
 import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../../validators/fileValidator"
 import { getTagReactSelectOptions, pullTagList } from "../../../../../actions/tagActions";
@@ -30,7 +30,7 @@ class AdminAssociateFileUploadAddContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            associate: id,
+            associateId: id,
             file: null,
             id: id,
             text: "",
@@ -186,7 +186,7 @@ class AdminAssociateFileUploadAddContainer extends Component {
 
             // Once our state has been validated `associate-side` then we will
             // make an API request with the server to create our new production.
-            this.props.postAssociateFileUpload(
+            this.props.postPrivateFileDetail(
                 this.getPostData(),
                 this.onSuccessPostCallback,
                 this.onFailurePostCallback
@@ -270,30 +270,17 @@ class AdminAssociateFileUploadAddContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, title, description, tags, isTagSetsLoading, is_archived, errors, file } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         const associateFiles = this.props.associateFileList ? this.props.associateFileList.results : [];
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         return (
             <AdminAssociateFileUploadAddComponent
-                id={id}
-                title={title}
-                description={description}
-                tags={tags}
+                {...this}
+                {...this.state}
+                {...this.props}
                 tagOptions={tagOptions}
-                is_archived={is_archived}
                 associate={associate}
                 associateFiles={associateFiles}
-                flashMessage={this.props.flashMessage}
-                onTextChange={this.onTextChange}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
-                file={file}
-                onFileDrop={this.onFileDrop}
-                onRemoveFileUploadClick={this.onRemoveFileUploadClick}
-                onMultiChange={this.onMultiChange}
-                isTagSetsLoading={isTagSetsLoading}
             />
         );
     }
@@ -317,8 +304,8 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        postAssociateFileUpload: (postData, successCallback, failedCallback) => {
-            dispatch(postAssociateFileUpload(postData, successCallback, failedCallback))
+        postPrivateFileDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPrivateFileDetail(postData, successCallback, failedCallback))
         },
         pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
