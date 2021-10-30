@@ -16,36 +16,34 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 import { FRONTLINE_ROLE_ID } from "../../../../constants/api";
 import AwayLogAlertComponent from "../awayLogAlertComponent";
 
-
 const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
 );
 
+const selectOptions = {
+    0: 'Archived',
+    1: 'New',
+    2: 'Declined',
+    3: 'Pending',
+    4: 'Cancelled',
+    5: 'Ongoing',
+    6: 'In-progress',
+    7: 'Completed and Unpaid',
+    8: 'Completed and Paid',
+};
 
 class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             orders,
 
             // Everything else.
-            onTableChange, isLoading, user
+            onTableChange, isLoading, user, onNextClick, onPreviousClick,
         } = this.props;
-
-        const selectOptions = {
-            "new": 'New',
-            "declined": 'Declined',
-            "pending": 'Pending',
-            "cancelled": 'Cancelled',
-            "ongoing": 'Ongoing',
-            "in_progress": 'In-progress',
-            "completed_and_unpaid": 'Completed and Unpaid',
-            "completed_and_paid": 'Completed and Paid',
-            "archived": 'Archived',
-        };
 
         const columns = [{
             dataField: 'typeOf',
@@ -181,7 +179,7 @@ function completionDateFormatter(cell, row){
 
 
 function statusFormatter(cell, row){
-    return row.prettyState;
+    return selectOptions[row.state];
 }
 
 
@@ -207,13 +205,13 @@ export default class AdminAssociateOrderListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             orderList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id, associate, user
+            flashMessage, onTableChange, isLoading, id, clientDetail, user, onNextClick, onPreviousClick, associate
         } = this.props;
 
         const orders = orderList.results ? orderList.results : [];
@@ -287,14 +285,23 @@ export default class AdminAssociateOrderListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             orders={orders}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                             user={user}
                         />
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>

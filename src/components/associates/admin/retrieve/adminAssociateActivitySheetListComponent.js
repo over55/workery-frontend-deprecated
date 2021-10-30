@@ -113,13 +113,13 @@ function jobFormatter(cell, row){
 function stateFormatter(cell, row){
     switch(row.state) {
         case 2:
-            return <><i className="fas fa-thumbs-down"></i>&nbsp;Rejected</>;
+            return <><i className="fas fa-times-circle"></i>&nbsp;Rejected</>;
             break;
         case 1:
-            return <><i className="fas fa-thumbs-up"></i>&nbsp;Accepted</>;
+            return <><i className="fas fa-check-circle"></i>&nbsp;Accepted</>;
             break;
         case 0:
-            return <><i className="fas fa-thumbs-down"></i>&nbsp;Rejected</>;
+            return <><i className="fas fa-times-circle"></i>&nbsp;Rejected</>;
             break;
         default:
             return <><i className="fas fa-question"></i></>;
