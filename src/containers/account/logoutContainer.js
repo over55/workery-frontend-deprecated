@@ -43,6 +43,13 @@ class LogoutContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // For debugging purposes only.
+        console.log("REACT_APP_WWW_PROTOCOL:", process.env.REACT_APP_WWW_PROTOCOL);
+        console.log("REACT_APP_WWW_DOMAIN:", process.env.REACT_APP_WWW_DOMAIN);
+        console.log("REACT_APP_API_PROTOCOL:", process.env.REACT_APP_API_PROTOCOL);
+        console.log("REACT_APP_API_DOMAIN:", process.env.REACT_APP_API_DOMAIN);
+
         const { user } = this.props;
         if (user !== undefined && user.token !== undefined && user.token !== null) {
             // DEVELOPERS NOTE:
@@ -77,6 +84,10 @@ class LogoutContainer extends Component {
 
         // Create a flash message telling the user that they successfully logged out.
         this.props.setFlashMessage("success", "You have successfully logged out.");
+
+        const aURL = process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_WWW_DOMAIN + "/login";
+        console.log("aURL:", aURL);
+        window.location.href = aURL;
 
         // Tell the state that we've successfully finished loading this page
         // as a result we will redirect to the login page.
@@ -126,13 +137,21 @@ class LogoutContainer extends Component {
 
     render() {
         const { isLoading, errors } = this.state;
-        if (isLoading) {
-            return (
-                <TenantRedirectComponent errors={errors} />
-            );
-        } else {
-            return <Redirect to="/login" />;
+
+        // DEVELOPERS NOTE:
+        // - Do not use the `reac-router-dom` library to redirect by using the
+        //  'Redirect' code because I tried and it did not set the correct
+        //  sub-domain in the URL path, so I decided to use the
+        //  `window.location.href` instead.
+        if (isLoading == false) {
+            const aURL = process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_WWW_DOMAIN + "/login";
+            console.log("aURL:", aURL);
+            window.location.href = aURL;
         }
+
+        return (
+            <TenantRedirectComponent errors={errors} />
+        );
 
     }
 }
