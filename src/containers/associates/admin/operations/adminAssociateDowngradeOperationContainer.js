@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import AdminAssociateDowngradeOperationComponent from "../../../../components/associates/admin/operations/adminAssociateDowngradeOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { postAssociateDowngradeOperation } from "../../../../actions/associateActions";
+import { postAssociateDowngradeOperation } from "../../../../actions/associateOperationActions";
 import { validateDowngradeOperationInput } from "../../../../validators/associateValidator"
 
 

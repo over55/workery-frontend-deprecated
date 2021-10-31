@@ -100,7 +100,7 @@ export function validateMetricsInput(data) {
     }
     if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
         errors.howHear = 'This field is required';
-    } 
+    }
     if (data.joinDate === undefined || data.joinDate === null || data.joinDate === "" || isNaN(data.joinDate) ) {
         errors.joinDate = 'This field is required';
     }
