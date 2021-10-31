@@ -15,7 +15,6 @@ import {
     WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_ENDPOINT,
     WORKERY_ASSOCIATE_METRICS_UPDATE_API_ENDPOINT,
     WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT,
-    WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
     WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_ENDPOINT,
     WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_ENDPOINT,
     WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_ENDPOINT
@@ -581,74 +580,6 @@ export function pullTaskItemAvailableAssociateList(taskItemId, onSuccessCallback
             }
 
         }).then( () => { // FINALLY
-            // Do nothing.
-        });
-
-    }
-}
-
-export function postAssociateAvatarCreateOrUpdate(postData, onSuccessCallback, onFailureCallback) {
-    return dispatch => {
-
-        // Change the global state to attempting to log in.
-        store.dispatch(
-            setAssociateDetailRequest()
-        );
-
-        // Generate our app's Axios instance.
-        const customAxios = getCustomAxios();
-
-        // The following code will convert the `camelized` data into `snake case`
-        // data so our API endpoint will be able to read it.
-        let decamelizedData = decamelizeKeys(postData);
-
-        // Perform our API submission.
-        customAxios.post(WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
-            const responseData = successResponse.data;
-
-            let associate = camelizeKeys(responseData);
-
-            // Extra.
-            associate['isAPIRequestRunning'] = false;
-            associate['errors'] = {};
-
-            // Update the global state of the application to store our
-            // user associate for the application.
-            store.dispatch(
-                setAssociateDetailSuccess(associate)
-            );
-
-            // DEVELOPERS NOTE:
-            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-            // OBJECT WE GOT FROM THE API.
-            if (onSuccessCallback) {
-                onSuccessCallback(associate);
-            }
-        }).catch( (exception) => {
-            if (exception.response) {
-                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                let errors = camelizeKeys(responseData);
-
-                console.log("postAssociateResidentialUpgradeDetail | error:", errors); // For debuggin purposes only.
-
-                // Send our failure to the redux.
-                store.dispatch(
-                    setAssociateDetailFailure({
-                        isAPIRequestRunning: false,
-                        errors: errors
-                    })
-                );
-
-                // DEVELOPERS NOTE:
-                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
-                // OBJECT WE GOT FROM THE API.
-                if (onFailureCallback) {
-                    onFailureCallback(errors);
-                }
-            }
-
-        }).then( () => {
             // Do nothing.
         });
 
