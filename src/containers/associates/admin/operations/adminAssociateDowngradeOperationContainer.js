@@ -24,7 +24,7 @@ class AdminAssociateDowngradeOperationContainer extends Component {
             organizationTypeOf: "",
 
             // Everything else...
-            associate: id,
+            associateId: id,
             id: id,
             errors: {},
         }
@@ -48,6 +48,8 @@ class AdminAssociateDowngradeOperationContainer extends Component {
         if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
             postData.organizationTypeOf = "";
         }
+
+        postData.associateId = parseInt(this.state.associateId);
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
