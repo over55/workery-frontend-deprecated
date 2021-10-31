@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import AdminAssociateArchiveOperationComponent from "../../../../components/associates/admin/operations/adminAssociateArchiveOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { postAssociateDeactivationDetail } from "../../../../actions/associateActions";
+import { postAssociateDeactivationDetail } from "../../../../actions/associateOperationActions";
 import { validateDeactivationInput } from "../../../../validators/associateValidator";
 
 
@@ -46,7 +46,7 @@ class AdminAssociateArchiveOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.associate = this.props.associateDetail.id;
+        postData.associateId = this.props.associateDetail.id;
         postData.state = 0;
         postData.deactivationReason = this.state.reason;
         postData.deactivationReasonOther = this.state.reasonOther;
@@ -151,19 +151,13 @@ class AdminAssociateArchiveOperationContainer extends Component {
      */
 
     render() {
-        const { id, errors, isLoading, reason, reasonOther } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
             <AdminAssociateArchiveOperationComponent
-                id={id}
-                errors={errors}
-                isLoading={isLoading}
-                reason={reason}
-                reasonOther={reasonOther}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associate={associate}
-                onClick={this.onClick}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
             />
         );
     }
