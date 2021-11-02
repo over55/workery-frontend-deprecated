@@ -626,3 +626,16 @@ export function validateDeactivationInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+export function validateDeleteInput(data) {
+    let errors = {};
+
+    if (data.associateId === undefined || data.associateId === null || data.associateId === "") {
+        errors.associateId = 'This field is required.';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

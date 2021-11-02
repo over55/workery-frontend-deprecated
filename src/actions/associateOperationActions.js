@@ -13,7 +13,8 @@ import {
     WORKERY_ASSOCIATE_ARCHIVE_API_ENDPOINT,
     WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
     WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_ENDPOINT,
-    WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_ENDPOINT
+    WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_ENDPOINT,
+    WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 import {
@@ -368,6 +369,68 @@ export function postAssociateDowngradeOperation(postData, onSuccessCallback, onF
                 let errors = camelizeKeys(responseData);
 
                 console.log("postAssociateDowngradeOperation | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+export function postAssociatePermanentlyDeleteOperation(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setAssociateDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT, { "associate_id": id }).then( (successResponse) => {
+            let client = {
+                isAPIRequestRunning: false,
+                errors: {},
+            };
+
+            // Update the global state of the application to store our
+            // user client for the application.
+            store.dispatch(
+                setAssociateDetailSuccess(client)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(client);
+            }
+
+        }).catch( (exception) => {
+            if (exception.response) {
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("postAssociatePermanentlyDeleteOperation | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(

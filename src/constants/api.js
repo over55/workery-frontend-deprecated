@@ -65,6 +65,7 @@ export const WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_ENDPOINT = '/associ
 export const WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_ENDPOINT = '/associate-operations/upgrade-residential';
 export const WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_ENDPOINT = '/associate-operations/downgrade-commercial';
 export const WORKERY_ASSOCIATE_ARCHIVE_API_ENDPOINT = '/associate-operations/archive';
+export const WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT = '/associate-operations/permanently-delete';
 export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
 export const WORKERY_TASK_DETAIL_API_ENDPOINT = '/task/';
 export const WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT = '/task/XXX/available-associates';
