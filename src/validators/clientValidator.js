@@ -485,6 +485,9 @@ export function validateSearchInput(data) {
         if (data.telephone === undefined || data.telephone === null || data.telephone === "") {
             hasEmptyField += 1;
         }
+        if (data.email === undefined || data.email === null || data.email === "") {
+            hasEmptyField += 1;
+        }
 
         if (hasEmptyField === 4) {
             // errors.givenName = '';

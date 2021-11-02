@@ -213,36 +213,15 @@ class ClientCreateStep6Container extends Component {
      */
 
     render() {
-        const {
-            typeOf, isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate, comment,
-            errors
-        } = this.state;
-
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
-
         return (
             <ClientCreateStep6Component
-                typeOf={typeOf}
-                isTagsLoading={isTagsLoading}
-                tags={tags}
+                {...this}
+                {...this.state}
+                {...this.props}
                 tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
                 howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                comment={comment}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onJoinDateChange={this.onJoinDateChange}
-                onClick={this.onClick}
             />
         );
     }

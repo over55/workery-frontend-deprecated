@@ -120,7 +120,9 @@ class ClientCreateStep2Container extends Component {
                 isLoading: true,
             },
             ()=>{
-                this.props.pullClientList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullClientList(
+                    page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback
+                );
             }
         )
     }
@@ -133,7 +135,9 @@ class ClientCreateStep2Container extends Component {
                 isLoading: true,
             },
             ()=>{
-                this.props.pullClientList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullClientList(
+                    page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback
+                );
             }
         )
     }
@@ -144,23 +148,17 @@ class ClientCreateStep2Container extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
         const clients = (this.props.clientList && this.props.clientList.results) ? this.props.clientList.results : [];
         const hasNext = this.props.clientList.next !== null;
         const hasPrevious = this.props.clientList.previous !== null;
         return (
             <ClientCreateStep2Component
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
+                {...this}
+                {...this.state}
+                {...this.props}
                 clients={clients}
-                isLoading={isLoading}
-                errors={errors}
-                onTextChange={this.onTextChange}
                 hasNext={hasNext}
-                onNextClick={this.onNextClick}
                 hasPrevious={hasPrevious}
-                onPreviousClick={this.onPreviousClick}
             />
         );
     }

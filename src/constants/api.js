@@ -720,36 +720,36 @@ export const MOBILE_CONTACT_POINT_TYPE_OF_ID = 2
 export const WORK_CONTACT_POINT_TYPE_OF_ID = 3
 export const PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES = [
     {
-        id: 'primaryPhoneTypeOf-1-choice',
-        selectName: "primaryPhoneTypeOf",
+        id: 'telephoneTypeOf-1-choice',
+        selectName: "telephoneTypeOf",
         value: TELEPHONE_CONTACT_POINT_TYPE_OF_ID,
         label: "Landline"
     },{
-        id: 'primaryPhoneTypeOf-2-choice',
-        selectName: "primaryPhoneTypeOf",
+        id: 'telephoneTypeOf-2-choice',
+        selectName: "telephoneTypeOf",
         value: MOBILE_CONTACT_POINT_TYPE_OF_ID,
         label: "Mobile"
     },{
-        id: 'primaryPhoneTypeOf-3-choice',
-        selectName: "primaryPhoneTypeOf",
+        id: 'telephoneTypeOf-3-choice',
+        selectName: "telephoneTypeOf",
         value: WORK_CONTACT_POINT_TYPE_OF_ID,
         label: "Work"
     }
 ];
 export const SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES = [
     {
-        id: 'secondaryPhoneTypeOf-1-choice',
-        selectName: "secondaryPhoneTypeOf",
+        id: 'otherTelephoneTypeOf-1-choice',
+        selectName: "otherTelephoneTypeOf",
         value: TELEPHONE_CONTACT_POINT_TYPE_OF_ID,
         label: "Landline"
     },{
-        id: 'secondaryPhoneTypeOf-2-choice',
-        selectName: "secondaryPhoneTypeOf",
+        id: 'otherTelephoneTypeOf-2-choice',
+        selectName: "otherTelephoneTypeOf",
         value: MOBILE_CONTACT_POINT_TYPE_OF_ID,
         label: "Mobile"
     },{
-        id: 'secondaryPhoneTypeOf-3-choice',
-        selectName: "secondaryPhoneTypeOf",
+        id: 'otherTelephoneTypeOf-3-choice',
+        selectName: "otherTelephoneTypeOf",
         value: WORK_CONTACT_POINT_TYPE_OF_ID,
         label: "Work"
     }

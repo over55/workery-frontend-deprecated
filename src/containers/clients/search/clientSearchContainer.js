@@ -59,7 +59,7 @@ class ClientListContainer extends Component {
      *------------------------------------------------------------
      */
 	handleKeyDown(e) {
-		
+
 		if (e.keyCode === 13) {
 			this.setState({ advancedSearchActive: false, }, ()=> {
 				// Perform client-side validation.
@@ -85,7 +85,7 @@ class ClientListContainer extends Component {
 			});
 		}
 	}
-	
+
     onTextChange(e) {
         this.setState({ [e.target.name]: e.target.value, });
     }

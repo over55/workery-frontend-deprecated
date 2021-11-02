@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, RESIDENTIAL_CUSTOMER_TYPE_OF_ID } from '../../../constants/api';
 
 
 class CardComponent extends Component {
@@ -14,10 +15,10 @@ class CardComponent extends Component {
                     <div className="card-body">
                         <h5 className="card-title">
                             <Link to={`/client/${client.id}`}>
-                                {client.typeOf === 3 &&
+                                {client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID &&
                                     <strong><i className="fas fa-building"></i>&nbsp;{client.organizationName}</strong>
                                 }
-                                {client.typeOf === 2 &&
+                                {client && client.typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID &&
                                     <strong><i className="fas fa-home"></i>&nbsp;{client.givenName}&nbsp;{client.lastName}</strong>
                                 }
                             </Link>

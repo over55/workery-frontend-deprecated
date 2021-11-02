@@ -24,10 +24,10 @@ class ClientCreateStep4Container extends Component {
             organizationTypeOf: localStorageGetIntegerItem("workery-create-client-organizationTypeOf"),
             givenName: localStorage.getItem("workery-create-client-givenName"),
             lastName: localStorage.getItem("workery-create-client-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-client-primaryPhone"),
-            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-primaryPhoneTypeOf"),
-            secondaryPhone: localStorage.getItem("workery-create-client-secondaryPhone"),
-            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-secondaryPhoneTypeOf"),
+            telephone: localStorage.getItem("workery-create-client-telephone"),
+            telephoneTypeOf: localStorageGetIntegerItem("workery-create-client-telephoneTypeOf"),
+            otherTelephone: localStorage.getItem("workery-create-client-otherTelephone"),
+            otherTelephoneTypeOf: localStorageGetIntegerItem("workery-create-client-otherTelephoneTypeOf"),
             email: localStorage.getItem("workery-create-client-email"),
             isOkToEmail: localStorageGetIntegerItem("workery-create-client-isOkToEmail"),
             isOkToText: localStorageGetIntegerItem("workery-create-client-isOkToText"),
@@ -159,28 +159,11 @@ class ClientCreateStep4Container extends Component {
      */
 
     render() {
-        const {
-            typeOf, organizationName, organizationTypeOf, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToEmail, isOkToText, errors
-        } = this.state;
         return (
             <ClientCreateStep4Component
-                typeOf={typeOf}
-                organizationName={organizationName}
-                organizationTypeOf={organizationTypeOf}
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                primaryPhoneTypeOf={primaryPhoneTypeOf}
-                secondaryPhone={secondaryPhone}
-                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
-                onSelectChange={this.onSelectChange}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

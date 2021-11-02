@@ -59,7 +59,11 @@ class ClientCreateStep3Container extends Component {
 
     render() {
         return (
-            <ClientCreateStep3Component onClick={this.onClick}/>
+            <ClientCreateStep3Component 
+                {...this}
+                {...this.state}
+                {...this.props}
+            />
         );
     }
 }
