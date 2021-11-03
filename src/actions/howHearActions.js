@@ -430,7 +430,7 @@ export const setHowHearDetailFailure = howHearDetail => ({
  * Utility function takes the API data and converts it to HTML dropdown
  * options which will be consumed by the `react-select` library elements.
  */
-export function getHowHearReactSelectOptions(howHearList=[], selectName="howHear") {
+export function getHowHearReactSelectOptions(howHearList=[], selectName="howHearId") {
     const howHearOptions = [];
     const isNotProductionsEmpty = isEmpty(howHearList) === false;
     if (isNotProductionsEmpty) {
@@ -442,7 +442,8 @@ export function getHowHearReactSelectOptions(howHearList=[], selectName="howHear
                 howHearOptions.push({
                     selectName: selectName,
                     value: howHear.id,
-                    label: howHear.text
+                    label: howHear.text,
+                    howHearId: howHear.id,
                 });
                 // console.log(howHear);
             }

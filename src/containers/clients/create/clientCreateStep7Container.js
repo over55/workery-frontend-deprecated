@@ -61,8 +61,8 @@ class ClientCreateStep7Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
             gender: localStorage.getItem("workery-create-client-gender"),
             genderLabel: localStorage.getItem("workery-create-client-gender-label"),
-            howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
-            howHearLabel: localStorage.getItem("workery-create-client-howHearLabel"),
+            howHearId: localStorageGetIntegerItem("workery-create-client-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-client-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
             joinDate: joinDate,
@@ -159,6 +159,10 @@ class ClientCreateStep7Container extends Component {
         if (this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === "" || isNaN(this.state.otherTelephoneTypeOf)) {
             postData.otherTelephoneTypeOf = TELEPHONE_CONTACT_POINT_TYPE_OF_ID;
         }
+
+        // (14) Boolean handler.
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

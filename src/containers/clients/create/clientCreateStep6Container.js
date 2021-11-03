@@ -34,7 +34,8 @@ class ClientCreateStep6Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
             gender: localStorage.getItem("workery-create-client-gender"),
             isHowHearLoading: true,
-            howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
+            howHearId: localStorageGetIntegerItem("workery-create-client-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-client-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
             joinDate: joinDate,
@@ -123,9 +124,12 @@ class ClientCreateStep6Container extends Component {
     }
 
     onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
+        console.log(option);
+        const optionKey = [option.selectName].toString()+"Option";
+        const optionLabel = [option.selectName].toString()+"Label";
         this.setState({
             [option.selectName]: option.value,
+            [optionLabel]: option.label,
             optionKey: option,
         });
         localStorage.setItem('workery-create-client-'+[option.selectName].toString(), option.value);
