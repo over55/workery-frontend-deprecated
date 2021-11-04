@@ -429,7 +429,7 @@ export const setServiceFeeDetailFailure = serviceFeeDetail => ({
  * Utility function takes the API data and converts it to HTML dropdown
  * options which will be consumed by the `react-select` library elements.
  */
-export function getServiceFeeReactSelectOptions(serviceFeeList=[], selectName="serviceFee") {
+export function getServiceFeeReactSelectOptions(serviceFeeList=[], selectName="serviceFeeId") {
     const serviceFeeOptions = [];
     const isNotProductionsEmpty = isEmpty(serviceFeeList) === false;
     if (isNotProductionsEmpty) {
@@ -441,7 +441,8 @@ export function getServiceFeeReactSelectOptions(serviceFeeList=[], selectName="s
                 serviceFeeOptions.push({
                     selectName: selectName,
                     value: serviceFee.id,
-                    label: serviceFee.title
+                    label: serviceFee.title,
+                    serviceFeeId: serviceFee.id
                 });
                 // console.log(serviceFee);
             }
@@ -474,7 +475,8 @@ export function getPickedServiceFeeReactSelectOptions(pickedServiceFeesArray, se
                         serviceFeeOptions.push({
                             selectName: selectName,
                             value: serviceFee.id,
-                            label: serviceFee.title
+                            label: serviceFee.title,
+                            serviceFeeId: serviceFee.id,
                         });
                         // console.log(serviceFee);
                     } // end IF

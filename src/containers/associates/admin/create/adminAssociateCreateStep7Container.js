@@ -34,7 +34,8 @@ class AdminAssociateCreateStep7Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
             gender: localStorage.getItem("workery-create-associate-gender"),
             isHowHearLoading: true,
-            howHear: localStorageGetIntegerItem("workery-create-associate-howHear"),
+            howHearId: localStorageGetIntegerItem("workery-create-associate-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-associate-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-associate-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-associate-howHearOther"),
             joinDate: joinDate,
@@ -123,9 +124,12 @@ class AdminAssociateCreateStep7Container extends Component {
     }
 
     onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
+        console.log(option);
+        const optionKey = [option.selectName].toString()+"Option";
+        const optionLabel = [option.selectName].toString()+"Label";
         this.setState({
             [option.selectName]: option.value,
+            [optionLabel]: option.label,
             optionKey: option,
         });
         localStorage.setItem('workery-create-associate-'+[option.selectName].toString(), option.value);
@@ -192,7 +196,7 @@ class AdminAssociateCreateStep7Container extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // console.log(this.state); // For debugging purposes only.
+        console.log(this.state); // For debugging purposes only.
 
         // Perform associate-side validation.
         const { errors, isValid } = validateStep7CreateInput(this.state);

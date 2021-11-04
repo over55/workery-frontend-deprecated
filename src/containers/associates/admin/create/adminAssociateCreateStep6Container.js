@@ -15,9 +15,9 @@ import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../../constants/api';
-import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
-import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
-import { getVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../../actions/vehicleTypeActions";
+import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
+import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
+import { getVehicleTypeReactSelectOptions, getPickedVehicleTypeReactSelectOptions, pullVehicleTypeList } from "../../../../actions/vehicleTypeActions";
 import { pullServiceFeeList, getServiceFeeReactSelectOptions } from "../../../../actions/serviceFeeActions";
 
 
@@ -49,7 +49,7 @@ class AdminAssociateCreateStep6Container extends Component {
             isVehicleTypesLoading: true,
             vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
             isServiceFeeLoading: true,
-            serviceFee: localStorageGetIntegerItem("workery-create-associate-serviceFee"),
+            serviceFeeId: localStorageGetIntegerItem("workery-create-associate-serviceFeeId"),
             emergencyContactName: localStorage.getItem("workery-create-associate-emergencyContactName"),
             emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
@@ -160,15 +160,18 @@ class AdminAssociateCreateStep6Container extends Component {
     }
 
     onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
+        console.log(option);
+        const optionKey = [option.selectName].toString()+"Option";
+        const optionLabel = [option.selectName].toString()+"Label";
         this.setState({
             [option.selectName]: option.value,
-            [optionKey]: option,
+            [optionLabel]: option.label,
+            optionKey: option,
         });
-        localStorage.setItem('workery-create-associate-'+[option.selectName], option.value);
+        localStorage.setItem('workery-create-associate-'+[option.selectName].toString(), option.value);
+        localStorage.setItem('workery-create-associate-'+[option.selectName].toString()+"Label", option.label);
         localStorageSetObjectOrArrayItem('workery-create-associate-'+optionKey, option);
         // console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
-        // console.log(this.state);
     }
 
     onRadioChange(e) {
@@ -201,42 +204,66 @@ class AdminAssociateCreateStep6Container extends Component {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            skillSets: selectedOptions,
-        });
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let pickedSkillSets = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let pickedOption = selectedOptions[i];
+                pickedOption.skillSetId = pickedOption.value;
+                pickedSkillSets.push(pickedOption);
+            }
+        }
+        this.setState({ skillSets: pickedSkillSets, });
 
         // // Set all the tags we have selected to the STORAGE.
         const key = 'workery-create-associate-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
+        localStorageSetObjectOrArrayItem(key, pickedSkillSets);
     }
 
     onInsuranceRequirementMultiChange(...args) {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            insuranceRequirements: selectedOptions,
-        });
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let pickedInsuranceRequirements = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let pickedOption = selectedOptions[i];
+                pickedOption.insuranceRequirementId = pickedOption.value;
+                pickedInsuranceRequirements.push(pickedOption);
+            }
+        }
+        this.setState({ insuranceRequirements: pickedInsuranceRequirements, });
 
         // // Set all the tags we have selected to the STORAGE.
         const key = 'workery-create-associate-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
+        localStorageSetObjectOrArrayItem(key, pickedInsuranceRequirements);
     }
 
     onVehicleTypeMultiChange(...args) {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            vehicleTypes: selectedOptions,
-        });
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let pickedVehicleTypes = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let pickedOption = selectedOptions[i];
+                pickedOption.vehicleTypeId = pickedOption.value;
+                pickedVehicleTypes.push(pickedOption);
+            }
+        }
+        this.setState({ vehicleTypes: pickedVehicleTypes, });
 
         // // Set all the tags we have selected to the STORAGE.
         const key = 'workery-create-associate-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
+        localStorageSetObjectOrArrayItem(key, pickedVehicleTypes);
     }
 
     onDuesDateChange(dateObj) {
@@ -298,11 +325,31 @@ class AdminAssociateCreateStep6Container extends Component {
      */
 
     render() {
+        const {
+            skillSets, insuranceRequirements, vehicleTypes,
+        } = this.state;
+
+        const skillSetOptions = getSkillSetReactSelectOptions(this.props.skillSetList);
+        const transcodedSkillSets = getPickedSkillSetReactSelectOptions(skillSets, this.props.skillSetList)
+
+        const insuranceRequirementOptions = getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList);
+        const transcodedInsuranceRequirements = getPickedInsuranceRequirementReactSelectOptions(insuranceRequirements, this.props.insuranceRequirementList)
+
+        const vehicleTypeOptions = getVehicleTypeReactSelectOptions(this.props.vehicleTypeList);
+        const transcodedVehicleTypes = getPickedVehicleTypeReactSelectOptions(vehicleTypes, this.props.vehicleTypeList)
+
         return (
             <AdminAssociateCreateStep6Component
                 {...this}
                 {...this.state}
                 {...this.props}
+                skillSets={transcodedSkillSets}
+                skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
+                insuranceRequirements={transcodedInsuranceRequirements}
+                insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
+                vehicleTypes={transcodedVehicleTypes}
+                vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
+                serviceFeeOptions={getServiceFeeReactSelectOptions(this.props.serviceFeeList)}
             />
         );
     }

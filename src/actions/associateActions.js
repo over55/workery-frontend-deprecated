@@ -718,7 +718,8 @@ export function getAssociateReactSelectOptions(associateList=[], selectName="ass
                 associateOptions.push({
                     selectName: selectName,
                     value: associate.id,
-                    label: associate.fullName
+                    label: associate.fullName,
+                    associateId: associate.id,
                 });
                 // console.log(associate);
             }

@@ -67,7 +67,8 @@ class AdminAssociateCreateStep8Container extends Component {
             taxId: localStorage.getItem("workery-create-associate-taxId"),
             driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
             vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
-            serviceFee: localStorageGetIntegerItem("workery-create-associate-serviceFee"),
+            serviceFeeId: localStorageGetIntegerItem("workery-create-associate-serviceFeeId"),
+            serviceFeeIdLabel: localStorage.getItem("workery-create-associate-serviceFeeIdLabel"),
             emergencyContactName: localStorage.getItem("workery-create-associate-emergencyContactName"),
             emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
@@ -79,8 +80,8 @@ class AdminAssociateCreateStep8Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
             gender: localStorage.getItem("workery-create-associate-gender"),
             genderLabel: localStorage.getItem("workery-create-associate-gender-label"),
-            howHear: localStorageGetIntegerItem("workery-create-associate-howHear"),
-            howHearLabel: localStorage.getItem("workery-create-associate-howHearLabel"),
+            howHearId: localStorageGetIntegerItem("workery-create-associate-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-associate-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-associate-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-associate-howHearOther"),
             joinDate: joinDate,
@@ -279,7 +280,8 @@ class AdminAssociateCreateStep8Container extends Component {
         e.preventDefault();
 
         const { errors, isValid } = validateStep8CreateInput(this.state);
-        // console.log(errors, isValid); // For debugging purposes only.
+
+        console.log(errors, isValid); // For debugging purposes only.
 
         if (isValid) {
             this.setState(
