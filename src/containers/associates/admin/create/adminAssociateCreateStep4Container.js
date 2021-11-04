@@ -25,8 +25,8 @@ class AdminAssociateCreateStep4Container extends Component {
             organizationTypeOf: localStorageGetIntegerItem("workery-create-associate-organizationTypeOf"),
             givenName: localStorage.getItem("workery-create-associate-givenName"),
             lastName: localStorage.getItem("workery-create-associate-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-associate-primaryPhone"),
-            secondaryPhone: localStorage.getItem("workery-create-associate-secondaryPhone"),
+            telephone: localStorage.getItem("workery-create-associate-telephone"),
+            otherTelephone: localStorage.getItem("workery-create-associate-otherTelephone"),
             email: localStorage.getItem("workery-create-associate-email"),
             isOkToEmail: localStorageGetIntegerItem("workery-create-associate-isOkToEmail"),
             isOkToText: localStorageGetIntegerItem("workery-create-associate-isOkToText"),
@@ -49,8 +49,8 @@ class AdminAssociateCreateStep4Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        localStorage.setItem("workery-create-associate-primaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
-        localStorage.setItem("workery-create-associate-secondaryPhoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
+        localStorage.setItem("workery-create-associate-telephoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
+        localStorage.setItem("workery-create-associate-otherTelephoneTypeOf", TELEPHONE_CONTACT_POINT_TYPE_OF_ID);
     }
 
     componentWillUnmount() {

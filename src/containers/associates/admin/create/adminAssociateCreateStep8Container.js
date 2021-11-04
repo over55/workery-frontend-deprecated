@@ -35,10 +35,10 @@ class AdminAssociateCreateStep8Container extends Component {
             organizationTypeOf: localStorageGetIntegerItem("workery-create-associate-organizationTypeOf"),
             givenName: localStorage.getItem("workery-create-associate-givenName"),
             lastName: localStorage.getItem("workery-create-associate-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-associate-primaryPhone"),
-            primaryPhoneTypeOf: 1,
-            secondaryPhone: localStorage.getItem("workery-create-associate-secondaryPhone"),
-            secondaryPhoneTypeOf: 1,
+            telephone: localStorage.getItem("workery-create-associate-telephone"),
+            telephoneTypeOf: 1,
+            otherTelephone: localStorage.getItem("workery-create-associate-otherTelephone"),
+            otherTelephoneTypeOf: 1,
             email: localStorage.getItem("workery-create-associate-email"),
             isOkToEmail: localStorageGetIntegerItem("workery-create-associate-isOkToEmail"),
             isOkToEmailLabel: localStorage.getItem("workery-create-associate-isOkToEmail-label"),
@@ -208,15 +208,15 @@ class AdminAssociateCreateStep8Container extends Component {
         }
 
         // () Other telephone type of
-        let secondaryPhoneTypeOf = this.state.secondaryPhoneTypeOf;
-        if (secondaryPhoneTypeOf === undefined || secondaryPhoneTypeOf === null || isNaN(secondaryPhoneTypeOf) ) {
-            secondaryPhoneTypeOf = 1; // Choose default.
+        let otherTelephoneTypeOf = this.state.otherTelephoneTypeOf;
+        if (otherTelephoneTypeOf === undefined || otherTelephoneTypeOf === null || isNaN(otherTelephoneTypeOf) ) {
+            otherTelephoneTypeOf = 1; // Choose default.
         }
-        postData.otherTelephoneTypeOf = secondaryPhoneTypeOf;
+        postData.otherTelephoneTypeOf = otherTelephoneTypeOf;
 
         // (8) Telephone: This field is required.
-        postData.telephone = this.state.primaryPhone;
-        postData.telephoneTypeOf = this.state.primaryPhoneTypeOf;
+        postData.telephone = this.state.telephone;
+        postData.telephoneTypeOf = this.state.telephoneTypeOf;
 
         // (9) Address Country: This field is required.
         postData.addressCountry = this.state.country;
