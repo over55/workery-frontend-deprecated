@@ -263,44 +263,11 @@ class ClientAddressUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            errors, id, isLoading,
-
-            // STEP 3
-            typeOf,
-
-            // STEP 4
-            givenName, lastName,
-
-            // STEP 5
-            country, region, locality, postalCode, streetAddress,
-        } = this.state;
-
         return (
             <ClientAddressUpdateComponent
-                // STEP 3
-                typeOf={typeOf}
-
-                // STEP 4
-                givenName={givenName}
-                lastName={lastName}
-
-                // STEP 5
-                country={country}
-                region={region}
-                locality={locality}
-                postalCode={postalCode}
-                streetAddress={streetAddress}
-
-                // EVERYTHING ELSE
-                isLoading={isLoading}
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onBillingCountryChange={this.onBillingCountryChange}
-                onBillingRegionChange={this.onBillingRegionChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

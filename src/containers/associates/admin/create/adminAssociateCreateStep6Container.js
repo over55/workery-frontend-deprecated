@@ -298,71 +298,11 @@ class AdminAssociateCreateStep6Container extends Component {
      */
 
     render() {
-        const {
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, wsibNumber,
-            isSkillsetLoading, skillSets,
-            insuranceRequirements,
-            vehicleTypes,
-            duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibInsuranceDate, policeCheck,
-            emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-            isInsuranceRequirementsLoading, isVehicleTypesLoading, serviceFee, isServiceFeeLoading,
-            isActive,
-            errors, isLoading
-        } = this.state;
-
-        const { user } = this.props;
         return (
             <AdminAssociateCreateStep6Component
-                description={description}
-                hourlySalaryDesired={hourlySalaryDesired}
-                limitSpecial={limitSpecial}
-                taxId={taxId}
-                driversLicenseClass={driversLicenseClass}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                wsibNumber={wsibNumber}
-                onTextChange={this.onTextChange}
-
-                isSkillsetLoading={isSkillsetLoading}
-                skillSets={skillSets}
-                skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-
-                isInsuranceRequirementsLoading={isInsuranceRequirementsLoading}
-                insuranceRequirements={insuranceRequirements}
-                insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
-                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-
-                isVehicleTypesLoading={isVehicleTypesLoading}
-                vehicleTypes={vehicleTypes}
-                vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
-                onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
-
-                isServiceFeeLoading={isServiceFeeLoading}
-                serviceFee={serviceFee}
-                serviceFeeOptions={getServiceFeeReactSelectOptions(this.props.serviceFeeList)}
-
-                duesDate={duesDate}
-                onDuesDateChange={this.onDuesDateChange}
-                commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
-                onCommercialInsuranceExpiryDate={this.onCommercialInsuranceExpiryDate}
-                autoInsuranceExpiryDate={autoInsuranceExpiryDate}
-                onAutoInsuranceExpiryDateChange={this.onAutoInsuranceExpiryDateChange}
-                wsibInsuranceDate={wsibInsuranceDate}
-                onWsibInsuranceDateChange={this.onWsibInsuranceDateChange}
-                policeCheck={policeCheck}
-                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
-
-                onSelectChange={this.onSelectChange}
-
-                isActive={isActive}
-                onRadioChange={this.onRadioChange}
-
-                onNextClick={this.onNextClick}
-                errors={errors}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

@@ -144,23 +144,17 @@ class AdminAssociateCreateStep2Container extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
         const associates = (this.props.associateList && this.props.associateList.results) ? this.props.associateList.results : [];
         const hasNext = this.props.associateList.next !== null;
         const hasPrevious = this.props.associateList.previous !== null;
         return (
             <AdminAssociateCreateStep2Component
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associates={associates}
-                isLoading={isLoading}
-                errors={errors}
-                onTextChange={this.onTextChange}
                 hasNext={hasNext}
-                onNextClick={this.onNextClick}
                 hasPrevious={hasPrevious}
-                onPreviousClick={this.onPreviousClick}
             />
         );
     }

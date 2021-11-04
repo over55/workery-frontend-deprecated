@@ -140,7 +140,7 @@ class ClientMetricsUpdateContainer extends Component {
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
 
-        // () First Name and Last Name if biz
+        // (12) First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             postData.givenName = this.state.givenName;
             postData.givenName = this.state.givenName;
@@ -149,6 +149,13 @@ class ClientMetricsUpdateContainer extends Component {
         } else {
 
         }
+
+        // (13) Process tags.
+        let tagPKs = [];
+        for (let t of this.state.tags) {
+            tagPKs.push(t.tagId);
+        }
+        postData.tags = tagPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

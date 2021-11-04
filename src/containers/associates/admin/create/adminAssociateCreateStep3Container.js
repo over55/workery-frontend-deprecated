@@ -63,7 +63,11 @@ class AdminAssociateCreateStep3Container extends Component {
 
     render() {
         return (
-            <AdminAssociateCreateStep3Component onClick={this.onClick} />
+            <AdminAssociateCreateStep3Component 
+                {...this}
+                {...this.state}
+                {...this.props}
+            />
         );
     }
 }

@@ -205,45 +205,11 @@ class ClientUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            errors, id, isLoading,
-
-            // STEP 3
-            typeOf,
-
-            // STEP 4 - REZ
-            givenName, lastName, telephone, telephoneTypeOf, otherTelephone, otherTelephoneTypeOf, email, isOkToText, isOkToEmail,
-
-            // STEP 4 - BIZ
-            organizationName, organizationTypeOf,
-        } = this.state;
-
         return (
             <ClientContactUpdateComponent
-                // STEP 3
-                typeOf={typeOf}
-
-                // STEP 4
-                organizationName={organizationName}
-                organizationTypeOf={organizationTypeOf}
-                givenName={givenName}
-                lastName={lastName}
-                telephone={telephone}
-                telephoneTypeOf={telephoneTypeOf}
-                otherTelephone={otherTelephone}
-                otherTelephoneTypeOf={otherTelephoneTypeOf}
-                email={email}
-                isOkToText={isOkToText}
-                isOkToEmail={isOkToEmail}
-
-                // EVERYTHING ELSE
-                isLoading={isLoading}
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
