@@ -228,14 +228,18 @@ class AdminAssociateCreateStep8Container extends Component {
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
 
-        // () First Name and Last Name if biz
+        // (12) First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             postData.givenName = this.state.givenName;
             postData.givenName = this.state.givenName;
             postData.lastName = this.state.lastName;
         }
 
-        // Handle the `isActive` field.
+        // (13) Boolean handler.
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
+
+        // (14) Handle the `isActive` field.
         if (this.state.isActive === IS_INACTIVE_TYPE_OF) {
             postData.isActive = false;
         }
