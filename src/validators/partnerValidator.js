@@ -19,8 +19,8 @@ export function validateContactInput(data) {
     if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
         errors.lastName = 'This field is required';
     }
-    if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-        errors.primaryPhone = 'This field is required';
+    if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
+        errors.telephone = 'This field is required';
     }
     if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
         errors.email = 'This field is required';
@@ -69,10 +69,10 @@ export function validateMetricsInput(data) {
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
-        errors.howHear = 'This field is required';
+    if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
+        errors.howHearId = 'This field is required';
     } else {
-        if (data.howHear === "Other") {
+        if (data.howHearIdLabel.includes("Other") === true) {
             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                 errors.howHearOther = 'This field is required';
             }
@@ -103,8 +103,8 @@ export function validateInput(data) {
     if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
         errors.lastName = 'This field is required';
     }
-    if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-        errors.primaryPhone = 'This field is required';
+    if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
+        errors.telephone = 'This field is required';
     }
     if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
         errors.email = 'This field is required';
@@ -142,10 +142,10 @@ export function validateInput(data) {
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
-        errors.howHear = 'This field is required';
+    if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
+        errors.howHearId = 'This field is required';
     } else {
-        if (data.howHear === "Other") {
+        if (data.howHearIdLabel.includes("Other") === true) {
             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                 errors.howHearOther = 'This field is required';
             }
@@ -180,11 +180,11 @@ export function validateStep3CreateInput(data) {
     if (data.lastName === undefined || data.lastName === null || validator.isEmpty(data.lastName) || data.lastName === "") {
         errors.lastName = 'This field is required';
     }
-    if (data.primaryPhone === undefined || data.primaryPhone === null || validator.isEmpty(data.primaryPhone) || data.primaryPhone === "") {
-        errors.primaryPhone = 'This field is required';
+    if (data.telephone === undefined || data.telephone === null || validator.isEmpty(data.telephone) || data.telephone === "") {
+        errors.telephone = 'This field is required';
     }
-    if (data.primaryPhoneTypeOf === undefined || data.primaryPhoneTypeOf === null || data.primaryPhoneTypeOf === "" || isNaN(data.primaryPhoneTypeOf) ) {
-        errors.primaryPhoneTypeOf = 'This field is required';
+    if (data.telephoneTypeOf === undefined || data.telephoneTypeOf === null || data.telephoneTypeOf === "" || isNaN(data.telephoneTypeOf) ) {
+        errors.telephoneTypeOf = 'This field is required';
     }
     if (data.email === undefined || data.email === null || validator.isEmpty(data.email) || data.email === "") {
         errors.email = 'This field is required';
@@ -246,10 +246,10 @@ export function validateStep5CreateInput(data) {
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
-        errors.howHear = 'This field is required';
+    if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
+        errors.howHearId = 'This field is required';
     } else {
-        if (data.howHear === "Other") {
+        if (data.howHearIdLabel.includes("Other") === true) {
             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                 errors.howHearOther = 'This field is required';
             }
@@ -307,7 +307,7 @@ export function validatePromotionInput(data) {
 export function validateSearchInput(data) {
     let errors = {};
 
-    if (data.advancedSearchActive === false) {
+    if (data.advancedSearchActive === true) {
         if (data.keyword === undefined || data.keyword === null || data.keyword === "") {
             errors.keyword = 'This field is required.';
         }

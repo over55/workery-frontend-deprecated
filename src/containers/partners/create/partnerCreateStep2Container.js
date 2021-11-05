@@ -144,23 +144,17 @@ class PartnerCreateStep2Container extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
         const partners = (this.props.partnerList && this.props.partnerList.results) ? this.props.partnerList.results : [];
         const hasNext = this.props.partnerList.next !== null;
         const hasPrevious = this.props.partnerList.previous !== null;
         return (
             <PartnerCreateStep2Component
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
+                {...this}
+                {...this.state}
+                {...this.props}
                 partners={partners}
-                isLoading={isLoading}
-                errors={errors}
-                onTextChange={this.onTextChange}
                 hasNext={hasNext}
-                onNextClick={this.onNextClick}
                 hasPrevious={hasPrevious}
-                onPreviousClick={this.onPreviousClick}
             />
         );
     }

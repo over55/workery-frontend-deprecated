@@ -10,7 +10,7 @@ import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput
 
 export default class PartnerCreateStep1Component extends Component {
     render() {
-        const { givenName, lastName, email, phone, errors, onTextChange, isLoading, onClick } = this.props;
+        const { givenName, lastName, email, telephone, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -83,11 +83,11 @@ export default class PartnerCreateStep1Component extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.phone}
+                                error={errors.telephone}
                                 label="Phone"
                                 onChange={onTextChange}
-                                value={phone}
-                                name="phone"
+                                value={telephone}
+                                name="telephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />

@@ -45,7 +45,8 @@ class PartnerCreateStep5Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-partner-dateOfBirth"),
             gender: localStorage.getItem("workery-create-partner-gender"),
             isHowHearLoading: true,
-            howHear: localStorageGetIntegerItem("workery-create-partner-howHear"),
+            howHearId: localStorageGetIntegerItem("workery-create-partner-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-partner-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-partner-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-partner-howHearOther"),
             joinDate: rawJoinDate,
@@ -222,37 +223,15 @@ class PartnerCreateStep5Container extends Component {
      */
 
     render() {
-        const {
-            typeOf, returnURL, isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate, comment,
-            errors
-        } = this.state;
-
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
-
         return (
             <PartnerCreateStep5Component
-                typeOf={typeOf}
-                returnURL={returnURL}
-                isTagsLoading={isTagsLoading}
-                tags={tags}
-                tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
+                {...this}
+                {...this.state}
+                {...this.props}
                 howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                comment={comment}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onJoinDateChange={this.onJoinDateChange}
-                onClick={this.onClick}
+                tagOptions={tagOptions}
             />
         );
     }

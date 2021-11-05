@@ -23,9 +23,22 @@ class PartnerCreateStep4Container extends Component {
 
     constructor(props) {
         super(props);
+
+        // Auto-fill the `country` and `region` fields.
+        let country = localStorage.getItem("workery-create-partner-country");
+        if (country === null || country === "") {
+            country = "Canada";
+            localStorage.setItem('workery-create-partner-country', country);
+        }
+        let region = localStorage.getItem("workery-create-partner-region");
+        if (region === null || region === "") {
+            region = "Ontario";
+            localStorage.setItem('workery-create-partner-region', region);
+        }
+
         this.state = {
-            country: localStorage.getItem("workery-create-partner-country"),
-            region: localStorage.getItem("workery-create-partner-region"),
+            country: country,
+            region: region,
             locality: localStorage.getItem("workery-create-partner-locality"),
             postalCode: localStorage.getItem("workery-create-partner-postalCode"),
             streetAddress: localStorage.getItem("workery-create-partner-streetAddress"),
@@ -152,26 +165,11 @@ class PartnerCreateStep4Container extends Component {
      */
 
     render() {
-        const { referrer, errors, isLoading } = this.state;
-        const {
-            country, region, locality,
-            postalCode, streetAddress,
-        } = this.state;
-        const { user } = this.props;
         return (
             <PartnerCreateStep4Component
-                country={country}
-                region={region}
-                locality={locality}
-                streetAddress={streetAddress}
-                postalCode={postalCode}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onBillingCountryChange={this.onBillingCountryChange}
-                onBillingRegionChange={this.onBillingRegionChange}
-                onNextClick={this.onNextClick}
-                errors={errors}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

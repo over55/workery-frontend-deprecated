@@ -28,10 +28,10 @@ class PartnerCreateStep6Container extends Component {
         // Get the type of.
         const typeOf = localStorageGetIntegerItem("workery-create-partner-typeOf");
         let returnURL;
-        let primaryPhone;
-        let primaryPhoneTypeOf;
-        let secondaryPhone;
-        let secondaryPhoneTypeOf;
+        let telephone;
+        let telephoneTypeOf;
+        let otherTelephone;
+        let otherTelephoneTypeOf;
         let email;
         let isOkToEmail;
         let isOkToText;
@@ -39,10 +39,10 @@ class PartnerCreateStep6Container extends Component {
         let isOkToTextLabel;
         if (typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/partners/add/step-4-rez-or-cc";
-            primaryPhone = localStorage.getItem("workery-create-partner-rez-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-rez-primaryPhoneTypeOf");
-            secondaryPhone = localStorage.getItem("workery-create-partner-rez-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-rez-secondaryPhoneTypeOf");
+            telephone = localStorage.getItem("workery-create-partner-rez-telephone");
+            telephoneTypeOf = localStorageGetIntegerItem("workery-create-partner-rez-telephoneTypeOf");
+            otherTelephone = localStorage.getItem("workery-create-partner-rez-otherTelephone");
+            otherTelephoneTypeOf = localStorageGetIntegerItem("workery-create-partner-rez-otherTelephoneTypeOf");
             email = localStorage.getItem("workery-create-partner-rez-email");
             isOkToEmail = localStorageGetIntegerItem("workery-create-partner-rez-isOkToEmail");
             isOkToText = localStorageGetIntegerItem("workery-create-partner-rez-isOkToText");
@@ -51,10 +51,10 @@ class PartnerCreateStep6Container extends Component {
         }
         else if (typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             returnURL = "/partners/add/step-4-biz";
-            primaryPhone = localStorage.getItem("workery-create-partner-primaryPhone");
-            primaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-primaryPhoneTypeOf");
-            secondaryPhone =  localStorage.getItem("workery-create-partner-secondaryPhone");
-            secondaryPhoneTypeOf = localStorageGetIntegerItem("workery-create-partner-secondaryPhoneTypeOf");
+            telephone = localStorage.getItem("workery-create-partner-telephone");
+            telephoneTypeOf = localStorageGetIntegerItem("workery-create-partner-telephoneTypeOf");
+            otherTelephone =  localStorage.getItem("workery-create-partner-otherTelephone");
+            otherTelephoneTypeOf = localStorageGetIntegerItem("workery-create-partner-otherTelephoneTypeOf");
             email = localStorage.getItem("workery-create-partner-email");
             isOkToEmail = localStorageGetIntegerItem("workery-create-partner-isOkToEmail");
             isOkToText = localStorageGetIntegerItem("workery-create-partner-isOkToText");
@@ -70,10 +70,10 @@ class PartnerCreateStep6Container extends Component {
             // Step 4 - Residential & Business
             givenName: localStorage.getItem("workery-create-partner-rez-givenName"),
             lastName: localStorage.getItem("workery-create-partner-rez-lastName"),
-            primaryPhone: primaryPhone,
-            primaryPhoneTypeOf: primaryPhoneTypeOf,
-            secondaryPhone: secondaryPhone,
-            secondaryPhoneTypeOf: secondaryPhoneTypeOf,
+            telephone: telephone,
+            telephoneTypeOf: telephoneTypeOf,
+            otherTelephone: otherTelephone,
+            otherTelephoneTypeOf: otherTelephoneTypeOf,
             email: email,
             isOkToEmail: isOkToEmail,
             isOkToEmailLabel: isOkToEmailLabel,
@@ -97,8 +97,8 @@ class PartnerCreateStep6Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-partner-dateOfBirth"),
             gender: localStorage.getItem("workery-create-partner-gender"),
             genderLabel: localStorage.getItem("workery-create-partner-gender-label"),
-            howHear: localStorageGetIntegerItem("workery-create-partner-howHear"),
-            howHearLabel: localStorage.getItem("workery-create-partner-howHearLabel"),
+            howHearId: localStorageGetIntegerItem("workery-create-partner-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-partner-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-partner-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-partner-howHearOther"),
             joinDate: joinDate,
@@ -171,15 +171,15 @@ class PartnerCreateStep6Container extends Component {
         }
 
         // () Other telephone type of
-        let secondaryPhoneTypeOf = this.state.secondaryPhoneTypeOf;
-        if (secondaryPhoneTypeOf === undefined || secondaryPhoneTypeOf === null || isNaN(secondaryPhoneTypeOf) ) {
-            secondaryPhoneTypeOf = 1; // Choose default.
+        let otherTelephoneTypeOf = this.state.otherTelephoneTypeOf;
+        if (otherTelephoneTypeOf === undefined || otherTelephoneTypeOf === null || isNaN(otherTelephoneTypeOf) ) {
+            otherTelephoneTypeOf = 1; // Choose default.
         }
-        postData.otherTelephoneTypeOf = secondaryPhoneTypeOf;
+        postData.otherTelephoneTypeOf = otherTelephoneTypeOf;
 
         // (8) Telephone: This field is required.
-        postData.telephone = this.state.primaryPhone;
-        postData.telephoneTypeOf = this.state.primaryPhoneTypeOf;
+        postData.telephone = this.state.telephone;
+        postData.telephoneTypeOf = this.state.telephoneTypeOf;
 
         // (9) Address Country: This field is required.
         postData.addressCountry = this.state.country;
@@ -197,6 +197,9 @@ class PartnerCreateStep6Container extends Component {
             postData.lastName = this.state.lastName;
         }
 
+        // (14) Boolean handler.
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
@@ -298,92 +301,11 @@ class PartnerCreateStep6Container extends Component {
      */
 
     render() {
-        const {
-            // Step 3
-            typeOf,
-            typeOfLabel,
-
-            // Step 4 - Residential & Business
-            givenName,
-            lastName,
-            primaryPhone,
-            secondaryPhone,
-            email,
-            isOkToEmail,
-            isOkToEmailLabel,
-            isOkToText,
-            isOkToTextLabel,
-            organizationName,
-
-            // Step 5 - Address
-            country,
-            region,
-            locality,
-            postalCode,
-            streetAddress,
-
-            // Step 6 - Metrics
-            tags,
-            dateOfBirth,
-            gender,
-            genderLabel,
-            howHear,
-            howHearLabel,
-            howHearOption,
-            howHearOther,
-            joinDate,
-            comment,
-
-            // Everything else
-            returnURL,
-            errors,
-            isLoading,
-        } = this.state;
-
         return (
             <PartnerCreateStep6Component
-                // Step 3
-                typeOf={typeOf}
-                typeOfLabel={typeOfLabel}
-
-                // Step 4 - Residential & Business
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToEmailLabel={isOkToEmailLabel}
-                isOkToText={isOkToText}
-                isOkToTextLabel={isOkToTextLabel}
-                organizationName={organizationName}
-                givenName={givenName}
-                lastName={lastName}
-
-                // Step 5 - Address
-                country={country}
-                region={region}
-                locality={locality}
-                postalCode={postalCode}
-                streetAddress={streetAddress}
-
-                // Step 6 - Metrics
-                tags={tags}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                genderLabel={genderLabel}
-                howHear={howHear}
-                howHearLabel={howHearLabel}
-                howHearOption={howHearOption}
-                howHearOther={howHearOther}
-                joinDate={joinDate}
-                comment={comment}
-
-                // Everything else
-                returnURL={returnURL}
-                errors={errors}
-                isLoading={isLoading}
-                onSubmitClick={this.onSubmitClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
