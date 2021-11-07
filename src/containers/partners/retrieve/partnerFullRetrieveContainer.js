@@ -84,14 +84,13 @@ class PartnerFullRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
         const partner = this.props.partnerDetail ? this.props.partnerDetail : [];
         return (
             <PartnerFullRetrieveComponent
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 partner={partner}
-                flashMessage={this.props.flashMessage}
-                onPartnerClick={this.onPartnerClick}
             />
         );
     }

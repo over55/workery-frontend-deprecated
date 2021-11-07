@@ -36,12 +36,13 @@ class PartnerContactUpdateContainer extends Component {
 
             // STEP 3
             organizationName: this.props.partnerDetail.organizationName,
+            name: this.props.partnerDetail.name,
             givenName: this.props.partnerDetail.givenName,
             lastName: this.props.partnerDetail.lastName,
-            primaryPhone: this.props.partnerDetail.telephone,
-            primaryPhoneTypeOf: this.props.partnerDetail. telephoneTypeOf,
-            secondaryPhone: this.props.partnerDetail.otherTelephone,
-            secondaryPhoneTypeOf: this.props.partnerDetail.otherTelephoneTypeOf,
+            telephone: this.props.partnerDetail.telephone,
+            telephoneTypeOf: this.props.partnerDetail. telephoneTypeOf,
+            otherTelephone: this.props.partnerDetail.otherTelephone,
+            otherTelephoneTypeOf: this.props.partnerDetail.otherTelephoneTypeOf,
             email: this.props.partnerDetail.email,
             isOkToText: isOkToText,
             isOkToEmail: isOkToEmail,
@@ -198,35 +199,11 @@ class PartnerContactUpdateContainer extends Component {
      */
 
     render() {
-        const { isLoading, errors, id } = this.state;
-        const {
-            // STEP 3
-            organizationName, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail,
-        } = this.state;
         return (
             <PartnerContactUpdateComponent
-                // Everything else...
-                id={id}
-                errors={errors}
-                isLoading={isLoading}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
-
-                // STEP 3
-                organizationName={organizationName}
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                primaryPhoneTypeOf={primaryPhoneTypeOf}
-                primaryPhoneTypeOfOptions={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                secondaryPhone={secondaryPhone}
-                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
-                secondaryPhoneTypeOfOptions={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

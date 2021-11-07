@@ -91,14 +91,13 @@ class PartnerLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id, isLoading } = this.state;
         const partner = isEmpty(this.state.partner) ? {} : this.state.partner;
         return (
             <PartnerLiteRetrieveComponent
-                id={id}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 partner={partner}
-                flashMessage={this.props.flashMessage}
             />
         );
     }

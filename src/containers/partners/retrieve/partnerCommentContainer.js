@@ -205,20 +205,15 @@ class PartnerCommentContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, text, errors } = this.state;
         const partner = this.props.partnerDetail ? this.props.partnerDetail : {};
         const partnerComments = this.props.partnerCommentList ? this.props.partnerCommentList.results : [];
         return (
             <OrderListComponent
-                id={id}
-                text={text}
+                {...this}
+                {...this.state}
+                {...this.props}
                 partner={partner}
                 partnerComments={partnerComments}
-                flashMessage={this.props.flashMessage}
-                onTextChange={this.onTextChange}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
             />
         );
     }

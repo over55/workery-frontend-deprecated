@@ -195,36 +195,11 @@ class PartnerAddressUpdateContainer extends Component {
      */
 
     render() {
-        const { isLoading, errors, id } = this.state;
-        const {
-            // STEP 3
-            organizationName, givenName, lastName,
-
-            // STEP 4
-            country, region, locality, postalCode, streetAddress,
-        } = this.state;
         return (
             <PartnerAddressUpdateComponent
-                // Everything else...
-                id={id}
-                errors={errors}
-                isLoading={isLoading}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
-
-                // STEP 3
-                organizationName={organizationName}
-                givenName={givenName}
-                lastName={lastName}
-
-                // STEP 4
-                country={country}
-                region={region}
-                locality={locality}
-                streetAddress={streetAddress}
-                postalCode={postalCode}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

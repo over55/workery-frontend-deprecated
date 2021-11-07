@@ -194,35 +194,14 @@ class PartnerMetricsUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            id, givenName, lastName,
-            typeOf, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate,
-            errors
-        } = this.state;
-
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
 
         return (
             <PartnerMetricsUpdateComponent
-                id={id}
-                givenName={givenName}
-                lastName={lastName}
-                typeOf={typeOf}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
+                {...this}
+                {...this.state}
+                {...this.props}
                 howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onJoinDateChange={this.onJoinDateChange}
-                onClick={this.onClick}
             />
         );
     }

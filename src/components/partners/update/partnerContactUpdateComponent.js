@@ -12,16 +12,22 @@ import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
 import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, GENDER_RADIO_CHOICES } from "../../../constants/api";
+import {
+    IS_OK_TO_EMAIL_CHOICES,
+    IS_OK_TO_TEXT_CHOICES,
+    GENDER_RADIO_CHOICES,
+    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
+    SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
+} from "../../../constants/api";
 
 
 export default class PartnerContactUpdateComponent extends Component {
     render() {
         const {
             // STEP 3
-            organizationName, givenName, lastName,
-            primaryPhone, primaryPhoneTypeOfOptions, primaryPhoneTypeOf,
-            secondaryPhone, secondaryPhoneTypeOf, secondaryPhoneTypeOfOptions, email,
+            organizationName, givenName, lastName, name,
+            telephone, telephoneTypeOfOptions, telephoneTypeOf,
+            otherTelephone, otherTelephoneTypeOf, otherTelephoneTypeOfOptions, email,
             isOkToEmail, isOkToText,
 
             // Everything else..
@@ -96,11 +102,11 @@ export default class PartnerContactUpdateComponent extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.primaryPhone}
+                                error={errors.telephone}
                                 label="Primary Phone (*)"
                                 onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
+                                value={telephone}
+                                name="telephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
@@ -108,22 +114,22 @@ export default class PartnerContactUpdateComponent extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="Primary Telephone type (*)"
-                                name="primaryPhoneTypeOf"
+                                name="telephoneTypeOf"
                                 defaultOptionLabel="Please select a telephone type."
-                                options={primaryPhoneTypeOfOptions}
-                                value={primaryPhoneTypeOf}
-                                error={errors.primaryPhoneTypeOf}
+                                options={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
+                                value={telephoneTypeOf}
+                                error={errors.telephoneTypeOf}
                                 onSelectChange={onSelectChange}
                             />
 
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
-                                error={errors.secondaryPhone}
+                                error={errors.otherTelephone}
                                 label="Secondary Phone"
                                 onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
+                                value={otherTelephone}
+                                name="otherTelephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
@@ -131,11 +137,11 @@ export default class PartnerContactUpdateComponent extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-success"
                                 label="Secondary Telephone type"
-                                name="secondaryPhoneTypeOf"
+                                name="otherTelephoneTypeOf"
                                 defaultOptionLabel="Please select a telephone type."
-                                options={secondaryPhoneTypeOfOptions}
-                                value={secondaryPhoneTypeOf}
-                                error={errors.secondaryPhoneTypeOf}
+                                options={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
+                                value={otherTelephoneTypeOf}
+                                error={errors.otherTelephoneTypeOf}
                                 onSelectChange={onSelectChange}
                             />
 
