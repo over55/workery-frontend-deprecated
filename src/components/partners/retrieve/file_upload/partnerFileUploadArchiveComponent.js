@@ -32,12 +32,12 @@ export default class PartnerFileUploadArchiveComponent extends Component {
                             <Link to="/partners"><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{partner && partner.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{partner && partner.name}
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}</h1>
+                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.name}</h1>
 
                 {partner.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

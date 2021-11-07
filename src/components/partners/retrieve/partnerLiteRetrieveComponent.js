@@ -20,14 +20,14 @@ export default class PartnerLiteRetrieveComponent extends Component {
                             <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}
+                            <i className="fas fa-handshake"></i>&nbsp;{partner && partner.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}</h1>
+                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.name}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -67,7 +67,7 @@ export default class PartnerLiteRetrieveComponent extends Component {
                                 </Link>
                             </div>
                             <div className="col-sm-7 px-4 py-3">
-                                <h3>{partner && partner.fullName}</h3>
+                                <h3>{partner && partner.name}</h3>
                                 {partner && partner.address &&
                                     <p className="text-muted">
                                         <a href={partner.addressUrl}>{partner.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>

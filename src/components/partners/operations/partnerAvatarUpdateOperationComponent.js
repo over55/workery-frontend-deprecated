@@ -33,7 +33,7 @@ export default class PartnerAvatarUpdateOperationComponent extends Component {
                             <Link to="/partners"><i className="fas fa-user-circle"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{partner && partner.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{partner && partner.name}
                         </li>
                     </ol>
                 </nav>

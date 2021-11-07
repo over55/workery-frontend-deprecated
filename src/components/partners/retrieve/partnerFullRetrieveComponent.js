@@ -26,14 +26,14 @@ export default class PartnerFullRetrieveComponent extends Component {
                             <Link to="/partners"><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}
+                            <i className="fas fa-handshake"></i>&nbsp;{partner && partner.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}</h1>
+                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.name}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -85,7 +85,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
-                                    <td>{partner.fullName}</td>
+                                    <td>{partner.name}</td>
                                 </tr>
 
                                 <tr>
