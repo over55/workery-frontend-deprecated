@@ -132,7 +132,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={partner.addressUrl}>{partner.fullAddress}</a>
+                                        <a href={partner.fullAddressUrl}>{partner.fullAddressWithoutPostalCode}</a>
                                     </td>
                                 </tr>
 
