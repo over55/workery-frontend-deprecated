@@ -67,6 +67,10 @@ class PartnerContactUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
+        // Boolean handler.
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
