@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import OrderListComponent from "../../../../components/partners/retrieve/file_upload/partnerFileUploadAddComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { postPartnerFileUpload } from "../../../../actions/partnerFileUploadActions";
+import { postPrivateFileDetail } from "../../../../actions/privateFileActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../validators/fileValidator"
 import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
@@ -30,7 +30,7 @@ class PartnerFileUploadAddContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            partner: id,
+            partnerId: id,
             file: null,
             id: id,
             text: "",
@@ -186,7 +186,7 @@ class PartnerFileUploadAddContainer extends Component {
 
             // Once our state has been validated `partner-side` then we will
             // make an API request with the server to create our new production.
-            this.props.postPartnerFileUpload(
+            this.props.postPrivateFileDetail(
                 this.getPostData(),
                 this.onSuccessPostCallback,
                 this.onFailurePostCallback
@@ -317,8 +317,8 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        postPartnerFileUpload: (postData, successCallback, failedCallback) => {
-            dispatch(postPartnerFileUpload(postData, successCallback, failedCallback))
+        postPrivateFileDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPrivateFileDetail(postData, successCallback, failedCallback))
         },
         pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(

@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import OrderListComponent from "../../../../components/partners/retrieve/file_upload/partnerFileUploadListComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
-import { pullPartnerFileUploadList, postPartnerFileUpload } from "../../../../actions/partnerFileUploadActions";
+import { pullPrivateFileList, postPrivateFileDetail } from "../../../../actions/privateFileActions";
 import { validateInput } from "../../../../validators/fileValidator"
 
 
@@ -19,13 +19,13 @@ class PartnerFileUploadListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("partner", id);
+        parametersMap.set("partner_id", id);
         // parametersMap.set("is_archived", 3); // 3 = TRUE | 2 = FALSE
         parametersMap.set("o", "-created_at");
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 10000,
+            offset: 0,
+            limit: 10000,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
@@ -73,9 +73,9 @@ class PartnerFileUploadListContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Get our data.
-        this.props.pullPartnerFileUploadList(
-            this.state.page,
-            this.state.sizePerPage,
+        this.props.pullPrivateFileList(
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessListCallback,
             this.onFailureListCallback
@@ -103,7 +103,7 @@ class PartnerFileUploadListContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -123,7 +123,7 @@ class PartnerFileUploadListContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -131,9 +131,9 @@ class PartnerFileUploadListContainer extends Component {
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
-                this.props.pullPartnerFileUploadList(
-                    this.state.page,
-                    this.state.sizePerPage,
+                this.props.pullPrivateFileList(
+                    this.state.offset,
+                    this.state.limit,
                     this.state.parametersMap,
                     this.onSuccessListCallback,
                     this.onFailureListCallback
@@ -171,7 +171,7 @@ class PartnerFileUploadListContainer extends Component {
 
                 // Once our state has been validated `partner-side` then we will
                 // make an API request with the server to create our new production.
-                this.props.postPartnerFileUpload(
+                this.props.postPrivateFileDetail(
                     this.getPostData(),
                     this.onSuccessPostCallback,
                     this.onFailurePostCallback
@@ -195,7 +195,7 @@ class PartnerFileUploadListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -214,17 +214,17 @@ class PartnerFileUploadListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullPartnerFileUploadList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(this.state.offset, this.state.limit, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullPartnerFileUploadList(page, sizePerPage, this.state.parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(offset, limit, this.state.parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
 
@@ -241,7 +241,7 @@ class PartnerFileUploadListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullPartnerFileUploadList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(this.state.offset, this.state.limit, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
         }else {
@@ -257,12 +257,12 @@ class PartnerFileUploadListContainer extends Component {
     render() {
         const { isLoading, id, text, errors } = this.state;
         const partner = this.props.partnerDetail ? this.props.partnerDetail : {};
-        const partnerFileList = this.props.partnerFileList && this.props.partnerFileList.results ? this.props.partnerFileList.results : [];
+        const privateFileList = this.props.privateFileList && this.props.privateFileList.results ? this.props.privateFileList.results : [];
         return (
             <OrderListComponent
                 id={id}
                 partner={partner}
-                partnerFiles={partnerFileList}
+                partnerFiles={privateFileList}
                 flashMessage={this.props.flashMessage}
                 isLoading={isLoading}
                 errors={errors}
@@ -277,7 +277,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        partnerFileList: store.partnerFileListState,
+        privateFileList: store.privateFileListState,
         partnerDetail: store.partnerDetailState,
     };
 }
@@ -287,13 +287,13 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullPartnerFileUploadList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
+        pullPrivateFileList: (offset, limit, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullPartnerFileUploadList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
+                pullPrivateFileList(offset, limit, map, onSuccessListCallback, onFailureListCallback)
             )
         },
-        postPartnerFileUpload: (postData, successCallback, failedCallback) => {
-            dispatch(postPartnerFileUpload(postData, successCallback, failedCallback))
+        postPrivateFileDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPrivateFileDetail(postData, successCallback, failedCallback))
         },
     }
 }

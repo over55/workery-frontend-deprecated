@@ -36,7 +36,7 @@ export default class PartnerFileUploadAddComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/partners"><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                            <Link to="/partners"><i className="fas fa-user-circle"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-user"></i>&nbsp;{partner && partner.name}
@@ -46,7 +46,7 @@ export default class PartnerFileUploadAddComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.name}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{partner && partner.name}</h1>
 
                 {partner.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
@@ -66,11 +66,13 @@ export default class PartnerFileUploadAddComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
+                        {/*
                         <div id="step-3" className="st-grey">
                             <Link to={`/partner/${id}/orders`}>
                                 <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
                             </Link>
                         </div>
+                        */}
                         <div id="step-4" className="st-grey">
                             <Link to={`/partner/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
@@ -81,6 +83,13 @@ export default class PartnerFileUploadAddComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </strong>
                         </div>
+                        {/*
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/partner/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
+                        */}
                     </div>
                 </div>
 
