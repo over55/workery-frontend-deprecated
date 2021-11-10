@@ -7,6 +7,7 @@ import OrderListComponent from "../../../components/partners/retrieve/partnerCom
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullPartnerCommentList, postPartnerComment } from "../../../actions/partnerCommentActions";
 import { validateInput } from "../../../validators/commentValidator"
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 
 class PartnerCommentContainer extends Component {
@@ -18,14 +19,20 @@ class PartnerCommentContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
-        const parametersMap = new Map();
-        parametersMap.set("about", id);
-        parametersMap.set("o", "-created_at");
+
+        // Force active users as per issue via https://github.com/over55/workery-front/issues/296
+        var parametersMap = new Map();
+        parametersMap.set("partner_id", id);
+        parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `PartnerListComponent`.
+        parametersMap.set("sort_field", "created_time");
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 10000,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "ASC",
+            sortField: "created_time",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
@@ -40,6 +47,8 @@ class PartnerCommentContainer extends Component {
         }
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onSuccessListCallback = this.onSuccessListCallback.bind(this);
         this.onFailureListCallback = this.onFailureListCallback.bind(this);
         this.onSuccessPostCallback = this.onSuccessPostCallback.bind(this);
@@ -53,14 +62,11 @@ class PartnerCommentContainer extends Component {
      *  items under different key names to support our API web-service's API.
      */
     getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.about = this.state.id;
-        postData.extraText = this.state.text;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
+        const { id, text } = this.state;
+        return {
+            "partnerId": parseInt(id),
+            "text": text
+        };
     }
 
     /**
@@ -73,8 +79,8 @@ class PartnerCommentContainer extends Component {
 
         // Get our data.
         this.props.pullPartnerCommentList(
-            this.state.page,
-            this.state.sizePerPage,
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessListCallback,
             this.onFailureListCallback
@@ -102,7 +108,7 @@ class PartnerCommentContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
                 text: "",
@@ -120,10 +126,10 @@ class PartnerCommentContainer extends Component {
     }
 
     onSuccessPostCallback(response) {
-        console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
+        console.log("onSuccessPostCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
                 text: "",
@@ -133,8 +139,8 @@ class PartnerCommentContainer extends Component {
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
                 this.props.pullPartnerCommentList(
-                    this.state.page,
-                    this.state.sizePerPage,
+                    this.state.offset,
+                    this.state.limit,
                     this.state.parametersMap,
                     this.onSuccessListCallback,
                     this.onFailureListCallback
@@ -199,6 +205,35 @@ class PartnerCommentContainer extends Component {
         }
     }
 
+    onNextClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullPartnerList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onPreviousClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullPartnerList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -233,9 +268,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullPartnerCommentList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
+        pullPartnerCommentList: (offset, limit, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullPartnerCommentList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
+                pullPartnerCommentList(offset, limit, map, onSuccessListCallback, onFailureListCallback)
             )
         },
         postPartnerComment: (postData, successCallback, failedCallback) => {

@@ -799,7 +799,8 @@ export function getClientReactSelectOptions(clientList=[], selectName="client") 
                 clientOptions.push({
                     selectName: selectName,
                     value: client.id,
-                    label: client.fullName
+                    label: client.fullName,
+                    customerId: client.id,
                 });
                 // console.log(client);
             }

@@ -98,15 +98,13 @@ class ClientLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id, isLoading } = this.state;
         const client = isEmpty(this.state.client) ? {} : this.state.client;
         return (
             <ClientLiteRetrieveComponent
-                id={id}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 client={client}
-                flashMessage={this.props.flashMessage}
-                onClientClick={this.onClientClick}
             />
         );
     }

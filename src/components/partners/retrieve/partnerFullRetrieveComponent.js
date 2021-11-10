@@ -5,16 +5,23 @@ import Moment from 'react-moment';
 // import 'moment-timezone';
 
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
+import {
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    EXECUTIVE_ROLE_ID
+} from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
 
 export default class PartnerFullRetrieveComponent extends Component {
     // Not using the following: streetTypeOption, streetDirectionOption, howDidYouHearOption
     render() {
-        const { id, partner, flashMessage, errors, onPartnerClick } = this.props;
+        const { id, partner, flashMessage, errors, onPartnerClick, user, onAddJobClick } = this.props;
         const { typeOf } = partner;
+        const typeOfLabel = typeOf === 2 ? "Residential" : "Commercial"
         const isActiveState = partner.state === "active";
         const isRezPartner = typeOf === 2;
+        const isCompany = partner && partner.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
+        const canDeletePartner = user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -23,17 +30,23 @@ export default class PartnerFullRetrieveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/partners"><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                            <Link to="/partners"><i className="fas fa-user-circle"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-handshake"></i>&nbsp;{partner && partner.name}
+                            <i className="fas fa-user"></i>&nbsp;{partner && partner.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.name}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{partner && partner.name}</h1>
+
+                {partner.state === 'inactive' &&
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This partner is archived and is read-only.
+                    </div>
+                }
 
                 <div className="row">
                     <div className="step-navigation">
@@ -48,13 +61,23 @@ export default class PartnerFullRetrieveComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
+                            <Link to={`/partner/${id}/orders`}>
+                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
+                            </Link>
+                        </div>
+                        <div id="step-4" className="st-grey">
                             <Link to={`/partner/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey">
+                        <div id="step-5" className="st-grey">
                             <Link to={`/partner/${id}/files`}>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
+                            </Link>
+                        </div>
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/partner/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
                             </Link>
                         </div>
                     </div>
@@ -73,32 +96,44 @@ export default class PartnerFullRetrieveComponent extends Component {
                             <tbody>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-sitemap"></i>&nbsp;Type
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Type of Partner</th>
+                                    <td>{typeOfLabel}</td>
+                                </tr>
+
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-phone"></i>&nbsp;Contact
                                         <Link to={`/partner/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                             <i className="fas fa-edit"></i>&nbsp;
                                         </Link>
                                     </th>
                                 </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Organization</th>
-                                    <td>{partner.organizationName}</td>
-                                </tr>
+                                {isCompany &&
+                                    <tr>
+                                        <th scope="row" className="bg-light">Company Name</th>
+                                        <td>{partner.organizationName}</td>
+                                    </tr>
+                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{partner.name}</td>
                                 </tr>
-
                                 <tr>
                                     <th scope="row" className="bg-light">Primary Telephone</th>
-                                    <td><a href={`tel:${partner.e164Telephone}`}>{partner.telephone}</a></td>
+                                    <td><a href={`tel:${partner.e164Telephone}`}>{partner.telephone ? partner.telephone : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Secondary Telephone</th>
-                                    <td><a href={`tel:${partner.e164OtherTelephone}`}>{partner.otherTelephone}</a></td>
+                                    <td><a href={`tel:${partner.otherTelephone}`}>{partner.otherTelephone ? partner.otherTelephone : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Email</th>
-                                    <td><a href={`mailto:${partner.email}`}>{partner.email}</a></td>
+                                    <td><a href={`mailto:${partner.email}`}>{partner.email ? partner.email : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Ok to Email?</th>
@@ -132,11 +167,9 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={partner.fullAddressUrl}>{partner.fullAddressWithoutPostalCode}</a>
+                                        <a href={partner.fullAddressUrl} target="_blank">{partner.fullAddressWithoutPostalCode}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
-
-
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
@@ -146,17 +179,22 @@ export default class PartnerFullRetrieveComponent extends Component {
                                         </Link>
                                     </th>
                                 </tr>
-                                <tr>
+                                {typeOf !== COMMERCIAL_CUSTOMER_TYPE_OF_ID && <tr>
                                     <th scope="row" className="bg-light">Date of Birth</th>
-                                    <td>{partner && <Moment format="MM/DD/YYYY">{partner.birthdate}</Moment>}</td>
-                                </tr>
+                                    <td>
+                                        {partner && partner.birthdate
+                                            ?<Moment format="MM/DD/YYYY">{partner.birthdate}</Moment>
+                                            :"-"
+                                        }
+                                    </td>
+                                </tr>}
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
-                                    <td>{partner.gender}</td>
+                                    <td>{partner.gender ? partner.gender : "-"}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
-                                    <td>{partner.description}</td>
+                                    <td>{partner.description ? partner.description : "-"}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
@@ -168,11 +206,13 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Join Date</th>
-                                    <td>{partner && <Moment format="MM/DD/YYYY">{partner.joinDate}</Moment>}</td>
+                                    <td>
+                                        {partner && <Moment format="MM/DD/YYYY">{partner.joinDate}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
-                                    <td>{partner.howHearPretty}</td>
+                                    <td>{partner.howHearText ? partner.howHearText : "-"}</td>
                                 </tr>
 
 
@@ -184,23 +224,27 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Account #</th>
-                                    <td>{partner.id}</td>
+                                    <td>{partner && partner.id && partner.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created At</th>
-                                    <td>{partner && <Moment format="MM/DD/YYYY hh:mm:ss a">{partner.created}</Moment>}</td>
+                                    <td>
+                                        {partner && <Moment format="MM/DD/YYYY hh:mm:ss a">{partner.created}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
-                                    <td>{partner.createdBy}</td>
+                                    <td>{partner.createdByName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
-                                    <td>{partner && <Moment format="MM/DD/YYYY hh:mm:ss a">{partner.lastModified}</Moment>}</td>
+                                    <td>
+                                        {partner && <Moment format="MM/DD/YYYY hh:mm:ss a">{partner.lastModified}</Moment>}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>
-                                    <td>{partner.lastModifiedBy}</td>
+                                    <td>{partner.lastModifiedByName}</td>
                                 </tr>
 
 
@@ -213,36 +257,42 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        <ul>
-                                            <li>
-                                                <Link onClick={onPartnerClick}>
-                                                    Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                        {partner.state === 'inactive'
+                                            ?<div>
+                                                <i className="fas fa-lock"></i>&nbsp;Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
+                                            </div>
+                                            :<div>
+                                                <Link onClick={onAddJobClick} className="btn btn-success btn-lg mt-4 pl-4 pr-4">
+                                                    <i className="fas fa-plus"></i>&nbsp;Add Job
                                                 </Link>
-                                            </li>
-                                            <li>
-                                                {isActiveState
-                                                    ?<Link to={`/partner/${id}/deactivation`}>
-                                                        Deactivate Partner&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                    :<Link to={`/partner/${id}/activation`}>
-                                                        Activate Partner&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                }
-
-                                            </li>
-                                            {isRezPartner &&
-                                                <li>
-                                                    <Link to={`/partner/${id}/rez-upgrade`}>
-                                                        Upgrade Partner&nbsp;<i className="fas fa-chevron-right"></i>
-                                                    </Link>
-                                                </li>
-                                            }
-                                            <li>
-                                                <Link to={`/partner/${id}/delete`}>
-                                                    Delete Partner&nbsp;<i className="fas fa-chevron-right"></i>
+                                            </div>
+                                        }
+                                        {isActiveState
+                                            ?<div>
+                                                <Link to={`/partner/${id}/archive`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                    <i className="fas fa-archive"></i>&nbsp;Archive
                                                 </Link>
-                                            </li>
-                                        </ul>
+                                            </div>
+                                            :<div>
+                                                <Link to={`/partner/${id}/unarchive`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
+                                                    Unarchive&nbsp;<i className="fas fa-box-open"></i>
+                                                </Link>
+                                            </div>
+                                        }
+                                        {isRezPartner &&
+                                            <div>
+                                                <Link to={`/partner/${id}/rez-upgrade`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
+                                                    <i className="fas fa-bolt"></i>&nbsp;Upgrade Partner
+                                                </Link>
+                                            </div>
+                                        }
+                                        {canDeletePartner &&
+                                            <div>
+                                                <Link to={`/partner/${id}/delete`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                    <i className="fas fa-trash"></i>&nbsp;Permanently Delete Partner
+                                                </Link>
+                                            </div>
+                                        }
                                     </td>
                                 </tr>
 
@@ -250,9 +300,10 @@ export default class PartnerFullRetrieveComponent extends Component {
                         </table>
                         <form>
                             <div className="form-group">
-                                {/*<Link to={`/partner/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
+                                { /*
+                                <Link to={`/partner/${id}/update`} className="btn btn-primary btn-lg mt-4 float-right pl-4 pr-4">
                                     <i className="fas fa-edit"></i>&nbsp;Update
-                                </Link>*/}
+                                </Link> */ }
                                 <Link to={`/partners`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
@@ -269,9 +320,9 @@ export default class PartnerFullRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { id, text } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }
