@@ -60,11 +60,6 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </strong>
                         </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to={`/partner/${id}/orders`}>
-                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
-                            </Link>
-                        </div>
                         <div id="step-4" className="st-grey">
                             <Link to={`/partner/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
@@ -75,11 +70,13 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
+                        {/*
                         <div id="step-6" className="st-grey">
                             <Link to={`/partner/${id}/operations`}>
                                 <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
                             </Link>
                         </div>
+                        */}
                     </div>
                 </div>
 
@@ -247,8 +244,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                                     <td>{partner.lastModifiedByName}</td>
                                 </tr>
 
-
-
+                                {/*
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-project-diagram"></i>&nbsp;Functions
@@ -295,6 +291,7 @@ export default class PartnerFullRetrieveComponent extends Component {
                                         }
                                     </td>
                                 </tr>
+                                */}
 
                             </tbody>
                         </table>
