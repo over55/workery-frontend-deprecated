@@ -70,13 +70,11 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
-                        {/*
                         <div id="step-6" className="st-grey">
                             <Link to={`/partner/${id}/operations`}>
                                 <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
                             </Link>
                         </div>
-                        */}
                     </div>
                 </div>
 
@@ -244,7 +242,6 @@ export default class PartnerFullRetrieveComponent extends Component {
                                     <td>{partner.lastModifiedByName}</td>
                                 </tr>
 
-                                {/*
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-project-diagram"></i>&nbsp;Functions
@@ -253,16 +250,6 @@ export default class PartnerFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Available Choices</th>
                                     <td>
-                                        {partner.state === 'inactive'
-                                            ?<div>
-                                                <i className="fas fa-lock"></i>&nbsp;Add Job Order&nbsp;<i className="fas fa-chevron-right"></i>
-                                            </div>
-                                            :<div>
-                                                <Link onClick={onAddJobClick} className="btn btn-success btn-lg mt-4 pl-4 pr-4">
-                                                    <i className="fas fa-plus"></i>&nbsp;Add Job
-                                                </Link>
-                                            </div>
-                                        }
                                         {isActiveState
                                             ?<div>
                                                 <Link to={`/partner/${id}/archive`} className="btn btn-primary btn-lg mt-4 pl-4 pr-4">
@@ -275,13 +262,6 @@ export default class PartnerFullRetrieveComponent extends Component {
                                                 </Link>
                                             </div>
                                         }
-                                        {isRezPartner &&
-                                            <div>
-                                                <Link to={`/partner/${id}/rez-upgrade`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
-                                                    <i className="fas fa-bolt"></i>&nbsp;Upgrade Partner
-                                                </Link>
-                                            </div>
-                                        }
                                         {canDeletePartner &&
                                             <div>
                                                 <Link to={`/partner/${id}/delete`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
@@ -291,7 +271,6 @@ export default class PartnerFullRetrieveComponent extends Component {
                                         }
                                     </td>
                                 </tr>
-                                */}
 
                             </tbody>
                         </table>

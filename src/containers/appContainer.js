@@ -318,6 +318,7 @@ import PartnerCreateStep6Container from "./partners/create/partnerCreateStep6Con
 import PartnerContactUpdateContainer from "./partners/update/partnerContactUpdateContainer";
 import PartnerAddressUpdateContainer from "./partners/update/partnerAddressUpdateContainer";
 import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdateContainer";
+import PartnerOperationsContainer from "./partners/retrieve/partnerOperationsContainer";
 import PartnerAvatarUpdateOperationContainer from "./partners/operations/partnerAvatarUpdateOperationContainer";
 
 // Ongoing Work Order
@@ -661,6 +662,7 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id/update/contact" exact component={requiresAuth(PartnerContactUpdateContainer)} />
                                 <Route path="/partner/:id/update/address" exact component={requiresAuth(PartnerAddressUpdateContainer)} />
                                 <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
+                                <Route path="/partner/:id/operations" exact component={requiresAuth(PartnerOperationsContainer)} />
 
                                 { /* WORK ORDER */}
                                 <Route path="/ongoing-orders" exact component={requiresAuth(AdminOngoingOrderListComponent)} />
