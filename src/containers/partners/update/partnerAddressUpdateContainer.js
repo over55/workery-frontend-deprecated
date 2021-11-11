@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import PartnerAddressUpdateComponent from "../../../components/partners/update/partnerAddressUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateAddressInput } from "../../../validators/partnerValidator";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID
+} from '../../../constants/api';
+import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
+import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import { putPartnerAddressDetail } from "../../../actions/partnerActions";
 
 
@@ -26,17 +32,18 @@ class PartnerAddressUpdateContainer extends Component {
         const region = this.props.partnerDetail.addressRegion === "ON" ? "Ontario" : this.props.partnerDetail.addressRegion;
 
         this.state = {
-            // Everything else...
-            id: id,
             errors: {},
             isLoading: false,
+            id: id,
 
             // STEP 3
-            organizationName: this.props.partnerDetail.organizationName,
+            typeOf: this.props.partnerDetail.typeOf,
+
+            // STEP 4
             givenName: this.props.partnerDetail.givenName,
             lastName: this.props.partnerDetail.lastName,
 
-            // STEP 4
+            // STEP 5
             country: country,
             region: region,
             locality: this.props.partnerDetail.addressLocality,
@@ -48,11 +55,11 @@ class PartnerAddressUpdateContainer extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
-        this.onMultiChange = this.onMultiChange.bind(this);
-        this.onDOBDateTimeChange = this.onDOBDateTimeChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailedCallback = this.onFailedCallback.bind(this);
+        this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
+        this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
     }
 
     /**
@@ -62,6 +69,66 @@ class PartnerAddressUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        // (2) Middle name (API ISSUE)
+        postData.middleName = this.state.middleName;
+
+        // (2) Join date - We need to format as per required API format.
+        const joinDateMoment = moment(this.state.joinDate);
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
+
+        // (4) How Hear Other - This field may not be null, therefore make blank.
+        if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
+            postData.howHearOther = "";
+        }
+
+        // // (5) Password & Password Repeat
+        // if (this.state.password === undefined || this.state.password === null || this.state.password === '' || this.state.password.length == 0) {
+        //     var randomString = Math.random().toString(34).slice(-10);
+        //     randomString += "A";
+        //     randomString += "!";
+        //     postData.password = randomString;
+        //     postData.passwordRepeat = randomString;
+        // }
+
+        // (6) Organization Type Of - This field may not be null, therefore make blank.
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+            postData.organizationTypeOf = "";
+        }
+
+        // (7) Extra Comment: This field is required.
+        if (this.state.comment === undefined || this.state.comment === null) {
+            postData.extraComment = "";
+        } else {
+            postData.extraComment = this.state.comment;
+        }
+
+        // (8) Telephone type: This field is required.;
+        if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
+            postData.telephoneTypeOf = 1;
+        }
+        if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
+            postData.otherTelephoneTypeOf = 1;
+        }
+
+        // (9) Address Country: This field is required.
+        postData.addressCountry = this.state.country;
+
+        // (10) Address Locality: This field is required.
+        postData.addressLocality = this.state.locality;
+
+        // (11) Address Region: This field is required.
+        postData.addressRegion = this.state.region
+
+        // () First Name and Last Name if biz
+        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.lastName = this.state.lastName;
+        } else {
+
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -75,6 +142,10 @@ class PartnerAddressUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // Fetch all our GUI drop-down options which are populated by the API.
+        this.props.pullHowHearList(1,1000);
+        this.props.pullTagList(1,1000);
     }
 
     componentWillUnmount() {
@@ -91,16 +162,14 @@ class PartnerAddressUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(partner) {
+    onSuccessCallback(partner) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Partner has been successfully updated.");
         this.props.history.push("/partner/"+this.state.id+"/full");
     }
 
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+    onFailedCallback(errors) {
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -120,6 +189,19 @@ class PartnerAddressUpdateContainer extends Component {
         })
     }
 
+    onBillingCountryChange(value) {
+        // Update state.
+        if (value === null || value === undefined || value === '') {
+            this.setState({ country: null, region: null });
+        } else {
+            this.setState({ country: value, region: null });
+        }
+    }
+
+    onBillingRegionChange(value) {
+        this.setState({ region: value }); // Update state.
+    }
+
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
@@ -129,15 +211,17 @@ class PartnerAddressUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putPartnerAddressDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({ errors: {}, isLoading: true, }, ()=>{
+                this.props.putPartnerAddressDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailedCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailedCallback(errors);
         }
     }
 
@@ -173,22 +257,6 @@ class PartnerAddressUpdateContainer extends Component {
         });
     }
 
-    onMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // Set all the tags we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
-        });
-    }
-
-    onDOBDateTimeChange(dateOfBirth) {
-        this.setState({
-            dateOfBirth: dateOfBirth,
-        });
-    }
-
     /**
      *  Main render function
      *------------------------------------------------------------
@@ -209,6 +277,8 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         partnerDetail: store.partnerDetailState,
+        howHearList: store.howHearListState,
+        tagList: store.tagListState,
     };
 }
 
@@ -217,6 +287,16 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
+        pullHowHearList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullHowHearList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
         putPartnerAddressDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 putPartnerAddressDetail(data, onSuccessCallback, onFailureCallback)
@@ -224,7 +304,6 @@ const mapDispatchToProps = dispatch => {
         },
     }
 }
-
 
 export default connect(
     mapStateToProps,

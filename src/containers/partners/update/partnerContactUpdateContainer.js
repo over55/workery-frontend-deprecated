@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import PartnerContactUpdateComponent from "../../../components/partners/update/partnerContactUpdateComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { validateContactInput } from "../../../validators/partnerValidator";
 import {
-    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES,
-    SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID
 } from '../../../constants/api';
+import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
+import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
 import { putPartnerContactDetail } from "../../../actions/partnerActions";
 
 
-class PartnerContactUpdateContainer extends Component {
+class PartnerUpdateContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -25,38 +27,43 @@ class PartnerContactUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // Map the API fields to our fields.
         const isOkToEmail = this.props.partnerDetail.isOkToEmail === true ? 1 : 0;
         const isOkToText = this.props.partnerDetail.isOkToText === true ? 1 : 0;
 
         this.state = {
-            // Everything else...
-            id: id,
             errors: {},
             isLoading: false,
+            id: id,
 
             // STEP 3
+            typeOf: this.props.partnerDetail.typeOf,
+
+            // STEP 4
             organizationName: this.props.partnerDetail.organizationName,
-            name: this.props.partnerDetail.name,
+            organizationTypeOf: this.props.partnerDetail.organizationTypeOf,
+            givenName: this.props.partnerDetail.givenName,
+            lastName: this.props.partnerDetail.lastName,
+            organizationName: this.props.partnerDetail.organizationName,
+            organizationTypeOf: this.props.partnerDetail.organizationTypeOf,
             givenName: this.props.partnerDetail.givenName,
             lastName: this.props.partnerDetail.lastName,
             telephone: this.props.partnerDetail.telephone,
-            telephoneTypeOf: this.props.partnerDetail. telephoneTypeOf,
+            telephoneTypeOf: this.props.partnerDetail.telephoneTypeOf,
             otherTelephone: this.props.partnerDetail.otherTelephone,
             otherTelephoneTypeOf: this.props.partnerDetail.otherTelephoneTypeOf,
             email: this.props.partnerDetail.email,
-            isOkToText: isOkToText,
             isOkToEmail: isOkToEmail,
+            isOkToText: isOkToText,
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onRadioChange = this.onRadioChange.bind(this);
-        this.onMultiChange = this.onMultiChange.bind(this);
-        this.onDOBDateTimeChange = this.onDOBDateTimeChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailedCallback = this.onFailedCallback.bind(this);
     }
 
     /**
@@ -66,6 +73,23 @@ class PartnerContactUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        // (6) Organization Type Of - This field may not be null, therefore make blank.
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+            postData.organizationTypeOf = "";
+        }
+
+        if (this.state.organizationName === undefined || this.state.organizationName === null) {
+            postData.organizationName = "";
+        }
+
+        // (8) Telephone type: This field is required.;
+        if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
+            postData.telephoneTypeOf = 1;
+        }
+        if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
+            postData.otherTelephoneTypeOf = 1;
+        }
 
         // Boolean handler.
         postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
@@ -83,6 +107,10 @@ class PartnerContactUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // Fetch all our GUI drop-down options which are populated by the API.
+        this.props.pullHowHearList(1,1000);
+        this.props.pullTagList(1,1000);
     }
 
     componentWillUnmount() {
@@ -99,16 +127,14 @@ class PartnerContactUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(partner) {
+    onSuccessCallback(partner) {
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Partner has been successfully updated.");
         this.props.history.push("/partner/"+this.state.id+"/full");
     }
 
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+    onFailedCallback(errors) {
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -137,15 +163,17 @@ class PartnerContactUpdateContainer extends Component {
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putPartnerContactDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({ errors: {}, isLoading: true, }, ()=>{
+                this.props.putPartnerContactDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailedCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailedCallback(errors);
         }
     }
 
@@ -169,32 +197,6 @@ class PartnerContactUpdateContainer extends Component {
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
         localStorage.setItem(storageValueKey, value) // Save to storage.
-
-        // For the debugging purposes only.
-        console.log({
-            "STORE-VALUE-KEY": storageValueKey,
-            "STORE-VALUE": value,
-            "STORAGE-VALUE-KEY": storeValueKey,
-            "STORAGE-VALUE": value,
-            "STORAGE-LABEL-KEY": storeLabelKey,
-            "STORAGE-LABEL": label,
-        });
-    }
-
-    onMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
-
-        // Set all the tags we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
-        });
-    }
-
-    onDOBDateTimeChange(dateOfBirth) {
-        this.setState({
-            dateOfBirth: dateOfBirth,
-        });
     }
 
     /**
@@ -217,6 +219,8 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         partnerDetail: store.partnerDetailState,
+        howHearList: store.howHearListState,
+        tagList: store.tagListState,
     };
 }
 
@@ -224,6 +228,16 @@ const mapDispatchToProps = dispatch => {
     return {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
+        },
+        pullHowHearList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullHowHearList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
         },
         putPartnerContactDetail: (data, onSuccessCallback, onFailureCallback) => {
             dispatch(
@@ -233,8 +247,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(PartnerContactUpdateContainer);
+)(PartnerUpdateContainer);

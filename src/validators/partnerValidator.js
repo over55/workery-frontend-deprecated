@@ -63,16 +63,16 @@ export function validateAddressInput(data) {
 
 export function validateMetricsInput(data) {
     let errors = {};
-    if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
-        errors.dateOfBirth = 'This field is required';
-    }
+    // if (data.dateOfBirth === undefined || data.dateOfBirth === null || data.dateOfBirth === "") {
+    //     errors.dateOfBirth = 'This field is required';
+    // }
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
     if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
         errors.howHearId = 'This field is required';
     } else {
-        if (data.howHearIdLabel.includes("Other") === true) {
+        if (data.howHearIdLabel && data.howHearIdLabel.includes("Other") === true) {
             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                 errors.howHearOther = 'This field is required';
             }
