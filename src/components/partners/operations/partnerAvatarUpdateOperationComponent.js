@@ -54,7 +54,7 @@ export default class PartnerAvatarUpdateOperationComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/partner/${id}/full`}>
+                            <Link to={`/partner/${id}/operations`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
