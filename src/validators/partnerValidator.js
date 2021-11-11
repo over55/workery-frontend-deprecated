@@ -340,3 +340,16 @@ export function validateSearchInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+export function validateDeleteInput(data) {
+    let errors = {};
+
+    if (data.partnerId === undefined || data.partnerId === null || data.partnerId === "") {
+        errors.partnerId = 'This field is required.';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
