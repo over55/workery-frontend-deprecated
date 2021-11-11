@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import ClientArchiveOperationComponent from "../../../components/clients/operations/clientArchiveOperationComponent";
+import PartnerArchiveOperationComponent from "../../../components/partners/operations/partnerArchiveOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { postClientDeactivationDetail } from "../../../actions/clientActions";
-import { validateDeactivationInput } from "../../../validators/clientValidator";
+import { postPartnerDeactivationDetail } from "../../../actions/partnerActions";
+import { validateDeactivationInput } from "../../../validators/partnerValidator";
 
 
-class ClientArchiveOperationContainer extends Component {
+class PartnerArchiveOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -22,7 +22,7 @@ class ClientArchiveOperationContainer extends Component {
         // Update state.
         this.state = {
             id: id,
-            client: {},
+            partner: {},
             reason: "",
             reasonOther: "",
             isLoading: false,
@@ -46,7 +46,7 @@ class ClientArchiveOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.customerId = this.props.clientDetail.id;
+        postData.partnerId = this.props.partnerDetail.id;
         postData.state = "inactive";
         postData.deactivationReason = this.state.reason;
         postData.deactivationReasonOther = this.state.reasonOther;
@@ -82,8 +82,8 @@ class ClientArchiveOperationContainer extends Component {
 
     onSuccessCallback(response) {
         console.log("onSuccessCallback | Fetched:", response);
-        this.props.setFlashMessage("success", "Client has been successfully deactivated.");
-        this.props.history.push("/client/"+this.props.clientDetail.id+"/operations");
+        this.props.setFlashMessage("success", "Partner has been successfully deactivated.");
+        this.props.history.push("/partner/"+this.props.partnerDetail.id+"/operations");
     }
 
     onFailureCallback(errors) {
@@ -116,13 +116,13 @@ class ClientArchiveOperationContainer extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // Perform client-side validation.
+        // Perform partner-side validation.
         const { errors, isValid } = validateDeactivationInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ isLoading: true, errors: [], }, ()=>{
-                this.props.postClientDeactivationDetail(
+                this.props.postPartnerDeactivationDetail(
                     this.getPostData(),
                     this.onSuccessCallback,
                     this.onFailureCallback,
@@ -152,15 +152,15 @@ class ClientArchiveOperationContainer extends Component {
 
     render() {
         const { id, errors, isLoading, reason, reasonOther } = this.state;
-        const client = this.props.clientDetail ? this.props.clientDetail : [];
+        const partner = this.props.partnerDetail ? this.props.partnerDetail : [];
         return (
-            <ClientArchiveOperationComponent
+            <PartnerArchiveOperationComponent
                 id={id}
                 errors={errors}
                 isLoading={isLoading}
                 reason={reason}
                 reasonOther={reasonOther}
-                client={client}
+                partner={partner}
                 onClick={this.onClick}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
@@ -173,7 +173,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        clientDetail: store.clientDetailState,
+        partnerDetail: store.partnerDetailState,
     };
 }
 
@@ -182,9 +182,9 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        postClientDeactivationDetail: (postData, onSuccessCallback, onFailureCallback) => {
+        postPartnerDeactivationDetail: (postData, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                postClientDeactivationDetail(postData, onSuccessCallback, onFailureCallback)
+                postPartnerDeactivationDetail(postData, onSuccessCallback, onFailureCallback)
             )
         },
     }
@@ -194,4 +194,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ClientArchiveOperationContainer);
+)(PartnerArchiveOperationContainer);

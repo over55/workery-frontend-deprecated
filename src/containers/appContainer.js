@@ -321,6 +321,8 @@ import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdat
 import PartnerOperationsContainer from "./partners/retrieve/partnerOperationsContainer";
 import PartnerAvatarUpdateOperationContainer from "./partners/operations/partnerAvatarUpdateOperationContainer";
 import PartnerPermanentDeleteOperationContainer from "./partners/operations/partnerPermanentDeleteOperationContainer";
+import PartnerUnarchiveOperationContainer from "./partners/operations/partnerUnarchiveOperationContainer";
+import PartnerArchiveOperationContainer from "./partners/operations/partnerArchiveOperationContainer";
 
 // Ongoing Work Order
 import AdminOngoingOrderListComponent from "./ongoingOrders/admin/list/ongoingOrderListContainer";
@@ -665,6 +667,8 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
                                 <Route path="/partner/:id/operations" exact component={requiresAuth(PartnerOperationsContainer)} />
                                 <Route path="/partner/:id/delete" exact component={requiresAuth(PartnerPermanentDeleteOperationContainer)} />
+                                <Route path="/partner/:id/unarchive" exact component={requiresAuth(PartnerUnarchiveOperationContainer)} />
+                                <Route path="/partner/:id/archive" exact component={requiresAuth(PartnerArchiveOperationContainer)} />
 
                                 { /* WORK ORDER */}
                                 <Route path="/ongoing-orders" exact component={requiresAuth(AdminOngoingOrderListComponent)} />

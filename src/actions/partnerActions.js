@@ -14,7 +14,8 @@ import {
     WORKERY_PARTNER_CONTACT_UPDATE_API_ENDPOINT,
     WORKERY_PARTNER_METRICS_UPDATE_API_ENDPOINT,
     WORKERY_PARTNER_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
-    WORKERY_PARTNER_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT
+    WORKERY_PARTNER_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT,
+    WORKERY_PARTNER_ARCHIVE_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -590,6 +591,75 @@ export function postPartnerAvatarCreateOrUpdate(postData, onSuccessCallback, onF
 
     }
 }
+
+export function postPartnerDeactivationDetail(postData, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setPartnerDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // The following code will convert the `camelized` data into `snake case`
+        // data so our API endpoint will be able to read it.
+        let decamelizedData = decamelizeKeys(postData);
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_PARTNER_ARCHIVE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = successResponse.data;
+
+            let partner = camelizeKeys(responseData);
+
+            // Extra.
+            partner['isAPIRequestRunning'] = false;
+            partner['errors'] = {};
+
+            // Update the global state of the application to store our
+            // user partner for the application.
+            store.dispatch(
+                setPartnerDetailSuccess(partner)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(partner);
+            }
+        }).catch( (exception) => {
+            if (exception.response) {
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("postPartnerDeactivationDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setPartnerDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                REDUX ACTIONS                               //
