@@ -4,6 +4,7 @@ import Scroll from 'react-scroll';
 
 import AdminAssociateCreateStep2Component from "../../../../components/associates/admin/create/adminAssociateCreateStep2Component";
 import { pullAssociateList } from "../../../../actions/associateActions";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class AdminAssociateCreateStep2Container extends Component {
@@ -21,7 +22,8 @@ class AdminAssociateCreateStep2Container extends Component {
             phone: localStorage.getItem("workery-create-associate-phone"),
             isLoading: true,
             errors: {},
-            page: 1,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
         }
 
         this.onTextChange = this.onTextChange.bind(this);
@@ -56,7 +58,8 @@ class AdminAssociateCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullAssociateList(1, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+        const { offset, limit } = this.state;
+        this.props.pullAssociateList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -77,7 +80,7 @@ class AdminAssociateCreateStep2Container extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -113,27 +116,29 @@ class AdminAssociateCreateStep2Container extends Component {
     }
 
     onNextClick(e) {
-        const page = this.state.page + 1;
+        let { offset, limit } = this.state;
+        offset = offset + 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullAssociateList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullAssociateList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
 
     onPreviousClick(e) {
-        const page = this.state.page - 1;
+        let { offset, limit } = this.state;
+        offset = offset - 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullAssociateList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullAssociateList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
@@ -169,9 +174,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullAssociateList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullAssociateList: (offset, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullAssociateList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullAssociateList(offset, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

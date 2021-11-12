@@ -4,6 +4,7 @@ import Scroll from 'react-scroll';
 
 import StaffCreateStep2Component from "../../../components/staff/create/staffCreateStep2Component";
 import { pullStaffList } from "../../../actions/staffActions";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 
 class StaffCreateStep2Container extends Component {
@@ -15,13 +16,14 @@ class StaffCreateStep2Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-staff-firstName"),
+            givenName: localStorage.getItem("workery-create-staff-givenName"),
             lastName: localStorage.getItem("workery-create-staff-lastName"),
             email: localStorage.getItem("workery-create-staff-email"),
             phone: localStorage.getItem("workery-create-staff-phone"),
             isLoading: true,
             errors: {},
-            page: 1,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
         }
 
         this.onTextChange = this.onTextChange.bind(this);
@@ -34,8 +36,8 @@ class StaffCreateStep2Container extends Component {
 
     getParametersMapFromState() {
         const parametersMap = new Map();
-        if (this.state.firstName !== undefined && this.state.firstName !== null) {
-            parametersMap.set('givenName', this.state.firstName);
+        if (this.state.givenName !== undefined && this.state.givenName !== null) {
+            parametersMap.set('givenName', this.state.givenName);
         }
         if (this.state.lastName !== undefined && this.state.lastName !== null) {
             parametersMap.set('lastName', this.state.lastName);
@@ -56,7 +58,8 @@ class StaffCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullStaffList(1, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+        const { offset, limit } = this.state;
+        this.props.pullStaffList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -77,7 +80,7 @@ class StaffCreateStep2Container extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -113,27 +116,33 @@ class StaffCreateStep2Container extends Component {
     }
 
     onNextClick(e) {
-        const page = this.state.page + 1;
+        let { offset, limit } = this.state;
+        offset = offset + 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullStaffList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullStaffList(
+                    offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback
+                );
             }
         )
     }
 
     onPreviousClick(e) {
-        const page = this.state.page - 1;
+        let { offset, limit } = this.state;
+        offset = offset - 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullStaffList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullStaffList(
+                    offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback
+                );
             }
         )
     }
@@ -144,23 +153,17 @@ class StaffCreateStep2Container extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
-        const staff = (this.props.staffList && this.props.staffList.results) ? this.props.staffList.results : [];
+        const staffs = (this.props.staffList && this.props.staffList.results) ? this.props.staffList.results : [];
         const hasNext = this.props.staffList.next !== null;
         const hasPrevious = this.props.staffList.previous !== null;
         return (
             <StaffCreateStep2Component
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                staff={staff}
-                isLoading={isLoading}
-                errors={errors}
-                onTextChange={this.onTextChange}
+                {...this}
+                {...this.state}
+                {...this.props}
+                staffs={staffs}
                 hasNext={hasNext}
-                onNextClick={this.onNextClick}
                 hasPrevious={hasPrevious}
-                onPreviousClick={this.onPreviousClick}
             />
         );
     }
@@ -175,9 +178,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullStaffList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullStaffList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullStaffList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullStaffList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

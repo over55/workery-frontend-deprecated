@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
+import { FRONTLINE_ROLE_ID, MANAGEMENT_ROLE_ID, EXECUTIVE_ROLE_ID } from "../../../constants/api";
 
 
 class CardComponent extends Component {
@@ -14,7 +15,21 @@ class CardComponent extends Component {
                     <div className="card-body">
                         <h5 className="card-title">
                             <Link to={`/staff/${staff.id}`}>
-                                <strong><i className="fas fa-home"></i>&nbsp;{staff.givenName}&nbsp;{staff.lastName}</strong>
+                                <strong>
+                                {staff && staff.typeOf === FRONTLINE_ROLE_ID &&
+                                    <i className="fas fa-user-friends"></i>
+                                }
+                                {staff && staff.typeOf === MANAGEMENT_ROLE_ID &&
+                                    <i className="fas fa-users-cog"></i>
+                                }
+                                {staff && staff.typeOf === EXECUTIVE_ROLE_ID &&
+                                    <i className="fas fa-users-cog" style={{color:"green"}}></i>
+                                }
+                                {staff && staff.typeOf === 0 &&
+                                    <i className="fas fa-question-circle" style={{color:"red"}}></i>
+                                }
+                                &nbsp;{staff.givenName}&nbsp;{staff.lastName}
+                                </strong>
                             </Link>
                         </h5>
                         <p className="card-text">
@@ -34,7 +49,7 @@ class CardComponent extends Component {
 
 export default class StaffCreateStep2Component extends Component {
     render() {
-        const { staff, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick } = this.props;
+        const { staffs, isLoading, errors, hasNext, onNextClick, hasPrevious, onPreviousClick } = this.props;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -44,7 +59,7 @@ export default class StaffCreateStep2Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -67,7 +82,7 @@ export default class StaffCreateStep2Component extends Component {
                             </strong>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Group</span>
+                            <span className="num">3.</span><span className="">Type</span>
                         </div>
                         <div id="step-4" className="st-grey">
                             <span className="num">4.</span><span className="">Contact</span>
@@ -76,10 +91,7 @@ export default class StaffCreateStep2Component extends Component {
                             <span className="num">5.</span><span className="">Address</span>
                         </div>
                         <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Account</span>
-                        </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Metrics</span>
+                            <span className="num">6.</span><span className="">Metrics</span>
                         </div>
                     </div>
                 </div>
@@ -89,7 +101,7 @@ export default class StaffCreateStep2Component extends Component {
                 </div>
 
                 <div className="card-group row">
-                    {staff && staff.map(
+                    {staffs && staffs.map(
                         (staff) => <CardComponent staff={staff} key={staff.id} isLoading={isLoading} />)
                     }
                 </div>

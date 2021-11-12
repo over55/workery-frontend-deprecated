@@ -4,6 +4,7 @@ import Scroll from 'react-scroll';
 
 import ClientCreateStep2Component from "../../../components/clients/create/clientCreateStep2Component";
 import { pullClientList } from "../../../actions/clientActions";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 
 class ClientCreateStep2Container extends Component {
@@ -21,7 +22,8 @@ class ClientCreateStep2Container extends Component {
             phone: localStorage.getItem("workery-create-client-phone"),
             isLoading: true,
             errors: {},
-            page: 1,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
         }
 
         this.onTextChange = this.onTextChange.bind(this);
@@ -56,7 +58,8 @@ class ClientCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullClientList(1, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+        const { offset, limit } = this.state;
+        this.props.pullClientList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -77,7 +80,7 @@ class ClientCreateStep2Container extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -113,30 +116,32 @@ class ClientCreateStep2Container extends Component {
     }
 
     onNextClick(e) {
-        const page = this.state.page + 1;
+        let { offset, limit } = this.state;
+        offset = offset + 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
                 this.props.pullClientList(
-                    page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback
+                    offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback
                 );
             }
         )
     }
 
     onPreviousClick(e) {
-        const page = this.state.page - 1;
+        let { offset, limit } = this.state;
+        offset = offset - 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
                 this.props.pullClientList(
-                    page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback
+                    offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback
                 );
             }
         )
@@ -173,9 +178,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullClientList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullClientList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullClientList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullClientList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

@@ -19,7 +19,7 @@ export default class StaffCreateStep1Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -40,7 +40,7 @@ export default class StaffCreateStep1Component extends Component {
                             <span className="num">2.</span><span className="">Results</span>
                         </div>
                         <div id="step-3" className="st-grey">
-                            <span className="num">3.</span><span className="">Group</span>
+                            <span className="num">3.</span><span className="">Type</span>
                         </div>
                         <div id="step-4" className="st-grey">
                             <span className="num">4.</span><span className="">Contact</span>
@@ -49,10 +49,7 @@ export default class StaffCreateStep1Component extends Component {
                             <span className="num">5.</span><span className="">Address</span>
                         </div>
                         <div id="step-6" className="st-grey">
-                            <span className="num">6.</span><span className="">Account</span>
-                        </div>
-                        <div id="step-7" className="st-grey">
-                            <span className="num">7.</span><span className="">Metrics</span>
+                            <span className="num">6.</span><span className="">Metrics</span>
                         </div>
                     </div>
                 </div>
