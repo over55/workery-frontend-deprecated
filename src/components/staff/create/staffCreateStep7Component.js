@@ -9,19 +9,22 @@ import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import { COMMERCIAL_CUSTOMER_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
+import { COMMERCIAL_ASSOCIATE_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUNTEER_CHOICES, ANOTHER_HOUSEHOLD_MEMBER_REGISTERED_CHOICES } from "../../../constants/api";
 
 
 export default class StaffCreateStep7Component extends Component {
     render() {
         const {
-            typeOf, tags, tagOptions, dateOfBirth, gender, howHear, howHearOptions, howHearOther, joinDate,
+            typeOf, isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHearId, howHearOptions, howHearOther, howHearIdLabel, joinDate,
             onRadioChange,  onMultiChange, onJoinDateChange, comment,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 'Other';
+        let isOtherHowDidYouHearSelected = false;
+        if (howHearIdLabel !== undefined && howHearIdLabel !== null && howHearIdLabel !== "") {
+            isOtherHowDidYouHearSelected = howHearIdLabel.includes("Other") === true
+        }
 
-        const isBizTypeOf = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID || typeOf === toString(COMMERCIAL_CUSTOMER_TYPE_OF_ID);
+        const isBizTypeOf = typeOf === COMMERCIAL_ASSOCIATE_TYPE_OF_ID || typeOf === toString(COMMERCIAL_ASSOCIATE_TYPE_OF_ID);
 
         return (
             <main id="main" role="main">
@@ -31,7 +34,7 @@ export default class StaffCreateStep7Component extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-plus"></i>&nbsp;Add
@@ -57,7 +60,7 @@ export default class StaffCreateStep7Component extends Component {
                         </div>
                         <div id="step-3" className="st-grey">
                             <Link to="/staff/add/step-3">
-                                <span className="num">3.</span><span className="">Group</span>
+                                <span className="num">3.</span><span className="">Type</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
@@ -70,14 +73,9 @@ export default class StaffCreateStep7Component extends Component {
                                 <span className="num">5.</span><span className="">Address</span>
                             </Link>
                         </div>
-                        <div id="step-6" className="st-grey">
-                            <Link to="/staff/add/step-6">
-                                <span className="num">6.</span><span className="">Account</span>
-                            </Link>
-                        </div>
-                        <div id="step-7" className="st-grey active">
+                         <div id="step-6" className="st-grey active">
                             <strong>
-                                <span className="num">7.</span><span className="">Metrics</span>
+                                <span className="num">6.</span><span className="">Metrics</span>
                             </strong>
                         </div>
                     </div>
@@ -89,7 +87,7 @@ export default class StaffCreateStep7Component extends Component {
                             <h2>
                                 <i className="fas fa-chart-pie"></i>&nbsp;Metrics
                             </h2>
-                            <p>All fields which have the (*) symbol are required to be filled out.</p>
+                            <p className="text-secondary font-italic">All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
@@ -106,6 +104,7 @@ export default class StaffCreateStep7Component extends Component {
                                 selectedOptions={tags}
                                 error={errors.tags}
                                 onMultiChange={onMultiChange}
+                                isLoading={isTagsLoading}
                             />
 
                             <BootstrapRadio
@@ -120,24 +119,27 @@ export default class StaffCreateStep7Component extends Component {
                             />
 
                             <BootstrapDatePicker
-                                label="Date of Birth (*)"
+                                label="Date of Birth"
                                 name="dateOfBirth"
                                 dateObj={dateOfBirth}
                                 onTimeChange={onDateOfBirthChange}
+                                borderClassname="border-success"
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.dateOfBirth}
+                                helpText="This field is optional as start date can be set at a later task."
                             />
 
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="How did you hear about us? (*)"
-                                name="howHear"
+                                name="howHearId"
                                 defaultOptionLabel="Please select how you heard about us."
                                 options={howHearOptions}
-                                value={howHear}
-                                error={errors.howHear}
+                                value={howHearId}
+                                error={errors.howHearId}
                                 onSelectChange={onSelectChange}
+                                isLoading={isHowHearLoading}
                             />
 
                             {isOtherHowDidYouHearSelected &&
@@ -153,7 +155,7 @@ export default class StaffCreateStep7Component extends Component {
                                 />
                             }
 
-                            <BootstrapDatePicker
+                            {typeOf !== COMMERCIAL_ASSOCIATE_TYPE_OF_ID && <BootstrapDatePicker
                                 label="Join date (*)"
                                 name="joinDate"
                                 dateObj={joinDate}
@@ -161,7 +163,7 @@ export default class StaffCreateStep7Component extends Component {
                                 datePickerClassName="form-control form-control-lg border"
                                 divClassName="form-group p-0 col-md-7 mb-4"
                                 error={errors.joinDate}
-                            />
+                            />}
 
                             <BootstrapTextarea
                                 name="comment"
@@ -179,7 +181,7 @@ export default class StaffCreateStep7Component extends Component {
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     Next&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
-                                <Link to="/staff/add/step-6" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to="/staff/add/step-5" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
                                 </Link>
                             </div>

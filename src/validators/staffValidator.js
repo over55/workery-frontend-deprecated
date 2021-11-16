@@ -39,8 +39,6 @@ export function validateInput(data) {
 
     } else if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
 
-        alert("TODO"); // TODO: IMPLEMENT WHEN READY.
-
     }
 
     // --- ADDRESS --- //
@@ -78,10 +76,10 @@ export function validateInput(data) {
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
-        errors.howHear = 'This field is required';
+    if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
+        errors.howHearId = 'This field is required';
     } else {
-        if (data.howHear === "Other") {
+        if (data.howHearIdLabel.includes("Other") === true) {
             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                 errors.howHearOther = 'This field is required';
             }
@@ -210,10 +208,10 @@ export function validateStep7CreateInput(data) {
     if (data.gender === undefined || data.gender === null || data.gender === "" ) {
         errors.gender = 'This field is required';
     }
-    if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
-        errors.howHear = 'This field is required';
+    if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
+        errors.howHearId = 'This field is required';
     } else {
-        if (data.howHear === "Other") {
+        if (data.howHearIdLabel.includes("Other") === true) {
             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                 errors.howHearOther = 'This field is required';
             }
@@ -309,10 +307,10 @@ export function validateSearchInput(data) {
      if (data.gender === undefined || data.gender === null || data.gender === "" ) {
          errors.gender = 'This field is required';
      }
-     if (data.howHear === undefined || data.howHear === null ||data.howHear === "" || isNaN(data.howHear) ) {
-         errors.howHear = 'This field is required';
+     if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
+         errors.howHearId = 'This field is required';
      } else {
-         if (data.howHear === "Other") {
+         if (data.howHearIdLabel.includes("Other") === true) {
              if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                  errors.howHearOther = 'This field is required';
              }
