@@ -184,6 +184,7 @@ class StaffCreateStep8Container extends Component {
         // (13) Boolean handler.
         postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
         postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
+        postData.isActive = parseInt(this.state.isActive) === 1 ? true : false;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

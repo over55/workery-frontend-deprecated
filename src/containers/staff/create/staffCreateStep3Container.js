@@ -65,7 +65,11 @@ class StaffCreateStep3Container extends Component {
 
     render() {
         return (
-            <StaffCreateStep3Component onClick={this.onClick} />
+            <StaffCreateStep3Component
+                {...this}
+                {...this.state}
+                {...this.props}
+            />
         );
     }
 }

@@ -184,37 +184,11 @@ class StaffCreateStep6Container extends Component {
      */
 
     render() {
-        const {
-            description, policeCheck,
-            emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-            isActive, password, passwordRepeat,
-            errors, isLoading, returnURL
-        } = this.state;
-
-        const { user } = this.props;
         return (
             <StaffCreateStep6Component
-                description={description}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                password={password}
-                passwordRepeat={passwordRepeat}
-                onTextChange={this.onTextChange}
-
-                policeCheck={policeCheck}
-                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
-
-                onSelectChange={this.onSelectChange}
-
-                isActive={isActive}
-                onRadioChange={this.onRadioChange}
-
-                onNextClick={this.onNextClick}
-                errors={errors}
-                returnURL={returnURL}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
