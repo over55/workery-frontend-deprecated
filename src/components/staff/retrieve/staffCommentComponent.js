@@ -15,18 +15,13 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
 import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
-import {
-    EXECUTIVE_ROLE_ID,
-    MANAGEMENT_ROLE_ID
-} from '../../../constants/api';
 
 
 export default class StaffCommentComponent extends Component {
     render() {
         const {
-            user, staffComments, flashMessage, isLoading, id, staff, text, onTextChange, errors, onClick
+            staffComments, flashMessage, isLoading, id, staff, text, onTextChange, errors, onClick
         } = this.props;
-        const canViewFunctions = user.roleId === MANAGEMENT_ROLE_ID || user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -36,17 +31,23 @@ export default class StaffCommentComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
+
+                {staff.state === 0 &&
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This staff is archived and is read-only.
+                    </div>
+                }
 
                 <div className="row">
                     <div className="step-navigation">
@@ -60,23 +61,22 @@ export default class StaffCommentComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey active">
+
+                        <div id="step-4" className="st-grey active">
                             <strong>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </strong>
                         </div>
-                        <div id="step-4" className="st-grey">
+                        <div id="step-5" className="st-grey">
                             <Link to={`/staff/${id}/files`}>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
-                        {canViewFunctions &&
-                            <div id="step-5" className="st-grey">
-                                <Link to={`/staff/${id}/operations`}>
-                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
-                                </Link>
-                            </div>
-                        }
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/staff/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 

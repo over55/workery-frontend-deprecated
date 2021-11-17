@@ -86,13 +86,9 @@ class StaffOperationsContainer extends Component {
     render() {
         return (
             <StaffOperationsComponent
-                id={this.state.id}
-                isLoading={this.state.isLoading}
-                flashMessage={this.props.flashMessage}
-                onAddJobClick={this.onAddJobClick}
-                order={this.props.orderDetail}
-                user={this.props.user}
-                staff={this.props.staffDetail}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

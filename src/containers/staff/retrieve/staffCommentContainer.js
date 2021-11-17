@@ -7,6 +7,7 @@ import OrderListComponent from "../../../components/staff/retrieve/staffCommentC
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
 import { pullStaffCommentList, postStaffComment } from "../../../actions/staffCommentActions";
 import { validateInput } from "../../../validators/commentValidator"
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 
 class StaffCommentContainer extends Component {
@@ -18,14 +19,20 @@ class StaffCommentContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
-        const parametersMap = new Map();
-        parametersMap.set("about", id);
-        parametersMap.set("o", "-created_at");
+
+        // Force active users as per issue via https://github.com/over55/workery-front/issues/296
+        var parametersMap = new Map();
+        parametersMap.set("staff_id", id);
+        parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `StaffListComponent`.
+        parametersMap.set("sort_field", "created_time");
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 10000,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "ASC",
+            sortField: "created_time",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
@@ -40,6 +47,8 @@ class StaffCommentContainer extends Component {
         }
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onSuccessListCallback = this.onSuccessListCallback.bind(this);
         this.onFailureListCallback = this.onFailureListCallback.bind(this);
         this.onSuccessPostCallback = this.onSuccessPostCallback.bind(this);
@@ -53,14 +62,11 @@ class StaffCommentContainer extends Component {
      *  items under different key names to support our API web-service's API.
      */
     getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.about = this.state.id;
-        postData.extraText = this.state.text;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
+        const { id, text } = this.state;
+        return {
+            "staffId": parseInt(id),
+            "text": text
+        };
     }
 
     /**
@@ -70,11 +76,12 @@ class StaffCommentContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        console.log("StaffCommentContainer|componentDidMount|run");
 
         // Get our data.
         this.props.pullStaffCommentList(
-            this.state.page,
-            this.state.sizePerPage,
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessListCallback,
             this.onFailureListCallback
@@ -102,7 +109,7 @@ class StaffCommentContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
                 text: "",
@@ -120,10 +127,10 @@ class StaffCommentContainer extends Component {
     }
 
     onSuccessPostCallback(response) {
-        console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
+        console.log("onSuccessPostCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
                 text: "",
@@ -133,8 +140,8 @@ class StaffCommentContainer extends Component {
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
                 this.props.pullStaffCommentList(
-                    this.state.page,
-                    this.state.sizePerPage,
+                    this.state.offset,
+                    this.state.limit,
                     this.state.parametersMap,
                     this.onSuccessListCallback,
                     this.onFailureListCallback
@@ -199,27 +206,50 @@ class StaffCommentContainer extends Component {
         }
     }
 
+    onNextClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullStaffList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onPreviousClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullStaffList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
-        const { isLoading, id, text, errors } = this.state;
         const staff = this.props.staffDetail ? this.props.staffDetail : {};
         const staffComments = this.props.staffCommentList ? this.props.staffCommentList.results : [];
         return (
             <OrderListComponent
-                id={id}
-                text={text}
-                user={this.props.user}
+                {...this}
+                {...this.state}
+                {...this.props}
                 staff={staff}
                 staffComments={staffComments}
-                flashMessage={this.props.flashMessage}
-                onTextChange={this.onTextChange}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
             />
         );
     }
@@ -239,9 +269,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullStaffCommentList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
+        pullStaffCommentList: (offset, limit, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullStaffCommentList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
+                pullStaffCommentList(offset, limit, map, onSuccessListCallback, onFailureListCallback)
             )
         },
         postStaffComment: (postData, successCallback, failedCallback) => {
