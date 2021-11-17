@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import StaffFileUploadArchiveComponent from "../../../../components/staff/retrieve/file_upload/staffFileUploadArchiveComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { deleteStaffFileUpload } from "../../../../actions/staffFileUploadActions";
+import { deletePrivateFileDetail } from "../../../../actions/privateFileActions";
 
 
 class StaffFileUploadArchiveContainer extends Component {
@@ -88,7 +88,8 @@ class StaffFileUploadArchiveContainer extends Component {
     onClick(e) {
         e.preventDefault();
         this.setState({ isLoading: true }, ()=>{
-            this.props.deleteStaffFileUpload(this.state.fileId, this.onSuccessCallback, this.onFailureCallback);
+            console.log("onClick|pre");
+            this.props.deletePrivateFileDetail(this.state.fileId, this.onSuccessCallback, this.onFailureCallback);
         });
     }
 
@@ -103,7 +104,6 @@ class StaffFileUploadArchiveContainer extends Component {
         return (
             <StaffFileUploadArchiveComponent
                 id={id}
-                user={this.props.user}
                 staff={staff}
                 isLoading={isLoading}
                 errors={errors}
@@ -125,8 +125,8 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        deleteStaffFileUpload: (id, onSuccessCallback, onFailureCallback) => {
-            dispatch(deleteStaffFileUpload(id, onSuccessCallback, onFailureCallback))
+        deletePrivateFileDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(deletePrivateFileDetail(id, onSuccessCallback, onFailureCallback))
         },
     }
 }

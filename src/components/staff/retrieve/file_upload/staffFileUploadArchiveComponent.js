@@ -13,18 +13,13 @@ import Moment from 'react-moment';
 
 import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
-import {
-    EXECUTIVE_ROLE_ID,
-    MANAGEMENT_ROLE_ID,
-} from '../../../../constants/api';
 
 
 export default class StaffFileUploadArchiveComponent extends Component {
     render() {
         const {
-            user, isLoading, id, staff, errors, onClick
+            isLoading, id, staff, errors, onClick
         } = this.props;
-        const canViewFunctions = user.roleId === MANAGEMENT_ROLE_ID || user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -34,15 +29,15 @@ export default class StaffFileUploadArchiveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
+                            <Link to="/staffs"><i className="fas fa-user-circle"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
 
                 {staff.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
@@ -62,23 +57,21 @@ export default class StaffFileUploadArchiveComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey">
+                        <div id="step-4" className="st-grey">
                             <Link to={`/staff/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey active">
+                        <div id="step-5" className="st-grey active">
                             <strong>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </strong>
                         </div>
-                        {canViewFunctions &&
-                            <div id="step-5" className="st-grey">
-                                <Link to={`/staff/${id}/operations`}>
-                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
-                                </Link>
-                            </div>
-                        }
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/staff/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
