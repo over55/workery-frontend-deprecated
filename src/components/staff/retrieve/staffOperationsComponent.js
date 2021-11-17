@@ -30,14 +30,14 @@ export default class StaffOperationsComponent extends Component {
                             <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-money-check-alt"></i>&nbsp;View Financial Details</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -76,17 +76,17 @@ export default class StaffOperationsComponent extends Component {
 
                         <div className="card-group row">
 
-                            <div className="col-sm-4 mb-4">
+                            {staff && <div className="col-sm-4 mb-4">
                                 <div className="card box-shadow text-center mx-auto h-100">
                                     <div className="card-custom-top-2">
-                                        {staff.isArchived
+                                        {staff.state === 1
                                             ? <div><i className="fas fa-box-open fa-3x"></i></div>
                                             : <div><i className="fas fa-archive fa-3x"></i></div>
                                         }
                                     </div>
                                     <div className="card-body">
                                         <h3 className="card-title">
-                                            {staff.isArchived
+                                            {staff.state === 1
                                                 ? "Unarchive"
                                                 : "Archive"
                                             }
@@ -99,7 +99,7 @@ export default class StaffOperationsComponent extends Component {
                                         </Link>
                                     </div>
                                 </div>
-                            </div>
+                            </div>}
                             <div className="col-sm-4 mb-4">
                                 <div className="card box-shadow text-center mx-auto h-100">
                                     <div className="card-custom-top-2">

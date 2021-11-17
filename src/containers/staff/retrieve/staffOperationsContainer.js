@@ -1,9 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import StaffOperationsComponent from "../../../components/staff/retrieve/staffOperationsComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../helpers/localStorageUtility';
 
 
 class StaffOperationsContainer extends Component {
@@ -17,10 +21,16 @@ class StaffOperationsContainer extends Component {
 
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const staff = localStorageGetObjectItem("workery-admin-retrieve-staff-"+id.toString() );
+        const isLoading = isEmpty(staff);
+
         // Update state.
         this.state = {
             id: parseInt(id),
-            isLoading: false,
+            staff: staff,
+            isLoading: isLoading,
         }
 
         // Update functions.
@@ -84,11 +94,13 @@ class StaffOperationsContainer extends Component {
      */
 
     render() {
+        const staff = isEmpty(this.state.staff) ? {} : this.state.staff;
         return (
             <StaffOperationsComponent
                 {...this}
                 {...this.state}
                 {...this.props}
+                staff={staff}
             />
         );
     }
