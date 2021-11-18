@@ -273,7 +273,7 @@ class StaffUpdateContainer extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // Perform client-side validation.
+        // Perform staff-side validation.
         const { errors, isValid } = validateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.

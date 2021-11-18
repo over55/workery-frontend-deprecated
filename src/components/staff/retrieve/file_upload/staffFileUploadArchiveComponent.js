@@ -29,7 +29,7 @@ export default class StaffFileUploadArchiveComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staffs"><i className="fas fa-user-circle"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
@@ -39,7 +39,7 @@ export default class StaffFileUploadArchiveComponent extends Component {
 
                 <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
 
-                {staff.state === 'inactive' &&
+                {staff.state === 0 &&
                     <div className="alert alert-info" role="alert">
                         <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This staff is archived and is read-only.
                     </div>

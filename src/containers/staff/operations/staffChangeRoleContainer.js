@@ -141,20 +141,11 @@ class StaffChangeRoleContainer extends Component {
      */
 
     render() {
-        const {
-            id, givenName, lastName, role, isLoading, errors
-        } = this.state;
         return (
             <StaffChangeRoleComponent
-                isLoading={isLoading}
-                id={id}
-                givenName={givenName}
-                lastName={lastName}
-                role={role}
-                errors={errors}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
-                user={this.props.user}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

@@ -39,6 +39,12 @@ export default class StaffOperationsComponent extends Component {
 
                 <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
 
+                {staff.state === 0 &&
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This staff is archived and is read-only.
+                    </div>
+                }
+
                 <div className="row">
                     <div className="step-navigation">
                         <div id="step-1" className="st-grey">
@@ -87,16 +93,21 @@ export default class StaffOperationsComponent extends Component {
                                     <div className="card-body">
                                         <h3 className="card-title">
                                             {staff.state === 1
-                                                ? "Unarchive"
-                                                : "Archive"
+                                                ? "Archive"
+                                                : "Unarchive"
                                             }
                                         </h3>
                                         <p className="card-text">Update staff status.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
-                                        <Link className="btn btn-success btn-lg" to={`/staff/${id}/archive`}>
-                                            Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                        </Link>
+                                        {staff.state === 1
+                                            ? <Link className="btn btn-success btn-lg" to={`/staff/${id}/archive`}>
+                                                Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </Link>
+                                            : <Link className="btn btn-success btn-lg" to={`/staff/${id}/unarchive`}>
+                                                Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </Link>
+                                        }
                                     </div>
                                 </div>
                             </div>}
@@ -110,9 +121,14 @@ export default class StaffOperationsComponent extends Component {
                                         <p className="card-text">Change the staff's password.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
-                                        <Link className="btn btn-success btn-lg" to={`/staff/${id}/password`}>
-                                            Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                        </Link>
+                                        {staff.state === 1
+                                            ? <Link className="btn btn-success btn-lg" to={`/staff/${id}/password`}>
+                                                Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </Link>
+                                            : <button className="btn btn-success btn-lg" disabled={true}>
+                                                Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </button>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -126,9 +142,14 @@ export default class StaffOperationsComponent extends Component {
                                         <p className="card-text">Change the staff's role.</p>
                                     </div>
                                     <div className="card-footer bg-transparent border-0">
-                                        <Link className="btn btn-success btn-lg" to={`/staff/${id}/role`}>
-                                            Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                        </Link>
+                                        {staff.state === 1
+                                            ? <Link className="btn btn-success btn-lg" to={`/staff/${id}/role`}>
+                                                Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </Link>
+                                            : <button className="btn btn-success btn-lg" disabled={true}>
+                                                Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                            </button>
+                                        }
                                     </div>
                                 </div>
                             </div>

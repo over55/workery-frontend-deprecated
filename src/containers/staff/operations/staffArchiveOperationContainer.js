@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import StaffAccountChangePasswordComponent from "../../../components/staff/operations/staffAccountChangePasswordComponent";
-import { validateChangePasswordOperationInput } from "../../../validators/staffValidator";
+import StaffArchiveOperationComponent from "../../../components/staff/operations/staffArchiveOperationComponent";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { putStaffChangePasswordOperation } from '../../../actions/staffActions';
+import { postArchiveUnarchiveOperation } from "../../../actions/staffActions";
+import { validateDeactivationInput } from "../../../validators/staffValidator";
 
 
-class StaffAccountChangePasswordContainer extends Component {
+class StaffArchiveOperationContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -17,25 +17,25 @@ class StaffAccountChangePasswordContainer extends Component {
     constructor(props) {
         super(props);
 
-        // Since we are using the ``react-routes-dom`` library then we
-        // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // Update state.
         this.state = {
             id: id,
-            givenName: this.props.staffDetail.givenName,
-            lastName: this.props.staffDetail.lastName,
-            password: "",
-            passwordRepeat: "",
-            errors: {},
-            isLoading: false
+            staff: {},
+            reason: "",
+            reasonOther: "",
+            isLoading: false,
+            errors: [],
         }
 
-        this.getPostData = this.getPostData.bind(this);
+        // Update functions.
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
-        this.onNextClick = this.onNextClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
+        this.getPostData = this.getPostData.bind(this);
     }
 
     /**
@@ -45,6 +45,11 @@ class StaffAccountChangePasswordContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        postData.staffId = this.props.staffDetail.id;
+        postData.state = "inactive";
+        postData.deactivationReason = this.state.reason;
+        postData.deactivationReasonOther = this.state.reasonOther;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -58,6 +63,7 @@ class StaffAccountChangePasswordContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
     }
 
     componentWillUnmount() {
@@ -74,16 +80,19 @@ class StaffAccountChangePasswordContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(staff) {
-        this.setState({ errors: {}, isLoading: true, })
-        this.props.setFlashMessage("success", "Staff password has been successfully updated.");
-        this.props.history.push("/staff/"+this.state.id+"/full");
+    onSuccessCallback(response) {
+        console.log("onSuccessCallback | Fetched:", response);
+        this.props.setFlashMessage("success", "Staff has been successfully deactivated.");
+        this.props.history.push("/staff/"+this.props.staffDetail.id+"/operations");
     }
 
-    onFailedSubmissionCallback(errors) {
+    onFailureCallback(errors) {
+        console.log("onFailureCallback | errors:", errors);
+
         this.setState({
-            errors: errors, isLoading: false,
-        })
+            errors: errors,
+            isLoading: false
+        });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -98,37 +107,41 @@ class StaffAccountChangePasswordContainer extends Component {
      */
 
     onTextChange(e) {
-        // Update our state.
         this.setState({
             [e.target.name]: e.target.value,
-        });
-
-        // Update our persistent storage.
-        const key = "workery-create-staff-"+[e.target.name];
-        localStorage.setItem(key, e.target.value)
+        })
     }
 
-    onNextClick(e) {
+    onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
         // Perform staff-side validation.
-        const { errors, isValid } = validateChangePasswordOperationInput(this.state);
+        const { errors, isValid } = validateDeactivationInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.setState({ isLoading: true, errors:{} }, ()=>{
-                this.props.putStaffChangePasswordOperation(
+            this.setState({ isLoading: true, errors: [], }, ()=>{
+                this.props.postArchiveUnarchiveOperation(
                     this.getPostData(),
-                    this.onSuccessfulSubmissionCallback,
-                    this.onFailedSubmissionCallback
+                    this.onSuccessCallback,
+                    this.onFailureCallback,
                 );
             });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailureCallback(errors);
         }
+    }
+
+    onSelectChange(option) {
+        const optionKey = [option.selectName].toString()+"Option";
+        this.setState({
+            [option.selectName]: option.value,
+            [optionKey]: option,
+        });
+        console.log([option.selectName], optionKey, "|",option); // For debugging purposes only.
     }
 
 
@@ -138,11 +151,13 @@ class StaffAccountChangePasswordContainer extends Component {
      */
 
     render() {
+        const staff = this.props.staffDetail ? this.props.staffDetail : [];
         return (
-            <StaffAccountChangePasswordComponent
+            <StaffArchiveOperationComponent
                 {...this}
                 {...this.state}
                 {...this.props}
+                staff={staff}
             />
         );
     }
@@ -151,6 +166,7 @@ class StaffAccountChangePasswordContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
+        flashMessage: store.flashMessageState,
         staffDetail: store.staffDetailState,
     };
 }
@@ -160,13 +176,16 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putStaffChangePasswordOperation: (postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffChangePasswordOperation(postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        postArchiveUnarchiveOperation: (postData, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                postArchiveUnarchiveOperation(postData, onSuccessCallback, onFailureCallback)
+            )
         },
     }
 }
 
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(StaffAccountChangePasswordContainer);
+)(StaffArchiveOperationContainer);

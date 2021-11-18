@@ -36,7 +36,7 @@ export default class StaffFileUploadAddComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staffs"><i className="fas fa-user-circle"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
@@ -48,7 +48,7 @@ export default class StaffFileUploadAddComponent extends Component {
 
                 <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
 
-                {staff.state === 'inactive' &&
+                {staff.state === 0 &&
                     <div className="alert alert-info" role="alert">
                         <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This staff is archived and is read-only.
                     </div>
@@ -64,6 +64,11 @@ export default class StaffFileUploadAddComponent extends Component {
                         <div id="step-2" className="st-grey">
                             <Link to={`/staff/${id}/full`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
+                            </Link>
+                        </div>
+                        <div id="step-3" className="st-grey">
+                            <Link to={`/staff/${id}/orders`}>
+                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">

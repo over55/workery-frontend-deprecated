@@ -31,7 +31,7 @@ export default class StaffLiteRetrieveComponent extends Component {
 
                 <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
 
-                {staff.state === 'inactive' &&
+                {staff.state === 0 &&
                     <div className="alert alert-info" role="alert">
                         <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This staff is archived and is read-only.
                     </div>

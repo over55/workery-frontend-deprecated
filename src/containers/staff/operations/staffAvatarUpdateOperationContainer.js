@@ -246,20 +246,15 @@ class StaffAvatarUpdateOperationContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, errors, file } = this.state;
         const staff = this.props.staffDetail ? this.props.staffDetail : {};
         const staffFiles = this.props.staffFileList ? this.props.staffFileList.results : [];
         return (
             <StaffAvatarUpdateOperationComponent
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 staff={staff}
                 staffFiles={staffFiles}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
-                file={file}
-                onFileDrop={this.onFileDrop}
-                onRemoveFileUploadClick={this.onRemoveFileUploadClick}
             />
         );
     }

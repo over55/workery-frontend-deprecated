@@ -133,7 +133,7 @@ class RemoteListComponent extends Component {
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no staffs at the moment"
+                noDataIndication="There are no staff at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -230,7 +230,7 @@ class StaffFileUploadListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staffs"><i className="fas fa-user-circle"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
@@ -240,6 +240,12 @@ class StaffFileUploadListComponent extends Component {
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
+
+                {staff.state === 0 &&
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This staff is archived and is read-only.
+                    </div>
+                }
 
                 <div className="row">
                     <div className="step-navigation">
@@ -271,12 +277,12 @@ class StaffFileUploadListComponent extends Component {
                     </div>
                 </div>
 
-                <div className="row">
+                {staff.state === 1 && <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
                             <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to={`/staff/${id}/file/add`} className="d-block link-ndecor" title="Staff">
+                                    <Link to={`/staff/${id}/file/add`} className="d-block link-ndecor" title="Staffs">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
@@ -285,7 +291,7 @@ class StaffFileUploadListComponent extends Component {
                             </div>
                         </section>
                     </div>
-                </div>
+                </div>}
 
                 <div className="row">
                     <div className="col-md-12">

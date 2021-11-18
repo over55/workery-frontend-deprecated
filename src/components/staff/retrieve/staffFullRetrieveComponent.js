@@ -103,9 +103,14 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-phone"></i>&nbsp;Contact
-                                        <Link to={`/staff/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
-                                            <i className="fas fa-edit"></i>&nbsp;
-                                        </Link>
+                                        {staff.state === 1
+                                            ? <Link to={`/staff/${id}/update/contact`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                                <i className="fas fa-edit"></i>&nbsp;
+                                            </Link>
+                                            : <button disabled={true} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                                <i className="fas fa-edit"></i>&nbsp;
+                                            </button>
+                                        }
                                     </th>
                                 </tr>
                                 {isCompany &&
@@ -154,9 +159,14 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-map-marker-alt"></i>&nbsp;Postal Address
-                                        <Link to={`/staff/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
-                                            <i className="fas fa-edit"></i>&nbsp;
-                                        </Link>
+                                        {staff.state === 1
+                                            ? <Link to={`/staff/${id}/update/address`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                                <i className="fas fa-edit"></i>&nbsp;
+                                            </Link>
+                                            : <button disabled={true} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                                <i className="fas fa-edit"></i>&nbsp;
+                                            </button>
+                                        }
                                     </th>
                                 </tr>
                                 <tr>
@@ -171,9 +181,14 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-user-tie"></i>&nbsp;Account
-                                        <Link to={`/staff/${id}/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
-                                            <i className="fas fa-edit"></i>&nbsp;
-                                        </Link>
+                                        {staff.state === 1
+                                            ? <Link to={`/staff/${id}/update/account`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                                <i className="fas fa-edit"></i>&nbsp;
+                                            </Link>
+                                            : <button disabled={true} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                                <i className="fas fa-edit"></i>&nbsp;
+                                            </button>
+                                        }
                                     </th>
                                 </tr>
                                 <tr>
@@ -221,9 +236,14 @@ export default class StaffFullRetrieveComponent extends Component {
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-chart-pie"></i>&nbsp;Metrics
-                                        <Link to={`/staff/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
-                                            <i className="fas fa-edit"></i>&nbsp;
-                                        </Link>
+                                        {staff.state === 1
+                                            ? <Link to={`/staff/${id}/update/metrics`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                                <i className="fas fa-edit"></i>&nbsp;
+                                            </Link>
+                                            : <button disabled={true} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                                <i className="fas fa-edit"></i>&nbsp;
+                                            </button>
+                                        }
                                     </th>
                                 </tr>
                                 {typeOf !== COMMERCIAL_CUSTOMER_TYPE_OF_ID && <tr>
@@ -316,18 +336,16 @@ export default class StaffFullRetrieveComponent extends Component {
                                                 </Link>
                                             </div>
                                         }
-                                        {isRezStaff &&
-                                            <div>
-                                                <Link to={`/staff/${id}/rez-upgrade`} className="btn btn-warning btn-lg mt-4 pl-4 pr-4">
-                                                    <i className="fas fa-bolt"></i>&nbsp;Upgrade Staff
-                                                </Link>
-                                            </div>
-                                        }
                                         {canDeleteStaff &&
                                             <div>
-                                                <Link to={`/staff/${id}/delete`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
-                                                    <i className="fas fa-trash"></i>&nbsp;Permanently Delete Staff
-                                                </Link>
+                                                {staff.state === 1
+                                                    ? <Link to={`/staff/${id}/delete`} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                        <i className="fas fa-trash"></i>&nbsp;Permanently Delete Staff
+                                                    </Link>
+                                                    : <button disabled={true} className="btn btn-danger btn-lg mt-4 pl-4 pr-4">
+                                                        <i className="fas fa-trash"></i>&nbsp;Permanently Delete Staff
+                                                    </button>
+                                                }
                                             </div>
                                         }
                                     </td>

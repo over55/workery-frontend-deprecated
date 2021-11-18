@@ -102,8 +102,9 @@ export default class StaffCommentComponent extends Component {
                                 helpText="This is the comment of the organization."
                                 onChange={onTextChange}
                                 error={errors.text}
+                                disabled={staff.state === 0}
                             />
-                            <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onClick}>
+                            <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onClick} disabled={staff.state === 0}>
                                 <i className="fas fa-check-circle"></i>&nbsp;Save
                             </button>
                         </form>

@@ -842,9 +842,10 @@ export function deleteStaffDetail(id, onSuccessCallback, onFailureCallback) {
 //                                  DELETE                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function archiveStaffDetail(id, onSuccessCallback, onFailureCallback) {
+
+export function postArchiveUnarchiveOperation(postData, onSuccessCallback, onFailureCallback) {
     return dispatch => {
-        // Change the global state to attempting to fetch latest user details.
+        // Change the global state to attempting to log in.
         store.dispatch(
             setStaffDetailRequest()
         );
@@ -852,40 +853,40 @@ export function archiveStaffDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_STAFF_ARCHIVE_API_ENDPOINT.replace("XXX", id);
+        // The following code will convert the `camelized` data into `snake case`
+        // data so our API endpoint will be able to read it.
+        let decamelizedData = decamelizeKeys(postData);
 
-        customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
+        // Perform our API submission.
+        customAxios.post(WORKERY_STAFF_ARCHIVE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+            // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
-            // console.log(successResult); // For debugging purposes.
 
-            let staff = camelizeKeys(responseData);
+            let client = camelizeKeys(responseData);
 
             // Extra.
-            staff['isAPIRequestRunning'] = false;
-            staff['errors'] = {};
-
-            console.log("archiveStaffDetail | Success:", staff); // For debugging purposes.
+            client['isAPIRequestRunning'] = false;
+            client['errors'] = {};
 
             // Update the global state of the application to store our
-            // user staff for the application.
+            // user client for the application.
             store.dispatch(
-                setStaffDetailSuccess(staff)
+                setStaffDetailSuccess(client)
             );
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
             // OBJECT WE GOT FROM THE API.
             if (onSuccessCallback) {
-                onSuccessCallback(staff);
+                onSuccessCallback(client);
             }
-
-        }).catch( (exception) => { // ERROR
+        }).catch( (exception) => {
             if (exception.response) {
                 const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("archiveStaffDetail | error:", errors); // For debuggin purposes only.
+                console.log("postStaffDeactivationDetail | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
@@ -903,7 +904,7 @@ export function archiveStaffDetail(id, onSuccessCallback, onFailureCallback) {
                 }
             }
 
-        }).then( () => { // FINALLY
+        }).then( () => {
             // Do nothing.
         });
 
