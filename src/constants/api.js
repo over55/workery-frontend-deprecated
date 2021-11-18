@@ -85,6 +85,7 @@ export const WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_ENDPOINT = '/staff/XXX/chan
 export const WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_ENDPOINT = '/staff/XXX/change-password';
 export const WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT = '/staff-operations/upload-avatar';
 export const WORKERY_STAFF_ARCHIVE_API_ENDPOINT = '/staff-operations/archive';
+export const WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_ENDPOINT = '/staff-operations/permanently-delete';
 export const WORKERY_FINANCIAL_LIST_API_ENDPOINT = '/financials';
 export const WORKERY_FINANCIAL_DETAIL_API_ENDPOINT = '/financial/';
 export const WORKERY_TAG_LIST_API_ENDPOINT = '/tags';

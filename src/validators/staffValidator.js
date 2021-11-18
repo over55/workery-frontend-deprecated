@@ -411,3 +411,16 @@ export function validateDeactivationInput(data) {
         isValid: isEmpty(errors)
     }
 }
+
+export function validateDeleteInput(data) {
+    let errors = {};
+
+    if (data.staffId === undefined || data.staffId === null || data.staffId === "") {
+        errors.staffId = 'This field is required.';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}

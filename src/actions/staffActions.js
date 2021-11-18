@@ -17,7 +17,8 @@ import {
     WORKERY_STAFF_ARCHIVE_API_ENDPOINT,
     WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_ENDPOINT,
     WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_ENDPOINT,
-    WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT
+    WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
+    WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_ENDPOINT
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -887,6 +888,69 @@ export function postArchiveUnarchiveOperation(postData, onSuccessCallback, onFai
                 let errors = camelizeKeys(responseData);
 
                 console.log("postStaffDeactivationDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setStaffDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+
+export function postPermaDeleteOperation(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setStaffDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_ENDPOINT, { "staff_id": id }).then( (successResponse) => {
+            let client = {
+                isAPIRequestRunning: false,
+                errors: {},
+            };
+
+            // Update the global state of the application to store our
+            // user client for the application.
+            store.dispatch(
+                setStaffDetailSuccess(client)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(client);
+            }
+
+        }).catch( (exception) => {
+            if (exception.response) {
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("putStaffDetail | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
