@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import StaffChangeRoleComponent from "../../../components/staff/operations/staffChangeRoleComponent";
 import { validateChangeRoleInput } from "../../../validators/staffValidator";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { putStaffChangePasswordOperation } from '../../../actions/staffActions';
+import { putStaffChangeRoleOperation } from '../../../actions/staffActions';
 
 
 class StaffChangeRoleContainer extends Component {
@@ -49,6 +49,7 @@ class StaffChangeRoleContainer extends Component {
 
         // Change the staff id.
         postData.staffId = parseInt(this.state.id);
+        postData.roleId = parseInt(this.state.role);
 
         // Finally: Return our new modified data.
         console.log("getPostData | Post-postData:", postData);
@@ -126,7 +127,7 @@ class StaffChangeRoleContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ isLoading: true, errors: {} }, ()=>{
-                this.props.putStaffChangePasswordOperation(
+                this.props.putStaffChangeRoleOperation(
                     this.getPostData(),
                     this.onSuccessfulSubmissionCallback,
                     this.onFailedSubmissionCallback
@@ -167,8 +168,8 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putStaffChangePasswordOperation: (postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffChangePasswordOperation(postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        putStaffChangeRoleOperation: (postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffChangeRoleOperation(postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
     }
 }
