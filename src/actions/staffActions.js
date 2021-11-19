@@ -654,38 +654,42 @@ export function putStaffChangePasswordOperation(postData, onSuccessCallback, onF
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_ENDPOINT.replace("XXX", postData.id), decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+            // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
-            let staff = camelizeKeys(responseData);
+
+            let client = camelizeKeys(responseData);
 
             // Extra.
-            staff['isAPIRequestRunning'] = false;
-            staff['errors'] = {};
+            client['isAPIRequestRunning'] = false;
+            client['errors'] = {};
 
             // Update the global state of the application to store our
-            // user staff for the application.
+            // user client for the application.
             store.dispatch(
-                setStaffDetailSuccess(staff)
+                setStaffDetailSuccess(client)
             );
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
             // OBJECT WE GOT FROM THE API.
             if (onSuccessCallback) {
-                onSuccessCallback(staff);
+                onSuccessCallback(client);
             }
-
         }).catch( (exception) => {
             if (exception.response) {
                 const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("putStaffDetail | error:", errors); // For debuggin purposes only.
+                console.log("putStaffChangePasswordOperation | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
-                    setStaffDetailFailure({ isAPIRequestRunning: false, errors: errors, })
+                    setStaffDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
                 );
 
                 // DEVELOPERS NOTE:
@@ -699,7 +703,6 @@ export function putStaffChangePasswordOperation(postData, onSuccessCallback, onF
         }).then( () => {
             // Do nothing.
         });
-
     }
 }
 

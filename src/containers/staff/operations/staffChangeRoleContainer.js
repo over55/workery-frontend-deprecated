@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import StaffChangeRoleComponent from "../../../components/staff/operations/staffChangeRoleComponent";
 import { validateChangeRoleInput } from "../../../validators/staffValidator";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { putStaffChangeRoleOperation } from '../../../actions/staffActions';
+import { putStaffChangePasswordOperation } from '../../../actions/staffActions';
 
 
 class StaffChangeRoleContainer extends Component {
@@ -45,9 +45,13 @@ class StaffChangeRoleContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+        console.log("getPostData | Pre-postData:", postData);
+
+        // Change the staff id.
+        postData.staffId = parseInt(this.state.id);
 
         // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
+        console.log("getPostData | Post-postData:", postData);
         return postData;
     }
 
@@ -122,7 +126,7 @@ class StaffChangeRoleContainer extends Component {
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             this.setState({ isLoading: true, errors: {} }, ()=>{
-                this.props.putStaffChangeRoleOperation(
+                this.props.putStaffChangePasswordOperation(
                     this.getPostData(),
                     this.onSuccessfulSubmissionCallback,
                     this.onFailedSubmissionCallback
@@ -163,8 +167,8 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putStaffChangeRoleOperation: (postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffChangeRoleOperation(postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        putStaffChangePasswordOperation: (postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
+            dispatch(putStaffChangePasswordOperation(postData, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
         },
     }
 }

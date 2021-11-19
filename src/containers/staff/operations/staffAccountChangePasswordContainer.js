@@ -45,6 +45,7 @@ class StaffAccountChangePasswordContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+        postData.staffId = parseInt(this.state.id);
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
