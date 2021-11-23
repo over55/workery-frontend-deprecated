@@ -2,58 +2,58 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from '../../bootstrap/bootstrapSingleSelect';
+import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
+import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
 import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
 import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
+import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
+import {
+    IS_OK_TO_EMAIL_CHOICES,
+    IS_OK_TO_TEXT_CHOICES,
+    GENDER_RADIO_CHOICES
+} from "../../../constants/api";
 
 
-
-class StaffAddressUpdateComponent extends Component {
+export default class StaffAddressUpdateComponent extends Component {
     render() {
         const {
-            id, givenName, lastName,
+            // STEP 5
             country, region, locality, postalCode, streetAddress,
 
-            errors,
-            onTextChange,
-            onSelectChange,
-            onBillingCountryChange,
-            onBillingRegionChange,
-            onNextClick,
-            isLoading
+            // EVERYTHING ELSE
+            givenName, lastName, id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
+            onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
-
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
+                            <Link to={`/staff`}><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/staff/${id}/full`}><i className="fas fa-user-tie"></i>&nbsp;{givenName} {lastName}</Link>
+                            <Link to={`/staff/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName} {lastName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-edit"></i>&nbsp;Edit Staff (Address)
+                            <i className="fas fa-edit"></i>&nbsp;Update (Address)
                         </li>
                     </ol>
                 </nav>
 
-                <h1>
-                    <i className="fas fa-edit"></i>&nbsp;Edit Staff (Address)
-                </h1>
-
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h2>
-                                <i className="fas fa-address-book"></i>&nbsp;Address
-                            </h2>
+                            <h1><i className="fas fa-edit"></i>&nbsp;Staff Address Form</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
@@ -113,11 +113,11 @@ class StaffAddressUpdateComponent extends Component {
                             />
 
                             <div className="form-group">
-                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onNextClick}>
+                                <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
                                 <Link to={`/staff/${id}/full`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
-                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                    <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
 
@@ -129,5 +129,3 @@ class StaffAddressUpdateComponent extends Component {
         );
     }
 }
-
-export default StaffAddressUpdateComponent;
