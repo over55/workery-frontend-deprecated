@@ -1049,7 +1049,8 @@ export function getStaffReactSelectOptions(staffList=[], selectName="staff") {
                 staffOptions.push({
                     selectName: selectName,
                     value: staff.id,
-                    label: staff.fullName
+                    label: staff.fullName,
+                    staffId: staff.id,
                 });
                 // console.log(staff);
             }
