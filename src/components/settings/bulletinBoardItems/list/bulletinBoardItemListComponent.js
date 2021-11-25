@@ -64,7 +64,8 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'createdTime',
             text: 'Created',
-            sort: true
+            sort: true,
+            formatter: dateTimeFormatter,
         },{
             dataField: 'state',
             text: 'State',
@@ -136,6 +137,13 @@ function iconFormatter(cell, row){
 }
 
 
+function dateTimeFormatter(cell, row){
+    return (
+        <Moment format="MM/DD/YYYY hh:mm:ss a">{row.createdTime}</Moment>
+    )
+}
+
+
 function statusFormatter(cell, row){
     switch(row.state) {
         case "active":
@@ -175,7 +183,7 @@ function emailFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/bulletinBoardItem/${row.id}`}>
+        <Link to={`/settings/bulletin-board-item/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )

@@ -177,7 +177,7 @@ export function pullBulletinBoardItemDetail(id, successCallback, failedCallback)
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -256,7 +256,7 @@ export function putBulletinBoardItemDetail(postData, successCallback, failedCall
         console.log(postData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+postData.id+"/", decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+postData.id, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
@@ -321,7 +321,7 @@ export function deleteBulletinBoardItemDetail(id, successCallback, failedCallbac
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.

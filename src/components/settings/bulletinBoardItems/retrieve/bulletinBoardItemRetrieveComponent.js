@@ -9,7 +9,9 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 
 class BulletinBoardItemRetrieveComponent extends Component {
     render() {
-        const { text, createdAt, createdBy, lastModifiedAt, lastModifiedBy, onClick, onBack, isLoading } = this.props;
+        const {
+            text, createdAt, createdByName, createdFromIp, lastModifiedAt, lastModifiedByName, lastModifiedFromIp, onClick, onBack, isLoading
+        } = this.props;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -50,7 +52,13 @@ class BulletinBoardItemRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
-                                    <td>{createdBy}</td>
+                                    <td>
+                                        {createdByName}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Created from IP</th>
+                                    <td>{createdFromIp}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Last Modified At</th>
@@ -58,7 +66,11 @@ class BulletinBoardItemRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Last Modified By</th>
-                                    <td>{lastModifiedBy}</td>
+                                    <td>{lastModifiedByName}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Last Modified from IP</th>
+                                    <td>{lastModifiedFromIp}</td>
                                 </tr>
                             </tbody>
                         </table>

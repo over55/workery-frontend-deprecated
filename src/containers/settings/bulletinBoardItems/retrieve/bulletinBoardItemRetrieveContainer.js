@@ -24,8 +24,10 @@ class BulletinBoardItemRetrieveContainer extends Component {
         this.state = {
             id: id,
             createdAt: "",
+            createdFromIp: "",
             lastModifiedAt: "",
-            lastModifiedBy: "",
+            lastModifiedByName: "",
+            lastModifiedFromIp: "",
             isLoading: false,
         }
 
@@ -81,9 +83,11 @@ class BulletinBoardItemRetrieveContainer extends Component {
         this.setState({
             text: bbi.text,
             createdAt: bbi.createdAt,
-            createdBy: bbi.createdBy,
+            createdByName: bbi.createdByName,
+            createdFromIp: bbi.createdFromIp,
             lastModifiedAt: bbi.lastModifiedAt,
-            lastModifiedBy: bbi.lastModifiedBy,
+            lastModifiedByName: bbi.lastModifiedByName,
+            lastModifiedFromIp: bbi.lastModifiedFromIp,
         });
     }
 
@@ -106,14 +110,9 @@ class BulletinBoardItemRetrieveContainer extends Component {
     render() {
         return (
             <BulletinBoardItemRetrieveComponent
-                text={this.state.text}
-                createdAt={this.state.createdAt}
-                createdBy={this.state.createdBy}
-                lastModifiedAt={this.state.lastModifiedAt}
-                lastModifiedBy={this.state.lastModifiedBy}
-                isLoading={this.state.isLoading}
-                onBack={this.onBack}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
