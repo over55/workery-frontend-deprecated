@@ -183,9 +183,23 @@ function emailFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/settings/bulletin-board-item/${row.id}`}>
-            View&nbsp;<i className="fas fa-chevron-right"></i>
-        </Link>
+        <>
+            {row.state === 0
+                ?<div>
+                    <Link to={`/settings/bulletin-board-item/${row.id}`}>
+                        View&nbsp;<i className="fas fa-chevron-right"></i>
+                    </Link>
+                </div>
+                :<div>
+                    <Link to={`/settings/bulletin-board-item/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
+                        <i className="fas fa-edit"></i>&nbsp;Edit
+                    </Link>&nbsp;&nbsp;&nbsp;
+                    <Link to={`/settings/bulletin-board-item/${row.id}/delete`} className="btn btn-danger pl-4 pr-4">
+                        <i className="fas fa-minus"></i>&nbsp;Remove
+                    </Link>
+                </div>
+            }
+        </>
     )
 }
 

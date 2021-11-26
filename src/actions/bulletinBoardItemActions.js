@@ -324,29 +324,17 @@ export function deleteBulletinBoardItemDetail(id, successCallback, failedCallbac
         const aURL = WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = successResponse.data;
-            // console.log(successResult); // For debugging purposes.
-
-            let profile = camelizeKeys(responseData);
-
-            // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
-
-            console.log("pullBulletinBoardItemDetail | Success:", profile); // For debugging purposes.
-
             // Update the global state of the application to store our
             // user profile for the application.
             store.dispatch(
-                setBulletinBoardItemDetailSuccess(profile)
+                setBulletinBoardItemDetailSuccess(null)
             );
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
             // OBJECT WE GOT FROM THE API.
             if (successCallback) {
-                successCallback(profile);
+                successCallback(null);
             }
 
         }).catch( (exception) => { // ERROR
