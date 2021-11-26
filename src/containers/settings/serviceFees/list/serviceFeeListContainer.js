@@ -30,9 +30,10 @@ class ServiceFeeListContainer extends Component {
             totalSize: 0,
             sortOrder: "ASC",
             sortField: "title",
+            state: 1,
 
             // Sorting, Filtering, & Searching
-            parametersMap: new Map(),
+            parametersMap: parametersMap,
 
             // Overaly
             isLoading: true,

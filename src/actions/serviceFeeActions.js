@@ -37,6 +37,8 @@ export function pullServiceFeeList(offset=0, limit=10, filtersMap=new Map(), onS
             }
         )
 
+        console.log("pullServiceFeeList|filtersMap:", filtersMap);
+
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
