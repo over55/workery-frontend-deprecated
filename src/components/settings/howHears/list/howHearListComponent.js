@@ -77,7 +77,7 @@ class RemoteListComponent extends Component {
             formatter: stateFormatter
         },{
             dataField: 'id',
-            text: '',
+            text: '-',
             sort: false,
             formatter: detailLinkFormatter
         }];
@@ -182,9 +182,8 @@ function stateFormatter(cell, row){
 function detailLinkFormatter(cell, row){
     return (
         <div>
-            {row.state
-                ? ""
-                : <div>
+            {row.state === 1
+                ? <div>
                     <Link to={`/settings/how-hear/${row.id}/update`} className="btn btn-primary pl-4 pr-4">
                         <i className="fas fa-edit"></i>&nbsp;Edit
                     </Link>&nbsp;&nbsp;&nbsp;
@@ -192,6 +191,7 @@ function detailLinkFormatter(cell, row){
                         <i className="fas fa-minus"></i>&nbsp;Remove
                     </Link>
                 </div>
+                : ""
             }
         </div>
     )

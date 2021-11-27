@@ -177,7 +177,7 @@ export function pullHowHearDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_HOW_HEAR_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_HOW_HEAR_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -254,7 +254,7 @@ export function putHowHearDetail(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_HOW_HEAR_DETAIL_API_ENDPOINT+postData.id+"/", decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_HOW_HEAR_DETAIL_API_ENDPOINT+postData.id, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -316,32 +316,20 @@ export function deleteHowHearDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_HOW_HEAR_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_HOW_HEAR_DETAIL_API_ENDPOINT+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = successResponse.data;
-            // console.log(successResult); // For debugging purposes.
-
-            let profile = camelizeKeys(responseData);
-
-            // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
-
-            console.log("deleteHowHearDetail | Success:", profile); // For debugging purposes.
-
             // Update the global state of the application to store our
             // user profile for the application.
             store.dispatch(
-                setHowHearDetailSuccess(profile)
+                setHowHearDetailSuccess(null)
             );
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
             // OBJECT WE GOT FROM THE API.
             if (onSuccessCallback) {
-                onSuccessCallback(profile);
+                onSuccessCallback(null);
             }
 
         }).catch( (exception) => { // ERROR
