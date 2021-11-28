@@ -177,7 +177,7 @@ export function pullSkillSetDetail(id, successCallback, failedCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -251,7 +251,7 @@ export function putSkillSetDetail(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+postData.id+"/", decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+postData.id, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -315,28 +315,17 @@ export function deleteSkillSetDetail(id, successCallback, failedCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            const responseData = successResponse.data;
-            // console.log(successResult); // For debugging purposes.
-
-            let profile = camelizeKeys(responseData);
-
-            // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
-
-            console.log("pullSkillSetDetail | Success:", profile); // For debugging purposes.
-
             // Update the global state of the application to store our
             // user profile for the application.
             store.dispatch(
-                setSkillSetDetailSuccess(profile)
+                setSkillSetDetailSuccess(null)
             );
 
             if (successCallback) {
-                successCallback(profile);
+                successCallback(null);
             }
 
         }).catch( (exception) => { // ERROR
@@ -436,7 +425,8 @@ export function getSkillSetReactSelectOptions(skillSetList=[], selectName="skill
                 skillSetOptions.push({
                     selectName: selectName,
                     value: skillSet.id,
-                    label: skillSet.subCategory
+                    label: skillSet.subCategory,
+                    skillSetId: skillSet.id,
                 });
                 // console.log(skillSet);
             }
@@ -471,7 +461,8 @@ export function getPickedSkillSetReactSelectOptions(pickedSkillSetArray, skillSe
                         skillSetOptions.push({
                             selectName: selectName,
                             value: skillSet.id,
-                            label: skillSet.subCategory
+                            label: skillSet.subCategory,
+                            skillSetId: skillSet.id,
                         });
                         // console.log(skillSet);
                     } // end IF

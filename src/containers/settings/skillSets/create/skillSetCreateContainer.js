@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import SkillSetCreateComponent from "../../../../components/settings/skillSets/create/skillSetCreateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
 import validateInput from "../../../../validators/skillSetValidator";
-import { getInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
+import { getInsuranceRequirementReactSelectOptions, getPickedInsuranceRequirementReactSelectOptions, pullInsuranceRequirementList } from "../../../../actions/insuranceRequirementActions";
 import { postSkillSetDetail } from "../../../../actions/skillSetActions";
 
 
@@ -59,7 +59,7 @@ class SkillSetCreateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullInsuranceRequirementList(1, 1000);
+        this.props.pullInsuranceRequirementList(0, 1000);
     }
 
     componentWillUnmount() {
@@ -109,10 +109,18 @@ class SkillSetCreateContainer extends Component {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            insuranceRequirements: selectedOptions,
-        });
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let pickedInsuranceRequirements = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let pickedOption = selectedOptions[i];
+                pickedOption.insuranceRequirementId = pickedOption.value;
+                pickedInsuranceRequirements.push(pickedOption);
+            }
+        }
+        this.setState({ insuranceRequirements: pickedInsuranceRequirements, });
     }
 
     onClick(e) {
@@ -147,19 +155,20 @@ class SkillSetCreateContainer extends Component {
      */
 
     render() {
-        const { category, subCategory, insuranceRequirements, description, errors, isLoading } = this.state;
+        const {
+            insuranceRequirements,
+        } = this.state;
+
+        const insuranceRequirementOptions = getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList);
+        const transcodedInsuranceRequirements = getPickedInsuranceRequirementReactSelectOptions(insuranceRequirements, this.props.insuranceRequirementList)
+
         return (
             <SkillSetCreateComponent
-                category={category}
-                subCategory={subCategory}
-                description={description}
-                insuranceRequirements={insuranceRequirements}
+                {...this}
+                {...this.state}
+                {...this.props}
+                insuranceRequirements={transcodedInsuranceRequirements}
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
-                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onClick={this.onClick}
-                isLoading={isLoading}
             />
         );
     }
