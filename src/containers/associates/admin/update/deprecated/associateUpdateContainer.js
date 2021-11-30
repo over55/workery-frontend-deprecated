@@ -201,7 +201,7 @@ class AssociateUpdateContainer extends Component {
         this.props.pullHowHearList(1,1000);
         this.props.pullTagList(1,1000);
         this.props.pullSkillSetList(1, 1000);
-        this.props.pullInsuranceRequirementList(1, 1000);
+        this.props.pullInsuranceRequirementList(0, 1000);
         this.props.pullVehicleTypeList(1, 1000);
     }
 

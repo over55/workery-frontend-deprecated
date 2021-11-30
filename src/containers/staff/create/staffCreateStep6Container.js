@@ -64,7 +64,7 @@ class StaffCreateStep6Container extends Component {
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
         this.props.pullSkillSetList(1, 1000, parametersMap);
-        this.props.pullInsuranceRequirementList(1, 1000, parametersMap);
+        this.props.pullInsuranceRequirementList(0, 1000, parametersMap);
         this.props.pullVehicleTypeList(1, 1000, parametersMap);
     }
 

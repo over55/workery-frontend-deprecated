@@ -214,7 +214,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
         this.props.pullSkillSetList(1, 1000, parametersMap, this.onFetchedSkillSetsCallback);
-        this.props.pullInsuranceRequirementList(1, 1000, parametersMap, this.onFetchedInsuranceRequirementsCallback);
+        this.props.pullInsuranceRequirementList(0, 1000, parametersMap, this.onFetchedInsuranceRequirementsCallback);
         this.props.pullVehicleTypeList(1, 1000, parametersMap, this.onFetchedVehicleTypesCallback);
         this.props.pullServiceFeeList(1, 1000, parametersMap, this.onFetchedServiceFeeCallback);
 

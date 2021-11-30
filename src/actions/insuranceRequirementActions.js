@@ -429,7 +429,9 @@ export function getInsuranceRequirementReactSelectOptions(insuranceRequirementLi
                 insuranceRequirementOptions.push({
                     selectName: selectName,
                     value: insuranceRequirement.id,
-                    label: insuranceRequirement.text
+                    id: insuranceRequirement.id,
+                    label: insuranceRequirement.text,
+                    insuranceRequirementId: insuranceRequirement.id,
                 });
                 // console.log(insuranceRequirement);
             }
@@ -444,34 +446,35 @@ export function getInsuranceRequirementReactSelectOptions(insuranceRequirementLi
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedInsuranceRequirementReactSelectOptions(pickedInsuranceRequirementsArray, insuranceRequirementList=[], selectName="insuranceRequirement") {
-    const insuranceRequirementOptions = [];
-    const isAPIResponseNotEmpty = isEmpty(insuranceRequirementList) === false;
-    const isPickedArrayNotEmpty = isEmpty(pickedInsuranceRequirementsArray) === false;
-    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
-        const results = insuranceRequirementList.results;
-        const isResultsNotEmpty = isEmpty(results) === false;
-        if (isResultsNotEmpty) {
-            for (let i = 0; i < pickedInsuranceRequirementsArray.length; i++) {
-                let pickedInsuranceRequirement = pickedInsuranceRequirementsArray[i];
+ export function getPickedInsuranceRequirementReactSelectOptions(pickedInsuranceRequirementsArray, insuranceRequirementList=[], selectName="insuranceRequirement") {
+     const insuranceRequirementOptions = [];
+     const isAPIResponseNotEmpty = isEmpty(insuranceRequirementList) === false;
+     const isPickedArrayNotEmpty = isEmpty(pickedInsuranceRequirementsArray) === false;
+     if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
+         const results = insuranceRequirementList.results;
+         const isResultsNotEmpty = isEmpty(results) === false;
+         if (isResultsNotEmpty) {
+             for (let i = 0; i < pickedInsuranceRequirementsArray.length; i++) {
+                 let pickedInsuranceRequirement = pickedInsuranceRequirementsArray[i];
 
-                for (let j = 0; j < results.length; j++) {
-                    let insuranceRequirement = results[j];
+                 for (let j = 0; j < results.length; j++) {
+                     let insuranceRequirement = results[j];
 
-                    if (insuranceRequirement.id === pickedInsuranceRequirement.insuranceRequirementId) {
-                        insuranceRequirementOptions.push({
-                            selectName: selectName,
-                            value: insuranceRequirement.id,
-                            label: insuranceRequirement.text
-                        });
-                        // console.log(insuranceRequirement);
-                    } // end IF
+                     if (insuranceRequirement.id === pickedInsuranceRequirement.insuranceRequirementId) {
+                         insuranceRequirementOptions.push({
+                             selectName: selectName,
+                             value: insuranceRequirement.id,
+                             label: insuranceRequirement.text,
+                             insuranceRequirementId: insuranceRequirement.id,
+                         });
+                         // console.log(insuranceRequirement);
+                     } // end IF
 
-                } //end FOR
+                 } //end FOR
 
-            } // end FOR
+             } // end FOR
 
-        } // end IF
-    }
-    return insuranceRequirementOptions;
-}
+         } // end IF
+     }
+     return insuranceRequirementOptions;
+ }
