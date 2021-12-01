@@ -702,6 +702,7 @@ export const setAssociateDetailFailure = associateDetail => ({
 //                                 UTILITY                                    //
 ////////////////////////////////////////////////////////////////////////////////
 
+
 /**
  * Utility function takes the API data and converts it to HTML dropdown
  * options which will be consumed by the `react-select` library elements.
@@ -718,12 +719,51 @@ export function getAssociateReactSelectOptions(associateList=[], selectName="ass
                 associateOptions.push({
                     selectName: selectName,
                     value: associate.id,
-                    label: associate.fullName,
+                    label: associate.name,
+                    id: associate.id,
                     associateId: associate.id,
                 });
                 // console.log(associate);
             }
         }
+    }
+    return associateOptions;
+}
+
+/**
+ * Utlity function takes an array of `Associate` primary keys and the `Associates` results
+ * from the API and returns the HTML dropdown selections which will be consumed
+ * by the GUI powered by `react-select`.
+ */
+export function getPickedAssociateReactSelectOptions(pickedAssociatesArray, associateList=[], selectName="associate") {
+    const associateOptions = [];
+    const isAPIResponseNotEmpty = isEmpty(associateList) === false;
+    const isPickedArrayNotEmpty = isEmpty(pickedAssociatesArray) === false;
+    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
+        const results = associateList.results;
+        const isResultsNotEmpty = isEmpty(results) === false;
+        if (isResultsNotEmpty) {
+            for (let i = 0; i < pickedAssociatesArray.length; i++) {
+                let pickedAssociate = pickedAssociatesArray[i];
+
+                for (let j = 0; j < results.length; j++) {
+                    let associate = results[j];
+
+                    if (associate.id === pickedAssociate.associateId) {
+                        associateOptions.push({
+                            selectName: selectName,
+                            value: associate.id,
+                            label: associate.name,
+                            associateId: associate.id,
+                        });
+                        // console.log(associate);
+                    } // end IF
+
+                } //end FOR
+
+            } // end FOR
+
+        } // end IF
     }
     return associateOptions;
 }

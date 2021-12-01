@@ -51,6 +51,9 @@ class AwayLogCreateContainer extends Component {
         const untilDateMoment = moment(untilDate);
         postData.untilDate = untilDateMoment.format("YYYY-MM-DD")
 
+        // Boolean handler.
+        postData.untilFurtherNotice = parseInt(this.state.untilFurtherNotice) === 1 ? true : false;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
@@ -67,7 +70,7 @@ class AwayLogCreateContainer extends Component {
         // Get a filtered list of ALL the ACTIVE associates.
         const parametersMap = new Map();
         parametersMap.set('state', 1); // `1` is `true` in API.
-        this.props.pullAssociateList(1, 10000, parametersMap);
+        this.props.pullAssociateList(0, 25000, parametersMap);
     }
 
     componentWillUnmount() {
@@ -91,7 +94,6 @@ class AwayLogCreateContainer extends Component {
         } else {
             console.log("onSuccessCallback | ERROR:",response);
         }
-
     }
 
     onFailureCallback(errors) {
@@ -180,24 +182,13 @@ class AwayLogCreateContainer extends Component {
      */
 
     render() {
-        const { associate, associateOption, startDate, reason, reasonOther, untilFurtherNotice, untilDate, errors } = this.state;
         const associateOptions = getAssociateReactSelectOptions(this.props.associateList);
         return (
             <AwayLogCreateComponent
-                associate={associate}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associateOptions={associateOptions}
-                startDate={startDate}
-                onStartDateChange={this.onStartDateChange}
-                reason={reason}
-                reasonOther={reasonOther}
-                untilFurtherNotice={untilFurtherNotice}
-                untilDate={untilDate}
-                onUntilDateChange={this.onUntilDateChange}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onClick={this.onClick}
             />
         );
     }
