@@ -25,7 +25,7 @@ class AwayLogUpdateContainer extends Component {
 
         this.state = {
             id: parseInt(id),
-            associate: "",
+            associateId: "",
             associateOption: "",
             associateOptions: [],
             isAssociatesLoading: true,
@@ -64,6 +64,9 @@ class AwayLogUpdateContainer extends Component {
             postData.untilDate = null;
         }
 
+        // Boolean handler.
+        postData.untilFurtherNotice = parseInt(this.state.untilFurtherNotice) === 1 ? true : false;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
@@ -80,7 +83,7 @@ class AwayLogUpdateContainer extends Component {
         // Get a filtered list of ALL the ACTIVE associates.
         const parametersMap = new Map();
         parametersMap.set('state', 1); // `1` is `true` in API.
-        this.props.pullAssociateList(1, 10000, parametersMap, this.onAssociatesListCallback);
+        this.props.pullAssociateList(0, 10000, parametersMap, this.onAssociatesListCallback);
 
         // Get our detail.
         this.props.pullAwayLogDetail(this.state.id, this.onAwayLogFetchCallback);
@@ -135,7 +138,7 @@ class AwayLogUpdateContainer extends Component {
     onAwayLogFetchCallback(awayLogDetail) {
         console.log("onAwayLogFetchCallback |", awayLogDetail);
         this.setState({
-            associate: parseInt(awayLogDetail.associate),
+            associateId: parseInt(awayLogDetail.associateId),
             associateOption: [],
             startDate: new Date(awayLogDetail.startDate),
             reason: parseInt(awayLogDetail.reason),
@@ -220,26 +223,14 @@ class AwayLogUpdateContainer extends Component {
      */
 
     render() {
-        const { associate, associateOption, isAssociatesLoading, startDate, reason, reasonOther, untilFurtherNotice, untilDate, errors } = this.state;
+        const { associateId } = this.state;
         const associateOptions = getAssociateReactSelectOptions(this.props.associateList);
         return (
             <AwayLogUpdateComponent
-                associate={associate}
-                associateOption={associateOption}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associateOptions={associateOptions}
-                isAssociatesLoading={isAssociatesLoading}
-                startDate={startDate}
-                onStartDateChange={this.onStartDateChange}
-                reason={reason}
-                reasonOther={reasonOther}
-                untilFurtherNotice={untilFurtherNotice}
-                untilDate={untilDate}
-                onUntilDateChange={this.onUntilDateChange}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onClick={this.onClick}
             />
         );
     }

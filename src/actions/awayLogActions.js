@@ -317,25 +317,14 @@ export function deleteAwayLogDetail(id, successCallback, failedCallback) {
         const aURL = WORKERY_AWAY_LOG_DETAIL_API_ENDPOINT+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            const responseData = successResponse.data;
-            // console.log(successResult); // For debugging purposes.
-
-            let profile = camelizeKeys(responseData);
-
-            // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
-
-            console.log("deleteAwayLogDetail | Success:", profile); // For debugging purposes.
-
             // Update the global state of the application to store our
             // user profile for the application.
             store.dispatch(
-                setAwayLogDetailSuccess(profile)
+                setAwayLogDetailSuccess(null)
             );
 
             if (successCallback) {
-                successCallback(profile);
+                successCallback(null);
             }
 
         }).catch( (exception) => { // ERROR

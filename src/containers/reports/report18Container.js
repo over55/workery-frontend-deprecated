@@ -47,7 +47,7 @@ class Report18Container extends Component {
 
         const parametersMap = new Map();
         parametersMap.set('state', 0);
-        this.props.pullAssociateList(1, 5000, parametersMap, this.onAssociatesListCallback, null);
+        this.props.pullAssociateList(0, 5000, parametersMap, this.onAssociatesListCallback, null);
     }
 
     componentWillUnmount() {

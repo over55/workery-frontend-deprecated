@@ -1,4 +1,5 @@
 import isEmpty from "lodash/isEmpty";
+import Moment from 'react-moment';
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -44,11 +45,13 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'startDate',
             text: 'Start Date',
-            sort: true
+            sort: true,
+            formatter: startDateFormatter,
         },{
             dataField: 'untilDate',
             text: 'Until Date',
-            sort: true
+            sort: true,
+            formatter: untilDateFormatter
         },{
             dataField: 'state',
             text: 'Status',
@@ -131,6 +134,18 @@ function statusFormatter(cell, row){
     }
 }
 
+
+function startDateFormatter(cell, row){
+    return (
+        row && row.startDate ? <Moment format="MM/DD/YYYY">{row.startDate}</Moment> :"-"
+    )
+}
+
+function untilDateFormatter(cell, row){
+    return (
+        row && row.untilDate && row.untilFurtherNotice === false ? <Moment format="MM/DD/YYYY">{row.untilDate}</Moment> :"-"
+    )
+}
 
 function detailLinkFormatter(cell, row){
     return (
