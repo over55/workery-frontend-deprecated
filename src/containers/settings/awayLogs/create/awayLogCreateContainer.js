@@ -19,7 +19,7 @@ class AwayLogCreateContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            associate: null,
+            associateId: null,
             associateOption: null,
             startDate: null,
             reason: null,
@@ -123,6 +123,7 @@ class AwayLogCreateContainer extends Component {
     }
 
     onSelectChange(option) {
+        console.log(option);
         const optionKey = [option.selectName]+"Option";
         this.setState({
             [option.selectName]: option.value,

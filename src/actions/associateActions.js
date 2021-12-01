@@ -707,7 +707,7 @@ export const setAssociateDetailFailure = associateDetail => ({
  * Utility function takes the API data and converts it to HTML dropdown
  * options which will be consumed by the `react-select` library elements.
  */
-export function getAssociateReactSelectOptions(associateList=[], selectName="associate") {
+export function getAssociateReactSelectOptions(associateList=[], selectName="associateId") {
     const associateOptions = [];
     const isNotProductionsEmpty = isEmpty(associateList) === false;
     if (isNotProductionsEmpty) {
@@ -735,7 +735,7 @@ export function getAssociateReactSelectOptions(associateList=[], selectName="ass
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedAssociateReactSelectOptions(pickedAssociatesArray, associateList=[], selectName="associate") {
+export function getPickedAssociateReactSelectOptions(pickedAssociatesArray, associateList=[], selectName="associateId") {
     const associateOptions = [];
     const isAPIResponseNotEmpty = isEmpty(associateList) === false;
     const isPickedArrayNotEmpty = isEmpty(pickedAssociatesArray) === false;

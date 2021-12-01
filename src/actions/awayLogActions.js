@@ -177,7 +177,7 @@ export function pullAwayLogDetail(id, successCallback, failedCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_AWAY_LOG_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_AWAY_LOG_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -251,7 +251,7 @@ export function putAwayLogDetail(data, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_AWAY_LOG_DETAIL_API_ENDPOINT+data.id+"/", decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_AWAY_LOG_DETAIL_API_ENDPOINT+data.id, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
@@ -314,7 +314,7 @@ export function deleteAwayLogDetail(id, successCallback, failedCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_AWAY_LOG_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_AWAY_LOG_DETAIL_API_ENDPOINT+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
