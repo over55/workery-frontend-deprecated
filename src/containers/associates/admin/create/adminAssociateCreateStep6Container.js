@@ -90,10 +90,10 @@ class AdminAssociateCreateStep6Container extends Component {
         // DEVELOPERS NOTE: Fetch our skillset list.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap, this.onSkillSetSuccessFetch);
+        this.props.pullSkillSetList(0, 1000, parametersMap, this.onSkillSetSuccessFetch);
         this.props.pullInsuranceRequirementList(0, 1000, parametersMap, this.onInsuranceRequirementsSuccessFetch);
-        this.props.pullVehicleTypeList(1, 1000, parametersMap, this.onVehicleTypesSuccessFetch);
-        this.props.pullServiceFeeList(1, 1000, parametersMap, this.onFetchedServiceFeeCallback);
+        this.props.pullVehicleTypeList(0, 1000, parametersMap, this.onVehicleTypesSuccessFetch);
+        this.props.pullServiceFeeList(0, 1000, parametersMap, this.onFetchedServiceFeeCallback);
     }
 
     componentWillUnmount() {

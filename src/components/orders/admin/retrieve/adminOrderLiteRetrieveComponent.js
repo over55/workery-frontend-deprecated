@@ -4,6 +4,15 @@ import { Link } from "react-router-dom";
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
+import {
+    WORK_ORDER_CANCELLED_STATE,
+    WORK_ORDER_COMPLETED_BUT_UNPAID_STATE,
+    WORK_ORDER_COMPLETED_AND_PAID_STATE
+} from "../../../../constants/api";
+import {
+    getWorkOrderStateLabel,
+    getWorkOrderTypeOfLabel
+} from "../../../../constants/labels";
 
 
 export default class AdminOrderLiteRetrieveComponent extends Component {
@@ -12,12 +21,12 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
 
         let isCancelled = false;
         if (order && isEmpty(order) === false) {
-            isCancelled = order.state === "cancelled";
+            isCancelled = order.state === WORK_ORDER_CANCELLED_STATE;
         }
 
         let isCompleted;
         if (order && isEmpty(order) === false) {
-            isCompleted = order.state === "completed_and_unpaid" || order.state === "completed_and_paid" || isCancelled;
+            isCompleted = order.state === WORK_ORDER_COMPLETED_BUT_UNPAID_STATE || order.state === WORK_ORDER_COMPLETED_AND_PAID_STATE || isCancelled;
         }
 
         return (
@@ -91,63 +100,63 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
 
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
-                                {order && order.customerFullName &&
+                                {order && order.customerName &&
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-user-circle"></i>&nbsp;Client
                                         </th>
                                     </tr>
                                 }
-                                {order && order.customerFullName &&
+                                {order && order.customer &&
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
                                         <td>
-                                            <Link to={`/client/${order && order.customer}`} target="_blank">
-                                                {order && order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/client/${order && order.customer.id}`} target="_blank">
+                                                {order && order.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                 }
-                                {order && order.customerFullName && order.customerTelephone &&
+                                {order && order.customer && order.customer.telephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">{order && order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order && order.customerTelephone}</td>
+                                        <th scope="row" className="bg-light">{order && order.customer.telephoneTypeOf} #</th>
+                                        <td><a href={`tel:${order && order.customer.telephone}`}>{order && order.customer.telephone}</a></td>
                                     </tr>
                                 }
-                                {order && order.customerFullName && order.customerOtherTelephone &&
+                                {order && order.customer && order.customer.otherTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Other {order && order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order && order.customerOtherTelephone}</td>
+                                        <th scope="row" className="bg-light">Other {order && order.customer.otherTelephoneTypeOf} #</th>
+                                        <td>{order && order.customer.otherTelephone}</td>
                                     </tr>
                                 }
 
-                                {order && order.associateFullName &&
+                                {order && order.associate &&
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-crown"></i>&nbsp;Associate
                                         </th>
                                     </tr>
                                 }
-                                {order && order.associateFullName && order.associateFullName &&
+                                {order && order.associate && order.associate.id &&
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
                                         <td>
-                                            <Link to={`/associate/${order && order.associate}`} target="_blank">
-                                                {order && order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/associate/${order && order.associate.id}`} target="_blank">
+                                                {order && order.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                 }
-                                {order && order.associateFullName && order.associateTelephone &&
+                                {order && order.associate && order.associate.telephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">{order && order.associatePrettyTelephoneTypeOf} #</th>
-                                        <td>{order && order.associateTelephone}</td>
+                                        <th scope="row" className="bg-light">{order && order.associate.telephoneTypeOf} #</th>
+                                        <td>{order && order.associate.telephone}</td>
                                     </tr>
                                 }
-                                {order && order.associateFullName && order.associateOtherTelephone &&
+                                {order && order.associate && order.associate.otherTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Other {order && order.associatePrettyTelephoneTypeOf} #</th>
-                                        <td>{order && order.associateOtherTelephone}</td>
+                                        <th scope="row" className="bg-light">Other {order && order.associate.otherTelephoneTypeOf} #</th>
+                                        <td>{order && order.associate.otherTelephone}</td>
                                     </tr>
                                 }
                                 <tr className="bg-dark">
@@ -161,11 +170,11 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Status</th>
-                                    <td>{order && order.prettyStatus}</td>
+                                    <td>{order && order.state && getWorkOrderStateLabel(order.state)}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Type</th>
-                                    <td>{order && order.prettyTypeOf}</td>
+                                    <td>{order && order.typeOf && getWorkOrderTypeOfLabel(order.typeOf)}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
@@ -174,16 +183,16 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Skill(s)</th>
                                     <td>
-                                        {order && order.prettySkillSets && order.prettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        {order && order.skillSets && order.skillSets.map(
+                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillsets-${skillSet.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Tags(s)</th>
                                     <td>
-                                        {order && order.prettyTags && order.prettyTags.map(
-                                            (tag) => <TagItem tag={tag} key={`tag-${tag.id}`} />)
+                                        {order && order.tags && order.tags.map(
+                                            (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                                         }
                                     </td>
                                 </tr>
@@ -270,13 +279,12 @@ export default class AdminOrderLiteRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { id, text } = this.props.tag;
+        const { text, id } = this.props.tag;
         return (
             <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }
-
 
 class SkillSetItem extends Component {
     render() {

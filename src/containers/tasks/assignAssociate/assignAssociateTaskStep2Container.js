@@ -53,7 +53,7 @@ class TaskUpdateContainer extends Component {
         const parametersMap2 = new Map();
         parametersMap2.set('task_item', this.state.id);
         parametersMap2.set('o', 'associate_name');
-        this.props.pullActivitySheetList(1, 1000, parametersMap2);
+        this.props.pullActivitySheetList(0, 1000, parametersMap2);
 
         this.props.pullTaskDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }

@@ -96,8 +96,8 @@ class AdminOrderLiteUpdateContainer extends Component {
         // Fetch all our GUI drop-down options which are populated by the API.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap, this.onSuccessfulSkillSetsFetchCallback);
-        this.props.pullTagList(1,1000, parametersMap, this.onSuccessfulTagsFetchCallback);
+        this.props.pullSkillSetList(0, 1000, parametersMap, this.onSuccessfulSkillSetsFetchCallback);
+        this.props.pullTagList(0,1000, parametersMap, this.onSuccessfulTagsFetchCallback);
     }
 
     componentWillUnmount() {

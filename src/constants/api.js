@@ -1083,15 +1083,19 @@ export const WORK_ORDER_POSTPONE_REASON_CHOICES = [
 ];
 
 
-export const WORK_ORDER_NEW_STATE = 'new'
-export const WORK_ORDER_DECLINED_STATE = 'declined'
-export const WORK_ORDER_PENDING_STATE = 'pending'
-export const WORK_ORDER_CANCELLED_STATE = 'cancelled'
-export const WORK_ORDER_ONGOING_STATE = 'ongoing'
-export const WORK_ORDER_IN_PROGRESS_STATE = 'in_progress'
-export const WORK_ORDER_COMPLETED_BUT_UNPAID_STATE = 'completed_and_unpaid'
-export const WORK_ORDER_COMPLETED_AND_PAID_STATE = 'completed_and_paid'
-export const WORK_ORDER_ARCHIVED_STATE = 'archived'
+export const WORK_ORDER_NEW_STATE = 1;
+export const WORK_ORDER_DECLINED_STATE = 2;
+export const WORK_ORDER_PENDING_STATE = 3;
+export const WORK_ORDER_CANCELLED_STATE = 4;
+export const WORK_ORDER_ONGOING_STATE = 5;
+export const WORK_ORDER_IN_PROGRESS_STATE = 6;
+export const WORK_ORDER_COMPLETED_BUT_UNPAID_STATE = 7;
+export const WORK_ORDER_COMPLETED_AND_PAID_STATE = 8;
+export const WORK_ORDER_ARCHIVED_STATE = 0;
+
+export const WORK_ORDER_UNASSIGNED_TYPE_OF = 0;
+export const WORK_ORDER_RESIDENTIAL_TYPE_OF = 1;
+export const WORK_ORDER_COMMERCIAL_TYPE_OF = 2;
 
 
 /**

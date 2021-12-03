@@ -41,7 +41,7 @@ class TagContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullTagList(1, 1000, new Map(), this.onSuccessCallback);
+        this.props.pullTagList(0, 1000, new Map(), this.onSuccessCallback);
     }
 
     componentWillUnmount() {

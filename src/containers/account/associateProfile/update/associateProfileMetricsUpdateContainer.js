@@ -105,8 +105,8 @@ class AssociateProfileMetricsUpdateContainer extends Component {
         // DEVELOPERS NOTE: Fetch our skillset list.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullHowHearList(1,1000, parametersMap, this.onHowHearSuccessFetch);
-        this.props.pullTagList(1, 1000, parametersMap, this.onTagsSuccessFetch);
+        this.props.pullHowHearList(0,1000, parametersMap, this.onHowHearSuccessFetch);
+        this.props.pullTagList(0, 1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {

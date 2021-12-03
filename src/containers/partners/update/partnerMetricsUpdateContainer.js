@@ -173,8 +173,8 @@ class PartnerMetricsUpdateContainer extends Component {
         // Fetch all our GUI drop-down options which are populated by the API.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullHowHearList(1,1000, parametersMap, this.onHowHearSuccessFetch);
-        this.props.pullTagList(1, 1000, parametersMap, this.onTagsSuccessFetch);
+        this.props.pullHowHearList(0,1000, parametersMap, this.onHowHearSuccessFetch);
+        this.props.pullTagList(0, 1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {

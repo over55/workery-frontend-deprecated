@@ -48,7 +48,7 @@ class Report19Container extends Component {
 
         // DEVELOPERS NOTE: Fetch our tags list.
         const filtersMap = new Map();
-        this.props.pullTagList(1, 1000, filtersMap, this.onTagsListCallback);
+        this.props.pullTagList(0, 1000, filtersMap, this.onTagsListCallback);
     }
 
     componentWillUnmount() {

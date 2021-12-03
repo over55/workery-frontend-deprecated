@@ -184,7 +184,7 @@ class AssociateFinancialUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullServiceFeeList(1, 1000, parametersMap);
+        this.props.pullServiceFeeList(0, 1000, parametersMap);
         this.props.pullOrderDetail(this.state.id);
         this.performCalculation();
     }

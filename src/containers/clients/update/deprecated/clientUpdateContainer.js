@@ -170,8 +170,8 @@ class ClientUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
+        this.props.pullHowHearList(0,1000);
+        this.props.pullTagList(0,1000);
     }
 
     componentWillUnmount() {

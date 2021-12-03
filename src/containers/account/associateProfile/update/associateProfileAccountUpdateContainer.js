@@ -173,9 +173,9 @@ class AssociateProfileAccountUpdateContainer extends Component {
         // DEVELOPERS NOTE: Fetch our skillset list.
         const parametersMap = new Map()
         parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap, this.onFetchedSkillSetsCallback);
+        this.props.pullSkillSetList(0, 1000, parametersMap, this.onFetchedSkillSetsCallback);
         this.props.pullInsuranceRequirementList(0, 1000, parametersMap, this.onFetchedInsuranceRequirementsCallback);
-        this.props.pullVehicleTypeList(1, 1000, parametersMap, this.onFetchedVehicleTypesCallback);
+        this.props.pullVehicleTypeList(0, 1000, parametersMap, this.onFetchedVehicleTypesCallback);
     }
 
     componentWillUnmount() {

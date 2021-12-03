@@ -48,7 +48,7 @@ class Report13Container extends Component {
 
         // DEVELOPERS NOTE: Fetch our skillset list.
         const filtersMap = new Map();
-        this.props.pullSkillSetList(1, 1000, filtersMap, this.onSkillSetsListCallback);
+        this.props.pullSkillSetList(0, 1000, filtersMap, this.onSkillSetsListCallback);
     }
 
     componentWillUnmount() {

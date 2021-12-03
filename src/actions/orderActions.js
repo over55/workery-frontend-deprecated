@@ -281,7 +281,7 @@ export function pullOrderDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ORDER_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_ORDER_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -349,7 +349,7 @@ export function pullMyOrderDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_MY_ORDER_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_MY_ORDER_DETAIL_API_ENDPOINT+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;

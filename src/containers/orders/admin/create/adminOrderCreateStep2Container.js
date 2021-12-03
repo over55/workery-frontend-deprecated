@@ -56,7 +56,7 @@ class  AdminOrderCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullClientList(1, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullClientList(0, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
