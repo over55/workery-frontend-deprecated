@@ -49,24 +49,6 @@ class RemoteListComponent extends Component {
             5: 'Follow up was ongoing job updated',
         };
 
-        /*
-        ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID = 1
-        FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID = 2
-        FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID = 3
-        FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID = 4
-        UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID = 5
-
-        TASK_ITEM_TYPE_OF_CHOICES = (
-            (ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID, _('Assign associate')),
-            (FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID, _('Follow up is job complete')),
-            (FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID, _('Follow up customer survey')),
-            (FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up did associate accept job')),
-            (UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up was ongoing job updated')),
-        )
-
-        */
-
-
         const columns = [{
             dataField: 'orderTypeOf',
             text: '',
@@ -96,7 +78,7 @@ class RemoteListComponent extends Component {
             text: 'Associate',
             sort: true,
         },{
-            dataField: 'isClosed',
+            dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
@@ -162,11 +144,11 @@ function dueDateFormatter(cell, row){
 
 
 function statusFormatter(cell, row){
-    switch(row.isClosed) {
-        case false:
+    switch(row.state) {
+        case 1:
             return <i className="fas fa-clock"></i>;
             break;
-        case true:
+        case 2:
             return <i className="fas fa-check-circle"></i>;
             break;
         default:
