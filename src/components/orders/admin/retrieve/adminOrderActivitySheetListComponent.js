@@ -6,7 +6,6 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 import Moment from 'react-moment';
@@ -25,7 +24,7 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             activitySheetItems,
@@ -35,14 +34,15 @@ class RemoteListComponent extends Component {
         } = this.props;
 
         const columns = [{
-            dataField: 'job',
+            dataField: 'orderId',
             text: 'Job #',
             sort: false,
             formatter: jobFormatter,
         },{
             dataField: 'state',
             text: 'Has Accepted?',
-            sort: false
+            sort: false,
+            formatter: stateFormatter,
         },{
             dataField: 'createdAt',
             text: 'Created At',
@@ -59,31 +59,6 @@ class RemoteListComponent extends Component {
             order: 'desc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
-
         return (
             <BootstrapTable
                 bootstrap4
@@ -96,7 +71,6 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no activity sheets at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -107,10 +81,10 @@ class RemoteListComponent extends Component {
 
 
 function jobFormatter(cell, row){
-    if (row.job === null || row.job === undefined || row.job === "None") { return "-"; }
+    if (row.orderId === null || row.orderId === undefined || row.orderId === "None") { return "-"; }
     return (
-        <Link to={`/order/${row.job}`} target="_blank">
-            {row.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+        <Link to={`/order/${row.orderId}`} target="_blank">
+            {row.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
@@ -134,15 +108,15 @@ function iconFormatter(cell, row){
 function orderNameFormatter(cell, row){
     if (row.orderName === null || row.orderName === undefined || row.orderName === "None") { return "-"; }
     return (
-        <Link to={`/order/${row.order}`} target="_blank">
+        <Link to={`/order/${row.orderId}`} target="_blank">
             {row.orderName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
 
 
-function statusFormatter(cell, row){
-    return row.prettyState;
+function stateFormatter(cell, row){
+    return row.state === 1 ? "Accepted" : "Declined";
 }
 
 function createdAtFormatter(cell, row){
@@ -154,7 +128,7 @@ export default class AdminOrderActivitySheetListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             activitySheetItems,
@@ -170,10 +144,10 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
-                        <li className="breadcrumb-item" aria-current="page">
+                        <li className="breadcrumb-item" aria-current="offset">
                             <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
+                        <li className="breadcrumb-item active" aria-current="offset">
                             <i className="fas fa-wrench"></i>&nbsp;Order # {order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
@@ -230,8 +204,8 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                         </h2>
                         {isEmpty(order)===false &&
                             <RemoteListComponent
-                                page={page}
-                                sizePerPage={sizePerPage}
+                                offset={offset}
+                                limit={limit}
                                 totalSize={totalSize}
                                 activitySheetItems={activitySheetItems}
                                 onTableChange={onTableChange}

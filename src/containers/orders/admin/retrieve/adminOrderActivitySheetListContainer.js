@@ -17,11 +17,11 @@ class OrderActivitySheetListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("job", id);
+        parametersMap.set("orderId", id);
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
@@ -44,11 +44,11 @@ class OrderActivitySheetListContainer extends Component {
      */
 
     componentDidMount() {
-        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        window.scrollTo(0, 0);  // Start the offset at the top of the page.
 
         this.props.pullActivitySheetList(
-            this.state.page,
-            this.state.sizePerPage,
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessfulSubmissionCallback,
             this.onFailedSubmissionCallback
@@ -77,7 +77,7 @@ class OrderActivitySheetListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -102,7 +102,7 @@ class OrderActivitySheetListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortActivitySheet, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortActivitySheet, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -121,17 +121,17 @@ class OrderActivitySheetListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullActivitySheetList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullActivitySheetList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullActivitySheetList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullActivitySheetList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -148,7 +148,7 @@ class OrderActivitySheetListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullActivitySheetList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullActivitySheetList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -162,13 +162,13 @@ class OrderActivitySheetListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, id } = this.state;
+        const { offset, limit, totalSize, isLoading, id } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
         return (
             <AdminOrderActivitySheetListComponent
-                page={page}
-                sizePerPage={sizePerPage}
+                offset={offset}
+                limit={limit}
                 totalSize={totalSize}
                 activitySheetItems={activitySheetItems}
                 onTableChange={this.onTableChange}
@@ -195,9 +195,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullActivitySheetList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullActivitySheetList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullActivitySheetList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullActivitySheetList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
