@@ -18,7 +18,7 @@ class OrderTaskListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("job", id);
+        parametersMap.set("orderId", id);
         parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `AssociateListComponent`.
         parametersMap.set("sort_field", "id");
         this.state = {
