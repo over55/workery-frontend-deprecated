@@ -46,7 +46,7 @@ export default class AdminOrderFileUploadAddComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Order</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{order && order.name}</h1>
 
                 {order.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

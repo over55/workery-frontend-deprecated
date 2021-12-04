@@ -5,10 +5,10 @@ import Scroll from 'react-scroll';
 
 import AdminOrderFileUploadArchiveComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadArchiveComponent";
 import { setFlashMessage } from "../../../../../actions/flashMessageActions";
-import { deleteOrderFileUpload } from "../../../../../actions/orderFileUploadActions";
+import { deletePrivateFileDetail } from "../../../../../actions/privateFileActions";
 
 
-class OrderFileUploadArchiveContainer extends Component {
+class AdminOrderFileUploadArchiveContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -88,7 +88,7 @@ class OrderFileUploadArchiveContainer extends Component {
     onClick(e) {
         e.preventDefault();
         this.setState({ isLoading: true }, ()=>{
-            this.props.deleteOrderFileUpload(this.state.fileId, this.onSuccessCallback, this.onFailureCallback);
+            this.props.deletePrivateFileDetail(this.state.fileId, this.onSuccessCallback, this.onFailureCallback);
         });
     }
 
@@ -98,15 +98,13 @@ class OrderFileUploadArchiveContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, errors } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
             <AdminOrderFileUploadArchiveComponent
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 order={order}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
             />
         );
     }
@@ -124,8 +122,8 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        deleteOrderFileUpload: (id, onSuccessCallback, onFailureCallback) => {
-            dispatch(deleteOrderFileUpload(id, onSuccessCallback, onFailureCallback))
+        deletePrivateFileDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(deletePrivateFileDetail(id, onSuccessCallback, onFailureCallback))
         },
     }
 }
@@ -134,4 +132,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderFileUploadArchiveContainer);
+)(AdminOrderFileUploadArchiveContainer);

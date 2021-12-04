@@ -28,16 +28,16 @@ export default class AdminOrderFileUploadArchiveComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
-                        <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
+                        <li className="breadcrumb-item" aria-current="offset">
+                            <Link to={`/orders`}><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{order && order.fullName}
+                        <li className="breadcrumb-item active" aria-current="offset">
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Order</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{order && order.name}</h1>
 
                 {order.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

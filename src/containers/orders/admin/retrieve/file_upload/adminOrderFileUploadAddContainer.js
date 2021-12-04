@@ -4,8 +4,9 @@ import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
 import AdminOrderFileUploadAddComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadAddComponent";
-import { postOrderFileUpload } from "../../../../../actions/orderFileUploadActions";
-import { clearFlashMessage, setFlashMessage } from "../../../../../actions/flashMessageActions";
+import { setFlashMessage } from "../../../../../actions/flashMessageActions";
+import { postPrivateFileDetail } from "../../../../../actions/privateFileActions";
+import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../../validators/fileValidator"
 import { getTagReactSelectOptions, pullTagList } from "../../../../../actions/tagActions";
 
@@ -29,7 +30,7 @@ class AdminOrderFileUploadAddContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            work_order: id,
+            orderId: id,
             file: null,
             id: id,
             text: "",
@@ -64,6 +65,8 @@ class AdminOrderFileUploadAddContainer extends Component {
             idTags.push(tag.value);
         }
         postData.tags = idTags;
+        postData.workOrderId = parseInt(this.state.orderId)
+        postData.orderId = parseInt(this.state.orderId)
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -185,7 +188,7 @@ class AdminOrderFileUploadAddContainer extends Component {
 
             // Once our state has been validated `order-side` then we will
             // make an API request with the server to create our new production.
-            this.props.postOrderFileUpload(
+            this.props.postPrivateFileDetail(
                 this.getPostData(),
                 this.onSuccessPostCallback,
                 this.onFailurePostCallback
@@ -269,30 +272,17 @@ class AdminOrderFileUploadAddContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, title, description, tags, isTagSetsLoading, is_archived, errors, file } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         const orderFiles = this.props.orderFileList ? this.props.orderFileList.results : [];
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         return (
             <AdminOrderFileUploadAddComponent
-                id={id}
-                title={title}
-                description={description}
-                tags={tags}
+                {...this}
+                {...this.state}
+                {...this.props}
                 tagOptions={tagOptions}
-                is_archived={is_archived}
                 order={order}
                 orderFiles={orderFiles}
-                flashMessage={this.props.flashMessage}
-                onTextChange={this.onTextChange}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
-                file={file}
-                onFileDrop={this.onFileDrop}
-                onRemoveFileUploadClick={this.onRemoveFileUploadClick}
-                onMultiChange={this.onMultiChange}
-                isTagSetsLoading={isTagSetsLoading}
             />
         );
     }
@@ -316,8 +306,8 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        postOrderFileUpload: (postData, successCallback, failedCallback) => {
-            dispatch(postOrderFileUpload(postData, successCallback, failedCallback))
+        postPrivateFileDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPrivateFileDetail(postData, successCallback, failedCallback))
         },
         pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
