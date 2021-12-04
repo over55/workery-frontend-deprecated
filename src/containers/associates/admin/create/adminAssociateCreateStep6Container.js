@@ -88,8 +88,8 @@ class AdminAssociateCreateStep6Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
         this.props.pullSkillSetList(0, 1000, parametersMap, this.onSkillSetSuccessFetch);
         this.props.pullInsuranceRequirementList(0, 1000, parametersMap, this.onInsuranceRequirementsSuccessFetch);
         this.props.pullVehicleTypeList(0, 1000, parametersMap, this.onVehicleTypesSuccessFetch);

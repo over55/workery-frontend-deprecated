@@ -125,8 +125,8 @@ class AdminAssociateMetricsUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
         this.props.pullHowHearList(0,1000, parametersMap, this.onHowHearSuccessFetch);
         this.props.pullTagList(0, 1000, parametersMap, this.onTagsSuccessFetch);
     }

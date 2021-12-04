@@ -77,8 +77,8 @@ class PartnerCreateStep5Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
         this.props.pullHowHearList(0,1000, parametersMap, this.onHowHearSuccessFetch);
         this.props.pullTagList(0,1000, parametersMap, this.onTagsSuccessFetch);
     }

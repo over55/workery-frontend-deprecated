@@ -68,8 +68,6 @@ class AdminOrderLiteUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.isHomeSupportService = this.state.homeSupport;
-
         if (this.state.assignmentDate instanceof Date) {
             const assignmentDateMoment = moment(this.state.assignmentDate);
             postData.assignmentDate = assignmentDateMoment.format("YYYY-MM-DD")
@@ -79,6 +77,25 @@ class AdminOrderLiteUpdateContainer extends Component {
             const completionDateMoment = moment(this.state.completionDate);
             postData.completionDate = completionDateMoment.format("YYYY-MM-DD")
         }
+
+        // Boolean handler.
+        postData.isHomeSupportService = parseInt(this.state.homeSupport) === 1 ? true : false;
+
+        //
+        // Generate our PKs.
+        //
+
+        let ssPKs = [];
+        for (let ss of this.state.skillSets) {
+            ssPKs.push(ss.skillSetId);
+        }
+        postData.skillSets = ssPKs;
+
+        let tagPKs = [];
+        for (let t of this.state.tags) {
+            tagPKs.push(t.tagId);
+        }
+        postData.tags = tagPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -94,10 +111,10 @@ class AdminOrderLiteUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(0, 1000, parametersMap, this.onSuccessfulSkillSetsFetchCallback);
-        this.props.pullTagList(0,1000, parametersMap, this.onSuccessfulTagsFetchCallback);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullSkillSetList(0, 10000, parametersMap, this.onSuccessfulSkillSetsFetchCallback);
+        this.props.pullTagList(0,10000, parametersMap, this.onSuccessfulTagsFetchCallback);
     }
 
     componentWillUnmount() {
@@ -240,9 +257,7 @@ class AdminOrderLiteUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            id, errors, description, isLoading, isTagsLoading, tags, isSkillSetsLoading, skillSets, assignmentDate, completionDate, homeSupport
-        } = this.state;
+        const { tags, skillSets } = this.state;
 
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
@@ -250,34 +265,17 @@ class AdminOrderLiteUpdateContainer extends Component {
         const skillSetOptions = getSkillSetReactSelectOptions(this.props.skillSetList);
         const transcodedSkillSets = getPickedSkillSetReactSelectOptions(skillSets, this.props.skillSetList)
 
+        console.log(transcodedSkillSets);
+
         return (
             <OrderLiteUpdateComponent
-                id={id}
-                isLoading={isLoading}
-                errors={errors}
-                description={description}
-                onTextChange={this.onTextChange}
-
-                isTagsLoading={isTagsLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 tags={transcodedTags}
                 tagOptions={tagOptions}
-                onTagMultiChange={this.onTagMultiChange}
-
-                isSkillSetsLoading={isSkillSetsLoading}
                 skillSets={transcodedSkillSets}
                 skillSetOptions={skillSetOptions}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-
-                onAssignmentDateChange={this.onAssignmentDateChange}
-                assignmentDate={assignmentDate}
-                onCompletionDateChange={this.onCompletionDateChange}
-                completionDate={completionDate}
-
-                onRadioChange={this.onRadioChange}
-                homeSupport={homeSupport}
-
-                onClick={this.onClick}
-                user={this.props.user}
             />
         );
     }
