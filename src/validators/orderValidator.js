@@ -85,10 +85,11 @@ export function validateFinancialUpdateInput(data) {
 
 export function validateStep1CreateInput(data) {
     let errors = {};
+    console.log(data);
 
     var missingCount = 0;
 
-    if (data.firstName === undefined || data.firstName === null || data.firstName === "") {
+    if (data.givenName === undefined || data.givenName === null || data.givenName === "") {
         missingCount++;
     }
     if (data.lastName === undefined || data.skillSets === null || data.lastName === "" || isEmpty(data.lastName) ) {
@@ -393,7 +394,7 @@ export function validateSearchInput(data) {
         }
     } else {
         let hasEmptyField = 0;
-        if (data.firstName === undefined || data.firstName === null || data.firstName === "") {
+        if (data.givenName === undefined || data.givenName === null || data.givenName === "") {
             hasEmptyField += 1;
         }
         if (data.lastName === undefined || data.lastName === null || data.lastName === "") {
@@ -407,10 +408,11 @@ export function validateSearchInput(data) {
         }
 
         if (hasEmptyField === 4) {
-            // errors.firstName = '';
+            // errors.givenName = '';
             // errors.lastName = '';
             // errors.phone = '';
             // errors.email = '';
+            console.log("data:", data);
             errors.MinimumOneFieldRequired = "Please input at leaset one field from the advanced section before submitting.";
         }
     }

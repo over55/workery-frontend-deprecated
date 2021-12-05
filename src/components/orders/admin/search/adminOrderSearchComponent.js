@@ -94,7 +94,7 @@ class AdminOrderSearchComponent extends Component {
                                     inputClassName="form-control form-control-lg"
                                     borderColour="border-primary"
                                     error={errors.givenName}
-                                    label="First Name"
+                                    label="Given Name"
                                     onChange={onTextChange}
                                     value={givenName}
                                     name="givenName"

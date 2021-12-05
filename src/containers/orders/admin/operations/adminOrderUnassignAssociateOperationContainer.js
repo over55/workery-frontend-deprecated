@@ -44,13 +44,11 @@ class AdminOrderUnassignAssociateOperationContainer extends Component {
      *  items under different key names to support our API web-service's API.
      */
     getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.job = this.state.id;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
+        const { id, reason } = this.state;
+        return {
+            workOrderId: id,
+            reason: reason,
+        }
     }
 
     /**
@@ -141,15 +139,11 @@ class AdminOrderUnassignAssociateOperationContainer extends Component {
      */
 
     render() {
-        const { errors, id, reason } = this.state;
-
         return (
             <AdminOrderUnassignAssociateOperationComponent
-                reason={reason}
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

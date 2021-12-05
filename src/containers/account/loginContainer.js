@@ -143,16 +143,11 @@ class LoginContainer extends Component {
      */
 
     render() {
-        const { email, password, errors, isLoading } = this.state;
         return (
             <LoginComponent
-                email={email}
-                password={password}
-                errors={errors}
-                isLoading={isLoading}
-                onChange={this.onChange}
-                onSubmit={this.onSubmit}
-                flashMessage={this.props.flashMessage}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

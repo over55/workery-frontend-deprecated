@@ -10,7 +10,7 @@ import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneIn
 
 export default class AdminOrderCreateStep1Component extends Component {
     render() {
-        const { firstName, lastName, email, phone, errors, onTextChange, isLoading, onClick } = this.props;
+        const { givenName, lastName, email, phone, errors, onTextChange, isLoading, onClick } = this.props;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -61,11 +61,11 @@ export default class AdminOrderCreateStep1Component extends Component {
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.firstName}
-                                label="First Name"
+                                error={errors.givenName}
+                                label="Given Name"
                                 onChange={onTextChange}
-                                value={firstName}
-                                name="firstName"
+                                value={givenName}
+                                name="givenName"
                                 type="text"
                             />
 

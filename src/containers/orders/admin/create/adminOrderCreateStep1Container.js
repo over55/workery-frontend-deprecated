@@ -14,7 +14,7 @@ class  AdminOrderCreateStep1Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-order-firstName"),
+            givenName: localStorage.getItem("workery-create-order-givenName"),
             lastName: localStorage.getItem("workery-create-order-lastName"),
             email: localStorage.getItem("workery-create-order-email"),
             phone: localStorage.getItem("workery-create-order-phone"),
@@ -97,16 +97,11 @@ class  AdminOrderCreateStep1Container extends Component {
      */
 
     render() {
-        const { firstName, lastName, email, phone, errors } = this.state;
         return (
             < AdminOrderCreateStep1Component
-                firstName={firstName}
-                lastName={lastName}
-                email={email}
-                phone={phone}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
