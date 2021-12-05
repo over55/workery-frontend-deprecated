@@ -25,12 +25,21 @@ class AdminOrderLiteUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        console.log("COMP", this.props.orderDetail.completionDate);
+
         // Get our dates based on our browsers timezone.
         // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
-        var assignmentDate = new Date(this.props.orderDetail.assignmentDate);
-        assignmentDate.setMinutes( assignmentDate.getMinutes() + assignmentDate.getTimezoneOffset() );
-        var completionDate = new Date(this.props.orderDetail.completionDate);
-        completionDate.setMinutes( completionDate.getMinutes() + completionDate.getTimezoneOffset() );
+        var assignmentDate = this.props.orderDetail.assignmentDate
+        if (assignmentDate !== null) {
+            var assignmentDate = new Date(assignmentDate);
+            assignmentDate.setMinutes( assignmentDate.getMinutes() + assignmentDate.getTimezoneOffset() );
+        }
+
+        var completionDate = this.props.orderDetail.completionDate;
+        if (completionDate !== null) {
+            completionDate = new Date(completionDate);
+            completionDate.setMinutes( completionDate.getMinutes() + completionDate.getTimezoneOffset() );
+        }
 
         this.state = {
             errors: {},
@@ -42,8 +51,8 @@ class AdminOrderLiteUpdateContainer extends Component {
             homeSupport: this.props.orderDetail.isHomeSupportService ? 1 : 0,
             tags: this.props.orderDetail.tags,
             isTagsLoading: true,
-            assignmentDate: this.props.orderDetail.assignmentDate ? assignmentDate : null,
-            completionDate: this.props.orderDetail.completionDate ? completionDate : null,
+            assignmentDate: assignmentDate,
+            completionDate: completionDate,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -68,12 +77,12 @@ class AdminOrderLiteUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        if (this.state.assignmentDate instanceof Date) {
+        if (this.state.assignmentDate !== null && this.state.assignmentDate instanceof Date) {
             const assignmentDateMoment = moment(this.state.assignmentDate);
             postData.assignmentDate = assignmentDateMoment.format("YYYY-MM-DD")
         }
 
-        if (this.state.completionDate instanceof Date) {
+        if (this.state.completionDate !== null && this.state.completionDate instanceof Date) {
             const completionDateMoment = moment(this.state.completionDate);
             postData.completionDate = completionDateMoment.format("YYYY-MM-DD")
         }
