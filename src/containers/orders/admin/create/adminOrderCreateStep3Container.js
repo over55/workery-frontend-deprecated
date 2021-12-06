@@ -120,16 +120,11 @@ class  AdminOrderCreateStep3Container extends Component {
      */
 
     render() {
-        const { startDate, jobType, homeSupport, errors } = this.state;
         return (
             < AdminOrderCreateStep3Component
-                startDate={startDate}
-                onStartDateChange={this.onStartDateChange}
-                jobType={jobType}
-                homeSupport={homeSupport}
-                onRadioChange={this.onRadioChange}
-                errors={errors}
-                onNextClick={this.onNextClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

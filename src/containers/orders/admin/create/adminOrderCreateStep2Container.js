@@ -150,23 +150,13 @@ class  AdminOrderCreateStep2Container extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
         const clients = (this.props.clientList && this.props.clientList.results) ? this.props.clientList.results : [];
-        const hasNext = this.props.clientList.next !== null;
-        const hasPrevious = this.props.clientList.previous !== null;
         return (
             < AdminOrderCreateStep2Component
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
+                {...this}
+                {...this.state}
+                {...this.props}
                 clients={clients}
-                isLoading={isLoading}
-                errors={errors}
-                onClientClick={this.onClientClick}
-                hasNext={hasNext}
-                onNextClick={this.onNextClick}
-                hasPrevious={hasPrevious}
-                onPreviousClick={this.onPreviousClick}
             />
         );
     }
