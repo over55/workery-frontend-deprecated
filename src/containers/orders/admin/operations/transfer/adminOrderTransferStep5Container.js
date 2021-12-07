@@ -49,14 +49,12 @@ class AdminOrderTransferStep5Container extends Component {
      *  items under different key names to support our API web-service's API.
      */
     getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.job = this.state.id;
-        postData.customer = this.state.client;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
+        return {
+            workOrderId: parseInt(this.state.id),
+            customerId: parseInt(this.state.client),
+            associateId: parseInt(this.state.associate),
+            reason: this.state.reason,
+        }
     }
 
     /**
