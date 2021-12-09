@@ -52,8 +52,8 @@ class AdminOrderPostponeOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.job = this.state.id;
-        postData.additionalComment = this.state.comment;
+        postData.workOrderId = parseInt(this.state.id);
+        postData.comment = this.state.comment;
 
         const startDateMoment = moment(this.state.startDate);
         postData.startDate = startDateMoment.format("YYYY-MM-DD")
