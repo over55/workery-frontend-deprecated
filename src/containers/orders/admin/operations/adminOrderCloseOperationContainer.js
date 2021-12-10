@@ -72,6 +72,8 @@ class AdminOrderCloseOperationContainer extends Component {
             postData.reason = 1;
         }
 
+        postData.wasSuccessfullyFinished = parseInt(this.state.wasSuccessfullyFinished) === 1 ? true : false;
+
         // Finally: Return our new modified data.
         console.log("state |", this.state);
         console.log("getPostData |", postData);
