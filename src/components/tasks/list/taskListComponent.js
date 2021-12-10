@@ -122,11 +122,11 @@ class RemoteListComponent extends Component {
 
 
 function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case COMMERCIAL_CUSTOMER_TYPE_OF_ID:
+    switch(row.orderTypeOf) {
+        case 2:
             return <i className="fas fa-building"></i>;
             break;
-        case RESIDENTIAL_CUSTOMER_TYPE_OF_ID:
+        case 1:
             return <i className="fas fa-home"></i>;
             break;
         default:
@@ -183,7 +183,7 @@ function associateFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/task/${row.id}`}>
+        <Link to={`/task/${row.typeOf}/${row.id}/step-1`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )

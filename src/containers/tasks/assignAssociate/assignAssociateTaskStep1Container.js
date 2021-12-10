@@ -86,10 +86,9 @@ class AssignAssociateTaskStep1Container extends Component {
     render() {
         return (
             <AssignAssociateTaskStep1Component
-                id={this.state.id}
-                task={this.props.taskDetail}
-                onBack={this.onBack}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
