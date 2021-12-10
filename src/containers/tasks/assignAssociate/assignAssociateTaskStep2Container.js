@@ -45,6 +45,8 @@ class TaskUpdateContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
+        //TODO: FIGURE OUT HOW TO APPLY THIS LOGIC.
+
         const parametersMap = new Map();
         parametersMap.set('available_for_task_item', this.state.id);
         parametersMap.set('o', 'last_name');
@@ -108,18 +110,15 @@ class TaskUpdateContainer extends Component {
      */
 
     render() {
-        const { isLoading, errors, id, } = this.state;
         const associates = this.props.associateList ? this.props.associateList.results : [];
         const activitySheetItems = this.props.activitySheetItemList ? this.props.activitySheetItemList.results : [];
         return (
             <AssignAssociateTaskStep2Component
+                {...this}
+                {...this.state}
+                {...this.props}
                 associates={associates}
                 activitySheetItems={activitySheetItems}
-                task={this.props.taskDetail}
-                id={id}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
             />
         );
     }
