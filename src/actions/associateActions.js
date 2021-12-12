@@ -509,21 +509,27 @@ export function putAssociateMetricsDetail(data, successCallback, failedCallback)
 ////////////////////////////////////////////////////////////////////////////////
 
 
-export function pullTaskItemAvailableAssociateList(taskItemId, onSuccessCallback=null, onFailureCallback=null) {
+export function pullTaskItemAvailableAssociateList(offset=0, limit=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
             setAssociateListRequest()
         );
 
-        console.log(taskItemId, onSuccessCallback, onFailureCallback);
+        console.log(offset, limit, filtersMap, onSuccessCallback, onFailureCallback);
 
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT.replace("XXX", taskItemId);
+        let aURL = WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT+"?offset="+offset+"&offset_size="+limit;
+        filtersMap.forEach(
+            (value, key) => {
+                let decamelizedkey = decamelize(key)
+                aURL += "&"+decamelizedkey+"="+value;
+            }
+        )
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
@@ -536,6 +542,7 @@ export function pullTaskItemAvailableAssociateList(taskItemId, onSuccessCallback
             // Extra.
             data['isAPIRequestRunning'] = false;
             data['errors'] = {};
+            data['offset'] = offset;
 
             // console.log(data); // For debugging purposes.
 
@@ -554,6 +561,7 @@ export function pullTaskItemAvailableAssociateList(taskItemId, onSuccessCallback
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
+                // Decode our MessagePack (Buffer) into JS Object.
                 const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);

@@ -22,15 +22,15 @@ export default class AssignAssociateTaskStep1Component extends Component {
         const insuredAssociates = [];
         const uninsuredAssociates = [];
 
-        // if (isEmpty(associates) === false) { // Defensive Code.
-        //     for (associate of associates) {
-        //         if (associate.wsibNumber !== undefined && associate.wsibNumber !== null && associate.wsibNumber !== "") {
-        //             insuredAssociates.push(associate);
-        //         } else {
-        //             uninsuredAssociates.push(associate)
-        //         }
-        //     }
-        // }
+        if (isEmpty(associates) === false) { // Defensive Code.
+            for (let associateItem of associates) {
+                if (associateItem.wsibNumber !== undefined && associateItem.wsibNumber !== null && associateItem.wsibNumber !== "") {
+                    insuredAssociates.push(associateItem);
+                } else {
+                    uninsuredAssociates.push(associateItem)
+                }
+            }
+        }
 
         return (
             <main id="main" role="main">
@@ -253,21 +253,21 @@ class SkillSetItem extends Component {
 
 class ActivitySheetItem extends Component {
     render() {
-        const { associate, associateFullName, associateTelephone, associateE164Telephone, associateEmail, prettyState, comment } = this.props.activitySheetItem;
+        const { associate, associateName, associateTelephone, associateE164Telephone, associateEmail, state, comment } = this.props.activitySheetItem;
         const { onClick } = this.props;
         return (
             <tr>
                 <td>
-                    <Link to={`/associate/${associate}`} target="_blank">{associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                    <Link to={`/associate/${associate}`} target="_blank">{associateName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
                 </td>
                 <td>
-                    {prettyState}
+                    <ActivitySheetItemStatusFormatter state={state} />
                 </td>
                 <td>
                     {comment}
                 </td>
                 <td>
-                    <Link onClick={ (event)=>{ onClick(event, associate, associateFullName) } }>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, associate, associateName) } }>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
@@ -281,7 +281,9 @@ class ActivitySheetItem extends Component {
 
 class InsuredAssociateItem extends Component {
     render() {
-        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, prettyTags } = this.props.associate;
+        const {
+            id, typeOf, name, telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, tags
+        } = this.props.associate;
         const { onClick } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
@@ -293,10 +295,10 @@ class InsuredAssociateItem extends Component {
                     }
                 </td>
                 <td>
-                    <Link to={`/associate/${id}`} target="_blank">{fullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                    <Link to={`/associate/${id}`} target="_blank">{name}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
                 </td>
                 <td>
-                    <a href={`tel:${e164Telephone}`}>{telephone}</a>
+                    <a href={`tel:${telephone}`}>{telephone}</a>
                 </td>
                 <td>
                     <a href={`mailto:${email}`}>{email}</a>
@@ -318,14 +320,14 @@ class InsuredAssociateItem extends Component {
                     {past30DaysActivitySheetCount}
                 </td>
                 <td>
-                    {isEmpty(prettyTags)
+                    {isEmpty(tags)
                         ? "-"
-                        : prettyTags.map(
+                        : tags.map(
                         (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                     }
                 </td>
                 <td>
-                    <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, id, name) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
@@ -336,7 +338,7 @@ class InsuredAssociateItem extends Component {
 
 class UninsuredAssociateItem extends Component {
     render() {
-        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, prettyTags } = this.props.associate;
+        const { id, typeOf, name, telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, tags } = this.props.associate;
         const { onClick } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
@@ -348,10 +350,10 @@ class UninsuredAssociateItem extends Component {
                     }
                 </td>
                 <td>
-                    <Link to={`/associate/${id}`} target="_blank">{fullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                    <Link to={`/associate/${id}`} target="_blank">{name}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
                 </td>
                 <td>
-                    <a href={`tel:${e164Telephone}`}>{telephone}</a>
+                    <a href={`tel:${telephone}`}>{telephone}</a>
                 </td>
                 <td>
                     <a href={`mailto:${email}`}>{email}</a>
@@ -370,15 +372,15 @@ class UninsuredAssociateItem extends Component {
                     {past30DaysActivitySheetCount}
                 </td>
                 <td>
-                    {isEmpty(prettyTags)
+                    {isEmpty(tags)
                         ? "-"
-                        : prettyTags.map(
+                        : tags.map(
                             (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>
                         )
                     }
                 </td>
                 <td>
-                    <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, id, name) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
@@ -393,4 +395,18 @@ class TagItem extends Component {
             <span className="badge badge-danger badge-lg" value={id}>{text}</span>
         );
     };
+}
+
+function ActivitySheetItemStatusFormatter(props){
+    switch(props.state) {
+        case 1:
+            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
+            break;
+        case 0:
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
+            break;
+        default:
+        return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
+            break;
+    }
 }

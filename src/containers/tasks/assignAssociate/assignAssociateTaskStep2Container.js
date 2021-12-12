@@ -48,12 +48,13 @@ class TaskUpdateContainer extends Component {
         //TODO: FIGURE OUT HOW TO APPLY THIS LOGIC.
 
         const parametersMap = new Map();
-        parametersMap.set('available_for_task_item', this.state.id);
-        parametersMap.set('o', 'last_name');
-        this.props.pullTaskItemAvailableAssociateList(this.state.id);
+        parametersMap.set('task_item_id', this.state.id);
+        parametersMap.set('sort_order', 'asc');
+        parametersMap.set('sort_field', 'last_name');
+        this.props.pullTaskItemAvailableAssociateList(0, 100000, parametersMap);
 
         const parametersMap2 = new Map();
-        parametersMap2.set('task_item', this.state.id);
+        parametersMap2.set('task_item_id', this.state.id);
         parametersMap2.set('o', 'associate_name');
         this.props.pullActivitySheetList(0, 1000, parametersMap2);
 
