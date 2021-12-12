@@ -317,7 +317,7 @@ class InsuredAssociateItem extends Component {
                     />
                 </td>
                 <td>
-                    {past30DaysActivitySheetCount}
+                    {past30DaysActivitySheetCount === undefined ? 0 : past30DaysActivitySheetCount}
                 </td>
                 <td>
                     {isEmpty(tags)
@@ -369,7 +369,7 @@ class UninsuredAssociateItem extends Component {
                     />
                 </td>
                 <td>
-                    {past30DaysActivitySheetCount}
+                    {past30DaysActivitySheetCount === undefined ? 0 : past30DaysActivitySheetCount}
                 </td>
                 <td>
                     {isEmpty(tags)
