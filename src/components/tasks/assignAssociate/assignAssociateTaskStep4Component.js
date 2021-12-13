@@ -43,8 +43,8 @@ export default class AssignAssociateTaskStep4Component extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Client Name</th>
                                         <td>
-                                            <Link to={`/client/${task.jobCustomer}`} target="_blank">
-                                                {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/client/${task.customerId}`} target="_blank">
+                                                {task && task.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
