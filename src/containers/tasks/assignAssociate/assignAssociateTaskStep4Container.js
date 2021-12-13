@@ -45,13 +45,12 @@ class AssignAssociateTaskStep4Container extends Component {
      *  items under different key names to support our API web-service's API.
      */
     getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.task_item = this.state.id;
-        postData.state = this.state.status;
-        postData.associate = this.state.associateId;
-
-        // Finally: Return our new modified data.
+        const postData = {
+            taskItemId: parseInt(this.state.id),
+            state: parseInt(this.state.status),
+            status: this.state.status,
+            associateId: parseInt(this.state.associateId),
+        };
         console.log("getPostData |", postData);
         return postData;
     }
