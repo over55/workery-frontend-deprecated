@@ -50,6 +50,7 @@ class AssignAssociateTaskStep4Container extends Component {
             state: parseInt(this.state.status),
             status: this.state.status,
             associateId: parseInt(this.state.associateId),
+            comment: this.state.comment,
         };
         console.log("getPostData |", postData);
         return postData;
@@ -82,7 +83,7 @@ class AssignAssociateTaskStep4Container extends Component {
     onSuccessCallback(profile) {
         localStorageRemoveItemsContaining("workery-task-1-");
         this.props.setFlashMessage("success", "Assign associate task has been successfully closed.");
-        this.props.history.push("/order/"+this.props.taskDetail.job);
+        this.props.history.push("/order/"+this.props.taskDetail.orderId);
     }
 
     onFailureCallback(errors) {

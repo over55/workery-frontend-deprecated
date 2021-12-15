@@ -55,7 +55,7 @@ class AssignAssociateTaskStep3Container extends Component {
         let postData = Object.assign({}, this.state);
 
         postData.task_item = this.state.id;
-        postData.state = this.state.status;
+        postData.state = parseInt(this.state.status);
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
