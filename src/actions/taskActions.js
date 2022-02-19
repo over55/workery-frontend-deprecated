@@ -380,9 +380,12 @@ export function postTaskOrderCompletionDetail(postData, successCallback, failedC
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
+        console.log("postTaskOrderCompletionDetail | decamelizedData:", decamelizedData);
+
         // Perform our API submission.
         customAxios.post(WORKERY_TASK_ORDER_COMPLETION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
+            console.log("postTaskOrderCompletionDetail | responseData:", responseData);
 
             let device = camelizeKeys(responseData);
 
@@ -404,7 +407,7 @@ export function postTaskOrderCompletionDetail(postData, successCallback, failedC
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("postTaskDetail | error:", errors); // For debuggin purposes only.
+                console.log("postTaskOrderCompletionDetail | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(

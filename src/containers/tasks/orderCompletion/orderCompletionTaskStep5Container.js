@@ -89,11 +89,14 @@ class OrderCompletionTaskStep5Container extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.task_item = this.state.id;
+        postData.taskItemId = parseInt(this.state.id);
 
         if (isNaN(this.state.reason)) {
             postData.reason = 1;
         }
+
+        postData.wasCompleted = this.state.wasCompleted === "true" ? true : false;
+        postData.hasInputtedFinancials = this.state.hasInputtedFinancials === "true" ? true : false;
 
         if (this.state.completionDate !== undefined && this.state.completionDate !== null) {
             const completionDateMoment = moment(this.state.completionDate);
@@ -140,7 +143,7 @@ class OrderCompletionTaskStep5Container extends Component {
     onSuccessCallback(profile) {
         localStorageRemoveItemsContaining("workery-task-6-");
         this.props.setFlashMessage("success", "Job completion task has been successfully closed.");
-        this.props.history.push("/order/"+this.props.taskDetail.job);
+        this.props.history.push("/order/"+this.props.taskDetail.orderId);
     }
 
     onFailureCallback(errors) {
@@ -159,7 +162,7 @@ class OrderCompletionTaskStep5Container extends Component {
         if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
             if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
-                this.props.history.push("/order/"+this.props.taskDetail.job);
+                this.props.history.push("/order/"+this.props.taskDetail.orderId);
             }
         }
     }

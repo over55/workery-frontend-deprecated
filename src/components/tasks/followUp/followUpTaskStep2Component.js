@@ -24,12 +24,12 @@ export default class FollowUpTaskStep2Component extends Component {
                             <Link to={`/tasks`}><i className="fas fa-tasks"></i>&nbsp;Tasks</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - 48 Hour Follow Up</h1>
+                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - 48 Hour Follow Up</h1>
 
                 {task && task.associateAwayLog !== undefined && task.associateAwayLog !== null &&
                     <div className="alert alert-warning" role="alert">

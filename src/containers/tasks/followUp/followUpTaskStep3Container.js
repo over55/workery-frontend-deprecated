@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from "lodash/isEmpty";
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
@@ -8,7 +9,7 @@ import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { validateTask2Step2Input } from "../../../validators/taskValidator";
 import { postTaskFollowUpDetail } from "../../../actions/taskActions";
-import { localStorageGetIntegerItem, localStorageRemoveItemsContaining, localStorageGetDateItem } from '../../../helpers/localStorageUtility';
+import { localStorageGetObjectItem, localStorageRemoveItemsContaining, localStorageGetDateItem } from '../../../helpers/localStorageUtility';
 
 
 class FollowUpTaskStep3Container extends Component {
@@ -33,7 +34,7 @@ class FollowUpTaskStep3Container extends Component {
             status: localStorage.getItem("workery-task-2-status"),
             meetingDate: localStorageGetDateItem("workery-task-2-meetingDate"),
             comment: localStorage.getItem("workery-task-2-comment"),
-            associate: localStorageGetIntegerItem("workery-task-2-associateId"),
+            associate: localStorageGetObjectItem("workery-task-2-associate"),
             errors: {},
         }
 
@@ -52,9 +53,11 @@ class FollowUpTaskStep3Container extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.task_item = this.state.id;
-        postData.hasAgreedToMeet = this.state.status;
-
+        postData.taskItemId = parseInt(this.state.id);
+        if (isEmpty(this.state.associate) === false) {
+           postData.associateId = parseInt(this.state.associate.id);
+        }
+        postData.hasAgreedToMeet = parseInt(this.state.status === true) ? true : false;
         if (this.state.meetingDate !== undefined && this.state.meetingDate !== null) {
             const meetingDateMoment = moment(this.state.meetingDate);
             postData.meetingDate = meetingDateMoment.format("YYYY-MM-DD");
@@ -92,7 +95,7 @@ class FollowUpTaskStep3Container extends Component {
     onSuccessCallback(profile) {
         localStorageRemoveItemsContaining("workery-task-2-");
         this.props.setFlashMessage("success", "48 hour follow-up task has been successfully closed.");
-        this.props.history.push("/order/"+this.props.taskDetail.job);
+        this.props.history.push("/order/"+this.props.taskDetail.orderId);
     }
 
     onFailureCallback(errors) {

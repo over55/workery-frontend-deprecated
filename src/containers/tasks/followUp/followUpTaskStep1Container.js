@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from "lodash/isEmpty";
 
 import FollowUpTaskStep1Component from "../../../components/tasks/followUp/followUpTaskStep1Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-
+import { localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
 
 class FollowUpTaskStep1Container extends Component {
     /**
@@ -56,10 +57,18 @@ class FollowUpTaskStep1Container extends Component {
     onSuccessCallback(taskDetail) {
         console.log("onSuccessCallback | taskDetail:", taskDetail); // For debugging purposes only.
         if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
+            if (isEmpty(taskDetail.associate) === false) {
+                console.log("nSuccessCallback | taskDetail | associate:", taskDetail.associate);
+                localStorageSetObjectOrArrayItem("workery-task-2-associate", taskDetail.associate)
+            } else {
+                console.log("nSuccessCallback | taskDetail | associate | d.n.e.");
+            }
             if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
                 this.props.history.push("/tasks");
             }
+        } else {
+            console.log("nSuccessCallback | taskDetail | d.n.e.");
         }
     }
 

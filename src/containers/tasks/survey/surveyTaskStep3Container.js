@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import isEmpty from "lodash/isEmpty";
 
 import SurveyTaskStep3Component from "../../../components/tasks/survey/surveyTaskStep3Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
 import { postTaskSurveyDetail } from "../../../actions/taskActions";
 import {
-    localStorageGetIntegerItem, localStorageGetBooleanOrNullItem, localStorageSetObjectOrArrayItem, localStorageRemoveItemsContaining
+    localStorageGetIntegerItem, localStorageGetBooleanOrNullItem,
+    localStorageSetObjectOrArrayItem, localStorageRemoveItemsContaining,
+    localStorageGetObjectItem
 } from '../../../helpers/localStorageUtility';
 
 
@@ -32,6 +35,7 @@ class SurveyTaskStep3Container extends Component {
             id: id,
 
             // Step 2
+            associate: localStorageGetObjectItem("workery-task-7-associate"),
             wasSurveyConductedLabel: localStorage.getItem("workery-task-7-wasSurveyConducted-label"),
             wasSurveyConducted: localStorageGetBooleanOrNullItem("workery-task-7-wasSurveyConducted"),
             noSurveyConductedReasonLabel: localStorage.getItem("workery-task-7-noSurveyConductedReasonLabel"),
@@ -65,7 +69,11 @@ class SurveyTaskStep3Container extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.task_item = this.state.id;
+        postData.taskItemId = parseInt(this.state.id);
+
+        if (isEmpty(this.state.associate) === false) {
+           postData.associateId = parseInt(this.state.associate.id);
+        }
 
         if (this.state.wasJobSatisfactory === undefined || this.state.wasJobSatisfactory === null || this.state.wasJobSatisfactory === "") {
             postData.wasJobSatisfactory = false;
@@ -119,7 +127,7 @@ class SurveyTaskStep3Container extends Component {
     onSuccessCallback(profile) {
         localStorageRemoveItemsContaining("workery-task-7-");
         this.props.setFlashMessage("success", "Survey task has been successfully closed.");
-        this.props.history.push("/order/"+this.props.taskDetail.job);
+        this.props.history.push("/order/"+this.props.taskDetail.orderId);
     }
 
     onFailureCallback(errors) {
@@ -138,7 +146,7 @@ class SurveyTaskStep3Container extends Component {
         if (taskDetail !== undefined && taskDetail !== null && taskDetail !== "") {
             if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
-                this.props.history.push("/order/"+this.props.taskDetail.job);
+                this.props.history.push("/order/"+this.props.taskDetail.orderId);
             }
         }
     }

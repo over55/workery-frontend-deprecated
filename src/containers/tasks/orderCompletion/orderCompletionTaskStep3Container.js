@@ -234,16 +234,23 @@ class OrderCompletionTaskStep3Container extends Component {
      *  the state for the field.
      */
     onAmountChange(e) {
-        const amount = e.target.value.replace("$","").replace(",", "");
-        this.setState(
-            { [e.target.name]: parseFloat(amount), }, ()=>{
-                const key = "workery-task-6-"+[e.target.name];
-                localStorage.setItem(key, parseFloat(amount));
+        const name = e.target.name;
+        const value = e.target.value;
 
-                // Update our form with our latest calculations. Since all our
-                // currency fields are to be taken into account, then generally
-                // run this function for all modifications.
-                this.performCalculation();
+        const amount = value.replace("$","").replace(",", "");
+        this.setState(
+            { [name]: parseFloat(amount), }, ()=>{
+                try {
+                    const key = "workery-task-6-"+[name];
+                    localStorage.setItem(key, parseFloat(amount));
+
+                    // Update our form with our latest calculations. Since all our
+                    // currency fields are to be taken into account, then generally
+                    // run this function for all modifications.
+                    this.performCalculation();
+                } catch (err) {
+                    console.log("onAmountChange | err:", err);
+                }
             }
         );
     }

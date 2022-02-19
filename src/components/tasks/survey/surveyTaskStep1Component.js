@@ -7,6 +7,8 @@ import Moment from 'react-moment';
 export default class SurveyTaskStep1Component extends Component {
     render() {
         const { id, task, onBack, onClick } = this.props;
+        const { associate, associateTags, customer, customerTags, workOrder, workOrderSkillSets, workOrderTags } = task;
+
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -18,12 +20,12 @@ export default class SurveyTaskStep1Component extends Component {
                             <Link to={`/tasks`}><i className="fas fa-tasks"></i>&nbsp;Tasks</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Survey
+                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Survey
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Survey</h1>
+                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Survey</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -54,29 +56,29 @@ export default class SurveyTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Job #</th>
                                     <td>
-                                        <Link to={`/order/${task.job}`} target="_blank">
-                                            {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/order/${task.orderId}`} target="_blank">
+                                            {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Start Date</th>
-                                    <td>{task && <Moment format="MM/DD/YYYY">{task.jobStartDate}</Moment>}</td>
+                                    <td>{task && <Moment format="MM/DD/YYYY">{workOrder && workOrder.startDate}</Moment>}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
                                     <td>
-                                        <Link to={`/client/${task.jobCustomer}`} target="_blank">
-                                            {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/client/${customer && customer.id}`} target="_blank">
+                                            {customer && customer.name}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Phone #</th>
                                     <td>
-                                        {task &&
-                                            <a href={`tel:${task.jobCustomerE164Telephone}`}>
-                                                {task.jobCustomerTelephone}
+                                        {customer &&
+                                            <a href={`tel:${customer.telephone}`}>
+                                                {customer.telephone}
                                             </a>
                                         }
                                     </td>
@@ -84,25 +86,25 @@ export default class SurveyTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Client Tag(s)</th>
                                     <td>
-                                        {task.jobCustomerPrettyTags && task.jobCustomerPrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
+                                        {customerTags && customerTags.map(
+                                            (customerTag) => <TagItem tag={customerTag} key={`workOrderTag-${customerTag.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Name</th>
                                     <td>
-                                        <Link to={`/associate/${task.jobAssociate}`} target="_blank">
-                                            {task && task.jobAssociateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/associate/${associate && associate.id}`} target="_blank">
+                                            {associate && associate.name}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Phone #</th>
                                     <td>
-                                        {task &&
-                                            <a href={`tel:${task.jobAssociateE164Telephone}`}>
-                                                {task.jobAssociateTelephone}
+                                        {associate &&
+                                            <a href={`tel:${associate.telephone}`}>
+                                                {associate.telephone}
                                             </a>
                                         }
                                     </td>
@@ -110,45 +112,45 @@ export default class SurveyTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Tag(s)</th>
                                     <td>
-                                        {task.jobAssociatePrettyTags && task.jobAssociatePrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
+                                        {associateTags && associateTags.map(
+                                            (associateTag) => <TagItem tag={associateTag} key={`associateTag-${associateTag.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Description</th>
-                                    <td>{task && task.jobDescription}</td>
+                                    <td>{workOrder && workOrder.description}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Skill Set(s)</th>
                                     <td>
-                                        {task.jobPrettySkillSets && task.jobPrettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        {workOrderSkillSets && workOrderSkillSets.map(
+                                            (workOrderSkillSet) => <SkillSetItem skillSet={workOrderSkillSet} key={`workOrderSkillSet-${workOrderSkillSet.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {task.jobPrettyTags && task.jobPrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
+                                        {workOrderTags && workOrderTags.map(
+                                            (workOrderTag) => <TagItem tag={workOrderTag} key={`workOrderTag-${workOrderTag.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Comments</th>
                                     <td>
-                                        <Link to={`/order/${task.job}/comments`} target="_blank">
-                                            View comments&nbsp;({task.jobCommentsCount})&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/order/${task.orderId}/comments`} target="_blank">
+                                            View comments&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created:</th>
                                     <td>
-                                        At {task && task.createdAt &&
-                                            <Moment format="MM/DD/YYYY">{task.createdAt}</Moment>
-                                        } by {task && task.createdByLabel}
+                                        At {task && task.createdTime &&
+                                            <Moment format="MM/DD/YYYY">{task.createdTime}</Moment>
+                                        }
                                     </td>
                                 </tr>
 
@@ -162,13 +164,13 @@ export default class SurveyTaskStep1Component extends Component {
                                     <td>
                                         <div className="row">
                                             <div className="col-md-4 mx-auto p-2">
-                                                <Link className="btn btn-orange btn-lg" to={`/order/${task.job}/postpone`}>
+                                                <Link className="btn btn-orange btn-lg" to={`/order/${task.orderId}/postpone`}>
                                                     <i className="fas fa-clock"></i>&nbsp;Postpone
                                                 </Link>
                                             </div>
                                             {/*
                                             <div className="col-md-4 mx-auto p-2">
-                                                <Link className="btn btn-danger btn-lg" to={`/order/${task.job}/close`}>
+                                                <Link className="btn btn-danger btn-lg" to={`/order/${task.orderId}/close`}>
                                                     <i className="fas fa-window-close"></i>&nbsp;Close
                                                 </Link>
                                             </div>

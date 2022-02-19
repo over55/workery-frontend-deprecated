@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from "lodash/isEmpty";
 
 import SurveyTaskStep1Component from "../../../components/tasks/survey/surveyTaskStep1Component";
 import { pullTaskDetail } from "../../../actions/taskActions";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { localStorageSetObjectOrArrayItem } from '../../../helpers/localStorageUtility';
 
 
 class SurveyTaskStep1Container extends Component {
@@ -59,6 +61,13 @@ class SurveyTaskStep1Container extends Component {
             if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
                 this.props.history.push("/tasks");
+            }
+
+            if (isEmpty(taskDetail.associate) === false) {
+                console.log("nSuccessCallback | taskDetail | associate:", taskDetail.associate);
+                localStorageSetObjectOrArrayItem("workery-task-7-associate", taskDetail.associate)
+            } else {
+                console.log("nSuccessCallback | taskDetail | associate | d.n.e.");
             }
         }
     }

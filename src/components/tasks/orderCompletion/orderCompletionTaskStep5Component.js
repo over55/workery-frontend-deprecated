@@ -27,6 +27,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
             // Everything else...
             task, id, onClick, onBack, errors, isLoading
         } = this.props;
+        const { associate, associateTags, customer, customerTags, workOrder, workOrderSkillSets, workOrderTags } = task;
         const isCancelled = wasCompleted === false || wasCompleted === "false";
         const isCompleted = wasCompleted === true || wasCompleted === "true";
         const isOtherHowDidYouHearSelected = reason === 1;
@@ -43,7 +44,7 @@ export default class OrderCompletionTaskStep5Component extends Component {
                             <Link to={`/tasks`}><i className="fas fa-tasks"></i>&nbsp;Tasks</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
@@ -72,24 +73,24 @@ export default class OrderCompletionTaskStep5Component extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Job #</th>
                                         <td>
-                                            <Link to={`/order/${task.job}`} target="_blank">
-                                                {task && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/order/${task.orderId}`} target="_blank">
+                                                {task && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Name</th>
                                         <td>
-                                            <Link to={`/client/${task.jobCustomer}`} target="_blank">
-                                                {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/client/${customer && customer.id}`} target="_blank">
+                                                {customer && customer.name}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Name</th>
                                         <td>
-                                            <Link to={`/associate/${task.jobAssociate}`} target="_blank">
-                                                {task && task.jobAssociateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/associate/${associate && associate.id}`} target="_blank">
+                                                {associate && associate.name}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
