@@ -53,7 +53,7 @@ class FollowUpPendingTaskStep2Container extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.task_item = this.state.id;
+        postData.taskItemId = parseInt(this.state.id);
         postData.state = this.state.status;
 
         // Finally: Return our new modified data.
