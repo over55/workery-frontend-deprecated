@@ -61,8 +61,8 @@ class AdminFinancialUpdateContainer extends Component {
 
         const hasNoIDs = this.props.orderDetail.invoiceIds === undefined || this.props.orderDetail.invoiceIds === null || this.props.orderDetail.invoiceIds === "";
 
-        const associateServiceFee = this.props.orderDetail.associateServiceFee;
-        let invoiceServiceFee = parseInt(this.props.orderDetail.invoiceServiceFee);
+        const associateServiceFee = this.props.orderDetail.associate.invoiceServiceFee.id;
+        let invoiceServiceFee = parseInt(this.props.orderDetail.invoiceServiceFee.id);
         if (invoiceServiceFee === undefined || invoiceServiceFee === null || isNaN(invoiceServiceFee)) {
             invoiceServiceFee = associateServiceFee;
         }
@@ -71,7 +71,7 @@ class AdminFinancialUpdateContainer extends Component {
         // Start ...
         //----------------------------------------------------------------------
         let invoiceQuotedLabourAmount = parseFloat(this.props.orderDetail.invoiceQuotedLabourAmount)
-        if (invoiceServiceFee === undefined || invoiceServiceFee === null || isNaN(invoiceServiceFee)) {
+        if (invoiceQuotedLabourAmount === undefined || invoiceQuotedLabourAmount === null || isNaN(invoiceQuotedLabourAmount)) {
             invoiceQuotedLabourAmount = 0;
         }
         let invoiceQuotedMaterialAmount = parseFloat(this.props.orderDetail.invoiceQuotedMaterialAmount)
