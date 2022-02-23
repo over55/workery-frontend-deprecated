@@ -25,7 +25,9 @@ export function validateUpdateInput(data) {
 export function validateFinancialUpdateInput(data) {
     let errors = {};
 
-    if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "" || isEmpty(data.paymentStatus)) {
+    if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "") {
+        console.log("ongoingOrderValidator | validateFinancialUpdateInput | paymentStatus:", data.paymentStatus);
+        console.log("ongoingOrderValidator | validateFinancialUpdateInput | data:", data);
         errors.paymentStatus = 'This field is required';
     }
     if (data.invoiceDate === undefined || data.invoiceDate === null || data.invoiceDate === "" || isNaN(data.invoiceDate) ) {

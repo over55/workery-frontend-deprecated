@@ -22,11 +22,13 @@ export function validateLiteUpdateInput(data) {
 
 export function validateFinancialUpdateInput(data) {
     let errors = {};
+    console.log("orderValidator | validateFinancialUpdateInput | paymentStatus:", data.paymentStatus);
+    console.log("orderValidator | validateFinancialUpdateInput | data:", data);
 
     if (data.invoicePaidTo === undefined || data.invoicePaidTo === null || data.invoicePaidTo === "" || isNaN(data.invoicePaidTo) ) {
         errors.invoicePaidTo = 'This field is required';
     }
-    if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "" || isEmpty(data.paymentStatus)) {
+    if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "") {
         errors.paymentStatus = 'This field is required';
     } else {
         if (data.paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE) {
