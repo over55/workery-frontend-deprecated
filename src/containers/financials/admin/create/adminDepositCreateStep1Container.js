@@ -150,9 +150,12 @@ class AdminDepositCreateStep1Container extends Component {
         e.preventDefault();
 
         const amount = e.target.value.replace("$","").replace(",", "");
+        const amountFloat = parseFloat(amount);
+        const name = [e.target.name];
         this.setState(
-            { [e.target.name]: parseFloat(amount), }, ()=>{
-                localStorage.setItem('workery-create-deposit-'+[e.target.name], parseFloat(amount) );
+            { [e.target.name]: amountFloat, }, ()=>{
+                console.log("onAmountChange|float:", amountFloat)
+                localStorage.setItem('workery-create-deposit-'+name, amountFloat );
             }
         );
     }

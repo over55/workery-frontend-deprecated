@@ -167,6 +167,7 @@ class AdminDepositListContainer extends Component {
         const { page, sizePerPage, totalSize, isLoading, id } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         const depositList = (this.props.depositList && this.props.depositList.results) ? this.props.depositList.results : [];
+        console.log("Deposit List:", depositList)
         return (
             <AdminDepositListComponent
                 page={page}

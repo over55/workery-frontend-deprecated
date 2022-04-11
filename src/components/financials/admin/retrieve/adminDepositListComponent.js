@@ -38,10 +38,12 @@ class RemoteListComponent extends Component {
             dataField: 'paidToLabel',
             text: 'Paid to',
             sort: false,
+            formatter: paidToFormatter,
         },{
             dataField: 'paidForLabel',
             text: 'Paid for',
             sort: false,
+            formatter: paidForFormatter,
         },{
             dataField: 'paidAt',
             text: 'Paid at',
@@ -51,6 +53,7 @@ class RemoteListComponent extends Component {
             dataField: 'depositMethodLabel',
             text: 'Deposit method',
             sort: false,
+            formatter: depositFormatter,
         },{
             dataField: 'amount',
             text: 'Amount',
@@ -118,6 +121,57 @@ function jobFormatter(cell, row){
     )
 }
 
+function paidToFormatter(cell, row){
+    switch(row.paidTo) {
+        case 1:
+            return "Organization";
+            break;
+        case 2:
+            return "Associate";
+            break;
+        default:
+            return "-";
+            break;
+    }
+}
+
+function paidForFormatter(cell, row){
+    switch(row.paidFor) {
+        case 1:
+            return "Labour";
+            break;
+        case 2:
+            return "Materials";
+            break;
+        case 3:
+            return "Other Costs";
+            break;
+        default:
+            return "-";
+            break;
+    }
+}
+
+function depositFormatter(cell, row){
+    switch(row.depositMethod) {
+        case 1:
+            return "Debit";
+            break;
+        case 2:
+            return "Credit";
+            break;
+        case 3:
+            return "Cheque";
+            break;
+        case 4:
+            return "Cash";
+            break;
+        default:
+            return "-";
+            break;
+
+    }
+}
 
 function iconFormatter(cell, row){
     switch(row.typeOf) {

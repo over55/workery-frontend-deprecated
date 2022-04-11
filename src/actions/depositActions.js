@@ -2,7 +2,6 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     DEPOSIT_LIST_REQUEST, DEPOSIT_LIST_FAILURE, DEPOSIT_LIST_SUCCESS,
@@ -43,9 +42,9 @@ export function pullDepositList(orderId, page=1, sizePerPage=10, filtersMap=new 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
-            console.log(responseData); // For debugging purposes.
+            console.log("pullDepositList:", responseData); // For debugging purposes.
 
             let data = camelizeKeys(responseData);
 
@@ -74,7 +73,7 @@ export function pullDepositList(orderId, page=1, sizePerPage=10, filtersMap=new 
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = responseBinaryData;
 
                 let errors = camelizeKeys(responseData);
 
@@ -121,15 +120,13 @@ export function postDepositDetail(postData, successCallback, failedCallback) {
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
 
         const aURL = WORKERY_DEPOSIT_LIST_API_ENDPOINT.replace("XXX", postData.order);
 
         // Perform our API submission.
-        customAxios.post(aURL, buffer).then( (successResponse) => {
+        customAxios.post(aURL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
 
@@ -150,7 +147,7 @@ export function postDepositDetail(postData, successCallback, failedCallback) {
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = responseBinaryData;
 
                 let errors = camelizeKeys(responseData);
 
@@ -197,7 +194,7 @@ export function pullDepositDetail(user, slug) {
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
             let profile = camelizeKeys(responseData);
@@ -219,7 +216,7 @@ export function pullDepositDetail(user, slug) {
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = responseBinaryData;
 
                 let errors = camelizeKeys(responseData);
 
@@ -267,12 +264,12 @@ export function putDepositDetail(user, data, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(data);
 
         // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
+        var buffer = decamelizedData;
 
         // Perform our API submission.
         customAxios.put(WORKERY_DEPOSIT_DETAIL_API_ENDPOINT+data.slug, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
             // Extra.
@@ -293,7 +290,7 @@ export function putDepositDetail(user, data, successCallback, failedCallback) {
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = responseBinaryData;
 
                 let errors = camelizeKeys(responseData);
 
@@ -340,7 +337,7 @@ export function deleteDepositDetail(orderId, paymentId, onSuccessCallback, onFai
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
             let profile = camelizeKeys(responseData);
@@ -366,7 +363,7 @@ export function deleteDepositDetail(orderId, paymentId, onSuccessCallback, onFai
                 const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = responseBinaryData;
 
                 let errors = camelizeKeys(responseData);
 

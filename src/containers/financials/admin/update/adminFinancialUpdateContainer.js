@@ -444,25 +444,16 @@ class AdminFinancialUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateFinancialUpdateInput(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.setState(
-                { isLoading: true, errors: {} },
-                ()=>{
-                    this.props.putOrderFinancialDetail(
-                        this.getPostData(),
-                        this.onSuccessfulSubmissionCallback,
-                        this.onFailedSubmissionCallback
-                    );
-                }
-            );
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailedSubmissionCallback(errors);
-        }
+        this.setState(
+            { isLoading: true, errors: {} },
+            ()=>{
+                this.props.putOrderFinancialDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            }
+        );
     }
 
     /**
