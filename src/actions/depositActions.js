@@ -337,25 +337,26 @@ export function deleteDepositDetail(orderId, paymentId, onSuccessCallback, onFai
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = successResponse.data;
+            // const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
-            let profile = camelizeKeys(responseData);
+            // let profile = camelizeKeys(responseData);
+            let data = {};
 
             // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
+            data['isAPIRequestRunning'] = false;
+            data['errors'] = {};
 
-            console.log("pullDepositDetail | Success:", profile); // For debugging purposes.
+            // console.log("pullDepositDetail | Success:", profile); // For debugging purposes.
 
             // Update the global state of the application to store our
             // user profile for the application.
             store.dispatch(
-                setDepositDetailSuccess(profile)
+                setDepositDetailSuccess(data)
             );
 
             if (onSuccessCallback) {
-                onSuccessCallback(profile);
+                onSuccessCallback(data);
             }
 
         }).catch( (exception) => { // ERROR
