@@ -8,7 +8,7 @@ import {
     setAccessTokenInLocalStorage,
     setRefreshTokenInLocalStorage
 } from './jwtUtility';
-import { WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../Constants/API";
+import { WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../constants/api";
 
 
 /**
@@ -31,8 +31,8 @@ export default function getCustomAxios() {
         baseURL: getAPIBaseURL(),
         headers: {
             'Authorization': "JWT " + accessToken,
-            'Content-Type': 'application/msgpack;',
-            'Accept': 'application/msgpack',
+            'Content-Type': 'application/json;',
+            'Accept': 'application/json',
         },
         responseType: 'arraybuffer'
     });
