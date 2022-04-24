@@ -122,7 +122,7 @@ class AdminInvoiceCreateStep2Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Name</th>
-                                    <td>{order && order.associateFullName}</td>
+                                    <td>{order && order.associateName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Telephone</th>
