@@ -1,7 +1,6 @@
 import axios from 'axios';
-import msgpack from 'msgpack-lite';
 
-import { getAPIBaseURL } from '../helpers/urlUtility';
+import { getAPIBaseURL } from './urlUtility';
 import {
     getAccessTokenFromLocalStorage,
     getRefreshTokenFromLocalStorage,
@@ -9,7 +8,6 @@ import {
     setRefreshTokenInLocalStorage
 } from './jwtUtility';
 import { WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../constants/api";
-
 
 /**
  *  Function returns a custom `Axios` instance tailered to the `Mikaponics`
@@ -34,7 +32,6 @@ export default function getCustomAxios() {
             'Content-Type': 'application/json;',
             'Accept': 'application/json',
         },
-        responseType: 'arraybuffer'
     });
 
     // Attach our Axios "refesh token" interceptor.
@@ -89,7 +86,6 @@ export default function getCustomAxios() {
     // Return our custom Axios instance for our application.
     return customAxios;
 }
-
 
 const axiosServiceRefresh = axios.create({
     headers: {
