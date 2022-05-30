@@ -118,8 +118,8 @@ class Report1Container extends Component {
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { fromDate, toDate, jobState } = this.state;
-            const toDateString = toDate.toISOString().slice(0, 10);
-            const fromDateString = fromDate.toISOString().slice(0, 10);
+            const toDateString = toDate.getTime();
+            const fromDateString = fromDate.getTime();
             const accessToken = getAccessTokenFromLocalStorage();
             const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_ONE_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&token="+accessToken;
             console.log(url);
