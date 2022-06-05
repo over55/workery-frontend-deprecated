@@ -7,6 +7,7 @@ import { pullAssociateList, getAssociateReactSelectOptions } from "../../actions
 import { validateReport2Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
+import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
 class Report18Container extends Component {
@@ -28,6 +29,7 @@ class Report18Container extends Component {
             isLoading: false
         }
 
+        this.onAssociateChange = this.onAssociateChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onFromDateChange = this.onFromDateChange.bind(this);
         this.onToDateChange = this.onToDateChange.bind(this);
@@ -98,10 +100,25 @@ class Report18Container extends Component {
 
     onSelectChange(option) {
         const optionKey = [option.selectName]+"Option";
+        console.log("onSelectChange | option:",option);
+        console.log("onSelectChange | optionKey:",optionKey);
         this.setState({
             [option.selectName]: option.value,
             [optionKey]: option,
         });
+    }
+
+    onAssociateChange(option) {
+        for (var i = 0; i < this.state.associateOptions.length; i++) {
+            var associateOption = this.state.associateOptions[i];
+            if (option.associateId == associateOption.associateId) {
+                console.log(option);
+                this.setState({
+                    associate: option.value,
+                });
+            }
+        }
+        console.log("associateOptions:", this.state.associateOptions);
     }
 
     onFromDateChange(dateObj) {
@@ -133,9 +150,11 @@ class Report18Container extends Component {
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { associate, fromDate, toDate, jobState } = this.state;
-            const toDateString = toDate.toISOString().slice(0, 10);
-            const fromDateString = fromDate.toISOString().slice(0, 10);
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate;
+            const toDateString = toDate.getTime();
+            const fromDateString = fromDate.getTime();
+            const accessToken = getAccessTokenFromLocalStorage();
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
+
             console.log(url);
 
             // The following code will open up a new browser tab and load up the
@@ -166,7 +185,6 @@ class Report18Container extends Component {
             errors, isLoading
         } = this.state;
 
-
         return (
             <Report18Component
                 associate={associate}
@@ -182,6 +200,7 @@ class Report18Container extends Component {
                 onToDateChange={this.onToDateChange}
                 onClick={this.onClick}
                 flashMessage={this.props.flashMessage}
+                onAssociateChange={this.onAssociateChange}
             />
         );
     }

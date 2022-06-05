@@ -12,9 +12,10 @@ export default class Report18Component extends Component {
     render() {
         const {
             associate, associateOptions, isAssociatesLoading, fromDate, toDate, jobState, errors, isLoading,
-            onClick, onSelectChange, onFromDateChange, onToDateChange
+            onClick, onSelectChange, onFromDateChange, onToDateChange, onAssociateChange
         } = this.props;
 
+        console.log("Report18Component | associate:", associate);
 
         return (
             <main id="main" role="main">
@@ -50,7 +51,7 @@ export default class Report18Component extends Component {
                                 options={associateOptions}
                                 value={associate}
                                 error={errors.associate}
-                                onSelectChange={onSelectChange}
+                                onSelectChange={onAssociateChange}
                                 isLoading={isAssociatesLoading}
                             />
 
