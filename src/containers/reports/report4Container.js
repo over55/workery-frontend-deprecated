@@ -5,6 +5,7 @@ import Scroll from 'react-scroll';
 import Report4Component from "../../components/reports/report4Component";
 import { validateReport4Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_FOUR_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 import { getSubdomain } from "../../helpers/urlUtility";
 
 
@@ -116,9 +117,11 @@ class Report4Container extends Component {
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { fromDate, toDate } = this.state;
-            const toDateString = toDate.toISOString().slice(0, 10);
-            const fromDateString = fromDate.toISOString().slice(0, 10);
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_FOUR_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString;
+            const toDateString = toDate.getTime();
+            const fromDateString = fromDate.getTime();
+            const accessToken = getAccessTokenFromLocalStorage();
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_FOUR_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&token="+accessToken;
+
             console.log(url);
 
             // The following code will open up a new browser tab and load up the
