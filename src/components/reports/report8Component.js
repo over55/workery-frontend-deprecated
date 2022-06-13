@@ -11,7 +11,7 @@ export default class Report8Component extends Component {
     render() {
         const {
             associate, associateOptions, isAssociatesLoading, errors, isLoading,
-            onClick, onSelectChange
+            onClick, onSelectChange, onAssociateChange
         } = this.props;
 
 
@@ -49,7 +49,7 @@ export default class Report8Component extends Component {
                                 options={associateOptions}
                                 value={associate}
                                 error={errors.associate}
-                                onSelectChange={onSelectChange}
+                                onSelectChange={onAssociateChange}
                                 isLoading={isAssociatesLoading}
                             />
 
