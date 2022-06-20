@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  sample-prod:
+    container_name: workery-front
+    build:
+      context: .
+      dockerfile: prod.Dockerfile
+    ports:
+      - '1337:80'
+
+# Usage:
+#   docker-compose -f prod.docker-compose.yml up
+#
+# Go to in your browser:
+#   http://localhost:1337/
