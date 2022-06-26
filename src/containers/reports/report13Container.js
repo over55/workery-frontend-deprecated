@@ -7,6 +7,7 @@ import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../actions/s
 import { validateReport13Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
+import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
 class Report13Container extends Component {
@@ -144,8 +145,8 @@ class Report13Container extends Component {
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { skillSets, fromDate, toDate, jobState } = this.state;
-            const toDateString = toDate.toISOString().slice(0, 10);
-            const fromDateString = fromDate.toISOString().slice(0, 10);
+            const toDateString = toDate.getTime();
+            const fromDateString = fromDate.getTime();
             console.log(skillSets);
 
             let skillsetIds = "";
@@ -160,7 +161,8 @@ class Report13Container extends Component {
             if (skillSets.length > 0) {
                 skillsetIds = skillsetIds.slice(0, -1); // Removed last character.
             }
-            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/en/" + WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?skillset_ids=" + skillsetIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+            const accessToken = getAccessTokenFromLocalStorage();
+            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/en/" + WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?skillset_ids=" + skillsetIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&token="+accessToken;
 
             // For debugging purposes only.
             console.log(url);
