@@ -6,6 +6,7 @@ import Report14Component from "../../components/reports/report14Component";
 import { validateReport14Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_FOURTEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
+import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
 class Report14Container extends Component {
@@ -117,9 +118,10 @@ class Report14Container extends Component {
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { fromDate, toDate, jobState } = this.state;
-            const toDateString = toDate.toISOString().slice(0, 10);
-            const fromDateString = fromDate.toISOString().slice(0, 10);
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_FOURTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+            const toDateString = toDate.getTime();
+            const fromDateString = fromDate.getTime();
+            const accessToken = getAccessTokenFromLocalStorage();
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_FOURTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?token="+accessToken + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
             console.log(url);
 
             // The following code will open up a new browser tab and load up the
