@@ -6,6 +6,7 @@ import Report15Component from "../../components/reports/report15Component";
 import { validateReport15Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
+import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
 class Report15Container extends Component {
@@ -111,7 +112,8 @@ class Report15Container extends Component {
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { daysBeforeExpiry, expiryDateType } = this.state;
-            let url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?filter_date_type=xxx&filter_days=yyy";
+            const accessToken = getAccessTokenFromLocalStorage();
+            let url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?token="+accessToken + "&filter_date_type=xxx&filter_days=yyy";
             url = url.replace('xxx', expiryDateType);
             url = url.replace('yyy', daysBeforeExpiry);
 
