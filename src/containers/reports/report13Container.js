@@ -162,7 +162,7 @@ class Report13Container extends Component {
                 skillsetIds = skillsetIds.slice(0, -1); // Removed last character.
             }
             const accessToken = getAccessTokenFromLocalStorage();
-            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/en/" + WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?skillset_ids=" + skillsetIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&token="+accessToken;
+            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?token="+accessToken + "&skillset_ids=" + skillsetIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
 
             // For debugging purposes only.
             console.log(url);
