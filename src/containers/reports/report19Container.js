@@ -7,6 +7,7 @@ import { getTagReactSelectOptions, pullTagList } from "../../actions/tagActions"
 import { validateReport19Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
+import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
 class Report19Container extends Component {
@@ -144,8 +145,6 @@ class Report19Container extends Component {
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { tags, fromDate, toDate, jobState } = this.state;
-            const toDateString = toDate.toISOString().slice(0, 10);
-            const fromDateString = fromDate.toISOString().slice(0, 10);
             console.log(tags);
 
             let tagIds = "";
@@ -160,7 +159,10 @@ class Report19Container extends Component {
             if (tags.length > 0) {
                 tagIds = tagIds.slice(0, -1); // Removed last character.
             }
-            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/en/" + WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_ENDPOINT + "?tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+            const toDateString = toDate.getTime();
+            const fromDateString = fromDate.getTime();
+            const accessToken = getAccessTokenFromLocalStorage();
+            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_ENDPOINT + "?token="+accessToken +  "&tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
 
             // For debugging purposes only.
             console.log(url);
