@@ -7,7 +7,6 @@ export const APP_STATE = 'APP_STATE';
  *  The API web-services endpoints.
  */
 export const WORKERY_API_BASE_PATH = '/api/v1'
-export const WORKERY_LOGIN_API_ENDPOINT = '/login';
 export const WORKERY_REFRESH_TOKEN_API_ENDPOINT = '/refresh-token';
 export const WORKERY_PROFILE_API_ENDPOINT = '/profile';
 export const WORKERY_TENANT_LIST_API_ENDPOINT = '/franchises';
@@ -151,16 +150,17 @@ export const WORKERY_STAFF_FILE_LIST_API_ENDPOINT = '/staff-files';
 export const WORKERY_STAFF_FILE_ARCHIVE_API_ENDPOINT = '/staff-file/XXX/';
 export const WORKERY_TAG_ITEM_SEARCH_LIST_API_ENDPOINT = '/v1/search';
 
-// OLD - PLEASE DO SOMETHING WITH THESE.
 export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';
-export const WORKERY_REGISTER_API_URL = process.env.REACT_APP_API_HOST+'/api/register';
-export const WORKERY_ACTIVATE_API_URL = process.env.REACT_APP_API_HOST+'/api/activate';
+export const WORKERY_REGISTER_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/register';
+export const WORKERY_LOGIN_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/login';
+export const WORKERY_ACTIVATE_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/activate';
 export const WORKERY_ACTIVATE_API_ENDPOINT = '/activate';
-export const WORKERY_SEND_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/send-password-reset';
-export const WORKERY_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/reset-password';
-export const WORKERY_ONBOARDING_API_URL = process.env.REACT_APP_API_HOST+'/api/onboarding';
-export const WORKERY_PURCHASE_DEVICE_API_URL = process.env.REACT_APP_API_HOST+'/api/purchase-device';
-export const WORKERY_PROFILE_API_URL = process.env.REACT_APP_API_HOST+'/api/profile';
+export const WORKERY_SEND_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/send-password-reset';
+export const WORKERY_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/reset-password';
+export const WORKERY_ONBOARDING_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/onboarding';
+export const WORKERY_PURCHASE_DEVICE_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/purchase-device';
+export const WORKERY_PROFILE_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/profile';
+
 
 
 /**

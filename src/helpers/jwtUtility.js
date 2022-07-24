@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { camelizeKeys } from 'humps';
-import { WORKERY_API_BASE_PATH, WORKERY_LOGIN_API_ENDPOINT, WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../constants/api"
+import { WORKERY_API_BASE_PATH, WORKERY_LOGIN_API_URL, WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../constants/api"
 
 /**
  *------------------------------------------------------------------------------
@@ -62,8 +62,7 @@ export function clearAllAccessAndRefreshTokensFromLocalStorage() {
  *  Function makes a call to our login API endpoint.
  */
 function atteptLogin(email, password) {
-    const loginUrl = process.env.REACT_APP_API_HOST+WORKERY_API_BASE_PATH + WORKERY_LOGIN_API_ENDPOINT
-    return axios.post(loginUrl, {
+    return axios.post(WORKERY_LOGIN_API_URL, {
         'email': email,
         'password': password,
     })

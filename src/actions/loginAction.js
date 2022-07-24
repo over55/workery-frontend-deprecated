@@ -3,7 +3,7 @@ import store from '../store';
 import { camelizeKeys } from 'humps';
 
 import { LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../constants/actionTypes"
-import { WORKERY_LOGIN_API_ENDPOINT } from "../constants/api"
+import { WORKERY_LOGIN_API_URL } from "../constants/api"
 import { setAccessTokenInLocalStorage, setRefreshTokenInLocalStorage, clearAllAccessAndRefreshTokensFromLocalStorage } from '../helpers/jwtUtility';
 import { getAPIBaseURL } from '../helpers/urlUtility';
 import getCustomAxios from '../helpers/customAxios';
@@ -41,16 +41,12 @@ export function postLogin(email, password, successCallback=null, failedCallback=
         // WHEN ATTEMPTING TO LOGIN, WE NEED TO CLEAR ANY PREVIOUS SESSION TOKENS.
         clearAllAccessAndRefreshTokensFromLocalStorage();
 
-        // Create a new Axios instance which will be sending and receiving in
-        // MessagePack (Buffer) format.
-        const customAxios = getCustomAxios();
-
         var data = {
             'email': email,
             'password': password,
         };
 
-        customAxios.post(WORKERY_LOGIN_API_ENDPOINT, data).then( (successResponse) => {
+        axios.post(WORKERY_LOGIN_API_URL, data).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 
