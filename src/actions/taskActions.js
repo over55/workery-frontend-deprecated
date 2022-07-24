@@ -8,13 +8,13 @@ import {
     TASK_DETAIL_REQUEST, TASK_DETAIL_FAILURE, TASK_DETAIL_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_TASK_LIST_API_ENDPOINT,
-    WORKERY_TASK_DETAIL_API_ENDPOINT,
-    WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT,
-    WORKERY_TASK_FOLLOW_UP_OPERATION_API_ENDPOINT,
-    WORKERY_TASK_FOLLOW_UP_PENDING_OPERATION_API_ENDPOINT,
-    WORKERY_TASK_ORDER_COMPLETION_API_ENDPOINT,
-    WORKERY_TASK_SURVEY_OPERATION_API_ENDPOINT
+    WORKERY_TASK_LIST_API_URL,
+    WORKERY_TASK_DETAIL_API_URL,
+    WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_URL,
+    WORKERY_TASK_FOLLOW_UP_OPERATION_API_URL,
+    WORKERY_TASK_FOLLOW_UP_PENDING_OPERATION_API_URL,
+    WORKERY_TASK_ORDER_COMPLETION_API_URL,
+    WORKERY_TASK_SURVEY_OPERATION_API_URL
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -37,7 +37,7 @@ export function pullTaskList(offset=0, limit=10, filtersMap=new Map(), onSuccess
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_TASK_LIST_API_ENDPOINT+"?offset="+offset+"&page_size="+limit;
+        let aURL = WORKERY_TASK_LIST_API_URL+"?offset="+offset+"&page_size="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -123,7 +123,7 @@ export function postTaskDetail(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TASK_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_TASK_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -190,7 +190,7 @@ export function postTaskAssignAssociateDetail(postData, successCallback, failedC
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -254,7 +254,7 @@ export function postTaskFollowUpDetail(postData, successCallback, failedCallback
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TASK_FOLLOW_UP_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_TASK_FOLLOW_UP_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -318,7 +318,7 @@ export function postTaskFollowUpPendingDetail(postData, successCallback, failedC
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TASK_FOLLOW_UP_PENDING_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_TASK_FOLLOW_UP_PENDING_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -383,7 +383,7 @@ export function postTaskOrderCompletionDetail(postData, successCallback, failedC
         console.log("postTaskOrderCompletionDetail | decamelizedData:", decamelizedData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TASK_ORDER_COMPLETION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_TASK_ORDER_COMPLETION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             console.log("postTaskOrderCompletionDetail | responseData:", responseData);
 
@@ -447,7 +447,7 @@ export function postTaskSurveyDetail(postData, successCallback, failedCallback) 
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TASK_SURVEY_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_TASK_SURVEY_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 
@@ -510,7 +510,7 @@ export function pullTaskDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_TASK_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_TASK_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -587,7 +587,7 @@ export function putTaskDetail(user, data, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_TASK_DETAIL_API_ENDPOINT+data.slug, decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_TASK_DETAIL_API_URL+data.slug, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 

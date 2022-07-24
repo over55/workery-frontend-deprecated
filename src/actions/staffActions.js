@@ -8,17 +8,17 @@ import {
     STAFF_DETAIL_REQUEST, STAFF_DETAIL_FAILURE, STAFF_DETAIL_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_STAFF_LIST_API_ENDPOINT,
-    WORKERY_STAFF_DETAIL_API_ENDPOINT,
-    WORKERY_STAFF_CONTACT_UPDATE_API_ENDPOINT,
-    WORKERY_STAFF_ADDRESS_UPDATE_API_ENDPOINT,
-    WORKERY_STAFF_ACCOUNT_UPDATE_API_ENDPOINT,
-    WORKERY_STAFF_METRICS_UPDATE_API_ENDPOINT,
-    WORKERY_STAFF_ARCHIVE_API_ENDPOINT,
-    WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_ENDPOINT,
-    WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_ENDPOINT,
-    WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
-    WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_ENDPOINT
+    WORKERY_STAFF_LIST_API_URL,
+    WORKERY_STAFF_DETAIL_API_URL,
+    WORKERY_STAFF_CONTACT_UPDATE_API_URL,
+    WORKERY_STAFF_ADDRESS_UPDATE_API_URL,
+    WORKERY_STAFF_ACCOUNT_UPDATE_API_URL,
+    WORKERY_STAFF_METRICS_UPDATE_API_URL,
+    WORKERY_STAFF_ARCHIVE_API_URL,
+    WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_URL,
+    WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_URL,
+    WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_URL,
+    WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_URL
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -41,7 +41,7 @@ export function pullStaffList(offset=0, limit=10, filtersMap=new Map(), onSucces
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_STAFF_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_STAFF_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -127,7 +127,7 @@ export function postStaffDetail(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_STAFF_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_STAFF_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -189,7 +189,7 @@ export function pullStaffDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_STAFF_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_STAFF_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -266,7 +266,7 @@ export function putStaffDetail(data, onSuccessCallback, onFailureCallback) {
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_STAFF_DETAIL_API_ENDPOINT+data.id, decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_STAFF_DETAIL_API_URL+data.id, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let staff = camelizeKeys(responseData);
 
@@ -330,7 +330,7 @@ export function putStaffContactDetail(data, onSuccessCallback, onFailureCallback
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_STAFF_CONTACT_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_STAFF_CONTACT_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let staff = camelizeKeys(responseData);
 
@@ -394,7 +394,7 @@ export function putStaffAddressDetail(data, onSuccessCallback, onFailureCallback
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_STAFF_ADDRESS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_STAFF_ADDRESS_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let staff = camelizeKeys(responseData);
 
@@ -458,7 +458,7 @@ export function putStaffAccountDetail(data, onSuccessCallback, onFailureCallback
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_STAFF_ACCOUNT_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_STAFF_ACCOUNT_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let staff = camelizeKeys(responseData);
 
@@ -522,7 +522,7 @@ export function putStaffMetricsDetail(data, onSuccessCallback, onFailureCallback
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_STAFF_METRICS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_STAFF_METRICS_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let staff = camelizeKeys(responseData);
 
@@ -590,7 +590,7 @@ export function putStaffChangeRoleOperation(postData, onSuccessCallback, onFailu
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 
@@ -657,7 +657,7 @@ export function putStaffChangePasswordOperation(postData, onSuccessCallback, onF
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 
@@ -725,7 +725,7 @@ export function postStaffAvatarCreateOrUpdate(postData, onSuccessCallback, onFai
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_URL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 
@@ -793,7 +793,7 @@ export function deleteStaffDetail(id, onSuccessCallback, onFailureCallback) {
         const customAxios = getCustomAxios();
 
         // Perform our API submission.
-        customAxios.delete(WORKERY_STAFF_DETAIL_API_ENDPOINT+id).then( (successResponse) => {
+        customAxios.delete(WORKERY_STAFF_DETAIL_API_URL+id).then( (successResponse) => {
             const responseData = successResponse.data;
             let staff = camelizeKeys(responseData);
 
@@ -865,7 +865,7 @@ export function postArchiveUnarchiveOperation(postData, onSuccessCallback, onFai
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_STAFF_ARCHIVE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_STAFF_ARCHIVE_API_URL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 
@@ -930,7 +930,7 @@ export function postPermaDeleteOperation(id, onSuccessCallback, onFailureCallbac
         const customAxios = getCustomAxios();
 
         // Perform our API submission.
-        customAxios.post(WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_ENDPOINT, { "staff_id": id }).then( (successResponse) => {
+        customAxios.post(WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_URL, { "staff_id": id }).then( (successResponse) => {
             let client = {
                 isAPIRequestRunning: false,
                 errors: {},

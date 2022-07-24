@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import Report21Component from "../../components/reports/report21Component";
-import { WORKERY_REPORT_TWENTY_ONE_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_TWENTY_ONE_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 
 
@@ -88,7 +88,7 @@ class Report21Container extends Component {
 
         // Extract the selected options and convert to ISO string format, also
         // create our URL to be used for submission.
-        const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWENTY_ONE_CSV_DOWNLOAD_API_ENDPOINT;
+        const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWENTY_ONE_CSV_DOWNLOAD_API_URL;
         console.log(url);
 
         // The following code will open up a new browser tab and load up the

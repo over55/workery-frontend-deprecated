@@ -4,8 +4,8 @@ import { camelizeKeys, decamelizeKeys } from 'humps';
 
 import { PROFILE_REQUEST, PROFILE_SUCCESS, PROFILE_FAILURE } from "../constants/actionTypes";
 import {
-    WORKERY_PROFILE_API_ENDPOINT,
-    WORKERY_ACTIVATE_API_ENDPOINT
+    WORKERY_PROFILE_API_URL,
+    WORKERY_ACTIVATE_API_URL
 } from "../constants/api";
 import {
     getAccessTokenFromLocalStorage,
@@ -62,7 +62,7 @@ export function pullProfile(successCallback=null, failedCallback=null) {
         attachAxiosRefreshTokenHandler(customAxios);
 
         // Run our Axios post.
-        customAxios.get(WORKERY_PROFILE_API_ENDPOINT).then( (successResponse) => { // SUCCESS
+        customAxios.get(WORKERY_PROFILE_API_URL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
 
             let profile = camelizeKeys(responseData);
@@ -138,7 +138,7 @@ export function postProfile(data, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_PROFILE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_PROFILE_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let profile = camelizeKeys(responseData);
@@ -204,7 +204,7 @@ export function postActivateProfile(accessCode, successCallback, failedCallback)
             'pr_access_code': accessCode  // Set to `snake-case` for API server.
         };
 
-        customAxios.post(WORKERY_ACTIVATE_API_ENDPOINT, data).then( (successResponse) => {
+        customAxios.post(WORKERY_ACTIVATE_API_URL, data).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let profile = camelizeKeys(responseData);

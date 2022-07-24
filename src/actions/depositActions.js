@@ -7,7 +7,7 @@ import {
     DEPOSIT_LIST_REQUEST, DEPOSIT_LIST_FAILURE, DEPOSIT_LIST_SUCCESS,
     DEPOSIT_DETAIL_REQUEST, DEPOSIT_DETAIL_FAILURE, DEPOSIT_DETAIL_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_DEPOSIT_LIST_API_ENDPOINT, WORKERY_DEPOSIT_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_DEPOSIT_LIST_API_URL, WORKERY_DEPOSIT_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -29,7 +29,7 @@ export function pullDepositList(orderId, page=1, sizePerPage=10, filtersMap=new 
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_DEPOSIT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_DEPOSIT_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -121,7 +121,7 @@ export function postDepositDetail(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
 
-        const aURL = WORKERY_DEPOSIT_LIST_API_ENDPOINT.replace("XXX", postData.order);
+        const aURL = WORKERY_DEPOSIT_LIST_API_URL.replace("XXX", postData.order);
 
         // Perform our API submission.
         customAxios.post(aURL, decamelizedData).then( (successResponse) => {
@@ -190,7 +190,7 @@ export function pullDepositDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_DEPOSIT_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_DEPOSIT_DETAIL_API_URL+slug;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.
@@ -267,7 +267,7 @@ export function putDepositDetail(user, data, successCallback, failedCallback) {
         var buffer = decamelizedData;
 
         // Perform our API submission.
-        customAxios.put(WORKERY_DEPOSIT_DETAIL_API_ENDPOINT+data.slug, buffer).then( (successResponse) => {
+        customAxios.put(WORKERY_DEPOSIT_DETAIL_API_URL+data.slug, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
@@ -333,7 +333,7 @@ export function deleteDepositDetail(orderId, paymentId, onSuccessCallback, onFai
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_DEPOSIT_DETAIL_API_ENDPOINT.replace("XXX", orderId).replace("YYY", paymentId);
+        const aURL = WORKERY_DEPOSIT_DETAIL_API_URL.replace("XXX", orderId).replace("YYY", paymentId);
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             // Decode our MessagePack (Buffer) into JS Object.

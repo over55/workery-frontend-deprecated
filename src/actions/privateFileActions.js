@@ -7,7 +7,7 @@ import {
     PRIVATE_FILE_LIST_REQUEST, PRIVATE_FILE_LIST_FAILURE, PRIVATE_FILE_LIST_SUCCESS,
     PRIVATE_FILE_DETAIL_REQUEST, PRIVATE_FILE_DETAIL_FAILURE, PRIVATE_FILE_DETAIL_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_PRIVATE_FILE_LIST_API_ENDPOINT, WORKERY_PRIVATE_FILE_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_PRIVATE_FILE_LIST_API_URL, WORKERY_PRIVATE_FILE_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -29,7 +29,7 @@ export function pullPrivateFileList(offset=0, limit=10, filtersMap=new Map(), on
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_PRIVATE_FILE_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_PRIVATE_FILE_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -115,7 +115,7 @@ export function postPrivateFileDetail(postData, successCallback, failedCallback)
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_PRIVATE_FILE_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_PRIVATE_FILE_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -177,7 +177,7 @@ export function pullPrivateFileDetail(id, onSuccessCallback, onFailureCallback) 
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_PRIVATE_FILE_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_PRIVATE_FILE_DETAIL_API_URL+id+"/";
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -253,7 +253,7 @@ export function putPrivateFileDetail(postData, successCallback, failedCallback) 
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        const aURL = WORKERY_PRIVATE_FILE_DETAIL_API_ENDPOINT+postData.id+"/";
+        const aURL = WORKERY_PRIVATE_FILE_DETAIL_API_URL+postData.id+"/";
         console.log("URL:", aURL);
 
         // Perform our API submission.
@@ -319,7 +319,7 @@ export function deletePrivateFileDetail(id, onSuccessCallback, onFailureCallback
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_PRIVATE_FILE_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_PRIVATE_FILE_DETAIL_API_URL+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             // DEVELOPERS NOTE:

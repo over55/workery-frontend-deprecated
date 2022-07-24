@@ -7,7 +7,7 @@ import msgpack from 'msgpack-lite';
 import {
     TAG_ITEM_SEARCH_LIST_REQUEST, TAG_ITEM_SEARCH_LIST_FAILURE, TAG_ITEM_SEARCH_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_TAG_ITEM_SEARCH_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_TAG_ITEM_SEARCH_LIST_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -29,7 +29,7 @@ export function pullTagItemList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_TAG_ITEM_SEARCH_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_TAG_ITEM_SEARCH_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)

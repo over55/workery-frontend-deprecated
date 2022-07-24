@@ -7,7 +7,7 @@ import {
     setAccessTokenInLocalStorage,
     setRefreshTokenInLocalStorage
 } from './jwtUtility';
-import { WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../constants/api";
+import { WORKERY_REFRESH_TOKEN_API_URL } from "../constants/api";
 
 /**
  *  Function returns a custom `Axios` instance tailered to the `Mikaponics`
@@ -104,7 +104,7 @@ const handleRefresh = async token => {
     axiosServiceRefresh.defaults.headers.common.Authorization = `Bearer ${token}`;
     return new Promise((resolve, reject) => {
         axiosServiceRefresh
-        .post(WORKERY_REFRESH_TOKEN_API_ENDPOINT, param)
+        .post(WORKERY_REFRESH_TOKEN_API_URL, param)
         .then(response => {
             resolve(response);
         })

@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import Report17Component from "../../components/reports/report17Component";
 import { validateReport17Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
@@ -122,7 +122,7 @@ class Report17Container extends Component {
             const toDateString = toDate.getTime();
             const fromDateString = fromDate.getTime();
             const accessToken = getAccessTokenFromLocalStorage();
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?token="+accessToken + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&user_type="+userType;
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_URL + "?token="+accessToken + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&user_type="+userType;
             console.log(url);
 
             // The following code will open up a new browser tab and load up the

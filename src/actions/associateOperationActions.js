@@ -9,12 +9,12 @@ import {
     FINANCIAL_LIST_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_ASSOCIATE_BALANCE_OPERATION_API_ENDPOINT,
-    WORKERY_ASSOCIATE_ARCHIVE_API_ENDPOINT,
-    WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
-    WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_ENDPOINT,
-    WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_ENDPOINT,
-    WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT
+    WORKERY_ASSOCIATE_BALANCE_OPERATION_API_URL,
+    WORKERY_ASSOCIATE_ARCHIVE_API_URL,
+    WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_URL,
+    WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_URL,
+    WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_URL,
+    WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_URL
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 import {
@@ -61,7 +61,7 @@ export function pullAssociateBalanceOperation(associateId, onSuccessCallback=nul
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ASSOCIATE_BALANCE_OPERATION_API_ENDPOINT+"?id="+associateId
+        let aURL = WORKERY_ASSOCIATE_BALANCE_OPERATION_API_URL+"?id="+associateId
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
@@ -136,7 +136,7 @@ export function postAssociateDeactivationDetail(postData, onSuccessCallback, onF
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ASSOCIATE_ARCHIVE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ASSOCIATE_ARCHIVE_API_URL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 
@@ -205,7 +205,7 @@ export function postAssociateAvatarCreateOrUpdate(postData, onSuccessCallback, o
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let associate = camelizeKeys(responseData);
@@ -273,7 +273,7 @@ export function postAssociateResidentialUpgradeDetail(postData, onSuccessCallbac
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let associate = camelizeKeys(responseData);
@@ -341,7 +341,7 @@ export function postAssociateDowngradeOperation(postData, onSuccessCallback, onF
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let associate = camelizeKeys(responseData);
@@ -404,7 +404,7 @@ export function postAssociatePermanentlyDeleteOperation(id, onSuccessCallback, o
         const customAxios = getCustomAxios();
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT, { "associate_id": id }).then( (successResponse) => {
+        customAxios.post(WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_URL, { "associate_id": id }).then( (successResponse) => {
             let client = {
                 isAPIRequestRunning: false,
                 errors: {},

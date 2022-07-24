@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import Report15Component from "../../components/reports/report15Component";
 import { validateReport15Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
@@ -113,7 +113,7 @@ class Report15Container extends Component {
             // create our URL to be used for submission.
             const { daysBeforeExpiry, expiryDateType } = this.state;
             const accessToken = getAccessTokenFromLocalStorage();
-            let url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_ENDPOINT + "?token="+accessToken + "&filter_date_type=xxx&filter_days=yyy";
+            let url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_URL + "?token="+accessToken + "&filter_date_type=xxx&filter_days=yyy";
             url = url.replace('xxx', expiryDateType);
             url = url.replace('yyy', daysBeforeExpiry);
 

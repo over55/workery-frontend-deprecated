@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import Report2Component from "../../components/reports/report2Component";
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../actions/associateActions";
 import { validateReport2Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
@@ -153,7 +153,7 @@ class Report2Container extends Component {
             const toDateString = toDate.getTime();
             const fromDateString = fromDate.getTime();
             const accessToken = getAccessTokenFromLocalStorage();
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_URL + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
 
             console.log(url);
 

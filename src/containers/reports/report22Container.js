@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import Report22Component from "../../components/reports/report22Component";
 import { getTagReactSelectOptions, pullTagList } from "../../actions/tagActions";
 import { validateReport22Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 
 
@@ -160,7 +160,7 @@ class Report22Container extends Component {
             if (tags.length > 0) {
                 tagIds = tagIds.slice(0, -1); // Removed last character.
             }
-            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/en/" + WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_ENDPOINT + "?tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/en/" + WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_URL + "?tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
 
             // For debugging purposes only.
             console.log(url);

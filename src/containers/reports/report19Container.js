@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import Report19Component from "../../components/reports/report19Component";
 import { getTagReactSelectOptions, pullTagList } from "../../actions/tagActions";
 import { validateReport19Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
@@ -162,7 +162,7 @@ class Report19Container extends Component {
             const toDateString = toDate.getTime();
             const fromDateString = fromDate.getTime();
             const accessToken = getAccessTokenFromLocalStorage();
-            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_ENDPOINT + "?token="+accessToken +  "&tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL + "?token="+accessToken +  "&tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
 
             // For debugging purposes only.
             console.log(url);

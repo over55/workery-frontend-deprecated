@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { camelizeKeys } from 'humps';
-import { WORKERY_API_BASE_PATH, WORKERY_LOGIN_API_URL, WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../constants/api"
+import { WORKERY_LOGIN_API_URL, WORKERY_REFRESH_TOKEN_API_URL } from "../constants/api"
 
 /**
  *------------------------------------------------------------------------------
@@ -99,8 +99,7 @@ export async function fetchTokenCredentials(email, password) {
  *  Function makes a call to our login API endpoint.
  */
 function atteptRefresh(refreshTokenString) {
-    const refreshTolenUrl = process.env.REACT_APP_API_HOST+WORKERY_API_BASE_PATH + WORKERY_REFRESH_TOKEN_API_ENDPOINT
-    return axios.post(refreshTolenUrl, {
+    return axios.post(WORKERY_REFRESH_TOKEN_API_URL, {
         'refresh_token': refreshTokenString,
     })
 }

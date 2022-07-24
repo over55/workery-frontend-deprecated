@@ -8,14 +8,14 @@ import {
     ASSOCIATE_DETAIL_REQUEST, ASSOCIATE_DETAIL_FAILURE, ASSOCIATE_DETAIL_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_ASSOCIATE_LIST_API_ENDPOINT,
-    WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT,
-    WORKERY_ASSOCIATE_CONTACT_UPDATE_API_ENDPOINT,
-    WORKERY_ASSOCIATE_ADDRESS_UPDATE_API_ENDPOINT,
-    WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_ENDPOINT,
-    WORKERY_ASSOCIATE_METRICS_UPDATE_API_ENDPOINT,
-    WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT,
-    WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_ENDPOINT,} from '../constants/api';
+    WORKERY_ASSOCIATE_LIST_API_URL,
+    WORKERY_ASSOCIATE_DETAIL_API_URL,
+    WORKERY_ASSOCIATE_CONTACT_UPDATE_API_URL,
+    WORKERY_ASSOCIATE_ADDRESS_UPDATE_API_URL,
+    WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_URL,
+    WORKERY_ASSOCIATE_METRICS_UPDATE_API_URL,
+    WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_URL,
+    WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_URL,} from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -37,7 +37,7 @@ export function pullAssociateList(offset=0, limit=10, filtersMap=new Map(), onSu
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ASSOCIATE_LIST_API_ENDPOINT+"?offset="+offset+"&offset_size="+limit;
+        let aURL = WORKERY_ASSOCIATE_LIST_API_URL+"?offset="+offset+"&offset_size="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -124,7 +124,7 @@ export function postAssociateDetail(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ASSOCIATE_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ASSOCIATE_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -186,7 +186,7 @@ export function pullAssociateDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_ASSOCIATE_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -263,7 +263,7 @@ export function putAssociateContactDetail(data, successCallback, failedCallback)
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ASSOCIATE_CONTACT_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_ASSOCIATE_CONTACT_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -327,7 +327,7 @@ export function putAssociateAddressDetail(data, successCallback, failedCallback)
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ASSOCIATE_ADDRESS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_ASSOCIATE_ADDRESS_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -391,7 +391,7 @@ export function putAssociateAccountDetail(data, successCallback, failedCallback)
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -455,7 +455,7 @@ export function putAssociateMetricsDetail(data, successCallback, failedCallback)
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ASSOCIATE_METRICS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_ASSOCIATE_METRICS_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -523,7 +523,7 @@ export function pullTaskItemAvailableAssociateList(offset=0, limit=10, filtersMa
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT+"?offset="+offset+"&offset_size="+limit;
+        let aURL = WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_URL+"?offset="+offset+"&offset_size="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -607,7 +607,7 @@ export function postAssociateChangePasswordOperation(postData, onSuccessCallback
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let associate = camelizeKeys(responseData);

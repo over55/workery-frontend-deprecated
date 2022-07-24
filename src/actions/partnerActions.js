@@ -8,14 +8,14 @@ import {
     PARTNER_DETAIL_REQUEST, PARTNER_DETAIL_FAILURE, PARTNER_DETAIL_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_PARTNER_LIST_API_ENDPOINT,
-    WORKERY_PARTNER_DETAIL_API_ENDPOINT,
-    WORKERY_PARTNER_ADDRESS_UPDATE_API_ENDPOINT,
-    WORKERY_PARTNER_CONTACT_UPDATE_API_ENDPOINT,
-    WORKERY_PARTNER_METRICS_UPDATE_API_ENDPOINT,
-    WORKERY_PARTNER_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
-    WORKERY_PARTNER_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT,
-    WORKERY_PARTNER_ARCHIVE_API_ENDPOINT
+    WORKERY_PARTNER_LIST_API_URL,
+    WORKERY_PARTNER_DETAIL_API_URL,
+    WORKERY_PARTNER_ADDRESS_UPDATE_API_URL,
+    WORKERY_PARTNER_CONTACT_UPDATE_API_URL,
+    WORKERY_PARTNER_METRICS_UPDATE_API_URL,
+    WORKERY_PARTNER_AVATAR_CREATE_OR_UPDATE_API_URL,
+    WORKERY_PARTNER_PERMANENTLY_DELETE_UPGRADE_API_URL,
+    WORKERY_PARTNER_ARCHIVE_API_URL
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -38,7 +38,7 @@ export function pullPartnerList(offset=0, limit=10, filtersMap=new Map(), onSucc
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_PARTNER_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_PARTNER_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -124,7 +124,7 @@ export function postPartnerDetail(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_PARTNER_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_PARTNER_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -186,7 +186,7 @@ export function pullPartnerDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_PARTNER_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_PARTNER_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -263,7 +263,7 @@ export function putPartnerContactDetail(data, onSuccessCallback, onFailureCallba
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_PARTNER_CONTACT_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_PARTNER_CONTACT_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let partner = camelizeKeys(responseData);
 
@@ -331,7 +331,7 @@ export function putPartnerAddressDetail(data, onSuccessCallback, onFailureCallba
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_PARTNER_ADDRESS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_PARTNER_ADDRESS_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let partner = camelizeKeys(responseData);
 
@@ -399,7 +399,7 @@ export function putPartnerMetricsDetail(data, onSuccessCallback, onFailureCallba
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_PARTNER_METRICS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_PARTNER_METRICS_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let partner = camelizeKeys(responseData);
 
@@ -468,7 +468,7 @@ export function deletePartnerDetail(id, onSuccessCallback, onFailureCallback) {
         const customAxios = getCustomAxios();
 
         // Perform our API submission.
-        customAxios.post(WORKERY_PARTNER_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT, { "partner_id": id }).then( (successResponse) => {
+        customAxios.post(WORKERY_PARTNER_PERMANENTLY_DELETE_UPGRADE_API_URL, { "partner_id": id }).then( (successResponse) => {
             let partner = {
                 isAPIRequestRunning: false,
                 errors: {},
@@ -540,7 +540,7 @@ export function postPartnerAvatarCreateOrUpdate(postData, onSuccessCallback, onF
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_PARTNER_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_PARTNER_AVATAR_CREATE_OR_UPDATE_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let partner = camelizeKeys(responseData);
@@ -607,7 +607,7 @@ export function postPartnerDeactivationDetail(postData, onSuccessCallback, onFai
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_PARTNER_ARCHIVE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_PARTNER_ARCHIVE_API_URL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 

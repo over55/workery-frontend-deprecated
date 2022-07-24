@@ -8,15 +8,15 @@ import {
     CLIENT_DETAIL_REQUEST, CLIENT_DETAIL_FAILURE, CLIENT_DETAIL_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_CLIENT_LIST_API_ENDPOINT,
-    WORKERY_CLIENT_DETAIL_API_ENDPOINT,
-    WORKERY_CLIENT_ARCHIVE_API_ENDPOINT,
-    WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT,
-    WORKERY_CLIENT_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT,
-    WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT,
-    WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT,
-    WORKERY_CLIENT_ADDRESS_UPDATE_API_ENDPOINT,
-    WORKERY_CLIENT_METRICS_UPDATE_API_ENDPOINT
+    WORKERY_CLIENT_LIST_API_URL,
+    WORKERY_CLIENT_DETAIL_API_URL,
+    WORKERY_CLIENT_ARCHIVE_API_URL,
+    WORKERY_CLIENT_REZ_UPGRADE_API_URL,
+    WORKERY_CLIENT_PERMANENTLY_DELETE_UPGRADE_API_URL,
+    WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_URL,
+    WORKERY_CLIENT_CONTACT_UPDATE_API_URL,
+    WORKERY_CLIENT_ADDRESS_UPDATE_API_URL,
+    WORKERY_CLIENT_METRICS_UPDATE_API_URL
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -39,7 +39,7 @@ export function pullClientList(offset=0, limit=10, filtersMap=new Map(), onSucce
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_CLIENT_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_CLIENT_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -125,7 +125,7 @@ export function postClientDetail(postData, onSuccessCallback, onFailureCallback)
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_CLIENT_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let client = camelizeKeys(responseData);
@@ -191,7 +191,7 @@ export function pullClientDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_CLIENT_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_CLIENT_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -268,7 +268,7 @@ export function putClientContactDetail(data, onSuccessCallback, onFailureCallbac
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_CLIENT_CONTACT_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let client = camelizeKeys(responseData);
 
@@ -336,7 +336,7 @@ export function putClientAddressDetail(data, onSuccessCallback, onFailureCallbac
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_CLIENT_ADDRESS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_CLIENT_ADDRESS_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let client = camelizeKeys(responseData);
 
@@ -404,7 +404,7 @@ export function putClientMetricsDetail(data, onSuccessCallback, onFailureCallbac
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_CLIENT_METRICS_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_CLIENT_METRICS_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let client = camelizeKeys(responseData);
 
@@ -471,7 +471,7 @@ export function deleteClientDetail(id, onSuccessCallback, onFailureCallback) {
         const customAxios = getCustomAxios();
 
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_PERMANENTLY_DELETE_UPGRADE_API_ENDPOINT, { "customer_id": id }).then( (successResponse) => {
+        customAxios.post(WORKERY_CLIENT_PERMANENTLY_DELETE_UPGRADE_API_URL, { "customer_id": id }).then( (successResponse) => {
             let client = {
                 isAPIRequestRunning: false,
                 errors: {},
@@ -541,7 +541,7 @@ export function postClientDeactivationDetail(postData, onSuccessCallback, onFail
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_ARCHIVE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_CLIENT_ARCHIVE_API_URL, decamelizedData).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = successResponse.data;
 
@@ -611,7 +611,7 @@ export function postClientResidentialUpgradeDetail(postData, onSuccessCallback, 
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_CLIENT_REZ_UPGRADE_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let client = camelizeKeys(responseData);
@@ -679,7 +679,7 @@ export function postClientAvatarCreateOrUpdate(postData, onSuccessCallback, onFa
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let client = camelizeKeys(responseData);

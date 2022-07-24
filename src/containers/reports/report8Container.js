@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import Report8Component from "../../components/reports/report8Component";
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../actions/associateActions";
 import { validateReport8Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_EIGHT_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_EIGHT_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
@@ -136,7 +136,7 @@ class Report8Container extends Component {
             // create our URL to be used for submission.
             const { associate } = this.state;
             const accessToken = getAccessTokenFromLocalStorage();
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_EIGHT_CSV_DOWNLOAD_API_ENDPOINT + "?associate_id="+associate + "&token="+accessToken;
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_EIGHT_CSV_DOWNLOAD_API_URL + "?associate_id="+associate + "&token="+accessToken;
             console.log(url);
 
             // The following code will open up a new browser tab and load up the

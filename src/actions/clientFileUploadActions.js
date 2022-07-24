@@ -7,9 +7,9 @@ import {
     CLIENT_FILE_LIST_REQUEST, CLIENT_FILE_LIST_FAILURE, CLIENT_FILE_LIST_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_CLIENT_FILE_LIST_API_ENDPOINT,
-    WORKERY_CLIENT_FILE_DETAIL_API_ENDPOINT,
-    WORKERY_CLIENT_FILE_ARCHIVE_API_ENDPOINT
+    WORKERY_CLIENT_FILE_LIST_API_URL,
+    WORKERY_CLIENT_FILE_DETAIL_API_URL,
+    WORKERY_CLIENT_FILE_ARCHIVE_API_URL
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -32,7 +32,7 @@ export function pullClientFileUploadList(page=1, sizePerPage=10, filtersMap=new 
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_CLIENT_FILE_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_CLIENT_FILE_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -118,7 +118,7 @@ export function postClientFileUpload(postData, successCallback, failedCallback) 
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_FILE_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_CLIENT_FILE_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -180,7 +180,7 @@ export function deleteClientFileUpload(id, successCallback, failedCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_CLIENT_FILE_ARCHIVE_API_ENDPOINT.replace("XXX", id);
+        const aURL = WORKERY_CLIENT_FILE_ARCHIVE_API_URL.replace("XXX", id);
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;

@@ -7,7 +7,7 @@ import msgpack from 'msgpack-lite';
 import {
     ONGOING_ORDER_COMMENT_LIST_REQUEST, ONGOING_ORDER_COMMENT_LIST_FAILURE, ONGOING_ORDER_COMMENT_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_ONGOING_ORDER_COMMENT_LIST_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -29,7 +29,7 @@ export function pullOngoingOrderCommentList(page=1, sizePerPage=10, filtersMap=n
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_ONGOING_ORDER_COMMENT_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -122,7 +122,7 @@ export function postOngoingOrderComment(postData, successCallback, failedCallbac
         var buffer = msgpack.encode(decamelizedData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
+        customAxios.post(WORKERY_ONGOING_ORDER_COMMENT_LIST_API_URL, buffer).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
             const responseData = msgpack.decode(Buffer(successResponse.data));
 

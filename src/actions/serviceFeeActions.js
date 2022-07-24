@@ -7,7 +7,7 @@ import {
     SERVICE_FEE_LIST_REQUEST, SERVICE_FEE_LIST_FAILURE, SERVICE_FEE_LIST_SUCCESS,
     SERVICE_FEE_DETAIL_REQUEST, SERVICE_FEE_DETAIL_FAILURE, SERVICE_FEE_DETAIL_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_SERVICE_FEE_LIST_API_ENDPOINT, WORKERY_SERVICE_FEE_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_SERVICE_FEE_LIST_API_URL, WORKERY_SERVICE_FEE_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -29,7 +29,7 @@ export function pullServiceFeeList(offset=0, limit=10, filtersMap=new Map(), onS
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_SERVICE_FEE_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_SERVICE_FEE_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -117,7 +117,7 @@ export function postServiceFeeDetail(postData, successCallback, failedCallback) 
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_SERVICE_FEE_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_SERVICE_FEE_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -179,7 +179,7 @@ export function pullServiceFeeDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_SERVICE_FEE_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_SERVICE_FEE_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -256,7 +256,7 @@ export function putServiceFeeDetail(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_SERVICE_FEE_DETAIL_API_ENDPOINT+postData.id, decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_SERVICE_FEE_DETAIL_API_URL+postData.id, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -318,7 +318,7 @@ export function deleteServiceFeeDetail(id, onSuccessCallback, onFailureCallback)
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_SERVICE_FEE_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_SERVICE_FEE_DETAIL_API_URL+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
         // Update the global state of the application to store our

@@ -4,7 +4,7 @@ import Scroll from 'react-scroll';
 
 import Report7Component from "../../components/reports/report7Component";
 import { validateReport7Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_ENDPOINT } from "../../constants/api";
+import { WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
@@ -107,7 +107,7 @@ class Report7Container extends Component {
             // create our URL to be used for submission.
             const { associateType } = this.state;
             const accessToken = getAccessTokenFromLocalStorage();
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_ENDPOINT + "?filter_type="+associateType + "&token="+accessToken;
+            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_URL + "?filter_type="+associateType + "&token="+accessToken;
             console.log(url);
 
             // The following code will open up a new browser tab and load up the

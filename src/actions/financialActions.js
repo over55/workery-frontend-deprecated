@@ -8,7 +8,7 @@ import {
     FINANCIAL_LIST_FAILURE,
     FINANCIAL_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_FINANCIAL_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_FINANCIAL_LIST_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -52,7 +52,7 @@ export function pullFinancialList(offset=0, limit=10, filtersMap=new Map(), onSu
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_FINANCIAL_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_FINANCIAL_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)

@@ -7,7 +7,7 @@ import {
     ACTIVITY_SHEET_LIST_REQUEST, ACTIVITY_SHEET_LIST_FAILURE, ACTIVITY_SHEET_LIST_SUCCESS,
     ACTIVITY_SHEET_DETAIL_REQUEST, ACTIVITY_SHEET_DETAIL_FAILURE, ACTIVITY_SHEET_DETAIL_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_ACTIVITY_SHEET_LIST_API_ENDPOINT, WORKERY_ACTIVITY_SHEET_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_ACTIVITY_SHEET_LIST_API_URL, WORKERY_ACTIVITY_SHEET_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -29,7 +29,7 @@ export function pullActivitySheetList(offset=0, limit=10, filtersMap=new Map(), 
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ACTIVITY_SHEET_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_ACTIVITY_SHEET_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -112,7 +112,7 @@ export function postActivitySheetDetail(postData, successCallback, failedCallbac
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ACTIVITY_SHEET_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ACTIVITY_SHEET_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -174,7 +174,7 @@ export function pullActivitySheetDetail(user, slug) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ACTIVITY_SHEET_DETAIL_API_ENDPOINT+slug;
+        const aURL = WORKERY_ACTIVITY_SHEET_DETAIL_API_URL+slug;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -244,7 +244,7 @@ export function putActivitySheetDetail(user, data, successCallback, failedCallba
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ACTIVITY_SHEET_DETAIL_API_ENDPOINT+data.slug, decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_ACTIVITY_SHEET_DETAIL_API_URL+data.slug, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 

@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import {
     PARTNER_COMMENT_LIST_REQUEST, PARTNER_COMMENT_LIST_FAILURE, PARTNER_COMMENT_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_PARTNER_COMMENT_LIST_API_ENDPOINT, WORKERY_PARTNER_COMMENT_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_PARTNER_COMMENT_LIST_API_URL, WORKERY_PARTNER_COMMENT_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -28,7 +28,7 @@ export function pullPartnerCommentList(page=1, sizePerPage=10, filtersMap=new Ma
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_PARTNER_COMMENT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_PARTNER_COMMENT_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -114,7 +114,7 @@ export function postPartnerComment(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_PARTNER_COMMENT_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_PARTNER_COMMENT_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = decamelizedData;
 
             let device = camelizeKeys(responseData);

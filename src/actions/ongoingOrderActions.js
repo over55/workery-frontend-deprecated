@@ -8,15 +8,15 @@ import {
     ONGOING_ORDER_DETAIL_REQUEST, ONGOING_ORDER_DETAIL_FAILURE, ONGOING_ORDER_DETAIL_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_ONGOING_ORDER_LIST_API_ENDPOINT,
-    WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT,
-    // WORKERY_ONGOING_ORDER_TRANSFER_OPERATION_API_ENDPOINT,
-    // WORKERY_ONGOING_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT,
-    // WORKERY_ONGOING_ORDER_CLOSE_OPERATION_API_ENDPOINT,
-    // WORKERY_ONGOING_ORDER_REOPEN_OPERATION_API_ENDPOINT,
-    // WORKERY_ONGOING_ORDER_POSTPONE_OPERATION_API_ENDPOINT,
-    WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_ENDPOINT,
-    // WORKERY_ONGOING_ORDER_FINANCIAL_UPDATE_API_ENDPOINT
+    WORKERY_ONGOING_ORDER_LIST_API_URL,
+    WORKERY_ONGOING_ORDER_DETAIL_API_URL,
+    // WORKERY_ONGOING_ORDER_TRANSFER_OPERATION_API_URL,
+    // WORKERY_ONGOING_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_URL,
+    // WORKERY_ONGOING_ORDER_CLOSE_OPERATION_API_URL,
+    // WORKERY_ONGOING_ORDER_REOPEN_OPERATION_API_URL,
+    // WORKERY_ONGOING_ORDER_POSTPONE_OPERATION_API_URL,
+    WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_URL,
+    // WORKERY_ONGOING_ORDER_FINANCIAL_UPDATE_API_URL
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -39,7 +39,7 @@ export function pullOngoingOrderList(offset=0, limit=10, filtersMap=new Map(), o
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ONGOING_ORDER_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_ONGOING_ORDER_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -120,7 +120,7 @@ export function pullOngoingOrderDetail(id, onSuccessCallback, onFailureCallback)
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_ONGOING_ORDER_DETAIL_API_URL+id+"/";
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -197,7 +197,7 @@ export function putOngoingOrderDetail(data, onSuccessCallback, onFailureCallback
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 

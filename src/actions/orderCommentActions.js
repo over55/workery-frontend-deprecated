@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import {
     ORDER_COMMENT_LIST_REQUEST, ORDER_COMMENT_LIST_FAILURE, ORDER_COMMENT_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_ORDER_COMMENT_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_ORDER_COMMENT_LIST_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -28,7 +28,7 @@ export function pullOrderCommentList(offset=1, limit=10, filtersMap=new Map(), o
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ORDER_COMMENT_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_ORDER_COMMENT_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -114,7 +114,7 @@ export function postOrderComment(postData, successCallback, failedCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_COMMENT_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_COMMENT_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);

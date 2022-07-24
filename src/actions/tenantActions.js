@@ -7,7 +7,7 @@ import {
     TENANT_LIST_REQUEST, TENANT_LIST_FAILURE, TENANT_LIST_SUCCESS,
     TENANT_DETAIL_REQUEST, TENANT_DETAIL_FAILURE, TENANT_DETAIL_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_TENANT_LIST_API_ENDPOINT, WORKERY_TENANT_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_TENANT_LIST_API_URL, WORKERY_TENANT_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -29,7 +29,7 @@ export function pullTenantList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_TENANT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_TENANT_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -118,7 +118,7 @@ export function postTenantDetail(postData, successCallback, failedCallback) {
         console.log("postTenantDetail | decamelizedData", decamelizedData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TENANT_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_TENANT_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let tenantData = camelizeKeys(responseData);
@@ -180,7 +180,7 @@ export function pullTenantDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_TENANT_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_TENANT_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data
@@ -257,7 +257,7 @@ export function putTenantDetail(postData, onSuccessCallback, onFailureCallback) 
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_TENANT_DETAIL_API_ENDPOINT+postData.id, decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_TENANT_DETAIL_API_URL+postData.id, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let tenantData = camelizeKeys(responseData);
 

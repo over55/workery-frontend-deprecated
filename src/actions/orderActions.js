@@ -8,23 +8,23 @@ import {
     ORDER_DETAIL_REQUEST, ORDER_DETAIL_FAILURE, ORDER_DETAIL_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_MY_ORDER_LIST_API_ENDPOINT,
-    WORKERY_MY_ORDER_DETAIL_API_ENDPOINT,
-    WORKERY_ORDER_LIST_API_ENDPOINT,
-    WORKERY_ORDER_DETAIL_API_ENDPOINT,
-    WORKERY_ORDER_INVOICE_RETRIEVE_API_ENDPOINT,
-    WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT,
-    WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT,
-    WORKERY_ORDER_CLOSE_OPERATION_API_ENDPOINT,
-    WORKERY_ORDER_REOPEN_OPERATION_API_ENDPOINT,
-    WORKERY_ORDER_POSTPONE_OPERATION_API_ENDPOINT,
-    WORKERY_ORDER_CLONE_OPERATION_API_ENDPOINT,
-    WORKERY_ORDER_INVOICE_OPERATION_API_ENDPOINT,
-    WORKERY_ORDER_LITE_UPDATE_API_ENDPOINT,
-    WORKERY_ORDER_FINANCIAL_UPDATE_API_ENDPOINT,
-    WORKERY_INVOICE_FIRST_SECTION_UPDATE_API_ENDPOINT,
-    WORKERY_INVOICE_SECOND_SECTION_UPDATE_API_ENDPOINT,
-    WORKERY_INVOICE_THIRD_SECTION_UPDATE_API_ENDPOINT,
+    WORKERY_MY_ORDER_LIST_API_URL,
+    WORKERY_MY_ORDER_DETAIL_API_URL,
+    WORKERY_ORDER_LIST_API_URL,
+    WORKERY_ORDER_DETAIL_API_URL,
+    WORKERY_ORDER_INVOICE_RETRIEVE_API_URL,
+    WORKERY_ORDER_TRANSFER_OPERATION_API_URL,
+    WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_URL,
+    WORKERY_ORDER_CLOSE_OPERATION_API_URL,
+    WORKERY_ORDER_REOPEN_OPERATION_API_URL,
+    WORKERY_ORDER_POSTPONE_OPERATION_API_URL,
+    WORKERY_ORDER_CLONE_OPERATION_API_URL,
+    WORKERY_ORDER_INVOICE_OPERATION_API_URL,
+    WORKERY_ORDER_LITE_UPDATE_API_URL,
+    WORKERY_ORDER_FINANCIAL_UPDATE_API_URL,
+    WORKERY_INVOICE_FIRST_SECTION_UPDATE_API_URL,
+    WORKERY_INVOICE_SECOND_SECTION_UPDATE_API_URL,
+    WORKERY_INVOICE_THIRD_SECTION_UPDATE_API_URL,
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -47,7 +47,7 @@ export function pullOrderList(offset=0, limit=10, filtersMap=new Map(), onSucces
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ORDER_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_ORDER_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -128,7 +128,7 @@ export function pullMyOrderList(offset=0, limit=10, filtersMap=new Map(), onSucc
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_MY_ORDER_LIST_API_ENDPOINT+"?offset="+offset+"&limit="+limit;
+        let aURL = WORKERY_MY_ORDER_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -215,7 +215,7 @@ export function postOrderDetail(postData, onSuccessCallback, onFailureCallback) 
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_LIST_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_LIST_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -281,7 +281,7 @@ export function pullOrderDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ORDER_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_ORDER_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -349,7 +349,7 @@ export function pullMyOrderDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_MY_ORDER_DETAIL_API_ENDPOINT+id;
+        const aURL = WORKERY_MY_ORDER_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
@@ -418,7 +418,7 @@ export function pullOrderInvoice(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ORDER_INVOICE_RETRIEVE_API_ENDPOINT.replace("XXX", id);
+        const aURL = WORKERY_ORDER_INVOICE_RETRIEVE_API_URL.replace("XXX", id);
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data
@@ -496,7 +496,7 @@ export function putOrderLiteDetail(data, onSuccessCallback, onFailureCallback) {
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ORDER_LITE_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_ORDER_LITE_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -560,7 +560,7 @@ export function putOrderFinancialDetail(data, onSuccessCallback, onFailureCallba
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_ORDER_FINANCIAL_UPDATE_API_ENDPOINT.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_ORDER_FINANCIAL_UPDATE_API_URL.replace("XXX", data.id), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -623,7 +623,7 @@ export function putInvoiceFirstSection(data, onSuccessCallback, onFailureCallbac
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_INVOICE_FIRST_SECTION_UPDATE_API_ENDPOINT.replace("XXX", data.orderId), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_INVOICE_FIRST_SECTION_UPDATE_API_URL.replace("XXX", data.orderId), decamelizedData).then( (successResponse) => {
             let device = successResponse.data;
 
             // Extra.
@@ -685,7 +685,7 @@ export function putInvoiceSecondSection(data, onSuccessCallback, onFailureCallba
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_INVOICE_SECOND_SECTION_UPDATE_API_ENDPOINT.replace("XXX", data.orderId), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_INVOICE_SECOND_SECTION_UPDATE_API_URL.replace("XXX", data.orderId), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -748,7 +748,7 @@ export function putInvoiceThirdSection(data, onSuccessCallback, onFailureCallbac
         let decamelizedData = decamelizeKeys(data);
 
         // Perform our API submission.
-        customAxios.put(WORKERY_INVOICE_THIRD_SECTION_UPDATE_API_ENDPOINT.replace("XXX", data.orderId), decamelizedData).then( (successResponse) => {
+        customAxios.put(WORKERY_INVOICE_THIRD_SECTION_UPDATE_API_URL.replace("XXX", data.orderId), decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
@@ -815,7 +815,7 @@ export function postOrderTransfer(postData, onSuccessCallback, onFailureCallback
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_TRANSFER_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -882,7 +882,7 @@ export function postOrderUnassignAssociate(postData, onSuccessCallback, onFailur
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -949,7 +949,7 @@ export function postOrderClose(postData, onSuccessCallback, onFailureCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_CLOSE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_CLOSE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -1016,7 +1016,7 @@ export function postOrderReopen(postData, onSuccessCallback, onFailureCallback) 
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_REOPEN_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_REOPEN_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -1083,7 +1083,7 @@ export function postOrderPostpone(postData, onSuccessCallback, onFailureCallback
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_POSTPONE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_POSTPONE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -1151,7 +1151,7 @@ export function cloneOrder(postData, onSuccessCallback, onFailureCallback) {
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_CLONE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_CLONE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
@@ -1218,7 +1218,7 @@ export function invoiceOrderOperation(postData, onSuccessCallback, onFailureCall
         let decamelizedData = decamelizeKeys(postData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_INVOICE_OPERATION_API_ENDPOINT, decamelizedData).then( (successResponse) => {
+        customAxios.post(WORKERY_ORDER_INVOICE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
             const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
