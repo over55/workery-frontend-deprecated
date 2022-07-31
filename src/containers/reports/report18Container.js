@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 import Report18Component from "../../components/reports/report18Component";
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../actions/associateActions";
 import { validateReport18Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
+import { WORKERY_REPORT_EIGHTEEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
@@ -146,7 +146,7 @@ class Report18Container extends Component {
             const toDateString = toDate.getTime();
             const fromDateString = fromDate.getTime();
             const accessToken = getAccessTokenFromLocalStorage();
-            const url =  WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
+            const url =  WORKERY_REPORT_EIGHTEEN_CSV_DOWNLOAD_API_URL + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
 
             console.log(url);
 

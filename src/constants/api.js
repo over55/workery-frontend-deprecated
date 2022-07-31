@@ -137,6 +137,7 @@ export const WORKERY_REPORT_FOURTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_AP
 export const WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/15';
 export const WORKERY_REPORT_SIXTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/16';
 export const WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/17';
+export const WORKERY_REPORT_EIGHTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/18';
 export const WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/19';
 export const WORKERY_REPORT_TWENTY_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/20';
 export const WORKERY_REPORT_TWENTY_ONE_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/21';
