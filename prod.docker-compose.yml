@@ -1,8 +1,7 @@
 version: '3.7'
 
 services:
-
-  sample-prod:
+  app:
     container_name: workery-front
     build:
       context: .
