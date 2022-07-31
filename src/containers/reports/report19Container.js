@@ -6,7 +6,6 @@ import Report19Component from "../../components/reports/report19Component";
 import { getTagReactSelectOptions, pullTagList } from "../../actions/tagActions";
 import { validateReport19Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
-import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 

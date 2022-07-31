@@ -6,7 +6,7 @@ import Report22Component from "../../components/reports/report22Component";
 import { getTagReactSelectOptions, pullTagList } from "../../actions/tagActions";
 import { validateReport22Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_URL } from "../../constants/api";
-import { getSubdomain } from "../../helpers/urlUtility";
+import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
 class Report22Container extends Component {
@@ -136,16 +136,12 @@ class Report22Container extends Component {
             // the file multiple times.
             this.setState({ isLoading: true, })
 
-            // DEVELOPERS NOTE:
-            // Because we have a multi-tenant architecture, we need to make calls
-            // to the specific tenant for the CSV download API to work.
-            const schema = getSubdomain();
-
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { tags, fromDate, toDate, jobState } = this.state;
-            const toDateString = toDate.toISOString().slice(0, 10);
-            const fromDateString = fromDate.toISOString().slice(0, 10);
+            const toDateString = toDate.getTime();
+            const fromDateString = fromDate.getTime();
+            const accessToken = getAccessTokenFromLocalStorage();
             console.log(tags);
 
             let tagIds = "";
@@ -160,7 +156,7 @@ class Report22Container extends Component {
             if (tags.length > 0) {
                 tagIds = tagIds.slice(0, -1); // Removed last character.
             }
-            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/en/" + WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_URL + "?tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+            url = WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_URL + "?token="+accessToken + "&tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
 
             // For debugging purposes only.
             console.log(url);
