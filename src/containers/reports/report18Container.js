@@ -47,7 +47,7 @@ class Report18Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         const parametersMap = new Map();
-        parametersMap.set('state', 1);
+        parametersMap.set('state', 0);
         this.props.pullAssociateList(0, 5000, parametersMap, this.onAssociatesListCallback, null);
     }
 
