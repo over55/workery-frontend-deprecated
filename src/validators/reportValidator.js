@@ -240,6 +240,29 @@ export function validateReport17Input(data) {
 }
 
 
+export function validateReport18Input(data) {
+    let errors = {};
+
+    if (data.associate === undefined || data.associate === null || data.associate === "" || isNaN(data.associate) ) {
+        errors.associate = 'This field is required';
+    }
+    if (data.fromDate === undefined || data.fromDate === null || data.fromDate === "" || isNaN(data.fromDate) ) {
+        errors.fromDate = 'This field is required';
+    }
+    if (data.toDate === undefined || data.toDate === null || data.toDate === "" || isNaN(data.toDate) ) {
+        errors.toDate = 'This field is required';
+    }
+    if (data.jobState === undefined || data.jobState === null || data.jobState === "" ) {
+        errors.jobState = 'This field is required';
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    }
+}
+
+
 export function validateReport19Input(data) {
     let errors = {};
 

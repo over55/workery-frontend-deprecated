@@ -4,8 +4,8 @@ import Scroll from 'react-scroll';
 
 import Report18Component from "../../components/reports/report18Component";
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../actions/associateActions";
-import { validateReport2Input } from "../../validators/reportValidator";
-import { WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_URL } from "../../constants/api";
+import { validateReport18Input } from "../../validators/reportValidator";
+import { WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
@@ -47,7 +47,7 @@ class Report18Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         const parametersMap = new Map();
-        parametersMap.set('state', 0);
+        parametersMap.set('state', 1);
         this.props.pullAssociateList(0, 5000, parametersMap, this.onAssociatesListCallback, null);
     }
 
@@ -133,21 +133,20 @@ class Report18Container extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateReport2Input(this.state);
+        const { errors, isValid } = validateReport18Input(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
             // Disable the button so the user cannot double click and download
             // the file multiple times.
             this.setState({ isLoading: true, })
-
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { associate, fromDate, toDate, jobState } = this.state;
             const toDateString = toDate.getTime();
             const fromDateString = fromDate.getTime();
             const accessToken = getAccessTokenFromLocalStorage();
-            const url = WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_URL + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
+            const url =  WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
 
             console.log(url);
 
