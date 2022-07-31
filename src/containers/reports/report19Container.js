@@ -137,11 +137,6 @@ class Report19Container extends Component {
             // the file multiple times.
             this.setState({ isLoading: true, })
 
-            // DEVELOPERS NOTE:
-            // Because we have a multi-tenant architecture, we need to make calls
-            // to the specific tenant for the CSV download API to work.
-            const schema = getSubdomain();
-
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { tags, fromDate, toDate, jobState } = this.state;
@@ -162,7 +157,7 @@ class Report19Container extends Component {
             const toDateString = toDate.getTime();
             const fromDateString = fromDate.getTime();
             const accessToken = getAccessTokenFromLocalStorage();
-            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL + "?token="+accessToken +  "&tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+            url = WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL + "?token="+accessToken +  "&tag_ids=" + tagIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
 
             // For debugging purposes only.
             console.log(url);

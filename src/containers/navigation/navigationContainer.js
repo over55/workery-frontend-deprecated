@@ -238,6 +238,7 @@ class ItemNode extends React.Component {
         this.state = {
             isOpen:false
         }
+        console.log("#####");
     }
 
     toggle = () => {
@@ -249,6 +250,7 @@ class ItemNode extends React.Component {
 
     render() {
         const { id, icon, title, url, children } = this.props.menuData;
+        console.log("----->",id, icon, title, url, children);
         const sideMenuToggle = this.props.sideMenuToggle;
         if(children)
         {
@@ -381,8 +383,7 @@ class NavigationContainer extends React.Component {
         }
 
         // Check if we are in a tenant or not.
-        const subdomain = getSubdomain();
-        const isTenant = subdomain !== null && subdomain !== undefined;
+        const isTenant = true; // TODO: HANDLE WHEN IN THE ORGANIZATION SECTION.
 
         // Get state variables.
         const { tasksCount } = this.state;
