@@ -4,7 +4,6 @@ import Scroll from 'react-scroll';
 
 import Report6Component from "../../components/reports/report6Component";
 import { WORKERY_REPORT_SIX_CSV_DOWNLOAD_API_URL } from "../../constants/api";
-import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
@@ -81,16 +80,10 @@ class Report6Container extends Component {
         // Disable the button so the user cannot double click and download
         // the file multiple times.
         this.setState({ isLoading: true, })
-
-        // DEVELOPERS NOTE:
-        // Because we have a multi-tenant architecture, we need to make calls
-        // to the specific tenant for the CSV download API to work.
-        const schema = getSubdomain();
-
         // Extract the selected options and convert to ISO string format, also
         // create our URL to be used for submission.
         const accessToken = getAccessTokenFromLocalStorage();
-        const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_SIX_CSV_DOWNLOAD_API_URL+ "?token="+accessToken;
+        const url = WORKERY_REPORT_SIX_CSV_DOWNLOAD_API_URL+ "?token="+accessToken;
         console.log(url);
 
         // The following code will open up a new browser tab and load up the

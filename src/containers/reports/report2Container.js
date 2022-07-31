@@ -6,7 +6,6 @@ import Report2Component from "../../components/reports/report2Component";
 import { pullAssociateList, getAssociateReactSelectOptions } from "../../actions/associateActions";
 import { validateReport2Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_URL } from "../../constants/api";
-import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
@@ -141,19 +140,13 @@ class Report2Container extends Component {
             // Disable the button so the user cannot double click and download
             // the file multiple times.
             this.setState({ isLoading: true, })
-
-            // DEVELOPERS NOTE:
-            // Because we have a multi-tenant architecture, we need to make calls
-            // to the specific tenant for the CSV download API to work.
-            const schema = getSubdomain();
-
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { associate, fromDate, toDate, jobState } = this.state;
             const toDateString = toDate.getTime();
             const fromDateString = fromDate.getTime();
             const accessToken = getAccessTokenFromLocalStorage();
-            const url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_URL + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
+            const url =  WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_URL + "?from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState+"&associate_id="+associate+"&token="+accessToken;
 
             console.log(url);
 

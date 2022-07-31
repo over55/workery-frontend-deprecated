@@ -6,7 +6,6 @@ import Report13Component from "../../components/reports/report13Component";
 import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../actions/skillSetActions";
 import { validateReport13Input } from "../../validators/reportValidator";
 import { WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_URL } from "../../constants/api";
-import { getSubdomain } from "../../helpers/urlUtility";
 import { getAccessTokenFromLocalStorage } from "../../helpers/jwtUtility";
 
 
@@ -137,11 +136,6 @@ class Report13Container extends Component {
             // the file multiple times.
             this.setState({ isLoading: true, })
 
-            // DEVELOPERS NOTE:
-            // Because we have a multi-tenant architecture, we need to make calls
-            // to the specific tenant for the CSV download API to work.
-            const schema = getSubdomain();
-
             // Extract the selected options and convert to ISO string format, also
             // create our URL to be used for submission.
             const { skillSets, fromDate, toDate, jobState } = this.state;
@@ -162,7 +156,7 @@ class Report13Container extends Component {
                 skillsetIds = skillsetIds.slice(0, -1); // Removed last character.
             }
             const accessToken = getAccessTokenFromLocalStorage();
-            url = process.env.REACT_APP_API_PROTOCOL + "://" + schema + "." + process.env.REACT_APP_API_DOMAIN + "/" + WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_URL + "?token="+accessToken + "&skillset_ids=" + skillsetIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
+            url = WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_URL + "?token="+accessToken + "&skillset_ids=" + skillsetIds + "&from_dt="+fromDateString+"&to_dt="+toDateString+"&state="+jobState;
 
             // For debugging purposes only.
             console.log(url);
