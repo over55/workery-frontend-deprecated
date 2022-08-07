@@ -13,6 +13,7 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 export default class AdminInvoiceRetrieveComponent extends Component {
     render() {
         const { id, invoice, errors, flashMessage, isLoading, onDownloadInvoicePDFClick } = this.props;
+        console.log("AdminInvoiceRetrieveComponent | Invoice:", invoice);
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -59,7 +60,7 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                     </div>
                 </div>
 
-                {invoice && invoice.invoiceId !== undefined && invoice.invoiceId !== null
+                {invoice && invoice.workOrderId !== undefined && invoice.workOrderId !== null
                     ? <div className="row pt-3 mb-4 pb-2">
                         <div className="col-md-10 mx-auto p-2">
 
@@ -78,7 +79,7 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Invoice ID</th>
-                                        <td>{invoice && invoice.invoiceId}</td>
+                                        <td>{invoice && invoice.workOrderId}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Invoice Date</th>

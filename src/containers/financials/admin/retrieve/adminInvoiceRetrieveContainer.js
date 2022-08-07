@@ -119,12 +119,15 @@ class AdminInvoiceRetrieveContainer extends Component {
     }
 
     onSuccessCallback(response) {
-        // console.log(response);
-        this.setState({ isLoading: false, })
+        this.setState({
+            isLoading: false,
+            invoice: response,
+        })
     }
 
     onFailureCallback(errors) {
         console.log(errors);
+        this.setData({ invoice : null});
     }
 
     /**
@@ -150,7 +153,9 @@ class AdminInvoiceRetrieveContainer extends Component {
      */
 
     render() {
-        const invoice = this.props.orderDetail ? this.props.orderDetail : {};
+        // const invoice = this.props.orderDetail ? this.props.orderDetail : {};
+        // console.log("AdminInvoiceRetrieveContainer | invoice:", invoice);
+        const { invoice } = this.state;
         return (
             <AdminInvoiceRetrieveComponent
                 id={this.state.id}
