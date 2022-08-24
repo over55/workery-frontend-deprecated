@@ -151,7 +151,7 @@ function idFormatter(cell, row){
 function clientNameFormatter(cell, row){
     if (row.customerName === null || row.customerName === undefined || row.customerName === "None") { return "-"; }
     return (
-        <Link to={`/client/${row.customer}`} target="_blank">
+        <Link to={`/client/${row.customerId}`} target="_blank">
             {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     );
@@ -161,7 +161,7 @@ function clientNameFormatter(cell, row){
 function associateNameFormatter(cell, row){
     if (row.associateName === null || row.associateName === undefined || row.associateName === "None") { return "-"; }
     return (
-        <Link to={`/associate/${row.associate}`} target="_blank">
+        <Link to={`/associate/${row.associateId}`} target="_blank">
             {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     );
