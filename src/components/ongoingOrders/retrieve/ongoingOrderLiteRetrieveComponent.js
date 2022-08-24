@@ -131,7 +131,7 @@ export default class OngoingOrderLiteRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Status</th>
-                                    <td>{ongoingOrder.prettyStatus}</td>
+                                    <td>{ongoingOrder.status}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Type</th>

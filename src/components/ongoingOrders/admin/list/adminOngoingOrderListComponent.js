@@ -172,7 +172,7 @@ function emailFormatter(cell, row){
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/ongoingOrder/${row.id}`}>
+        <Link to={`/ongoing-order/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )

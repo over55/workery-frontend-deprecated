@@ -120,7 +120,7 @@ export function pullOngoingOrderDetail(id, onSuccessCallback, onFailureCallback)
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_ONGOING_ORDER_DETAIL_API_URL+id+"/";
+        const aURL = WORKERY_ONGOING_ORDER_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
