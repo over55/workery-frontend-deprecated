@@ -1,16 +1,32 @@
-version: '3.7'
 
+version: '3.8'
 services:
   app:
-    container_name: workery-frontend
+    stdin_open: true
+    container_name: workery_frontend
+    restart: unless-stopped
     build:
-      context: .
-      dockerfile: prod.Dockerfile
+        context: .
+        dockerfile: prod.Dockerfile
+        args:
+          - REACT_APP_API_HOST=http://theworkery.cloud
+          - REACT_APP_API_DOMAIN=theworkery.cloud
+          - REACT_APP_API_PROTOCOL=https
+          - REACT_APP_WWW_DOMAIN=theworkery.app
+          - REACT_APP_WWW_PROTOCOL=https
+          - REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES=10485760
     ports:
-      - '1337:80'
+        - '3000:3000'
+    environment:
+        CHOKIDAR_USEPOLLING: "true"
+    volumes:
+        - ./:/app
 
-# Usage:
-#   docker-compose -f prod.docker-compose.yml up
-#
-# Go to in your browser:
-#   http://localhost:1337/
+## Usage:
+##   docker-compose -p workery_frontend -f prod.docker-compose.yml up
+##
+## Go to in your browser:
+##   http://localhost:1337/
+
+
+# https://medium.com/@marvels0098/how-to-include-reactjs-app-in-docker-container-2e73068ce2d5
