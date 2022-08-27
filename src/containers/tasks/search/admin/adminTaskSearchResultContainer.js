@@ -153,7 +153,7 @@ class AdminTaskSearchResultContainer extends Component {
 
             // DEVELOPERS NOTE:
             // (1) We are commenting out this code because of the following
-            //     issue in github: https://github.com/over55/workery-front/issues/259
+            //     issue in github: https://github.com/over55/workery-frontend/issues/259
             // (2) We will automatically set `isClosed` to be `3`.
             // if (filters.isClosed === undefined) {
             //     parametersMap.delete("isClosed");

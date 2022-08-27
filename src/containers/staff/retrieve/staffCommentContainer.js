@@ -20,7 +20,7 @@ class StaffCommentContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
 
-        // Force active users as per issue via https://github.com/over55/workery-front/issues/296
+        // Force active users as per issue via https://github.com/over55/workery-frontend/issues/296
         var parametersMap = new Map();
         parametersMap.set("staff_id", id);
         parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `StaffListComponent`.

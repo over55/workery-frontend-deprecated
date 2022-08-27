@@ -17,7 +17,7 @@ class SkillSetListContainer extends Component {
     constructor(props) {
         super(props);
 
-        // Force active users as per issue via https://github.com/over55/workery-front/issues/296
+        // Force active users as per issue via https://github.com/over55/workery-frontend/issues/296
         var parametersMap = new Map();
         parametersMap.set("state", 1);
         parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `SkillSetListComponent`.
@@ -137,7 +137,7 @@ class SkillSetListContainer extends Component {
 
         } else if (type === "filter") {
             //
-            // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
+            // DEPRECATED VIA https://github.com/over55/workery-frontend/issues/296
             //
             console.log(type, filters); // For debugging purposes only.
             if (filters.state === undefined) {

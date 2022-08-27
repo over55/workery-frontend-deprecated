@@ -16,10 +16,10 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 ## Using the production Dockerfile, build and tag the Docker image:
-##   $ docker build -f prod.Dockerfile -t workery-front:latest .
+##   $ docker build -f prod.Dockerfile -t workery-frontend:latest .
 ##
 ## Spin up the container:
-##   $ docker run -it --rm -p 1337:80 workery-front:latest
+##   $ docker run -it --rm -p 1337:80 workery-frontend:latest
 ##
 ## Navigate to http://localhost:1337/ in your browser to view the app.
 ##

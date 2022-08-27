@@ -58,7 +58,7 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'customerName',
             text: 'Customer',
-            // sort: true, // Commented by b/c of https://github.com/over55/workery-front/issues/302
+            // sort: true, // Commented by b/c of https://github.com/over55/workery-frontend/issues/302
             formatter: customerNameFormatter,
         },{
             dataField: 'assignmentDate',

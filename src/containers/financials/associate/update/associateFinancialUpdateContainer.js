@@ -217,7 +217,7 @@ class AssociateFinancialUpdateContainer extends Component {
         this.setState({ errors: {}, isLoading: false, });
         this.props.setFlashMessage("success", "Order has been successfully updated.");
 
-        // According to the following ticket (https://github.com/over55/workery-front/issues/212)
+        // According to the following ticket (https://github.com/over55/workery-frontend/issues/212)
         // we are to redirect to a different page where the user can handle
         // zeroing the amount owing.
         const invoiceAmountDue = order['invoiceAmountDue'];

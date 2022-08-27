@@ -60,7 +60,7 @@ class RemoteListComponent extends Component {
         },{
             dataField: 'associateName',
             text: 'Associate',
-            // sort: true, // Commented out via https://github.com/over55/workery-front/issues/302
+            // sort: true, // Commented out via https://github.com/over55/workery-frontend/issues/302
             formatter: associateNameFormatter,
         },{
             dataField: 'assignmentDate',
