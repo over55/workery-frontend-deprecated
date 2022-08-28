@@ -13,22 +13,6 @@ ARG REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES
 ARG REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE
 
 # Set environment variables in this image when built.
-ENV REACT_APP_API_HOST $REACT_APP_API_HOST
-ENV REACT_APP_API_DOMAIN $REACT_APP_API_DOMAIN
-ENV REACT_APP_API_PROTOCOL $REACT_APP_API_PROTOCOL
-ENV REACT_APP_WWW_DOMAIN $REACT_APP_WWW_DOMAIN
-ENV REACT_APP_WWW_PROTOCOL $REACT_APP_WWW_PROTOCOL
-ENV REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES $REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES
-ENV REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE $REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE
-
-# Install dependencies
-COPY package.json ./
-COPY yarn.lock ./
-RUN yarn install --frozen-lockfile
-
-# Copy source code.
-COPY . .
-
 # Apply environment variables with the build.
 RUN REACT_APP_API_HOST=${REACT_APP_API_HOST} \
   REACT_APP_API_DOMAIN=${REACT_APP_API_DOMAIN} \
@@ -37,6 +21,23 @@ RUN REACT_APP_API_HOST=${REACT_APP_API_HOST} \
   REACT_APP_WWW_PROTOCOL=${REACT_APP_WWW_PROTOCOL} \
   REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES=${REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES} \
   REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE=${REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE}
+
+# Verify environment variables work.
+RUN echo "$REACT_APP_API_HOST"
+RUN echo "$REACT_APP_API_DOMAIN"
+RUN echo "$REACT_APP_API_PROTOCOL"
+RUN echo "$REACT_APP_WWW_DOMAIN"
+RUN echo "$REACT_APP_WWW_PROTOCOL"
+RUN echo "$REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES"
+RUN echo "$REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE"
+
+# Install dependencies
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+# Copy source code.
+COPY . .
 
 # Build production instance.
 RUN yarn build
@@ -51,7 +52,7 @@ EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
 
 ### BUILD
-# docker build -f prod.Dockerfile -t over55/workery-frontend:latest --platform linux/amd64 .
+# docker build -f prod.Dockerfile -t over55/workery-frontend:latest --platform linux/amd64 --build-arg REACT_APP_API_HOST=https://theworkery.cloud --build-arg REACT_APP_API_DOMAIN=theworkery.cloud --build-arg REACT_APP_API_PROTOCOL=https --build-arg REACT_APP_WWW_DOMAIN=theworkery.app --build-arg REACT_APP_WWW_PROTOCOL=https --build-arg REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES=10485760 --build-arg REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE="File is too large. The maximum size is 10 MB." .
 
 ### TAG
 # docker tag over55/workery-frontend:latest over55/workery-frontend:latest
