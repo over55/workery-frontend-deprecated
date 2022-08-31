@@ -72,15 +72,15 @@ class LoginContainer extends Component {
         console.log(profile); // For debugging purposes.
 
         this.setState({ errors: {}, });
-        const { tenantSchemaName, roleId } = profile;
-        if (tenantSchemaName === null || tenantSchemaName === undefined || tenantSchemaName === "null" || tenantSchemaName === "" || roleId === EXECUTIVE_ROLE_ID) {
+        const { roleId } = profile;
+        if (roleId === EXECUTIVE_ROLE_ID) {
             const location = process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_WWW_DOMAIN + "/organizations";
             console.log(location);
             window.location = location; // Do not use `react-router-dom` library.
         } else {
             const accessToken = getAccessTokenFromLocalStorage();
             const refreshToken = getRefreshTokenFromLocalStorage();
-            const location = process.env.REACT_APP_WWW_PROTOCOL + "://" + tenantSchemaName + "." + process.env.REACT_APP_WWW_DOMAIN + "/dashboard-redirect/"+accessToken+"/"+refreshToken;
+            const location = process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_WWW_DOMAIN + "/dashboard-redirect/"+accessToken+"/"+refreshToken;
             window.location = location; // Do not use `react-router-dom` library.
         }
     }
