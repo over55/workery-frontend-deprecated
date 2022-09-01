@@ -1,7 +1,6 @@
 import axios from 'axios';
 import store from '../store';
 import { camelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 
 import { LOGOUT_REQUEST, LOGOUT_FAILURE, LOGOUT_SUCCESS } from "../constants/actionTypes"
 import { WORKERY_LOGOUT_API_URL } from "../constants/api"

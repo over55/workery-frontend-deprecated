@@ -2,7 +2,6 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     ORDER_FILE_LIST_REQUEST, ORDER_FILE_LIST_FAILURE, ORDER_FILE_LIST_SUCCESS
@@ -43,12 +42,7 @@ export function pullOrderFileUploadList(page=1, sizePerPage=10, filtersMap=new M
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-
-            console.log(responseData); // For debugging purposes.
-
-            let data = camelizeKeys(responseData);
+            let data = camelizeKeys(successResponse.data);
 
             // Extra.
             data['isAPIRequestRunning'] = false;
@@ -72,12 +66,7 @@ export function pullOrderFileUploadList(page=1, sizePerPage=10, filtersMap=new M
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
-
-                let errors = camelizeKeys(responseData);
+                let errors = camelizeKeys(exception.response.data);
 
                 console.log("pullOrderFileUploadList | error:", errors); // For debuggin purposes only.
 
@@ -122,15 +111,10 @@ export function postOrderFileUpload(postData, successCallback, failedCallback) {
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_ORDER_FILE_LIST_API_URL, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_ORDER_FILE_LIST_API_URL, decamelizedData).then( (successResponse) => {
 
-            let device = camelizeKeys(responseData);
+            let device = camelizeKeys(successResponse.data);
 
             // Extra.
             device['isAPIRequestRunning'] = false;
@@ -146,12 +130,7 @@ export function postOrderFileUpload(postData, successCallback, failedCallback) {
             );
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
-
-                let errors = camelizeKeys(responseData);
+                let errors = camelizeKeys(exception.response.data);
 
                 console.log("postOrderFileUploadList | error:", errors); // For debuggin purposes only.
 
@@ -195,11 +174,8 @@ export function deleteOrderFileUpload(id, successCallback, failedCallback) {
         const aURL = WORKERY_ORDER_FILE_ARCHIVE_API_URL.replace("XXX", id);
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-            // console.log(successResult); // For debugging purposes.
 
-            let profile = camelizeKeys(responseData);
+            let profile = camelizeKeys(successResponse.data);
 
             // Extra.
             profile['isAPIRequestRunning'] = false;
@@ -219,12 +195,7 @@ export function deleteOrderFileUpload(id, successCallback, failedCallback) {
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
-
-                let errors = camelizeKeys(responseData);
+                let errors = camelizeKeys(exception.response.data);
 
                 console.log("deleteOrderFileUpload | error:", errors); // For debuggin purposes only.
 

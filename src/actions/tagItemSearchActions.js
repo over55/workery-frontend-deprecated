@@ -2,7 +2,6 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     TAG_ITEM_SEARCH_LIST_REQUEST, TAG_ITEM_SEARCH_LIST_FAILURE, TAG_ITEM_SEARCH_LIST_SUCCESS
@@ -39,12 +38,7 @@ export function pullTagItemList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-
-            console.log(responseData); // For debugging purposes.
-
-            let data = camelizeKeys(responseData);
+            let data = camelizeKeys(successResponse.data);
 
             // Extra.
             data['isAPIRequestRunning'] = false;
@@ -68,12 +62,7 @@ export function pullTagItemList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
-
-                let errors = camelizeKeys(responseData);
+                let errors = camelizeKeys(exception.response.data);
 
                 console.log("pullTagItemList | error:", errors); // For debuggin purposes only.
 

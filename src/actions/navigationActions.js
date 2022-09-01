@@ -1,7 +1,6 @@
 import axios from 'axios';
 import store from '../store';
 import { camelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 
 import { NAVIGATION_REQUEST, NAVIGATION_FAILURE, NAVIGATION_SUCCESS } from '../constants/actionTypes';
 import getCustomAxios from '../helpers/customAxios';
