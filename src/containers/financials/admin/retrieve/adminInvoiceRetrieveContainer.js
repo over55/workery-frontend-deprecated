@@ -6,7 +6,7 @@ import AdminInvoiceRetrieveComponent from "../../../../components/financials/adm
 import { pullOrderInvoice } from "../../../../actions/orderActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { getSubdomain } from "../../../../helpers/urlUtility";
-import { WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_ENDPOINT } from '../../../../constants/api';
+import { WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_URL } from '../../../../constants/api';
 import { getAPIBaseURL } from '../../../../helpers/urlUtility';
 import { getAccessTokenFromLocalStorage, attachAxiosRefreshTokenHandler } from '../../../../helpers/jwtUtility';
 
@@ -104,7 +104,7 @@ class AdminInvoiceRetrieveContainer extends Component {
         // Attach our Axios "refesh token" interceptor.
         attachAxiosRefreshTokenHandler(customAxios);
 
-        const aURL = WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_ENDPOINT.replace("XXX", this.state.id);
+        const aURL = WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_URL.replace("XXX", this.state.id);
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
             this.onSuccessPDFDownloadCallback(successResponse);
@@ -119,12 +119,15 @@ class AdminInvoiceRetrieveContainer extends Component {
     }
 
     onSuccessCallback(response) {
-        // console.log(response);
-        this.setState({ isLoading: false, })
+        this.setState({
+            isLoading: false,
+            invoice: response,
+        })
     }
 
     onFailureCallback(errors) {
         console.log(errors);
+        this.setData({ invoice : null});
     }
 
     /**
@@ -150,7 +153,9 @@ class AdminInvoiceRetrieveContainer extends Component {
      */
 
     render() {
-        const invoice = this.props.orderDetail ? this.props.orderDetail : {};
+        // const invoice = this.props.orderDetail ? this.props.orderDetail : {};
+        // console.log("AdminInvoiceRetrieveContainer | invoice:", invoice);
+        const { invoice } = this.state;
         return (
             <AdminInvoiceRetrieveComponent
                 id={this.state.id}

@@ -41,6 +41,15 @@ class HowHearCreateContainer extends Component {
         // postData.tagText = this.state.tagText;
         // postData.tagDesc = this.state.tagDesc;
 
+        // Int hander.
+        postData.sortNumber = parseInt(this.state.sortNumber);
+
+        // Boolean handler.
+        postData.isForAssociate = parseInt(this.state.isForAssociate) === "1" ? true : false;
+        postData.isForCustomer = parseInt(this.state.isForCustomer) === "1" ? true : false;
+        postData.isForPartner = parseInt(this.state.isForPartner) === "1" ? true : false;
+        postData.isForStaff = parseInt(this.state.isForStaff) === "1" ? true : false;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;

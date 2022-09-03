@@ -16,8 +16,6 @@ import { FlashMessageComponent } from "../../../flashMessageComponent";
 import {
     RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID,
 } from '../../../../constants/api';
 
 
@@ -46,7 +44,7 @@ class RemoteListComponent extends Component {
 
         const columns = [
         {
-            dataField: 'is_archived',
+            dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
@@ -149,11 +147,14 @@ class RemoteListComponent extends Component {
 
 
 function statusFormatter(cell, row){
-    switch(row.isArchived) {
-        case false:
+    switch(row.state) {
+        case 0:
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
+            break;
+        case 1:
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
-        case true:
+        case 2:
             return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
@@ -166,23 +167,33 @@ function statusFormatter(cell, row){
 function fileFormatter(cell, row){
     return (
         <div>
-            {row.isArchived === false &&
+            {row.state === 0 &&
+                <strong>
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </strong>
+            }
+            {row.state === 1 &&
                 <a href={row.fileUrl} target="_blank">
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                 </a>
             }
-            {row.isArchived === true &&
+            {row.state === 2 &&
                 <strong>
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                 </strong>
             }
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            {row.isArchived === false &&
-                <Link to={`/staff/${row.staff}/file/archive/${row.id}`}>
+            {row.state === 0 &&
+                <strong>
+                    <i className="fas fa-archive"></i>&nbsp;Archived
+                </strong>
+            }
+            {row.state === 1 &&
+                <Link to={`/staff/${row.staffId}/file/archive/${row.id}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archive
                 </Link>
             }
-            {row.isArchived === true &&
+            {row.state === 2 &&
                 <strong>
                     <i className="fas fa-archive"></i>&nbsp;Archived
                 </strong>
@@ -207,10 +218,9 @@ class StaffFileUploadListComponent extends Component {
             staffFiles, staff, id,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, user
+            flashMessage, onTableChange, isLoading
         } = this.props;
 
-        const canViewFunctions = user.groupId === MANAGEMENT_GROUP_ID || user.groupId === EXECUTIVE_GROUP_ID;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -220,16 +230,22 @@ class StaffFileUploadListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
+                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
                         </li>
                     </ol>
                 </nav>
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
+
+                {staff.state === 0 &&
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This staff is archived and is read-only.
+                    </div>
+                }
 
                 <div className="row">
                     <div className="step-navigation">
@@ -243,32 +259,30 @@ class StaffFileUploadListComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey">
+                        <div id="step-4" className="st-grey">
                             <Link to={`/staff/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </Link>
                         </div>
-                        <div id="step-4" className="st-grey active">
+                        <div id="step-5" className="st-grey active">
                             <strong>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </strong>
                         </div>
-                        {canViewFunctions &&
-                            <div id="step-5" className="st-grey">
-                                <Link to={`/staff/${id}/operations`}>
-                                    <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
-                                </Link>
-                            </div>
-                        }
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/staff/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
-                <div className="row">
+                {staff.state === 1 && <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
                             <div className="col-sm-12 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
-                                    <Link to={`/staff/${id}/file/add`} className="d-block link-ndecor" title="Staff">
+                                    <Link to={`/staff/${id}/file/add`} className="d-block link-ndecor" title="Staffs">
                                         <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
                                     </Link>
                                 </div>
@@ -277,7 +291,7 @@ class StaffFileUploadListComponent extends Component {
                             </div>
                         </section>
                     </div>
-                </div>
+                </div>}
 
                 <div className="row">
                     <div className="col-md-12">

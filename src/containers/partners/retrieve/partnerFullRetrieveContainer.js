@@ -27,6 +27,7 @@ class PartnerFullRetrieveContainer extends Component {
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onPartnerClick = this.onPartnerClick.bind(this);
+        this.onAddJobClick = this.onAddJobClick.bind(this);
     }
 
     /**
@@ -64,6 +65,14 @@ class PartnerFullRetrieveContainer extends Component {
         console.log("onFailureCallback | errors:", errors);
     }
 
+    onAddJobClick(e) {
+        e.preventDefault();
+        localStorage.setItem("workery-create-order-partnerId", this.props.partnerDetail.id);
+        localStorage.setItem("workery-create-order-partnerGivenName", this.props.partnerDetail.givenName);
+        localStorage.setItem("workery-create-order-partnerLastName", this.props.partnerDetail.lastName);
+        this.props.history.push("/orders/add/step-3");
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
@@ -84,14 +93,13 @@ class PartnerFullRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
         const partner = this.props.partnerDetail ? this.props.partnerDetail : [];
         return (
             <PartnerFullRetrieveComponent
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 partner={partner}
-                flashMessage={this.props.flashMessage}
-                onPartnerClick={this.onPartnerClick}
             />
         );
     }

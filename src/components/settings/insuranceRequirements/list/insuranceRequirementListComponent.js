@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -5,7 +6,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+// import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
@@ -22,13 +23,13 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             insuranceRequirements,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
         const selectOptions = {
@@ -45,15 +46,15 @@ class RemoteListComponent extends Component {
             text: 'Description',
             sort: true
         },{
-            dataField: 'isArchived',
+            dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
                 options: selectOptions,
-                defaultValue: 3,
-                withoutEmptyOption: true
+                // defaultValue: 3,
+                // withoutEmptyOption: true
             }),
-            formatter: isArchivedFormatter
+            formatter: statusFormatter
         },{
             dataField: 'id',
             text: '',
@@ -66,30 +67,30 @@ class RemoteListComponent extends Component {
             order: 'asc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     offset: offset,
+        //     limit: limit,
+        //     totalSize: totalSize,
+        //     limitList: [{
+        //         text: '25', value: 25
+        //     }, {
+        //         text: '50', value: 50
+        //     }, {
+        //         text: '100', value: 100
+        //     }, {
+        //         text: 'All', value: totalSize
+        //     }],
+        //     showTotal: true,
+        //     paginationTotalRenderer: customTotal,
+        //     firstPageText: 'First',
+        //     prePageText: 'Back',
+        //     nextPageText: 'Next',
+        //     lastPageText: 'Last',
+        //     nextPageTitle: 'First offset',
+        //     prePageTitle: 'Pre offset',
+        //     firstPageTitle: 'Next offset',
+        //     lastPageTitle: 'Last offset',
+        // };
 
         return (
             <BootstrapTable
@@ -103,7 +104,7 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no insurance requirements at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -113,8 +114,8 @@ class RemoteListComponent extends Component {
 }
 
 
-function isArchivedFormatter(cell, row){
-    if (row.isArchived === false) {
+function statusFormatter(cell, row){
+    if (row.state === 1) {
         return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>
     } else {
         return <i className="fas fa-archive" style={{ color: 'blue' }}></i>
@@ -145,16 +146,19 @@ class InsuranceRequirementListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             insuranceRequirementList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
-        const insuranceRequirements = insuranceRequirementList.results ? insuranceRequirementList.results : [];
+        let insuranceRequirements = [];
+        if (insuranceRequirementList && isEmpty(insuranceRequirementList)===false) {
+            insuranceRequirements = insuranceRequirementList.results ? insuranceRequirementList.results : [];
+        }
 
         return (
             <div>
@@ -199,13 +203,22 @@ class InsuranceRequirementListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             insuranceRequirements={insuranceRequirements}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>

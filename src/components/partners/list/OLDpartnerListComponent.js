@@ -25,56 +25,64 @@ class RemoteListComponent extends Component {
             page, sizePerPage, totalSize,
 
             // Data
-            orders,
+            partners,
 
             // Everything else.
             onTableChange, isLoading
         } = this.props;
 
         const selectOptions = {
-            "running": 'Running',
-            "terminated": 'Terminated',
+            1: 'Active',
+            0: 'Inactive',
         };
 
         const columns = [{
-            dataField: 'typeOf',
-            text: '',
-            sort: false,
-            formatter: iconFormatter
+            dataField: 'organizationName',
+            text: 'Organization',
+            sort: false
         },{
-            dataField: 'id',
-            text: 'Job #',
-            sort: true,
-            formatter: idFormatter,
-        },{
-            dataField: 'customerName',
-            text: 'Client',
+            dataField: 'givenName',
+            text: 'First Name',
             sort: true
         },{
-            dataField: 'associateName',
-            text: 'Associate',
+            dataField: 'lastName',
+            text: 'Last Name',
+            sort: true
+        },{
+            dataField: 'telephone',
+            text: 'Phone',
             sort: true,
-            formatter: associateNameFormatter,
+            formatter: telephoneFormatter
+        },{
+            dataField: 'email',
+            text: 'Email',
+            sort: true,
+            formatter: emailFormatter,
         },{
             dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
                 options: selectOptions,
-                defaultValue: 'running',
+                defaultValue: 1,
                 withoutEmptyOption: true
             }),
             formatter: statusFormatter
         },{
             dataField: 'slug',
+            text: 'Financials',
+            sort: false,
+            formatter: financialExternalLinkFormatter
+        },{
+            dataField: 'id',
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
         }];
 
         const defaultSorted = [{
-            dataField: 'id',
-            order: 'desc'
+            dataField: 'lastName',
+            order: 'asc'
         }];
 
         const paginationOption = {
@@ -106,12 +114,12 @@ class RemoteListComponent extends Component {
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ orders }
+                data={ partners }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no orders at the moment"
+                noDataIndication="There are no partners at the moment"
                 remote
                 onTableChange={ onTableChange }
                 pagination={ paginationFactory(paginationOption) }
@@ -124,66 +132,75 @@ class RemoteListComponent extends Component {
 }
 
 
-function iconFormatter(cell, row){
-    switch(row.typeOf) {
-        case 2:
-            return <i className="fas fa-building"></i>;
-            break;
+function statusFormatter(cell, row){
+    switch(row.state) {
         case 1:
-            return <i className="fas fa-home"></i>;
+            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
+            break;
+        case 0:
+            return <i className="fas fa-times-circle" style={{ color: 'red' }}></i>;
             break;
         default:
-            return <i className="fas fa-question"></i>;
+        return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
             break;
     }
 }
 
 
-function idFormatter(cell, row){
+function financialExternalLinkFormatter(cell, row){
     return (
-        row.id && row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
-    );
+        <a target="_blank" href={`/financial/${row.id}`}>
+            View&nbsp;<i className="fas fa-external-link-alt"></i>
+        </a>
+    )
 }
 
 
-function associateNameFormatter(cell, row){
-    if (row.associateName === null || row.associateName === undefined || row.associateName === "None") { return "-"; }
+function telephoneFormatter(cell, row){
     return (
-        <Link to={`/associate/${row.associate}`} target="_blank">
-            {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
-        </Link>
-    );
+        <a href={`tel:${row.e164Telephone}`}>
+            {row.telephone}
+        </a>
+    )
 }
 
 
-function statusFormatter(cell, row){
-    return row.prettyState;
+function emailFormatter(cell, row){
+    if (row.email === undefined || row.email === null) {
+        return ("-");
+    } else {
+        return (
+            <a href={`mailto:${row.email}`}>
+                {row.email}
+            </a>
+        )
+    }
 }
 
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/ongoing-order/${row.id}`}>
+        <Link to={`/partner/${row.id}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
 }
 
 
-class OngoingOrderListComponent extends Component {
+class PartnerListComponent extends Component {
     render() {
         const {
             // Pagination
             page, sizePerPage, totalSize,
 
             // Data
-            ongoingOrderList,
+            partnerList,
 
             // Everything else...
             flashMessage, onTableChange, isLoading
         } = this.props;
 
-        const orders = ongoingOrderList.results ? ongoingOrderList.results : [];
+        const partners = partnerList.results ? partnerList.results : [];
 
         return (
             <div>
@@ -194,14 +211,39 @@ class OngoingOrderListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-undo-alt"></i>&nbsp;Ongoing Jobs
+                            <i className="fas fa-handshake"></i>&nbsp;Partners
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-undo-alt"></i>&nbsp;Ongoing Jobs</h1>
+                <h1><i className="fas fa-handshake"></i>&nbsp;Partners</h1>
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <section className="row text-center placeholders">
+                            <div className="col-sm-6 placeholder">
+                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
+                                    <Link to="/partners/add/step-1" className="d-block link-ndecor" title="Partners">
+                                        <span className="r-circle"><i className="fas fa-plus fa-3x"></i></span>
+                                    </Link>
+                                </div>
+                                <h4>Add</h4>
+                                <div className="text-muted">Add Partners</div>
+                            </div>
+                            <div className="col-sm-6 placeholder">
+                                <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
+                                    <Link to="/partners/search" className="d-block link-ndecor" title="Search">
+                                        <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
+                                    </Link>
+                                </div>
+                                <h4>Search</h4>
+                                <span className="text-muted">Search Partners</span>
+                            </div>
+                        </section>
+                    </div>
+                </div>
 
                 <div className="row">
                     <div className="col-md-12">
@@ -212,7 +254,7 @@ class OngoingOrderListComponent extends Component {
                             page={page}
                             sizePerPage={sizePerPage}
                             totalSize={totalSize}
-                            orders={orders}
+                            partners={partners}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
@@ -223,4 +265,4 @@ class OngoingOrderListComponent extends Component {
     }
 }
 
-export default OngoingOrderListComponent;
+export default PartnerListComponent;

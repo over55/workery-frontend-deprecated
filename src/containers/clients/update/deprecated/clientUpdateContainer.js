@@ -170,8 +170,8 @@ class ClientUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
+        this.props.pullHowHearList(0,1000);
+        this.props.pullTagList(0,1000);
     }
 
     componentWillUnmount() {
@@ -277,14 +277,15 @@ class ClientUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
     onDOBDateTimeChange(dateOfBirth) {

@@ -25,7 +25,7 @@ class StaffAccountUpdateContainer extends Component {
         // Map the API fields to our fields.
         const country = this.props.staffDetail.addressCountry === "CA" ? "Canada" : this.props.staffDetail.addressCountry;
         const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
-        const isActive = this.props.staffDetail.isActive === true ? 1 : 2;
+        const isActive = this.props.staffDetail.state === 1 ? 1 : 2;
         const policeCheckObj = new Date(this.props.staffDetail.policeCheck);
         policeCheckObj.setMinutes( policeCheckObj.getMinutes() + policeCheckObj.getTimezoneOffset() );
 
@@ -63,10 +63,10 @@ class StaffAccountUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        if (parseInt(this.state.isActive) === 3) {
+        if (parseInt(this.state.isActive) === 1) {
             postData.isActive = true;
         }
-        if (parseInt(this.state.isActive) === 2) {
+        if (parseInt(this.state.isActive) === 0) {
             postData.isActive = false;
         }
 

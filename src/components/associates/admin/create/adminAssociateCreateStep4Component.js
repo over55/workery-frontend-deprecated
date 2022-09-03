@@ -14,7 +14,7 @@ import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, ORGANIZATION_TYPE_OF_CHO
 class AdminAssociateCreateStep4Component extends Component {
     render() {
         const {
-            typeOf, organizationName, organizationTypeOf, givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText, errors,
+            typeOf, organizationName, organizationTypeOf, givenName, lastName, telephone, otherTelephone, email, isOkToEmail, isOkToText, errors,
             onTextChange, onRadioChange, isLoading, onClick, onSelectChange
         } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
@@ -133,11 +133,11 @@ class AdminAssociateCreateStep4Component extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.primaryPhone}
+                                error={errors.telephone}
                                 label="Primary Phone (*)"
                                 onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
+                                value={telephone}
+                                name="telephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
@@ -145,11 +145,11 @@ class AdminAssociateCreateStep4Component extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
-                                error={errors.secondaryPhone}
+                                error={errors.otherTelephone}
                                 label="Secondary Phone"
                                 onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
+                                value={otherTelephone}
+                                name="otherTelephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />

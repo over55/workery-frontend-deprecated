@@ -45,6 +45,7 @@ class StaffAccountChangePasswordContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+        postData.staffId = parseInt(this.state.id);
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -138,25 +139,11 @@ class StaffAccountChangePasswordContainer extends Component {
      */
 
     render() {
-        const {
-            id, givenName, lastName, description, policeCheck, password, passwordRepeat, errors, isLoading, returnURL
-        } = this.state;
-
-        const { user } = this.props;
         return (
             <StaffAccountChangePasswordComponent
-                id={id}
-                givenName={givenName}
-                lastName={lastName}
-
-                password={password}
-                passwordRepeat={passwordRepeat}
-                onTextChange={this.onTextChange}
-
-                onNextClick={this.onNextClick}
-                errors={errors}
-                returnURL={returnURL}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

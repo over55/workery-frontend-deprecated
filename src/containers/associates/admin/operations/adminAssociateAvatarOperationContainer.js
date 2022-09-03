@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import AdminAssociateAvatarOperationComponent from "../../../../components/associates/admin/operations/adminAssociateAvatarOperationComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { postAssociateAvatarCreateOrUpdate } from "../../../../actions/associateActions";
+import { postAssociateAvatarCreateOrUpdate } from "../../../../actions/associateOperationActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateImageInput } from "../../../../validators/fileValidator"
 
@@ -29,7 +29,7 @@ class AdminAssociateAvatarOperationContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            associate: id,
+            associateId: id,
             file: null,
             id: id,
             text: "",
@@ -54,7 +54,10 @@ class AdminAssociateAvatarOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // (3) Tags - We need to only return our `id` values.
+        // Set the parse integer.
+        postData.associateId = parseInt(this.state.associateId);
+
+        // Tags - We need to only return our `id` values.
         let idTags = [];
         for (let i = 0; i < this.state.tags.length; i++) {
             let tag = this.state.tags[i];
@@ -246,20 +249,15 @@ class AdminAssociateAvatarOperationContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, errors, file } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         const associateFiles = this.props.associateFileList ? this.props.associateFileList.results : [];
         return (
             <AdminAssociateAvatarOperationComponent
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associate={associate}
                 associateFiles={associateFiles}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
-                file={file}
-                onFileDrop={this.onFileDrop}
-                onRemoveFileUploadClick={this.onRemoveFileUploadClick}
             />
         );
     }

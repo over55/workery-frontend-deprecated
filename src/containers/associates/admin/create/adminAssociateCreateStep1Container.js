@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import AdminAssociateCreateStep1Component from "../../../../components/associates/admin/create/adminAssociateCreateStep1Component";
+import { validateSearchInput } from "../../../../validators/associateValidator";
 
 
 class AdminAssociateCreateStep1Container extends Component {
@@ -86,7 +87,22 @@ class AdminAssociateCreateStep1Container extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        this.onSuccessfulSubmissionCallback();
+        const { errors, isValid } = validateSearchInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            this.onSuccessfulSubmissionCallback();
+
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.setState({ errors: errors });
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
     }
 
 
@@ -96,16 +112,11 @@ class AdminAssociateCreateStep1Container extends Component {
      */
 
     render() {
-        const { givenName, lastName, email, phone, errors, isLoading } = this.state
         return (
             <AdminAssociateCreateStep1Component
-                givenName={givenName}
-                lastName={lastName}
-                email={email}
-                phone={phone}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

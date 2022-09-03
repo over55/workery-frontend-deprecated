@@ -24,13 +24,13 @@ import {
 export default class ClientRezUpdateComponent extends Component {
     render() {
         const {
-            typeOf, isTagsLoading, tags, tagOptions, onTagMultiChange, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOption, howHearOther, joinDate, description,
+            typeOf, isTagsLoading, tags, tagOptions, onTagMultiChange, dateOfBirth, gender, isHowHearLoading, howHearId, howHearOptions, howHearOption, howHearOther, joinDate, description,
 
             // EVERYTHING ELSE
             givenName, lastName, id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
             onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 1;
+        const isOtherHowDidYouHearSelected = howHearId === 1;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -97,11 +97,11 @@ export default class ClientRezUpdateComponent extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="How did you hear about us? (*)"
-                                name="howHear"
+                                name="howHearId"
                                 defaultOptionLabel="Please select how you heard about us."
                                 options={howHearOptions}
-                                value={howHear}
-                                error={errors.howHear}
+                                value={howHearId}
+                                error={errors.howHearId}
                                 onSelectChange={onSelectChange}
                                 isLoading={isHowHearLoading}
                             />

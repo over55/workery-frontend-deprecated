@@ -2,12 +2,11 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     TAG_ITEM_SEARCH_LIST_REQUEST, TAG_ITEM_SEARCH_LIST_FAILURE, TAG_ITEM_SEARCH_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_TAG_ITEM_SEARCH_LIST_API_ENDPOINT } from '../constants/api';
+import { WORKERY_TAG_ITEM_SEARCH_LIST_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -29,7 +28,7 @@ export function pullTagItemList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_TAG_ITEM_SEARCH_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_TAG_ITEM_SEARCH_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -39,12 +38,7 @@ export function pullTagItemList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-
-            console.log(responseData); // For debugging purposes.
-
-            let data = camelizeKeys(responseData);
+            let data = camelizeKeys(successResponse.data);
 
             // Extra.
             data['isAPIRequestRunning'] = false;
@@ -68,12 +62,7 @@ export function pullTagItemList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
-
-                let errors = camelizeKeys(responseData);
+                let errors = camelizeKeys(exception.response.data);
 
                 console.log("pullTagItemList | error:", errors); // For debuggin purposes only.
 

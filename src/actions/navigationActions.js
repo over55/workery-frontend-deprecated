@@ -1,11 +1,10 @@
 import axios from 'axios';
 import store from '../store';
 import { camelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 
 import { NAVIGATION_REQUEST, NAVIGATION_FAILURE, NAVIGATION_SUCCESS } from '../constants/actionTypes';
 import getCustomAxios from '../helpers/customAxios';
-import { WORKERY_NAVIGATION_API_ENDPOINT } from "../constants/api"
+import { WORKERY_NAVIGATION_API_URL } from "../constants/api"
 
 
 export const setNavigationRequest = () => ({
@@ -44,9 +43,8 @@ export function pullNavigation(schema, successCallback=null, failedCallback=null
         const customAxios = getCustomAxios();
 
         // Make the call to the web-service.
-        customAxios.get(WORKERY_NAVIGATION_API_ENDPOINT).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.get(WORKERY_NAVIGATION_API_URL).then( (successResponse) => { // SUCCESS
+            const responseData = successResponse.data;
 
             // console.log(responseData); // For debugging purposes.
 
@@ -71,10 +69,7 @@ export function pullNavigation(schema, successCallback=null, failedCallback=null
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 

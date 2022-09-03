@@ -33,7 +33,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                             <Link to="/associates"><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{associate && associate.name}
                         </li>
                     </ol>
                 </nav>
@@ -42,7 +42,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.name}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -132,15 +132,15 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
-                                    <td>{associate && associate.fullName}</td>
+                                    <td>{associate && associate.name}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Primary Telephone</th>
-                                    <td><a href={`tel:${associate && associate.e164Telephone}`}>{associate && associate.telephone}</a></td>
+                                    <td><a href={`tel:${associate && associate.telephone}`}>{associate && associate.telephone}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Secondary Telephone</th>
-                                    <td><a href={`tel:${associate && associate.e164OtherTelephone}`}>{associate && associate.otherTelephone}</a></td>
+                                    <td><a href={`tel:${associate && associate.otherTelephone}`}>{associate && associate.otherTelephone}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Email</th>
@@ -178,7 +178,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={associate && associate.addressUrl} target="_blank">{associate && associate.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
+                                        <a href={associate && associate.fullAddressUrl} target="_blank">{associate && associate.fullAddressWithoutPostalCode}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
 
@@ -195,7 +195,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Skill sets</th>
                                     <td>
-                                        {associate.prettySkillSets && associate.prettySkillSets.map(
+                                        {associate.skillSets && associate.skillSets.map(
                                             (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
                                         }
                                     </td>
@@ -203,7 +203,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Insurance Requirement(s)</th>
                                     <td>
-                                        {associate && associate.prettyInsuranceRequirements && associate.prettyInsuranceRequirements.map(
+                                        {associate && associate.insuranceRequirements && associate.insuranceRequirements.map(
                                             (ir) => <InsuranceRequirementItem ir={ir} key={`ir-${ir.id}`} />)
                                         }
                                     </td>
@@ -263,7 +263,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Vehicle(s)</th>
                                     <td>
-                                        {associate && associate.prettyVehicleTypes && associate.prettyVehicleTypes.map(
+                                        {associate && associate.vehicleTypes && associate.vehicleTypes.map(
                                             (vt) => <VehicleTypeItem vt={vt} key={`vt-${vt.id}`} />)
                                         }
                                     </td>
@@ -307,7 +307,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {associate && associate.prettyTags && associate.prettyTags.map(
+                                        {associate && associate.tags && associate.tags.map(
                                             (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                                         }
                                     </td>
@@ -320,7 +320,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
-                                    <td>{associate.howHearPretty}</td>
+                                    <td>{associate.howHearText ? associate.howHearText : "-"}</td>
                                 </tr>
                                 {associate &&
                                     <tr>

@@ -1,9 +1,14 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import StaffOperationsComponent from "../../../components/staff/retrieve/staffOperationsComponent";
 import { clearFlashMessage } from "../../../actions/flashMessageActions";
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../helpers/localStorageUtility';
+import { pullStaffDetail } from "../../../actions/staffActions";
 
 
 class StaffOperationsContainer extends Component {
@@ -17,16 +22,21 @@ class StaffOperationsContainer extends Component {
 
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const staff = localStorageGetObjectItem("workery-admin-retrieve-staff-"+id.toString() );
+        const isLoading = isEmpty(staff);
+
         // Update state.
         this.state = {
             id: parseInt(id),
-            isLoading: false,
+            staff: staff,
+            isLoading: isLoading,
         }
 
         // Update functions.
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
-        this.onAddJobClick = this.onAddJobClick.bind(this);
     }
 
     /**
@@ -36,6 +46,7 @@ class StaffOperationsContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+        this.props.pullStaffDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -56,8 +67,12 @@ class StaffOperationsContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        // console.log(response);
-        this.setState({ isLoading: false, })
+        console.log(response);
+        this.setState({ isLoading: false, staff: response, });
+
+        // The following code will save the object to the browser's local
+        // storage to be retrieved later more quickly.
+        localStorageSetObjectOrArrayItem("workery-admin-retrieve-staff-"+this.state.id.toString(), response);
     }
 
     onFailureCallback(errors) {
@@ -69,14 +84,6 @@ class StaffOperationsContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onAddJobClick(e) {
-        e.preventDefault();
-        localStorage.setItem("workery-create-order-clientId", this.props.clientDetail.id);
-        localStorage.setItem("workery-create-order-clientGivenName", this.props.clientDetail.givenName);
-        localStorage.setItem("workery-create-order-clientLastName", this.props.clientDetail.lastName);
-        this.props.history.push("/orders/add/step-3");
-    }
-
 
     /**
      *  Main render function
@@ -84,15 +91,13 @@ class StaffOperationsContainer extends Component {
      */
 
     render() {
+        const staff = isEmpty(this.state.staff) ? {} : this.state.staff;
         return (
             <StaffOperationsComponent
-                id={this.state.id}
-                isLoading={this.state.isLoading}
-                flashMessage={this.props.flashMessage}
-                onAddJobClick={this.onAddJobClick}
-                order={this.props.orderDetail}
-                user={this.props.user}
-                staff={this.props.staffDetail}
+                {...this}
+                {...this.state}
+                {...this.props}
+                staff={staff}
             />
         );
     }
@@ -110,6 +115,11 @@ const mapDispatchToProps = dispatch => {
     return {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
+        },
+        pullStaffDetail: (id, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullStaffDetail(id, onSuccessCallback, onFailureCallback)
+            )
         },
     }
 }

@@ -273,7 +273,7 @@ class StaffUpdateContainer extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // Perform client-side validation.
+        // Perform staff-side validation.
         const { errors, isValid } = validateInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
@@ -309,14 +309,15 @@ class StaffUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
     onJoinDateChange(dateObj) {

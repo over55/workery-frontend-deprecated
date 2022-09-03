@@ -12,19 +12,22 @@ import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 export default class AssignAssociateTaskStep1Component extends Component {
     render() {
         const {
-            task, associates, activitySheetItems, id, errors, isLoading, onClick
+            taskDetail, associates, activitySheetItems, id, errors, isLoading, onClick
         } = this.props;
 
-        let associate;
+        const task = taskDetail;
+        const { associate, customer, customerTags, workOrder, workOrderSkillSets, workOrderTags } = task;
+
+        // let associate;
         const insuredAssociates = [];
         const uninsuredAssociates = [];
 
         if (isEmpty(associates) === false) { // Defensive Code.
-            for (associate of associates) {
-                if (associate.wsibNumber !== undefined && associate.wsibNumber !== null && associate.wsibNumber !== "") {
-                    insuredAssociates.push(associate);
+            for (let associateItem of associates) {
+                if (associateItem.wsibNumber !== undefined && associateItem.wsibNumber !== null && associateItem.wsibNumber !== "") {
+                    insuredAssociates.push(associateItem);
                 } else {
-                    uninsuredAssociates.push(associate)
+                    uninsuredAssociates.push(associateItem)
                 }
             }
         }
@@ -40,12 +43,12 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             <Link to={`/tasks`}><i className="fas fa-tasks"></i>&nbsp;Tasks</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task  && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task  && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job  && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Assign Associate</h1>
+                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId  && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Assign Associate</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -77,25 +80,27 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Job #</th>
                                     <td>
-                                        <Link to={`/order/${task.job}`} target="_blank">
-                                            {task  && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/order/${task.orderId}`} target="_blank">
+                                            {task  && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
                                     <td>
-                                        <Link to={`/client/${task.jobCustomer}`} target="_blank">
-                                            {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
-                                        </Link>
+                                        {customer &&
+                                            <Link to={`/client/${customer.id}`} target="_blank">
+                                                {task && customer.name}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            </Link>
+                                        }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Phone #</th>
                                     <td>
-                                        {task &&
-                                            <a href={`tel:${task.jobCustomerE164Telephone}`}>
-                                                {task.jobCustomerTelephone}
+                                        {customer &&
+                                            <a href={`tel:${customer.telephone}`}>
+                                                {customer.telephone}
                                             </a>
                                         }
                                     </td>
@@ -103,9 +108,9 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Client Location</th>
                                     <td>
-                                        {task &&
-                                            <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
-                                                {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        {customer &&
+                                            <a href={customer.fullAddressUrl} target="_blank">
+                                                {customer.fullAddressWithoutPostalCode}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </a>
                                         }
                                     </td>
@@ -113,36 +118,36 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Client Tag(s)</th>
                                     <td>
-                                        {task.jobCustomerPrettyTags && task.jobCustomerPrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
+                                        {customerTags && customerTags.map(
+                                            (customerTag) => <TagItem tag={customerTag} key={`customerTag-${customerTag.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Description</th>
-                                    <td>{task && task.jobDescription}</td>
+                                    <td>{workOrder && workOrder.description}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Skill Set(s)</th>
                                     <td>
-                                        {task.jobPrettySkillSets && task.jobPrettySkillSets.map(
-                                            (skillSet) => <SkillSetItem skillSet={skillSet} key={`skillset-${skillSet.id}`} />)
+                                        {workOrderSkillSets && workOrderSkillSets.map(
+                                            (workOrderSkillSet) => <SkillSetItem skillSet={workOrderSkillSet} key={`workOrderSkillSet-${workOrderSkillSet.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {task.jobPrettyTags && task.jobPrettyTags.map(
-                                            (prettyTag) => <TagItem tag={prettyTag} key={`prettyTag-${prettyTag.id}`} />)
+                                        {workOrderTags && workOrderTags.map(
+                                            (workOrderTag) => <TagItem tag={workOrderTag} key={`workOrderTag-${workOrderTag.id}`} />)
                                         }
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Comments</th>
                                     <td>
-                                        <Link to={`/order/${task.job}/comments`} target="_blank">
-                                            View comments&nbsp;({task.jobCommentsCount})&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/order/${task.orderId}/comments`} target="_blank">
+                                            View comments&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
@@ -171,6 +176,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                             </tr>
                             </thead>
                             <tbody>
+                                {/* TODO: CONTINUE IMPLEMENTING FROM HERE... */}
                                 {associates && insuredAssociates.map(
                                     (associate) => <InsuredAssociateItem associate={associate} onClick={onClick} key={`act-${associate.id}`} />)
                                 }
@@ -247,21 +253,21 @@ class SkillSetItem extends Component {
 
 class ActivitySheetItem extends Component {
     render() {
-        const { associate, associateFullName, associateTelephone, associateE164Telephone, associateEmail, prettyState, comment } = this.props.activitySheetItem;
+        const { associate, associateName, associateTelephone, associateE164Telephone, associateEmail, state, comment } = this.props.activitySheetItem;
         const { onClick } = this.props;
         return (
             <tr>
                 <td>
-                    <Link to={`/associate/${associate}`} target="_blank">{associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                    <Link to={`/associate/${associate}`} target="_blank">{associateName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
                 </td>
                 <td>
-                    {prettyState}
+                    <ActivitySheetItemStatusFormatter state={state} />
                 </td>
                 <td>
                     {comment}
                 </td>
                 <td>
-                    <Link onClick={ (event)=>{ onClick(event, associate, associateFullName) } }>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, associate, associateName) } }>Re-Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
@@ -275,7 +281,9 @@ class ActivitySheetItem extends Component {
 
 class InsuredAssociateItem extends Component {
     render() {
-        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, prettyTags } = this.props.associate;
+        const {
+            id, typeOf, name, telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, tags
+        } = this.props.associate;
         const { onClick } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
@@ -287,10 +295,10 @@ class InsuredAssociateItem extends Component {
                     }
                 </td>
                 <td>
-                    <Link to={`/associate/${id}`} target="_blank">{fullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                    <Link to={`/associate/${id}`} target="_blank">{name}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
                 </td>
                 <td>
-                    <a href={`tel:${e164Telephone}`}>{telephone}</a>
+                    <a href={`tel:${telephone}`}>{telephone}</a>
                 </td>
                 <td>
                     <a href={`mailto:${email}`}>{email}</a>
@@ -309,17 +317,17 @@ class InsuredAssociateItem extends Component {
                     />
                 </td>
                 <td>
-                    {past30DaysActivitySheetCount}
+                    {past30DaysActivitySheetCount === undefined ? 0 : past30DaysActivitySheetCount}
                 </td>
                 <td>
-                    {isEmpty(prettyTags)
+                    {isEmpty(tags)
                         ? "-"
-                        : prettyTags.map(
+                        : tags.map(
                         (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>)
                     }
                 </td>
                 <td>
-                    <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, id, name) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
@@ -330,7 +338,7 @@ class InsuredAssociateItem extends Component {
 
 class UninsuredAssociateItem extends Component {
     render() {
-        const { id, typeOf, fullName, telephone, e164Telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, prettyTags } = this.props.associate;
+        const { id, typeOf, name, telephone, email, wsibNumber, hourlySalaryDesired, past30DaysActivitySheetCount, tags } = this.props.associate;
         const { onClick } = this.props;
         const isCommercial = typeOf === 3; // COMMERCIAL_ASSOCIATE_TYPE_OF_ID
         return (
@@ -342,10 +350,10 @@ class UninsuredAssociateItem extends Component {
                     }
                 </td>
                 <td>
-                    <Link to={`/associate/${id}`} target="_blank">{fullName}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
+                    <Link to={`/associate/${id}`} target="_blank">{name}&nbsp;<i className="fas fa-external-link-alt"></i></Link>
                 </td>
                 <td>
-                    <a href={`tel:${e164Telephone}`}>{telephone}</a>
+                    <a href={`tel:${telephone}`}>{telephone}</a>
                 </td>
                 <td>
                     <a href={`mailto:${email}`}>{email}</a>
@@ -361,18 +369,18 @@ class UninsuredAssociateItem extends Component {
                     />
                 </td>
                 <td>
-                    {past30DaysActivitySheetCount}
+                    {past30DaysActivitySheetCount === undefined ? 0 : past30DaysActivitySheetCount}
                 </td>
                 <td>
-                    {isEmpty(prettyTags)
+                    {isEmpty(tags)
                         ? "-"
-                        : prettyTags.map(
+                        : tags.map(
                             (tag) => <TagItem tag={tag} key={`tags-${tag.id}`}/>
                         )
                     }
                 </td>
                 <td>
-                    <Link onClick={ (event)=>{ onClick(event, id, fullName) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
+                    <Link onClick={ (event)=>{ onClick(event, id, name) } }>Assign&nbsp;<i className="fas fa-chevron-right"></i></Link>
                 </td>
             </tr>
         );
@@ -387,4 +395,18 @@ class TagItem extends Component {
             <span className="badge badge-danger badge-lg" value={id}>{text}</span>
         );
     };
+}
+
+function ActivitySheetItemStatusFormatter(props){
+    switch(props.state) {
+        case 1:
+            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
+            break;
+        case 0:
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
+            break;
+        default:
+        return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
+            break;
+    }
 }

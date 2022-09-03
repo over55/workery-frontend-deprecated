@@ -8,7 +8,6 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
@@ -25,7 +24,7 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             tasks,
@@ -49,24 +48,6 @@ class RemoteListComponent extends Component {
             4: 'Follow up did associate accept job',
             5: 'Follow up was ongoing job updated',
         };
-
-        /*
-        ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID = 1
-        FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID = 2
-        FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID = 3
-        FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID = 4
-        UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID = 5
-
-        TASK_ITEM_TYPE_OF_CHOICES = (
-            (ASSIGNED_ASSOCIATE_TASK_ITEM_TYPE_OF_ID, _('Assign associate')),
-            (FOLLOW_UP_IS_JOB_COMPLETE_TASK_ITEM_TYPE_OF_ID, _('Follow up is job complete')),
-            (FOLLOW_UP_CUSTOMER_SURVEY_TASK_ITEM_TYPE_OF_ID, _('Follow up customer survey')),
-            (FOLLOW_UP_DID_ASSOCIATE_ACCEPT_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up did associate accept job')),
-            (UPDATE_ONGOING_JOB_TASK_ITEM_TYPE_OF_ID, _('Follow up was ongoing job updated')),
-        )
-
-        */
-
 
         const columns = [{
             dataField: 'orderTypeOf',
@@ -97,7 +78,7 @@ class RemoteListComponent extends Component {
             text: 'Associate',
             sort: true,
         },{
-            dataField: 'isClosed',
+            dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
@@ -116,32 +97,6 @@ class RemoteListComponent extends Component {
             order: 'desc'
         }];
 
-
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
-
         return (
             <BootstrapTable
                 bootstrap4
@@ -154,7 +109,6 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no tasks at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -190,11 +144,11 @@ function dueDateFormatter(cell, row){
 
 
 function statusFormatter(cell, row){
-    switch(row.isClosed) {
-        case false:
+    switch(row.state) {
+        case 1:
             return <i className="fas fa-clock"></i>;
             break;
-        case true:
+        case 2:
             return <i className="fas fa-check-circle"></i>;
             break;
         default:
@@ -234,13 +188,13 @@ class AdminOrderTaskListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             taskList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id, order
+            flashMessage, onTableChange, isLoading, id, orderDetail
         } = this.props;
 
         const tasks = (taskList && taskList.results) ? taskList.results : [];
@@ -253,10 +207,10 @@ class AdminOrderTaskListComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
-                        <li className="breadcrumb-item" aria-current="page">
+                        <li className="breadcrumb-item" aria-current="offset">
                             <Link to={`/orders`}><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
+                        <li className="breadcrumb-item active" aria-current="offset">
                             <i className="fas fa-wrench"></i>&nbsp;Order # {id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
@@ -311,10 +265,10 @@ class AdminOrderTaskListComponent extends Component {
                         <h2>
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
-                        {isEmpty(order)===false &&
+                        {isEmpty(orderDetail)===false &&
                             <RemoteListComponent
-                                page={page}
-                                sizePerPage={sizePerPage}
+                                offset={offset}
+                                limit={limit}
                                 totalSize={totalSize}
                                 tasks={tasks}
                                 onTableChange={onTableChange}

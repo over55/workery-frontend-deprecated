@@ -33,12 +33,12 @@ export default class StaffAvatarUpdateOperationComponent extends Component {
                             <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{staff && staff.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-user"></i>&nbsp;View Staff</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{staff && staff.name}</h1>
 
                 {staff.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
@@ -54,13 +54,8 @@ export default class StaffAvatarUpdateOperationComponent extends Component {
                             </strong>
                         </div>
                         <div id="step-2" className="st-grey">
-                            <Link to={`/staff/${id}/full`}>
+                            <Link to={`/staff/${id}/operations`}>
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
-                            </Link>
-                        </div>
-                        <div id="step-3" className="st-grey">
-                            <Link to={`/staff/${id}/orders`}>
-                                <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
                             </Link>
                         </div>
                         <div id="step-4" className="st-grey">
@@ -71,6 +66,11 @@ export default class StaffAvatarUpdateOperationComponent extends Component {
                         <div id="step-5" className="st-grey">
                             <Link to={`/staff/${id}`}>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
+                            </Link>
+                        </div>
+                        <div id="step-5" className="st-grey">
+                            <Link to={`/staff/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
                             </Link>
                         </div>
                     </div>

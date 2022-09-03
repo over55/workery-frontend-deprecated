@@ -31,17 +31,23 @@ export default class PartnerCommentComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/partners"><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                            <Link to="/partners"><i className="fas fa-user-circle"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{partner && partner.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{partner && partner.name}</h1>
+
+                {partner.state === 'inactive' &&
+                    <div className="alert alert-info" role="alert">
+                        <strong><i className="fas fa-archive"></i>&nbsp;Archived</strong> - This partner is archived and is read-only.
+                    </div>
+                }
 
                 <div className="row">
                     <div className="step-navigation">
@@ -55,18 +61,25 @@ export default class PartnerCommentComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
-                        <div id="step-3" className="st-grey active">
+                        <div id="step-4" className="st-grey active">
                             <strong>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
                             </strong>
                         </div>
-                        <div id="step-4" className="st-grey">
+                        <div id="step-5" className="st-grey">
                             <Link to={`/partner/${id}/files`}>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </Link>
                         </div>
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/partner/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
+
+
 
 
                 <div className="row align-items-start">

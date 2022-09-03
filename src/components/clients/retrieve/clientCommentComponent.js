@@ -34,14 +34,14 @@ export default class ClientCommentComponent extends Component {
                             <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{client && client.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{client && client.name}</h1>
 
                 {client.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

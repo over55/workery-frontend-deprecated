@@ -61,8 +61,8 @@ class AdminFinancialUpdateContainer extends Component {
 
         const hasNoIDs = this.props.orderDetail.invoiceIds === undefined || this.props.orderDetail.invoiceIds === null || this.props.orderDetail.invoiceIds === "";
 
-        const associateServiceFee = this.props.orderDetail.associateServiceFee;
-        let invoiceServiceFee = parseInt(this.props.orderDetail.invoiceServiceFee);
+        const associateServiceFee = this.props.orderDetail.associate.invoiceServiceFee.id;
+        let invoiceServiceFee = parseInt(this.props.orderDetail.invoiceServiceFee.id);
         if (invoiceServiceFee === undefined || invoiceServiceFee === null || isNaN(invoiceServiceFee)) {
             invoiceServiceFee = associateServiceFee;
         }
@@ -71,7 +71,7 @@ class AdminFinancialUpdateContainer extends Component {
         // Start ...
         //----------------------------------------------------------------------
         let invoiceQuotedLabourAmount = parseFloat(this.props.orderDetail.invoiceQuotedLabourAmount)
-        if (invoiceServiceFee === undefined || invoiceServiceFee === null || isNaN(invoiceServiceFee)) {
+        if (invoiceQuotedLabourAmount === undefined || invoiceQuotedLabourAmount === null || isNaN(invoiceQuotedLabourAmount)) {
             invoiceQuotedLabourAmount = 0;
         }
         let invoiceQuotedMaterialAmount = parseFloat(this.props.orderDetail.invoiceQuotedMaterialAmount)
@@ -284,9 +284,9 @@ class AdminFinancialUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullServiceFeeList(1, 1000, parametersMap);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullServiceFeeList(0, 1000, parametersMap);
         this.props.pullOrderDetail(this.state.id, this.onSuccessfullyFetchedOrderDetail);
         this.performCalculation();
     }
@@ -326,7 +326,7 @@ class AdminFinancialUpdateContainer extends Component {
         this.setState({ errors: {}, isLoading: false, });
         this.props.setFlashMessage("success", "Order has been successfully updated.");
 
-        // According to the following ticket (https://github.com/over55/workery-front/issues/212)
+        // According to the following ticket (https://github.com/over55/workery-frontend/issues/212)
         // we are to redirect to a different page where the user can handle
         // zeroing the amount owing.
         const invoiceAmountDue = order['invoiceAmountDue'];
@@ -444,25 +444,16 @@ class AdminFinancialUpdateContainer extends Component {
         e.preventDefault();
 
         // Perform client-side validation.
-        const { errors, isValid } = validateFinancialUpdateInput(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.setState(
-                { isLoading: true, errors: {} },
-                ()=>{
-                    this.props.putOrderFinancialDetail(
-                        this.getPostData(),
-                        this.onSuccessfulSubmissionCallback,
-                        this.onFailedSubmissionCallback
-                    );
-                }
-            );
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailedSubmissionCallback(errors);
-        }
+        this.setState(
+            { isLoading: true, errors: {} },
+            ()=>{
+                this.props.putOrderFinancialDetail(
+                    this.getPostData(),
+                    this.onSuccessfulSubmissionCallback,
+                    this.onFailedSubmissionCallback
+                );
+            }
+        );
     }
 
     /**

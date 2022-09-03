@@ -36,14 +36,14 @@ export default class AdminAssociateDowngradeOperationComponent extends Component
                             <Link to="/associates"><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{associate && associate.name}
                         </li>
                     </ol>
                 </nav>
 
                 <AwayLogAlertComponent associate={associate} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.name}</h1>
 
                 {associate.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

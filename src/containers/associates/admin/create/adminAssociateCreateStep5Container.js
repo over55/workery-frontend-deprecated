@@ -166,26 +166,11 @@ class AdminAssociateCreateStep5Container extends Component {
      */
 
     render() {
-        const { referrer, errors, isLoading } = this.state;
-        const {
-            country, region, locality,
-            postalCode, streetAddress,
-        } = this.state;
-        const { user } = this.props;
         return (
             <AdminAssociateCreateStep5Component
-                country={country}
-                region={region}
-                locality={locality}
-                streetAddress={streetAddress}
-                postalCode={postalCode}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onBillingCountryChange={this.onBillingCountryChange}
-                onBillingRegionChange={this.onBillingRegionChange}
-                onNextClick={this.onNextClick}
-                errors={errors}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

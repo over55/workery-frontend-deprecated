@@ -34,7 +34,8 @@ class ClientCreateStep6Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
             gender: localStorage.getItem("workery-create-client-gender"),
             isHowHearLoading: true,
-            howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
+            howHearId: localStorageGetIntegerItem("workery-create-client-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-client-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
             joinDate: joinDate,
@@ -65,10 +66,10 @@ class ClientCreateStep6Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullHowHearList(1,1000, parametersMap, this.onHowHearSuccessFetch);
-        this.props.pullTagList(1, 1000, parametersMap, this.onTagsSuccessFetch);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullHowHearList(0,1000, parametersMap, this.onHowHearSuccessFetch);
+        this.props.pullTagList(0, 1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -123,9 +124,12 @@ class ClientCreateStep6Container extends Component {
     }
 
     onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
+        console.log(option);
+        const optionKey = [option.selectName].toString()+"Option";
+        const optionLabel = [option.selectName].toString()+"Label";
         this.setState({
             [option.selectName]: option.value,
+            [optionLabel]: option.label,
             optionKey: option,
         });
         localStorage.setItem('workery-create-client-'+[option.selectName].toString(), option.value);
@@ -213,36 +217,15 @@ class ClientCreateStep6Container extends Component {
      */
 
     render() {
-        const {
-            typeOf, isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate, comment,
-            errors
-        } = this.state;
-
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
-
         return (
             <ClientCreateStep6Component
-                typeOf={typeOf}
-                isTagsLoading={isTagsLoading}
-                tags={tags}
+                {...this}
+                {...this.state}
+                {...this.props}
                 tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
                 howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                comment={comment}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onMultiChange={this.onMultiChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onJoinDateChange={this.onJoinDateChange}
-                onClick={this.onClick}
             />
         );
     }

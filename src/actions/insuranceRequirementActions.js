@@ -2,13 +2,12 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     INSURANCE_REQUIREMENT_LIST_REQUEST, INSURANCE_REQUIREMENT_LIST_FAILURE, INSURANCE_REQUIREMENT_LIST_SUCCESS,
     INSURANCE_REQUIREMENT_DETAIL_REQUEST, INSURANCE_REQUIREMENT_DETAIL_FAILURE, INSURANCE_REQUIREMENT_DETAIL_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_INSURANCE_REQUIREMENT_LIST_API_ENDPOINT, WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_INSURANCE_REQUIREMENT_LIST_API_URL, WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -16,21 +15,21 @@ import getCustomAxios from '../helpers/customAxios';
 //                                 LIST                                       //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullInsuranceRequirementList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullInsuranceRequirementList(offset=0, limit=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
             setInsuranceRequirementListRequest()
         );
 
-        console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback);
+        console.log(offset, limit, filtersMap, onSuccessCallback, onFailureCallback);
 
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_INSURANCE_REQUIREMENT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_INSURANCE_REQUIREMENT_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -40,8 +39,7 @@ export function pullInsuranceRequirementList(page=1, sizePerPage=10, filtersMap=
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             console.log(responseData); // For debugging purposes.
 
@@ -50,7 +48,7 @@ export function pullInsuranceRequirementList(page=1, sizePerPage=10, filtersMap=
             // Extra.
             data['isAPIRequestRunning'] = false;
             data['errors'] = {};
-            data['page'] = page;
+            data['offset'] = offset;
 
             // console.log(data); // For debugging purposes.
 
@@ -69,10 +67,7 @@ export function pullInsuranceRequirementList(page=1, sizePerPage=10, filtersMap=
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -119,13 +114,9 @@ export function postInsuranceRequirementDetail(postData, successCallback, failed
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_INSURANCE_REQUIREMENT_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_INSURANCE_REQUIREMENT_LIST_API_URL, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
 
@@ -143,10 +134,7 @@ export function postInsuranceRequirementDetail(postData, successCallback, failed
             );
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -189,11 +177,10 @@ export function pullInsuranceRequirementDetail(id, onSuccessCallback, onFailureC
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
             let profile = camelizeKeys(responseData);
@@ -219,10 +206,7 @@ export function pullInsuranceRequirementDetail(id, onSuccessCallback, onFailureC
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -269,13 +253,9 @@ export function putInsuranceRequirementDetail(postData, successCallback, failedC
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.put(WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT+postData.id+"/", buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.put(WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_URL+postData.id, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
             // Extra.
@@ -293,10 +273,7 @@ export function putInsuranceRequirementDetail(postData, successCallback, failedC
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -339,40 +316,25 @@ export function deleteInsuranceRequirementDetail(id, onSuccessCallback, onFailur
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_URL+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-            // console.log(successResult); // For debugging purposes.
-
-            let profile = camelizeKeys(responseData);
-
-            // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
-
-            console.log("deleteInsuranceRequirementDetail | Success:", profile); // For debugging purposes.
-
             // Update the global state of the application to store our
             // user profile for the application.
             store.dispatch(
-                setInsuranceRequirementDetailSuccess(profile)
+                setInsuranceRequirementDetailSuccess(null)
             );
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
             // OBJECT WE GOT FROM THE API.
             if (onSuccessCallback) {
-                onSuccessCallback(profile);
+                onSuccessCallback(null);
             }
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -409,7 +371,7 @@ export const setInsuranceRequirementListRequest = () => ({
     type: INSURANCE_REQUIREMENT_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
-        page: 1,
+        offset: 0,
         errors: {}
     },
 });
@@ -467,7 +429,9 @@ export function getInsuranceRequirementReactSelectOptions(insuranceRequirementLi
                 insuranceRequirementOptions.push({
                     selectName: selectName,
                     value: insuranceRequirement.id,
-                    label: insuranceRequirement.text
+                    id: insuranceRequirement.id,
+                    label: insuranceRequirement.text,
+                    insuranceRequirementId: insuranceRequirement.id,
                 });
                 // console.log(insuranceRequirement);
             }
@@ -482,34 +446,35 @@ export function getInsuranceRequirementReactSelectOptions(insuranceRequirementLi
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedInsuranceRequirementReactSelectOptions(insuranceRequirementPKsArray, insuranceRequirementList=[], selectName="insuranceRequirement") {
-    const insuranceRequirementOptions = [];
-    const isAPIResponseNotEmpty = isEmpty(insuranceRequirementList) === false;
-    const isPKsArrayNotEmpty = isEmpty(insuranceRequirementPKsArray) === false;
-    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
-        const results = insuranceRequirementList.results;
-        const isResultsNotEmpty = isEmpty(results) === false;
-        if (isResultsNotEmpty) {
-            for (let i = 0; i < insuranceRequirementPKsArray.length; i++) {
-                let insuranceRequirementPK = insuranceRequirementPKsArray[i];
+ export function getPickedInsuranceRequirementReactSelectOptions(pickedInsuranceRequirementsArray, insuranceRequirementList=[], selectName="insuranceRequirement") {
+     const insuranceRequirementOptions = [];
+     const isAPIResponseNotEmpty = isEmpty(insuranceRequirementList) === false;
+     const isPickedArrayNotEmpty = isEmpty(pickedInsuranceRequirementsArray) === false;
+     if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
+         const results = insuranceRequirementList.results;
+         const isResultsNotEmpty = isEmpty(results) === false;
+         if (isResultsNotEmpty) {
+             for (let i = 0; i < pickedInsuranceRequirementsArray.length; i++) {
+                 let pickedInsuranceRequirement = pickedInsuranceRequirementsArray[i];
 
-                for (let j = 0; j < results.length; j++) {
-                    let insuranceRequirement = results[j];
+                 for (let j = 0; j < results.length; j++) {
+                     let insuranceRequirement = results[j];
 
-                    if (insuranceRequirement.id === insuranceRequirementPK) {
-                        insuranceRequirementOptions.push({
-                            selectName: selectName,
-                            value: insuranceRequirement.id,
-                            label: insuranceRequirement.text
-                        });
-                        // console.log(insuranceRequirement);
-                    } // end IF
+                     if (insuranceRequirement.id === pickedInsuranceRequirement.insuranceRequirementId) {
+                         insuranceRequirementOptions.push({
+                             selectName: selectName,
+                             value: insuranceRequirement.id,
+                             label: insuranceRequirement.text,
+                             insuranceRequirementId: insuranceRequirement.id,
+                         });
+                         // console.log(insuranceRequirement);
+                     } // end IF
 
-                } //end FOR
+                 } //end FOR
 
-            } // end FOR
+             } // end FOR
 
-        } // end IF
-    }
-    return insuranceRequirementOptions;
-}
+         } // end IF
+     }
+     return insuranceRequirementOptions;
+ }

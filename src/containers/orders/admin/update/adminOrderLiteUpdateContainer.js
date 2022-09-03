@@ -25,12 +25,21 @@ class AdminOrderLiteUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        console.log("COMP", this.props.orderDetail.completionDate);
+
         // Get our dates based on our browsers timezone.
         // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
-        var assignmentDate = new Date(this.props.orderDetail.assignmentDate);
-        assignmentDate.setMinutes( assignmentDate.getMinutes() + assignmentDate.getTimezoneOffset() );
-        var completionDate = new Date(this.props.orderDetail.completionDate);
-        completionDate.setMinutes( completionDate.getMinutes() + completionDate.getTimezoneOffset() );
+        var assignmentDate = this.props.orderDetail.assignmentDate
+        if (assignmentDate !== null) {
+            var assignmentDate = new Date(assignmentDate);
+            assignmentDate.setMinutes( assignmentDate.getMinutes() + assignmentDate.getTimezoneOffset() );
+        }
+
+        var completionDate = this.props.orderDetail.completionDate;
+        if (completionDate !== null) {
+            completionDate = new Date(completionDate);
+            completionDate.setMinutes( completionDate.getMinutes() + completionDate.getTimezoneOffset() );
+        }
 
         this.state = {
             errors: {},
@@ -42,8 +51,8 @@ class AdminOrderLiteUpdateContainer extends Component {
             homeSupport: this.props.orderDetail.isHomeSupportService ? 1 : 0,
             tags: this.props.orderDetail.tags,
             isTagsLoading: true,
-            assignmentDate: this.props.orderDetail.assignmentDate ? assignmentDate : null,
-            completionDate: this.props.orderDetail.completionDate ? completionDate : null,
+            assignmentDate: assignmentDate,
+            completionDate: completionDate,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -68,17 +77,34 @@ class AdminOrderLiteUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.isHomeSupportService = this.state.homeSupport;
-
-        if (this.state.assignmentDate instanceof Date) {
+        if (this.state.assignmentDate !== null && this.state.assignmentDate instanceof Date) {
             const assignmentDateMoment = moment(this.state.assignmentDate);
             postData.assignmentDate = assignmentDateMoment.format("YYYY-MM-DD")
         }
 
-        if (this.state.completionDate instanceof Date) {
+        if (this.state.completionDate !== null && this.state.completionDate instanceof Date) {
             const completionDateMoment = moment(this.state.completionDate);
             postData.completionDate = completionDateMoment.format("YYYY-MM-DD")
         }
+
+        // Boolean handler.
+        postData.isHomeSupportService = parseInt(this.state.homeSupport) === 1 ? true : false;
+
+        //
+        // Generate our PKs.
+        //
+
+        let ssPKs = [];
+        for (let ss of this.state.skillSets) {
+            ssPKs.push(ss.skillSetId);
+        }
+        postData.skillSets = ssPKs;
+
+        let tagPKs = [];
+        for (let t of this.state.tags) {
+            tagPKs.push(t.tagId);
+        }
+        postData.tags = tagPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -94,10 +120,10 @@ class AdminOrderLiteUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap, this.onSuccessfulSkillSetsFetchCallback);
-        this.props.pullTagList(1,1000, parametersMap, this.onSuccessfulTagsFetchCallback);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullSkillSetList(0, 10000, parametersMap, this.onSuccessfulSkillSetsFetchCallback);
+        this.props.pullTagList(0,10000, parametersMap, this.onSuccessfulTagsFetchCallback);
     }
 
     componentWillUnmount() {
@@ -166,14 +192,15 @@ class AdminOrderLiteUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idSkillSets = [];
+        let pickedSkillSets = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idSkillSets.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.skillSetId = pickedOption.value;
+                pickedSkillSets.push(pickedOption);
             }
         }
-        this.setState({ skillSets: idSkillSets, });
+        this.setState({ skillSets: pickedSkillSets, });
     }
 
     onTagMultiChange(...args) {
@@ -183,14 +210,15 @@ class AdminOrderLiteUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
     onRadioChange(e) {
@@ -238,9 +266,7 @@ class AdminOrderLiteUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            id, errors, description, isLoading, isTagsLoading, tags, isSkillSetsLoading, skillSets, assignmentDate, completionDate, homeSupport
-        } = this.state;
+        const { tags, skillSets } = this.state;
 
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
@@ -248,34 +274,17 @@ class AdminOrderLiteUpdateContainer extends Component {
         const skillSetOptions = getSkillSetReactSelectOptions(this.props.skillSetList);
         const transcodedSkillSets = getPickedSkillSetReactSelectOptions(skillSets, this.props.skillSetList)
 
+        console.log(transcodedSkillSets);
+
         return (
             <OrderLiteUpdateComponent
-                id={id}
-                isLoading={isLoading}
-                errors={errors}
-                description={description}
-                onTextChange={this.onTextChange}
-
-                isTagsLoading={isTagsLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 tags={transcodedTags}
                 tagOptions={tagOptions}
-                onTagMultiChange={this.onTagMultiChange}
-
-                isSkillSetsLoading={isSkillSetsLoading}
                 skillSets={transcodedSkillSets}
                 skillSetOptions={skillSetOptions}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-
-                onAssignmentDateChange={this.onAssignmentDateChange}
-                assignmentDate={assignmentDate}
-                onCompletionDateChange={this.onCompletionDateChange}
-                completionDate={completionDate}
-
-                onRadioChange={this.onRadioChange}
-                homeSupport={homeSupport}
-
-                onClick={this.onClick}
-                user={this.props.user}
             />
         );
     }

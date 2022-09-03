@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import StaffCreateStep1Component from "../../../components/staff/create/staffCreateStep1Component";
+import { validateSearchInput } from "../../../validators/staffValidator";
 
 
 class StaffCreateStep1Container extends Component {
@@ -14,7 +15,8 @@ class StaffCreateStep1Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-staff-firstName"),
+            advancedSearchActive: true,
+            givenName: localStorage.getItem("workery-create-staff-givenName"),
             lastName: localStorage.getItem("workery-create-staff-lastName"),
             email: localStorage.getItem("workery-create-staff-email"),
             phone: localStorage.getItem("workery-create-staff-phone"),
@@ -76,8 +78,7 @@ class StaffCreateStep1Container extends Component {
     onTextChange(e) {
         this.setState({
             [e.target.name]: e.target.value,
-        })
-
+        });
         const key = "workery-create-staff-"+[e.target.name].toString();
         localStorage.setItem(key, e.target.value);
     }
@@ -86,7 +87,21 @@ class StaffCreateStep1Container extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        this.onSuccessfulSubmissionCallback();
+        const { errors, isValid } = validateSearchInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            this.onSuccessfulSubmissionCallback();
+            // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.setState({ errors: errors });
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
     }
 
 
@@ -96,16 +111,11 @@ class StaffCreateStep1Container extends Component {
      */
 
     render() {
-        const { firstName, lastName, email, phone, errors, isLoading } = this.state
         return (
             <StaffCreateStep1Component
-                firstName={firstName}
-                lastName={lastName}
-                email={email}
-                phone={phone}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

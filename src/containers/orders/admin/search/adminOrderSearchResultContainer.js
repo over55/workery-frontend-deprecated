@@ -22,8 +22,8 @@ class AdminOrderSearchResultContainer extends Component {
         if (search.keyword !== undefined && search.keyword !== "") {
             parametersMap.set("search", search.keyword);
         }
-        if (search.firstName !== undefined && search.firstName !== "") {
-            parametersMap.set("given_name", search.firstName);
+        if (search.givenName !== undefined && search.givenName !== "") {
+            parametersMap.set("given_name", search.givenName);
         }
         if (search.lastName !== undefined && search.lastName !== "") {
             parametersMap.set("last_name", search.lastName);
@@ -38,8 +38,8 @@ class AdminOrderSearchResultContainer extends Component {
 
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
@@ -60,7 +60,7 @@ class AdminOrderSearchResultContainer extends Component {
      */
 
     componentDidMount() {
-        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        window.scrollTo(0, 0);  // Start the offset at the top of the offset.
     }
 
     componentWillUnmount() {
@@ -84,7 +84,7 @@ class AdminOrderSearchResultContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -109,7 +109,7 @@ class AdminOrderSearchResultContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -128,17 +128,17 @@ class AdminOrderSearchResultContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -155,7 +155,7 @@ class AdminOrderSearchResultContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -169,16 +169,11 @@ class AdminOrderSearchResultContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <OrderSearchResultComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                orderList={this.props.orderList}
-                onTableChange={this.onTableChange}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
@@ -197,9 +192,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullOrderList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullOrderList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

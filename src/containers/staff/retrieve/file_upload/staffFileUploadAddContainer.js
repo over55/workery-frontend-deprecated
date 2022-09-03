@@ -5,7 +5,7 @@ import Scroll from 'react-scroll';
 
 import OrderListComponent from "../../../../components/staff/retrieve/file_upload/staffFileUploadAddComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { postStaffFileUpload } from "../../../../actions/staffFileUploadActions";
+import { postPrivateFileDetail } from "../../../../actions/privateFileActions";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { validateInput } from "../../../../validators/fileValidator"
 import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
@@ -30,7 +30,7 @@ class StaffFileUploadAddContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            staff: id,
+            staffId: id,
             file: null,
             id: id,
             text: "",
@@ -80,7 +80,7 @@ class StaffFileUploadAddContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullTagList(1, 1000, new Map(), this.onTagFetchSuccessCallback);
+        this.props.pullTagList(0, 1000, new Map(), this.onTagFetchSuccessCallback);
     }
 
     componentWillUnmount() {
@@ -186,7 +186,7 @@ class StaffFileUploadAddContainer extends Component {
 
             // Once our state has been validated `staff-side` then we will
             // make an API request with the server to create our new production.
-            this.props.postStaffFileUpload(
+            this.props.postPrivateFileDetail(
                 this.getPostData(),
                 this.onSuccessPostCallback,
                 this.onFailurePostCallback
@@ -282,7 +282,6 @@ class StaffFileUploadAddContainer extends Component {
                 tags={tags}
                 tagOptions={tagOptions}
                 is_archived={is_archived}
-                user={this.props.user}
                 staff={staff}
                 staffFiles={staffFiles}
                 flashMessage={this.props.flashMessage}
@@ -318,8 +317,8 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        postStaffFileUpload: (postData, successCallback, failedCallback) => {
-            dispatch(postStaffFileUpload(postData, successCallback, failedCallback))
+        postPrivateFileDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPrivateFileDetail(postData, successCallback, failedCallback))
         },
         pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(

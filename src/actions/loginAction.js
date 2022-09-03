@@ -1,12 +1,12 @@
 import axios from 'axios';
 import store from '../store';
 import { camelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 
 import { LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../constants/actionTypes"
-import { WORKERY_LOGIN_API_ENDPOINT } from "../constants/api"
-import { setAccessTokenInLocalStorage, setRefreshTokenInLocalStorage } from '../helpers/jwtUtility';
+import { WORKERY_LOGIN_API_URL } from "../constants/api"
+import { setAccessTokenInLocalStorage, setRefreshTokenInLocalStorage, clearAllAccessAndRefreshTokensFromLocalStorage } from '../helpers/jwtUtility';
 import { getAPIBaseURL } from '../helpers/urlUtility';
+import getCustomAxios from '../helpers/customAxios';
 
 
 export const setLoginRequest = () => ({
@@ -37,31 +37,17 @@ export function postLogin(email, password, successCallback=null, failedCallback=
             setLoginRequest()
         );
 
-        // Create a new Axios instance which will be sending and receiving in
-        // MessagePack (Buffer) format.
-        const customAxios = axios.create({
-            baseURL: getAPIBaseURL(),
-            headers: {
-                'Content-Type': 'application/json;',
-                'Accept': 'application/json',
-            },
-            // responseType: 'arraybuffer'
-        })
-
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode({
-            'email_or_username': email,
-            'password': password,
-        });
+        // DEVELOPERS NOTE:
+        // WHEN ATTEMPTING TO LOGIN, WE NEED TO CLEAR ANY PREVIOUS SESSION TOKENS.
+        clearAllAccessAndRefreshTokensFromLocalStorage();
 
         var data = {
-            'email_or_username': email,
+            'email': email,
             'password': password,
         };
 
-        customAxios.post(WORKERY_LOGIN_API_ENDPOINT, data).then( (successResponse) => {
+        axios.post(WORKERY_LOGIN_API_URL, data).then( (successResponse) => {
             // Decode our MessagePack (Buffer) into JS Object.
-            // const responseData = msgpack.decode(Buffer(successResponse.data));
             const responseData = successResponse.data;
 
             // Snake-case from API to camel-case for React.
@@ -76,8 +62,8 @@ export function postLogin(email, password, successCallback=null, failedCallback=
 
             // SAVE OUR CREDENTIALS IN PERSISTENT STORAGE. THIS IS AN IMPORTANT
             // STEP BECAUSE OUR TOKEN UTILITY HELPER NEEDS THIS.
-            setAccessTokenInLocalStorage(profile.token);
-            setRefreshTokenInLocalStorage(null);
+            setAccessTokenInLocalStorage(profile.accessToken);
+            setRefreshTokenInLocalStorage(profile.refreshToken);
 
             // Update the global state of the application to store our
             // user profile for the application.
@@ -94,10 +80,6 @@ export function postLogin(email, password, successCallback=null, failedCallback=
 
         }).catch( (exception) => {
             if (exception.response) {
-                // const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                // const responseData = msgpack.decode(Buffer(responseBinaryData));
                 const responseData = exception.response.data
 
                 let errors = camelizeKeys(responseData);

@@ -29,7 +29,7 @@ class PartnerAvatarUpdateOperationContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            partner: id,
+            partnerId: parseInt(id),
             file: null,
             id: id,
             text: "",

@@ -72,7 +72,7 @@ class AdminFinancialCloneOperationContainer extends Component {
     onSuccessCallback(response) {
         console.log("onSuccessCallback | Fetched:", response);
         this.props.setFlashMessage("success", "Word order has been successfully cloned.");
-        this.props.history.push("/financial/"+response.cloneId+"");
+        this.props.history.push("/financial/"+response.id+"");
     }
 
     onFailureCallback(errors) {

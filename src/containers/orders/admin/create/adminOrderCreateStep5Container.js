@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import  AdminOrderCreateStep5Component from "../../../../components/orders/admin/create/adminOrderCreateStep5Component";
 import { validateStep5CreateInput } from "../../../../validators/orderValidator";
-import { getTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
+import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../../actions/tagActions";
 import { localStorageSetObjectOrArrayItem, localStorageGetArrayItem } from '../../../../helpers/localStorageUtility';
 
 
@@ -38,9 +38,9 @@ class  AdminOrderCreateStep5Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
        // Fetch all our GUI drop-down options which are populated by the API.
-       const parametersMap = new Map()
-       parametersMap.set("isArchived", 3)
-       this.props.pullTagList(1,1000, parametersMap, this.onTagsSuccessFetch);
+       const parametersMap = new Map();
+       parametersMap.set("state", 1);
+       this.props.pullTagList(0,1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -81,14 +81,21 @@ class  AdminOrderCreateStep5Container extends Component {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the tags we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let pickedTags = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
+            }
+        }
+        this.setState({ tags: pickedTags, }, ()=>{
+            const key = 'workery-create-order-' + args[1].name;
+            localStorageSetObjectOrArrayItem(key, selectedOptions);
         });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-create-order-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
     }
 
     onNextClick(e) {
@@ -120,18 +127,16 @@ class  AdminOrderCreateStep5Container extends Component {
      */
 
     render() {
-        const { comment, isTagsLoading, tags, errors } = this.state;
+        const { tags } = this.state;
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
+        const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList);
         return (
             < AdminOrderCreateStep5Component
-                comment={comment}
-                onTextChange={this.onTextChange}
-                isTagsLoading={isTagsLoading}
-                tags={tags}
+                {...this}
+                {...this.state}
+                {...this.props}
                 tagOptions={tagOptions}
-                onTagMultiChange={this.onTagMultiChange}
-                onNextClick={this.onNextClick}
-                errors={errors}
+                tags={transcodedTags}
             />
         );
     }

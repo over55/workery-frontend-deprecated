@@ -10,7 +10,6 @@ import {
 } from '../../../helpers/localStorageUtility';
 
 
-
 class StaffLiteRetrieveContainer extends Component {
     /**
      *  Initializer & Utility
@@ -37,6 +36,7 @@ class StaffLiteRetrieveContainer extends Component {
         // Update functions.
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onStaffClick = this.onStaffClick.bind(this);
     }
 
     /**
@@ -84,6 +84,13 @@ class StaffLiteRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
+    onStaffClick(e) {
+        e.preventDefault();
+        localStorage.setItem("workery-create-order-staffId", this.props.staffDetail.id);
+        localStorage.setItem("workery-create-order-staffGivenName", this.props.staffDetail.givenName);
+        localStorage.setItem("workery-create-order-staffLastName", this.props.staffDetail.lastName);
+        this.props.history.push("/orders/add/step-3");
+    }
 
     /**
      *  Main render function
@@ -91,15 +98,13 @@ class StaffLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id, isLoading } = this.state;
         const staff = isEmpty(this.state.staff) ? {} : this.state.staff;
         return (
             <StaffLiteRetrieveComponent
-                id={id}
-                isLoading={isLoading}
-                user={this.props.user}
+                {...this}
+                {...this.state}
+                {...this.props}
                 staff={staff}
-                flashMessage={this.props.flashMessage}
             />
         );
     }

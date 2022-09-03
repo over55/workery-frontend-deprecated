@@ -29,7 +29,7 @@ export default class ClientContactUpdateComponent extends Component {
             typeOf,
 
             // STEP 4
-            organizationName, organizationTypeOf, givenName, lastName, primaryPhone, secondaryPhone, email, isOkToText, isOkToEmail,
+            organizationName, organizationTypeOf, givenName, lastName, telephone, otherTelephone, email, isOkToText, isOkToEmail,
 
             // EVERYTHING ELSE
             id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
@@ -114,11 +114,11 @@ export default class ClientContactUpdateComponent extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.primaryPhone}
+                                error={errors.telephone}
                                 label="Primary Telephone (*)"
                                 onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
+                                value={telephone}
+                                name="telephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
@@ -126,11 +126,11 @@ export default class ClientContactUpdateComponent extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
-                                error={errors.secondaryPhone}
+                                error={errors.otherTelephone}
                                 label="Secondary Telephone"
                                 onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
+                                value={otherTelephone}
+                                name="otherTelephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />

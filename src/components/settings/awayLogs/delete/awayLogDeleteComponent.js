@@ -7,7 +7,7 @@ import Moment from 'react-moment';
 class AwayLogDeleteComponent extends Component {
     render() {
         const {
-            associate, associateOptions, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
+            associateId, associateOptions, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
             onClick, onBack
         } = this.props;
         return (
@@ -42,7 +42,7 @@ class AwayLogDeleteComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Associate #</th>
-                                    <td>{associate}</td>
+                                    <td>{associateId}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Start Date</th>

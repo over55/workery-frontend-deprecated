@@ -35,6 +35,7 @@ class AdminDepositCreateStep2Container extends Component {
             paidFor: localStorageGetIntegerItem("workery-create-deposit-paidFor"),
             paidForLabel: localStorage.getItem("workery-create-deposit-paidFor-label"),
             amount: localStorageGetFloatItem("workery-create-deposit-amount"),
+            currency: "CAD",
             errors: {},
             isLoading: false
         }

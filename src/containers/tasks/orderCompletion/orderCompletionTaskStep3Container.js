@@ -161,9 +161,9 @@ class OrderCompletionTaskStep3Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullServiceFeeList(1, 1000, parametersMap);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullServiceFeeList(0, 1000, parametersMap);
         this.props.pullOrderDetail(this.state.id);
         this.performCalculation();
     }
@@ -196,7 +196,7 @@ class OrderCompletionTaskStep3Container extends Component {
         this.setState({ errors: {}, isLoading: false, });
         this.props.setFlashMessage("success", "Order has been successfully updated.");
 
-        // According to the following ticket (https://github.com/over55/workery-front/issues/212)
+        // According to the following ticket (https://github.com/over55/workery-frontend/issues/212)
         // we are to redirect to a different page where the user can handle
         // zeroing the amount owing.
         const invoiceAmountDue = order['invoiceAmountDue'];
@@ -234,16 +234,23 @@ class OrderCompletionTaskStep3Container extends Component {
      *  the state for the field.
      */
     onAmountChange(e) {
-        const amount = e.target.value.replace("$","").replace(",", "");
-        this.setState(
-            { [e.target.name]: parseFloat(amount), }, ()=>{
-                const key = "workery-task-6-"+[e.target.name];
-                localStorage.setItem(key, parseFloat(amount));
+        const name = e.target.name;
+        const value = e.target.value;
 
-                // Update our form with our latest calculations. Since all our
-                // currency fields are to be taken into account, then generally
-                // run this function for all modifications.
-                this.performCalculation();
+        const amount = value.replace("$","").replace(",", "");
+        this.setState(
+            { [name]: parseFloat(amount), }, ()=>{
+                try {
+                    const key = "workery-task-6-"+[name];
+                    localStorage.setItem(key, parseFloat(amount));
+
+                    // Update our form with our latest calculations. Since all our
+                    // currency fields are to be taken into account, then generally
+                    // run this function for all modifications.
+                    this.performCalculation();
+                } catch (err) {
+                    console.log("onAmountChange | err:", err);
+                }
             }
         );
     }

@@ -144,23 +144,11 @@ class StaffCreateStep4Container extends Component {
      */
 
     render() {
-        const {
-            givenName, lastName, primaryPhone, secondaryPhone, workEmail, personalEmail, isOkToEmail, isOkToText, errors
-        } = this.state;
         return (
             <StaffCreateStep4Component
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                workEmail={workEmail}
-                personalEmail={personalEmail}
-                isOkToEmail={isOkToEmail}
-                isOkToText={isOkToText}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

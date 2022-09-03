@@ -1,17 +1,27 @@
 import axios from 'axios';
 import store from '../store';
-import { camelizeKeys, decamelize } from 'humps';
+import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     FINANCIAL_LIST_REQUEST,
     FINANCIAL_LIST_FAILURE,
     FINANCIAL_LIST_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_ASSOCIATE_BALANCE_OPERATION_API_ENDPOINT } from '../constants/api';
+import {
+    WORKERY_ASSOCIATE_BALANCE_OPERATION_API_URL,
+    WORKERY_ASSOCIATE_ARCHIVE_API_URL,
+    WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_URL,
+    WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_URL,
+    WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_URL,
+    WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_URL
+} from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
-
+import {
+    setAssociateDetailRequest,
+    setAssociateDetailSuccess,
+    setAssociateDetailFailure
+} from './associateActions';
 
 export const setFinancialListRequest = () => ({
     type: FINANCIAL_LIST_REQUEST,
@@ -51,12 +61,11 @@ export function pullAssociateBalanceOperation(associateId, onSuccessCallback=nul
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_ASSOCIATE_BALANCE_OPERATION_API_ENDPOINT+"?id="+associateId
+        let aURL = WORKERY_ASSOCIATE_BALANCE_OPERATION_API_URL+"?id="+associateId
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             console.log(responseData); // For debugging purposes.
 
@@ -83,14 +92,11 @@ export function pullAssociateBalanceOperation(associateId, onSuccessCallback=nul
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
-                console.log("pullFinancialList | error:", errors); // For debuggin purposes only.
+                console.log("pullAssociateBalanceOperation | error:", errors); // For debuggin purposes only.
 
                 // Send our failure to the redux.
                 store.dispatch(
@@ -109,6 +115,340 @@ export function pullAssociateBalanceOperation(associateId, onSuccessCallback=nul
             }
 
         }).then( () => { // FINALLY
+            // Do nothing.
+        });
+
+    }
+}
+
+export function postAssociateDeactivationDetail(postData, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setAssociateDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // The following code will convert the `camelized` data into `snake case`
+        // data so our API endpoint will be able to read it.
+        let decamelizedData = decamelizeKeys(postData);
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_ASSOCIATE_ARCHIVE_API_URL, decamelizedData).then( (successResponse) => {
+            // Decode our MessagePack (Buffer) into JS Object.
+            const responseData = successResponse.data;
+
+            let client = camelizeKeys(responseData);
+
+            // Extra.
+            client['isAPIRequestRunning'] = false;
+            client['errors'] = {};
+
+            // Update the global state of the application to store our
+            // user client for the application.
+            store.dispatch(
+                setAssociateDetailSuccess(client)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(client);
+            }
+        }).catch( (exception) => {
+            if (exception.response) {
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("postAssociateDeactivationDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+export function postAssociateAvatarCreateOrUpdate(postData, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setAssociateDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // The following code will convert the `camelized` data into `snake case`
+        // data so our API endpoint will be able to read it.
+        let decamelizedData = decamelizeKeys(postData);
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_URL, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
+
+            let associate = camelizeKeys(responseData);
+
+            // Extra.
+            associate['isAPIRequestRunning'] = false;
+            associate['errors'] = {};
+
+            // Update the global state of the application to store our
+            // user associate for the application.
+            store.dispatch(
+                setAssociateDetailSuccess(associate)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(associate);
+            }
+        }).catch( (exception) => {
+            if (exception.response) {
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("postAssociateAvatarCreateOrUpdate | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+export function postAssociateResidentialUpgradeDetail(postData, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setAssociateDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // The following code will convert the `camelized` data into `snake case`
+        // data so our API endpoint will be able to read it.
+        let decamelizedData = decamelizeKeys(postData);
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
+
+            let associate = camelizeKeys(responseData);
+
+            // Extra.
+            associate['isAPIRequestRunning'] = false;
+            associate['errors'] = {};
+
+            // Update the global state of the application to store our
+            // user associate for the application.
+            store.dispatch(
+                setAssociateDetailSuccess(associate)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(associate);
+            }
+        }).catch( (exception) => {
+            if (exception.response) {
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("postAssociateResidentialUpgradeDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+export function postAssociateDowngradeOperation(postData, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setAssociateDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // The following code will convert the `camelized` data into `snake case`
+        // data so our API endpoint will be able to read it.
+        let decamelizedData = decamelizeKeys(postData);
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_URL, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
+
+            let associate = camelizeKeys(responseData);
+
+            // Extra.
+            associate['isAPIRequestRunning'] = false;
+            associate['errors'] = {};
+
+            // Update the global state of the application to store our
+            // user associate for the application.
+            store.dispatch(
+                setAssociateDetailSuccess(associate)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(associate);
+            }
+        }).catch( (exception) => {
+            if (exception.response) {
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("postAssociateDowngradeOperation | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
+            // Do nothing.
+        });
+
+    }
+}
+
+export function postAssociatePermanentlyDeleteOperation(id, onSuccessCallback, onFailureCallback) {
+    return dispatch => {
+        // Change the global state to attempting to log in.
+        store.dispatch(
+            setAssociateDetailRequest()
+        );
+
+        // Generate our app's Axios instance.
+        const customAxios = getCustomAxios();
+
+        // Perform our API submission.
+        customAxios.post(WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_URL, { "associate_id": id }).then( (successResponse) => {
+            let client = {
+                isAPIRequestRunning: false,
+                errors: {},
+            };
+
+            // Update the global state of the application to store our
+            // user client for the application.
+            store.dispatch(
+                setAssociateDetailSuccess(client)
+            );
+
+            // DEVELOPERS NOTE:
+            // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+            // OBJECT WE GOT FROM THE API.
+            if (onSuccessCallback) {
+                onSuccessCallback(client);
+            }
+
+        }).catch( (exception) => {
+            if (exception.response) {
+                // Decode our MessagePack (Buffer) into JS Object.
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+                let errors = camelizeKeys(responseData);
+
+                console.log("postAssociatePermanentlyDeleteOperation | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            }
+
+        }).then( () => {
             // Do nothing.
         });
 

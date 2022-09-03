@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import AdminAssociateFullRetrieveComponent from "../../../../components/associates/admin/retrieve/adminAssociateFullRetrieveComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateDetail } from "../../../../actions/associateActions";
-
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../../helpers/localStorageUtility';
 
 class AdminAssociateFullRetrieveContainer extends Component {
     /**
@@ -17,10 +20,16 @@ class AdminAssociateFullRetrieveContainer extends Component {
 
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const associate = this.props.associateDetail;
+        const isLoading = isEmpty(associate);
+
         // Update state.
         this.state = {
             id: id,
-            associate: {}
+            associate: associate,
+            isLoading: isLoading,
         }
 
         // Update functions.
@@ -56,7 +65,12 @@ class AdminAssociateFullRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log("onSuccessCallback | Fetched:", response);
+        console.log("onSuccessCallback | response:", response);
+        this.setState({ isLoading: false, associate: response });
+
+        // The following code will save the object to the browser's local
+        // storage to be retrieved later more quickly.
+        localStorageSetObjectOrArrayItem("workery-admin-retrieve-associate-"+this.state.id.toString(), response);
     }
 
     onFailureCallback(errors) {
@@ -75,13 +89,11 @@ class AdminAssociateFullRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
-        const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
             <AdminAssociateFullRetrieveComponent
-                id={id}
-                associate={associate}
-                flashMessage={this.props.flashMessage}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

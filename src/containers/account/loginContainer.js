@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import { EXECUTIVE_GROUP_ID } from '../../constants/api';
+import { EXECUTIVE_ROLE_ID } from '../../constants/api';
 import LoginComponent from '../../components/account/loginComponent';
 import validateInput from "../../validators/loginValidator";
 import { postLogin } from "../../actions/loginAction";
@@ -72,15 +72,15 @@ class LoginContainer extends Component {
         console.log(profile); // For debugging purposes.
 
         this.setState({ errors: {}, });
-        const { schemaName } = profile;
-        if (schemaName === null || schemaName === undefined || schemaName === "null") {
+        const { roleId } = profile;
+        if (roleId === EXECUTIVE_ROLE_ID) {
             const location = process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_WWW_DOMAIN + "/organizations";
             console.log(location);
             window.location = location; // Do not use `react-router-dom` library.
         } else {
             const accessToken = getAccessTokenFromLocalStorage();
             const refreshToken = getRefreshTokenFromLocalStorage();
-            const location = process.env.REACT_APP_WWW_PROTOCOL + "://" + schemaName + "." + process.env.REACT_APP_WWW_DOMAIN + "/dashboard-redirect/"+accessToken+"/"+refreshToken;
+            const location = process.env.REACT_APP_WWW_PROTOCOL + "://" + process.env.REACT_APP_WWW_DOMAIN + "/dashboard-redirect/"+accessToken+"/"+refreshToken;
             window.location = location; // Do not use `react-router-dom` library.
         }
     }
@@ -143,16 +143,11 @@ class LoginContainer extends Component {
      */
 
     render() {
-        const { email, password, errors, isLoading } = this.state;
         return (
             <LoginComponent
-                email={email}
-                password={password}
-                errors={errors}
-                isLoading={isLoading}
-                onChange={this.onChange}
-                onSubmit={this.onSubmit}
-                flashMessage={this.props.flashMessage}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

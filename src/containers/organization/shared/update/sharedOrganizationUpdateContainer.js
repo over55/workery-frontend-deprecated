@@ -96,6 +96,12 @@ class SharedOrganizationUpdateContainer extends Component {
         // Schema Name: This field is required.
         postData.schemaName = this.state.schema;
 
+        // Convert
+        postData.id = parseInt(this.state.id);
+
+        // Default value - do nothing from our perspective.
+        postData.state = 1;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;

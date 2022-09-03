@@ -2,13 +2,12 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     TENANT_LIST_REQUEST, TENANT_LIST_FAILURE, TENANT_LIST_SUCCESS,
     TENANT_DETAIL_REQUEST, TENANT_DETAIL_FAILURE, TENANT_DETAIL_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_TENANT_LIST_API_ENDPOINT, WORKERY_TENANT_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_TENANT_LIST_API_URL, WORKERY_TENANT_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -30,7 +29,7 @@ export function pullTenantList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_TENANT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_TENANT_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -40,8 +39,7 @@ export function pullTenantList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             console.log(responseData); // For debugging purposes.
 
@@ -69,10 +67,7 @@ export function pullTenantList(page=1, sizePerPage=10, filtersMap=new Map(), onS
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -119,36 +114,30 @@ export function postTenantDetail(postData, successCallback, failedCallback) {
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         console.log("postTenantDetail | data", postData);
+        console.log("postTenantDetail | decamelizedData", decamelizedData);
 
         // Perform our API submission.
-        customAxios.post(WORKERY_TENANT_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_TENANT_LIST_API_URL, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
-            let device = camelizeKeys(responseData);
+            let tenantData = camelizeKeys(responseData);
 
             // Extra.
-            device['isAPIRequestRunning'] = false;
-            device['errors'] = {};
+            tenantData['isAPIRequestRunning'] = false;
+            tenantData['errors'] = {};
 
             // Run our success callback function.
-            successCallback(device);
+            successCallback(tenantData);
 
             // Update the global state of the application to store our
-            // user device for the application.
+            // tenant data for the application.
             store.dispatch(
-                setTenantDetailSuccess(device)
+                setTenantDetailSuccess(tenantData)
             );
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -191,11 +180,10 @@ export function pullTenantDetail(id, onSuccessCallback, onFailureCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_TENANT_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_TENANT_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data
             // console.log(successResult); // For debugging purposes.
 
             let profile = camelizeKeys(responseData);
@@ -221,10 +209,7 @@ export function pullTenantDetail(id, onSuccessCallback, onFailureCallback) {
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -271,38 +256,31 @@ export function putTenantDetail(postData, onSuccessCallback, onFailureCallback) 
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.put(WORKERY_TENANT_DETAIL_API_ENDPOINT+postData.id+"/", buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-            let device = camelizeKeys(responseData);
+        customAxios.put(WORKERY_TENANT_DETAIL_API_URL+postData.id, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
+            let tenantData = camelizeKeys(responseData);
 
             // Extra.
-            device['isAPIRequestRunning'] = false;
-            device['errors'] = {};
+            tenantData['isAPIRequestRunning'] = false;
+            tenantData['errors'] = {};
 
             // Update the global state of the application to store our
-            // user device for the application.
+            // tenant data for the application.
             store.dispatch(
-                setTenantDetailSuccess(device)
+                setTenantDetailSuccess(tenantData)
             );
 
             // DEVELOPERS NOTE:
             // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
             // OBJECT WE GOT FROM THE API.
             if (onSuccessCallback) {
-                onSuccessCallback(device);
+                onSuccessCallback(tenantData);
             }
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 

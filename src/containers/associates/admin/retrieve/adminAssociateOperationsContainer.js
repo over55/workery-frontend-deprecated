@@ -87,12 +87,9 @@ class AdminAssociateOperationsContainer extends Component {
     render() {
         return (
             <AdminAssociateOperationsComponent
-                id={this.state.id}
-                isLoading={this.state.isLoading}
-                flashMessage={this.props.flashMessage}
-                onAddJobClick={this.onAddJobClick}
-                associateDetail={this.props.associateDetail}
-                user={this.props.user}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

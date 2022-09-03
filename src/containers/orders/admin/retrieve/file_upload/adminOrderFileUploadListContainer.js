@@ -5,11 +5,11 @@ import Scroll from 'react-scroll';
 
 import AdminOrderFileUploadListComponent from "../../../../../components/orders/admin/retrieve/file_upload/adminOrderFileUploadListComponent";
 import { clearFlashMessage } from "../../../../../actions/flashMessageActions";
-import { pullOrderFileUploadList, postOrderFileUpload } from "../../../../../actions/orderFileUploadActions";
+import { pullPrivateFileList, postPrivateFileDetail } from "../../../../../actions/privateFileActions";
 import { validateInput } from "../../../../../validators/fileValidator"
 
 
-class OrderFileUploadListContainer extends Component {
+class AdminOrderFileUploadListContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -18,15 +18,19 @@ class OrderFileUploadListContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
+
         const parametersMap = new Map();
-        parametersMap.set("work_order", id);
-        // parametersMap.set("is_archived", 3); // 3 = TRUE | 2 = FALSE
-        parametersMap.set("o", "-created_at");
+        parametersMap.set("sort_order", "DESC"); // Don't forget these same values must be set in the `defaultSorted` var inside `ClientListComponent`.
+        parametersMap.set("sort_field", "id");
+        parametersMap.set("order_id", id);
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 10000,
+            offset: 0,
+            limit: 10000,
             totalSize: 0,
+            sortOrder: "DESC",
+            sortField: "id",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
@@ -56,7 +60,7 @@ class OrderFileUploadListContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.about = this.state.id;
+        postData.orderId = this.state.id;
         postData.extraText = this.state.text;
 
         // Finally: Return our new modified data.
@@ -73,9 +77,9 @@ class OrderFileUploadListContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Get our data.
-        this.props.pullOrderFileUploadList(
-            this.state.page,
-            this.state.sizePerPage,
+        this.props.pullPrivateFileList(
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessListCallback,
             this.onFailureListCallback
@@ -103,7 +107,7 @@ class OrderFileUploadListContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -123,7 +127,7 @@ class OrderFileUploadListContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -131,9 +135,9 @@ class OrderFileUploadListContainer extends Component {
                 console.log("onSuccessPostCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
-                this.props.pullOrderFileUploadList(
-                    this.state.page,
-                    this.state.sizePerPage,
+                this.props.pullPrivateFileList(
+                    this.state.offset,
+                    this.state.limit,
                     this.state.parametersMap,
                     this.onSuccessListCallback,
                     this.onFailureListCallback
@@ -171,7 +175,7 @@ class OrderFileUploadListContainer extends Component {
 
                 // Once our state has been validated `order-side` then we will
                 // make an API request with the server to create our new production.
-                this.props.postOrderFileUpload(
+                this.props.postPrivateFileDetail(
                     this.getPostData(),
                     this.onSuccessPostCallback,
                     this.onFailurePostCallback
@@ -195,7 +199,7 @@ class OrderFileUploadListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -214,17 +218,17 @@ class OrderFileUploadListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderFileUploadList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(this.state.offset, this.state.limit, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullOrderFileUploadList(page, sizePerPage, this.state.parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(offset, limit, this.state.parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
 
@@ -241,7 +245,7 @@ class OrderFileUploadListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderFileUploadList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
+                    this.props.pullPrivateFileList(this.state.offset, this.state.limit, parametersMap, this.onSuccessListCallback, this.onFailureListCallback);
                 }
             );
         }else {
@@ -255,19 +259,15 @@ class OrderFileUploadListContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, text, errors } = this.state;
         const order = this.props.orderDetail ? this.props.orderDetail : {};
-        const orderFileList = this.props.orderFileList && this.props.orderFileList.results ? this.props.orderFileList.results : [];
+        const privateFileList = this.props.privateFileList && this.props.privateFileList.results ? this.props.privateFileList.results : [];
         return (
             <AdminOrderFileUploadListComponent
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 order={order}
-                orderFiles={orderFileList}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
-                onTableChange={this.onTableChange}
+                orderFiles={privateFileList}
             />
         );
     }
@@ -277,7 +277,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        orderFileList: store.orderFileListState,
+        privateFileList: store.privateFileListState,
         orderDetail: store.orderDetailState,
     };
 }
@@ -287,13 +287,13 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderFileUploadList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
+        pullPrivateFileList: (offset, limit, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullOrderFileUploadList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
+                pullPrivateFileList(offset, limit, map, onSuccessListCallback, onFailureListCallback)
             )
         },
-        postOrderFileUpload: (postData, successCallback, failedCallback) => {
-            dispatch(postOrderFileUpload(postData, successCallback, failedCallback))
+        postPrivateFileDetail: (postData, successCallback, failedCallback) => {
+            dispatch(postPrivateFileDetail(postData, successCallback, failedCallback))
         },
     }
 }
@@ -302,4 +302,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(OrderFileUploadListContainer);
+)(AdminOrderFileUploadListContainer);

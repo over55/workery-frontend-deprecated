@@ -44,7 +44,7 @@ class RemoteListComponent extends Component {
 
         const columns = [
         {
-            dataField: 'is_archived',
+            dataField: 'state',
             text: 'Status',
             sort: false,
             filter: selectFilter({
@@ -147,11 +147,14 @@ class RemoteListComponent extends Component {
 
 
 function statusFormatter(cell, row){
-    switch(row.isArchived) {
-        case false:
+    switch(row.state) {
+        case 0:
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
+            break;
+        case 1:
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
-        case true:
+        case 2:
             return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
@@ -164,23 +167,33 @@ function statusFormatter(cell, row){
 function fileFormatter(cell, row){
     return (
         <div>
-            {row.isArchived === false &&
+            {row.state === 0 &&
+                <strong>
+                    <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
+                </strong>
+            }
+            {row.state === 1 &&
                 <a href={row.fileUrl} target="_blank">
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                 </a>
             }
-            {row.isArchived === true &&
+            {row.state === 2 &&
                 <strong>
                     <i className="fas fa-cloud-download-alt"></i>&nbsp;Download
                 </strong>
             }
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            {row.isArchived === false &&
-                <Link to={`/partner/${row.customer}/file/archive/${row.id}`}>
+            {row.state === 0 &&
+                <strong>
+                    <i className="fas fa-archive"></i>&nbsp;Archived
+                </strong>
+            }
+            {row.state === 1 &&
+                <Link to={`/partner/${row.partnerId}/file/archive/${row.id}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archive
                 </Link>
             }
-            {row.isArchived === true &&
+            {row.state === 2 &&
                 <strong>
                     <i className="fas fa-archive"></i>&nbsp;Archived
                 </strong>
@@ -217,16 +230,16 @@ class PartnerFileUploadListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/partners"><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                            <Link to="/partners"><i className="fas fa-user-circle"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{partner && partner.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{partner && partner.name}
                         </li>
                     </ol>
                 </nav>
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-handshake"></i>&nbsp;{partner && partner.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{partner && partner.name}</h1>
 
                 <div className="row">
                     <div className="step-navigation">
@@ -240,11 +253,13 @@ class PartnerFileUploadListComponent extends Component {
                                 <span className="num"><i className="fas fa-id-card"></i>&nbsp;</span><span className="">Details</span>
                             </Link>
                         </div>
+                        {/*
                         <div id="step-3" className="st-grey">
                             <Link to={`/partner/${id}/orders`}>
                                 <span className="num"><i className="fas fa-wrench"></i>&nbsp;</span><span className="">Jobs</span>
                             </Link>
                         </div>
+                        */}
                         <div id="step-4" className="st-grey">
                             <Link to={`/partner/${id}/comments`}>
                                 <span className="num"><i className="fas fa-comments"></i>&nbsp;</span><span className="">Comments</span>
@@ -254,6 +269,11 @@ class PartnerFileUploadListComponent extends Component {
                             <strong>
                                 <span className="num"><i className="fas fa-cloud"></i>&nbsp;</span><span className="">Files</span>
                             </strong>
+                        </div>
+                        <div id="step-6" className="st-grey">
+                            <Link to={`/partner/${id}/operations`}>
+                                <span className="num"><i className="fas fa-ellipsis-h"></i>&nbsp;</span><span className="">Operations</span>
+                            </Link>
                         </div>
                     </div>
                 </div>

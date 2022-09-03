@@ -4,7 +4,7 @@ import {
     RESIDENCE_TYPE_OF,
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF,
-    ASSOCIATE_GROUP_ID,
+    ASSOCIATE_ROLE_ID,
     WORK_ORDER_COMPLETED_AND_PAID_STATE,
     WORK_ORDER_COMPLETED_BUT_UNPAID_STATE
 } from '../constants/api';
@@ -22,11 +22,13 @@ export function validateLiteUpdateInput(data) {
 
 export function validateFinancialUpdateInput(data) {
     let errors = {};
+    console.log("orderValidator | validateFinancialUpdateInput | paymentStatus:", data.paymentStatus);
+    console.log("orderValidator | validateFinancialUpdateInput | data:", data);
 
     if (data.invoicePaidTo === undefined || data.invoicePaidTo === null || data.invoicePaidTo === "" || isNaN(data.invoicePaidTo) ) {
         errors.invoicePaidTo = 'This field is required';
     }
-    if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "" || isEmpty(data.paymentStatus)) {
+    if (data.paymentStatus === undefined || data.paymentStatus === null || data.paymentStatus === "") {
         errors.paymentStatus = 'This field is required';
     } else {
         if (data.paymentStatus === WORK_ORDER_COMPLETED_AND_PAID_STATE) {
@@ -85,10 +87,11 @@ export function validateFinancialUpdateInput(data) {
 
 export function validateStep1CreateInput(data) {
     let errors = {};
+    console.log(data);
 
     var missingCount = 0;
 
-    if (data.firstName === undefined || data.firstName === null || data.firstName === "") {
+    if (data.givenName === undefined || data.givenName === null || data.givenName === "") {
         missingCount++;
     }
     if (data.lastName === undefined || data.skillSets === null || data.lastName === "" || isEmpty(data.lastName) ) {
@@ -245,8 +248,8 @@ export function validateStep7CreateInput(data) {
 export function validatePromotionInput(data) {
     let errors = {};
 
-    if (data.groupId === undefined || data.groupId === null || data.groupId === "") {
-        errors.groupId = 'This field is required';
+    if (data.roleId === undefined || data.roleId === null || data.roleId === "") {
+        errors.roleId = 'This field is required';
     } else {
         if (data.areaCoordinatorAgreement === undefined || data.areaCoordinatorAgreement === null || data.areaCoordinatorAgreement === "" || data.areaCoordinatorAgreement === false) {
             errors.areaCoordinatorAgreement = 'This field is required.';
@@ -260,7 +263,7 @@ export function validatePromotionInput(data) {
         if (data.confidentialityAgreement === undefined || data.confidentialityAgreement === null || data.confidentialityAgreement === "" || data.confidentialityAgreement === false) {
             errors.confidentialityAgreement = 'This field is required';
         }
-        if (data.groupId === ASSOCIATE_GROUP_ID) {
+        if (data.roleId === ASSOCIATE_ROLE_ID) {
             if (data.associateAgreement === undefined || data.associateAgreement === null || data.associateAgreement === "" || data.associateAgreement === false) {
                 errors.associateAgreement = 'This field is required';
             }
@@ -393,7 +396,7 @@ export function validateSearchInput(data) {
         }
     } else {
         let hasEmptyField = 0;
-        if (data.firstName === undefined || data.firstName === null || data.firstName === "") {
+        if (data.givenName === undefined || data.givenName === null || data.givenName === "") {
             hasEmptyField += 1;
         }
         if (data.lastName === undefined || data.lastName === null || data.lastName === "") {
@@ -407,10 +410,11 @@ export function validateSearchInput(data) {
         }
 
         if (hasEmptyField === 4) {
-            // errors.firstName = '';
+            // errors.givenName = '';
             // errors.lastName = '';
             // errors.phone = '';
             // errors.email = '';
+            console.log("data:", data);
             errors.MinimumOneFieldRequired = "Please input at leaset one field from the advanced section before submitting.";
         }
     }

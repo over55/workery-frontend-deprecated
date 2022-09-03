@@ -23,7 +23,7 @@ class AdminAssociateLiteRetrieveContainer extends Component {
 
         // The following code will extract our financial data from the local
         // storage if the financial data was previously saved.
-        const associate = localStorageGetObjectItem("workery-admin-retrieve-associate-"+id.toString() );
+        const associate = this.props.associateDetail;
         const isLoading = isEmpty(associate);
 
         // Update state.
@@ -66,8 +66,8 @@ class AdminAssociateLiteRetrieveContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log(response);
-        this.setState({ isLoading: false, associate: response, });
+        console.log("onSuccessCallback | response:", response);
+        this.setState({ isLoading: false, associate: response });
 
         // The following code will save the object to the browser's local
         // storage to be retrieved later more quickly.
@@ -91,14 +91,11 @@ class AdminAssociateLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id, isLoading } = this.state;
-        const associate = isEmpty(this.state.associate) ? {} : this.state.associate;
         return (
             <AdminAssociateLiteRetrieveComponent
-                id={id}
-                isLoading={isLoading}
-                associate={associate}
-                flashMessage={this.props.flashMessage}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

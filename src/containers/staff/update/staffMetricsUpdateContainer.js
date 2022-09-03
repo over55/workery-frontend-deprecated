@@ -4,11 +4,14 @@ import Scroll from 'react-scroll';
 import * as moment from 'moment';
 
 import StaffMetricsUpdateComponent from "../../../components/staff/update/staffMetricsUpdateComponent";
-import { validateMetricsUpdateInput } from "../../../validators/staffValidator";
+import { setFlashMessage } from "../../../actions/flashMessageActions";
+import { validateMetricsInput } from "../../../validators/staffValidator";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID
+} from '../../../constants/api';
 import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
 import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
-import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { putStaffMetricsDetail } from '../../../actions/staffActions';
+import { putStaffMetricsDetail } from "../../../actions/staffActions";
 
 
 class StaffMetricsUpdateContainer extends Component {
@@ -24,35 +27,52 @@ class StaffMetricsUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
-        const birthdateObj = new Date(this.props.staffDetail.birthdate);
+        // Get our dates based on our browsers timezone.
+        // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
+        const birthdate = this.props.staffDetail.birthdate;
+        const birthdateObj = birthdate === undefined || birthdate === null ? null : new Date(birthdate);
+        if (birthdateObj) {
+            birthdateObj.setMinutes( birthdateObj.getMinutes() + birthdateObj.getTimezoneOffset() );
+        }
+
         const joinDateObj = new Date(this.props.staffDetail.joinDate);
+        joinDateObj.setMinutes( joinDateObj.getMinutes() + joinDateObj.getTimezoneOffset() );
 
         this.state = {
+            errors: {},
+            isLoading: false,
             id: id,
+
+            // STEP 3
+            typeOf: this.props.staffDetail.typeOf,
+
+            // STEP 4
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
+
+            // STEP 6
             isTagsLoading: true,
             tags: this.props.staffDetail.tags,
             dateOfBirth: birthdateObj,
             gender: this.props.staffDetail.gender,
             isHowHearLoading: true,
-            howHear: this.props.staffDetail.howHear,
+            howHearId: this.props.staffDetail.howHearId,
+            howHearOption: this.props.staffDetail.howHearOption,
             howHearOther: this.props.staffDetail.howHearOther,
             joinDate: joinDateObj,
-            errors: {},
-            isLoading: false
+            description: this.props.staffDetail.description,
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
+        this.onTagMultiChange = this.onTagMultiChange.bind(this);
         this.onDateOfBirthChange = this.onDateOfBirthChange.bind(this);
         this.onJoinDateChange = this.onJoinDateChange.bind(this);
-        this.onTagMultiChange = this.onTagMultiChange.bind(this);
-        this.onRadioChange = this.onRadioChange.bind(this);
         this.onClick = this.onClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailedCallback = this.onFailedCallback.bind(this);
         this.onTagsSuccessFetch = this.onTagsSuccessFetch.bind(this);
         this.onHowHearSuccessFetch = this.onHowHearSuccessFetch.bind(this);
     }
@@ -65,24 +85,80 @@ class StaffMetricsUpdateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // (1) birthdate - We need to format as per required API format.
-        const dateOfBirth = this.state.dateOfBirth;
-        if (dateOfBirth === undefined || dateOfBirth === null || dateOfBirth === "" || isNaN(dateOfBirth) ) {
-            const dateOfBirthMoment = moment(dateOfBirth);
-            postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD")
-        }
+        // (2) Middle name (API ISSUE)
+        postData.middleName = this.state.middleName;
 
         // (2) Join date - We need to format as per required API format.
         const joinDateMoment = moment(this.state.joinDate);
         postData.joinDate = joinDateMoment.format("YYYY-MM-DD");
 
-        // // (3) Tags - We need to only return our `id` values.
-        // let idTags = [];
-        // for (let i = 0; i < this.state.tags.length; i++) {
-        //     let tag = this.state.tags[i];
-        //     idTags.push(tag.value);
+        const dateOfBirth = this.state.dateOfBirth;
+        if (this.state.typeOf !== COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            if (dateOfBirth !== undefined && dateOfBirth !== null && dateOfBirth !== "" && isNaN(dateOfBirth) === false ) {
+                const dateOfBirthMoment = moment(dateOfBirth);
+                postData.birthdate = dateOfBirthMoment.format("YYYY-MM-DD")
+            } else {
+                postData.birthdate = null;
+            }
+        } else {
+            postData.birthdate = null;
+        }
+
+        // (4) How Hear Other - This field may not be null, therefore make blank.
+        if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
+            postData.howHearOther = "";
+        }
+
+        // // (5) Password & Password Repeat
+        // if (this.state.password === undefined || this.state.password === null || this.state.password === '' || this.state.password.length == 0) {
+        //     var randomString = Math.random().toString(34).slice(-10);
+        //     randomString += "A";
+        //     randomString += "!";
+        //     postData.password = randomString;
+        //     postData.passwordRepeat = randomString;
         // }
-        // postData.tags = idTags;
+
+        // (6) Organization Type Of - This field may not be null, therefore make blank.
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+            postData.organizationTypeOf = "";
+        }
+
+        // (8) Telephone type: This field is required.;
+        if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
+            postData.telephoneTypeOf = 1;
+        }
+        if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
+            postData.otherTelephoneTypeOf = 1;
+        }
+
+        // (9) Address Country: This field is required.
+        postData.addressCountry = this.state.country;
+
+        // (10) Address Locality: This field is required.
+        postData.addressLocality = this.state.locality;
+
+        // (11) Address Region: This field is required.
+        postData.addressRegion = this.state.region
+
+        // (12) First Name and Last Name if biz
+        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.lastName = this.state.lastName;
+        } else {
+
+        }
+
+        // (13) Process tags.
+        const { tags } = this.state;
+        let tagPKs = [];
+        if (tags !== undefined && tags !== null && tags !== "") {
+            for (let t of this.state.tags) {
+                tagPKs.push(t.tagId);
+            }
+        }
+        postData.tags = tagPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -98,10 +174,10 @@ class StaffMetricsUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullHowHearList(1,1000, parametersMap, this.onHowHearSuccessFetch);
-        this.props.pullTagList(1, 1000, parametersMap, this.onTagsSuccessFetch);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullHowHearList(0,1000, parametersMap, this.onHowHearSuccessFetch);
+        this.props.pullTagList(0, 1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -118,15 +194,14 @@ class StaffMetricsUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(staff) {
+    onSuccessCallback(staff) {
+        this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Staff has been successfully updated.");
         this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        });
+    onFailedCallback(errors) {
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -149,29 +224,64 @@ class StaffMetricsUpdateContainer extends Component {
      */
 
     onTextChange(e) {
-        this.setState({ [e.target.name]: e.target.value, });
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
+
+    onClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        // Perform staff-side validation.
+        const { errors, isValid } = validateMetricsInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            this.setState({ errors: {}, isLoading: true, }, ()=>{
+                this.props.putStaffMetricsDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailedCallback
+                );
+            });
+
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.onFailedCallback(errors);
+        }
     }
 
     onSelectChange(option) {
-        const optionKey = [option.selectName]+"Option";
+        const optionKey = [option.selectName].toString()+"Option";
         this.setState({
             [option.selectName]: option.value,
-            [optionKey]: option,
+            optionKey: option,
         });
+        console.log([option.selectName], optionKey, "|",option); // For debugging purposes only.
     }
 
     onRadioChange(e) {
         // Get the values.
-        const storageValueKey = "workery-create-staff-"+[e.target.name];
-        const storageLabelKey =  "workery-create-staff-"+[e.target.name].toString()+"-label";
+        const storageValueKey = "nwapp-create-staff-"+[e.target.name];
         const value = e.target.value;
         const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
         const storeValueKey = [e.target.name].toString();
-        const storeLabelKey = [e.target.name].toString()+"Label";
+        const storeLabelKey = [e.target.name].toString()+"-label";
 
         // Save the data.
         this.setState({ [e.target.name]: value, }); // Save to store.
-        this.setState({ storeLabelKey: label, }); // Save to store.
+        localStorage.setItem(storageValueKey, value) // Save to storage.
+
+        // For the debugging purposes only.
+        console.log({
+            "STORE-VALUE-KEY": storageValueKey,
+            "STORE-VALUE": value,
+            "STORAGE-VALUE-KEY": storeValueKey,
+            "STORAGE-VALUE": value,
+            "STORAGE-LABEL-KEY": storeLabelKey,
+            "STORAGE-LABEL": label,
+        });
     }
 
     onTagMultiChange(...args) {
@@ -181,45 +291,27 @@ class StaffMetricsUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
-    onDateOfBirthChange(dateObj) {
-        this.setState({ dateOfBirth: dateObj, });
+    onDateOfBirthChange(dateOfBirth) {
+        this.setState({
+            dateOfBirth: dateOfBirth,
+        });
     }
 
-    onJoinDateChange(dateObj) {
-        this.setState({ joinDate: dateObj, });
-    }
-
-    onClick(e) {
-        // Prevent the default HTML form submit code to run on the browser side.
-        e.preventDefault();
-
-        // console.log(this.state); // For debugging purposes only.
-
-        // Perform staff-side validation.
-        const { errors, isValid } = validateMetricsUpdateInput(this.state);
-
-        // CASE 1 OF 2: Validation passed successfully.
-        if (isValid) {
-            this.props.putStaffMetricsDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
-
-        // CASE 2 OF 2: Validation was a failure.
-        } else {
-            this.onFailedSubmissionCallback(errors);
-        }
+    onJoinDateChange(joinDate) {
+        this.setState({
+            joinDate: joinDate,
+        });
     }
 
     /**
@@ -228,40 +320,18 @@ class StaffMetricsUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            id, givenName, lastName,
-            typeOf, isTagsLoading, tags, dateOfBirth, gender, isHowHearLoading, howHear, howHearOther, joinDate,
-            errors
-        } = this.state;
-
+        const { tags } = this.state;
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
-
         return (
             <StaffMetricsUpdateComponent
-                id={id}
-                givenName={givenName}
-                lastName={lastName}
-                typeOf={typeOf}
-                isTagsLoading={isTagsLoading}
-                tags={transcodedTags}
-                tagOptions={tagOptions}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                joinDate={joinDate}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
+                {...this}
+                {...this.state}
+                {...this.props}
                 howHearOptions={howHearOptions}
-                howHearOther={howHearOther}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onJoinDateChange={this.onJoinDateChange}
-                onClick={this.onClick}
+                tagOptions={tagOptions}
+                tags={transcodedTags}
             />
         );
     }
@@ -270,14 +340,17 @@ class StaffMetricsUpdateContainer extends Component {
 const mapStateToProps = function(store) {
     return {
         user: store.userState,
-        tagList: store.tagListState,
-        howHearList: store.howHearListState,
         staffDetail: store.staffDetailState,
+        howHearList: store.howHearListState,
+        tagList: store.tagListState,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        setFlashMessage: (typeOf, text) => {
+            dispatch(setFlashMessage(typeOf, text))
+        },
         pullHowHearList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
                 pullHowHearList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
@@ -288,15 +361,13 @@ const mapDispatchToProps = dispatch => {
                 pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
-        setFlashMessage: (typeOf, text) => {
-            dispatch(setFlashMessage(typeOf, text))
-        },
-        putStaffMetricsDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffMetricsDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        putStaffMetricsDetail: (data, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                putStaffMetricsDetail(data, onSuccessCallback, onFailureCallback)
+            )
         },
     }
 }
-
 
 export default connect(
     mapStateToProps,

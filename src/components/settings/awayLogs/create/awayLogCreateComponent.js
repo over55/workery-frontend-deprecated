@@ -14,7 +14,7 @@ import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageL
 class AwayLogCreateComponent extends Component {
     render() {
         const {
-            associate, associateOptions, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
+            associateId, associateOptions, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
             errors, onTextChange, onSelectChange, onStartDateChange, onUntilDateChange, onRadioChange, isLoading, onClick
         } = this.props;
         const isOtherReasonSelected = reason === 1;
@@ -50,11 +50,11 @@ class AwayLogCreateComponent extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="Associate? (*)"
-                                name="associate"
+                                name="associateId"
                                 defaultOptionLabel="Please select the associate."
                                 options={associateOptions}
-                                value={associate}
-                                error={errors.associate}
+                                value={associateId}
+                                error={errors.associateId}
                                 onSelectChange={onSelectChange}
                             />
 

@@ -34,6 +34,7 @@ class ServiceFeeCreateContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
+        postData.percentage = parseFloat(this.state.percentage);
         postData.extraText = this.state.text;
 
         // Finally: Return our new modified data.

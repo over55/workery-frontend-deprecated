@@ -29,7 +29,7 @@ class StaffAvatarUpdateOperationContainer extends Component {
             is_archived: false,
 
             // Everything else...
-            staff: id,
+            staffId: parseInt(id),
             file: null,
             id: id,
             text: "",

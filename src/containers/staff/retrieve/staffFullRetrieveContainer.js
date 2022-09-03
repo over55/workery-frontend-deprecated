@@ -84,15 +84,13 @@ class StaffFullRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
         const staff = this.props.staffDetail ? this.props.staffDetail : [];
         return (
             <StaffFullRetrieveComponent
-                id={id}
-                user={this.props.user}
+                {...this}
+                {...this.state}
+                {...this.props}
                 staff={staff}
-                flashMessage={this.props.flashMessage}
-                onStaffClick={this.onStaffClick}
             />
         );
     }

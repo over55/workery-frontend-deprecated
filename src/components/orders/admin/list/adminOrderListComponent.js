@@ -5,47 +5,39 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import Moment from 'react-moment';
 // import 'moment-timezone';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
-import { FRONTLINE_GROUP_ID } from "../../../../constants/api";
+import { FRONTLINE_ROLE_ID } from "../../../../constants/api";
 
-
-const customTotal = (from, to, size) => (
-    <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
-);
-
+const selectOptions = {
+    0: 'Archived',
+    1: 'New',
+    2: 'Declined',
+    3: 'Pending',
+    4: 'Cancelled',
+    5: 'Ongoing',
+    6: 'In-progress',
+    7: 'Completed and Unpaid',
+    8: 'Completed and Paid',
+};
 
 class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             orders,
 
             // Everything else.
-            onTableChange, isLoading, user
+            onTableChange, isLoading, user, onNextClick, onPreviousClick,
         } = this.props;
-
-        const selectOptions = {
-            "new": 'New',
-            "declined": 'Declined',
-            "pending": 'Pending',
-            "cancelled": 'Cancelled',
-            "ongoing": 'Ongoing',
-            "in_progress": 'In-progress',
-            "completed_and_unpaid": 'Completed and Unpaid',
-            "completed_and_paid": 'Completed and Paid',
-            "archived": 'Archived',
-        };
 
         const columns = [{
             dataField: 'typeOf',
@@ -99,7 +91,7 @@ class RemoteListComponent extends Component {
 
         // The following code will hide the financial details if the
         // authenticated user belongs to the frontline staff.
-        if (user && user.groupId === FRONTLINE_GROUP_ID) {
+        if (user && user.roleId === FRONTLINE_ROLE_ID) {
             columns.splice(7, 1);
         }
 
@@ -108,30 +100,6 @@ class RemoteListComponent extends Component {
             order: 'desc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
 
         return (
             <BootstrapTable
@@ -145,7 +113,6 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no orders at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -184,7 +151,7 @@ function idFormatter(cell, row){
 function clientNameFormatter(cell, row){
     if (row.customerName === null || row.customerName === undefined || row.customerName === "None") { return "-"; }
     return (
-        <Link to={`/client/${row.customer}`} target="_blank">
+        <Link to={`/client/${row.customerId}`} target="_blank">
             {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     );
@@ -194,7 +161,7 @@ function clientNameFormatter(cell, row){
 function associateNameFormatter(cell, row){
     if (row.associateName === null || row.associateName === undefined || row.associateName === "None") { return "-"; }
     return (
-        <Link to={`/associate/${row.associate}`} target="_blank">
+        <Link to={`/associate/${row.associateId}`} target="_blank">
             {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     );
@@ -202,7 +169,7 @@ function associateNameFormatter(cell, row){
 
 
 function statusFormatter(cell, row){
-    return row.prettyState;
+    return selectOptions[row.state];
 }
 
 
@@ -238,13 +205,13 @@ class AdminOrderListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             orderList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, user
+            flashMessage, onTableChange, isLoading, user, onNextClick, onPreviousClick,
         } = this.props;
 
         let orders = [];
@@ -301,14 +268,24 @@ class AdminOrderListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             orders={orders}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                             user={user}
                         />
+
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>

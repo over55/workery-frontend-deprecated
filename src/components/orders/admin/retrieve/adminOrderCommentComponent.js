@@ -30,10 +30,10 @@ export default class AdminOrderCommentComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
-                        <li className="breadcrumb-item" aria-current="page">
+                        <li className="breadcrumb-item" aria-current="offset">
                             <Link to={`/orders`}><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
+                        <li className="breadcrumb-item active" aria-current="offset">
                             <i className="fas fa-wrench"></i>&nbsp;Order # {id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>

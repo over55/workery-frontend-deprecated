@@ -20,7 +20,7 @@ export default class AdminOrderLiteUpdateComponent extends Component {
             homeSupport, onRadioChange,
             onClick, onTextChange, user
         } = this.props;
-        const isExecutive = user.groupId === 1;
+        const isExecutive = user.roleId === 1;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

@@ -56,7 +56,7 @@ class ClientMetricsUpdateContainer extends Component {
             dateOfBirth: birthdateObj,
             gender: this.props.clientDetail.gender,
             isHowHearLoading: true,
-            howHear: this.props.clientDetail.howHear,
+            howHearId: this.props.clientDetail.howHearId,
             howHearOption: this.props.clientDetail.howHearOption,
             howHearOther: this.props.clientDetail.howHearOther,
             joinDate: joinDateObj,
@@ -140,7 +140,7 @@ class ClientMetricsUpdateContainer extends Component {
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
 
-        // () First Name and Last Name if biz
+        // (12) First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             postData.givenName = this.state.givenName;
             postData.givenName = this.state.givenName;
@@ -149,6 +149,13 @@ class ClientMetricsUpdateContainer extends Component {
         } else {
 
         }
+
+        // (13) Process tags.
+        let tagPKs = [];
+        for (let t of this.state.tags) {
+            tagPKs.push(t.tagId);
+        }
+        postData.tags = tagPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -164,10 +171,10 @@ class ClientMetricsUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullHowHearList(1,1000, parametersMap, this.onHowHearSuccessFetch);
-        this.props.pullTagList(1, 1000, parametersMap, this.onTagsSuccessFetch);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullHowHearList(0,1000, parametersMap, this.onHowHearSuccessFetch);
+        this.props.pullTagList(0, 1000, parametersMap, this.onTagsSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -281,14 +288,15 @@ class ClientMetricsUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
     onDateOfBirthChange(dateOfBirth) {
@@ -309,53 +317,18 @@ class ClientMetricsUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            errors, id, typeOf, givenName, lastName, isLoading,
-
-            // STEP 6
-            isTagsLoading, tags, birthdate, gender, isHowHearLoading, howHear, howHearOption, howHearOther, joinDate, description, dateOfBirth
-        } = this.state;
-
+        const { tags } = this.state;
         const howHearOptions = getHowHearReactSelectOptions(this.props.howHearList);
         const tagOptions = getTagReactSelectOptions(this.props.tagList);
         const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
-
         return (
             <ClientMetricsUpdateComponent
-                // STEP 3
-                typeOf={typeOf}
-
-                // STEP 4
-                givenName={givenName}
-                lastName={lastName}
-
-                // STEP 6
-                isTagsLoading={isTagsLoading}
-                tags={transcodedTags}
-                tagOptions={tagOptions}
-                onTagMultiChange={this.onTagMultiChange}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                isHowHearLoading={isHowHearLoading}
-                howHear={howHear}
+                {...this}
+                {...this.state}
+                {...this.props}
                 howHearOptions={howHearOptions}
-                howHearOption={howHearOption}
-                howHearOther={howHearOther}
-                joinDate={joinDate}
-                description={description}
-
-                // EVERYTHING ELSE
-                isLoading={isLoading}
-                givenName={givenName}
-                lastName={lastName}
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
-                onDateOfBirthChange={this.onDateOfBirthChange}
-                onJoinDateChange={this.onJoinDateChange}
+                tagOptions={tagOptions}
+                tags={transcodedTags}
             />
         );
     }

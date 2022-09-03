@@ -7,6 +7,7 @@ import AdminOrderCommentComponent from "../../../../components/orders/admin/retr
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullOrderCommentList, postOrderComment } from "../../../../actions/orderCommentActions";
 import { validateInput } from "../../../../validators/commentValidator"
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class OrderCommentContainer extends Component {
@@ -19,13 +20,16 @@ class OrderCommentContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("about", id);
-        parametersMap.set("o", "-created_at");
+        parametersMap.set("orderId", id);
+        parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `AssociateListComponent`.
+        parametersMap.set("sort_field", "id");
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 10000,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "ASC",
+            sortField: "id",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
@@ -53,14 +57,11 @@ class OrderCommentContainer extends Component {
      *  items under different key names to support our API web-service's API.
      */
     getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.about = this.state.id;
-        postData.extraText = this.state.text;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
+        const { id, text } = this.state;
+        return {
+            "orderId": parseInt(id),
+            "text": text
+        };
     }
 
     /**
@@ -69,12 +70,12 @@ class OrderCommentContainer extends Component {
      */
 
     componentDidMount() {
-        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        window.scrollTo(0, 0);  // Start the offset at the top of the offset.
 
         // Get our data.
         this.props.pullOrderCommentList(
-            this.state.page,
-            this.state.sizePerPage,
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessListCallback,
             this.onFailureListCallback
@@ -102,7 +103,7 @@ class OrderCommentContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
                 text: "",
@@ -123,7 +124,7 @@ class OrderCommentContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
                 text: "",
@@ -133,8 +134,8 @@ class OrderCommentContainer extends Component {
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
                 this.props.pullOrderCommentList(
-                    this.state.page,
-                    this.state.sizePerPage,
+                    this.state.offset,
+                    this.state.limit,
                     this.state.parametersMap,
                     this.onSuccessListCallback,
                     this.onFailureListCallback
@@ -238,9 +239,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderCommentList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
+        pullOrderCommentList: (offset, limit, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullOrderCommentList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
+                pullOrderCommentList(offset, limit, map, onSuccessListCallback, onFailureListCallback)
             )
         },
         postOrderComment: (postData, successCallback, failedCallback) => {

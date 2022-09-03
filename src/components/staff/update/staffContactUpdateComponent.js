@@ -2,58 +2,92 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
-// import { BootstrapCheckbox } from "../bootstrap/bootstrapCheckbox";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapSingleSelect } from "../../bootstrap/bootstrapSingleSelect";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 import { BootstrapRadio } from "../../bootstrap/bootstrapRadio";
+import { BootstrapCountrySelect } from '../../bootstrap/bootstrapCountrySelect'
+import { BootstrapRegionSelect } from '../../bootstrap/bootstrapRegionSelect'
+import { BootstrapDatePicker } from '../../bootstrap/bootstrapDatePicker';
+import { BootstrapTextarea } from "../../bootstrap/bootstrapTextarea";
+import { BootstrapMultipleSelect } from "../../bootstrap/bootstrapMultipleSelect";
 import {
-    IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES,
-    PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES, SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES
+    IS_OK_TO_EMAIL_CHOICES,
+    IS_OK_TO_TEXT_CHOICES,
+    GENDER_RADIO_CHOICES,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    ORGANIZATION_TYPE_OF_CHOICES
 } from "../../../constants/api";
 
 
-class StaffContactUpdateComponent extends Component {
+export default class StaffContactUpdateComponent extends Component {
     render() {
         const {
-            id, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, workEmail, personalEmail, errors,
-            onTextChange, onRadioChange, isLoading, onClick, onSelectChange
+            // STEP 3
+            typeOf,
+
+            // STEP 4
+            organizationName, organizationTypeOf, givenName, lastName, telephone, otherTelephone, email, isOkToText, isOkToEmail,
+
+            // EVERYTHING ELSE
+            id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
+            onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
+        const isCommercial = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
         return (
             <main id="main" role="main">
+                <BootstrapPageLoadingAnimation isLoading={isLoading} />
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
+                            <Link to={`/staff`}><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
                             <Link to={`/staff/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName} {lastName}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-edit"></i>&nbsp;Edit (Contact)
+                            <i className="fas fa-edit"></i>&nbsp;Update (Contact)
                         </li>
                     </ol>
                 </nav>
 
-                <h1>
-                    <i className="fas fa-edit"></i>&nbsp;Edit Staff (Contact)
-                </h1>
-
-
-
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h2>
-                                <i className="fas fa-tty"></i>&nbsp;Contact
-                            </h2>
+                            <h1><i className="fas fa-edit"></i>&nbsp;Staff Contact Form</h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
+
+                            {isCommercial &&
+                                <div>
+                                    <BootstrapInput
+                                        inputClassName="form-control form-control-lg"
+                                        borderColour="border-primary"
+                                        error={errors.organizationName}
+                                        label="Organization Name (*)"
+                                        onChange={onTextChange}
+                                        value={organizationName}
+                                        name="organizationName"
+                                        type="text"
+                                    />
+                                    <BootstrapSingleSelect
+                                        borderColour="border-primary"
+                                        label="Organization Type (*)"
+                                        name="organizationTypeOf"
+                                        defaultOptionLabel="Please select the organization."
+                                        options={ORGANIZATION_TYPE_OF_CHOICES}
+                                        value={organizationTypeOf}
+                                        error={errors.organizationTypeOf}
+                                        onSelectChange={onSelectChange}
+                                    />
+                                </div>
+                            }
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"
@@ -80,69 +114,61 @@ class StaffContactUpdateComponent extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.primaryPhone}
-                                label="Primary Phone (*)"
+                                error={errors.telephone}
+                                label="Primary Telephone (*)"
                                 onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
+                                value={telephone}
+                                name="telephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
-                            />
-
-                            <BootstrapSingleSelect
-                                borderColour="border-primary"
-                                label="Primary Telephone type (*)"
-                                name="primaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                                value={primaryPhoneTypeOf}
-                                error={errors.primaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
                             />
 
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
-                                error={errors.secondaryPhone}
-                                label="Secondary Phone"
+                                error={errors.otherTelephone}
+                                label="Secondary Telephone"
                                 onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
+                                value={otherTelephone}
+                                name="otherTelephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
 
-                            <BootstrapSingleSelect
+                            <BootstrapInput
+                                inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
-                                label="Secondary Telephone type"
-                                name="secondaryPhoneTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
-                                options={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                                value={secondaryPhoneTypeOf}
-                                error={errors.secondaryPhoneTypeOf}
-                                onSelectChange={onSelectChange}
+                                error={errors.email}
+                                label="Email"
+                                onChange={onTextChange}
+                                value={email}
+                                name="email"
+                                type="text"
+                                helpText="This field is optional only for staff."
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
-                                error={errors.workEmail}
-                                label="Work Email (*)"
-                                onChange={onTextChange}
-                                value={workEmail}
-                                name="workEmail"
-                                type="text"
+                                error={errors.isOkToEmail}
+                                label="Ok to E-Mail? (*)"
+                                name="isOkToEmail"
+                                onChange={onRadioChange}
+                                selectedValue={isOkToEmail}
+                                options={IS_OK_TO_EMAIL_CHOICES}
+                                helpText='Selecting "yes" will result in staff getting emails from our system.'
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
+                            <BootstrapRadio
+                                inputClassName="form-check-input form-check-input-lg"
                                 borderColour="border-primary"
-                                error={errors.personalEmail}
-                                label="Personal Email (*)"
-                                onChange={onTextChange}
-                                value={personalEmail}
-                                name="personalEmail"
-                                type="text"
+                                error={errors.isOkToText}
+                                label="Ok to Text? (*)"
+                                name="isOkToText"
+                                onChange={onRadioChange}
+                                selectedValue={isOkToText}
+                                options={IS_OK_TO_TEXT_CHOICES}
+                                helpText='Selecting "yes" will result in staff getting text-messages on their phone from our system.'
                             />
 
                             <div className="form-group">
@@ -150,7 +176,7 @@ class StaffContactUpdateComponent extends Component {
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
                                 <Link to={`/staff/${id}/full`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
-                                    <i className="fas fa-arrow-circle-left"></i>&nbsp;Back
+                                    <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>
 
@@ -162,5 +188,3 @@ class StaffContactUpdateComponent extends Component {
         );
     }
 }
-
-export default StaffContactUpdateComponent;

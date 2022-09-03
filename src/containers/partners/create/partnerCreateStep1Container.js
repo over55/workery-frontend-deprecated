@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
 import PartnerCreateStep1Component from "../../../components/partners/create/partnerCreateStep1Component";
+import { validateSearchInput } from "../../../validators/clientValidator";
 
 
 class PartnerCreateStep1Container extends Component {
@@ -17,7 +18,7 @@ class PartnerCreateStep1Container extends Component {
             givenName: localStorage.getItem("workery-create-partner-givenName"),
             lastName: localStorage.getItem("workery-create-partner-lastName"),
             email: localStorage.getItem("workery-create-partner-email"),
-            phone: localStorage.getItem("workery-create-partner-phone"),
+            telephone: localStorage.getItem("workery-create-partner-telephone"),
             errors: {},
             isLoading: false
         }
@@ -85,7 +86,22 @@ class PartnerCreateStep1Container extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        this.onSuccessfulSubmissionCallback();
+        const { errors, isValid } = validateSearchInput(this.state);
+
+        // CASE 1 OF 2: Validation passed successfully.
+        if (isValid) {
+            this.onSuccessfulSubmissionCallback();
+
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.setState({ errors: errors });
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+        }
     }
 
 
@@ -95,16 +111,11 @@ class PartnerCreateStep1Container extends Component {
      */
 
     render() {
-        const { givenName, lastName, email, phone, errors, isLoading } = this.state
         return (
             <PartnerCreateStep1Component
-                givenName={givenName}
-                lastName={lastName}
-                email={email}
-                phone={phone}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

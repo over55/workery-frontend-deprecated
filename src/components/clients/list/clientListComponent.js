@@ -8,7 +8,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+// import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
@@ -29,16 +29,16 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             clients,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
-        // const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
+        // const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-frontend/issues/296
         //     "active": 'Active',
         //     "inactive": 'Archived',
         // };
@@ -53,7 +53,7 @@ class RemoteListComponent extends Component {
         //     dataField: 'state',
         //     text: 'Status',
         //     sort: false,
-        //     // filter: selectFilter({ // DEPRECATED VIA https://github.com/over55/workery-front/issues/296
+        //     // filter: selectFilter({ // DEPRECATED VIA https://github.com/over55/workery-frontend/issues/296
         //     //     options: selectOptions,
         //     //     defaultValue: 1,
         //     //     withoutEmptyOption: true
@@ -95,30 +95,17 @@ class RemoteListComponent extends Component {
             order: 'asc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     page: offset,
+        //     sizePerPage: limit,
+        //     totalSize: totalSize,
+        //     showTotal: true,
+        //
+        //     // paginationTotalRenderer: customTotal,
+        //     withFirstAndLast: false,
+        //     nextPageText: "Next",
+        //     prePageText: "Previous",
+        // };
 
         return (
             <BootstrapTable
@@ -132,7 +119,7 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no clients at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -215,13 +202,13 @@ class ClientListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             clientList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
         let clients = [];
@@ -278,13 +265,23 @@ class ClientListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             clients={clients}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
+
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>

@@ -54,6 +54,10 @@ class  AdminOrderCreateStep6Container extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
+        // Refactored
+        postData.IsHomeSupportService =  parseInt(this.state.homeSupport) === 1 ? true : false;
+        postData.IsOngoing = this.state.jobType;
+
         // (1) Extra Comment: This field is required.
         if (this.state.comment === undefined || this.state.comment === null) {
             postData.extraComment = "";
@@ -62,27 +66,21 @@ class  AdminOrderCreateStep6Container extends Component {
         }
 
         // (2) Skill sets - We need to only return our `id` values.
-        let idSkillSets = [];
-        if (this.state.skillSets !== undefined && this.state.skillSets !== null) {
-            for (let i = 0; i < this.state.skillSets.length; i++) {
-                let skill = this.state.skillSets[i];
-                idSkillSets.push(skill.value);
-            }
+        let ssPKs = [];
+        for (let ss of this.state.skillSets) {
+            ssPKs.push(ss.skillSetId);
         }
-        postData.skillSets = idSkillSets;
+        postData.skillSets = ssPKs;
 
         // (3) Tag - We need to only return our `id` values.
-        let idTags = [];
-        if (this.state.tags !== undefined && this.state.tags !== null) {
-            for (let i = 0; i < this.state.tags.length; i++) {
-                let tag = this.state.tags[i];
-                idTags.push(tag.value);
-            }
+        let tagPKs = [];
+        for (let t of this.state.tags) {
+            tagPKs.push(t.tagId);
         }
-        postData.tags = idTags;
+        postData.tags = tagPKs;
 
         // (4) Customer
-        postData.customer = this.state.clientGivenId
+        postData.customerId = this.state.clientGivenId
 
         // (5) Start date - We need to format as per required API format.
         if (this.state.startDate instanceof Date) {
@@ -90,9 +88,6 @@ class  AdminOrderCreateStep6Container extends Component {
             postData.startDate = startDateMoment.format("YYYY-MM-DD")
 
         }
-
-        // IsOngoing
-        postData.isOngoing = this.state.jobType;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -132,7 +127,7 @@ class  AdminOrderCreateStep6Container extends Component {
                 console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
                 console.log("onSuccessCallback | State (Post-Fetch):", this.state);
                 localStorageRemoveItemsContaining("workery-create-order-");
-                this.props.history.push("/task/1/" + response.latestPendingTask + "/step-1");
+                this.props.history.push("/task/1/" + response.latestPendingTaskId + "/step-1");
             }
         )
     }

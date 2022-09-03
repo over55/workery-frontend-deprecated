@@ -38,6 +38,7 @@ class StaffCreateStep8Container extends Component {
 
         this.state = {
             // Step 3
+            typeOf: localStorageGetIntegerItem("workery-create-staff-accountType"),
             accountType: localStorageGetIntegerItem("workery-create-staff-accountType"),
             accountTypeLabel: localStorage.getItem("workery-create-staff-accountTypeLabel"),
 
@@ -78,8 +79,8 @@ class StaffCreateStep8Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-staff-dateOfBirth"),
             gender: localStorage.getItem("workery-create-staff-gender"),
             genderLabel: localStorage.getItem("workery-create-staff-gender-label"),
-            howHear: localStorageGetIntegerItem("workery-create-staff-howHear"),
-            howHearLabel: localStorage.getItem("workery-create-staff-howHearLabel"),
+            howHearId: localStorageGetIntegerItem("workery-create-staff-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-staff-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-staff-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-staff-howHearOther"),
             joinDate: joinDate,
@@ -144,7 +145,9 @@ class StaffCreateStep8Container extends Component {
 
         // (6) Organization Type Of - This field may not be null, therefore make blank.
         if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
-            postData.organizationTypeOf = "";
+            postData.organizationTypeOf = 0;
+        } else {
+            postData.organizationTypeOf = parseInt(postData.organizationTypeOf);
         }
 
         // (7) Extra Comment: This field is required.
@@ -177,6 +180,11 @@ class StaffCreateStep8Container extends Component {
         // (12) birthdate
         const birthdateMoment = moment(this.state.dateOfBirth);
         postData.birthdate = birthdateMoment.format("YYYY-MM-DD")
+
+        // (13) Boolean handler.
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
+        postData.isActive = parseInt(this.state.isActive) === 1 ? true : false;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -271,110 +279,11 @@ class StaffCreateStep8Container extends Component {
      */
 
     render() {
-        const {
-            // Step 3
-            accountType,
-            accountTypeLabel,
-
-            // Step 4 - Residential & Business
-            givenName,
-            lastName,
-            primaryPhone,
-            secondaryPhone,
-            workEmail,
-            personalEmail,
-            isOkToEmail,
-            isOkToEmailLabel,
-            isOkToText,
-            isOkToTextLabel,
-
-            // Step 5 - Address
-            country,
-            region,
-            locality,
-            postalCode,
-            streetAddress,
-
-            // Step 6 - Account
-            description,
-            policeCheck,
-            emergencyContactName,
-            emergencyContactRelationship,
-            emergencyContactTelephone,
-            emergencyContactAlternativeTelephone,
-            isActive,
-            password,
-            passwordRepeat,
-
-            // Step 7 - Metrics
-            tags,
-            dateOfBirth,
-            gender,
-            genderLabel,
-            howHear,
-            howHearLabel,
-            howHearOption,
-            howHearOther,
-            joinDate,
-            comment,
-
-            // Everything else
-            errors,
-            isLoading,
-        } = this.state;
-
         return (
             <StaffCreateStep8Component
-                // Step 3
-                accountType={password}
-                accountTypeLabel={accountTypeLabel}
-
-                // Step 4 - Residential & Business
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                workEmail={workEmail}
-                personalEmail={personalEmail}
-                isOkToEmail={isOkToEmail}
-                isOkToEmailLabel={isOkToEmailLabel}
-                isOkToText={isOkToText}
-                isOkToTextLabel={isOkToTextLabel}
-
-                // Step 5 - Address
-                country={country}
-                region={region}
-                locality={locality}
-                postalCode={postalCode}
-                streetAddress={streetAddress}
-
-                // Step 6 - Account
-                description={description}
-                policeCheck={policeCheck}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                isActive={isActive}
-                password={password}
-                passwordRepeat={passwordRepeat}
-
-                // Step 7 - Metrics
-                tags={tags}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                genderLabel={genderLabel}
-                howHear={howHear}
-                howHearLabel={howHearLabel}
-                howHearOption={howHearOption}
-                howHearOther={howHearOther}
-                joinDate={joinDate}
-                comment={comment}
-
-                // Everything else
-                errors={errors}
-                isLoading={isLoading}
-                onSubmitClick={this.onSubmitClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

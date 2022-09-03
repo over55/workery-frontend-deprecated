@@ -182,9 +182,9 @@ class AssociateFinancialUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullServiceFeeList(1, 1000, parametersMap);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullServiceFeeList(0, 1000, parametersMap);
         this.props.pullOrderDetail(this.state.id);
         this.performCalculation();
     }
@@ -217,7 +217,7 @@ class AssociateFinancialUpdateContainer extends Component {
         this.setState({ errors: {}, isLoading: false, });
         this.props.setFlashMessage("success", "Order has been successfully updated.");
 
-        // According to the following ticket (https://github.com/over55/workery-front/issues/212)
+        // According to the following ticket (https://github.com/over55/workery-frontend/issues/212)
         // we are to redirect to a different page where the user can handle
         // zeroing the amount owing.
         const invoiceAmountDue = order['invoiceAmountDue'];

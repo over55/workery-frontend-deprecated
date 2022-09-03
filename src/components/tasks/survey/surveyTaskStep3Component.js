@@ -16,6 +16,7 @@ export default class SurveyTaskStep3Component extends Component {
         const hasNoSurvey = wasSurveyConducted === false || wasSurveyConducted === "false";
         const hasSurvey = wasSurveyConducted === true || wasSurveyConducted === "true";
         const isNoSurveyConductedReasonOther = noSurveyConductedReason === 1;
+        const { associate, associateTags, customer, customerTags, workOrder, workOrderSkillSets, workOrderTags } = task;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -28,7 +29,7 @@ export default class SurveyTaskStep3Component extends Component {
                             <Link to={`/tasks`}><i className="fas fa-tasks"></i>&nbsp;Tasks</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Survey
+                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - Survey
                         </li>
                     </ol>
                 </nav>
@@ -51,17 +52,17 @@ export default class SurveyTaskStep3Component extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Client Name</th>
                                         <td>
-                                            <Link to={`/client/${task.jobCustomer}`} target="_blank">
-                                                {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/client/${customer && customer.id}`} target="_blank">
+                                                {customer && customer.id}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Location</th>
                                         <td>
-                                            {task &&
-                                                <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
-                                                    {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            {customer &&
+                                                <a href={customer.fullAddressUrl} target="_blank">
+                                                    {customer.fullAddressWithoutPostalCode}&nbsp;<i className="fas fa-external-link-alt"></i>
                                                 </a>
                                             }
                                         </td>
@@ -69,8 +70,8 @@ export default class SurveyTaskStep3Component extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Name</th>
                                         <td>
-                                            <Link to={`/associate/${task.jobAssociate}`} target="_blank">
-                                                {task && task.jobAssociateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/associate/${associate && associate.id}`} target="_blank">
+                                                {associate && associate.name}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>

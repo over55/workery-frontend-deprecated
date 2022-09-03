@@ -109,17 +109,17 @@ const STATUS_CHOICES = [
     {
         id: 'status-m-choice',
         name: "status",
-        value: "accepted",
+        value: 1,
         label: "Yes"
     },{
         id: 'status-f-choice',
         name: "status",
-        value: "declined",
+        value: 2,
         label: "No"
     },{
         id: 'status-pnts-choice',
         name: "status",
-        value: "pending",
+        value: 3,
         label: "Pending"
     }
 ];

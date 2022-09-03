@@ -157,18 +157,9 @@ class AdminOrderSearchContainer extends Component {
     render() {
         return (
             <OrderSearchComponent
-                keyword={this.state.keyword}
-                firstName={this.state.firstName}
-                lastName={this.state.lastName}
-                telephone={this.state.telephone}
-                email={this.state.email}
-                onTextChange={this.onTextChange}
-                advancedSearchActive={this.state.advancedSearchActive}
-                onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
-                onSearchClick={this.onSearchClick}
-				handleKeyDown={this.handleKeyDown}
-                onAdvancedSearchClick={this.onAdvancedSearchClick}
-                errors={this.state.errors}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

@@ -36,6 +36,7 @@ class PartnerLiteRetrieveContainer extends Component {
         // Update functions.
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
+        this.onPartnerClick = this.onPartnerClick.bind(this);
     }
 
     /**
@@ -72,7 +73,6 @@ class PartnerLiteRetrieveContainer extends Component {
         // The following code will save the object to the browser's local
         // storage to be retrieved later more quickly.
         localStorageSetObjectOrArrayItem("workery-admin-retrieve-partner-"+this.state.id.toString(), response);
-
     }
 
     onFailureCallback(errors) {
@@ -84,6 +84,13 @@ class PartnerLiteRetrieveContainer extends Component {
      *------------------------------------------------------------
      */
 
+    onPartnerClick(e) {
+        e.preventDefault();
+        localStorage.setItem("workery-create-order-partnerId", this.props.partnerDetail.id);
+        localStorage.setItem("workery-create-order-partnerGivenName", this.props.partnerDetail.givenName);
+        localStorage.setItem("workery-create-order-partnerLastName", this.props.partnerDetail.lastName);
+        this.props.history.push("/orders/add/step-3");
+    }
 
     /**
      *  Main render function
@@ -91,14 +98,13 @@ class PartnerLiteRetrieveContainer extends Component {
      */
 
     render() {
-        const { id, isLoading } = this.state;
         const partner = isEmpty(this.state.partner) ? {} : this.state.partner;
         return (
             <PartnerLiteRetrieveComponent
-                id={id}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 partner={partner}
-                flashMessage={this.props.flashMessage}
             />
         );
     }

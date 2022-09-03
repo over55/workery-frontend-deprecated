@@ -26,7 +26,7 @@ class StaffChangeRoleContainer extends Component {
             id: id,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
-            role: this.props.staffDetail.groupId,
+            role: this.props.staffDetail.roleId,
             errors: {},
             isLoading: false
         }
@@ -45,9 +45,14 @@ class StaffChangeRoleContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+        console.log("getPostData | Pre-postData:", postData);
+
+        // Change the staff id.
+        postData.staffId = parseInt(this.state.id);
+        postData.roleId = parseInt(this.state.role);
 
         // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
+        console.log("getPostData | Post-postData:", postData);
         return postData;
     }
 
@@ -141,20 +146,11 @@ class StaffChangeRoleContainer extends Component {
      */
 
     render() {
-        const {
-            id, givenName, lastName, role, isLoading, errors
-        } = this.state;
         return (
             <StaffChangeRoleComponent
-                isLoading={isLoading}
-                id={id}
-                givenName={givenName}
-                lastName={lastName}
-                role={role}
-                errors={errors}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
-                user={this.props.user}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

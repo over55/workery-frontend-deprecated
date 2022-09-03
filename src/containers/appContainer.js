@@ -89,6 +89,7 @@ import AdminAssociateBalanceOperationContainer from "./associates/admin/operatio
 import AdminAssociateChangePasswordOperationContainer from "./associates/admin/operations/adminAssociateChangePasswordOperationContainer";
 import AdminAssociateArchiveOperationContainer from "./associates/admin/operations/adminAssociateArchiveOperationContainer";
 import AdminAssociateUnarchiveOperationContainer from "./associates/admin/operations/adminAssociateUnarchiveOperationContainer";
+import AdminAssociatePermanentDeleteOperationContainer from "./associates/admin/operations/adminAssociatePermanentDeleteOperationContainer";
 
 // (Admin) Work Order
 import AdminOrderListContainer from "./orders/admin/list/adminOrderListContainer";
@@ -170,10 +171,12 @@ import StaffCreateStep5Container from "./staff/create/staffCreateStep5Container"
 import StaffCreateStep6Container from "./staff/create/staffCreateStep6Container";
 import StaffCreateStep7Container from "./staff/create/staffCreateStep7Container";
 import StaffCreateStep8Container from "./staff/create/staffCreateStep8Container";
-import StaffArchiveContainer from "./staff/operations/staffArchiveContainer";
+import StaffUnarchiveOperationContainer from "./staff/operations/staffUnarchiveOperationContainer";
+import StaffArchiveOperationContainer from "./staff/operations/staffArchiveOperationContainer";
 import StaffAccountChangePasswordContainer from "./staff/operations/staffAccountChangePasswordContainer";
 import StaffChangeRoleContainer from "./staff/operations/staffChangeRoleContainer";
 import StaffAvatarUpdateOperationContainer from "./staff/operations/staffAvatarUpdateOperationContainer";
+import StaffPermanentDeleteOperationContainer from "./staff/operations/staffPermanentDeleteOperationContainer";
 
 // Reports
 import ReportListContainer from "./reports/reportListContainer";
@@ -317,10 +320,14 @@ import PartnerCreateStep6Container from "./partners/create/partnerCreateStep6Con
 import PartnerContactUpdateContainer from "./partners/update/partnerContactUpdateContainer";
 import PartnerAddressUpdateContainer from "./partners/update/partnerAddressUpdateContainer";
 import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdateContainer";
+import PartnerOperationsContainer from "./partners/retrieve/partnerOperationsContainer";
 import PartnerAvatarUpdateOperationContainer from "./partners/operations/partnerAvatarUpdateOperationContainer";
+import PartnerPermanentDeleteOperationContainer from "./partners/operations/partnerPermanentDeleteOperationContainer";
+import PartnerUnarchiveOperationContainer from "./partners/operations/partnerUnarchiveOperationContainer";
+import PartnerArchiveOperationContainer from "./partners/operations/partnerArchiveOperationContainer";
 
 // Ongoing Work Order
-import OngoingOrderListContainer from "./ongoingOrders/list/ongoingOrderListContainer";
+import AdminOngoingOrderListComponent from "./ongoingOrders/admin/list/ongoingOrderListContainer";
 import OngoingOrderLiteRetrieveContainer from "./ongoingOrders/retrieve/ongoingOrderLiteRetrieveContainer";
 import OngoingOrderFullRetrieveContainer from "./ongoingOrders/retrieve/ongoingOrderFullRetrieveContainer";
 import OngoingOrderUpdateContainer from "./ongoingOrders/update/ongoingOrderUpdateContainer";
@@ -439,6 +446,7 @@ class AppContainer extends React.Component {
                                 <Route path="/associate/:id/operations/downgrade" exact component={requiresAuth(AdminAssociateDowngradeOperationContainer)} />
                                 <Route path="/associate/:id/operations/archive" exact component={requiresAuth(AdminAssociateArchiveOperationContainer)} />
                                 <Route path="/associate/:id/operations/unarchive" exact component={requiresAuth(AdminAssociateUnarchiveOperationContainer)} />
+                                <Route path="/associate/:id/operations/delete" exact component={requiresAuth(AdminAssociatePermanentDeleteOperationContainer)} />
 
                                 { /* WORK ORDER */}
                                 <Route path="/orders/add/step-1" exact component={requiresAuth(AdminOrderCreateStep1Container)} />
@@ -520,10 +528,12 @@ class AppContainer extends React.Component {
                                 <Route path="/staff/:id/update/address" exact component={requiresAuth(StaffAddressUpdateContainer)} />
                                 <Route path="/staff/:id/update/account" exact component={requiresAuth(StaffAccountUpdateContainer)} />
                                 <Route path="/staff/:id/update/metrics" exact component={requiresAuth(StaffMetricsUpdateContainer)} />
-                                <Route path="/staff/:id/archive" exact component={requiresAuth(StaffArchiveContainer)} />
+                                <Route path="/staff/:id/unarchive" exact component={requiresAuth(StaffUnarchiveOperationContainer)} />
+                                <Route path="/staff/:id/archive" exact component={requiresAuth(StaffArchiveOperationContainer)} />
                                 <Route path="/staff/:id/password" exact component={requiresAuth(StaffAccountChangePasswordContainer)} />
                                 <Route path="/staff/:id/role" exact component={requiresAuth(StaffChangeRoleContainer)} />
                                 <Route path="/staff/:id/avatar" exact component={requiresAuth(StaffAvatarUpdateOperationContainer)} />
+                                <Route path="/staff/:id/delete" exact component={requiresAuth(StaffPermanentDeleteOperationContainer)} />
 
                                 { /* REPORTS */ }
                                 <Route path="/reports" exact component={requiresAuth(ReportListContainer)} />
@@ -659,9 +669,13 @@ class AppContainer extends React.Component {
                                 <Route path="/partner/:id/update/contact" exact component={requiresAuth(PartnerContactUpdateContainer)} />
                                 <Route path="/partner/:id/update/address" exact component={requiresAuth(PartnerAddressUpdateContainer)} />
                                 <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
+                                <Route path="/partner/:id/operations" exact component={requiresAuth(PartnerOperationsContainer)} />
+                                <Route path="/partner/:id/delete" exact component={requiresAuth(PartnerPermanentDeleteOperationContainer)} />
+                                <Route path="/partner/:id/unarchive" exact component={requiresAuth(PartnerUnarchiveOperationContainer)} />
+                                <Route path="/partner/:id/archive" exact component={requiresAuth(PartnerArchiveOperationContainer)} />
 
                                 { /* WORK ORDER */}
-                                <Route path="/ongoing-orders" exact component={requiresAuth(OngoingOrderListContainer)} />
+                                <Route path="/ongoing-orders" exact component={requiresAuth(AdminOngoingOrderListComponent)} />
                                 <Route path="/ongoing-order/:id" exact component={requiresAuth(OngoingOrderLiteRetrieveContainer)} />
                                 <Route path="/ongoing-order/:id/full" exact component={requiresAuth(OngoingOrderFullRetrieveContainer)} />
                                 <Route path="/ongoing-order/:id/comments" exact component={requiresAuth(OngoingOrderCommentContainer)} />

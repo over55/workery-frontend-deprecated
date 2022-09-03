@@ -2,15 +2,14 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     CLIENT_FILE_LIST_REQUEST, CLIENT_FILE_LIST_FAILURE, CLIENT_FILE_LIST_SUCCESS
 } from '../constants/actionTypes';
 import {
-    WORKERY_CLIENT_FILE_LIST_API_ENDPOINT,
-    WORKERY_CLIENT_FILE_DETAIL_API_ENDPOINT,
-    WORKERY_CLIENT_FILE_ARCHIVE_API_ENDPOINT
+    WORKERY_CLIENT_FILE_LIST_API_URL,
+    WORKERY_CLIENT_FILE_DETAIL_API_URL,
+    WORKERY_CLIENT_FILE_ARCHIVE_API_URL
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -33,7 +32,7 @@ export function pullClientFileUploadList(page=1, sizePerPage=10, filtersMap=new 
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_CLIENT_FILE_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_CLIENT_FILE_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -43,8 +42,7 @@ export function pullClientFileUploadList(page=1, sizePerPage=10, filtersMap=new 
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             console.log(responseData); // For debugging purposes.
 
@@ -72,10 +70,7 @@ export function pullClientFileUploadList(page=1, sizePerPage=10, filtersMap=new 
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -122,13 +117,9 @@ export function postClientFileUpload(postData, successCallback, failedCallback) 
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_CLIENT_FILE_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_CLIENT_FILE_LIST_API_URL, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
 
@@ -146,10 +137,7 @@ export function postClientFileUpload(postData, successCallback, failedCallback) 
             );
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -192,11 +180,10 @@ export function deleteClientFileUpload(id, successCallback, failedCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_CLIENT_FILE_ARCHIVE_API_ENDPOINT.replace("XXX", id);
+        const aURL = WORKERY_CLIENT_FILE_ARCHIVE_API_URL.replace("XXX", id);
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
             let profile = camelizeKeys(responseData);
@@ -219,10 +206,7 @@ export function deleteClientFileUpload(id, successCallback, failedCallback) {
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 

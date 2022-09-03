@@ -61,11 +61,11 @@ class StaffCreateStep6Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap);
-        this.props.pullInsuranceRequirementList(1, 1000, parametersMap);
-        this.props.pullVehicleTypeList(1, 1000, parametersMap);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullSkillSetList(0, 1000, parametersMap);
+        this.props.pullInsuranceRequirementList(0, 1000, parametersMap);
+        this.props.pullVehicleTypeList(0, 1000, parametersMap);
     }
 
     componentWillUnmount() {
@@ -184,37 +184,11 @@ class StaffCreateStep6Container extends Component {
      */
 
     render() {
-        const {
-            description, policeCheck,
-            emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone,
-            isActive, password, passwordRepeat,
-            errors, isLoading, returnURL
-        } = this.state;
-
-        const { user } = this.props;
         return (
             <StaffCreateStep6Component
-                description={description}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                password={password}
-                passwordRepeat={passwordRepeat}
-                onTextChange={this.onTextChange}
-
-                policeCheck={policeCheck}
-                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
-
-                onSelectChange={this.onSelectChange}
-
-                isActive={isActive}
-                onRadioChange={this.onRadioChange}
-
-                onNextClick={this.onNextClick}
-                errors={errors}
-                returnURL={returnURL}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import StaffAddressUpdateComponent from "../../../components/staff/update/staffAddressUpdateComponent";
-import { validateStep5CreateInput } from "../../../validators/staffValidator";
-import {
-    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
-    COMMERCIAL_CUSTOMER_TYPE_OF_ID
-} from '../../../constants/api';
-import { BASIC_STREET_TYPE_CHOICES, STREET_DIRECTION_CHOICES } from "../../../constants/api";
 import { setFlashMessage } from "../../../actions/flashMessageActions";
-import { putStaffAddressDetail } from '../../../actions/staffActions';
+import { validateAddressInput } from "../../../validators/staffValidator";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID
+} from '../../../constants/api';
+import { getHowHearReactSelectOptions, pullHowHearList } from "../../../actions/howHearActions";
+import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../../actions/tagActions";
+import { putStaffAddressDetail } from "../../../actions/staffActions";
 
 
 class StaffAddressUpdateContainer extends Component {
@@ -31,24 +32,32 @@ class StaffAddressUpdateContainer extends Component {
         const region = this.props.staffDetail.addressRegion === "ON" ? "Ontario" : this.props.staffDetail.addressRegion;
 
         this.state = {
+            errors: {},
+            isLoading: false,
             id: id,
+
+            // STEP 3
+            typeOf: this.props.staffDetail.typeOf,
+
+            // STEP 4
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
+
+            // STEP 5
             country: country,
             region: region,
             locality: this.props.staffDetail.addressLocality,
             postalCode: this.props.staffDetail.postalCode,
             streetAddress: this.props.staffDetail.streetAddress,
-            errors: {},
-            isLoading: false
         }
 
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
-        this.onNextClick = this.onNextClick.bind(this);
-        this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
-        this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
+        this.onClick = this.onClick.bind(this);
+        this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onFailedCallback = this.onFailedCallback.bind(this);
         this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
         this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
     }
@@ -60,6 +69,66 @@ class StaffAddressUpdateContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        // (2) Middle name (API ISSUE)
+        postData.middleName = this.state.middleName;
+
+        // (2) Join date - We need to format as per required API format.
+        const joinDateMoment = moment(this.state.joinDate);
+        postData.joinDate = joinDateMoment.format("YYYY-MM-DD")
+
+        // (4) How Hear Other - This field may not be null, therefore make blank.
+        if (this.state.howHearOther === undefined || this.state.howHearOther === null) {
+            postData.howHearOther = "";
+        }
+
+        // // (5) Password & Password Repeat
+        // if (this.state.password === undefined || this.state.password === null || this.state.password === '' || this.state.password.length == 0) {
+        //     var randomString = Math.random().toString(34).slice(-10);
+        //     randomString += "A";
+        //     randomString += "!";
+        //     postData.password = randomString;
+        //     postData.passwordRepeat = randomString;
+        // }
+
+        // (6) Organization Type Of - This field may not be null, therefore make blank.
+        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
+            postData.organizationTypeOf = "";
+        }
+
+        // (7) Extra Comment: This field is required.
+        if (this.state.comment === undefined || this.state.comment === null) {
+            postData.extraComment = "";
+        } else {
+            postData.extraComment = this.state.comment;
+        }
+
+        // (8) Telephone type: This field is required.;
+        if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
+            postData.telephoneTypeOf = 1;
+        }
+        if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
+            postData.otherTelephoneTypeOf = 1;
+        }
+
+        // (9) Address Country: This field is required.
+        postData.addressCountry = this.state.country;
+
+        // (10) Address Locality: This field is required.
+        postData.addressLocality = this.state.locality;
+
+        // (11) Address Region: This field is required.
+        postData.addressRegion = this.state.region
+
+        // () First Name and Last Name if biz
+        if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.givenName = this.state.givenName;
+            postData.lastName = this.state.lastName;
+        } else {
+
+        }
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -73,6 +142,10 @@ class StaffAddressUpdateContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // Fetch all our GUI drop-down options which are populated by the API.
+        this.props.pullHowHearList(0,1000);
+        this.props.pullTagList(0,1000);
     }
 
     componentWillUnmount() {
@@ -89,15 +162,14 @@ class StaffAddressUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(staff) {
+    onSuccessCallback(staff) {
+        this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Staff has been successfully updated.");
         this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
-    onFailedSubmissionCallback(errors) {
-        this.setState({
-            errors: errors
-        })
+    onFailedCallback(errors) {
+        this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of
         // the page. Please see ``react-scroll`` for more information:
@@ -111,64 +183,79 @@ class StaffAddressUpdateContainer extends Component {
      *------------------------------------------------------------
      */
 
-     onTextChange(e) {
-         // Update our state.
-         this.setState({
-             [e.target.name]: e.target.value,
-         });
-
-         // Update our persistent storage.
-         const key = "workery-create-staff-"+[e.target.name];
-         localStorage.setItem(key, e.target.value)
-     }
-
-     onSelectChange(option) {
-         const optionKey = [option.selectName]+"Option";
-         this.setState({
-             [option.selectName]: option.value,
-             [optionKey]: option,
-         });
-     }
+    onTextChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value,
+        })
+    }
 
     onBillingCountryChange(value) {
         // Update state.
         if (value === null || value === undefined || value === '') {
-            this.setState({ country: null, region: null })
+            this.setState({ country: null, region: null });
         } else {
-            this.setState({ country: value, region: null })
+            this.setState({ country: value, region: null });
         }
-
-        // Update persistent storage.
-        localStorage.setItem('workery-create-staff-country', value);
-        localStorage.setItem('workery-create-staff-region', null);
     }
 
     onBillingRegionChange(value) {
         this.setState({ region: value }); // Update state.
-        localStorage.setItem('workery-create-staff-region', value); // Update persistent storage.
     }
 
-    onNextClick(e) {
+    onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
         // Perform staff-side validation.
-        const { errors, isValid } = validateStep5CreateInput(this.state);
+        const { errors, isValid } = validateAddressInput(this.state);
 
         // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
-            this.props.putStaffAddressDetail(
-                this.getPostData(),
-                this.onSuccessfulSubmissionCallback,
-                this.onFailedSubmissionCallback
-            );
+            this.setState({ errors: {}, isLoading: true, }, ()=>{
+                this.props.putStaffAddressDetail(
+                    this.getPostData(),
+                    this.onSuccessCallback,
+                    this.onFailedCallback
+                );
+            });
 
         // CASE 2 OF 2: Validation was a failure.
         } else {
-            this.onFailedSubmissionCallback(errors);
+            this.onFailedCallback(errors);
         }
     }
 
+    onSelectChange(option) {
+        const optionKey = [option.selectName].toString()+"Option";
+        this.setState({
+            [option.selectName]: option.value,
+            optionKey: option,
+        });
+        console.log([option.selectName], optionKey, "|",option); // For debugging purposes only.
+    }
+
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "nwapp-create-staff-"+[e.target.name];
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"-label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        localStorage.setItem(storageValueKey, value) // Save to storage.
+
+        // For the debugging purposes only.
+        console.log({
+            "STORE-VALUE-KEY": storageValueKey,
+            "STORE-VALUE": value,
+            "STORAGE-VALUE-KEY": storeValueKey,
+            "STORAGE-VALUE": value,
+            "STORAGE-LABEL-KEY": storeLabelKey,
+            "STORAGE-LABEL": label,
+        });
+    }
 
     /**
      *  Main render function
@@ -176,30 +263,11 @@ class StaffAddressUpdateContainer extends Component {
      */
 
     render() {
-        const { id, givenName, lastName, errors, isLoading, returnURL } = this.state;
-        const {
-            country, region, locality,
-            postalCode, streetAddress,
-        } = this.state;
-        const { user } = this.props;
         return (
             <StaffAddressUpdateComponent
-                id={id}
-                givenName={givenName}
-                lastName={lastName}
-                country={country}
-                region={region}
-                locality={locality}
-                streetAddress={streetAddress}
-                postalCode={postalCode}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onBillingCountryChange={this.onBillingCountryChange}
-                onBillingRegionChange={this.onBillingRegionChange}
-                onNextClick={this.onNextClick}
-                errors={errors}
-                returnURL={returnURL}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
@@ -209,6 +277,8 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         staffDetail: store.staffDetailState,
+        howHearList: store.howHearListState,
+        tagList: store.tagListState,
     };
 }
 
@@ -217,12 +287,23 @@ const mapDispatchToProps = dispatch => {
         setFlashMessage: (typeOf, text) => {
             dispatch(setFlashMessage(typeOf, text))
         },
-        putStaffAddressDetail: (data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback) => {
-            dispatch(putStaffAddressDetail(data, onSuccessfulSubmissionCallback, onFailedSubmissionCallback))
+        pullHowHearList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullHowHearList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        pullTagList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                pullTagList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+            )
+        },
+        putStaffAddressDetail: (data, onSuccessCallback, onFailureCallback) => {
+            dispatch(
+                putStaffAddressDetail(data, onSuccessCallback, onFailureCallback)
+            )
         },
     }
 }
-
 
 export default connect(
     mapStateToProps,

@@ -22,14 +22,14 @@ export default class ClientLiteRetrieveComponent extends Component {
                             <Link to={`/clients`}><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{client && client.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{client && client.name}</h1>
 
                 {client.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
@@ -77,8 +77,8 @@ export default class ClientLiteRetrieveComponent extends Component {
                         <div className="row">
                             <div className="col-sm-4">
                                 <Link to={`/client/${id}/avatar`}>
-                                    {client && client.avatarUrl !== undefined && client.avatarUrl !== null
-                                        ? <img src={client.avatarUrl} className="img-fluid rounded" alt="Profile" id={`customer-avatar-${id}`} />
+                                    {client && client.avatarFileUrl !== undefined && client.avatarFileUrl !== null
+                                        ? <img src={client.avatarFileUrl} className="img-fluid rounded" alt="Profile" id={`customer-avatar-${id}`} />
                                         : <img src="/img/placeholder.png" className="img-fluid rounded" alt="Profile" id={`avatar-placeholder`}/>
                                     }
                                     <p><i className="fas fa-edit"></i>Click here to change photo</p>
@@ -89,11 +89,11 @@ export default class ClientLiteRetrieveComponent extends Component {
                                     <h1>{client.organizationName}</h1>
                                 }
                                 <h3>
-                                    {client && client.fullName}
+                                    {client && client.name}
                                 </h3>
-                                {client && client.address &&
+                                {client && client.fullAddressWithPostalCode &&
                                     <p className="text-muted">
-                                        <a href={client.addressUrl}>{client.address}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
+                                        <a href={client.fullAddressUrl}>{client.fullAddressWithPostalCode}&nbsp;<i className="fas fa-map-marker-alt"></i></a>
                                     </p>
                                 }
                                 {client && client.email &&
@@ -103,7 +103,7 @@ export default class ClientLiteRetrieveComponent extends Component {
                                 }
                                 {client && client.telephone &&
                                     <p>
-                                        <a href={`tel:${client.e164Telephone}`}>
+                                        <a href={`tel:${client.telephone}`}>
                                             <i className="fas fa-phone-square"></i>&nbsp;{client.telephone}
                                         </a>
                                     </p>
@@ -141,9 +141,9 @@ export default class ClientLiteRetrieveComponent extends Component {
 
 class TagItem extends Component {
     render() {
-        const { label, value } = this.props.tag;
+        const { text, id } = this.props.tag;
         return (
-            <span className="badge badge-info badge-lg" value={value}>{label}</span>
+            <span className="badge badge-info badge-lg" value={id}>{text}</span>
         );
     };
 }

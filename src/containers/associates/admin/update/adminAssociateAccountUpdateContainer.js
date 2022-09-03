@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 import * as moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
+import {
+    localStorageGetObjectItem, localStorageSetObjectOrArrayItem
+} from '../../../../helpers/localStorageUtility';
 
 import AdminAssociateAccountUpdateComponent from "../../../../components/associates/admin/update/adminAssociateAccountUpdateComponent";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
@@ -26,53 +30,58 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const associate = this.props.associateDetail;
+        const isLoading = isEmpty(associate);
+
         // Get our dates based on our browsers timezone.
         // https://github.com/angular-ui/bootstrap/issues/2628#issuecomment-55125516
-        const duesDateObj = new Date(this.props.associateDetail.duesDate);
+        const duesDateObj = new Date(associate.duesDate);
         duesDateObj.setMinutes( duesDateObj.getMinutes() + duesDateObj.getTimezoneOffset() );
-        const commercialInsuranceExpiryDateObj = new Date(this.props.associateDetail.commercialInsuranceExpiryDate);
+        const commercialInsuranceExpiryDateObj = new Date(associate.commercialInsuranceExpiryDate);
         commercialInsuranceExpiryDateObj.setMinutes( commercialInsuranceExpiryDateObj.getMinutes() + commercialInsuranceExpiryDateObj.getTimezoneOffset() );
-        const autoInsuranceExpiryDateObj = new Date(this.props.associateDetail.autoInsuranceExpiryDate);
+        const autoInsuranceExpiryDateObj = new Date(associate.autoInsuranceExpiryDate);
         autoInsuranceExpiryDateObj.setMinutes( autoInsuranceExpiryDateObj.getMinutes() + autoInsuranceExpiryDateObj.getTimezoneOffset() );
-        const wsibInsuranceDateObj = new Date(this.props.associateDetail.wsibInsuranceDate);
+        const wsibInsuranceDateObj = new Date(associate.wsibInsuranceDate);
         wsibInsuranceDateObj.setMinutes( wsibInsuranceDateObj.getMinutes() + wsibInsuranceDateObj.getTimezoneOffset() );
-        const policeCheckObj = new Date(this.props.associateDetail.policeCheck);
+        const policeCheckObj = new Date(associate.policeCheck);
         policeCheckObj.setMinutes( policeCheckObj.getMinutes() + policeCheckObj.getTimezoneOffset() );
 
         this.state = {
             // STEP 3
             // typeOf: typeOf,
 
-            // STEP 6
+            name: associate.name,
             isSkillSetsLoading: true,
-            skillSets: this.props.associateDetail.skillSets,
-            insuranceRequirements: this.props.associateDetail.insuranceRequirements,
+            skillSets: associate.skillSets,
+            insuranceRequirements: associate.insuranceRequirements,
             isInsuranceRequirementsLoading: true,
-            description: this.props.associateDetail.description,
-            hourlySalaryDesired: this.props.associateDetail.hourlySalaryDesired,
-            limitSpecial: this.props.associateDetail.limitSpecial,
+            description: associate.description,
+            hourlySalaryDesired: associate.hourlySalaryDesired,
+            limitSpecial: associate.limitSpecial,
             duesDate: duesDateObj,
             commercialInsuranceExpiryDate: commercialInsuranceExpiryDateObj,
             autoInsuranceExpiryDate: autoInsuranceExpiryDateObj,
-            wsibNumber: this.props.associateDetail.wsibNumber,
+            wsibNumber: associate.wsibNumber,
             wsibInsuranceDate: wsibInsuranceDateObj,
             policeCheck: policeCheckObj,
-            taxId: this.props.associateDetail.taxId,
-            driversLicenseClass: this.props.associateDetail.driversLicenseClass,
+            taxId: associate.taxId,
+            driversLicenseClass: associate.driversLicenseClass,
             isVehicleTypesLoading: true,
             isServiceFeeLoading: true,
-            serviceFee: this.props.associateDetail.serviceFee,
-            vehicleTypes: this.props.associateDetail.vehicleTypes,
-            emergencyContactName: this.props.associateDetail.emergencyContactName,
-            emergencyContactRelationship: this.props.associateDetail.emergencyContactRelationship,
-            emergencyContactTelephone: this.props.associateDetail.emergencyContactTelephone,
-            emergencyContactAlternativeTelephone: this.props.associateDetail.emergencyContactAlternativeTelephone,
+            serviceFeeId: associate.serviceFeeId,
+            vehicleTypes: associate.vehicleTypes,
+            emergencyContactName: associate.emergencyContactName,
+            emergencyContactRelationship: associate.emergencyContactRelationship,
+            emergencyContactTelephone: associate.emergencyContactTelephone,
+            emergencyContactAlternativeTelephone: associate.emergencyContactAlternativeTelephone,
 
             // Everything else...
             errors: {},
             isLoading: false,
             id: id,
-            fullName: this.props.associateDetail.fullName,
+            fullName: associate.fullName,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -164,6 +173,30 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
         postData.isActive = true;
 
+        postData.hourlySalaryDesired = parseInt(this.state.hourlySalaryDesired);
+
+        //
+        // Generate our PKs.
+        //
+
+        let ssPKs = [];
+        for (let ss of this.state.skillSets) {
+            ssPKs.push(ss.skillSetId);
+        }
+        postData.skillSets = ssPKs;
+
+        let iiPKs = [];
+        for (let ii of this.state.insuranceRequirements) {
+            iiPKs.push(ii.insuranceRequirementId);
+        }
+        postData.insuranceRequirements = iiPKs;
+
+        let vtPKs = [];
+        for (let vt of this.state.vehicleTypes) {
+            vtPKs.push(vt.vehicleTypeId);
+        }
+        postData.vehicleTypes = vtPKs;
+
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
         return postData;
@@ -178,12 +211,17 @@ class AdminAssociateAccountUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap, this.onFetchedSkillSetsCallback);
-        this.props.pullInsuranceRequirementList(1, 1000, parametersMap, this.onFetchedInsuranceRequirementsCallback);
-        this.props.pullVehicleTypeList(1, 1000, parametersMap, this.onFetchedVehicleTypesCallback);
-        this.props.pullServiceFeeList(1, 1000, parametersMap, this.onFetchedServiceFeeCallback);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullSkillSetList(0, 1000, parametersMap, this.onFetchedSkillSetsCallback);
+        this.props.pullInsuranceRequirementList(0, 1000, parametersMap, this.onFetchedInsuranceRequirementsCallback);
+        this.props.pullVehicleTypeList(0, 1000, parametersMap, this.onFetchedVehicleTypesCallback);
+        this.props.pullServiceFeeList(0, 1000, parametersMap, this.onFetchedServiceFeeCallback);
+
+        console.log("LOG|associateId", this.state.id);
+        console.log("LOG|skillSets", this.state.skillSets);
+        console.log("LOG|insuranceRequirements", this.state.insuranceRequirements);
+        console.log("LOG|vehicleTypes", this.state.vehicleTypes);
     }
 
     componentWillUnmount() {
@@ -201,7 +239,13 @@ class AdminAssociateAccountUpdateContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(associate) {
-        this.setState({ errors: {}, isLoading: true, })
+        console.log("onSuccessfulSubmissionCallback | associate:", associate);
+
+        // The following code will save the object to the browser's local
+        // storage to be retrieved later more quickly.
+        localStorageSetObjectOrArrayItem("workery-admin-retrieve-associate-"+this.state.id.toString(), associate);
+
+        this.setState({ isLoading: false, associate: associate, errors:{} });
         this.props.setFlashMessage("success", "Associate has been successfully updated.");
         this.props.history.push("/associate/"+this.state.id+"/full");
     }
@@ -273,14 +317,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idSkillSets = [];
+        let pickedSkillSets = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idSkillSets.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.skillSetId = pickedOption.value;
+                pickedSkillSets.push(pickedOption);
             }
         }
-        this.setState({ skillSets: idSkillSets, });
+        this.setState({ skillSets: pickedSkillSets, });
     }
 
     onInsuranceRequirementMultiChange(...args) {
@@ -290,14 +335,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idInsuranceRequirements = [];
+        let pickedInsuranceRequirements = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idInsuranceRequirements.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.insuranceRequirementId = pickedOption.value;
+                pickedInsuranceRequirements.push(pickedOption);
             }
         }
-        this.setState({ insuranceRequirements: idInsuranceRequirements, });
+        this.setState({ insuranceRequirements: pickedInsuranceRequirements, });
     }
 
     onVehicleTypeMultiChange(...args) {
@@ -307,14 +353,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idVehicleTypes = [];
+        let pickedVehicleTypes = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idVehicleTypes.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.vehicleTypeId = pickedOption.value;
+                pickedVehicleTypes.push(pickedOption);
             }
         }
-        this.setState({ vehicleTypes: idVehicleTypes, });
+        this.setState({ vehicleTypes: pickedVehicleTypes, });
     }
 
     onTagMultiChange(...args) {
@@ -324,14 +371,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         // We need to only return our `id` values, therefore strip out the
         // `react-select` options format of the data and convert it into an
         // array of integers to hold the primary keys of the `Tag` items selected.
-        let idTags = [];
+        let pickedTags = [];
         if (selectedOptions !== null && selectedOptions !== undefined) {
             for (let i = 0; i < selectedOptions.length; i++) {
-                let tag = selectedOptions[i];
-                idTags.push(tag.value);
+                let pickedOption = selectedOptions[i];
+                pickedOption.tagId = pickedOption.value;
+                pickedTags.push(pickedOption);
             }
         }
-        this.setState({ tags: idTags, });
+        this.setState({ tags: pickedTags, });
     }
 
     onDuesDateChange(dateObj) {
@@ -395,20 +443,7 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
     render() {
         const {
-            // Step 4
-            givenName, lastName, primaryPhone, secondaryPhone, email, isOkToEmail, isOkToText,
-
-            // Step 5
-            country, region, locality, postalCode, streetAddress,
-
-            // Step 6
-            description, hourlySalaryDesired, limitSpecial, taxId, driversLicenseClass, isSkillSetsLoading, skillSets, isInsuranceRequirementsLoading, insuranceRequirements, isVehicleTypesLoading, vehicleTypes, duesDate, commercialInsuranceExpiryDate, autoInsuranceExpiryDate, wsibNumber, wsibInsuranceDate, policeCheck, emergencyContactName, emergencyContactRelationship, emergencyContactTelephone, emergencyContactAlternativeTelephone, serviceFee, isServiceFeeLoading,
-
-            // Step 7
-            tags, dateOfBirth, gender, howHear, howHearOther, joinDate, comment,
-
-            // Everything else...
-            errors, id, fullName, isLoading,
+            skillSets, insuranceRequirements, vehicleTypes,
         } = this.state;
 
         const skillSetOptions = getSkillSetReactSelectOptions(this.props.skillSetList);
@@ -422,58 +457,16 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
         return (
             <AdminAssociateAccountUpdateComponent
-                // Step 4
-                givenName={givenName}
-                lastName={lastName}
-
-                // Step 6
-                description={description}
-                hourlySalaryDesired={hourlySalaryDesired}
-                limitSpecial={limitSpecial}
-                taxId={taxId}
-                driversLicenseClass={driversLicenseClass}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                isSkillSetsLoading={isSkillSetsLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 skillSets={transcodedSkillSets}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
-                isInsuranceRequirementsLoading={isInsuranceRequirementsLoading}
                 insuranceRequirements={transcodedInsuranceRequirements}
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
-                isVehicleTypesLoading={isVehicleTypesLoading}
                 vehicleTypes={transcodedVehicleTypes}
                 vehicleTypeOptions={getVehicleTypeReactSelectOptions(this.props.vehicleTypeList)}
-                duesDate={duesDate}
-                onDuesDateChange={this.onDuesDateChange}
-                commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
-                onCommercialInsuranceExpiryDate={this.onCommercialInsuranceExpiryDate}
-                autoInsuranceExpiryDate={autoInsuranceExpiryDate}
-                onAutoInsuranceExpiryDateChange={this.onAutoInsuranceExpiryDateChange}
-                wsibNumber={wsibNumber}
-                wsibInsuranceDate={wsibInsuranceDate}
-                onWsibInsuranceDateChange={this.onWsibInsuranceDateChange}
-                policeCheck={policeCheck}
-                onPoliceCheckDateChange={this.onPoliceCheckDateChange}
-                isServiceFeeLoading={isServiceFeeLoading}
-                serviceFee={serviceFee}
                 serviceFeeOptions={getServiceFeeReactSelectOptions(this.props.serviceFeeList)}
-
-                // Everything else...
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
-                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onClick={this.onClick}
-                fullName={fullName}
-                isLoading={isLoading}
-                associate={this.props.associateDetail}
             />
         );
     }

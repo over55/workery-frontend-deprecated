@@ -33,7 +33,7 @@ export default class ClientAvatarUpdateOperationComponent extends Component {
                             <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{client && client.name}
                         </li>
                     </ol>
                 </nav>

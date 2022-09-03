@@ -7,7 +7,7 @@ import Moment from 'react-moment';
 import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import {
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    EXECUTIVE_GROUP_ID
+    EXECUTIVE_ROLE_ID
 } from '../../../constants/api';
 import { FlashMessageComponent } from "../../flashMessageComponent";
 
@@ -21,7 +21,7 @@ export default class ClientFullRetrieveComponent extends Component {
         const isActiveState = client.state === "active";
         const isRezClient = typeOf === 2;
         const isCompany = client && client.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
-        const canDeleteClient = user.groupId === EXECUTIVE_GROUP_ID;
+        const canDeleteClient = user.roleId === EXECUTIVE_ROLE_ID;
         return (
             <main id="main" role="main">
                 <nav aria-label="breadcrumb">
@@ -33,14 +33,14 @@ export default class ClientFullRetrieveComponent extends Component {
                             <Link to="/clients"><i className="fas fa-user-circle"></i>&nbsp;Clients</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{client && client.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{client && client.name}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{client && client.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{client && client.name}</h1>
 
                 {client.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">
@@ -121,19 +121,19 @@ export default class ClientFullRetrieveComponent extends Component {
                                 }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
-                                    <td>{client.fullName}</td>
+                                    <td>{client.name}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Primary Telephone</th>
-                                    <td><a href={`tel:${client.e164Telephone}`}>{client.telephone}</a></td>
+                                    <td><a href={`tel:${client.e164Telephone}`}>{client.telephone ? client.telephone : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Secondary Telephone</th>
-                                    <td><a href={`tel:${client.e164OtherTelephone}`}>{client.otherTelephone}</a></td>
+                                    <td><a href={`tel:${client.otherTelephone}`}>{client.otherTelephone ? client.otherTelephone : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Email</th>
-                                    <td><a href={`mailto:${client.email}`}>{client.email}</a></td>
+                                    <td><a href={`mailto:${client.email}`}>{client.email ? client.email : "-"}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Ok to Email?</th>
@@ -167,11 +167,9 @@ export default class ClientFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Location</th>
                                     <td>
-                                        <a href={client.addressUrl} target="_blank">{client.fullAddress}&nbsp;<i className="fas fa-external-link-alt"></i></a>
+                                        <a href={client.fullAddressUrl} target="_blank">{client.fullAddressWithoutPostalCode}&nbsp;<i className="fas fa-external-link-alt"></i></a>
                                     </td>
                                 </tr>
-
-
 
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
@@ -192,16 +190,16 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>}
                                 <tr>
                                     <th scope="row" className="bg-light">Gender</th>
-                                    <td>{client.gender}</td>
+                                    <td>{client.gender ? client.gender : "-"}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Description</th>
-                                    <td>{client.description}</td>
+                                    <td>{client.description ? client.description : "-"}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Tag(s)</th>
                                     <td>
-                                        {client.prettyTags && client.prettyTags.map(
+                                        {client.tags && client.tags.map(
                                             (tag) => <TagItem tag={tag} key={tag.id} />)
                                         }
                                     </td>
@@ -214,7 +212,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">How did they discover us?</th>
-                                    <td>{client.howHearPretty}</td>
+                                    <td>{client.howHearText ? client.howHearText : "-"}</td>
                                 </tr>
 
 
@@ -236,7 +234,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Created By</th>
-                                    <td>{client.createdBy}</td>
+                                    <td>{client.createdByName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified At</th>
@@ -246,7 +244,7 @@ export default class ClientFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Modified By</th>
-                                    <td>{client.lastModifiedBy}</td>
+                                    <td>{client.lastModifiedByName}</td>
                                 </tr>
 
 

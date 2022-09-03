@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import  AdminOrderCreateStep4Component from "../../../../components/orders/admin/create/adminOrderCreateStep4Component";
 import { validateStep4CreateInput } from "../../../../validators/orderValidator";
-import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
+import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../../../actions/skillSetActions";
 import {
     localStorageGetObjectItem,
     localStorageSetObjectOrArrayItem,
@@ -43,9 +43,9 @@ class  AdminOrderCreateStep4Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        const parametersMap = new Map()
-        parametersMap.set("isArchived", 3)
-        this.props.pullSkillSetList(1, 1000, parametersMap, this.onSkillSetSuccessFetch);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullSkillSetList(0, 1000, parametersMap, this.onSkillSetSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -86,14 +86,22 @@ class  AdminOrderCreateStep4Container extends Component {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            skillSets: selectedOptions,
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let pickedSkillSets = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let pickedOption = selectedOptions[i];
+                pickedOption.skillSetId = pickedOption.value;
+                pickedSkillSets.push(pickedOption);
+            }
+        }
+        this.setState({ skillSets: pickedSkillSets, }, ()=>{
+            // // Set all the tags we have selected to the STORAGE.
+            const key = 'workery-create-order-' + args[1].name;
+            localStorageSetObjectOrArrayItem(key, selectedOptions);
         });
-
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-create-order-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
     }
 
     onNextClick(e) {
@@ -125,17 +133,20 @@ class  AdminOrderCreateStep4Container extends Component {
      */
 
     render() {
-        const { description, isSkillsetLoading, skillSets, errors } = this.state;
+        const {
+            skillSets,
+        } = this.state;
+
+        const skillSetOptions = getSkillSetReactSelectOptions(this.props.skillSetList);
+        const transcodedSkillSets = getPickedSkillSetReactSelectOptions(skillSets, this.props.skillSetList)
+
         return (
             < AdminOrderCreateStep4Component
-                description={description}
-                onTextChange={this.onTextChange}
-                isSkillsetLoading={isSkillsetLoading}
-                skillSets={skillSets}
+                {...this}
+                {...this.state}
+                {...this.props}
+                skillSets={transcodedSkillSets}
                 skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-                errors={errors}
-                onNextClick={this.onNextClick}
             />
         );
     }

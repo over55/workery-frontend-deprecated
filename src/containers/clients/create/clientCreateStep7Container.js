@@ -35,14 +35,14 @@ class ClientCreateStep7Container extends Component {
             organizationTypeOf: localStorageGetIntegerItem("workery-create-client-organizationTypeOf"),
             givenName: localStorage.getItem("workery-create-client-givenName"),
             lastName: localStorage.getItem("workery-create-client-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-client-primaryPhone"),
-            telephone: localStorage.getItem("workery-create-client-primaryPhone"),
-            primaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-primaryPhoneTypeOf"),
-            telephoneTypeOf:localStorageGetIntegerItem("workery-create-client-primaryPhoneTypeOf"),
-            secondaryPhone: localStorage.getItem("workery-create-client-secondaryPhone"),
-            secondaryPhoneTypeOf: localStorageGetIntegerItem("workery-create-client-secondaryPhoneTypeOf"),
-            otherTelephone: localStorage.getItem("workery-create-client-secondaryPhone"),
-            otherTelephoneTypeOf: localStorageGetIntegerItem("workery-create-client-secondaryPhoneTypeOf"),
+            telephone: localStorage.getItem("workery-create-client-telephone"),
+            telephone: localStorage.getItem("workery-create-client-telephone"),
+            telephoneTypeOf: localStorageGetIntegerItem("workery-create-client-telephoneTypeOf"),
+            telephoneTypeOf:localStorageGetIntegerItem("workery-create-client-telephoneTypeOf"),
+            otherTelephone: localStorage.getItem("workery-create-client-otherTelephone"),
+            otherTelephoneTypeOf: localStorageGetIntegerItem("workery-create-client-otherTelephoneTypeOf"),
+            otherTelephone: localStorage.getItem("workery-create-client-otherTelephone"),
+            otherTelephoneTypeOf: localStorageGetIntegerItem("workery-create-client-otherTelephoneTypeOf"),
             email: localStorage.getItem("workery-create-client-email"),
             isOkToEmail: localStorageGetIntegerItem("workery-create-client-isOkToEmail"),
             isOkToEmailLabel: localStorage.getItem("workery-create-client-isOkToEmail-label"),
@@ -61,8 +61,8 @@ class ClientCreateStep7Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-client-dateOfBirth"),
             gender: localStorage.getItem("workery-create-client-gender"),
             genderLabel: localStorage.getItem("workery-create-client-gender-label"),
-            howHear: localStorageGetIntegerItem("workery-create-client-howHear"),
-            howHearLabel: localStorage.getItem("workery-create-client-howHearLabel"),
+            howHearId: localStorageGetIntegerItem("workery-create-client-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-client-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-client-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-client-howHearOther"),
             joinDate: joinDate,
@@ -159,6 +159,10 @@ class ClientCreateStep7Container extends Component {
         if (this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === "" || isNaN(this.state.otherTelephoneTypeOf)) {
             postData.otherTelephoneTypeOf = TELEPHONE_CONTACT_POINT_TYPE_OF_ID;
         }
+
+        // (14) Boolean handler.
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -261,92 +265,11 @@ class ClientCreateStep7Container extends Component {
      */
 
     render() {
-        const {
-            // Step 3
-            typeOf,
-            typeOfLabel,
-
-            // Step 4 - Residential & Business
-            givenName,
-            lastName,
-            primaryPhone,
-            secondaryPhone,
-            email,
-            isOkToEmail,
-            isOkToEmailLabel,
-            isOkToText,
-            isOkToTextLabel,
-            organizationName,
-            organizationTypeOf,
-
-            // Step 5 - Address
-            country,
-            region,
-            locality,
-            postalCode,
-            streetAddress,
-
-            // Step 6 - Metrics
-            tags,
-            dateOfBirth,
-            gender,
-            genderLabel,
-            howHear,
-            howHearLabel,
-            howHearOption,
-            howHearOther,
-            joinDate,
-            comment,
-
-            // Everything else
-            errors,
-            isLoading,
-        } = this.state;
-
         return (
             <ClientCreateStep7Component
-                // Step 3
-                typeOf={typeOf}
-                typeOfLabel={typeOfLabel}
-
-                // Step 4 - Residential & Business
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToEmailLabel={isOkToEmailLabel}
-                isOkToText={isOkToText}
-                isOkToTextLabel={isOkToTextLabel}
-                organizationName={organizationName}
-                organizationTypeOf={organizationTypeOf}
-                givenName={givenName}
-                lastName={lastName}
-
-                // Step 5 - Address
-                country={country}
-                region={region}
-                locality={locality}
-                postalCode={postalCode}
-                streetAddress={streetAddress}
-
-                // Step 6 - Metrics
-                tags={tags}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                genderLabel={genderLabel}
-                howHear={howHear}
-                howHearLabel={howHearLabel}
-                howHearOption={howHearOption}
-                howHearOther={howHearOther}
-                joinDate={joinDate}
-                comment={comment}
-
-                // Everything else
-                errors={errors}
-                isLoading={isLoading}
-                onSubmitClick={this.onSubmitClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

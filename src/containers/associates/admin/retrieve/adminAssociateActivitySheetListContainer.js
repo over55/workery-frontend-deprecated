@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
@@ -16,24 +17,39 @@ class AdminAssociateActivitySheetListContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        // The following code will extract our financial data from the local
+        // storage if the financial data was previously saved.
+        const associate = this.props.associateDetail;
+        const isLoading = isEmpty(associate);
+
         const { id } = this.props.match.params;
+
         const parametersMap = new Map();
-        parametersMap.set("associate", id);
+        parametersMap.set("sort_order", "DESC"); // Don't forget these same values must be set in the `defaultSorted` var inside `ClientListComponent`.
+        parametersMap.set("sort_field", "id");
+        parametersMap.set("associateId", id);
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "DESC",
+            sortField: "id",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
 
             // Overaly
-            isLoading: true,
+            isLoading: isLoading,
 
             // Everything else...
             id: id,
+            associate: associate,
         }
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onTableChange = this.onTableChange.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
@@ -48,8 +64,8 @@ class AdminAssociateActivitySheetListContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         this.props.pullActivitySheetList(
-            this.state.page,
-            this.state.sizePerPage,
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessfulSubmissionCallback,
             this.onFailedSubmissionCallback
@@ -78,7 +94,7 @@ class AdminAssociateActivitySheetListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -103,18 +119,32 @@ class AdminAssociateActivitySheetListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortActivitySheet, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
         if (type === "sort") {
-            console.log(type, sortField, sortActivitySheet); // For debugging purposes only.
+            console.log(type, sortField, sortOrder); // For debugging purposes only.
 
-            if (sortActivitySheet === "asc") {
-                parametersMap.set('o', decamelize(sortField));
+            if (sortOrder === "asc") {
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "ASC");
             }
-            if (sortActivitySheet === "desc") {
-                parametersMap.set('o', "-"+decamelize(sortField));
+            if (sortOrder === "desc") {
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "DESC");
+            }
+
+            // DEVELOPERS NOTE:
+            // THIS IS NOT AN ERROR. THE FRONTEND WILL DISPLAY "WESTERN NAME ORDER"
+            // (EX "Tony Stark") BUT THE ORDERING SHOULD BE DOING USING "LEXICAL
+            // NAME ORDER" (EX: "Stark, Tony"). THEREFORE WE NEED TO MANUALLY
+            // OVERRIDE THE SORTFIELD TO THE FOLLOWING.
+            if (sortField === "customerName") {
+                parametersMap.set('sort_field', "customer_lexical_name");
+            }
+            if (sortField === "associateName") {
+                parametersMap.set('sort_field', "associate_lexical_name");
             }
 
             this.setState(
@@ -122,17 +152,29 @@ class AdminAssociateActivitySheetListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullActivitySheetList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullActivitySheetList(
+                        this.state.offset,
+                        this.state.limit,
+                        parametersMap,
+                        this.onSuccessfulSubmissionCallback,
+                        this.onFailedSubmissionCallback
+                    );
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullActivitySheetList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullActivitySheetList(
+                        offset,
+                        limit,
+                        this.state.parametersMap,
+                        this.onSuccessfulSubmissionCallback,
+                        this.onFailedSubmissionCallback
+                    );
                 }
             );
 
@@ -149,12 +191,41 @@ class AdminAssociateActivitySheetListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullActivitySheetList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullActivitySheetList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
             alert("Unsupported feature detected!!"+type);
         }
+    }
+
+    onNextClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullActivitySheetList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onPreviousClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullActivitySheetList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     /**
@@ -163,20 +234,11 @@ class AdminAssociateActivitySheetListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, id } = this.state;
-        const associate = this.props.associateDetail ? this.props.associateDetail : {};
-        const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
         return (
             <AdminAssociateActivitySheetListComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                activitySheetItems={activitySheetItems}
-                onTableChange={this.onTableChange}
-                id={id}
-                associate={associate}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
@@ -196,9 +258,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullActivitySheetList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullActivitySheetList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullActivitySheetList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullActivitySheetList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

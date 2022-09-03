@@ -93,16 +93,13 @@ class ClientFullRetrieveContainer extends Component {
      */
 
     render() {
-        const { id } = this.state;
         const client = this.props.clientDetail ? this.props.clientDetail : [];
         return (
             <ClientFullRetrieveComponent
-                id={id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 client={client}
-                flashMessage={this.props.flashMessage}
-                onClientClick={this.onClientClick}
-                user={this.props.user}
-                onAddJobClick={this.onAddJobClick}
             />
         );
     }

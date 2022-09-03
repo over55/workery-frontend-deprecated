@@ -211,37 +211,11 @@ class AssociateProfileAddressUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            // Step 5
-            country, region, locality, postalCode, streetAddress,
-
-            // Everything else...
-            errors, id, fullName, isLoading,
-        } = this.state;
-
         return (
             <AssociateProfileAddressUpdateComponent
-                // Step 5
-                country={country}
-                region={region}
-                locality={locality}
-                postalCode={postalCode}
-                streetAddress={streetAddress}
-
-                // Everything else...
-                isLoading={isLoading}
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onVehicleTypeMultiChange={this.onVehicleTypeMultiChange}
-                onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-                onTagMultiChange={this.onTagMultiChange}
-                onClick={this.onClick}
-                fullName={fullName}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

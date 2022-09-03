@@ -7,14 +7,16 @@ import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
-// import overlayFactory from 'react-bootstrap-table2-overlay';
 import Moment from 'react-moment';
-// import 'moment-timezone';
 
-import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
+import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAlert";
+import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect";
 import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
-import { BootstrapSingleSelect } from '../../../bootstrap/bootstrapSingleSelect';
+import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
+import { BootstrapRadio } from "../../../bootstrap/bootstrapRadio";
+import { BootstrapCountrySelect } from '../../../bootstrap/bootstrapCountrySelect'
+import { BootstrapRegionSelect } from '../../../bootstrap/bootstrapRegionSelect'
 import { ORGANIZATION_TYPE_OF_CHOICES } from "../../../../constants/api";
 import AwayLogAlertComponent from "../awayLogAlertComponent";
 
@@ -22,8 +24,13 @@ import AwayLogAlertComponent from "../awayLogAlertComponent";
 export default class AdminAssociateUpgradeOperationComponent extends Component {
     render() {
         const {
-            isLoading, id, associate, errors, onClick, onTextChange, organizationName, organizationTypeOf,
+            organizationName, organizationTypeOf, typeOf, country, region, locality, postalCode, streetAddress,
+            errors,
+            onTextChange,
             onSelectChange,
+            onBillingCountryChange,
+            onBillingRegionChange,
+            isLoading, onClick, associate
         } = this.props;
         return (
             <div>
@@ -37,12 +44,12 @@ export default class AdminAssociateUpgradeOperationComponent extends Component {
                             <Link to="/associates"><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}
+                            <i className="fas fa-user"></i>&nbsp;{associate && associate.name}
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.fullName}</h1>
+                <h1><i className="fas fa-user"></i>&nbsp;{associate && associate.name}</h1>
 
                 <AwayLogAlertComponent associate={associate} />
 
@@ -55,16 +62,20 @@ export default class AdminAssociateUpgradeOperationComponent extends Component {
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
-                            <h1>Upgrade Associate</h1>
+                            <h2>
+                               <i className="fas fa-id-card"></i>&nbsp;Contact
+                            </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
+                            <h4><i className="fas fa-building"></i>&nbsp;Company Information</h4>
+
                             <BootstrapInput
-                                inputClassName="form-control"
+                                inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
                                 error={errors.organizationName}
-                                label="Organization Name (*)"
+                                label="Company Name (*)"
                                 onChange={onTextChange}
                                 value={organizationName}
                                 name="organizationName"
@@ -73,20 +84,75 @@ export default class AdminAssociateUpgradeOperationComponent extends Component {
 
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
-                                label="Organization Type (*)"
+                                label="Type (*)"
                                 name="organizationTypeOf"
-                                defaultOptionLabel="Please select a telephone type."
+                                defaultOptionLabel="Please select the type."
                                 options={ORGANIZATION_TYPE_OF_CHOICES}
                                 value={organizationTypeOf}
                                 error={errors.organizationTypeOf}
                                 onSelectChange={onSelectChange}
                             />
 
+                            <BootstrapCountrySelect
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.country}
+                                label="Country (*)"
+                                value={country}
+                                onChange={onBillingCountryChange}
+                                priorityOptions={["CA", "US", "MX"]}
+                                name="country"
+                            />
+                            <BootstrapRegionSelect
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.region}
+                                label="Province / state (*)"
+                                country={country}
+                                value={region}
+                                onChange={onBillingRegionChange}
+                                name="region"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.locality}
+                                label="City (*)"
+                                onChange={onTextChange}
+                                value={locality}
+                                name="locality"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.streetAddress}
+                                label="Street address (*)"
+                                onChange={onTextChange}
+                                value={streetAddress}
+                                name="streetAddress"
+                                type="text"
+                            />
+
+                            <BootstrapInput
+                                inputClassName="form-control"
+                                borderColour="border-primary"
+                                error={errors.postalCode}
+                                label="Postal / zip (*)"
+                                onChange={onTextChange}
+                                value={postalCode}
+                                name="postalCode"
+                                type="text"
+                            />
+
+
                             <div className="form-group">
                                 <button className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to={`/associate/${id}/full`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
+                                <Link to={`/associate/${associate.id}/operations`} className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
                                     <i className="fas fa-arrow-circle-left"></i> Back
                                 </Link>
                             </div>

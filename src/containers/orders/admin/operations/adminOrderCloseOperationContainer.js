@@ -58,7 +58,7 @@ class AdminOrderCloseOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.job = this.state.id;
+        postData.workOrderId = parseInt(this.state.id);
 
         if (this.state.completionDate !== undefined && this.state.completionDate !== null && !isNaN(this.state.completionDate) && this.state.completionDate !== "" ) {
             const completionDateMoment = moment(this.state.completionDate);
@@ -71,6 +71,8 @@ class AdminOrderCloseOperationContainer extends Component {
         if (this.state.wasSuccessfullyFinished === 1 || this.state.wasSuccessfullyFinished === "1") {
             postData.reason = 1;
         }
+
+        postData.wasSuccessfullyFinished = parseInt(this.state.wasSuccessfullyFinished) === 1 ? true : false;
 
         // Finally: Return our new modified data.
         console.log("state |", this.state);

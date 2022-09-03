@@ -14,10 +14,8 @@ class SkillSetCreateComponent extends Component {
     render() {
         const {
             category, subCategory, description, errors, onTextChange, isLoading, onClick,
-            insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange,
+            insuranceRequirements, insuranceRequirementOptions, onInsuranceRequirementMultiChange, isInsuranceRequirementsLoading
         } = this.props;
-        console.log(insuranceRequirements);
-        // console.log(insuranceRequirementOptions)
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -77,6 +75,7 @@ class SkillSetCreateComponent extends Component {
                                 selectedOptions={insuranceRequirements}
                                 error={errors.insuranceRequirements}
                                 onMultiChange={onInsuranceRequirementMultiChange}
+                                isLoading={isInsuranceRequirementsLoading}
                             />
 
                             <BootstrapTextarea

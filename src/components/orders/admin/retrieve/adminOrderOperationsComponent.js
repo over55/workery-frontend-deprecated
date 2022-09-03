@@ -12,7 +12,7 @@ import {
     BUSINESS_TYPE_OF,
     COMMUNITY_CARES_TYPE_OF,
     COMMERCIAL_CUSTOMER_TYPE_OF_ID,
-    EXECUTIVE_GROUP_ID
+    EXECUTIVE_ROLE_ID
 } from '../../../../constants/api';
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 
@@ -22,7 +22,7 @@ export default class AdminOrderOperationsComponent extends Component {
         const { id, order, user, errors, flashMessage, isLoading, onAddJobClick } = this.props;
         // const isActiveState = order.state === "active";
         // const isCompany = order && order.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
-        // const canDeleteClient = user.groupId === EXECUTIVE_GROUP_ID;
+        // const canDeleteClient = user.roleId === EXECUTIVE_ROLE_ID;
 
         let isCancelled = false;
         if (order && isEmpty(order) === false) {

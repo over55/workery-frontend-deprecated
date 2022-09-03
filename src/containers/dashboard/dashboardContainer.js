@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID,
-    FRONTLINE_GROUP_ID,
-    ASSOCIATE_GROUP_ID,
-//     AREA_COORDINATOR_GROUP_ID,
-//     MEMBER_GROUP_ID
+    EXECUTIVE_ROLE_ID,
+    MANAGEMENT_ROLE_ID,
+    FRONTLINE_ROLE_ID,
+    ASSOCIATE_ROLE_ID,
+//     AREA_COORDINATOR_ROLE_ID,
+//     MEMBER_ROLE_ID
 } from '../../constants/api';
 import AdminDashboardComponent from "../../components/dashboard/adminDashboardComponent";
 import AssociateDashboardComponent from "../../components/dashboard/associateDashboardComponent";
@@ -40,8 +40,15 @@ class DashboardContainer extends Component {
      */
 
     componentDidMount() {
-        this.props.pullProfile(this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-        this.props.pullDashboard(getSubdomain(), this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        this.props.pullProfile(
+            this.onSuccessfulSubmissionCallback,
+            this.onFailedSubmissionCallback
+        );
+        this.props.pullDashboard(
+            getSubdomain(),
+            this.onSuccessfulSubmissionCallback,
+            this.onFailedSubmissionCallback
+        );
         window.scrollTo(0, 0);  // Start the page at the top of the page.
     }
 
@@ -59,8 +66,10 @@ class DashboardContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback(profile) {
-        console.log(profile);
+    onSuccessfulSubmissionCallback(dashboardObj) {
+        console.log("DashboardContainer|onSuccessfulSubmissionCallback|dashboardObj:\n", dashboardObj);
+        // console.log("props.dashboard --->", this.props.dashboard);
+        // console.log("dashboardObj    --->", dashboardObj);
     }
 
     onFailedSubmissionCallback(errors) {
@@ -87,8 +96,8 @@ class DashboardContainer extends Component {
      */
 
     render() {
-        const { groupId } = this.props.user;
-        if (groupId === EXECUTIVE_GROUP_ID || groupId === MANAGEMENT_GROUP_ID || groupId === FRONTLINE_GROUP_ID) {
+        const { roleId } = this.props.user;
+        if (roleId === EXECUTIVE_ROLE_ID || roleId === MANAGEMENT_ROLE_ID || roleId === FRONTLINE_ROLE_ID) {
             return (
                 <AdminDashboardComponent
                     user={this.props.user}
@@ -96,7 +105,7 @@ class DashboardContainer extends Component {
                 />
             );
         }
-        if (groupId === ASSOCIATE_GROUP_ID) {
+        if (roleId === ASSOCIATE_ROLE_ID) {
             return (
                 <AssociateDashboardComponent
                     user={this.props.user}

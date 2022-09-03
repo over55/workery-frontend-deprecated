@@ -18,12 +18,16 @@ class OrderTaskListContainer extends Component {
         super(props);
         const { id } = this.props.match.params;
         const parametersMap = new Map();
-        parametersMap.set("job", id);
+        parametersMap.set("orderId", id);
+        parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `AssociateListComponent`.
+        parametersMap.set("sort_field", "id");
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "ASC",
+            sortField: "id",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
@@ -67,7 +71,7 @@ class OrderTaskListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -92,7 +96,7 @@ class OrderTaskListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -111,17 +115,17 @@ class OrderTaskListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullTaskList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTaskList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullTaskList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTaskList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -146,7 +150,7 @@ class OrderTaskListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullTaskList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTaskList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -160,18 +164,11 @@ class OrderTaskListContainer extends Component {
      */
 
     render() {
-        const { id, page, sizePerPage, totalSize, isLoading } = this.state;
         return (
             <AdminOrderTaskListComponent
-                id={id}
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                taskList={this.props.taskList}
-                onTableChange={this.onTableChange}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
-                order={this.props.orderDetail}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
@@ -191,9 +188,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullTaskList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullTaskList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullTaskList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullTaskList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

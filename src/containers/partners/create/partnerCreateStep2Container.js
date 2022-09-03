@@ -4,6 +4,7 @@ import Scroll from 'react-scroll';
 
 import PartnerCreateStep2Component from "../../../components/partners/create/partnerCreateStep2Component";
 import { pullPartnerList } from "../../../actions/partnerActions";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/api";
 
 
 class PartnerCreateStep2Container extends Component {
@@ -21,7 +22,8 @@ class PartnerCreateStep2Container extends Component {
             phone: localStorage.getItem("workery-create-partner-phone"),
             isLoading: true,
             errors: {},
-            page: 1,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
         }
 
         this.onTextChange = this.onTextChange.bind(this);
@@ -56,7 +58,8 @@ class PartnerCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullPartnerList(1, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+        const { offset, limit } = this.state;
+        this.props.pullPartnerList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -77,7 +80,7 @@ class PartnerCreateStep2Container extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -113,27 +116,29 @@ class PartnerCreateStep2Container extends Component {
     }
 
     onNextClick(e) {
-        const page = this.state.page + 1;
+        let { offset, limit } = this.state;
+        offset = offset + 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullPartnerList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullPartnerList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
 
     onPreviousClick(e) {
-        const page = this.state.page - 1;
+        let { offset, limit } = this.state;
+        offset = offset + 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullPartnerList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullPartnerList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
@@ -144,23 +149,17 @@ class PartnerCreateStep2Container extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
         const partners = (this.props.partnerList && this.props.partnerList.results) ? this.props.partnerList.results : [];
         const hasNext = this.props.partnerList.next !== null;
         const hasPrevious = this.props.partnerList.previous !== null;
         return (
             <PartnerCreateStep2Component
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
+                {...this}
+                {...this.state}
+                {...this.props}
                 partners={partners}
-                isLoading={isLoading}
-                errors={errors}
-                onTextChange={this.onTextChange}
                 hasNext={hasNext}
-                onNextClick={this.onNextClick}
                 hasPrevious={hasPrevious}
-                onPreviousClick={this.onPreviousClick}
             />
         );
     }
@@ -175,9 +174,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullPartnerList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullPartnerList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullPartnerList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullPartnerList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

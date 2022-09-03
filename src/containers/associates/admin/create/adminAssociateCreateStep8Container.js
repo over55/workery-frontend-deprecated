@@ -35,10 +35,10 @@ class AdminAssociateCreateStep8Container extends Component {
             organizationTypeOf: localStorageGetIntegerItem("workery-create-associate-organizationTypeOf"),
             givenName: localStorage.getItem("workery-create-associate-givenName"),
             lastName: localStorage.getItem("workery-create-associate-lastName"),
-            primaryPhone: localStorage.getItem("workery-create-associate-primaryPhone"),
-            primaryPhoneTypeOf: 1,
-            secondaryPhone: localStorage.getItem("workery-create-associate-secondaryPhone"),
-            secondaryPhoneTypeOf: 1,
+            telephone: localStorage.getItem("workery-create-associate-telephone"),
+            telephoneTypeOf: 1,
+            otherTelephone: localStorage.getItem("workery-create-associate-otherTelephone"),
+            otherTelephoneTypeOf: 1,
             email: localStorage.getItem("workery-create-associate-email"),
             isOkToEmail: localStorageGetIntegerItem("workery-create-associate-isOkToEmail"),
             isOkToEmailLabel: localStorage.getItem("workery-create-associate-isOkToEmail-label"),
@@ -67,7 +67,8 @@ class AdminAssociateCreateStep8Container extends Component {
             taxId: localStorage.getItem("workery-create-associate-taxId"),
             driversLicenseClass: localStorage.getItem("workery-create-associate-driversLicenseClass"),
             vehicleTypes: localStorageGetArrayItem("workery-create-associate-vehicleTypes"),
-            serviceFee: localStorageGetIntegerItem("workery-create-associate-serviceFee"),
+            serviceFeeId: localStorageGetIntegerItem("workery-create-associate-serviceFeeId"),
+            serviceFeeIdLabel: localStorage.getItem("workery-create-associate-serviceFeeIdLabel"),
             emergencyContactName: localStorage.getItem("workery-create-associate-emergencyContactName"),
             emergencyContactRelationship: localStorage.getItem("workery-create-associate-emergencyContactRelationship"),
             emergencyContactTelephone: localStorage.getItem("workery-create-associate-emergencyContactTelephone"),
@@ -79,8 +80,8 @@ class AdminAssociateCreateStep8Container extends Component {
             dateOfBirth: localStorageGetDateItem("workery-create-associate-dateOfBirth"),
             gender: localStorage.getItem("workery-create-associate-gender"),
             genderLabel: localStorage.getItem("workery-create-associate-gender-label"),
-            howHear: localStorageGetIntegerItem("workery-create-associate-howHear"),
-            howHearLabel: localStorage.getItem("workery-create-associate-howHearLabel"),
+            howHearId: localStorageGetIntegerItem("workery-create-associate-howHearId"),
+            howHearIdLabel: localStorage.getItem("workery-create-associate-howHearIdLabel"),
             howHearOption: localStorageGetObjectItem('workery-create-associate-howHearOption'),
             howHearOther: localStorage.getItem("workery-create-associate-howHearOther"),
             joinDate: joinDate,
@@ -208,15 +209,15 @@ class AdminAssociateCreateStep8Container extends Component {
         }
 
         // () Other telephone type of
-        let secondaryPhoneTypeOf = this.state.secondaryPhoneTypeOf;
-        if (secondaryPhoneTypeOf === undefined || secondaryPhoneTypeOf === null || isNaN(secondaryPhoneTypeOf) ) {
-            secondaryPhoneTypeOf = 1; // Choose default.
+        let otherTelephoneTypeOf = this.state.otherTelephoneTypeOf;
+        if (otherTelephoneTypeOf === undefined || otherTelephoneTypeOf === null || isNaN(otherTelephoneTypeOf) ) {
+            otherTelephoneTypeOf = 1; // Choose default.
         }
-        postData.otherTelephoneTypeOf = secondaryPhoneTypeOf;
+        postData.otherTelephoneTypeOf = otherTelephoneTypeOf;
 
         // (8) Telephone: This field is required.
-        postData.telephone = this.state.primaryPhone;
-        postData.telephoneTypeOf = this.state.primaryPhoneTypeOf;
+        postData.telephone = this.state.telephone;
+        postData.telephoneTypeOf = this.state.telephoneTypeOf;
 
         // (9) Address Country: This field is required.
         postData.addressCountry = this.state.country;
@@ -227,14 +228,18 @@ class AdminAssociateCreateStep8Container extends Component {
         // (11) Address Region: This field is required.
         postData.addressRegion = this.state.region
 
-        // () First Name and Last Name if biz
+        // (12) First Name and Last Name if biz
         if (this.state.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
             postData.givenName = this.state.givenName;
             postData.givenName = this.state.givenName;
             postData.lastName = this.state.lastName;
         }
 
-        // Handle the `isActive` field.
+        // (13) Boolean handler.
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
+
+        // (14) Handle the `isActive` field.
         if (this.state.isActive === IS_INACTIVE_TYPE_OF) {
             postData.isActive = false;
         }
@@ -279,7 +284,8 @@ class AdminAssociateCreateStep8Container extends Component {
         e.preventDefault();
 
         const { errors, isValid } = validateStep8CreateInput(this.state);
-        // console.log(errors, isValid); // For debugging purposes only.
+
+        console.log(errors, isValid); // For debugging purposes only.
 
         if (isValid) {
             this.setState(
@@ -335,132 +341,11 @@ class AdminAssociateCreateStep8Container extends Component {
      */
 
     render() {
-        const {
-            // Step 3
-            typeOf,
-            typeOfLabel,
-
-            // Step 4 - Residential & Business
-            givenName,
-            lastName,
-            primaryPhone,
-            secondaryPhone,
-            email,
-            isOkToEmail,
-            isOkToEmailLabel,
-            isOkToText,
-            isOkToTextLabel,
-            organizationName,
-
-            // Step 5 - Address
-            country,
-            region,
-            locality,
-            postalCode,
-            streetAddress,
-
-            // Step 6 - Account
-            skillSets,
-            insuranceRequirements,
-            description,
-            hourlySalaryDesired,
-            limitSpecial,
-            duesDate,
-            commercialInsuranceExpiryDate,
-            autoInsuranceExpiryDate,
-            wsibNumber,
-            wsibInsuranceDate,
-            policeCheck,
-            taxId,
-            driversLicenseClass,
-            vehicleTypes,
-            emergencyContactName,
-            emergencyContactRelationship,
-            emergencyContactTelephone,
-            emergencyContactAlternativeTelephone,
-            isActive,
-
-            // Step 7 - Metrics
-            tags,
-            dateOfBirth,
-            gender,
-            genderLabel,
-            howHear,
-            howHearLabel,
-            howHearOption,
-            howHearOther,
-            joinDate,
-            comment,
-
-            // Everything else
-            errors,
-            isLoading,
-        } = this.state;
-
         return (
             <AdminAssociateCreateStep8Component
-                // Step 3
-                typeOf={typeOf}
-                typeOfLabel={typeOfLabel}
-
-                // Step 4 - Residential & Business
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                secondaryPhone={secondaryPhone}
-                email={email}
-                isOkToEmail={isOkToEmail}
-                isOkToEmailLabel={isOkToEmailLabel}
-                isOkToText={isOkToText}
-                isOkToTextLabel={isOkToTextLabel}
-                organizationName={organizationName}
-                givenName={givenName}
-                lastName={lastName}
-
-                // Step 5 - Address
-                country={country}
-                region={region}
-                locality={locality}
-                postalCode={postalCode}
-                streetAddress={streetAddress}
-
-                // Step 6 - Account
-                skillSets={skillSets}
-                insuranceRequirements={insuranceRequirements}
-                description={description}
-                hourlySalaryDesired={hourlySalaryDesired}
-                limitSpecial={limitSpecial}
-                duesDate={duesDate}
-                commercialInsuranceExpiryDate={commercialInsuranceExpiryDate}
-                autoInsuranceExpiryDate={autoInsuranceExpiryDate}
-                wsibNumber={wsibNumber}
-                wsibInsuranceDate={wsibInsuranceDate}
-                policeCheck={policeCheck}
-                taxId={taxId}
-                driversLicenseClass={driversLicenseClass}
-                vehicleTypes={vehicleTypes}
-                emergencyContactName={emergencyContactName}
-                emergencyContactRelationship={emergencyContactRelationship}
-                emergencyContactTelephone={emergencyContactTelephone}
-                emergencyContactAlternativeTelephone={emergencyContactAlternativeTelephone}
-                isActive={isActive}
-
-                // Step 7 - Metrics
-                tags={tags}
-                dateOfBirth={dateOfBirth}
-                gender={gender}
-                genderLabel={genderLabel}
-                howHear={howHear}
-                howHearLabel={howHearLabel}
-                howHearOption={howHearOption}
-                howHearOther={howHearOther}
-                joinDate={joinDate}
-                comment={comment}
-
-                // Everything else
-                errors={errors}
-                isLoading={isLoading}
-                onSubmitClick={this.onSubmitClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

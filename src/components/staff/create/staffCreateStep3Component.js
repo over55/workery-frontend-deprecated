@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-import { FRONTLINE_GROUP_ID, MANAGEMENT_GROUP_ID } from "../../../constants/api";
+import { FRONTLINE_ROLE_ID, MANAGEMENT_ROLE_ID } from "../../../constants/api";
 
 
 export default class StaffCreateStep3Component extends Component {
@@ -73,7 +73,7 @@ export default class StaffCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Frontline Staff</h3>
                                 <p className="card-text">Add a residential staff</p>
-                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, FRONTLINE_GROUP_ID, "Frontline Staff")} }>
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, FRONTLINE_ROLE_ID, "Frontline Staff")} }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                             </div>
@@ -88,7 +88,7 @@ export default class StaffCreateStep3Component extends Component {
                             <div className="card-body">
                                 <h3 className="card-title">Management</h3>
                                 <p className="card-text">Add a business staff</p>
-                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, MANAGEMENT_GROUP_ID, "Management Staff")} }>
+                                <button className="btn btn-primary btn-lg" onClick={ (event)=>{ onClick(event, MANAGEMENT_ROLE_ID, "Management Staff")} }>
                                     Select&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                 </button>
                             </div>

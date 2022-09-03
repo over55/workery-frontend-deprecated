@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { camelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 import axios from 'axios';
 
 import PrivacyComponent from "../../components/general/privacyComponent";
@@ -33,18 +32,16 @@ class PrivacyContainer extends Component {
             // baseURL: getAPIBaseURL(),
             headers: {
                 // 'Authorization': "Bearer " + accessToken.token,
-                'Content-Type': 'application/msgpack;',
-                'Accept': 'application/msgpack',
+                'Content-Type': 'application/json;',
+                'Accept': 'application/json',
             },
-            responseType: 'arraybuffer'
+            // responseType: 'arraybuffer'
         })
 
         const aURL = process.env.REACT_APP_API_HOST+'/version';
 
         customAxios.get(aURL).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-            let data = camelizeKeys(responseData);
+            let data = camelizeKeys(successResponse.data);
 
             // console.log("postLogin | successResponse:", data); // For debugging purposes.
 
@@ -55,12 +52,7 @@ class PrivacyContainer extends Component {
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
-
-                let errors = camelizeKeys(responseData);
+                let errors = camelizeKeys(exception.response.data);
                 this.onFailedSubmissionCallback(errors);
             }
 
@@ -77,23 +69,20 @@ class PrivacyContainer extends Component {
             // baseURL: getAPIBaseURL(),
             headers: {
                 // 'Authorization': "Bearer " + accessToken.token,
-                'Content-Type': 'application/msgpack;',
-                'Accept': 'application/msgpack',
+                'Content-Type': 'application/json;',
+                'Accept': 'application/json',
             },
-            responseType: 'arraybuffer'
+            // responseType: 'arraybuffer'
         })
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode({
+        var buffer = {
             'name': "Frank Herbert"
-        });
+        };
 
         const aURL = process.env.REACT_APP_API_HOST+'/hello';
 
         customAxios.post(aURL, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-            let data = camelizeKeys(responseData);
+            let data = camelizeKeys(successResponse.data);
 
             console.log("SUCC:", data); // For debugging purposes.
 
@@ -105,14 +94,7 @@ class PrivacyContainer extends Component {
         }).catch( (exception) => {
             console.log(exception);
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
-
-                console.log(">>", responseData); // For debugging purposes.
-
-                let errors = camelizeKeys(responseData);
+                let errors = camelizeKeys(exception.response.data);
                 this.onFailedSubmissionCallback(errors);
             }
 

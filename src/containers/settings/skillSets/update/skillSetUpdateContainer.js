@@ -27,6 +27,7 @@ class SkillSetUpdateContainer extends Component {
             category: "",
             subCategory: "",
             insuranceRequirements: [],
+            isInsuranceRequirementsLoading: true,
             description: "",
             errors: {},
             isLoading: false
@@ -39,18 +40,25 @@ class SkillSetUpdateContainer extends Component {
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onRetrieveCallback = this.onRetrieveCallback.bind(this);
+        this.onFetchedInsuranceRequirementsCallback = this.onFetchedInsuranceRequirementsCallback.bind(this);
     }
 
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // (3) insuranceRequirements - We need to only return our `id` values.
-        let idInsuranceRequirements = [];
-        for (let i = 0; i < this.state.insuranceRequirements.length; i++) {
-            let insurance = this.state.insuranceRequirements[i];
-            idInsuranceRequirements.push(insurance.value);
+        // // (3) insuranceRequirements - We need to only return our `id` values.
+        // let idInsuranceRequirements = [];
+        // for (let i = 0; i < this.state.insuranceRequirements.length; i++) {
+        //     let insurance = this.state.insuranceRequirements[i];
+        //     idInsuranceRequirements.push(insurance.value);
+        // }
+        // postData.insuranceRequirements = idInsuranceRequirements;
+
+        let iiPKs = [];
+        for (let ii of this.state.insuranceRequirements) {
+            iiPKs.push(ii.insuranceRequirementId);
         }
-        postData.insuranceRequirements = idInsuranceRequirements;
+        postData.insuranceRequirements = iiPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -65,8 +73,9 @@ class SkillSetUpdateContainer extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullInsuranceRequirementList(1, 1000);
+        // DEVELOPERS NOTE: Fetch our list.
+        const parametersMap = new Map()
+        this.props.pullInsuranceRequirementList(0, 1000, parametersMap, this.onFetchedInsuranceRequirementsCallback);
         this.props.pullSkillSetDetail(this.state.id, this.onRetrieveCallback)
     }
 
@@ -107,11 +116,15 @@ class SkillSetUpdateContainer extends Component {
         this.setState({
             category: detail.category,
             subCategory: detail.subCategory,
-            insuranceRequirements: getPickedInsuranceRequirementReactSelectOptions(detail.insuranceRequirements, this.props.insuranceRequirementList),
+            insuranceRequirements: detail.insuranceRequirements,
             description: detail.description,
             errors: {},
             isLoading: false
         });
+    }
+
+    onFetchedInsuranceRequirementsCallback(response) {
+        this.setState({ isInsuranceRequirementsLoading: false, });
     }
 
     /**
@@ -129,10 +142,18 @@ class SkillSetUpdateContainer extends Component {
         // Extract the select options from the parameter.
         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            insuranceRequirements: selectedOptions,
-        });
+        // We need to only return our `id` values, therefore strip out the
+        // `react-select` options format of the data and convert it into an
+        // array of integers to hold the primary keys of the `Tag` items selected.
+        let pickedInsuranceRequirements = [];
+        if (selectedOptions !== null && selectedOptions !== undefined) {
+            for (let i = 0; i < selectedOptions.length; i++) {
+                let pickedOption = selectedOptions[i];
+                pickedOption.insuranceRequirementId = pickedOption.value;
+                pickedInsuranceRequirements.push(pickedOption);
+            }
+        }
+        this.setState({ insuranceRequirements: pickedInsuranceRequirements, });
     }
 
     onClick(e) {
@@ -167,19 +188,22 @@ class SkillSetUpdateContainer extends Component {
      */
 
     render() {
-        const { category, subCategory, insuranceRequirements, description, errors, isLoading } = this.state;
+        const { insuranceRequirements } = this.state;
+        const insuranceRequirementOptions = getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList);
+        const transcodedInsuranceRequirements = getPickedInsuranceRequirementReactSelectOptions(insuranceRequirements, this.props.insuranceRequirementList);
+
+        console.log("insuranceRequirements", insuranceRequirements);
+        console.log("insuranceRequirementOptions", insuranceRequirementOptions);
+        console.log("transcodedInsuranceRequirements", transcodedInsuranceRequirements);
+
         return (
             <SkillSetUpdateComponent
-                category={category}
-                subCategory={subCategory}
-                description={description}
-                insuranceRequirements={insuranceRequirements}
+                {...this}
+                {...this.state}
+                {...this.props}
+                insuranceRequirements={transcodedInsuranceRequirements}
                 insuranceRequirementOptions={getInsuranceRequirementReactSelectOptions(this.props.insuranceRequirementList)}
                 onInsuranceRequirementMultiChange={this.onInsuranceRequirementMultiChange}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onClick={this.onClick}
-                isLoading={isLoading}
             />
         );
     }

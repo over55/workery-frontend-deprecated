@@ -25,6 +25,7 @@ class AwayLogDeleteContainer extends Component {
 
         this.state = {
             id: parseInt(id),
+            associateId: parseInt(id),
             associate: "",
             associateOption: "",
             startDate: "",
@@ -78,7 +79,7 @@ class AwayLogDeleteContainer extends Component {
         // Get a filtered list of ALL the ACTIVE associates.
         const parametersMap = new Map();
         parametersMap.set('state', 1); // `1` is `true` in API.
-        this.props.pullAssociateList(1, 10000, parametersMap);
+        this.props.pullAssociateList(0, 10000, parametersMap);
 
         // Get our detail.
         this.props.pullAwayLogDetail(this.state.id, this.onAwayLogFetchCallback);
@@ -99,13 +100,8 @@ class AwayLogDeleteContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        if (response !== null && response !== undefined) {
-            this.props.setFlashMessage("success", "Away log has been successfully deleted.");
-            this.props.history.push("/settings/away-logs");
-        } else {
-            console.log("onSuccessCallback | ERROR:",response);
-        }
-
+        this.props.setFlashMessage("success", "Away log has been successfully deleted.");
+        this.props.history.push("/settings/away-logs");
     }
 
     onFailureCallback(errors) {
@@ -214,25 +210,13 @@ class AwayLogDeleteContainer extends Component {
      */
 
     render() {
-        const { associate, associateOption, startDate, reason, reasonOther, untilFurtherNotice, untilDate, errors } = this.state;
         const associateOptions = getAssociateReactSelectOptions(this.props.associateList);
         return (
             <AwayLogDeleteComponent
-                associate={associate}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associateOptions={associateOptions}
-                startDate={startDate}
-                onStartDateChange={this.onStartDateChange}
-                reason={reason}
-                reasonOther={reasonOther}
-                untilFurtherNotice={untilFurtherNotice}
-                untilDate={untilDate}
-                onUntilDateChange={this.onUntilDateChange}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onRadioChange={this.onRadioChange}
-                onSelectChange={this.onSelectChange}
-                onClick={this.onClick}
-                onBack={this.onBack}
             />
         );
     }

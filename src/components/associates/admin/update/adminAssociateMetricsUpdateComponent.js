@@ -29,14 +29,14 @@ class AdminAssociateMetricsUpdateComponent extends Component {
             typeOf, givenName, lastName,
 
             // Step 7
-            isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOther, joinDate, description,
+            isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHearId, howHearOptions, howHearOther, joinDate, description,
 
             // Everything else...
-            id, errors, onTextChange, onRadioChange, isLoading, onClick, fullName,
+            id, errors, onTextChange, onRadioChange, isLoading, onClick, name,
             onSelectChange, onTagMultiChange, onJoinDateChange,
             onDateOfBirthChange, associate
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 'Other';
+        const isOtherHowDidYouHearSelected = howHearId === 'Other';
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -49,7 +49,7 @@ class AdminAssociateMetricsUpdateComponent extends Component {
                             <Link to={`/associates`}><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/associate/${id}/full`}><i className="fas fa-user"></i>&nbsp;{fullName}</Link>
+                            <Link to={`/associate/${id}/full`}><i className="fas fa-user"></i>&nbsp;{name}</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-edit"></i>&nbsp;Edit Associate (Metrics)
@@ -105,11 +105,11 @@ class AdminAssociateMetricsUpdateComponent extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="How did you hear about us? (*)"
-                                name="howHear"
+                                name="howHearId"
                                 defaultOptionLabel="Please select how you heard about us."
                                 options={howHearOptions}
-                                value={howHear}
-                                error={errors.howHear}
+                                value={howHearId}
+                                error={errors.howHearId}
                                 onSelectChange={onSelectChange}
                                 isLoading={isHowHearLoading}
                             />

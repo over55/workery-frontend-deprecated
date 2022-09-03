@@ -15,11 +15,15 @@ import { COMMERCIAL_ASSOCIATE_TYPE_OF_ID, GENDER_RADIO_CHOICES, WILLING_TO_VOLUN
 export default class AdminAssociateCreateStep7Component extends Component {
     render() {
         const {
-            typeOf, isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHear, howHearOptions, howHearOther, joinDate,
+            typeOf, isTagsLoading, tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHearId, howHearOptions, howHearOther, howHearIdLabel, joinDate,
             onRadioChange,  onMultiChange, onJoinDateChange, comment,
             errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHear === 'Other';
+        
+        let isOtherHowDidYouHearSelected = false;
+        if (howHearIdLabel !== undefined && howHearIdLabel !== null && howHearIdLabel !== "") {
+            isOtherHowDidYouHearSelected = howHearIdLabel.includes("Other") === true
+        }
 
         const isBizTypeOf = typeOf === COMMERCIAL_ASSOCIATE_TYPE_OF_ID || typeOf === toString(COMMERCIAL_ASSOCIATE_TYPE_OF_ID);
 
@@ -133,11 +137,11 @@ export default class AdminAssociateCreateStep7Component extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="How did you hear about us? (*)"
-                                name="howHear"
+                                name="howHearId"
                                 defaultOptionLabel="Please select how you heard about us."
                                 options={howHearOptions}
-                                value={howHear}
-                                error={errors.howHear}
+                                value={howHearId}
+                                error={errors.howHearId}
                                 onSelectChange={onSelectChange}
                                 isLoading={isHowHearLoading}
                             />

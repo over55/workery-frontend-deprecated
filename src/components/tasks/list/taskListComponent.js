@@ -1,18 +1,23 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import BootstrapTable from 'react-bootstrap-table-next';
 import Moment from 'react-moment';
 // import 'moment-timezone';
+import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+// import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+} from '../../../constants/api';
 
 
 const customTotal = (from, to, size) => (
@@ -24,22 +29,14 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             tasks,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
-
-        // DEVELOPERS NOTE:
-        // Where did `2` and `3` values come from? These are the `true` and
-        // `false` values specified by `django-rest-framework` in the API.
-        const isClosedSelectOptions = {
-            3: 'Pending',
-            2: 'Closed',
-        };
 
         const typeOfSelectOptions = {
             0: 'All',
@@ -64,12 +61,10 @@ class RemoteListComponent extends Component {
             dataField: 'typeOf',
             text: 'Task',
             sort: true,
+            formatter: cell => typeOfSelectOptions[cell],
             filter: selectFilter({
-                options: typeOfSelectOptions,
-                defaultValue: 0,
-                withoutEmptyOption: true
+                options: typeOfSelectOptions
             }),
-            formatter: typeOfFormatter,
         },{
             dataField: 'customerName',
             text: 'Client',
@@ -80,55 +75,29 @@ class RemoteListComponent extends Component {
             text: 'Associate',
             sort: true,
             formatter: associateFormatter,
-        },
-        // {
-        //     dataField: 'isClosed',
-        //     text: 'Status',
-        //     sort: false,
-        //     filter: selectFilter({
-        //         options: isClosedSelectOptions,
-        //         defaultValue: 3, // Note: `3` is `pending`.
-        //         withoutEmptyOption: true
-        //     }),
-        //     formatter: statusFormatter
-        // },
-        {
+        },{
             dataField: 'id',
-            text: '',
+            text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
         }];
 
         const defaultSorted = [{
             dataField: 'dueDate',
-            order: 'asc'
+            order: 'desc'
         }];
 
-
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     page: offset,
+        //     sizePerPage: limit,
+        //     totalSize: totalSize,
+        //     showTotal: true,
+        //
+        //     // paginationTotalRenderer: customTotal,
+        //     withFirstAndLast: false,
+        //     nextPageText: "Next",
+        //     prePageText: "Previous",
+        // };
 
         return (
             <BootstrapTable
@@ -142,7 +111,7 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no tasks at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -153,9 +122,6 @@ class RemoteListComponent extends Component {
 
 
 function iconFormatter(cell, row){
-    if (row && row.associateAwayLog !== undefined && row.associateAwayLog !== null) {
-        return <i className="fas fa-sun"></i>;
-    }
     switch(row.orderTypeOf) {
         case 2:
             return <i className="fas fa-building"></i>;
@@ -169,38 +135,31 @@ function iconFormatter(cell, row){
     }
 }
 
-
-function typeOfFormatter(cell, row){
-    return row.title
-}
-
-
 function dueDateFormatter(cell, row){
     return row.dueDate ? <Moment format="MM/DD/YYYY">{row.dueDate}</Moment> : "-";
 }
 
-
 function statusFormatter(cell, row){
-    switch(row.isClosed) {
-        case false:
-            return <i className="fas fa-clock"></i>;
+    switch(row.state) {
+        case "active":
+            return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
-        case true:
-            return <i className="fas fa-check-circle"></i>;
+        case "inactive":
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
-        return <i className="fas fa-question-circle"></i>;
+        return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
             break;
     }
 }
 
 
 function customerFormatter(cell, row){
-    if (row.customer === "" || row.customer === null || row.customer === "null" || row.customer === undefined) {
+    if (row.customerId === "" || row.customerId === null || row.customerId === "null" || row.customerId === undefined) {
         return "-";
     }
     return (
-        <a target="_blank" href={`/client/${row.customer}`}>
+        <a target="_blank" href={`/client/${row.customerId}`}>
             <strong>
                 {row.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
             </strong>
@@ -210,11 +169,11 @@ function customerFormatter(cell, row){
 
 
 function associateFormatter(cell, row){
-    if (row.associate === "" || row.associate === null || row.associate === "null" || row.associate === undefined) {
+    if (row.associateId === "" || row.associateId === null || row.associateId === "null" || row.associateId === undefined) {
         return "-";
     }
     return (
-        <a target="_blank" href={`/associate/${row.associate}`}>
+        <a target="_blank" href={`/associate/${row.associateId}`}>
             <strong>
                 {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
             </strong>
@@ -222,25 +181,7 @@ function associateFormatter(cell, row){
     )
 }
 
-
-function financialExternalLinkFormatter(cell, row){
-    return (
-        <a target="_blank" href={`/financial/${row.id}`}>
-            View&nbsp;<i className="fas fa-external-link-alt"></i>
-        </a>
-    )
-}
-
-
 function detailLinkFormatter(cell, row){
-    if (row.typeOf === 3) { // Add code to prevent the deprecated task from being accessible.
-        return (
-            <div>
-                <i className="fas fa-lock"></i>&nbsp;Locked
-            </div>
-        );
-    }
-    if (row.isClosed === true) { return "Closed"; }
     return (
         <Link to={`/task/${row.typeOf}/${row.id}/step-1`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
@@ -253,16 +194,19 @@ class TaskListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             taskList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
-        const tasks = (taskList && taskList.results) ? taskList.results : [];
+        let tasks = [];
+        if (taskList && isEmpty(taskList)===false) {
+            tasks = taskList.results ? taskList.results : [];
+        }
 
         return (
             <div>
@@ -273,19 +217,18 @@ class TaskListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-tasks"></i>&nbsp;Tasks
+                            <i className="fas fa-user-circle"></i>&nbsp;Tasks
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-tasks"></i>&nbsp;Tasks</h1>
+                <h1><i className="fas fa-user-circle"></i>&nbsp;Tasks</h1>
 
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
-                           {/*
                             <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-pink">
                                     <Link to="/tasks/add/step-1" className="d-block link-ndecor" title="Tasks">
@@ -295,8 +238,7 @@ class TaskListComponent extends Component {
                                 <h4>Add</h4>
                                 <div className="text-muted">Add Tasks</div>
                             </div>
-                            */}
-                            <div className="col-sm-12 placeholder">
+                            <div className="col-sm-6 placeholder">
                                 <div className="rounded-circle mx-auto mt-4 mb-4 circle-200 bg-dgreen">
                                     <Link to="/tasks/search" className="d-block link-ndecor" title="Search">
                                         <span className="r-circle"><i className="fas fa-search fa-3x"></i></span>
@@ -315,13 +257,23 @@ class TaskListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             tasks={tasks}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
+
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>

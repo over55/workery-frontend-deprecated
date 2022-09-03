@@ -28,7 +28,7 @@ class AdminAssociateCreateStep6Component extends Component {
             wsibInsuranceDate, onWsibInsuranceDateChange,
             policeCheck, onPoliceCheckDateChange,
             isVehicleTypesLoading, isInsuranceRequirementsLoading, isSkillsetLoading,
-            isServiceFeeLoading, serviceFee, serviceFeeOptions
+            isServiceFeeLoading, serviceFeeId, serviceFeeOptions
         } = this.props;
 
         return (
@@ -256,11 +256,11 @@ class AdminAssociateCreateStep6Component extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="Service Fee (*)"
-                                name="serviceFee"
+                                name="serviceFeeId"
                                 defaultOptionLabel="Please select the service fee."
                                 options={serviceFeeOptions}
-                                value={serviceFee}
-                                error={errors.serviceFee}
+                                value={serviceFeeId}
+                                error={errors.serviceFeeId}
                                 onSelectChange={onSelectChange}
                                 isLoading={isServiceFeeLoading}
                             />

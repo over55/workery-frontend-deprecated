@@ -1,10 +1,9 @@
 import axios from 'axios';
 import store from '../store';
 import { camelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 
 import { LOGOUT_REQUEST, LOGOUT_FAILURE, LOGOUT_SUCCESS } from "../constants/actionTypes"
-import { WORKERY_LOGOUT_API_ENDPOINT } from "../constants/api"
+import { WORKERY_LOGOUT_API_URL } from "../constants/api"
 import { getAPIBaseURL } from '../helpers/urlUtility';
 
 
@@ -65,7 +64,7 @@ export function postLogout(user, onSuccessCallback, onFailureCallback) {
             token: user.token
         };
 
-        axios.post(WORKERY_LOGOUT_API_ENDPOINT, cred, config).then( (successResponse) => {
+        axios.post(WORKERY_LOGOUT_API_URL, cred, config).then( (successResponse) => {
             const responseData = successResponse.data;
 
             // Update the global state of the application to store our

@@ -15,7 +15,7 @@ class  AdminOrderCreateStep2Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: localStorage.getItem("workery-create-order-firstName"),
+            givenName: localStorage.getItem("workery-create-order-givenName"),
             lastName: localStorage.getItem("workery-create-order-lastName"),
             email: localStorage.getItem("workery-create-order-email"),
             phone: localStorage.getItem("workery-create-order-phone"),
@@ -34,8 +34,8 @@ class  AdminOrderCreateStep2Container extends Component {
 
     getParametersMapFromState() {
         const parametersMap = new Map();
-        if (this.state.firstName !== undefined && this.state.firstName !== null) {
-            parametersMap.set('givenName', this.state.firstName);
+        if (this.state.givenName !== undefined && this.state.givenName !== null) {
+            parametersMap.set('givenName', this.state.givenName);
         }
         if (this.state.lastName !== undefined && this.state.lastName !== null) {
             parametersMap.set('lastName', this.state.lastName);
@@ -56,7 +56,7 @@ class  AdminOrderCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullClientList(1, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullClientList(0, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -150,23 +150,13 @@ class  AdminOrderCreateStep2Container extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
         const clients = (this.props.clientList && this.props.clientList.results) ? this.props.clientList.results : [];
-        const hasNext = this.props.clientList.next !== null;
-        const hasPrevious = this.props.clientList.previous !== null;
         return (
             < AdminOrderCreateStep2Component
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
+                {...this}
+                {...this.state}
+                {...this.props}
                 clients={clients}
-                isLoading={isLoading}
-                errors={errors}
-                onClientClick={this.onClientClick}
-                hasNext={hasNext}
-                onNextClick={this.onNextClick}
-                hasPrevious={hasPrevious}
-                onPreviousClick={this.onPreviousClick}
             />
         );
     }

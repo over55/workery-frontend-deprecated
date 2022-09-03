@@ -45,13 +45,13 @@ class AssignAssociateTaskStep4Container extends Component {
      *  items under different key names to support our API web-service's API.
      */
     getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.task_item = this.state.id;
-        postData.state = this.state.status;
-        postData.associate = this.state.associateId;
-
-        // Finally: Return our new modified data.
+        const postData = {
+            taskItemId: parseInt(this.state.id),
+            state: parseInt(this.state.status),
+            status: this.state.status,
+            associateId: parseInt(this.state.associateId),
+            comment: this.state.comment,
+        };
         console.log("getPostData |", postData);
         return postData;
     }
@@ -83,7 +83,7 @@ class AssignAssociateTaskStep4Container extends Component {
     onSuccessCallback(profile) {
         localStorageRemoveItemsContaining("workery-task-1-");
         this.props.setFlashMessage("success", "Assign associate task has been successfully closed.");
-        this.props.history.push("/order/"+this.props.taskDetail.job);
+        this.props.history.push("/order/"+this.props.taskDetail.orderId);
     }
 
     onFailureCallback(errors) {

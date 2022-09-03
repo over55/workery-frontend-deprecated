@@ -14,6 +14,7 @@ import { WORK_ORDER_COMPLETED_AND_PAID_STATE } from "../../../../constants/api";
 export default class AdminFinancialRetrieveComponent extends Component {
     render() {
         const { id, order, errors, flashMessage, isLoading, } = this.props;
+        const { customer, associate, invoiceServiceFee } = order;
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -79,8 +80,8 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Client</th>
                                     <td>
-                                        <Link to={`/client/${order && order.customer}`} target="_blank">
-                                            {order && order.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/client/${customer && customer.id}`} target="_blank">
+                                            {customer && customer.name}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
@@ -123,8 +124,8 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Associate</th>
                                     <td>
-                                        <Link to={`/associate/${order && order.associate}`} target="_blank">
-                                            {order && order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/associate/${associate && associate.id}`} target="_blank">
+                                            {associate && associate.name}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
@@ -243,8 +244,8 @@ export default class AdminFinancialRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Service Fee Rate</th>
                                     <td>
-                                        {order && order.prettyInvoiceServiceFee
-                                            ?order.prettyInvoiceServiceFee
+                                        {invoiceServiceFee && invoiceServiceFee.percentage
+                                            ? <>{invoiceServiceFee.percentage}&nbsp;%</>
                                             :"-"
                                         }
                                     </td>

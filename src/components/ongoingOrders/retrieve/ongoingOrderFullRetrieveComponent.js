@@ -83,7 +83,7 @@ export default class OngoingOrderFullRetrieveComponent extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Status</th>
-                                    <td>{ongoingOrder.prettyStatus}</td>
+                                    <td>{ongoingOrder.status}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Job Type</th>
@@ -92,40 +92,40 @@ export default class OngoingOrderFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Client Full Name</th>
                                     <td>
-                                        <Link to={`/client/${ongoingOrder.customer}`} target="_blank">
-                                            {ongoingOrder.customerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                        <Link to={`/client/${ongoingOrder.customerId}`} target="_blank">
+                                            {ongoingOrder.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                         </Link>
                                     </td>
                                 </tr>
-                                {ongoingOrder.customerFullName && ongoingOrder.customerTelephone &&
+                                {ongoingOrder.customerName && ongoingOrder.customerTelephone &&
                                     <tr>
                                         <th scope="row" className="bg-light">Client {ongoingOrder.customerPrettyTelephoneTypeOf} #</th>
                                         <td>{ongoingOrder.customerTelephone}</td>
                                     </tr>
                                 }
-                                {ongoingOrder.customerFullName && ongoingOrder.customerOtherTelephone &&
+                                {ongoingOrder.customerName && ongoingOrder.customerOtherTelephone &&
                                     <tr>
                                         <th scope="row" className="bg-light">Client Other {ongoingOrder.customerPrettyTelephoneTypeOf} #</th>
                                         <td>{ongoingOrder.customerOtherTelephone}</td>
                                     </tr>
                                 }
-                                {ongoingOrder.associateFullName && ongoingOrder.associateFullName &&
+                                {ongoingOrder.associateName && ongoingOrder.associateName &&
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
                                         <td>
-                                            <Link to={`/associate/${ongoingOrder.associate}`} target="_blank">
-                                                {ongoingOrder.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/associate/${ongoingOrder.associateId}`} target="_blank">
+                                                {ongoingOrder.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                 }
-                                {ongoingOrder.associateFullName && ongoingOrder.associateTelephone &&
+                                {ongoingOrder.associateName && ongoingOrder.associateTelephone &&
                                     <tr>
                                         <th scope="row" className="bg-light">{ongoingOrder.associatePrettyTelephoneTypeOf} #</th>
                                         <td>{ongoingOrder.associateTelephone}</td>
                                     </tr>
                                 }
-                                {ongoingOrder.associateFullName && ongoingOrder.associateOtherTelephone &&
+                                {ongoingOrder.associateName && ongoingOrder.associateOtherTelephone &&
                                     <tr>
                                         <th scope="row" className="bg-light">Other {ongoingOrder.associatePrettyTelephoneTypeOf} #</th>
                                         <td>{ongoingOrder.associateOtherTelephone}</td>

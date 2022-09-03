@@ -10,6 +10,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 export default class FollowUpTaskStep3Component extends Component {
     render() {
         const { status, statusLabel, meetingDate, comment, id, task, onBack, onClick, errors, isLoading } = this.props;
+        const { associate, associateTags, customer, customerTags, workOrder, workOrderSkillSets, workOrderTags } = task;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -22,7 +23,7 @@ export default class FollowUpTaskStep3Component extends Component {
                             <Link to={`/tasks`}><i className="fas fa-tasks"></i>&nbsp;Tasks</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
@@ -48,25 +49,25 @@ export default class FollowUpTaskStep3Component extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Name</th>
                                         <td>
-                                            <Link to={`/associate/${task.jobAssociate}`} target="_blank">
-                                                {task && task.jobAssociateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/associate/${task && task.associateId}`} target="_blank">
+                                                {task && task.associateId}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Name</th>
                                         <td>
-                                            <Link to={`/client/${task.jobCustomer}`} target="_blank">
-                                                {task && task.jobCustomerFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            <Link to={`/client/${task.customerId}`} target="_blank">
+                                                {task && task.customerName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Location</th>
                                         <td>
-                                            {task &&
-                                                <a href={task.jobCustomerLocationGoogleUrl} target="_blank">
-                                                    {task.jobCustomerLocation}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                            {customer &&
+                                                <a href={customer.fullAddressUrl} target="_blank">
+                                                    {customer.fullAddressWithoutPostalCode}&nbsp;<i className="fas fa-external-link-alt"></i>
                                                 </a>
                                             }
                                         </td>

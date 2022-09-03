@@ -24,7 +24,7 @@ class AdminAssociateAvatarOperationContainer extends Component {
             repeatPassword: "",
 
             // Everything else...
-            associate: id,
+            associateId: id,
             id: id,
             errors: {},
         }
@@ -42,6 +42,9 @@ class AdminAssociateAvatarOperationContainer extends Component {
      */
     getPostData() {
         let postData = Object.assign({}, this.state);
+
+        // Convert to proper format.
+        postData.associateId = parseInt(this.state.associateId);
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

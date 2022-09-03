@@ -52,6 +52,14 @@ export const BootstrapErrorsProcessingAlert = ({ errors }) => {
         // STEP 3: Process a single "field" or "non_field_errors" and
         //         then get our value.
         let startKey = startCase(key);
+
+        // DEVELOPERS NOTE:
+        // The following code will remove any "Id" related keys as it was added
+        // due to "Golang" naming convention in the database. Ex: `how_hear_id`.
+        console.log("Info | BootstrapErrorsProcessingAlert | startKey | original:",startKey);
+        startKey = startKey.replace(" Id", "");
+        console.log("Info | BootstrapErrorsProcessingAlert | startKey | modified:",startKey);
+
         let value = errors[key];
         // console.log(key, value); // For debugging purposes only.
 

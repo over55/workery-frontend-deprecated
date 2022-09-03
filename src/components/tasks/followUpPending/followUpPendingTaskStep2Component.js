@@ -11,6 +11,8 @@ import { GENDER_RADIO_CHOICES } from "../../../constants/api";
 export default class FollowUpPendingTaskStep2Component extends Component {
     render() {
         const { task, status, id, comment, onClick, onBack, errors, isLoading, onRadioChange, onTextChange } = this.props;
+        const { associate, associateTags, customer, customerTags, workOrder, workOrderSkillSets, workOrderTags } = task;
+
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -23,12 +25,12 @@ export default class FollowUpPendingTaskStep2Component extends Component {
                             <Link to={`/tasks`}><i className="fas fa-tasks"></i>&nbsp;Tasks</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
+                            <i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.job && task.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - 24 Hour Follow Up</h1>
+                <h1><i className="fas fa-thumbtack"></i>&nbsp;Task # {task && task.orderId && task.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })} - 24 Hour Follow Up</h1>
 
                 {task && task.associateAwayLog !== undefined && task.associateAwayLog !== null &&
                     <div className="alert alert-warning" role="alert">
@@ -106,22 +108,25 @@ export default class FollowUpPendingTaskStep2Component extends Component {
     }
 }
 
+//
+// See `state` constants in `activity_sheet_items.go` in `workery-back` repo.
+//
 
 const STATUS_CHOICES = [
     {
         id: 'status-accepted-choice',
         name: "status",
-        value: "accepted",
+        value: 1,
         label: "Yes"
     },{
         id: 'status-declined-choice',
         name: "status",
-        value: "declined",
+        value: 2,
         label: "No"
     },{
         id: 'status-pending-choice',
         name: "status",
-        value: "pending",
+        value: 3,
         label: "Pending"
     }
 ];

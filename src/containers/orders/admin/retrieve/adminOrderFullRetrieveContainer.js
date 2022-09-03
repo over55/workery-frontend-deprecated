@@ -85,9 +85,10 @@ class OrderFullRetrieveContainer extends Component {
         const order = this.props.orderDetail ? this.props.orderDetail : {};
         return (
             <AdminOrderFullRetrieveComponent
-                id={this.state.id}
+                {...this}
+                {...this.state}
+                {...this.props}
                 order={order}
-                flashMessage={this.props.flashMessage}
             />
         );
     }

@@ -4,9 +4,12 @@ import { camelizeKeys, decamelize } from 'humps';
 import Scroll from 'react-scroll';
 
 import AdminAssociateUpgradeOperationComponent from "../../../../components/associates/admin/operations/adminAssociateUpgradeOperationComponent";
+import { validateResidentialUpgradeInput } from "../../../../validators/associateValidator";
 import { setFlashMessage } from "../../../../actions/flashMessageActions";
-import { postAssociateUpgradeOperation } from "../../../../actions/associateActions";
-import { validateUpgradeOperationInput } from "../../../../validators/associateValidator"
+import { postAssociateResidentialUpgradeDetail } from "../../../../actions/associateOperationActions";
+import {
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID
+} from '../../../../constants/api';
 
 
 class AdminAssociateUpgradeOperationContainer extends Component {
@@ -17,23 +20,28 @@ class AdminAssociateUpgradeOperationContainer extends Component {
 
     constructor(props) {
         super(props);
-        const { id } = this.props.match.params;
         this.state = {
-            isLoading: false,
             organizationName: "",
             organizationTypeOf: "",
-
-            // Everything else...
-            associate: id,
-            id: id,
+            country: "",
+            region: "",
+            locality: "",
+            postalCode: "",
+            streetAddress: "",
             errors: {},
+            isLoading: false,
+            associate: {},
         }
-        this.getPostData = this.getPostData.bind(this);
+
         this.onTextChange = this.onTextChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onRadioChange = this.onRadioChange.bind(this);
+        this.onBillingRegionChange = this.onBillingRegionChange.bind(this);
+        this.onBillingCountryChange = this.onBillingCountryChange.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
-        this.onClick = this.onClick.bind(this);
+        this.getPostData = this.getPostData.bind(this);
     }
 
     /**
@@ -44,10 +52,16 @@ class AdminAssociateUpgradeOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        // (6) Organization Type Of - This field may not be null, therefore make blank.
-        if (this.state.organizationTypeOf === undefined || this.state.organizationTypeOf === null) {
-            postData.organizationTypeOf = "";
-        }
+        postData.associateId = this.props.associateDetail.id;
+        postData.organizationName = this.state.organizationName;
+        // 'organization_type_of',
+        postData.organizationAddressCountry = this.state.country;
+        postData.organizationAddressLocality = this.state.locality;
+        postData.organizationAddressRegion = this.state.region;
+        postData.organizationPostOfficeBoxNumber = "";
+        postData.organizationPostalCode = this.state.postalCode;
+        postData.organizationStreetAddress = this.state.streetAddress;
+        postData.organizationStreetAddressExtra = "";
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -61,6 +75,12 @@ class AdminAssociateUpgradeOperationContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
+
+        // DEVELOPERS NOTE:
+        // Since we are in this page, we need to assign the user to be
+        // a business type user.
+        localStorage.setItem("workery-create-associate-typeOf", COMMERCIAL_CUSTOMER_TYPE_OF_ID);
+        localStorage.setItem("workery-create-associate-typeOf-label", "Business");
     }
 
     componentWillUnmount() {
@@ -78,21 +98,22 @@ class AdminAssociateUpgradeOperationContainer extends Component {
      */
 
     onSuccessCallback(response) {
-        console.log("onSuccessCallback | Fetched:",response); // For debugging purposes only.
-        this.setState({ errors: {}, isLoading: false, })
-        this.props.setFlashMessage("success", "Associate's organizationName has been successfully updated.");
-        this.props.history.push("/associate/"+this.state.id+"/operations");
+        console.log("onSuccessCallback | Fetched:", response);
+        this.props.setFlashMessage("success", "Residential associate has been successfully upgraded to business associate.");
+        this.props.history.push("/associate/"+this.props.associateDetail.id+"/operations");
     }
 
     onFailureCallback(errors) {
-        console.log("onFailureCallback |", errors);
-        this.setState({ isLoading: false, errors: errors, });
-    }
+        this.setState({
+            errors: errors
+        })
 
-    onTagFetchSuccessCallback(response) {
-        this.setState({ isTagSetsLoading: false, });
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
     }
-
 
     /**
      *  Event handling functions
@@ -100,47 +121,92 @@ class AdminAssociateUpgradeOperationContainer extends Component {
      */
 
     onTextChange(e) {
-        // AddressUpdate our state.
         this.setState({
             [e.target.name]: e.target.value,
-        });
+        })
+        const key = "workery-create-associate-biz-"+[e.target.name];
+        localStorage.setItem(key, e.target.value);
     }
 
     onSelectChange(option) {
+        console.log(option);
         const optionKey = [option.selectName]+"Option";
-        this.setState({
-            [option.selectName]: option.value,
-            [optionKey]: option,
+        this.setState(
+            { [option.selectName]: option.value, [optionKey]: option, },
+            ()=>{
+                console.log([option.selectName], optionKey, "|", this.state); // For debugging purposes only.
+            }
+        );
+    }
+
+    onRadioChange(e) {
+        // Get the values.
+        const storageValueKey = "workery-create-associate-biz-"+[e.target.name];
+        const storageLabelKey =  "workery-create-associate-biz-"+[e.target.name].toString()+"-label";
+        const value = e.target.value;
+        const label = e.target.dataset.label; // Note: 'dataset' is a react data via https://stackoverflow.com/a/20383295
+        const storeValueKey = [e.target.name].toString();
+        const storeLabelKey = [e.target.name].toString()+"Label";
+
+        // Save the data.
+        this.setState({ [e.target.name]: value, }); // Save to store.
+        this.setState({ storeLabelKey: label, }); // Save to store.
+        localStorage.setItem(storageValueKey, value) // Save to storage.
+        localStorage.setItem(storageLabelKey, label) // Save to storage.
+
+        // For the debugging purposes only.
+        console.log({
+            "STORE-VALUE-KEY": storageValueKey,
+            "STORE-VALUE": value,
+            "STORAGE-VALUE-KEY": storeValueKey,
+            "STORAGE-VALUE": value,
+            "STORAGE-LABEL-KEY": storeLabelKey,
+            "STORAGE-LABEL": label,
         });
     }
 
+    onBillingCountryChange(value) {
+        // Update state.
+        if (value === null || value === undefined || value === '') {
+            this.setState({ country: null, region: null })
+        } else {
+            this.setState({ country: value, region: null })
+        }
+
+        // Update persistent storage.
+        localStorage.setItem('workery-create-associate-country', value);
+        localStorage.setItem('workery-create-associate-region', null);
+    }
+
+    onBillingRegionChange(value) {
+        this.setState({ region: value }); // Update state.
+        localStorage.setItem('workery-create-associate-region', value); // Update persistent storage.
+    }
+
     onClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        const { errors, isValid } = validateUpgradeOperationInput(this.state);
-        // console.log(errors, isValid); // For debugging purposes only.
+        // Perform associate-side validation.
+        const { errors, isValid } = validateResidentialUpgradeInput(this.state);
 
+        // CASE 1 OF 2: Validation passed successfully.
         if (isValid) {
+
             this.setState({ isLoading: true, errors: [] }, ()=>{
-                this.props.postAssociateUpgradeOperation(
+                this.props.postAssociateResidentialUpgradeDetail(
                     this.getPostData(),
                     this.onSuccessCallback,
                     this.onFailureCallback
                 );
-            });
-        } else {
-            this.setState({
-                errors: errors,
-                isLoading: false,
-            });
+            })
 
-            // The following code will cause the screen to scroll to the top of
-            // the page. Please see ``react-scroll`` for more information:
-            // https://github.com/fisshy/react-scroll
-            var scroll = Scroll.animateScroll;
-            scroll.scrollToTop();
+        // CASE 2 OF 2: Validation was a failure.
+        } else {
+            this.onFailureCallback(errors);
         }
     }
+
 
     /**
      *  Main render function
@@ -148,44 +214,54 @@ class AdminAssociateUpgradeOperationContainer extends Component {
      */
 
     render() {
-        const { isLoading, id, errors, organizationName, organizationTypeOf } = this.state;
-        const associate = this.props.associateDetail ? this.props.associateDetail : {};
+        const {
+            organizationName, organizationTypeOf, country, region, locality, postalCode, streetAddress,
+            errors
+        } = this.state;
         return (
             <AdminAssociateUpgradeOperationComponent
-                id={id}
-                associate={associate}
                 organizationName={organizationName}
                 organizationTypeOf={organizationTypeOf}
-                isLoading={isLoading}
+                country={country}
+                region={region}
+                locality={locality}
+                postalCode={postalCode}
+                streetAddress={streetAddress}
                 errors={errors}
-                onClick={this.onClick}
                 onTextChange={this.onTextChange}
                 onSelectChange={this.onSelectChange}
+                onRadioChange={this.onRadioChange}
+                onClick={this.onClick}
+                associate={this.props.associateDetail}
+                onBillingCountryChange={this.onBillingCountryChange}
+                onBillingRegionChange={this.onBillingRegionChange}
             />
         );
     }
-}
+ }
 
-const mapStateToProps = function(store) {
-    return {
-        user: store.userState,
-        associateDetail: store.associateDetailState,
-    };
-}
+ const mapStateToProps = function(store) {
+     return {
+         user: store.userState,
+         associateDetail: store.associateDetailState,
+     };
+ }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        setFlashMessage: (typeOf, text) => {
-            dispatch(setFlashMessage(typeOf, text))
-        },
-        postAssociateUpgradeOperation: (postData, successCallback, failedCallback) => {
-            dispatch(postAssociateUpgradeOperation(postData, successCallback, failedCallback))
-        },
-    }
-}
+ const mapDispatchToProps = dispatch => {
+     return {
+         setFlashMessage: (typeOf, text) => {
+             dispatch(setFlashMessage(typeOf, text))
+         },
+         postAssociateResidentialUpgradeDetail: (postData, onSuccessCallback, onFailureCallback) => {
+             dispatch(
+                 postAssociateResidentialUpgradeDetail(postData, onSuccessCallback, onFailureCallback)
+             )
+         },
+     }
+ }
 
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AdminAssociateUpgradeOperationContainer);
+ export default connect(
+     mapStateToProps,
+     mapDispatchToProps
+ )(AdminAssociateUpgradeOperationContainer);

@@ -10,12 +10,12 @@ import { getSubdomain } from '../../helpers/urlUtility';
 
 
 import {
-    EXECUTIVE_GROUP_ID,
-    MANAGEMENT_GROUP_ID,
-    FRONTLINE_GROUP_ID,
-    ASSOCIATE_GROUP_ID,
-    CUSTOMER_GROUP_ID,
-    ANONYMOUS_GROUP_ID,
+    EXECUTIVE_ROLE_ID,
+    MANAGEMENT_ROLE_ID,
+    FRONTLINE_ROLE_ID,
+    ASSOCIATE_ROLE_ID,
+    CUSTOMER_ROLE_ID,
+    ANONYMOUS_ROLE_ID,
 } from '../../constants/api';
 
 
@@ -221,12 +221,12 @@ const AUTH_MEMBER_MENU_DATA = [
 
 
 export const NAVIGATION_TREE = {
-    [EXECUTIVE_GROUP_ID]: AUTH_MANAGEMENT_STAFF_MENU_DATA,
-    [MANAGEMENT_GROUP_ID]: AUTH_MANAGEMENT_STAFF_MENU_DATA,
-    [FRONTLINE_GROUP_ID]: AUTH_FRONTLINE_STAFF_MENU_DATA,
-    [ASSOCIATE_GROUP_ID]: AUTH_ASSOCIATE_MENU_DATA,
-    [CUSTOMER_GROUP_ID]: AUTH_MEMBER_MENU_DATA,
-    [ANONYMOUS_GROUP_ID]: ANON_MENU_DATA,
+    [EXECUTIVE_ROLE_ID]: AUTH_MANAGEMENT_STAFF_MENU_DATA,
+    [MANAGEMENT_ROLE_ID]: AUTH_MANAGEMENT_STAFF_MENU_DATA,
+    [FRONTLINE_ROLE_ID]: AUTH_FRONTLINE_STAFF_MENU_DATA,
+    [ASSOCIATE_ROLE_ID]: AUTH_ASSOCIATE_MENU_DATA,
+    [CUSTOMER_ROLE_ID]: AUTH_MEMBER_MENU_DATA,
+    [ANONYMOUS_ROLE_ID]: ANON_MENU_DATA,
 }
 
 
@@ -238,6 +238,7 @@ class ItemNode extends React.Component {
         this.state = {
             isOpen:false
         }
+        console.log("#####");
     }
 
     toggle = () => {
@@ -249,6 +250,7 @@ class ItemNode extends React.Component {
 
     render() {
         const { id, icon, title, url, children } = this.props.menuData;
+        console.log("----->",id, icon, title, url, children);
         const sideMenuToggle = this.props.sideMenuToggle;
         if(children)
         {
@@ -360,7 +362,7 @@ class NavigationContainer extends React.Component {
             if (count > 0) {
                 // Get our permission handling fields from the user object which
                 // we received from the API endpoint.
-                const { groupId } = user;
+                const { roleId } = user;
 
                 // Indicate we are authenticated.
                 isAuthenticated = true;
@@ -369,7 +371,7 @@ class NavigationContainer extends React.Component {
                 menuTitle = "Hi, "+user.firstName;
 
                 // Lookup the user group membership and get the navigation tree.
-                menuData = NAVIGATION_TREE[parseInt(groupId)];
+                menuData = NAVIGATION_TREE[parseInt(roleId)];
             }
         }
 
@@ -377,12 +379,11 @@ class NavigationContainer extends React.Component {
         if (menuData === null || menuData === undefined) {
             isAuthenticated = false;
             menuTitle = "Menu"
-            menuData = NAVIGATION_TREE[ANONYMOUS_GROUP_ID];
+            menuData = NAVIGATION_TREE[ANONYMOUS_ROLE_ID];
         }
 
         // Check if we are in a tenant or not.
-        const subdomain = getSubdomain();
-        const isTenant = subdomain !== null && subdomain !== undefined;
+        const isTenant = true; // TODO: HANDLE WHEN IN THE ORGANIZATION SECTION.
 
         // Get state variables.
         const { tasksCount } = this.state;

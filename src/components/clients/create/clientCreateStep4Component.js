@@ -16,7 +16,9 @@ import { IS_OK_TO_EMAIL_CHOICES, IS_OK_TO_TEXT_CHOICES, COMMERCIAL_CUSTOMER_TYPE
 class ClientCreateStep4Component extends Component {
     render() {
         const {
-            typeOf, organizationName, organizationTypeOf, givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToEmail, isOkToText, errors,
+            typeOf, organizationName, organizationTypeOf, givenName, lastName,
+            telephone, telephoneTypeOf, otherTelephone, otherTelephoneTypeOf,
+            email, isOkToEmail, isOkToText, errors,
             onTextChange, onRadioChange, isLoading, onClick, onSelectChange,
         } = this.props;
         const isCommercial = typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID;
@@ -132,11 +134,11 @@ class ClientCreateStep4Component extends Component {
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-primary"
-                                error={errors.primaryPhone}
+                                error={errors.telephone}
                                 label="Primary Phone (*)"
                                 onChange={onTextChange}
-                                value={primaryPhone}
-                                name="primaryPhone"
+                                value={telephone}
+                                name="telephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
@@ -144,22 +146,22 @@ class ClientCreateStep4Component extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-primary"
                                 label="Primary Telephone type (*)"
-                                name="primaryPhoneTypeOf"
+                                name="telephoneTypeOf"
                                 defaultOptionLabel="Please select a telephone type."
                                 options={PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                                value={primaryPhoneTypeOf}
-                                error={errors.primaryPhoneTypeOf}
+                                value={telephoneTypeOf}
+                                error={errors.telephoneTypeOf}
                                 onSelectChange={onSelectChange}
                             />
 
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
-                                error={errors.secondaryPhone}
+                                error={errors.otherTelephone}
                                 label="Secondary Phone"
                                 onChange={onTextChange}
-                                value={secondaryPhone}
-                                name="secondaryPhone"
+                                value={otherTelephone}
+                                name="otherTelephone"
                                 type="text"
                                 placeholder="+1 (xxx) xxx-xxxx"
                             />
@@ -167,11 +169,11 @@ class ClientCreateStep4Component extends Component {
                             <BootstrapSingleSelect
                                 borderColour="border-success"
                                 label="Secondary Telephone type"
-                                name="secondaryPhoneTypeOf"
+                                name="otherTelephoneTypeOf"
                                 defaultOptionLabel="Please select a telephone type."
                                 options={SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES}
-                                value={secondaryPhoneTypeOf}
-                                error={errors.secondaryPhoneTypeOf}
+                                value={otherTelephoneTypeOf}
+                                error={errors.otherTelephoneTypeOf}
                                 onSelectChange={onSelectChange}
                             />
 

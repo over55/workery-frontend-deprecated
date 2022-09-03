@@ -2,13 +2,12 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     COMMENT_LIST_REQUEST, COMMENT_LIST_FAILURE, COMMENT_LIST_SUCCESS,
 } from '../constants/actionTypes';
 import {
-    WORKERY_COMMENT_LIST_API_ENDPOINT,
+    WORKERY_COMMENT_LIST_API_URL,
 } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
@@ -31,7 +30,7 @@ export function pullCommentList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_COMMENT_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_COMMENT_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -41,8 +40,7 @@ export function pullCommentList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             console.log(responseData); // For debugging purposes.
 
@@ -70,10 +68,7 @@ export function pullCommentList(page=1, sizePerPage=10, filtersMap=new Map(), on
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 

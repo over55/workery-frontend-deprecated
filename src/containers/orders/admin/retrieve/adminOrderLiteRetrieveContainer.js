@@ -93,10 +93,10 @@ class OrderLiteRetrieveContainer extends Component {
         const order = isEmpty(this.state.order) ? {} : this.state.order;
         return (
             <AdminOrderLiteRetrieveComponent
-                id={this.state.id}
-                isLoading={this.state.isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
                 order={order}
-                flashMessage={this.props.flashMessage}
             />
         );
     }

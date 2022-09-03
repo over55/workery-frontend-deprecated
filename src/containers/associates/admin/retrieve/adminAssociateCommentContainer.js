@@ -7,6 +7,7 @@ import AdminAssociateCommentComponent from "../../../../components/associates/ad
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateCommentList, postAssociateComment } from "../../../../actions/associateCommentActions";
 import { validateInput } from "../../../../validators/commentValidator"
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class AdminAssociateCommentContainer extends Component {
@@ -18,14 +19,19 @@ class AdminAssociateCommentContainer extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
+
         const parametersMap = new Map();
-        parametersMap.set("about", id);
-        parametersMap.set("o", "-created_at");
+        parametersMap.set("associate_id", id);
+        parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `ClientListComponent`.
+        parametersMap.set("sort_field", "created_time");
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 10000,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "ASC",
+            sortField: "created_time",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
@@ -40,6 +46,8 @@ class AdminAssociateCommentContainer extends Component {
         }
         this.getPostData = this.getPostData.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onSuccessListCallback = this.onSuccessListCallback.bind(this);
         this.onFailureListCallback = this.onFailureListCallback.bind(this);
         this.onSuccessPostCallback = this.onSuccessPostCallback.bind(this);
@@ -53,14 +61,11 @@ class AdminAssociateCommentContainer extends Component {
      *  items under different key names to support our API web-service's API.
      */
     getPostData() {
-        let postData = Object.assign({}, this.state);
-
-        postData.about = this.state.id;
-        postData.extraText = this.state.text;
-
-        // Finally: Return our new modified data.
-        console.log("getPostData |", postData);
-        return postData;
+        const { id, text } = this.state;
+        return {
+            "associateId": parseInt(id),
+            "text": text
+        };
     }
 
     /**
@@ -73,8 +78,8 @@ class AdminAssociateCommentContainer extends Component {
 
         // Get our data.
         this.props.pullAssociateCommentList(
-            this.state.page,
-            this.state.sizePerPage,
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessListCallback,
             this.onFailureListCallback
@@ -102,7 +107,7 @@ class AdminAssociateCommentContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
                 text: "",
@@ -123,7 +128,7 @@ class AdminAssociateCommentContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
                 text: "",
@@ -133,8 +138,8 @@ class AdminAssociateCommentContainer extends Component {
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
                 this.props.pullAssociateCommentList(
-                    this.state.page,
-                    this.state.sizePerPage,
+                    this.state.offset,
+                    this.state.limit,
                     this.state.parametersMap,
                     this.onSuccessListCallback,
                     this.onFailureListCallback
@@ -199,26 +204,50 @@ class AdminAssociateCommentContainer extends Component {
         }
     }
 
+    onNextClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullClientList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onPreviousClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullClientList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
     /**
      *  Main render function
      *------------------------------------------------------------
      */
 
     render() {
-        const { isLoading, id, text, errors } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : {};
         const associateComments = this.props.associateCommentList ? this.props.associateCommentList.results : [];
         return (
             <AdminAssociateCommentComponent
-                id={id}
-                text={text}
+                {...this}
+                {...this.state}
+                {...this.props}
                 associate={associate}
                 associateComments={associateComments}
-                flashMessage={this.props.flashMessage}
-                onTextChange={this.onTextChange}
-                isLoading={isLoading}
-                errors={errors}
-                onClick={this.onClick}
             />
         );
     }

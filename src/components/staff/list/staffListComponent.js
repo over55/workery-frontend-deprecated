@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
@@ -7,12 +8,16 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+// import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
 
 import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../flashMessageComponent";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID,
+    COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+} from '../../../constants/api';
 
 
 const customTotal = (from, to, size) => (
@@ -24,21 +29,22 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
-            staffs,
+            staff,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
-        // const selectOptions = { // DEPRECATED VIA https://github.com/over55/workery-front/issues/297
+        // const selectOptions = {  // DEPRECATED VIA https://github.com/over55/workery-frontend/issues/296
         //     1: 'Active',
-        //     0: 'Inactive',
+        //     0: 'Archived',
         // };
 
-        const columns = [{
+        const columns = [
+        {
             dataField: 'givenName',
             text: 'First Name',
             sort: true
@@ -61,19 +67,17 @@ class RemoteListComponent extends Component {
             text: 'Joined',
             sort: true,
             formatter: joinDateFormatter,
-        },
-        // {
-        //     dataField: 'state',
-        //     text: 'Status',
-        //     sort: false,
-        //     // filter: selectFilter({  // DEPRECATED VIA https://github.com/over55/workery-front/issues/297
-        //     //     options: selectOptions,
-        //     //     defaultValue: 1,
-        //     //     withoutEmptyOption: true
-        //     // }),
-        //     formatter: statusFormatter
-        // },
-        {
+        },{
+            dataField: 'state',
+            text: 'Status',
+            sort: false,
+            // filter: selectFilter({ // DEPRECATED VIA https://github.com/over55/workery-frontend/issues/296
+            //     options: selectOptions,
+            //     defaultValue: 1,
+            //     withoutEmptyOption: true
+            // }),
+            formatter: statusFormatter
+        },{
             dataField: 'id',
             text: 'Details',
             sort: false,
@@ -85,44 +89,31 @@ class RemoteListComponent extends Component {
             order: 'asc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     page: offset,
+        //     sizePerPage: limit,
+        //     totalSize: totalSize,
+        //     showTotal: true,
+        //
+        //     // paginationTotalRenderer: customTotal,
+        //     withFirstAndLast: false,
+        //     nextPageText: "Next",
+        //     prePageText: "Previous",
+        // };
 
         return (
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ staffs }
+                data={ staff }
                 columns={ columns }
                 defaultSorted={ defaultSorted }
                 striped
                 bordered={ false }
-                noDataIndication="There are no staffs at the moment"
+                noDataIndication="There are no staff at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -131,14 +122,13 @@ class RemoteListComponent extends Component {
     }
 }
 
-
 function statusFormatter(cell, row){
     switch(row.state) {
         case 1:
             return <i className="fas fa-check-circle" style={{ color: 'green' }}></i>;
             break;
         case 0:
-            return <i className="fas fa-times-circle" style={{ color: 'red' }}></i>;
+            return <i className="fas fa-archive" style={{ color: 'blue' }}></i>;
             break;
         default:
         return <i className="fas fa-question-circle" style={{ color: 'blue' }}></i>;
@@ -154,6 +144,7 @@ function telephoneFormatter(cell, row){
     )
 }
 
+
 function emailFormatter(cell, row){
     if (row.email === undefined || row.email === null) {
         return ("-");
@@ -167,13 +158,6 @@ function emailFormatter(cell, row){
 }
 
 
-function joinDateFormatter(cell, row){
-    return (
-        row && row.joinDate ? <Moment format="MM/DD/YYYY">{row.joinDate}</Moment> :"-"
-    )
-}
-
-
 function detailLinkFormatter(cell, row){
     return (
         <Link to={`/staff/${row.id}`}>
@@ -183,20 +167,31 @@ function detailLinkFormatter(cell, row){
 }
 
 
+function joinDateFormatter(cell, row){
+    return (
+        row && row.joinDate ? <Moment format="MM/DD/YYYY">{row.joinDate}</Moment> :"-"
+    )
+}
+
+
+
 class StaffListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             staffList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
-        const staffs = staffList.results ? staffList.results : [];
+        let staff = [];
+        if (staffList && isEmpty(staffList)===false) {
+            staff = staffList.results ? staffList.results : [];
+        }
 
         return (
             <div>
@@ -207,14 +202,14 @@ class StaffListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user-tie"></i>&nbsp;Staff
+                            <i className="fas fa-user-circle"></i>&nbsp;Staff
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user-tie"></i>&nbsp;Staff</h1>
+                <h1><i className="fas fa-user-circle"></i>&nbsp;Staff</h1>
 
                 <div className="row">
                     <div className="col-md-12">
@@ -247,13 +242,23 @@ class StaffListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
-                            staffs={staffs}
+                            staff={staff}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
+
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>

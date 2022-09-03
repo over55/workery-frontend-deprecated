@@ -6,185 +6,192 @@ export const APP_STATE = 'APP_STATE';
 /**
  *  The API web-services endpoints.
  */
-export const WORKERY_API_BASE_PATH = '/en/api'
-export const WORKERY_LOGIN_API_ENDPOINT = '/login';
-export const WORKERY_REFRESH_TOKEN_API_ENDPOINT = '/refresh-token';
-export const WORKERY_PROFILE_API_ENDPOINT = '/profile';
-export const WORKERY_TENANT_LIST_API_ENDPOINT = '/franchises';
-export const WORKERY_TENANT_DETAIL_API_ENDPOINT = '/franchise/';
-export const WORKERY_DASHBOARD_API_ENDPOINT = '/dashboard';
-export const WORKERY_NAVIGATION_API_ENDPOINT = '/navigation';
-export const WORKERY_CLIENT_LIST_API_ENDPOINT = '/v2/customers';
-export const WORKERY_CLIENT_DETAIL_API_ENDPOINT = '/v2/customer/';
-export const WORKERY_CLIENT_ARCHIVE_API_ENDPOINT = '/customers/operation/archive';
-export const WORKERY_CLIENT_REZ_UPGRADE_API_ENDPOINT = '/customers/operation/upgrade-residential';
-export const WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT = '/customers/operation/avatar';
-export const WORKERY_CLIENT_COMMENT_LIST_API_ENDPOINT = '/customer-comments';
-export const WORKERY_CLIENT_FILE_LIST_API_ENDPOINT = '/customer-files';
-export const WORKERY_CLIENT_FILE_ARCHIVE_API_ENDPOINT = '/customer-file/XXX/';
-export const WORKERY_CLIENT_CONTACT_UPDATE_API_ENDPOINT = '/customer/XXX/contact';
-export const WORKERY_CLIENT_ADDRESS_UPDATE_API_ENDPOINT = '/customer/XXX/address';
-export const WORKERY_CLIENT_METRICS_UPDATE_API_ENDPOINT = '/customer/XXX/metrics';
-export const WORKERY_ORDER_LIST_API_ENDPOINT = '/orders';
-export const WORKERY_ORDER_INVOICE_RETRIEVE_API_ENDPOINT = '/order/XXX/invoice';
-export const WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_ENDPOINT = '/order/XXX/download-invoice-pdf';
-export const WORKERY_ORDER_DETAIL_API_ENDPOINT = '/order/';
-export const WORKERY_ORDER_LITE_UPDATE_API_ENDPOINT = '/order/XXX/lite';
-export const WORKERY_ORDER_FINANCIAL_UPDATE_API_ENDPOINT = '/order/XXX/financial';
-export const WORKERY_ORDER_COMMENT_LIST_API_ENDPOINT = '/order-comments';
-export const WORKERY_ORDER_TRANSFER_OPERATION_API_ENDPOINT = '/orders/operation/transfer';
-export const WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT = '/orders/operation/unassign';
-export const WORKERY_ORDER_CLOSE_OPERATION_API_ENDPOINT = '/orders/operation/close';
-export const WORKERY_ORDER_REOPEN_OPERATION_API_ENDPOINT = '/orders/operation/reopen';
-export const WORKERY_ORDER_POSTPONE_OPERATION_API_ENDPOINT = '/orders/operation/postpone';
-export const WORKERY_TASK_ORDER_COMPLETION_OPERATION_API_ENDPOINT = '/orders/operation/order-completion';
-export const WORKERY_ORDER_CLONE_OPERATION_API_ENDPOINT = '/orders/operation/clone';
-export const WORKERY_ORDER_INVOICE_OPERATION_API_ENDPOINT = '/orders/operation/invoice';
-export const WORKERY_ORDER_FILE_LIST_API_ENDPOINT = '/order-files';
-export const WORKERY_ORDER_FILE_ARCHIVE_API_ENDPOINT = '/order-file/XXX/';
-export const WORKERY_MY_ORDER_LIST_API_ENDPOINT = '/my-orders';
-export const WORKERY_MY_ORDER_DETAIL_API_ENDPOINT = '/my-order/';
-export const WORKERY_INVOICE_FIRST_SECTION_UPDATE_API_ENDPOINT = '/order/XXX/invoice/first-section';
-export const WORKERY_INVOICE_SECOND_SECTION_UPDATE_API_ENDPOINT = '/order/XXX/invoice/second-section';
-export const WORKERY_INVOICE_THIRD_SECTION_UPDATE_API_ENDPOINT = '/order/XXX/invoice/third-section';
-export const WORKERY_DEPOSIT_LIST_API_ENDPOINT = '/order/XXX/deposits';
-export const WORKERY_DEPOSIT_DETAIL_API_ENDPOINT = '/order/XXX/deposit/YYY';
-export const WORKERY_ASSOCIATE_LIST_API_ENDPOINT = '/associates';
-export const WORKERY_ASSOCIATE_DETAIL_API_ENDPOINT = '/associate/';
-export const WORKERY_ASSOCIATE_COMMENT_LIST_API_ENDPOINT = '/associate-comments';
-export const WORKERY_ASSOCIATE_CONTACT_UPDATE_API_ENDPOINT = '/associate/XXX/contact';
-export const WORKERY_ASSOCIATE_ADDRESS_UPDATE_API_ENDPOINT = '/associate/XXX/address';
-export const WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_ENDPOINT = '/associate/XXX/account';
-export const WORKERY_ASSOCIATE_METRICS_UPDATE_API_ENDPOINT = '/associate/XXX/metrics';
-export const WORKERY_ASSOCIATE_FILE_LIST_API_ENDPOINT = '/associate-files';
-export const WORKERY_ASSOCIATE_FILE_ARCHIVE_API_ENDPOINT = '/associate-file/XXX/';
-export const WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT = '/associates/operation/avatar';
-export const WORKERY_ASSOCIATE_BALANCE_OPERATION_API_ENDPOINT = '/associates/operation/balance';
-export const WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_ENDPOINT = '/associates/operation/password';
-export const WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_ENDPOINT = '/associates/operation/upgrade';
-export const WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_ENDPOINT = '/associates/operation/downgrade';
-export const WORKERY_ASSOCIATE_ARCHIVE_API_ENDPOINT = '/associates/operation/archive';
-export const WORKERY_TASK_LIST_API_ENDPOINT = '/tasks';
-export const WORKERY_TASK_DETAIL_API_ENDPOINT = '/task/';
-export const WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_ENDPOINT = '/task/XXX/available-associates';
-export const WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_ENDPOINT = '/task/operation/assign-associate';
-export const WORKERY_TASK_FOLLOW_UP_OPERATION_API_ENDPOINT = '/v2/task/operation/follow-up';
-export const WORKERY_TASK_FOLLOW_UP_PENDING_OPERATION_API_ENDPOINT = '/v2/task/operation/follow-up-pending';
-export const WORKERY_TASK_ORDER_COMPLETION_API_ENDPOINT = '/task/operation/order-completion';
-export const WORKERY_TASK_SURVEY_OPERATION_API_ENDPOINT = '/task/operation/survey';
-export const WORKERY_STAFF_LIST_API_ENDPOINT = '/v2/staves';
-export const WORKERY_STAFF_DETAIL_API_ENDPOINT = '/v2/staff/'
-export const WORKERY_STAFF_COMMENT_LIST_API_ENDPOINT = '/staff-comments';
-export const WORKERY_STAFF_CONTACT_UPDATE_API_ENDPOINT = '/staff/XXX/contact';
-export const WORKERY_STAFF_ADDRESS_UPDATE_API_ENDPOINT = '/staff/XXX/address';
-export const WORKERY_STAFF_ACCOUNT_UPDATE_API_ENDPOINT = '/staff/XXX/account';
-export const WORKERY_STAFF_METRICS_UPDATE_API_ENDPOINT = '/staff/XXX/metrics';
-export const WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_ENDPOINT = '/staff/XXX/change-role';
-export const WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_ENDPOINT = '/staff/XXX/change-password';
-export const WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT = '/staff/operation/avatar';
-export const WORKERY_FINANCIAL_LIST_API_ENDPOINT = '/financials';
-export const WORKERY_FINANCIAL_DETAIL_API_ENDPOINT = '/financial/';
-export const WORKERY_TAG_LIST_API_ENDPOINT = '/tags';
-export const WORKERY_TAG_DETAIL_API_ENDPOINT = '/tag/';
-export const WORKERY_HOW_HEAR_LIST_API_ENDPOINT = '/how_hears';
-export const WORKERY_HOW_HEAR_DETAIL_API_ENDPOINT = '/how_hear/';
-export const WORKERY_AWAY_LOG_LIST_API_ENDPOINT = '/away-logs';
-export const WORKERY_AWAY_LOG_DETAIL_API_ENDPOINT = '/away-log/';
-export const WORKERY_BULLETIN_BOARD_ITEM_LIST_API_ENDPOINT = '/bulletin_board_items';
-export const WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_ENDPOINT = '/bulletin_board_item/';
-export const WORKERY_SKILL_SET_LIST_API_ENDPOINT = '/skill_sets';
-export const WORKERY_SKILL_SET_DETAIL_API_ENDPOINT = '/skill_set/';
-export const WORKERY_INSURANCE_REQUIREMENT_LIST_API_ENDPOINT = '/insurance_requirements';
-export const WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_ENDPOINT = '/insurance_requirement/';
-export const WORKERY_SERVICE_FEE_LIST_API_ENDPOINT = '/order_service_fees';
-export const WORKERY_SERVICE_FEE_DETAIL_API_ENDPOINT = '/order_service_fee/';
-export const WORKERY_ARCHIVED_CLIENT_LIST_API_ENDPOINT = '/deactivated-customers';
-export const WORKERY_VEHICLE_TYPE_LIST_API_ENDPOINT = '/vehicle_types';
-export const WORKERY_VEHICLE_TYPE_DETAIL_API_ENDPOINT = '/vehicle_type/';
-export const WORKERY_PARTNER_LIST_API_ENDPOINT = '/v2/partners';
-export const WORKERY_PARTNER_DETAIL_API_ENDPOINT = '/v2/partner/';
-export const WORKERY_PARTNER_COMMENT_LIST_API_ENDPOINT = '/partner-comments';
-export const WORKERY_PARTNER_ADDRESS_UPDATE_API_ENDPOINT = '/partner/XXX/address';
-export const WORKERY_PARTNER_CONTACT_UPDATE_API_ENDPOINT = '/partner/XXX/contact';
-export const WORKERY_PARTNER_METRICS_UPDATE_API_ENDPOINT = '/partner/XXX/metrics';
-export const WORKERY_PARTNER_FILE_LIST_API_ENDPOINT = '/partner-files';
-export const WORKERY_PARTNER_FILE_ARCHIVE_API_ENDPOINT = '/partner-file/XXX/';
-export const WORKERY_PARTNER_AVATAR_CREATE_OR_UPDATE_API_ENDPOINT = '/partners/operation/avatar';
-export const WORKERY_ACTIVITY_SHEET_LIST_API_ENDPOINT = '/activity-sheets';
-export const WORKERY_ACTIVITY_SHEET_DETAIL_API_ENDPOINT = '/activity-sheet/';
-export const WORKERY_REPORT_ONE_CSV_DOWNLOAD_API_ENDPOINT = 'report/1/csv-download';
-export const WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_ENDPOINT = 'report/2/csv-download';
-export const WORKERY_REPORT_THREE_CSV_DOWNLOAD_API_ENDPOINT = 'report/3/csv-download';
-export const WORKERY_REPORT_FOUR_CSV_DOWNLOAD_API_ENDPOINT = 'report/4/csv-download';
-export const WORKERY_REPORT_FIVE_CSV_DOWNLOAD_API_ENDPOINT = 'report/5/csv-download';
-export const WORKERY_REPORT_SIX_CSV_DOWNLOAD_API_ENDPOINT = 'report/6/csv-download';
-export const WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/7/csv-download';
-export const WORKERY_REPORT_EIGHT_CSV_DOWNLOAD_API_ENDPOINT = 'report/8/csv-download';
-export const WORKERY_REPORT_NINE_CSV_DOWNLOAD_API_ENDPOINT = 'report/9/csv-download';
-export const WORKERY_REPORT_TEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/10/csv-download';
-export const WORKERY_REPORT_ELEVEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/11/csv-download';
-export const WORKERY_REPORT_TWELVE_CSV_DOWNLOAD_API_ENDPOINT = 'report/12/csv-download';
-export const WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/13/csv-download';
-export const WORKERY_REPORT_FOURTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/14/csv-download';
-export const WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/15/csv-download';
-export const WORKERY_REPORT_SIXTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/16/csv-download';
-export const WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/17/csv-download';
-export const WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_ENDPOINT = 'report/19/csv-download';
-export const WORKERY_REPORT_TWENTY_CSV_DOWNLOAD_API_ENDPOINT = 'report/20/csv-download';
-export const WORKERY_REPORT_TWENTY_ONE_CSV_DOWNLOAD_API_ENDPOINT = 'report/21/csv-download';
-export const WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_ENDPOINT = 'report/22/csv-download';
-export const WORKERY_ONGOING_ORDER_LIST_API_ENDPOINT = '/ongoing-orders';
-export const WORKERY_ONGOING_ORDER_DETAIL_API_ENDPOINT = '/ongoing-order/';
-export const WORKERY_ONGOING_ORDER_COMMENT_LIST_API_ENDPOINT = '/ongoing-order-comments';
-export const WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_ENDPOINT = '/v2/ongoing-order/XXX/';
-export const WORKERY_COMMENT_LIST_API_ENDPOINT = '/comments';
-export const WORKERY_STAFF_ARCHIVE_API_ENDPOINT = '/staff/XXX/archive'
-export const WORKERY_STAFF_FILE_LIST_API_ENDPOINT = '/staff-files';
-export const WORKERY_STAFF_FILE_ARCHIVE_API_ENDPOINT = '/staff-file/XXX/';
-export const WORKERY_TAG_ITEM_SEARCH_LIST_API_ENDPOINT = '/v1/search';
+export const WORKERY_API_BASE_PATH = '/api/v1'
+export const WORKERY_REFRESH_TOKEN_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/refresh-token';
+export const WORKERY_PROFILE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/profile';
+export const WORKERY_TENANT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/franchises';
+export const WORKERY_TENANT_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/franchise/';
+export const WORKERY_DASHBOARD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/dashboard';
+export const WORKERY_NAVIGATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/navigation';
+export const WORKERY_CLIENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customers';
+export const WORKERY_CLIENT_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer/';
+export const WORKERY_CLIENT_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer-operations/archive';
+export const WORKERY_CLIENT_REZ_UPGRADE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer-operations/upgrade-residential';
+export const WORKERY_CLIENT_PERMANENTLY_DELETE_UPGRADE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer-operations/permanently-delete';
+export const WORKERY_CLIENT_AVATAR_CREATE_OR_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer-operations/upload-avatar';
+export const WORKERY_CLIENT_COMMENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer-comments';
+export const WORKERY_CLIENT_FILE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer-files';
+export const WORKERY_CLIENT_FILE_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer-file/XXX/';
+export const WORKERY_CLIENT_CONTACT_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer/XXX/contact';
+export const WORKERY_CLIENT_ADDRESS_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer/XXX/address';
+export const WORKERY_CLIENT_METRICS_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/customer/XXX/metrics';
+export const WORKERY_ORDER_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/orders';
+export const WORKERY_ORDER_INVOICE_RETRIEVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/invoice';
+export const WORKERY_ORDER_INVOICE_DOWNLOAD_PDF_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/download-invoice-pdf';
+export const WORKERY_ORDER_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/';
+export const WORKERY_ORDER_LITE_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/lite';
+export const WORKERY_ORDER_FINANCIAL_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/financial';
+export const WORKERY_ORDER_COMMENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-comments';
+export const WORKERY_ORDER_TRANSFER_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-operations/transfer';
+export const WORKERY_ORDER_UNASSIGN_ASSOCIATE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-operations/unassign';
+export const WORKERY_ORDER_CLOSE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-operations/close';
+export const WORKERY_ORDER_REOPEN_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-operations/reopen';
+export const WORKERY_ORDER_POSTPONE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-operations/postpone';
+export const WORKERY_TASK_ORDER_COMPLETION_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-operations/order-completion';
+export const WORKERY_ORDER_CLONE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-operations/clone';
+export const WORKERY_ORDER_INVOICE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-operations/invoice';
+export const WORKERY_ORDER_FILE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-files';
+export const WORKERY_ORDER_FILE_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-file/XXX/';
+export const WORKERY_MY_ORDER_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/my-orders';
+export const WORKERY_MY_ORDER_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/my-order/';
+export const WORKERY_INVOICE_FIRST_SECTION_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/invoice/first-section';
+export const WORKERY_INVOICE_SECOND_SECTION_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/invoice/second-section';
+export const WORKERY_INVOICE_THIRD_SECTION_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/invoice/third-section';
+export const WORKERY_DEPOSIT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/deposits';
+export const WORKERY_DEPOSIT_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order/XXX/deposit/YYY';
+export const WORKERY_ASSOCIATE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associates';
+export const WORKERY_ASSOCIATE_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate/';
+export const WORKERY_ASSOCIATE_COMMENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-comments';
+export const WORKERY_ASSOCIATE_CONTACT_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate/XXX/contact';
+export const WORKERY_ASSOCIATE_ADDRESS_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate/XXX/address';
+export const WORKERY_ASSOCIATE_ACCOUNT_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate/XXX/account';
+export const WORKERY_ASSOCIATE_METRICS_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate/XXX/metrics';
+export const WORKERY_ASSOCIATE_FILE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-files';
+export const WORKERY_ASSOCIATE_FILE_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-file/XXX/';
+export const WORKERY_ASSOCIATE_AVATAR_CREATE_OR_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-operations/upload-avatar';
+export const WORKERY_ASSOCIATE_BALANCE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-operations/balance';
+export const WORKERY_ASSOCIATE_CHANGE_PASSWORD_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-operations/password';
+export const WORKERY_ASSOCIATE_UPGRADE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-operations/upgrade-residential';
+export const WORKERY_ASSOCIATE_DOWNGRADE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-operations/downgrade-commercial';
+export const WORKERY_ASSOCIATE_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-operations/archive';
+export const WORKERY_ASSOCIATE_PERMANENTLY_DELETE_UPGRADE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-operations/permanently-delete';
+export const WORKERY_TASK_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/tasks';
+export const WORKERY_TASK_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/task/';
+export const WORKERY_TASK_AVAILABLE_ASSOCIATE_LIST_CREATE_API_URL = 'task-operations/available-associates';
+export const WORKERY_TASK_ASSIGN_ASSOCIATE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/task-operations/assign-associate';
+export const WORKERY_TASK_FOLLOW_UP_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/task-operations/follow-up';
+export const WORKERY_TASK_FOLLOW_UP_PENDING_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/task-operations/follow-up-pending';
+export const WORKERY_TASK_ORDER_COMPLETION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/task-operations/order-completion';
+export const WORKERY_TASK_SURVEY_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/task-operations/survey';
+export const WORKERY_STAFF_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff';
+export const WORKERY_STAFF_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff/'
+export const WORKERY_STAFF_COMMENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff-comments';
+export const WORKERY_STAFF_CONTACT_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff/XXX/contact';
+export const WORKERY_STAFF_ADDRESS_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff/XXX/address';
+export const WORKERY_STAFF_ACCOUNT_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff/XXX/account';
+export const WORKERY_STAFF_METRICS_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff/XXX/metrics';
+export const WORKERY_STAFF_CHANGE_ROLE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff-operations/change-role';
+export const WORKERY_STAFF_CHANGE_PASSWORD_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff-operations/change-password';
+export const WORKERY_STAFF_AVATAR_CREATE_OR_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff-operations/upload-avatar';
+export const WORKERY_STAFF_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff-operations/archive';
+export const WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff-operations/permanently-delete';
+export const WORKERY_FINANCIAL_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/financials';
+export const WORKERY_FINANCIAL_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/financial/';
+export const WORKERY_TAG_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/tags';
+export const WORKERY_TAG_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/tag/';
+export const WORKERY_PRIVATE_FILE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/private-files';
+export const WORKERY_PRIVATE_FILE_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/private-file/';
+export const WORKERY_HOW_HEAR_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/how-hears';
+export const WORKERY_HOW_HEAR_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/how-hear/';
+export const WORKERY_AWAY_LOG_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-away-logs';
+export const WORKERY_AWAY_LOG_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/associate-away-log/';
+export const WORKERY_BULLETIN_BOARD_ITEM_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/bulletin-board-items';
+export const WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/bulletin-board-item/';
+export const WORKERY_SKILL_SET_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/skill-sets';
+export const WORKERY_SKILL_SET_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/skill-set/';
+export const WORKERY_INSURANCE_REQUIREMENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/insurance-requirements';
+export const WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/insurance-requirement/';
+export const WORKERY_SERVICE_FEE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-service-fees';
+export const WORKERY_SERVICE_FEE_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/order-service-fee/';
+export const WORKERY_ARCHIVED_CLIENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/deactivated-customers';
+export const WORKERY_VEHICLE_TYPE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/vehicle-types';
+export const WORKERY_VEHICLE_TYPE_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/vehicle-type/';
+export const WORKERY_PARTNER_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partners';
+export const WORKERY_PARTNER_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner/';
+export const WORKERY_PARTNER_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner-operations/archive';
+export const WORKERY_PARTNER_REZ_UPGRADE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner-operations/upgrade-residential';
+export const WORKERY_PARTNER_PERMANENTLY_DELETE_UPGRADE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner-operations/permanently-delete';
+export const WORKERY_PARTNER_AVATAR_CREATE_OR_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner-operations/upload-avatar';
+export const WORKERY_PARTNER_COMMENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner-comments';
+export const WORKERY_PARTNER_FILE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner-files';
+export const WORKERY_PARTNER_FILE_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner-file/XXX/';
+export const WORKERY_PARTNER_CONTACT_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner/XXX/contact';
+export const WORKERY_PARTNER_ADDRESS_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner/XXX/address';
+export const WORKERY_PARTNER_METRICS_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/partner/XXX/metrics';
+export const WORKERY_ACTIVITY_SHEET_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/activity-sheets';
+export const WORKERY_ACTIVITY_SHEET_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/activity-sheet/';
+export const WORKERY_REPORT_ONE_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/1';
+export const WORKERY_REPORT_TWO_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/2';
+export const WORKERY_REPORT_THREE_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/3';
+export const WORKERY_REPORT_FOUR_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/4';
+export const WORKERY_REPORT_FIVE_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/5';
+export const WORKERY_REPORT_SIX_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/6';
+export const WORKERY_REPORT_SEVEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/7';
+export const WORKERY_REPORT_EIGHT_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/8';
+export const WORKERY_REPORT_NINE_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/9';
+export const WORKERY_REPORT_TEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/10';
+export const WORKERY_REPORT_ELEVEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/11';
+export const WORKERY_REPORT_TWELVE_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/12';
+export const WORKERY_REPORT_THIRTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/13';
+export const WORKERY_REPORT_FOURTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/14';
+export const WORKERY_REPORT_FIFTHTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/15';
+export const WORKERY_REPORT_SIXTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/16';
+export const WORKERY_REPORT_SEVENTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/17';
+export const WORKERY_REPORT_EIGHTEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/18';
+export const WORKERY_REPORT_NINETEEN_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/19';
+export const WORKERY_REPORT_TWENTY_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/20';
+export const WORKERY_REPORT_TWENTY_ONE_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/21';
+export const WORKERY_REPORT_TWENTY_TWO_CSV_DOWNLOAD_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/download-report/22';
+export const WORKERY_ONGOING_ORDER_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/ongoing-orders';
+export const WORKERY_ONGOING_ORDER_DETAIL_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/ongoing-order/';
+export const WORKERY_ONGOING_ORDER_COMMENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/ongoing-order-comments';
+export const WORKERY_ONGOING_ORDER_RETRIEVE_UPDATE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/v2/ongoing-order/XXX/';
+export const WORKERY_COMMENT_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/comments';
+export const WORKERY_STAFF_FILE_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff-files';
+export const WORKERY_STAFF_FILE_ARCHIVE_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/staff-file/XXX/';
+export const WORKERY_TAG_ITEM_SEARCH_LIST_API_URL = process.env.REACT_APP_API_HOST + '/api/v1/v1/search';
 
-// OLD - PLEASE DO SOMETHING WITH THESE.
-export const WORKERY_LOGOUT_API_ENDPOINT ='/logout';
-export const WORKERY_REGISTER_API_URL = process.env.REACT_APP_API_HOST+'/api/register';
-export const WORKERY_ACTIVATE_API_URL = process.env.REACT_APP_API_HOST+'/api/activate';
-export const WORKERY_ACTIVATE_API_ENDPOINT = '/activate';
-export const WORKERY_SEND_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/send-password-reset';
-export const WORKERY_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/reset-password';
-export const WORKERY_ONBOARDING_API_URL = process.env.REACT_APP_API_HOST+'/api/onboarding';
-export const WORKERY_PURCHASE_DEVICE_API_URL = process.env.REACT_APP_API_HOST+'/api/purchase-device';
-export const WORKERY_PROFILE_API_URL = process.env.REACT_APP_API_HOST+'/api/profile';
+export const WORKERY_LOGOUT_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/logout';
+export const WORKERY_REGISTER_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/register';
+export const WORKERY_LOGIN_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/login';
+export const WORKERY_ACTIVATE_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/activate';
+export const WORKERY_SEND_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/send-password-reset';
+export const WORKERY_PASSWORD_RESET_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/reset-password';
+export const WORKERY_ONBOARDING_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/onboarding';
+export const WORKERY_PURCHASE_DEVICE_API_URL = process.env.REACT_APP_API_HOST+'/api/v1/purchase-device';
+
 
 
 /**
  *  The type of choices we have for the `Production` API endpoint for the
  *  `type_of` field.
  */
-export const EXECUTIVE_GROUP_ID = 1
-export const MANAGEMENT_GROUP_ID = 2
-export const FRONTLINE_GROUP_ID = 3
-export const ASSOCIATE_GROUP_ID = 4
-export const CUSTOMER_GROUP_ID = 5
-export const ANONYMOUS_GROUP_ID = 0
+export const EXECUTIVE_ROLE_ID = 1
+export const MANAGEMENT_ROLE_ID = 2
+export const FRONTLINE_ROLE_ID = 3
+export const ASSOCIATE_ROLE_ID = 4
+export const CUSTOMER_ROLE_ID = 5
+export const ANONYMOUS_ROLE_ID = 0
 export const GROUP_MEMBERSHIP_CHOICES = [
     {
         selectName: "group",
-        value: EXECUTIVE_GROUP_ID,
+        value: EXECUTIVE_ROLE_ID,
         label: "Executive"
     },{
         selectName: "group",
-        value: MANAGEMENT_GROUP_ID,
+        value: MANAGEMENT_ROLE_ID,
         label: "Manager"
     },{
         selectName: "group",
-        value: FRONTLINE_GROUP_ID,
+        value: FRONTLINE_ROLE_ID,
         label: "Frontline Staff"
     },{
         selectName: "group",
-        value: ASSOCIATE_GROUP_ID,
+        value: ASSOCIATE_ROLE_ID,
         label: "Associate"
     },{
         selectName: "group",
-        value: CUSTOMER_GROUP_ID,
+        value: CUSTOMER_ROLE_ID,
         label: "Member"
     }
 ];
@@ -562,11 +569,11 @@ export const GENDER_RADIO_CHOICES = [
 export const TENANT_STAFF_GROUP_MEMBERSHIP_CHOICES = [
     {
         selectName: "accountType",
-        value: MANAGEMENT_GROUP_ID,
+        value: MANAGEMENT_ROLE_ID,
         label: "Management"
     },{
         selectName: "accountType",
-        value: FRONTLINE_GROUP_ID,
+        value: FRONTLINE_ROLE_ID,
         label: "Frontline Staff"
     }
 ];
@@ -716,36 +723,36 @@ export const MOBILE_CONTACT_POINT_TYPE_OF_ID = 2
 export const WORK_CONTACT_POINT_TYPE_OF_ID = 3
 export const PRIMARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES = [
     {
-        id: 'primaryPhoneTypeOf-1-choice',
-        selectName: "primaryPhoneTypeOf",
+        id: 'telephoneTypeOf-1-choice',
+        selectName: "telephoneTypeOf",
         value: TELEPHONE_CONTACT_POINT_TYPE_OF_ID,
         label: "Landline"
     },{
-        id: 'primaryPhoneTypeOf-2-choice',
-        selectName: "primaryPhoneTypeOf",
+        id: 'telephoneTypeOf-2-choice',
+        selectName: "telephoneTypeOf",
         value: MOBILE_CONTACT_POINT_TYPE_OF_ID,
         label: "Mobile"
     },{
-        id: 'primaryPhoneTypeOf-3-choice',
-        selectName: "primaryPhoneTypeOf",
+        id: 'telephoneTypeOf-3-choice',
+        selectName: "telephoneTypeOf",
         value: WORK_CONTACT_POINT_TYPE_OF_ID,
         label: "Work"
     }
 ];
 export const SECONDARY_PHONE_CONTACT_POINT_TYPE_OF_CHOICES = [
     {
-        id: 'secondaryPhoneTypeOf-1-choice',
-        selectName: "secondaryPhoneTypeOf",
+        id: 'otherTelephoneTypeOf-1-choice',
+        selectName: "otherTelephoneTypeOf",
         value: TELEPHONE_CONTACT_POINT_TYPE_OF_ID,
         label: "Landline"
     },{
-        id: 'secondaryPhoneTypeOf-2-choice',
-        selectName: "secondaryPhoneTypeOf",
+        id: 'otherTelephoneTypeOf-2-choice',
+        selectName: "otherTelephoneTypeOf",
         value: MOBILE_CONTACT_POINT_TYPE_OF_ID,
         label: "Mobile"
     },{
-        id: 'secondaryPhoneTypeOf-3-choice',
-        selectName: "secondaryPhoneTypeOf",
+        id: 'otherTelephoneTypeOf-3-choice',
+        selectName: "otherTelephoneTypeOf",
         value: WORK_CONTACT_POINT_TYPE_OF_ID,
         label: "Work"
     }
@@ -1075,15 +1082,19 @@ export const WORK_ORDER_POSTPONE_REASON_CHOICES = [
 ];
 
 
-export const WORK_ORDER_NEW_STATE = 'new'
-export const WORK_ORDER_DECLINED_STATE = 'declined'
-export const WORK_ORDER_PENDING_STATE = 'pending'
-export const WORK_ORDER_CANCELLED_STATE = 'cancelled'
-export const WORK_ORDER_ONGOING_STATE = 'ongoing'
-export const WORK_ORDER_IN_PROGRESS_STATE = 'in_progress'
-export const WORK_ORDER_COMPLETED_BUT_UNPAID_STATE = 'completed_and_unpaid'
-export const WORK_ORDER_COMPLETED_AND_PAID_STATE = 'completed_and_paid'
-export const WORK_ORDER_ARCHIVED_STATE = 'archived'
+export const WORK_ORDER_NEW_STATE = 1;
+export const WORK_ORDER_DECLINED_STATE = 2;
+export const WORK_ORDER_PENDING_STATE = 3;
+export const WORK_ORDER_CANCELLED_STATE = 4;
+export const WORK_ORDER_ONGOING_STATE = 5;
+export const WORK_ORDER_IN_PROGRESS_STATE = 6;
+export const WORK_ORDER_COMPLETED_BUT_UNPAID_STATE = 7;
+export const WORK_ORDER_COMPLETED_AND_PAID_STATE = 8;
+export const WORK_ORDER_ARCHIVED_STATE = 0;
+
+export const WORK_ORDER_UNASSIGNED_TYPE_OF = 0;
+export const WORK_ORDER_RESIDENTIAL_TYPE_OF = 1;
+export const WORK_ORDER_COMMERCIAL_TYPE_OF = 2;
 
 
 /**
@@ -1179,12 +1190,12 @@ export const ROLE_RADIO_CHOICES = [
     {
         id: 'role-m-choice',
         name: "role",
-        value: MANAGEMENT_GROUP_ID,
+        value: MANAGEMENT_ROLE_ID,
         label: "Management"
     },{
         id: 'role-f-choice',
         name: "role",
-        value: FRONTLINE_GROUP_ID,
+        value: FRONTLINE_ROLE_ID,
         label: "Frontline Staff"
     }
 ];

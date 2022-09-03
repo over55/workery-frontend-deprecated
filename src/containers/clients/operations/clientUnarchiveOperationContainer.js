@@ -46,9 +46,9 @@ class ClientUnarchiveOperationContainer extends Component {
     getPostData() {
         let postData = Object.assign({}, this.state);
 
-        postData.customer = this.props.clientDetail.id;
+        postData.customerId = this.props.clientDetail.id;
         postData.state = "active";
-        postData.deactivationReason = 0; // NOT_SPECIFIED
+        postData.deactivationReason = -1; // NOT_SPECIFIED
         postData.deactivationReasonOther = ""
 
         // Finally: Return our new modified data.

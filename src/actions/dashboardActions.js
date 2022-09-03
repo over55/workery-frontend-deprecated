@@ -1,11 +1,10 @@
 import axios from 'axios';
 import store from '../store';
 import { camelizeKeys } from 'humps';
-import msgpack from 'msgpack-lite';
 
 import { DASHBOARD_REQUEST, DASHBOARD_FAILURE, DASHBOARD_SUCCESS } from '../constants/actionTypes';
 import getCustomAxios from '../helpers/customAxios';
-import { WORKERY_DASHBOARD_API_ENDPOINT } from "../constants/api"
+import { WORKERY_DASHBOARD_API_URL } from "../constants/api"
 
 
 export const setDashboardRequest = () => ({
@@ -44,12 +43,8 @@ export function pullDashboard(schema, successCallback=null, failedCallback=null)
         const customAxios = getCustomAxios();
 
         // Make the call to the web-service.
-        customAxios.get(WORKERY_DASHBOARD_API_ENDPOINT).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-
-            console.log(responseData); // For debugging purposes.
-
+        customAxios.get(WORKERY_DASHBOARD_API_URL).then( (successResponse) => { // SUCCESS
+            const responseData = successResponse.data;
             let dashboard = camelizeKeys(responseData);
 
             // Extra.
@@ -71,10 +66,7 @@ export function pullDashboard(schema, successCallback=null, failedCallback=null)
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 

@@ -2,13 +2,12 @@ import axios from 'axios';
 import store from '../store';
 import { camelizeKeys, decamelize, decamelizeKeys } from 'humps';
 import isEmpty from 'lodash/isEmpty';
-import msgpack from 'msgpack-lite';
 
 import {
     SKILL_SET_LIST_REQUEST, SKILL_SET_LIST_FAILURE, SKILL_SET_LIST_SUCCESS,
     SKILL_SET_DETAIL_REQUEST, SKILL_SET_DETAIL_FAILURE, SKILL_SET_DETAIL_SUCCESS
 } from '../constants/actionTypes';
-import { WORKERY_SKILL_SET_LIST_API_ENDPOINT, WORKERY_SKILL_SET_DETAIL_API_ENDPOINT } from '../constants/api';
+import { WORKERY_SKILL_SET_LIST_API_URL, WORKERY_SKILL_SET_DETAIL_API_URL } from '../constants/api';
 import getCustomAxios from '../helpers/customAxios';
 
 
@@ -16,21 +15,21 @@ import getCustomAxios from '../helpers/customAxios';
 //                                 LIST                                       //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullSkillSetList(page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullSkillSetList(offset=0, limit=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
             setSkillSetListRequest()
         );
 
-        console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback);
+        console.log(offset, limit, filtersMap, onSuccessCallback, onFailureCallback);
 
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_SKILL_SET_LIST_API_ENDPOINT+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_SKILL_SET_LIST_API_URL+"?offset="+offset+"&page_size="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -40,8 +39,7 @@ export function pullSkillSetList(page=1, sizePerPage=10, filtersMap=new Map(), o
 
         // Make the API call.
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
 
             console.log(responseData); // For debugging purposes.
 
@@ -50,7 +48,7 @@ export function pullSkillSetList(page=1, sizePerPage=10, filtersMap=new Map(), o
             // Extra.
             data['isAPIRequestRunning'] = false;
             data['errors'] = {};
-            data['page'] = page;
+            data['offset'] = offset;
 
             // console.log(data); // For debugging purposes.
 
@@ -69,10 +67,7 @@ export function pullSkillSetList(page=1, sizePerPage=10, filtersMap=new Map(), o
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -119,13 +114,9 @@ export function postSkillSetDetail(postData, successCallback, failedCallback) {
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.post(WORKERY_SKILL_SET_LIST_API_ENDPOINT, buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.post(WORKERY_SKILL_SET_LIST_API_URL, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
 
             let device = camelizeKeys(responseData);
 
@@ -143,10 +134,7 @@ export function postSkillSetDetail(postData, successCallback, failedCallback) {
             );
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -189,11 +177,10 @@ export function pullSkillSetDetail(id, successCallback, failedCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_SKILL_SET_DETAIL_API_URL+id;
 
         customAxios.get(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+            const responseData = successResponse.data;
             // console.log(successResult); // For debugging purposes.
 
             let profile = camelizeKeys(responseData);
@@ -216,10 +203,7 @@ export function pullSkillSetDetail(id, successCallback, failedCallback) {
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -266,13 +250,9 @@ export function putSkillSetDetail(postData, successCallback, failedCallback) {
         // data so our API endpoint will be able to read it.
         let decamelizedData = decamelizeKeys(postData);
 
-        // Encode from JS Object to MessagePack (Buffer)
-        var buffer = msgpack.encode(decamelizedData);
-
         // Perform our API submission.
-        customAxios.put(WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+postData.id+"/", buffer).then( (successResponse) => {
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
+        customAxios.put(WORKERY_SKILL_SET_DETAIL_API_URL+postData.id, decamelizedData).then( (successResponse) => {
+            const responseData = successResponse.data;
             let device = camelizeKeys(responseData);
 
             // Extra.
@@ -292,10 +272,7 @@ export function putSkillSetDetail(postData, successCallback, failedCallback) {
 
         }).catch( (exception) => {
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -338,37 +315,22 @@ export function deleteSkillSetDetail(id, successCallback, failedCallback) {
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
-        const aURL = WORKERY_SKILL_SET_DETAIL_API_ENDPOINT+id+"/";
+        const aURL = WORKERY_SKILL_SET_DETAIL_API_URL+id;
 
         customAxios.delete(aURL).then( (successResponse) => { // SUCCESS
-            // Decode our MessagePack (Buffer) into JS Object.
-            const responseData = msgpack.decode(Buffer(successResponse.data));
-            // console.log(successResult); // For debugging purposes.
-
-            let profile = camelizeKeys(responseData);
-
-            // Extra.
-            profile['isAPIRequestRunning'] = false;
-            profile['errors'] = {};
-
-            console.log("pullSkillSetDetail | Success:", profile); // For debugging purposes.
-
             // Update the global state of the application to store our
             // user profile for the application.
             store.dispatch(
-                setSkillSetDetailSuccess(profile)
+                setSkillSetDetailSuccess(null)
             );
 
             if (successCallback) {
-                successCallback(profile);
+                successCallback(null);
             }
 
         }).catch( (exception) => { // ERROR
             if (exception.response) {
-                const responseBinaryData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
-
-                // Decode our MessagePack (Buffer) into JS Object.
-                const responseData = msgpack.decode(Buffer(responseBinaryData));
+                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
 
@@ -405,7 +367,7 @@ export const setSkillSetListRequest = () => ({
     type: SKILL_SET_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
-        page: 1,
+        offset: 0,
         errors: {}
     },
 });
@@ -463,7 +425,8 @@ export function getSkillSetReactSelectOptions(skillSetList=[], selectName="skill
                 skillSetOptions.push({
                     selectName: selectName,
                     value: skillSet.id,
-                    label: skillSet.subCategory
+                    label: skillSet.subCategory,
+                    skillSetId: skillSet.id,
                 });
                 // console.log(skillSet);
             }
@@ -480,25 +443,26 @@ export function getSkillSetReactSelectOptions(skillSetList=[], selectName="skill
  * from the API and returns the HTML dropdown selections which will be consumed
  * by the GUI powered by `react-select`.
  */
-export function getPickedSkillSetReactSelectOptions(skillSetPKsArray, skillSetList=[], selectName="skillSet") {
+export function getPickedSkillSetReactSelectOptions(pickedSkillSetArray, skillSetList=[], selectName="skillSet") {
     const skillSetOptions = [];
     const isAPIResponseNotEmpty = isEmpty(skillSetList) === false;
-    const isPKsArrayNotEmpty = isEmpty(skillSetPKsArray) === false;
-    if (isAPIResponseNotEmpty && isPKsArrayNotEmpty) {
+    const isPickedArrayNotEmpty = isEmpty(pickedSkillSetArray) === false;
+    if (isAPIResponseNotEmpty && isPickedArrayNotEmpty) {
         const results = skillSetList.results;
         const isResultsNotEmpty = isEmpty(results) === false;
         if (isResultsNotEmpty) {
-            for (let i = 0; i < skillSetPKsArray.length; i++) {
-                let skillSetPK = skillSetPKsArray[i];
+            for (let i = 0; i < pickedSkillSetArray.length; i++) {
+                let pickedSkillSet = pickedSkillSetArray[i];
 
                 for (let j = 0; j < results.length; j++) {
                     let skillSet = results[j];
 
-                    if (skillSet.id === skillSetPK) {
+                    if (skillSet.id === pickedSkillSet.skillSetId) {
                         skillSetOptions.push({
                             selectName: selectName,
                             value: skillSet.id,
-                            label: skillSet.subCategory
+                            label: skillSet.subCategory,
+                            skillSetId: skillSet.id,
                         });
                         // console.log(skillSet);
                     } // end IF

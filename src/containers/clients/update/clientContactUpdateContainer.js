@@ -48,10 +48,10 @@ class ClientUpdateContainer extends Component {
             organizationTypeOf: this.props.clientDetail.organizationTypeOf,
             givenName: this.props.clientDetail.givenName,
             lastName: this.props.clientDetail.lastName,
-            primaryPhone: this.props.clientDetail.telephone,
-            primaryPhoneTypeOf: this.props.clientDetail.telephoneTypeOf,
-            secondaryPhone: this.props.clientDetail.otherTelephone,
-            secondaryPhoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
+            telephone: this.props.clientDetail.telephone,
+            telephoneTypeOf: this.props.clientDetail.telephoneTypeOf,
+            otherTelephone: this.props.clientDetail.otherTelephone,
+            otherTelephoneTypeOf: this.props.clientDetail.otherTelephoneTypeOf,
             email: this.props.clientDetail.email,
             isOkToEmail: isOkToEmail,
             isOkToText: isOkToText,
@@ -84,12 +84,16 @@ class ClientUpdateContainer extends Component {
         }
 
         // (8) Telephone type: This field is required.;
-        if (this.state.primaryPhoneTypeOf === undefined || this.state.primaryPhoneTypeOf === null || this.state.primaryPhoneTypeOf === "") {
-            postData.primaryPhoneTypeOf = 1;
+        if (this.state.telephoneTypeOf === undefined || this.state.telephoneTypeOf === null || this.state.telephoneTypeOf === "") {
+            postData.telephoneTypeOf = 1;
         }
-        if (this.state.secondaryPhoneTypeOf === undefined || this.state.secondaryPhoneTypeOf === null || this.state.secondaryPhoneTypeOf === "") {
-            postData.secondaryPhoneTypeOf = 1;
+        if (this.state.otherTelephoneTypeOf === undefined || this.state.otherTelephoneTypeOf === null || this.state.otherTelephoneTypeOf === "") {
+            postData.otherTelephoneTypeOf = 1;
         }
+
+        // Boolean handler.
+        postData.isOkToEmail = parseInt(this.state.isOkToEmail) === 1 ? true : false;
+        postData.isOkToText = parseInt(this.state.isOkToText) === 1 ? true : false;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -105,8 +109,8 @@ class ClientUpdateContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // Fetch all our GUI drop-down options which are populated by the API.
-        this.props.pullHowHearList(1,1000);
-        this.props.pullTagList(1,1000);
+        this.props.pullHowHearList(0,1000);
+        this.props.pullTagList(0,1000);
     }
 
     componentWillUnmount() {
@@ -201,45 +205,11 @@ class ClientUpdateContainer extends Component {
      */
 
     render() {
-        const {
-            errors, id, isLoading,
-
-            // STEP 3
-            typeOf,
-
-            // STEP 4 - REZ
-            givenName, lastName, primaryPhone, primaryPhoneTypeOf, secondaryPhone, secondaryPhoneTypeOf, email, isOkToText, isOkToEmail,
-
-            // STEP 4 - BIZ
-            organizationName, organizationTypeOf,
-        } = this.state;
-
         return (
             <ClientContactUpdateComponent
-                // STEP 3
-                typeOf={typeOf}
-
-                // STEP 4
-                organizationName={organizationName}
-                organizationTypeOf={organizationTypeOf}
-                givenName={givenName}
-                lastName={lastName}
-                primaryPhone={primaryPhone}
-                primaryPhoneTypeOf={primaryPhoneTypeOf}
-                secondaryPhone={secondaryPhone}
-                secondaryPhoneTypeOf={secondaryPhoneTypeOf}
-                email={email}
-                isOkToText={isOkToText}
-                isOkToEmail={isOkToEmail}
-
-                // EVERYTHING ELSE
-                isLoading={isLoading}
-                id={id}
-                errors={errors}
-                onTextChange={this.onTextChange}
-                onSelectChange={this.onSelectChange}
-                onRadioChange={this.onRadioChange}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
