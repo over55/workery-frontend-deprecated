@@ -52,10 +52,10 @@ EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
 
 ### BUILD
-# docker build -f prod.Dockerfile -t over55/workery-frontend:latest --platform linux/amd64 --build-arg REACT_APP_API_HOST=https://theworkery.cloud --build-arg REACT_APP_API_DOMAIN=theworkery.cloud --build-arg REACT_APP_API_PROTOCOL=https --build-arg REACT_APP_WWW_DOMAIN=theworkery.app --build-arg REACT_APP_WWW_PROTOCOL=https --build-arg REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES=10485760 --build-arg REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE="File is too large. The maximum size is 10 MB." .
+# docker build -f prod.Dockerfile -t over55/workery-frontend:prod-latest --platform linux/amd64 --build-arg REACT_APP_API_HOST=https://theworkery.cloud --build-arg REACT_APP_API_DOMAIN=theworkery.cloud --build-arg REACT_APP_API_PROTOCOL=https --build-arg REACT_APP_WWW_DOMAIN=theworkery.app --build-arg REACT_APP_WWW_PROTOCOL=https --build-arg REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_IN_BYTES=10485760 --build-arg REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE="File is too large. The maximum size is 10 MB." .
 
 ### TAG
-# docker tag over55/workery-frontend:latest over55/workery-frontend:latest
+# docker tag over55/workery-frontend:prod-latest over55/workery-frontend:prod-latest
 
 ### UPLOAD
-# docker push over55/workery-frontend:latest
+# docker push over55/workery-frontend:prod-latest
