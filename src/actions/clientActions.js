@@ -168,6 +168,25 @@ export function postClientDetail(postData, onSuccessCallback, onFailureCallback)
                 if (onFailureCallback) {
                     onFailureCallback(errors);
                 }
+            } else {
+                let errors = camelizeKeys(exception);
+
+                console.log("postClientDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setClientDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => {
@@ -223,6 +242,25 @@ export function pullClientDetail(id, onSuccessCallback, onFailureCallback) {
                 const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
+
+                console.log("pullClientDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setClientDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            } else {
+                let errors = camelizeKeys(exception);
 
                 console.log("pullClientDetail | error:", errors); // For debuggin purposes only.
 
@@ -311,6 +349,25 @@ export function putClientContactDetail(data, onSuccessCallback, onFailureCallbac
                 if (onFailureCallback) {
                     onFailureCallback(errors);
                 }
+            } else {
+                let errors = camelizeKeys(exception);
+
+                console.log("putClientDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setClientDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => {
@@ -379,6 +436,25 @@ export function putClientAddressDetail(data, onSuccessCallback, onFailureCallbac
                 if (onFailureCallback) {
                     onFailureCallback(errors);
                 }
+            } else {
+                let errors = camelizeKeys(exception);
+
+                console.log("putClientDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setClientDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
             }
 
         }).then( () => {
@@ -430,6 +506,25 @@ export function putClientMetricsDetail(data, onSuccessCallback, onFailureCallbac
                 const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
+
+                console.log("putClientDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setClientDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (onFailureCallback) {
+                    onFailureCallback(errors);
+                }
+            } else {
+                let errors = camelizeKeys(exception);
 
                 console.log("putClientDetail | error:", errors); // For debuggin purposes only.
 
