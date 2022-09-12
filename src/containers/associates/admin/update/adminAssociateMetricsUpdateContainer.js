@@ -106,10 +106,12 @@ class AdminAssociateMetricsUpdateContainer extends Component {
 
         // (5) Process tags.
         let tagPKs = [];
-        for (let t of this.state.tags) {
-            tagPKs.push(t.tagId);
+        if (this.state.tags !== undefined && this.state.tags !== null && this.state.tags !== "" && this.state.tags !== "null") {
+            for (let t of this.state.tags) {
+                tagPKs.push(t.tagId);
+            }
+            postData.tags = tagPKs;
         }
-        postData.tags = tagPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);

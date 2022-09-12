@@ -180,22 +180,28 @@ class AdminAssociateAccountUpdateContainer extends Component {
         //
 
         let ssPKs = [];
-        for (let ss of this.state.skillSets) {
-            ssPKs.push(ss.skillSetId);
+        if (this.state.skillSets !== undefined && this.state.skillSets !== null && this.state.skillSets !== "" && this.state.skillSets !== "null") {
+            for (let ss of this.state.skillSets) {
+                ssPKs.push(ss.skillSetId);
+            }
+            postData.skillSets = ssPKs;
         }
-        postData.skillSets = ssPKs;
 
         let iiPKs = [];
-        for (let ii of this.state.insuranceRequirements) {
-            iiPKs.push(ii.insuranceRequirementId);
+        if (this.state.insuranceRequirements !== undefined && this.state.insuranceRequirements !== null && this.state.insuranceRequirements !== "" && this.state.insuranceRequirements !== "null") {
+            for (let ii of this.state.insuranceRequirements) {
+                iiPKs.push(ii.insuranceRequirementId);
+            }
+            postData.insuranceRequirements = iiPKs;
         }
-        postData.insuranceRequirements = iiPKs;
 
         let vtPKs = [];
-        for (let vt of this.state.vehicleTypes) {
-            vtPKs.push(vt.vehicleTypeId);
+        if (this.state.vehicleTypes !== undefined && this.state.vehicleTypes !== null && this.state.vehicleTypes !== "" && this.state.vehicleTypes !== "null") {
+            for (let vt of this.state.vehicleTypes) {
+                vtPKs.push(vt.vehicleTypeId);
+            }
+            postData.vehicleTypes = vtPKs;
         }
-        postData.vehicleTypes = vtPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
