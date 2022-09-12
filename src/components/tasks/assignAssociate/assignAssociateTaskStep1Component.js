@@ -76,7 +76,7 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Client Phone #</th>
                                     <td>
-                                        {customer &&
+                                        {task && customer && customer.telephone &&
                                             <a href={`tel:${customer.telephone}`}>
                                                 {customer.telephone}
                                             </a>

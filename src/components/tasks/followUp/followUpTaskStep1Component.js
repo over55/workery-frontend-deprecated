@@ -78,7 +78,7 @@ export default class FollowUpTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Client Phone #</th>
                                     <td>
-                                        {task &&
+                                        {task && customer && customer.telephone &&
                                             <a href={`tel:${customer.telephone}`}>
                                                 {customer.telephone}
                                             </a>
@@ -104,7 +104,7 @@ export default class FollowUpTaskStep1Component extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Phone #</th>
                                     <td>
-                                        {task &&
+                                        {task && associate && associate.telephone &&
                                             <a href={`tel:${associate.telephone}`}>
                                                 {associate.telephone}
                                             </a>
