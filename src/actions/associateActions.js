@@ -163,6 +163,25 @@ export function postAssociateDetail(postData, successCallback, failedCallback) {
                 if (failedCallback) {
                     failedCallback(errors);
                 }
+            } else {
+                let errors = camelizeKeys(exception);
+
+                console.log("postAssociateDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (failedCallback) {
+                    failedCallback(errors);
+                }
             }
 
         }).then( () => {
@@ -285,6 +304,25 @@ export function putAssociateContactDetail(data, successCallback, failedCallback)
                 const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
 
                 let errors = camelizeKeys(responseData);
+
+                console.log("putAssociateDetail | error:", errors); // For debuggin purposes only.
+
+                // Send our failure to the redux.
+                store.dispatch(
+                    setAssociateDetailFailure({
+                        isAPIRequestRunning: false,
+                        errors: errors
+                    })
+                );
+
+                // DEVELOPERS NOTE:
+                // IF A CALLBACK FUNCTION WAS SET THEN WE WILL RETURN THE JSON
+                // OBJECT WE GOT FROM THE API.
+                if (failedCallback) {
+                    failedCallback(errors);
+                }
+            } else {
+                let errors = camelizeKeys(exception);
 
                 console.log("putAssociateDetail | error:", errors); // For debuggin purposes only.
 
