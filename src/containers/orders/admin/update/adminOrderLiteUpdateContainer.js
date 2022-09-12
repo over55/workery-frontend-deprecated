@@ -95,16 +95,20 @@ class AdminOrderLiteUpdateContainer extends Component {
         //
 
         let ssPKs = [];
-        for (let ss of this.state.skillSets) {
-            ssPKs.push(ss.skillSetId);
+        if (this.state.skillSets !== undefined && this.state.skillSets !== null && this.state.skillSets !== "" && this.state.skillSets !== "null") {
+            for (let ss of this.state.skillSets) {
+                ssPKs.push(ss.skillSetId);
+            }
+            postData.skillSets = ssPKs;
         }
-        postData.skillSets = ssPKs;
 
         let tagPKs = [];
-        for (let t of this.state.tags) {
-            tagPKs.push(t.tagId);
+        if (this.state.tags !== undefined && this.state.tags !== null && this.state.tags !== "" && this.state.tags !== "null") {
+            for (let t of this.state.tags) {
+                tagPKs.push(t.tagId);
+            }
+            postData.tags = tagPKs;
         }
-        postData.tags = tagPKs;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
