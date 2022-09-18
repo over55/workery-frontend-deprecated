@@ -127,14 +127,18 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 </tr>
                                 {order && order.customer && order.customer.telephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Client {order && order.customerTelephoneTypeOf} #</th>
-                                        <td>{order.customer.telephone}</td>
+                                        <th scope="row" className="bg-light">Telephone #</th>
+                                        <td>
+                                            <a href={`tel:${order && order.customer.telephone}`}>{order && order.customer.telephone}</a>
+                                        </td>
                                     </tr>
                                 }
                                 {order && order.customer && order.customer.otherTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Client Other {order && order.customerPrettyTelephoneTypeOf} #</th>
-                                        <td>{order.customer.otherTelephone}</td>
+                                        <th scope="row" className="bg-light">Other Telephone #</th>
+                                        <td>
+                                            <a href={`tel:${order && order.customer.otherTelephone}`}>{order && order.customer.otherTelephone}</a>
+                                        </td>
                                     </tr>
                                 }
                                 <tr>
@@ -169,14 +173,18 @@ export default class AdminOrderFullRetrieveComponent extends Component {
                                 }
                                 {order && order.associate && order.associate.telephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">{order && order.associate.telephoneTypeOf} #</th>
-                                        <td>{order && order.associate.telephone}</td>
+                                        <th scope="row" className="bg-light">Telephone #</th>
+                                        <td>
+                                            <a href={`tel:${order && order.associate.telephone}`}>{order && order.associate.telephone}</a>
+                                        </td>
                                     </tr>
                                 }
                                 {order && order.associate && order.associate.otherTelephone &&
                                     <tr>
-                                        <th scope="row" className="bg-light">Other {order && order.associate.otherTelephone} #</th>
-                                        <td>{order && order.associate.otherTelephone}</td>
+                                        <th scope="row" className="bg-light">Other Telephone #</th>
+                                        <td>
+                                            <a href={`tel:${order && order.associate.otherTelephone}`}>{order && order.associate.otherTelephone}</a>
+                                        </td>
                                     </tr>
                                 }
                                 <tr>
