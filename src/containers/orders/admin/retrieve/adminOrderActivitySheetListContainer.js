@@ -18,6 +18,7 @@ class OrderActivitySheetListContainer extends Component {
         const { id } = this.props.match.params;
         const parametersMap = new Map();
         parametersMap.set("orderId", id);
+        parametersMap.set("states", "1,2,3");
         this.state = {
             // Pagination
             offset: 0,

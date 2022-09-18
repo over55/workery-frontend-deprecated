@@ -21,6 +21,7 @@ class OrderTaskListContainer extends Component {
         parametersMap.set("orderId", id);
         parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `AssociateListComponent`.
         parametersMap.set("sort_field", "id");
+        parametersMap.set("states", "1,2,3");
         this.state = {
             // Pagination
             offset: 0,

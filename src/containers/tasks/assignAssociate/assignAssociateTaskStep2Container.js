@@ -51,11 +51,13 @@ class TaskUpdateContainer extends Component {
         parametersMap.set('task_item_id', this.state.id);
         parametersMap.set('sort_order', 'asc');
         parametersMap.set('sort_field', 'last_name');
+        parametersMap.set("states", "1,2,3");
         this.props.pullTaskItemAvailableAssociateList(0, 100000, parametersMap);
 
         const parametersMap2 = new Map();
         parametersMap2.set('task_item_id', this.state.id);
         parametersMap2.set('o', 'associate_name');
+        parametersMap2.set("states", "1,2,3");
         this.props.pullActivitySheetList(0, 1000, parametersMap2);
 
         this.props.pullTaskDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
