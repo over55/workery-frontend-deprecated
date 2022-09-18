@@ -43,7 +43,27 @@ export function pullClientList(offset=0, limit=10, filtersMap=new Map(), onSucce
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
-                aURL += "&"+decamelizedkey+"="+value;
+
+                // DEVELOPERS NOTE:
+                // The `telephone` URL parameter must be structured in the
+                // following format: `+YXXXXXXX` where Y is country code and
+                // XXXXXXX is the telephone number without any spaces or
+                // special characters.
+
+                // CASE 1 OF 2: Telephone key value pair.
+                if (decamelizedkey === "telephone") {
+                    let modifiedValue = value.replace(" ", "");
+                    modifiedValue = modifiedValue.replace("(", "");
+                    modifiedValue = modifiedValue.replace(")", "");
+                    modifiedValue = modifiedValue.replace("-", "");
+                    modifiedValue = modifiedValue.replace(" ", "");
+                    modifiedValue = encodeURIComponent(modifiedValue); // Handle the "+" character.
+                    aURL += "&"+decamelizedkey+"="+modifiedValue;
+
+                // CASE 2 OF 2: Non-Telephone key value pair.
+                } else {
+                    aURL += "&"+decamelizedkey+"="+value;
+                }
             }
         )
 
