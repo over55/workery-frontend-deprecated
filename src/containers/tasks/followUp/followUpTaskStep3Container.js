@@ -57,7 +57,7 @@ class FollowUpTaskStep3Container extends Component {
         if (isEmpty(this.state.associate) === false) {
            postData.associateId = parseInt(this.state.associate.id);
         }
-        postData.hasAgreedToMeet = parseInt(this.state.status === true) ? true : false;
+        postData.hasAgreedToMeet = this.state.status === "true" ? true : false;
         if (this.state.meetingDate !== undefined && this.state.meetingDate !== null) {
             const meetingDateMoment = moment(this.state.meetingDate);
             postData.meetingDate = meetingDateMoment.format("YYYY-MM-DD");
