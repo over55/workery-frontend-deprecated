@@ -42,7 +42,8 @@ class AdminInvoiceCreateStep2Component extends Component {
             orderId, order, errors, invoiceId, invoiceDate,
             invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentDate,
             cash, cheque, debit, credit, other, clientSignature, associateSignDate, associateSignature,
-            isLoading, onClick,
+            isLoading, onClick, associateName, associateTelephone, associateTaxId,
+            customerName, customerAddress, customerEmail,
         } = this.props;
         const invoiceSubTotalAmount = parseFloat(order.invoiceLabourAmount) + parseFloat(order.invoiceMaterialAmount) + parseFloat(order.invoiceOtherCostsAmount);
         return (
@@ -122,27 +123,27 @@ class AdminInvoiceCreateStep2Component extends Component {
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Name</th>
-                                    <td>{order && order.associateName}</td>
+                                    <td>{order && associateName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Telephone</th>
-                                    <td>{order && order.associateTelephone}</td>
+                                    <td>{order && associateTelephone}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Associate Tax ID</th>
-                                    <td>{order && order.associateTaxId}</td>
+                                    <td>{order && associateTaxId}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Name</th>
-                                    <td>{order && order.customerFullName}</td>
+                                    <td>{order && customerName}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Address</th>
-                                    <td>{order && order.customerAddress}</td>
+                                    <td>{order && customerAddress}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row" className="bg-light">Client Email</th>
-                                    <td>{order && order.customerEmail}</td>
+                                    <td>{order && customerEmail}</td>
                                 </tr>
 
                                 <tr className="bg-dark">

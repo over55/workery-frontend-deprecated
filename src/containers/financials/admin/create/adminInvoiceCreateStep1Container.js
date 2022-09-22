@@ -33,6 +33,13 @@ class AdminInvoiceCreateContainer extends Component {
             orderId: parseInt(id),
             invoiceId: invoiceIds,
             invoiceDate: invoiceDate,
+            associateName: localStorage.getItem("workery-create-invoice-associateName"),
+            associateTelephone: localStorage.getItem("workery-create-invoice-associateTelephone"),
+            associateTaxId: localStorage.getItem("workery-create-invoice-associateTaxId"),
+            customerName: localStorage.getItem("workery-create-invoice-customerName"),
+            customerAddress: localStorage.getItem("workery-create-invoice-customerAddress"),
+            customerEmail: localStorage.getItem("workery-create-invoice-customerEmail"),
+
             errors: {},
             isLoading: false
         }
@@ -112,7 +119,30 @@ class AdminInvoiceCreateContainer extends Component {
                            ? moment(response.invoiceDate, 'YYYY-MM-DD').toDate()
                            : null;
 
-        this.setState({ isLoading: false, invoiceDate: invoiceDateObj, })
+        if (response.associate !== undefined && response.associate.associate !== null && response.associate.associate !== "" && response.associate.associate !== "null") {
+            this.setState({
+                isLoading: false,
+                invoiceDate: invoiceDateObj,
+                associateName: response.associate.name,
+                associateTelephone: response.associate.telephone,
+                associateTaxId: response.associate.taxId,
+                customerName: response.customer.name,
+                customerAddress: response.customer.streetAddress,
+                customerEmail: response.customer.telephone,
+            });
+
+            localStorage.setItem("workery-create-invoice-associateName", response.associate.name);
+            localStorage.setItem("workery-create-invoice-associateTelephone", response.associate.telephone);
+            localStorage.setItem("workery-create-invoice-associateTaxId", response.associate.taxId);
+            localStorage.setItem("workery-create-invoice-customerName", response.customer.name);
+            localStorage.setItem("workery-create-invoice-customerAddress", response.customer.streetAddress);
+            localStorage.setItem("workery-create-invoice-customerEmail", response.customer.telephone);
+        } else {
+            this.setState({
+                isLoading: false,
+                invoiceDate: invoiceDateObj,
+            });
+        }
     }
 
     onFailureCallback(errors) {
@@ -176,10 +206,16 @@ class AdminInvoiceCreateContainer extends Component {
 
     render() {
         const {
-            orderId, errors, invoiceId, invoiceDate
+            orderId, errors, invoiceId, invoiceDate, associateName, associateTelephone, associateTaxId, customerName, customerAddress, customerEmail,
         } = this.state;
         return (
             <AdminInvoiceCreateComponent
+                associateName={associateName}
+                associateTelephone={associateTelephone}
+                associateTaxId={associateTaxId}
+                customerName={customerName}
+                customerAddress={customerAddress}
+                customerEmail={customerEmail}
                 orderId={orderId}
                 order={this.props.orderDetail}
                 invoiceId={invoiceId}

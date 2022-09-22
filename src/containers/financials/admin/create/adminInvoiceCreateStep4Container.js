@@ -32,6 +32,13 @@ class AdminInvoiceCreateStep4Container extends Component {
                         : null;
 
         this.state = {
+            // Top
+            associateName: localStorage.getItem("workery-create-invoice-associateName"),
+            associateTelephone: localStorage.getItem("workery-create-invoice-associateTelephone"),
+            associateTaxId: localStorage.getItem("workery-create-invoice-associateTaxId"),
+            customerName: localStorage.getItem("workery-create-invoice-customerName"),
+            customerAddress: localStorage.getItem("workery-create-invoice-customerAddress"),
+            customerEmail: localStorage.getItem("workery-create-invoice-customerEmail"),
             // LINE 01
             line01Quantity: localStorageGetIntegerItem("workery-create-invoice-line01Quantity"),
             line01Description: localStorage.getItem("workery-create-invoice-line01Description"),
@@ -147,6 +154,14 @@ class AdminInvoiceCreateStep4Container extends Component {
 
         const invoiceDateMoment = moment(this.state.invoiceDate);
         postData.invoiceDate = invoiceDateMoment.format("YYYY-MM-DD");
+
+        // TOP
+        postData.associateName = this.state.associateName;
+        postData.associateTelephone = this.state.associateTelephone;
+        postData.associateTaxId = this.state.associateTaxId;
+        postData.customerName = this.state.customerName;
+        postData.customerAddress = this.state.customerAddress;
+        postData.customerEmail = this.state.customerEmail;
 
         // LINE 1 OF 15
         postData.line01Qty = isNaN(this.state.line01Quantity) ? 0 : this.state.line01Quantity;
@@ -365,7 +380,9 @@ class AdminInvoiceCreateStep4Container extends Component {
         const {
             orderId, errors, isLoading, invoiceId, invoiceDate, invoiceQuoteDays, invoiceQuoteDate, invoiceCustomersApproval, line01Notes, line02Notes, paymentDate,
             cash, cheque, debit, credit, other, gender,
-            clientSignature, associateSignDate, associateSignature
+            clientSignature, associateSignDate, associateSignature,
+            associateName, associateTelephone, associateTaxId, customerName,
+            customerAddress, customerEmail
         } = this.state;
         const {
             line01Quantity, line01Description, line01UnitPrice, line01Amount,
@@ -386,6 +403,12 @@ class AdminInvoiceCreateStep4Container extends Component {
         } = this.state;
         return (
             <AdminInvoiceCreateStep4Component
+                associateName={associateName}
+                associateTelephone={associateTelephone}
+                associateTaxId={associateTaxId}
+                customerName={customerName}
+                customerAddress={customerAddress}
+                customerEmail={customerEmail}
                 orderId={orderId}
                 order={this.props.orderDetail}
                 invoiceId={invoiceId}

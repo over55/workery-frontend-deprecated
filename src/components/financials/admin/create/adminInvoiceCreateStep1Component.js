@@ -22,7 +22,7 @@ class AdminInvoiceCreateStep1Component extends Component {
     render() {
         const {
             orderId, order, errors,
-            invoiceId, invoiceDate,
+            invoiceId, invoiceDate, associateName, associateTelephone, associateTaxId, customerName, customerAddress, customerEmail,
             onTextChange, onRadioChange, onInvoiceDateChange, isLoading, onClick, onSelectChange
         } = this.props;
         return (
@@ -109,7 +109,7 @@ class AdminInvoiceCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 label="Associate Name"
-                                value={order && order.associateFullName}
+                                value={order && associateName}
                                 name="associateFullName"
                                 type="string"
                                 disabled={true}
@@ -119,7 +119,7 @@ class AdminInvoiceCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 label="Associate Telephone"
-                                value={order && order.associateTelephone}
+                                value={order && associateTelephone}
                                 name="associateTelephone"
                                 type="string"
                                 disabled={true}
@@ -129,7 +129,7 @@ class AdminInvoiceCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 label="Associate Tax ID"
-                                value={order && order.associateTaxId}
+                                value={order && associateTaxId}
                                 name="associateTaxId"
                                 type="string"
                                 disabled={true}
@@ -139,7 +139,7 @@ class AdminInvoiceCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 label="Client Name"
-                                value={order && order.customerFullName}
+                                value={order && customerName}
                                 name="customerFullName"
                                 type="string"
                                 disabled={true}
@@ -149,7 +149,7 @@ class AdminInvoiceCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 label="Client Address"
-                                value={order && order.customerAddress}
+                                value={order && customerAddress}
                                 name="customerAddress"
                                 type="string"
                                 disabled={true}
@@ -159,7 +159,7 @@ class AdminInvoiceCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 label="Client Email"
-                                value={order && order.customerEmail}
+                                value={order && customerEmail}
                                 name="customerEmail"
                                 type="string"
                                 disabled={true}
