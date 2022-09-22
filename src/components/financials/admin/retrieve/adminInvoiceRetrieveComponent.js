@@ -117,7 +117,7 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-file-invoice"></i>&nbsp;Invoice Description
-                                            <Link to={`/financial/${invoice && invoice.order}/invoice/update/second-section`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <Link to={`/financial/${invoice && invoice.orderId}/invoice/update/second-section`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                                 <i className="fas fa-edit"></i>&nbsp;
                                             </Link>
                                         </th>
@@ -230,7 +230,7 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-file-invoice"></i>&nbsp;Invoice Financials
-                                            <Link to={`/financial/${invoice && invoice.order}/invoice/update/third-section`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
+                                            <Link to={`/financial/${invoice && invoice.orderId}/invoice/update/third-section`} className="btn btn-success btn-sm  float-right pl-4 pr-4">
                                                 <i className="fas fa-edit"></i>&nbsp;
                                             </Link>
                                         </th>
