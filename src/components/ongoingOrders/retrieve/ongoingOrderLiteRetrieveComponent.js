@@ -91,30 +91,30 @@ export default class OngoingOrderLiteRetrieveComponent extends Component {
 
 
 
-                                {ongoingOrder.associateFullName &&
+                                {ongoingOrder.associateName &&
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-crown"></i>&nbsp;Associate
                                         </th>
                                     </tr>
                                 }
-                                {ongoingOrder.associateFullName && ongoingOrder.associateFullName &&
+                                {ongoingOrder.associateName && ongoingOrder.associateName &&
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
                                         <td>
                                             <Link to={`/associate/${ongoingOrder.associate}`} target="_blank">
-                                                {ongoingOrder.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                                {ongoingOrder.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                 }
-                                {ongoingOrder.associateFullName && ongoingOrder.associateTelephone &&
+                                {ongoingOrder.associateName && ongoingOrder.associateTelephone &&
                                     <tr>
                                         <th scope="row" className="bg-light">{ongoingOrder.associatePrettyTelephoneTypeOf} #</th>
                                         <td>{ongoingOrder.associateTelephone}</td>
                                     </tr>
                                 }
-                                {ongoingOrder.associateFullName && ongoingOrder.associateOtherTelephone &&
+                                {ongoingOrder.associateName && ongoingOrder.associateOtherTelephone &&
                                     <tr>
                                         <th scope="row" className="bg-light">Other {ongoingOrder.associatePrettyTelephoneTypeOf} #</th>
                                         <td>{ongoingOrder.associateOtherTelephone}</td>

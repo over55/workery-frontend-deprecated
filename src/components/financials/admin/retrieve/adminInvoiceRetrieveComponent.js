@@ -87,7 +87,7 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Name</th>
-                                        <td>{invoice && invoice.associateFullName}</td>
+                                        <td>{invoice && invoice.associateName}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Associate Phone</th>

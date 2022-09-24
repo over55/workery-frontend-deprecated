@@ -104,7 +104,7 @@ class AdminOrderCloseOperationComponent extends Component {
                                         <i className="fas fa-table"></i>&nbsp;Quick Info
                                     </th>
                                 </tr>
-                                {order.customerFullName &&
+                                {order && order.customerFullName &&
                                     <tr>
                                         <th scope="row" className="bg-light">Client</th>
                                         <td>
@@ -117,9 +117,9 @@ class AdminOrderCloseOperationComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Associate</th>
                                     <td>
-                                        {order.associateFullName
+                                        {order && order.associateName
                                             ?<Link to={`/customer/${order.associate}`} target="_blank">
-                                                {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                                {order.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                             :"-"
                                         }

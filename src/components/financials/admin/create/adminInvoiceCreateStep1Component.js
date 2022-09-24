@@ -110,7 +110,7 @@ class AdminInvoiceCreateStep1Component extends Component {
                                 borderColour="border-success"
                                 label="Associate Name"
                                 value={order && associateName}
-                                name="associateFullName"
+                                name="associateName"
                                 type="string"
                                 disabled={true}
                             />

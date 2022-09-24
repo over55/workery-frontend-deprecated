@@ -67,30 +67,30 @@ export default class AssociateOrderLiteRetrieveComponent extends Component {
                                     </tr>
                                 }
 
-                                {order.associateFullName &&
+                                {order.associateName &&
                                     <tr className="bg-dark">
                                         <th scope="row" colSpan="2" className="text-light">
                                             <i className="fas fa-crown"></i>&nbsp;Associate
                                         </th>
                                     </tr>
                                 }
-                                {order.associateFullName && order.associateFullName &&
+                                {order.associateName && order.associateName &&
                                     <tr>
                                         <th scope="row" className="bg-light">Name</th>
                                         <td>
                                             <Link to={`/profile/associate/lite`} target="_blank">
-                                                {order.associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                                {order.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
                                 }
-                                {order.associateFullName && order.associateTelephone &&
+                                {order.associateName && order.associateTelephone &&
                                     <tr>
                                         <th scope="row" className="bg-light">{order.associatePrettyTelephoneTypeOf} #</th>
                                         <td>{order.associateTelephone}</td>
                                     </tr>
                                 }
-                                {order.associateFullName && order.associateOtherTelephone &&
+                                {order.associateName && order.associateOtherTelephone &&
                                     <tr>
                                         <th scope="row" className="bg-light">Other {order.associatePrettyTelephoneTypeOf} #</th>
                                         <td>{order.associateOtherTelephone}</td>

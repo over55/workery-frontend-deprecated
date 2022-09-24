@@ -86,8 +86,8 @@ class AssociateInvoiceCreateStep1Component extends Component {
                                 inputClassName="form-control form-control-lg"
                                 borderColour="border-success"
                                 label="Associate Name"
-                                value={order && order.associateFullName}
-                                name="associateFullName"
+                                value={order && order.associateName}
+                                name="associateName"
                                 type="string"
                                 disabled={true}
                             />

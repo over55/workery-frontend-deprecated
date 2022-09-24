@@ -7,7 +7,7 @@ import { BootstrapPageLoadingAnimation } from "../../bootstrap/bootstrapPageLoad
 
 export default class AssignAssociateTaskStep4Component extends Component {
     render() {
-        const { statusLabel, associateId, associateFullName, comment, id, task, onBack, onClick, isLoading, errors } = this.props;
+        const { statusLabel, associateId, associateName, comment, id, task, onBack, onClick, isLoading, errors } = this.props;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -52,7 +52,7 @@ export default class AssignAssociateTaskStep4Component extends Component {
                                         <th scope="row" className="bg-light">Associate</th>
                                         <td>
                                             <Link to={`/associate/${associateId}`} target="_blank">
-                                                {associateFullName}&nbsp;<i className="fas fa-external-link-alt"></i>
+                                                {associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
                                             </Link>
                                         </td>
                                     </tr>
