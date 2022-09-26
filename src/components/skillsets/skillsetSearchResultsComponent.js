@@ -207,15 +207,16 @@ class SkillsetSearchResultsComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fa fa-crown"></i>&nbsp;Associates
+                            <i className="fa fa-toolbox"></i>&nbsp;Skill Sets Results
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fa fa-crown"></i>&nbsp;Associates</h1>
+                <h1><i className="fa fa-toolbox"></i>&nbsp;Skill Sets Results</h1>
 
+                {/*
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
@@ -240,6 +241,7 @@ class SkillsetSearchResultsComponent extends Component {
                         </section>
                     </div>
                 </div>
+                */}
 
                 <div className="row">
                     <div className="col-md-12">
