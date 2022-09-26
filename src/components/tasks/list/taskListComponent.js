@@ -225,7 +225,7 @@ class TaskListComponent extends Component {
                 <FlashMessageComponent object={flashMessage} />
 
                 <h1><i className="fas fa-user-circle"></i>&nbsp;Tasks</h1>
-
+                {/*
                 <div className="row">
                     <div className="col-md-12">
                         <section className="row text-center placeholders">
@@ -250,6 +250,7 @@ class TaskListComponent extends Component {
                         </section>
                     </div>
                 </div>
+                */}
 
                 <div className="row">
                     <div className="col-md-12">
