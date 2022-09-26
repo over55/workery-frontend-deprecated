@@ -6,7 +6,7 @@ import SkillsetSearchComponent from "../../components/skillsets/skillsetSearchCo
 import { localStorageGetArrayItem, localStorageSetObjectOrArrayItem } from '../../helpers/localStorageUtility';
 import { validateInput } from "../../validators/skillsetsValidator";
 
-import { getSkillSetReactSelectOptions, pullSkillSetList } from "../../actions/skillSetActions";
+import { getSkillSetReactSelectOptions, getPickedSkillSetReactSelectOptions, pullSkillSetList } from "../../actions/skillSetActions";
 
 
 class SkillsetSearchContainer extends Component {
@@ -19,15 +19,17 @@ class SkillsetSearchContainer extends Component {
         super(props);
 
         this.state = {
+            isSkillsetLoading: true,
+            isSkillSetsLoading: true,
             skillSets: [],
             errors: {},
             isLoading: false,
-            isSkillSetsLoading: true,
         }
 
         this.onClick = this.onClick.bind(this);
         this.onSkillSetMultiChange = this.onSkillSetMultiChange.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onSkillSetSuccessFetch = this.onSkillSetSuccessFetch.bind(this);
     }
 
     /**
@@ -39,7 +41,9 @@ class SkillsetSearchContainer extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullSkillSetList(0, 1000, new Map(), this.onSuccessCallback);
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullSkillSetList(0, 1000, parametersMap, this.onSkillSetSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -60,24 +64,35 @@ class SkillsetSearchContainer extends Component {
         this.setState({ isSkillSetsLoading: false, });
     }
 
+    onSkillSetSuccessFetch(howHearList) {
+        this.setState({ isSkillsetLoading: false, });
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
 
-    onSkillSetMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
+     onSkillSetMultiChange(...args) {
+         // Extract the select options from the parameter.
+         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            skillSets: selectedOptions,
-        });
+         // We need to only return our `id` values, therefore strip out the
+         // `react-select` options format of the data and convert it into an
+         // array of integers to hold the primary keys of the `Tag` items selected.
+         let pickedSkillSets = [];
+         if (selectedOptions !== null && selectedOptions !== undefined) {
+             for (let i = 0; i < selectedOptions.length; i++) {
+                 let pickedOption = selectedOptions[i];
+                 pickedOption.skillSetId = pickedOption.value;
+                 pickedSkillSets.push(pickedOption);
+             }
+         }
+         this.setState({ skillSets: pickedSkillSets, });
 
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-search-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
-    }
+         // // Set all the tags we have selected to the STORAGE.
+         localStorageSetObjectOrArrayItem("workery-search-skillSets", pickedSkillSets);
+     }
 
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
@@ -112,20 +127,18 @@ class SkillsetSearchContainer extends Component {
     render() {
         const {
             skillSets,
-            errors, isLoading, isSkillSetsLoading
         } = this.state;
 
-        const { user } = this.props;
+        const skillSetOptions = getSkillSetReactSelectOptions(this.props.skillSetList);
+        const transcodedSkillSets = getPickedSkillSetReactSelectOptions(skillSets, this.props.skillSetList)
+
         return (
             <SkillsetSearchComponent
-                skillSets={skillSets}
-                skillSetOptions={getSkillSetReactSelectOptions(this.props.skillSetList)}
-                onSkillSetMultiChange={this.onSkillSetMultiChange}
-                isSkillSetsLoading={isSkillSetsLoading}
-
-                onClick={this.onClick}
-                errors={errors}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
+                skillSets={transcodedSkillSets}
+                skillSetOptions={skillSetOptions}
             />
         );
     }

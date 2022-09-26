@@ -10,7 +10,7 @@ class SkillsetSearchComponent extends Component {
     render() {
         const {
             errors, isLoading, onClick,
-            skillSets, skillSetOptions, onSkillSetMultiChange, isSkillSetsLoading,
+            skillSets, skillSetOptions, onSkillSetMultiChange, isSkillsetLoading,
         } = this.props;
 
         return (
@@ -49,7 +49,7 @@ class SkillsetSearchComponent extends Component {
                                 selectedOptions={skillSets}
                                 error={errors.skillSets}
                                 onMultiChange={onSkillSetMultiChange}
-                                isLoading={isSkillSetsLoading}
+                                isLoading={isSkillsetLoading}
                             />
 
                             <div className="form-group">
