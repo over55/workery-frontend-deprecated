@@ -145,7 +145,7 @@ export function validateInput(data) {
     if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
         errors.howHearId = 'This field is required';
     } else {
-        if (data.howHearIdLabel.includes("Other") === true) {
+        if (data.howHearIdLabel && data.howHearIdLabel.includes("Other") === true) {
             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                 errors.howHearOther = 'This field is required';
             }
@@ -249,7 +249,7 @@ export function validateStep5CreateInput(data) {
     if (data.howHearId === undefined || data.howHearId === null || data.howHearId === "" || isNaN(data.howHearId) ) {
         errors.howHearId = 'This field is required';
     } else {
-        if (data.howHearIdLabel.includes("Other") === true) {
+        if (data.howHearIdLabel && data.howHearIdLabel.includes("Other") === true) {
             if (data.howHearOther === undefined || data.howHearOther === null || validator.isEmpty(data.howHearOther) || data.howHearOther === "") {
                 errors.howHearOther = 'This field is required';
             }
