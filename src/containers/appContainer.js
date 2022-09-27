@@ -342,8 +342,8 @@ import AssociateProfileContactUpdateContainer from "./account/associateProfile/u
 import AssociateProfileMetricsUpdateContainer from "./account/associateProfile/update/associateProfileMetricsUpdateContainer";
 
 // Tag Search
-import TagContainer from "./tags/tagContainer";
-import TagResultsContainer from "./tags/tagResultsContainer";
+import TagSearchContainer from "./tags/tagSearchContainer";
+import TagResultsContainer from "./tags/tagSearchResultsContainer";
 
 
 class AppContainer extends React.Component {
@@ -682,7 +682,7 @@ class AppContainer extends React.Component {
                                 <Route path="/ongoing-order/:id/update/lite" exact component={requiresAuth(OngoingOrderUpdateContainer)} />
 
                                 { /* UNIFIED SEARCH */ }
-                                <Route path="/tags" exact component={requiresAuth(TagContainer)} />
+                                <Route path="/tags" exact component={requiresAuth(TagSearchContainer)} />
                                 <Route path="/tag/results" exact component={requiresAuth(TagResultsContainer)} />
 
                                 { /* EVERYTHING ELSE... */ }

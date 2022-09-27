@@ -3,15 +3,14 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
 import { BootstrapErrorsProcessingAlert } from "../bootstrap/bootstrapAlert";
-import { BootstrapInput } from "../bootstrap/bootstrapInput";
 import { BootstrapMultipleSelect } from "../bootstrap/bootstrapMultipleSelect";
 
 
-class TagComponent extends Component {
+class TagSearchComponent extends Component {
     render() {
         const {
             errors, isLoading, onClick,
-            tags, tagOptions, onTagMultiChange, isTagsLoading,
+            tags, tagOptions, onTagMultiChange, isTagLoading,
         } = this.props;
 
         return (
@@ -22,35 +21,35 @@ class TagComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-tags"></i>&nbsp;Search Tags
+                            <i className="fas fa-tags"></i>&nbsp;Tags
                         </li>
                     </ol>
                 </nav>
 
                 <h1>
-                    <i className="fas fa-tags"></i>&nbsp;Search Tags
+                    <i className="fas fa-search"></i>&nbsp;Search Tags
                 </h1>
 
                 <div className="row">
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h2>
-                                <i className="fas fa-search"></i>&nbsp;Search
+                                <i className="fas fa-tags"></i>&nbsp;Tags
                             </h2>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
                             <BootstrapMultipleSelect
-                                borderColour="border-success"
-                                label="Tags"
+                                borderColour="border-primary"
+                                label="Tag (*)"
                                 name="tags"
                                 defaultOptionLabel="Please select the tags."
                                 options={tagOptions}
                                 selectedOptions={tags}
                                 error={errors.tags}
                                 onMultiChange={onTagMultiChange}
-                                isLoading={isTagsLoading}
+                                isLoading={isTagLoading}
                             />
 
                             <div className="form-group">
@@ -68,4 +67,4 @@ class TagComponent extends Component {
     }
 }
 
-export default TagComponent;
+export default TagSearchComponent;

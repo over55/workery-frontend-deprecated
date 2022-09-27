@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { camelizeKeys, decamelize } from 'humps';
 
-import TagResultsComponent from "../../components/tags/tagResultsComponent";
-import { localStorageGetArrayItem } from '../../helpers/localStorageUtility';
+import TagSearchResultsComponent from "../../components/tags/tagSearchResultsComponent";
 import { clearFlashMessage } from "../../actions/flashMessageActions";
-import { pullTagItemList } from "../../actions/tagItemSearchActions";
+import { pullAssociateList } from "../../actions/associateActions";
 import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../constants/api";
+import { localStorageGetArrayItem } from '../../helpers/localStorageUtility';
 
 
-class TagResultsContainer extends Component {
+class TagSearchResultsContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -17,21 +17,32 @@ class TagResultsContainer extends Component {
 
     constructor(props) {
         super(props);
+
+        // Force active users as per issue via https://github.com/over55/workery-frontend/issues/296
+        var parametersMap = new Map();
+        parametersMap.set("state", 1);
+        parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `AssociateListComponent`.
+        parametersMap.set("sort_field", "last_name");
+        parametersMap.set("tags", localStorageGetArrayItem("workery-search-tags"));
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "ASC",
+            sortField: "last_name",
 
             // Sorting, Filtering, & Searching
-            parametersMap: new Map(),
+            parametersMap: parametersMap,
 
-            // Everything else.
+            // Overaly
             isLoading: true,
-            keyword: localStorage.getItem("workery-search-keyword"),
             tags: localStorageGetArrayItem("workery-search-tags"),
         }
         this.onTableChange = this.onTableChange.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -43,32 +54,6 @@ class TagResultsContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-
-        var parametersMap = this.state.parametersMap;
-
-        // DEVELOPERS NOTE:
-        // WE NEED TO APPLY OUR SKILLSET FILTERING RIGHT HERE SO THE API WILL
-        // PERFORM THE FILTERING.
-        let tagPKs = "";
-        for (let i = 0; i < this.state.tags.length; i++) {
-            let tag = this.state.tags[i];
-            tagPKs += tag.value + ",";
-        }
-        tagPKs = tagPKs.slice(0, -1); // Note: Remove last character in string.
-        console.log(tagPKs); // For debugging purposes only.
-        parametersMap.set("tags", tagPKs);
-
-        if (this.state.keyword !== "" && this.state.keyword !== undefined && this.state.keyword !== null && this.state.keyword !== "null") {
-            parametersMap.set("keyword", this.state.keyword);
-        }
-
-        this.props.pullTagItemList(
-            this.state.page,
-            this.state.sizePerPage,
-            parametersMap,
-            this.onSuccessfulSubmissionCallback,
-            this.onFailedSubmissionCallback
-        );
     }
 
     componentWillUnmount() {
@@ -92,7 +77,7 @@ class TagResultsContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -117,7 +102,7 @@ class TagResultsContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -132,15 +117,18 @@ class TagResultsContainer extends Component {
         tagPKs = tagPKs.slice(0, -1); // Note: Remove last character in string.
         console.log(tagPKs); // For debugging purposes only.
         parametersMap.set("tags", tagPKs);
+        parametersMap.set('state', 1);
 
         if (type === "sort") {
             console.log(type, sortField, sortOrder); // For debugging purposes only.
 
             if (sortOrder === "asc") {
-                parametersMap.set('o', decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "ASC");
             }
             if (sortOrder === "desc") {
-                parametersMap.set('o', "-"+decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "DESC");
             }
 
             this.setState(
@@ -148,39 +136,71 @@ class TagResultsContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullTagItemList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullAssociateList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullTagItemList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullAssociateList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "filter") {
-            console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
-            } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
-            }
-            this.setState(
-                { parametersMap: parametersMap, isLoading: true, },
-                ()=>{
-                    // STEP 3:
-                    // SUBMIT TO OUR API.
-                    this.props.pullTagItemList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
+            ////
+            //// DEPRECATED VIA https://github.com/over55/workery-frontend/issues/296
+            ////
+            // console.log(type, filters); // For debugging purposes only.
+            // if (filters.state === undefined) {
+            //     parametersMap.delete("state");
+            // } else {
+            //     const filterVal = filters.state.filterVal;
+            //     parametersMap.set("state", filterVal);
+            // }
+            // this.setState(
+            //     { parametersMap: parametersMap, isLoading: true, },
+            //     ()=>{
+            //         // STEP 3:
+            //         // SUBMIT TO OUR API.
+            //         this.props.pullAssociateList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+            //     }
+            // );
         }else {
             alert("Unsupported feature detected!!"+type);
         }
+    }
+
+    onNextClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullAssociateList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onPreviousClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullAssociateList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     /**
@@ -189,16 +209,11 @@ class TagResultsContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading } = this.state;
         return (
-            <TagResultsComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                tagItemList={this.props.tagItemList}
-                onTableChange={this.onTableChange}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
+            <TagSearchResultsComponent
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
@@ -208,7 +223,7 @@ const mapStateToProps = function(store) {
     return {
         user: store.userState,
         flashMessage: store.flashMessageState,
-        tagItemList: store.tagItemListState,
+        associateList: store.associateListState,
     };
 }
 
@@ -217,9 +232,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullTagItemList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullAssociateList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullTagItemList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullAssociateList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
@@ -229,4 +244,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(TagResultsContainer);
+)(TagSearchResultsContainer);

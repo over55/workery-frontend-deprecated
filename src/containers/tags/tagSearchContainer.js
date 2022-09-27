@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import TagComponent from "../../components/tags/tagComponent";
-import { localStorageRemoveItemsContaining, localStorageSetObjectOrArrayItem } from '../../helpers/localStorageUtility';
+import TagSearchComponent from "../../components/tags/tagSearchComponent";
+import { localStorageGetArrayItem, localStorageSetObjectOrArrayItem } from '../../helpers/localStorageUtility';
 import { validateInput } from "../../validators/tagSearchValidator";
 
-import { getTagReactSelectOptions, pullTagList } from "../../actions/tagActions";
+import { getTagReactSelectOptions, getPickedTagReactSelectOptions, pullTagList } from "../../actions/tagActions";
 
 
-class TagContainer extends Component {
+class TagSearchContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -19,15 +19,17 @@ class TagContainer extends Component {
         super(props);
 
         this.state = {
+            isTagLoading: true,
+            isTagsLoading: true,
             tags: [],
             errors: {},
             isLoading: false,
-            isTagsLoading: true,
         }
 
         this.onClick = this.onClick.bind(this);
         this.onTagMultiChange = this.onTagMultiChange.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
+        this.onTagSuccessFetch = this.onTagSuccessFetch.bind(this);
     }
 
     /**
@@ -36,12 +38,12 @@ class TagContainer extends Component {
      */
 
     componentDidMount() {
-        localStorageRemoveItemsContaining("workery-search-");
-
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
-        // DEVELOPERS NOTE: Fetch our skillset list.
-        this.props.pullTagList(0, 1000, new Map(), this.onSuccessCallback);
+        // DEVELOPERS NOTE: Fetch our tag list.
+        const parametersMap = new Map();
+        parametersMap.set("state", 1);
+        this.props.pullTagList(0, 1000, parametersMap, this.onTagSuccessFetch);
     }
 
     componentWillUnmount() {
@@ -62,24 +64,35 @@ class TagContainer extends Component {
         this.setState({ isTagsLoading: false, });
     }
 
+    onTagSuccessFetch(howHearList) {
+        this.setState({ isTagLoading: false, });
+    }
+
     /**
      *  Event handling functions
      *------------------------------------------------------------
      */
 
-    onTagMultiChange(...args) {
-        // Extract the select options from the parameter.
-        const selectedOptions = args[0];
+     onTagMultiChange(...args) {
+         // Extract the select options from the parameter.
+         const selectedOptions = args[0];
 
-        // Set all the skill sets we have selected to the STORE.
-        this.setState({
-            tags: selectedOptions,
-        });
+         // We need to only return our `id` values, therefore strip out the
+         // `react-select` options format of the data and convert it into an
+         // array of integers to hold the primary keys of the `Tag` items selected.
+         let pickedTags = [];
+         if (selectedOptions !== null && selectedOptions !== undefined) {
+             for (let i = 0; i < selectedOptions.length; i++) {
+                 let pickedOption = selectedOptions[i];
+                 pickedOption.tagId = pickedOption.value;
+                 pickedTags.push(pickedOption);
+             }
+         }
+         this.setState({ tags: pickedTags, });
 
-        // // Set all the tags we have selected to the STORAGE.
-        const key = 'workery-search-' + args[1].name;
-        localStorageSetObjectOrArrayItem(key, selectedOptions);
-    }
+         // // Set all the tags we have selected to the STORAGE.
+         localStorageSetObjectOrArrayItem("workery-search-tags", pickedTags);
+     }
 
     onClick(e) {
         // Prevent the default HTML form submit code to run on the browser side.
@@ -113,20 +126,19 @@ class TagContainer extends Component {
 
     render() {
         const {
-            tags, errors, isLoading, isTagsLoading
+            tags,
         } = this.state;
 
-        const { user } = this.props;
-        return (
-            <TagComponent
-                tags={tags}
-                tagOptions={getTagReactSelectOptions(this.props.tagList)}
-                onTagMultiChange={this.onTagMultiChange}
-                isTagsLoading={isTagsLoading}
+        const tagOptions = getTagReactSelectOptions(this.props.tagList);
+        const transcodedTags = getPickedTagReactSelectOptions(tags, this.props.tagList)
 
-                onClick={this.onClick}
-                errors={errors}
-                isLoading={isLoading}
+        return (
+            <TagSearchComponent
+                {...this}
+                {...this.state}
+                {...this.props}
+                tags={transcodedTags}
+                tagOptions={tagOptions}
             />
         );
     }
@@ -152,4 +164,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(TagContainer);
+)(TagSearchContainer);
