@@ -34,7 +34,7 @@ RUN echo "$REACT_APP_IMAGE_UPLOAD_MAX_FILESIZE_ERROR_MESSAGE"
 # Install dependencies
 COPY package.json ./
 COPY yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --network-timeout 1000000
 
 # Copy source code.
 COPY . .
