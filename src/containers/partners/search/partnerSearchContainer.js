@@ -27,6 +27,7 @@ class PartnerListContainer extends Component {
         this.onTextChange = this.onTextChange.bind(this);
         this.onAdvancedSearchPanelToggle = this.onAdvancedSearchPanelToggle.bind(this);
         this.onSearchClick = this.onSearchClick.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
         this.onAdvancedSearchClick = this.onAdvancedSearchClick.bind(this);
     }
 
@@ -57,6 +58,35 @@ class PartnerListContainer extends Component {
      *  Event handling functions
      *------------------------------------------------------------
      */
+
+	handleKeyDown(e) {
+
+		if (e.keyCode === 13) {
+
+			this.setState({ advancedSearchActive: false, }, ()=> {
+				// Perform partner-side validation.
+				const { errors, isValid } = validateSearchInput(this.state);
+
+				// CASE 1 OF 2: Validation passed successfully.
+				if (isValid) {
+
+						localStorageSetObjectOrArrayItem('workery-search-partner-details', this.state);
+						this.props.history.push("/partners/search-results");
+
+
+				// CASE 2 OF 2: Validation was a failure.
+				} else {
+					this.setState({ errors: errors });
+
+					// The following code will cause the screen to scroll to the top of
+					// the page. Please see ``react-scroll`` for more information:
+					// https://github.com/fisshy/react-scroll
+					var scroll = Scroll.animateScroll;
+					scroll.scrollToTop();
+				}
+			});
+		}
+    }
 
     onTextChange(e) {
         this.setState({ [e.target.name]: e.target.value, });
@@ -137,6 +167,7 @@ class PartnerListContainer extends Component {
                 advancedSearchActive={this.state.advancedSearchActive}
                 onAdvancedSearchPanelToggle={this.onAdvancedSearchPanelToggle}
                 onSearchClick={this.onSearchClick}
+				handleKeyDown={this.handleKeyDown}
                 onAdvancedSearchClick={this.onAdvancedSearchClick}
                 errors={this.state.errors}
             />

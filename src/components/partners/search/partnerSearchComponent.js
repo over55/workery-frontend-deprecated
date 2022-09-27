@@ -5,10 +5,10 @@ import { BootstrapErrorsProcessingAlert } from "../../bootstrap/bootstrapAlert";
 import { BootstrapInput } from "../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../bootstrap/bootstrapTelephoneInput";
 
-
 class PartnerSearchComponent extends Component {
+
     render() {
-        const { onSearchClick, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
+        const { onSearchClick, handleKeyDown, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
         const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
         return (
             <div>
@@ -18,7 +18,7 @@ class PartnerSearchComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/partners`}><i className="fas fa-handshake"></i>&nbsp;Partners</Link>
+                            <Link to={`/partners`}><i className="fas fa-crown"></i>&nbsp;Partners</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-search"></i>&nbsp;Search
@@ -45,10 +45,11 @@ class PartnerSearchComponent extends Component {
                                 required=""
                                 value={keyword}
                                 onChange={onTextChange}
+								onKeyDown={handleKeyDown}
                             />
 
                             <div className="input-group-append">
-                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick}>
+                                <button className="btn btn-primary btn-lg" type="button" onClick={onSearchClick} >
                                     <i className="fas fa-search"></i>
                                 </button>
                             </div>
@@ -135,7 +136,7 @@ class PartnerSearchComponent extends Component {
 									disabled={isLoading}
 								/>
                             </div>
-                            
+
                         </div>
 
                         <div className="form-group col-md-12 mb-3 mx-auto text-center">

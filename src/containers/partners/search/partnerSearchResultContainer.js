@@ -10,7 +10,7 @@ import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../constants/ap
 import { localStorageGetObjectItem } from '../../../helpers/localStorageUtility';
 
 
-class PartnerSearchResultContainer extends Component {
+class AdminPartnerSearchResultContainer extends Component {
     /**
      *  Initializer & Utility
      *------------------------------------------------------------
@@ -22,7 +22,7 @@ class PartnerSearchResultContainer extends Component {
         const search = localStorageGetObjectItem('workery-search-partner-details');
         this.state = {
             // Pagination
-            page: 1,
+            offset: 0,
             sizePerPage: 100,
             totalSize: 0,
 
@@ -66,14 +66,14 @@ class PartnerSearchResultContainer extends Component {
      */
 
     componentDidMount() {
-        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        window.scrollTo(0, 0);  // Start the offset at the top of the offset.
 
         this.setState(
             { parametersMap: this.getParametersMapFromState(), isLoading: true, },
             ()=>{
                 // STEP 3:
                 // SUBMIT TO OUR API.
-                this.props.pullPartnerList(this.state.page, this.state.sizePerPage, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullPartnerList(this.state.offset, this.state.sizePerPage, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         );
     }
@@ -99,7 +99,7 @@ class PartnerSearchResultContainer extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -117,7 +117,7 @@ class PartnerSearchResultContainer extends Component {
         })
 
         // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
+        // the offset. Please see ``react-scroll`` for more information:
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
@@ -138,27 +138,27 @@ class PartnerSearchResultContainer extends Component {
     }
 
     onNextClick(e) {
-        const page = this.state.page + 1;
+        const offset = this.state.offset + 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullPartnerList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullPartnerList(offset, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
 
     onPreviousClick(e) {
-        const page = this.state.page - 1;
+        const offset = this.state.offset - 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullPartnerList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullPartnerList(offset, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
@@ -171,13 +171,13 @@ class PartnerSearchResultContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
+        const { offset, sizePerPage, totalSize, isLoading, errors } = this.state;
         const partners = (this.props.partnerList && this.props.partnerList.results) ? this.props.partnerList.results : [];
         const hasNext = this.props.partnerList.next !== null;
         const hasPrevious = this.props.partnerList.previous !== null;
         return (
             <PartnerSearchResultComponent
-                page={page}
+                offset={offset}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
                 partners={partners}
@@ -206,9 +206,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullPartnerList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullPartnerList: (offset, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullPartnerList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullPartnerList(offset, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
@@ -218,4 +218,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(PartnerSearchResultContainer);
+)(AdminPartnerSearchResultContainer);
