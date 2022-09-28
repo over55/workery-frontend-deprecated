@@ -82,7 +82,7 @@ class BulletinBoardComponent extends Component {
                     <p className="lead">There are no announcements. Feel free to add one.</p>
 
                     <p className="lead">
-                        <Link className="btn btn-success btn-lg" to="/settings/announcements">
+                        <Link className="btn btn-success btn-lg" to="/settings/bulletin-board-items/add">
                             <i className="fas fa-plus"></i>&nbsp;Add
                         </Link>
                     </p>
