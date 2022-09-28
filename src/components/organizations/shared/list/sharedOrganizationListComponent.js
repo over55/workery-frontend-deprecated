@@ -125,7 +125,7 @@ class SharedOrganizationListComponent extends Component {
             // Everything else...
             flashMessage, onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
-        const organizations = (tenantList && isEmpty(tenantList)===false) ? tenantList.results : [];
+        const organizations = tenantList.results ? tenantList.results : [];
         return (
             <div className="container-fluid">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
