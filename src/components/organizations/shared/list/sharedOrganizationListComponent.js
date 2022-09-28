@@ -102,7 +102,7 @@ function detailLinkFormatter(cell, row){
     const refreshToken = getRefreshTokenFromLocalStorage();
 
     // Generate our redirect address.
-    const absoluteUrl =  process.env.REACT_APP_WWW_PROTOCOL + "://" +process.env.REACT_APP_WWW_DOMAIN+"/dashboard"+"-redirect/"+accessToken+"/"+refreshToken;
+    const absoluteUrl =  process.env.REACT_APP_WWW_PROTOCOL + "://" +process.env.REACT_APP_WWW_DOMAIN+"/dashboard"+"-redirect/"+accessToken+"/"+refreshToken+"/"+schemaName;
 
     return (
         <div>

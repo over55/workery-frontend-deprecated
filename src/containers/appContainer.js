@@ -376,7 +376,7 @@ class AppContainer extends React.Component {
                                 <Route path="/organization/add" exact component={requiresAuth(SharedOrganizationCreateContainer)} />
                                 <Route path="/organization/add-success" exact component={requiresAuth(SharedOrganizationCreateSuccessContainer)} />
                                 <Route path="/organization/:id/update" exact component={requiresAuth(SharedOrganizationUpdateContainer)} />
-                                <Route path="/dashboard-redirect/:accessToken/:refreshToken" exact component={TenantDashboardRedirectContainer} />
+                                <Route path="/dashboard-redirect/:accessToken/:refreshToken/:schemaName" exact component={TenantDashboardRedirectContainer} />
                                 <Route path="/dashboard" exact component={requiresAuth(DashboardContainer)} />
                                 <Route path="/comments" exact component={requiresAuth(CommentListContainer)} />
                                 <Route path="/profile/associate/lite" exact component={requiresAuth(AssociateProfileLiteRetrieveContainer)} />

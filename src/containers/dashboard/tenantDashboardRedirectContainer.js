@@ -19,12 +19,13 @@ class TenantDashboardRedirectContainer extends Component {
 
         // Since we are using the ``react-routes-dom`` library then we
         // fetch the arguments as follows.
-        const { accessToken, refreshToken } = this.props.match.params;
+        const { accessToken, refreshToken, schemaName } = this.props.match.params;
 
         this.state = {
             referrer: '',
             accessTokenString: accessToken,
-            refreshTokenString: refreshToken
+            refreshTokenString: refreshToken,
+            schemaName: schemaName,
         }
 
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
