@@ -21,7 +21,7 @@ class AwayLogDeleteComponent extends Component {
                            <Link to="/settings"><i className="fas fa-cogs"></i>&nbsp;Settings</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/settings/away-logs"><i className="fas fa-bullhorn"></i>&nbsp;AwayLogs</Link>
+                            <Link to="/settings/away-logs"><i className="fas fa-bullhorn"></i>&nbsp;Away Logs</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-minus"></i>&nbsp;Remove
@@ -29,7 +29,7 @@ class AwayLogDeleteComponent extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-minus"></i>&nbsp;Remove AwayLog</h1>
+                <h1><i className="fas fa-minus"></i>&nbsp;Remove Away Log</h1>
                 <div className="row mt-4 pt-3 mb-4 pb-2">
                     <div className="col-md-10 mx-auto p-2">
                         <p><strong>Please confirm these details before deleting the away log</strong></p>
