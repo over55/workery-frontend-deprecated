@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -25,13 +26,13 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             organizations,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading,  onPreviousClick, onNextClick,
         } = this.props;
 
         const columns = [{
@@ -40,7 +41,7 @@ class RemoteListComponent extends Component {
             sort: false,
         },{
             dataField: 'name',
-            text: 'name',
+            text: 'Name',
             sort: true
         },{
             dataField: 'id',
@@ -49,30 +50,30 @@ class RemoteListComponent extends Component {
             formatter: detailLinkFormatter
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     offset: offset,
+        //     limit: limit,
+        //     totalSize: totalSize,
+        //     limitList: [{
+        //         text: '25', value: 25
+        //     }, {
+        //         text: '50', value: 50
+        //     }, {
+        //         text: '100', value: 100
+        //     }, {
+        //         text: 'All', value: totalSize
+        //     }],
+        //     showTotal: true,
+        //     paginationTotalRenderer: customTotal,
+        //     firstPageText: 'First',
+        //     prePageText: 'Back',
+        //     nextPageText: 'Next',
+        //     lastPageText: 'Last',
+        //     nextPageTitle: 'First offset',
+        //     prePageTitle: 'Pre offset',
+        //     firstPageTitle: 'Next offset',
+        //     lastPageTitle: 'Last offset',
+        // };
 
         return (
             <BootstrapTable
@@ -85,7 +86,7 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no organizations at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -116,15 +117,15 @@ class SharedOrganizationListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             tenantList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
-        const organizations = tenantList.results ? tenantList.results : [];
+        const organizations = (tenantList && isEmpty(tenantList)===false) ? tenantList.results : [];
         return (
             <div className="container-fluid">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -179,14 +180,23 @@ class SharedOrganizationListComponent extends Component {
                     </section>
 
                     <RemoteListComponent
-                        page={page}
-                        sizePerPage={sizePerPage}
+                        offset={offset}
+                        limit={limit}
                         totalSize={totalSize}
                         organizations={organizations}
                         onTableChange={onTableChange}
                         isLoading={isLoading}
                     />
 
+                    <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                    <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                        <i className="fas fa-check-circle"></i>&nbsp;Next
+                    </button>
+
+                    <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                        <i className="fas fa-check-circle"></i>&nbsp;Previous
+                    </button>
                 </div>
             </main>
                 </div>
