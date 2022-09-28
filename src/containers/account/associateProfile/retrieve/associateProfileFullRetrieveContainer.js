@@ -27,7 +27,7 @@ class AssociateProfileFullRetrieveContainer extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullProfile(this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        this.props.pullProfile(null, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     componentWillUnmount() {
@@ -89,8 +89,8 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullProfile: (successCallback, failureCallback) => {
-            dispatch(pullProfile(successCallback, failureCallback))
+        pullProfile: (overrideTenantSchema, successCallback, failureCallback) => {
+            dispatch(pullProfile(overrideTenantSchema, successCallback, failureCallback))
         },
     }
 }

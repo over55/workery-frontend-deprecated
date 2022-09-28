@@ -11,7 +11,6 @@ import {
 } from '../../constants/api';
 import AdminDashboardComponent from "../../components/dashboard/adminDashboardComponent";
 import AssociateDashboardComponent from "../../components/dashboard/associateDashboardComponent";
-import { pullProfile } from "../../actions/profileAction";
 import { pullDashboard } from "../../actions/dashboardActions";
 import { getSubdomain } from '../../helpers/urlUtility';
 
@@ -40,10 +39,6 @@ class DashboardContainer extends Component {
      */
 
     componentDidMount() {
-        this.props.pullProfile(
-            this.onSuccessfulSubmissionCallback,
-            this.onFailedSubmissionCallback
-        );
         this.props.pullDashboard(
             getSubdomain(),
             this.onSuccessfulSubmissionCallback,
@@ -127,9 +122,6 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullProfile: (successCallback, failureCallback) => {
-            dispatch(pullProfile(successCallback, failureCallback))
-        },
         pullDashboard: (schema, successCallback, failureCallback) => {
             dispatch(pullDashboard(schema, successCallback, failureCallback))
         }

@@ -42,7 +42,7 @@ class TenantDashboardRedirectContainer extends Component {
 
         // Defensive code: If we don't have the details then don't run this
         // function in our code.
-        const { accessTokenString, refreshTokenString } = this.state;
+        const { accessTokenString, refreshTokenString, schemaName } = this.state;
         if (accessTokenString === undefined || accessTokenString === null) {
             alert("NULL TOKEN DETECTED.");
             return;
@@ -58,7 +58,7 @@ class TenantDashboardRedirectContainer extends Component {
 
         // IMPORTANT: NOW THAT WE HAVE ATTACHED OUR ACCESS TOKEN TO OUR LOCAL
         // STORAGE, WE CAN NOW MAKE API CALLS.
-        this.props.pullProfile(this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+        this.props.pullProfile(schemaName, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     /**
@@ -66,10 +66,26 @@ class TenantDashboardRedirectContainer extends Component {
      *------------------------------------------------------------
      */
 
-    onSuccessfulSubmissionCallback() {
+    onSuccessfulSubmissionCallback(responseData) {
+        // DEVELOPERS NOTE:
+        // WE WILL SAVE THE ACCESS TOKEN AND REFRESH TOKEN THAT IS PROVIDED
+        // BY THE GET PROFILE ENDPOINT SUCCESS RESPONSE. ONCE WE SAVE THE
+        // TOKENS WE WILL REDIRECT THE USER TO THE DASHBOARD. THE PURPOSE OF
+        // THIS IS SO WE ENABLE THE ABILITY FOR EXECUTIVES TO SWITCH TENANT
+        // MEMBERSHIP.
+
+        const { accessToken, refreshToken } = responseData;
+        if (accessToken === undefined || accessToken === null || accessToken === "" || accessToken === "null") {
+            alert("onSuccessfulSubmissionCallback: NULL TOKEN DETECTED.");
+            return;
+        }
+
+        setAccessTokenInLocalStorage(accessToken);
+        setRefreshTokenInLocalStorage(refreshToken);
+
         this.setState({
             referrer: "/dashboard"
-        })
+        });
     }
 
     onFailedSubmissionCallback() {
@@ -106,8 +122,8 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullProfile: (successCallback, failureCallback) => {
-            dispatch(pullProfile(successCallback, failureCallback))
+        pullProfile: (overrideTenantSchema, successCallback, failureCallback) => {
+            dispatch(pullProfile(overrideTenantSchema, successCallback, failureCallback))
         }
     }
 }

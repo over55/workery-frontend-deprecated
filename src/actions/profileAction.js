@@ -45,7 +45,7 @@ export const setProfileFailure = profile => ({
 //                             STAFF / ASSOCIATE                              //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullProfile(successCallback=null, failedCallback=null) {
+export function pullProfile(overrideTenantSchema=null, successCallback=null, failedCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
@@ -62,7 +62,7 @@ export function pullProfile(successCallback=null, failedCallback=null) {
         attachAxiosRefreshTokenHandler(customAxios);
 
         // Run our Axios post.
-        customAxios.get(WORKERY_PROFILE_API_URL).then( (successResponse) => { // SUCCESS
+        customAxios.get(WORKERY_PROFILE_API_URL+"?override_tenant_schema="+overrideTenantSchema).then( (successResponse) => { // SUCCESS
             const responseData = successResponse.data;
 
             let profile = camelizeKeys(responseData);
