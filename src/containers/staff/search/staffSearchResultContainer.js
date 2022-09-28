@@ -22,8 +22,8 @@ class StaffSearchResultContainer extends Component {
         const search = localStorageGetObjectItem('workery-search-staff-details');
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 100,
+            offset: 0,
+            sizePerPage: 1000,
             totalSize: 0,
 
             // Everything else
@@ -73,7 +73,7 @@ class StaffSearchResultContainer extends Component {
             ()=>{
                 // STEP 3:
                 // SUBMIT TO OUR API.
-                this.props.pullStaffList(this.state.page, this.state.sizePerPage, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullStaffList(this.state.offset, this.state.sizePerPage, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         );
     }
@@ -99,7 +99,7 @@ class StaffSearchResultContainer extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -138,27 +138,27 @@ class StaffSearchResultContainer extends Component {
     }
 
     onNextClick(e) {
-        const page = this.state.page + 1;
+        const offset = this.state.offset + 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullStaffList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullStaffList(offset, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
 
     onPreviousClick(e) {
-        const page = this.state.page - 1;
+        const offset = this.state.offset - 1;
         this.setState(
             {
-                page: page,
+                offset: offset,
                 isLoading: true,
             },
             ()=>{
-                this.props.pullStaffList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullStaffList(offset, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
@@ -171,13 +171,13 @@ class StaffSearchResultContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, errors } = this.state;
+        const { offset, sizePerPage, totalSize, isLoading, errors } = this.state;
         const staff = (this.props.staffList && this.props.staffList.results) ? this.props.staffList.results : [];
         const hasNext = this.props.staffList.next !== null;
         const hasPrevious = this.props.staffList.previous !== null;
         return (
             <StaffSearchResultComponent
-                page={page}
+                offset={offset}
                 sizePerPage={sizePerPage}
                 totalSize={totalSize}
                 staff={staff}
@@ -206,9 +206,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullStaffList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullStaffList: (offset, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullStaffList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullStaffList(offset, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
