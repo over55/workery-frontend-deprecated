@@ -153,16 +153,11 @@ class AdminInvoiceRetrieveContainer extends Component {
      */
 
     render() {
-        // const invoice = this.props.orderDetail ? this.props.orderDetail : {};
-        // console.log("AdminInvoiceRetrieveContainer | invoice:", invoice);
-        const { invoice } = this.state;
         return (
             <AdminInvoiceRetrieveComponent
-                id={this.state.id}
-                isLoading={this.state.isLoading}
-                invoice={invoice}
-                flashMessage={this.props.flashMessage}
-                onDownloadInvoicePDFClick={this.onDownloadInvoicePDFClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }

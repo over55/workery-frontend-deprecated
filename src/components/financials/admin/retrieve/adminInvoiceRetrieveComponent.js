@@ -60,7 +60,7 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                     </div>
                 </div>
 
-                {invoice && invoice.workOrderId !== undefined && invoice.workOrderId !== null
+                {invoice && invoice.id !== undefined && invoice.workOrderId !== null
                     ? <div className="row pt-3 mb-4 pb-2">
                         <div className="col-md-10 mx-auto p-2">
 
@@ -79,7 +79,7 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Invoice ID</th>
-                                        <td>{invoice && invoice.workOrderId}</td>
+                                        <td>{invoice && invoice.id}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Invoice Date</th>
@@ -99,19 +99,19 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Name</th>
-                                        <td>{invoice && invoice.customerFullName}</td>
+                                        <td>{invoice && invoice.clientName}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Address</th>
-                                        <td>{invoice && invoice.customerAddress}</td>
+                                        <td>{invoice && invoice.clientAddress}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Phone</th>
-                                        <td>{invoice && invoice.customerTelephone}</td>
+                                        <td>{invoice && invoice.clientTelephone}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" className="bg-light">Client Email</th>
-                                        <td>{invoice && invoice.customerEmail}</td>
+                                        <td>{invoice && invoice.clientEmail}</td>
                                     </tr>
 
                                     <tr className="bg-dark">
@@ -238,8 +238,8 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Payment</th>
                                         <td>
-                                            {invoice && invoice.invoiceDepositAmount
-                                                ?<NumberFormat value={invoice.invoiceDepositAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice && invoice.paymentAmount
+                                                ?<NumberFormat value={invoice.paymentAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -247,8 +247,8 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Actual Labour</th>
                                         <td>
-                                            {invoice && invoice.invoiceLabourAmount
-                                                ?<NumberFormat value={invoice.invoiceLabourAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice && invoice.totalLabour
+                                                ?<NumberFormat value={invoice.totalLabour} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -256,8 +256,8 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Actual Materials</th>
                                         <td>
-                                            {invoice && invoice.invoiceMaterialAmount
-                                                ?<NumberFormat value={invoice.invoiceMaterialAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice && invoice.totalMaterials
+                                                ?<NumberFormat value={invoice.totalMaterials} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -265,8 +265,8 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Other Costs</th>
                                         <td>
-                                            {invoice && invoice.invoiceOtherCostsAmount
-                                                ?<NumberFormat value={invoice.invoiceOtherCostsAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice && invoice.otherCosts
+                                                ?<NumberFormat value={invoice.otherCosts} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -274,8 +274,8 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Total Tax</th>
                                         <td>
-                                            {invoice && invoice.invoiceTaxAmount
-                                                ?<NumberFormat value={invoice.invoiceTaxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice && invoice.tax
+                                                ?<NumberFormat value={invoice.tax} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
@@ -283,8 +283,8 @@ export default class AdminInvoiceRetrieveComponent extends Component {
                                     <tr>
                                         <th scope="row" className="bg-light">Total</th>
                                         <td>
-                                            {invoice && invoice.invoiceTotalAmount
-                                                ?<NumberFormat value={invoice.invoiceTotalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                                            {invoice && invoice.total
+                                                ?<NumberFormat value={invoice.total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                                                 :"-"
                                             }
                                         </td>
