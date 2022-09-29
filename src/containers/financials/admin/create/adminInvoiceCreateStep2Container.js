@@ -194,10 +194,10 @@ class AdminInvoiceCreateContainer extends Component {
      */
     onAmountChange(e) {
         const amount = e.target.value.replace("$","").replace(",", "");
-        const name = [e.target.name];
+        const name = String([e.target.name]);
         const amountFloat = parseFloat(amount);
         this.setState(
-            { name: amountFloat, }, ()=>{
+            { [e.target.name]: amountFloat, }, ()=>{
                 localStorage.setItem('workery-create-invoice-'+name, amountFloat );
                 this.calculateTotalAmounts();
             }
