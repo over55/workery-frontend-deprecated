@@ -22,8 +22,10 @@ const customTotal = (from, to, size) => (
 );
 
 const selectOptions = {
-    0: 'Rejected',
+    0: 'Error',
     1: 'Accepted',
+    2: 'Declined',
+    3: 'Pending',
 };
 
 class RemoteListComponent extends Component {
@@ -112,6 +114,9 @@ function jobFormatter(cell, row){
 
 function stateFormatter(cell, row){
     switch(row.state) {
+        case 3:
+            return <><i className="fas fa-pause-circle"></i>&nbsp;Pending</>;
+            break;
         case 2:
             return <><i className="fas fa-times-circle"></i>&nbsp;Rejected</>;
             break;
@@ -173,7 +178,10 @@ export default class AdminAssociateActivitySheetListComponent extends Component 
             flashMessage, onTableChange, isLoading, id, associate, onNextClick, onPreviousClick,
         } = this.props;
 
-        const activitySheetItems = (this.props.activitySheetItemList && this.props.activitySheetItemList.results) ? this.props.activitySheetItemList.results : [];
+        let activitySheetItems = [];
+        if (activitySheetItemList && isEmpty(activitySheetItemList)===false) {
+            activitySheetItems = activitySheetItemList.results ? activitySheetItemList.results : [];
+        }
 
         return (
             <div>
@@ -183,10 +191,10 @@ export default class AdminAssociateActivitySheetListComponent extends Component 
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
-                        <li className="breadcrumb-item" aria-current="page">
+                        <li className="breadcrumb-item" aria-current="offset">
                             <Link to="/associates"><i className="fas fa-crown"></i>&nbsp;Associates</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
+                        <li className="breadcrumb-item active" aria-current="offset">
                             <i className="fas fa-user"></i>&nbsp;{associate && associate.name}
                         </li>
                     </ol>
