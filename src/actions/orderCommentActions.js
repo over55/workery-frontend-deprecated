@@ -14,7 +14,7 @@ import getCustomAxios from '../helpers/customAxios';
 //                                 LIST                                       //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullOrderCommentList(offset=1, limit=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullOrderCommentList(offset=0, limit=10000, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(

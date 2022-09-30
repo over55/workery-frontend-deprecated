@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -23,17 +24,17 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             comments,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, user, onNextClick, onPreviousClick,
         } = this.props;
 
         const columns = [{
-            dataField: 'about',
+            dataField: 'orderId',
             text: 'Job #',
             sort: true,
             formatter: idFormatter,
@@ -42,41 +43,47 @@ class RemoteListComponent extends Component {
             text: 'Text',
             sort: true,
         },{
-            dataField: 'about',
+            dataField: 'orderId',
             text: 'Details',
             sort: false,
             formatter: detailLinkFormatter
         }];
+
+        // // The following code will hide the financial details if the
+        // // authenticated user belongs to the frontline staff.
+        // if (user && user.roleId === FRONTLINE_ROLE_ID) {
+        //     columns.splice(7, 1);
+        // }
 
         const defaultSorted = [{
             dataField: 'id',
             order: 'desc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     offset: offset,
+        //     sizePerPage: sizePerPage,
+        //     totalSize: totalSize,
+        //     sizePerPageList: [{
+        //         text: '25', value: 25
+        //     }, {
+        //         text: '50', value: 50
+        //     }, {
+        //         text: '100', value: 100
+        //     }, {
+        //         text: 'All', value: totalSize
+        //     }],
+        //     showTotal: true,
+        //     paginationTotalRenderer: customTotal,
+        //     firstPageText: 'First',
+        //     prePageText: 'Back',
+        //     nextPageText: 'Next',
+        //     lastPageText: 'Last',
+        //     nextPageTitle: 'First offset',
+        //     prePageTitle: 'Pre offset',
+        //     firstPageTitle: 'Next offset',
+        //     lastPageTitle: 'Last offset',
+        // };
 
         return (
             <BootstrapTable
@@ -90,7 +97,7 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no orders at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -117,13 +124,13 @@ function iconFormatter(cell, row){
 
 function idFormatter(cell, row){
     return (
-        row.about && row.about.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
+        row.orderId && row.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
     );
 }
 
 function detailLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.about}`}>
+        <Link to={`/order/${row.orderId}`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
@@ -134,16 +141,19 @@ class CommentListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
-            commentList,
+            orderCommentList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading
+            flashMessage, onTableChange, isLoading, user, onNextClick, onPreviousClick,
         } = this.props;
 
-        const comments = commentList.results ? commentList.results : [];
+        let comments = [];
+        if (orderCommentList && isEmpty(orderCommentList)===false) {
+            comments = orderCommentList.results ? orderCommentList.results : [];
+        }
 
         return (
             <div>
@@ -153,7 +163,7 @@ class CommentListComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
+                        <li className="breadcrumb-item active" aria-current="offset">
                             <i className="fas fa-comment"></i>&nbsp;Comments
                         </li>
                     </ol>
@@ -184,13 +194,24 @@ class CommentListComponent extends Component {
                             <i className="fas fa-table"></i>&nbsp;List
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             comments={comments}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
+                            user={user}
                         />
+
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
                     </div>
                 </div>
             </div>

@@ -62,6 +62,10 @@ export default function getCustomAxios() {
                         setAccessTokenInLocalStorage(newAccessToken);
                         setRefreshTokenInLocalStorage(newRefreshToken);
 
+                        // For debugging purposes.
+                        console.log("getCustomAxios | refresh token | newAccessToken:", newAccessToken);
+                        console.log("getCustomAxios | refresh token | newRefreshToken:", newRefreshToken);
+
                         // Reset our axios authorization header to use our
                         // new token but keep the original configuration intact.
                         originalConfig = {

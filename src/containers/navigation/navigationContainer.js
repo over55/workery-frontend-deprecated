@@ -238,7 +238,6 @@ class ItemNode extends React.Component {
         this.state = {
             isOpen:false
         }
-        console.log("#####");
     }
 
     toggle = () => {
@@ -250,7 +249,7 @@ class ItemNode extends React.Component {
 
     render() {
         const { id, icon, title, url, children } = this.props.menuData;
-        console.log("----->",id, icon, title, url, children);
+        // console.log("----->",id, icon, title, url, children);
         const sideMenuToggle = this.props.sideMenuToggle;
         if(children)
         {
