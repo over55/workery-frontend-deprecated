@@ -21,8 +21,8 @@ class AdminAssociateOrderListContainer extends Component {
         parametersMap.set("associate", id);
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
@@ -69,7 +69,7 @@ class AdminAssociateOrderListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -94,7 +94,7 @@ class AdminAssociateOrderListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortOrder, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortOrder, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -113,17 +113,17 @@ class AdminAssociateOrderListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullOrderList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -140,7 +140,7 @@ class AdminAssociateOrderListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullOrderList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullOrderList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -154,12 +154,12 @@ class AdminAssociateOrderListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, id } = this.state;
+        const { offset, limit, totalSize, isLoading, id } = this.state;
         const associate = this.props.associateDetail ? this.props.associateDetail : [];
         return (
             <AdminAssociateOrderListComponent
-                page={page}
-                sizePerPage={sizePerPage}
+                offset={offset}
+                limit={limit}
                 totalSize={totalSize}
                 orderList={this.props.orderList}
                 onTableChange={this.onTableChange}
@@ -186,9 +186,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullOrderList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullOrderList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullOrderList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullOrderList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

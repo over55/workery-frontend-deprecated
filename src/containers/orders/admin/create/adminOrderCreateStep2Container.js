@@ -21,7 +21,7 @@ class  AdminOrderCreateStep2Container extends Component {
             phone: localStorage.getItem("workery-create-order-phone"),
             isLoading: true,
             errors: {},
-            page: 1,
+            offset: 1,
         }
 
         this.onClientClick = this.onClientClick.bind(this);
@@ -56,7 +56,7 @@ class  AdminOrderCreateStep2Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullClientList(0, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullClientList(0, 10000, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
     }
 
     componentWillUnmount() {
@@ -77,8 +77,8 @@ class  AdminOrderCreateStep2Container extends Component {
         console.log("onSuccessCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
-                totalSize: response.count,
+                offset: response.offset,
+                limit: response.count,
                 isLoading: false,
             },
             ()=>{
@@ -119,29 +119,32 @@ class  AdminOrderCreateStep2Container extends Component {
     }
 
     onNextClick(e) {
-        const page = this.state.page + 1;
-        this.setState(
-            {
-                page: page,
-                isLoading: true,
-            },
-            ()=>{
-                this.props.pullClientList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
-            }
-        )
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + 100000;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullClientList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     onPreviousClick(e) {
-        const page = this.state.page - 1;
-        this.setState(
-            {
-                page: page,
-                isLoading: true,
-            },
-            ()=>{
-                this.props.pullClientList(page, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
-            }
-        )
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - 100000;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullClientList(offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
     }
 
     /**
@@ -171,9 +174,9 @@ const mapStateToProps = function(store) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        pullClientList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullClientList: (offset, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullClientList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullClientList(offset, sizePerPage, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
