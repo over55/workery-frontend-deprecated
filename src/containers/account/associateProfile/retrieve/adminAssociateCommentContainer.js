@@ -23,8 +23,8 @@ class AdminAssociateCommentContainer extends Component {
         parametersMap.set("o", "-created_at");
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: 10000,
+            offset: 0,
+            limit: 100000,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
@@ -69,12 +69,12 @@ class AdminAssociateCommentContainer extends Component {
      */
 
     componentDidMount() {
-        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        window.scrollTo(0, 0);  // Start the offset at the top of the offset.
 
         // Get our data.
         this.props.pullAssociateCommentList(
-            this.state.page,
-            this.state.sizePerPage,
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessListCallback,
             this.onFailureListCallback
@@ -102,7 +102,7 @@ class AdminAssociateCommentContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -122,7 +122,7 @@ class AdminAssociateCommentContainer extends Component {
         console.log("onSuccessListCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -131,8 +131,8 @@ class AdminAssociateCommentContainer extends Component {
                 console.log("onSuccessPostCallback | State (Post-Fetch):", this.state);
                 // Get our data.
                 this.props.pullAssociateCommentList(
-                    this.state.page,
-                    this.state.sizePerPage,
+                    this.state.offset,
+                    this.state.limit,
                     this.state.parametersMap,
                     this.onSuccessListCallback,
                     this.onFailureListCallback
@@ -170,7 +170,7 @@ class AdminAssociateCommentContainer extends Component {
                 isLoading: true,
             }, ()=>{
                 // The following code will cause the screen to scroll to the top of
-                // the page. Please see ``react-scroll`` for more information:
+                // the offset. Please see ``react-scroll`` for more information:
                 // https://github.com/fisshy/react-scroll
                 var scroll = Scroll.animateScroll;
                 scroll.scrollToTop();
@@ -190,7 +190,7 @@ class AdminAssociateCommentContainer extends Component {
             });
 
             // The following code will cause the screen to scroll to the top of
-            // the page. Please see ``react-scroll`` for more information:
+            // the offset. Please see ``react-scroll`` for more information:
             // https://github.com/fisshy/react-scroll
             var scroll = Scroll.animateScroll;
             scroll.scrollToTop();
@@ -236,9 +236,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullAssociateCommentList: (page, sizePerPage, map, onSuccessListCallback, onFailureListCallback) => {
+        pullAssociateCommentList: (offset, limit, map, onSuccessListCallback, onFailureListCallback) => {
             dispatch(
-                pullAssociateCommentList(page, sizePerPage, map, onSuccessListCallback, onFailureListCallback)
+                pullAssociateCommentList(offset, limit, map, onSuccessListCallback, onFailureListCallback)
             )
         },
         postAssociateComment: (postData, successCallback, failedCallback) => {
