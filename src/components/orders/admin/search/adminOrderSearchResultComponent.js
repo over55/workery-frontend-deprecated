@@ -24,7 +24,7 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             orders,
@@ -100,30 +100,30 @@ class RemoteListComponent extends Component {
             order: 'desc'
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     page: page,
+        //     limit: limit,
+        //     totalSize: totalSize,
+        //     limitList: [{
+        //         text: '25', value: 25
+        //     }, {
+        //         text: '50', value: 50
+        //     }, {
+        //         text: '100', value: 100
+        //     }, {
+        //         text: 'All', value: totalSize
+        //     }],
+        //     showTotal: true,
+        //     paginationTotalRenderer: customTotal,
+        //     firstPageText: 'First',
+        //     prePageText: 'Back',
+        //     nextPageText: 'Next',
+        //     lastPageText: 'Last',
+        //     nextPageTitle: 'First page',
+        //     prePageTitle: 'Pre page',
+        //     firstPageTitle: 'Next page',
+        //     lastPageTitle: 'Last page',
+        // };
 
         return (
             <BootstrapTable
@@ -137,7 +137,7 @@ class RemoteListComponent extends Component {
                 noDataIndication="There are no orders at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -238,7 +238,7 @@ class AdminOrderSearchResultComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             orderList,
@@ -280,8 +280,8 @@ class AdminOrderSearchResultComponent extends Component {
                             <i className="fas fa-list"></i>&nbsp;Search Results
                         </h2>
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
                             orders={orders}
                             onTableChange={onTableChange}

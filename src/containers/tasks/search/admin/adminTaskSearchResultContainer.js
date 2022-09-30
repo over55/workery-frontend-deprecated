@@ -38,8 +38,8 @@ class AdminTaskSearchResultContainer extends Component {
 
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
 
             // Sorting, Filtering, & Searching
@@ -84,7 +84,7 @@ class AdminTaskSearchResultContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -109,7 +109,7 @@ class AdminTaskSearchResultContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortTask, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortTask, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -128,17 +128,17 @@ class AdminTaskSearchResultContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullTaskList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTaskList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullTaskList(page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTaskList(offset, limit, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
 
@@ -162,13 +162,13 @@ class AdminTaskSearchResultContainer extends Component {
             //     parametersMap.set("isClosed", filterVal);
             // }
             parametersMap.set("isClosed", 3);
-            
+
             this.setState(
                 { parametersMap: parametersMap, isLoading: true, },
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullTaskList(this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullTaskList(this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
                 }
             );
         }else {
@@ -182,11 +182,11 @@ class AdminTaskSearchResultContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading } = this.state;
+        const { offset, limit, totalSize, isLoading } = this.state;
         return (
             <TaskSearchResultComponent
-                page={page}
-                sizePerPage={sizePerPage}
+                offset={offset}
+                limit={limit}
                 totalSize={totalSize}
                 taskList={this.props.taskList}
                 onTableChange={this.onTableChange}
@@ -210,9 +210,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullTaskList: (page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullTaskList: (offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullTaskList(page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullTaskList(offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }
