@@ -229,7 +229,7 @@ export const setStaffFileUploadListRequest = () => ({
     type: STAFF_FILE_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
-        page: 1,
+        offset: 0,
         errors: {}
     },
 });

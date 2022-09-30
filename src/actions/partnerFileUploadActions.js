@@ -228,7 +228,7 @@ export const setPartnerFileUploadListRequest = () => ({
     type: PARTNER_FILE_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
-        page: 1,
+        offset: 0,
         errors: {}
     },
 });

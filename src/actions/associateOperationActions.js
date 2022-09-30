@@ -27,7 +27,7 @@ export const setFinancialListRequest = () => ({
     type: FINANCIAL_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
-        page: 1,
+        offset: 0,
         errors: {}
     },
 });

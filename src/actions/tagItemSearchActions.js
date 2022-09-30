@@ -97,7 +97,7 @@ export const setTagItemListRequest = () => ({
     type: TAG_ITEM_SEARCH_LIST_REQUEST,
     payload: {
         isAPIRequestRunning: true,
-        page: 1,
+        offset: 0,
         errors: {}
     },
 });
