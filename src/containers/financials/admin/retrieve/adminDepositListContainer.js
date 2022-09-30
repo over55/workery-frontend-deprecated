@@ -16,14 +16,23 @@ class AdminDepositListContainer extends Component {
 
     constructor(props) {
         super(props);
+
         const { id } = this.props.match.params;
+
+        // Force active users as per issue via https://github.com/over55/workery-frontend/issues/296
         const parametersMap = new Map();
         parametersMap.set("job", id);
+        parametersMap.set("state", "active");
+        parametersMap.set("sort_order", "desc"); // Don't forget these same values must be set in the `defaultSorted` var inside `ClientListComponent`.
+        parametersMap.set("sort_field", "paid_at");
+
         this.state = {
             // Pagination
-            page: 1,
-            sizePerPage: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            offset: 0,
+            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
+            sortOrder: "desc",
+            sortField: "paid_at",
 
             // Sorting, Filtering, & Searching
             parametersMap: parametersMap,
@@ -35,6 +44,8 @@ class AdminDepositListContainer extends Component {
             id: parseInt(id),
         }
         this.onTableChange = this.onTableChange.bind(this);
+        this.onNextClick = this.onNextClick.bind(this);
+        this.onPreviousClick = this.onPreviousClick.bind(this);
         this.onSuccessfulSubmissionCallback = this.onSuccessfulSubmissionCallback.bind(this);
         this.onFailedSubmissionCallback = this.onFailedSubmissionCallback.bind(this);
     }
@@ -45,12 +56,12 @@ class AdminDepositListContainer extends Component {
      */
 
     componentDidMount() {
-        window.scrollTo(0, 0);  // Start the page at the top of the page.
+        window.scrollTo(0, 0);  // Start the offset at the top of the offset.
 
         this.props.pullDepositList(
             this.state.id,
-            this.state.page,
-            this.state.sizePerPage,
+            this.state.offset,
+            this.state.limit,
             this.state.parametersMap,
             this.onSuccessfulSubmissionCallback,
             this.onFailedSubmissionCallback
@@ -79,7 +90,7 @@ class AdminDepositListContainer extends Component {
         console.log("onSuccessfulSubmissionCallback | State (Pre-Fetch):", this.state);
         this.setState(
             {
-                page: response.page,
+                offset: response.offset,
                 totalSize: response.count,
                 isLoading: false,
             },
@@ -104,7 +115,7 @@ class AdminDepositListContainer extends Component {
      *  Function takes the user interactions made with the table and perform
      *  remote API calls to update the table based on user selection.
      */
-    onTableChange(type, { sortField, sortActivitySheet, data, page, sizePerPage, filters }) {
+    onTableChange(type, { sortField, sortActivitySheet, data, offset, limit, filters }) {
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
 
@@ -112,10 +123,12 @@ class AdminDepositListContainer extends Component {
             console.log(type, sortField, sortActivitySheet); // For debugging purposes only.
 
             if (sortActivitySheet === "asc") {
-                parametersMap.set('o', decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "ASC");
             }
             if (sortActivitySheet === "desc") {
-                parametersMap.set('o', "-"+decamelize(sortField));
+                parametersMap.set('sort_field', decamelize(sortField));
+                parametersMap.set('sort_order', "DESC");
             }
 
             this.setState(
@@ -123,39 +136,89 @@ class AdminDepositListContainer extends Component {
                 ()=>{
                     // STEP 3:
                     // SUBMIT TO OUR API.
-                    this.props.pullDepositList(this.state.id, this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullDepositList(
+                        this.state.id,
+                        this.state.offset,
+                        this.state.limit,
+                        parametersMap,
+                        this.onSuccessfulSubmissionCallback,
+                        this.onFailedSubmissionCallback
+                    );
                 }
             );
 
         } else if (type === "pagination") {
-            console.log(type, page, sizePerPage); // For debugging purposes only.
+            console.log(type, offset, limit); // For debugging purposes only.
 
             this.setState(
-                { page: page, sizePerPage:sizePerPage, isLoading: true, },
+                { offset: offset, limit:limit, isLoading: true, },
                 ()=>{
-                    this.props.pullDepositList(this.state.id, page, sizePerPage, this.state.parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+                    this.props.pullDepositList(
+                        this.state.id,
+                        offset,
+                        limit,
+                        this.state.parametersMap,
+                        this.onSuccessfulSubmissionCallback,
+                        this.onFailedSubmissionCallback
+                    );
                 }
             );
 
         } else if (type === "filter") {
-            console.log(type, filters); // For debugging purposes only.
-            if (filters.state === undefined) {
-                parametersMap.delete("state");
-            } else {
-                const filterVal = filters.state.filterVal;
-                parametersMap.set("state", filterVal);
-            }
-            this.setState(
-                { parametersMap: parametersMap, isLoading: true, },
-                ()=>{
-                    // STEP 3:
-                    // SUBMIT TO OUR API.
-                    this.props.pullDepositList(this.state.id, this.state.page, this.state.sizePerPage, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
-                }
-            );
+            // console.log(type, filters); // For debugging purposes only.
+            // if (filters.state === undefined) {
+            //     parametersMap.delete("state");
+            // } else {
+            //     const filterVal = filters.state.filterVal;
+            //     parametersMap.set("state", filterVal);
+            // }
+            // this.setState(
+            //     { parametersMap: parametersMap, isLoading: true, },
+            //     ()=>{
+            //         // STEP 3:
+            //         // SUBMIT TO OUR API.
+            //         this.props.pullDepositList(this.state.id, this.state.offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+            //     }
+            // );
         }else {
             alert("Unsupported feature detected!!"+type);
         }
+    }
+
+    onNextClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullDepositList(this.state.id, offset, this.state.limit, parametersMap, this.onSuccessfulSubmissionCallback, this.onFailedSubmissionCallback);
+    }
+
+    onPreviousClick(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.state.parametersMap;
+
+        this.props.pullDepositList(
+            this.state.id,
+            offset,
+            this.state.limit,
+            parametersMap,
+            this.onSuccessfulSubmissionCallback,
+            this.onFailedSubmissionCallback
+        );
     }
 
     /**
@@ -164,21 +227,11 @@ class AdminDepositListContainer extends Component {
      */
 
     render() {
-        const { page, sizePerPage, totalSize, isLoading, id } = this.state;
-        const order = this.props.orderDetail ? this.props.orderDetail : {};
-        const depositList = (this.props.depositList && this.props.depositList.results) ? this.props.depositList.results : [];
-        console.log("Deposit List:", depositList)
         return (
             <AdminDepositListComponent
-                page={page}
-                sizePerPage={sizePerPage}
-                totalSize={totalSize}
-                depositList={depositList}
-                onTableChange={this.onTableChange}
-                id={id}
-                order={order}
-                flashMessage={this.props.flashMessage}
-                isLoading={isLoading}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
@@ -198,9 +251,9 @@ const mapDispatchToProps = dispatch => {
         clearFlashMessage: () => {
             dispatch(clearFlashMessage())
         },
-        pullDepositList: (orderId, page, sizePerPage, map, onSuccessCallback, onFailureCallback) => {
+        pullDepositList: (orderId, offset, limit, map, onSuccessCallback, onFailureCallback) => {
             dispatch(
-                pullDepositList(orderId, page, sizePerPage, map, onSuccessCallback, onFailureCallback)
+                pullDepositList(orderId, offset, limit, map, onSuccessCallback, onFailureCallback)
             )
         },
     }

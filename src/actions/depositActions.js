@@ -15,21 +15,21 @@ import getCustomAxios from '../helpers/customAxios';
 //                                 LIST                                       //
 ////////////////////////////////////////////////////////////////////////////////
 
-export function pullDepositList(orderId, page=1, sizePerPage=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
+export function pullDepositList(orderId, offset=0, limit=10, filtersMap=new Map(), onSuccessCallback=null, onFailureCallback=null) {
     return dispatch => {
         // Change the global state to attempting to fetch latest user details.
         store.dispatch(
             setDepositListRequest()
         );
 
-        console.log(page, sizePerPage, filtersMap, onSuccessCallback, onFailureCallback);
+        console.log(offset, limit, filtersMap, onSuccessCallback, onFailureCallback);
 
         // Generate our app's Axios instance.
         const customAxios = getCustomAxios();
 
         // Generate the URL from the map.
         // Note: Learn about `Map` iteration via https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e
-        let aURL = WORKERY_DEPOSIT_LIST_API_URL+"?page="+page+"&page_size="+sizePerPage;
+        let aURL = WORKERY_DEPOSIT_LIST_API_URL+"?offset="+offset+"&limit="+limit;
         filtersMap.forEach(
             (value, key) => {
                 let decamelizedkey = decamelize(key)
@@ -51,7 +51,7 @@ export function pullDepositList(orderId, page=1, sizePerPage=10, filtersMap=new 
             // Extra.
             data['isAPIRequestRunning'] = false;
             data['errors'] = {};
-            data['page'] = page;
+            data['offset'] = offset;
 
             // console.log(data); // For debugging purposes.
 

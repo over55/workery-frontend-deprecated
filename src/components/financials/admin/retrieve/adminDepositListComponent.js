@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -25,13 +26,13 @@ class RemoteListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
-            depositList,
+            deposits,
 
             // Everything else.
-            onTableChange, isLoading
+            onTableChange, isLoading, onNextClick, onPreviousClick,
         } = this.props;
 
         const columns = [{
@@ -66,43 +67,43 @@ class RemoteListComponent extends Component {
             formatter: functionsFormatter,
         }];
 
-        const paginationOption = {
-            page: page,
-            sizePerPage: sizePerPage,
-            totalSize: totalSize,
-            sizePerPageList: [{
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }, {
-                text: '100', value: 100
-            }, {
-                text: 'All', value: totalSize
-            }],
-            showTotal: true,
-            paginationTotalRenderer: customTotal,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-        };
+        // const paginationOption = {
+        //     offset: offset,
+        //     sizePerPage: sizePerPage,
+        //     totalSize: totalSize,
+        //     sizePerPageList: [{
+        //         text: '25', value: 25
+        //     }, {
+        //         text: '50', value: 50
+        //     }, {
+        //         text: '100', value: 100
+        //     }, {
+        //         text: 'All', value: totalSize
+        //     }],
+        //     showTotal: true,
+        //     paginationTotalRenderer: customTotal,
+        //     firstPageText: 'First',
+        //     prePageText: 'Back',
+        //     nextPageText: 'Next',
+        //     lastPageText: 'Last',
+        //     nextPageTitle: 'First offset',
+        //     prePageTitle: 'Pre offset',
+        //     firstPageTitle: 'Next offset',
+        //     lastPageTitle: 'Last offset',
+        // };
 
         return (
             <BootstrapTable
                 bootstrap4
                 keyField='id'
-                data={ depositList }
+                data={ deposits }
                 columns={ columns }
                 striped
                 bordered={ false }
                 noDataIndication="There are no activity sheets at the moment"
                 remote
                 onTableChange={ onTableChange }
-                pagination={ paginationFactory(paginationOption) }
+                // pagination={ paginationFactory(paginationOption) }
                 filter={ filterFactory() }
                 loading={ isLoading }
                 // overlay={ overlayFactory({ spinner: true, styles: { overlay: (base) => ({...base, background: 'rgba(0, 128, 128, 0.5)'}) } }) }
@@ -216,14 +217,20 @@ export default class AdminOrderActivitySheetListComponent extends Component {
     render() {
         const {
             // Pagination
-            page, sizePerPage, totalSize,
+            offset, limit, totalSize,
 
             // Data
             depositList,
 
             // Everything else...
-            flashMessage, onTableChange, isLoading, id, order, invoice
+            flashMessage, onTableChange, isLoading, id, order, invoice, onNextClick, onPreviousClick
         } = this.props;
+
+        let deposits = [];
+        if (depositList && isEmpty(depositList)===false) {
+            deposits = depositList.results ? depositList.results : [];
+        }
+
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -232,10 +239,10 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                         <li className="breadcrumb-item">
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
-                        <li className="breadcrumb-item" aria-current="page">
+                        <li className="breadcrumb-item" aria-current="offset">
                             <Link to="/financials"><i className="fas fa-credit-card"></i>&nbsp;Financials</Link>
                         </li>
-                        <li className="breadcrumb-item active" aria-current="page">
+                        <li className="breadcrumb-item active" aria-current="offset">
                             <i className="fas fa-money-check-alt"></i>&nbsp;Order #{id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
@@ -277,13 +284,23 @@ export default class AdminOrderActivitySheetListComponent extends Component {
                         </h2>
 
                         <RemoteListComponent
-                            page={page}
-                            sizePerPage={sizePerPage}
+                            offset={offset}
+                            limit={limit}
                             totalSize={totalSize}
-                            depositList={depositList}
+                            deposits={deposits}
                             onTableChange={onTableChange}
                             isLoading={isLoading}
                         />
+
+                        <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Next
+                        </button>
+
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                            <i className="fas fa-check-circle"></i>&nbsp;Previous
+                        </button>
 
                         <form>
                             <div className="form-group">
