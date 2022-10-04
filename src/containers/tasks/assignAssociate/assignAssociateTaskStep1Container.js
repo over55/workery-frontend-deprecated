@@ -22,7 +22,8 @@ class AssignAssociateTaskStep1Container extends Component {
         // Update state.
         this.state = {
             id: id,
-        }
+            task: null,
+        };
 
         this.onClick = this.onClick.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
@@ -59,6 +60,8 @@ class AssignAssociateTaskStep1Container extends Component {
             if (taskDetail.isClosed === true || taskDetail.isClosed === "true") {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
                 this.props.history.push("/tasks");
+            } else {
+                this.setState({ task: taskDetail, });
             }
         }
     }
