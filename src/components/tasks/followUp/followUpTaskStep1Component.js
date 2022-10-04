@@ -7,6 +7,13 @@ import Moment from 'react-moment';
 export default class FollowUpTaskStep1Component extends Component {
     render() {
         const { id, task, onBack, onClick } = this.props;
+
+        // Defensive code.
+        if (task === undefined || task === null || task === "" || task === "null" || task === "undefined") {
+            return null;
+        }
+
+        // Destruct the fields inside task.
         const { associate, associateTags, customer, customerTags, workOrder, workOrderSkillSets, workOrderTags } = task;
 
         return (

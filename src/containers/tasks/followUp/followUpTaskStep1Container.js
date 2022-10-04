@@ -23,6 +23,7 @@ class FollowUpTaskStep1Container extends Component {
         // Update state.
         this.state = {
             id: id,
+            task: null,
         }
 
         this.onClick = this.onClick.bind(this);
@@ -67,6 +68,10 @@ class FollowUpTaskStep1Container extends Component {
                 this.props.setFlashMessage("danger", "Task has been already been closed.");
                 this.props.history.push("/tasks");
             }
+
+            this.setState({
+                "task": taskDetail,
+            });
         } else {
             console.log("nSuccessCallback | taskDetail | d.n.e.");
         }
@@ -95,10 +100,9 @@ class FollowUpTaskStep1Container extends Component {
     render() {
         return (
             <FollowUpTaskStep1Component
-                id={this.state.id}
-                task={this.props.taskDetail}
-                onBack={this.onBack}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
