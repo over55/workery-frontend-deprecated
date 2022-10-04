@@ -24,6 +24,7 @@ class SurveyTaskStep1Container extends Component {
         // Update state.
         this.state = {
             id: id,
+            task: null,
         }
 
         this.onClick = this.onClick.bind(this);
@@ -38,7 +39,11 @@ class SurveyTaskStep1Container extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
-        this.props.pullTaskDetail(this.state.id, this.onSuccessCallback, this.onFailureCallback);
+        this.props.pullTaskDetail(
+            this.state.id,
+            this.onSuccessCallback,
+            this.onFailureCallback
+        );
     }
 
     componentWillUnmount() {
@@ -69,6 +74,10 @@ class SurveyTaskStep1Container extends Component {
             } else {
                 console.log("nSuccessCallback | taskDetail | associate | d.n.e.");
             }
+
+            this.setState({
+                "task": taskDetail,
+            });
         }
     }
 
@@ -95,10 +104,9 @@ class SurveyTaskStep1Container extends Component {
     render() {
         return (
             <SurveyTaskStep1Component
-                id={this.state.id}
-                task={this.props.taskDetail}
-                onBack={this.onBack}
-                onClick={this.onClick}
+                {...this}
+                {...this.state}
+                {...this.props}
             />
         );
     }
