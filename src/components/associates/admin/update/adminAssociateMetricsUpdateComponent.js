@@ -36,7 +36,7 @@ class AdminAssociateMetricsUpdateComponent extends Component {
             onSelectChange, onTagMultiChange, onJoinDateChange,
             onDateOfBirthChange, associate
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHearId === 'Other';
+        const isOtherHowDidYouHearSelected = howHearId === 'Other'; //TODO: FIX TECHDEBT.
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

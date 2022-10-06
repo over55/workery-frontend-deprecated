@@ -30,7 +30,7 @@ export default class StaffRezUpdateComponent extends Component {
             givenName, lastName, id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
             onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHearId === 1;
+        const isOtherHowDidYouHearSelected = howHearId === 1; //TODO: FIX TECHDEBT.
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -40,7 +40,7 @@ export default class StaffRezUpdateComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to={`/staff`}><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
+                            <Link to={`/staff`}><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
                             <Link to={`/staff/${id}/full`}><i className="fas fa-user"></i>&nbsp;{givenName} {lastName}</Link>

@@ -30,7 +30,7 @@ export default class PartnerRezUpdateComponent extends Component {
             givenName, lastName, id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
             onMultiChange, onDateOfBirthChange, onSelectChange, onJoinDateChange,
         } = this.props;
-        const isOtherHowDidYouHearSelected = howHearId === 1;
+        const isOtherHowDidYouHearSelected = howHearId === 1; //TODO: FIX TECHDEBT.
         return (
             <main id="main" role="main">
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

@@ -230,7 +230,7 @@ class StaffFileUploadListComponent extends Component {
                            <Link to="/dashboard"><i className="fas fa-tachometer-alt"></i>&nbsp;Dashboard</Link>
                         </li>
                         <li className="breadcrumb-item" aria-current="page">
-                            <Link to="/staff"><i className="fas fa-user-circle"></i>&nbsp;Staffs</Link>
+                            <Link to="/staff"><i className="fas fa-user-tie"></i>&nbsp;Staff</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
                             <i className="fas fa-user"></i>&nbsp;{staff && staff.name}
