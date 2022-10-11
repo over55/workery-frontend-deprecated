@@ -22,8 +22,13 @@ class PartnerCreateStep2Container extends Component {
             phone: localStorage.getItem("workery-create-partner-phone"),
             isLoading: true,
             errors: {},
+
+            // Pagination
             offset: 0,
             limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            totalSize: 0,
+            sortOrder: "ASC",
+            sortField: "last_name",
         }
 
         this.onTextChange = this.onTextChange.bind(this);
@@ -116,31 +121,32 @@ class PartnerCreateStep2Container extends Component {
     }
 
     onNextClick(e) {
-        let { offset, limit } = this.state;
-        offset = offset + 1;
-        this.setState(
-            {
-                offset: offset,
-                isLoading: true,
-            },
-            ()=>{
-                this.props.pullPartnerList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
-            }
-        )
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap =  this.getParametersMapFromState();
+
+        this.props.pullPartnerList(offset, this.state.limit, parametersMap, this.onSuccessCallback, this.onFailureCallback);
     }
 
     onPreviousClick(e) {
-        let { offset, limit } = this.state;
-        offset = offset + 1;
-        this.setState(
-            {
-                offset: offset,
-                isLoading: true,
-            },
-            ()=>{
-                this.props.pullPartnerList(offset, limit, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
-            }
-        )
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+
+        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+
+        // Defensive code: Skip this function if it our offset is weird.
+        if (offset < 0) {
+            return;
+        }
+
+        // Copy the `parametersMap` that we already have.
+        var parametersMap = this.getParametersMapFromState();
+
+        this.props.pullPartnerList(offset, this.state.limit, parametersMap, this.onSuccessCallback, this.onFailureCallback);
     }
 
     /**
