@@ -37,7 +37,7 @@ export default class AdminOrderFileUploadArchiveComponent extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-user"></i>&nbsp;{order && order.name}</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
 
                 {order.state === 'inactive' &&
                     <div className="alert alert-info" role="alert">

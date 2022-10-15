@@ -39,7 +39,9 @@ export default class ClientOperationsComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-money-check-alt"></i>&nbsp;View Financial Details</h1>
+                <h1>
+                    <i className="fas fa-user"></i>&nbsp;{clientDetail && clientDetail.name}
+                </h1>
 
                 <div className="row">
                     <div className="step-navigation">

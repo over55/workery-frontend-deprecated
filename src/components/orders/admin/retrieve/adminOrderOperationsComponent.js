@@ -53,7 +53,7 @@ export default class AdminOrderOperationsComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-money-check-alt"></i>&nbsp;View Financial Details</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
 
                 <div className="row">
                     <div className="step-navigation">

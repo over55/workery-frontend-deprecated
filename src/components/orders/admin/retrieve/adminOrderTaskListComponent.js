@@ -218,7 +218,7 @@ class AdminOrderTaskListComponent extends Component {
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-tasks"></i>&nbsp;Tasks</h1>
+                <h1><i className="fas fa-wrench"></i>&nbsp;View Order</h1>
 
                 <div className="row">
                     <div className="step-navigation">

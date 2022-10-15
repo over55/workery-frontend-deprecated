@@ -233,14 +233,16 @@ class AdminOrderFileUploadListComponent extends Component {
                             <Link to="/orders"><i className="fas fa-wrench"></i>&nbsp;Orders</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-user"></i>&nbsp;{order && order.fullName}
+                            <i className="fas fa-wrench"></i>&nbsp;Order # {order && order.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
                         </li>
                     </ol>
                 </nav>
 
                 <FlashMessageComponent object={flashMessage} />
 
-                <h1><i className="fas fa-user"></i>&nbsp;{order && order.name}</h1>
+                <h1>
+                    <i className="fas fa-wrench"></i>&nbsp;View Order
+                </h1>
 
                 <div className="row">
                     <div className="step-navigation">
