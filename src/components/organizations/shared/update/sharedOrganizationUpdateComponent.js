@@ -13,7 +13,7 @@ import { BootstrapSingleSelect } from "../../../bootstrap/bootstrapSingleSelect"
 class SharedOrganizationUpdateComponent extends Component {
     render() {
         const {
-            schema, name, alternateName, description, country, region, locality, streetAddress, postalCode, timezone, timezoneOptions,
+            schema, name, alternateName, description, country, region, locality, streetAddress, postalCode, timezone, status, statusOptions, timezoneOptions,
             errors={}, isLoading, onTextChange, onSelectChange, onCountryChange, onRegionChange, onClick, onCancelClick
         } = this.props;
         return (
@@ -148,6 +148,17 @@ class SharedOrganizationUpdateComponent extends Component {
                                 options={timezoneOptions}
                                 value={timezone}
                                 error={errors.timezone}
+                                onSelectChange={onSelectChange}
+                            />
+
+                            <BootstrapSingleSelect
+                                borderColour="border-primary"
+                                label="Status (*)"
+                                name="status"
+                                defaultOptionLabel="Please select a status."
+                                options={statusOptions}
+                                value={status}
+                                error={errors.state}
                                 onSelectChange={onSelectChange}
                             />
 

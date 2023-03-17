@@ -37,6 +37,7 @@ class SharedOrganizationUpdateContainer extends Component {
             timezone: '',
             errors: {},
             isLoading: true,
+            status: 0,
         }
 
         this.getPostData = this.getPostData.bind(this);
@@ -100,8 +101,8 @@ class SharedOrganizationUpdateContainer extends Component {
         // Convert
         postData.id = parseInt(this.state.id);
 
-        // Default value - do nothing from our perspective.
-        postData.state = 1;
+        // State required.
+        postData.state = this.state.status;
 
         // Finally: Return our new modified data.
         console.log("getPostData |", postData);
@@ -144,6 +145,7 @@ class SharedOrganizationUpdateContainer extends Component {
             streetAddress: orgDetail.streetAddress,
             postalCode: orgDetail.postalCode,
             timezone: orgDetail.timezone,
+            status: orgDetail.state,
             errors: {},
             isLoading: false,
         });
@@ -214,7 +216,7 @@ class SharedOrganizationUpdateContainer extends Component {
 
     render() {
         const {
-            schema, name, alternateName, description, country, region, locality, streetAddress, postalCode, timezone, errors, isLoading
+            schema, name, alternateName, description, country, region, locality, streetAddress, postalCode, timezone, errors, isLoading, status
         } = this.state;
         return (
             <SharedOrganizationUpdateComponent
@@ -228,7 +230,19 @@ class SharedOrganizationUpdateContainer extends Component {
                 streetAddress={streetAddress}
                 timezone={timezone}
                 timezoneOptions={getTimezoneReactSelectOptions()}
+                statusOptions={[
+                    {
+                        selectName: "status",
+                        value: 1,
+                        label: "Active"
+                    },{
+                        selectName: "status",
+                        value: 2,
+                        label: "Inactive"
+                    }
+                ]}
                 postalCode={postalCode}
+                status={status}
                 errors={errors}
                 isLoading={isLoading}
                 onTextChange={this.onTextChange}
