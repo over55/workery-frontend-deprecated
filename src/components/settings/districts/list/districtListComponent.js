@@ -6,6 +6,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 import { FlashMessageComponent } from "../../../flashMessageComponent";
 import DistrictFilterComponent from "./districtFilterComponent";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 class ActiveListComponent extends Component {

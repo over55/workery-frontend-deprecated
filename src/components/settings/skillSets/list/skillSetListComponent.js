@@ -12,6 +12,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 
 const customTotal = (from, to, size) => (
@@ -213,7 +214,7 @@ class SkillSetListComponent extends Component {
 
                         <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
 
-                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick} disabled={skillSets.length === 0 || skillSets.length < STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION}>
                             <i className="fas fa-check-circle"></i>&nbsp;Next
                         </button>
 

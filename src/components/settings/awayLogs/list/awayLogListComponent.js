@@ -10,6 +10,7 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
@@ -232,7 +233,7 @@ class AwayLogListComponent extends Component {
 
                         <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
 
-                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick} disabled={awayLogs.length === 0 || awayLogs.length < STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION}>
                             <i className="fas fa-check-circle"></i>&nbsp;Next
                         </button>
 
