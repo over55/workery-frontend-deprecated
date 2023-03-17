@@ -80,6 +80,7 @@ class SharedOrganizationUpdateContainer extends Component {
         //
         // Timezone Name: This field is required.
         postData.timezoneName = this.state.timezone;
+        postData.timezone = this.state.timezone;
 
         // Street Address: This field is required.
         postData.addressCountry = this.state.country;
@@ -142,7 +143,7 @@ class SharedOrganizationUpdateContainer extends Component {
             locality: orgDetail.addressLocality,
             streetAddress: orgDetail.streetAddress,
             postalCode: orgDetail.postalCode,
-            timezone: orgDetail.timezoneName,
+            timezone: orgDetail.timezone,
             errors: {},
             isLoading: false,
         });
