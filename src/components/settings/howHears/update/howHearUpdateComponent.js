@@ -28,7 +28,7 @@ class HowHearUpdateComponent extends Component {
     render() {
         const {
             text, sortNumber,
-            isForAssociate, isForCustomer, isForPartner, isForStaff, onRadioChange,
+            isForAssociate, isForCustomer, isForStaff, onRadioChange,
             errors, isLoading, onClick, onTextChange
         } = this.props;
         return (
@@ -100,17 +100,6 @@ class HowHearUpdateComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isForCustomer}
                                 options={getBooleanOptions("isForCustomer")}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-success"
-                                error={errors.isForPartner}
-                                label="Is for partner?"
-                                name="isForPartner"
-                                onChange={onRadioChange}
-                                selectedValue={isForPartner}
-                                options={getBooleanOptions("isForPartner")}
                             />
 
                             <BootstrapRadio

@@ -7,7 +7,7 @@ import { BootstrapErrorsProcessingAlert } from "../../../bootstrap/bootstrapAler
 
 class HowHearDeleteComponent extends Component {
     render() {
-        const { text, sortNumber, isForAssociate, isForCustomer, isForPartner, isForStaff, errors, isLoading, onClick } = this.props;
+        const { text, sortNumber, isForAssociate, isForCustomer, isForStaff, errors, isLoading, onClick } = this.props;
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />

@@ -92,7 +92,7 @@ export default class Report17Component extends Component {
 
 
 /*
-" name="user_type" required=""><option selected="" value="">Types...</option><option value="">Client</option><option value="associate">Associate</option><option value="staff">Staff</option><option value="partner">Partner</option></select>
+" name="user_type" required=""><option selected="" value="">Types...</option><option value="">Client</option><option value="associate">Associate</option><option value="staff">Staff</option></select>
 */
 
 export const JOB_STATE_CHOICES = [
@@ -111,10 +111,5 @@ export const JOB_STATE_CHOICES = [
         selectName: "userType",
         value: 'staff',
         label: "Staff"
-    },{
-        id: 'userType-1-choice',
-        selectName: "userType",
-        value: "partner",
-        label: "Partner"
     }
 ];

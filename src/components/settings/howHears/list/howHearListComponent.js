@@ -57,11 +57,6 @@ class RemoteListComponent extends Component {
             sort: true,
             formatter: isForCustomerIconFormatter,
         },{
-            dataField: 'isForPartner',
-            text: 'Partner ?',
-            sort: true,
-            formatter: isForPartnerIconFormatter,
-        },{
             dataField: 'isForStaff',
             text: 'Staff ?',
             sort: true,
@@ -152,14 +147,6 @@ function isForCustomerIconFormatter(cell, row){
     }
 }
 
-
-function isForPartnerIconFormatter(cell, row){
-    if (row.isForPartner) {
-        return <i className="fas fa-check-circle"></i>;
-    } else {
-        return <i className="fas fa-times-circle"></i>
-    }
-}
 
 
 function isForStaffIconFormatter(cell, row){

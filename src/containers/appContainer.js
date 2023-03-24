@@ -302,30 +302,6 @@ import VehicleTypeDeleteContainer from "./settings/vehicleTypes/delete/vehicleTy
 import VehicleTypeCreateContainer from "./settings/vehicleTypes/create/vehicleTypeCreateContainer";
 import VehicleTypeUpdateContainer from "./settings/vehicleTypes/update/vehicleTypeUpdateContainer";
 
-import PartnerListContainer from "./partners/list/partnerListContainer";
-import PartnerSearchContainer from "./partners/search/partnerSearchContainer";
-import PartnerSearchResultContainer from "./partners/search/partnerSearchResultContainer";
-import PartnerLiteRetrieveContainer from "./partners/retrieve/partnerLiteRetrieveContainer";
-import PartnerFullRetrieveContainer from "./partners/retrieve/partnerFullRetrieveContainer";
-import PartnerCommentContainer from "./partners/retrieve/partnerCommentContainer";
-import PartnerFileUploadAddContainer from "./partners/retrieve/file_upload/partnerFileUploadAddContainer";
-import PartnerFileUploadArchiveContainer from "./partners/retrieve/file_upload/partnerFileUploadArchiveContainer";
-import PartnerFileUploadListContainer from "./partners/retrieve/file_upload/partnerFileUploadListContainer";
-import PartnerCreateStep1Container from "./partners/create/partnerCreateStep1Container";
-import PartnerCreateStep2Container from "./partners/create/partnerCreateStep2Container";
-import PartnerCreateStep3Container from "./partners/create/partnerCreateStep3Container";
-import PartnerCreateStep4Container from "./partners/create/partnerCreateStep4Container";
-import PartnerCreateStep5Container from "./partners/create/partnerCreateStep5Container";
-import PartnerCreateStep6Container from "./partners/create/partnerCreateStep6Container";
-import PartnerContactUpdateContainer from "./partners/update/partnerContactUpdateContainer";
-import PartnerAddressUpdateContainer from "./partners/update/partnerAddressUpdateContainer";
-import PartnerMetricsUpdateContainer from "./partners/update/partnerMetricsUpdateContainer";
-import PartnerOperationsContainer from "./partners/retrieve/partnerOperationsContainer";
-import PartnerAvatarUpdateOperationContainer from "./partners/operations/partnerAvatarUpdateOperationContainer";
-import PartnerPermanentDeleteOperationContainer from "./partners/operations/partnerPermanentDeleteOperationContainer";
-import PartnerUnarchiveOperationContainer from "./partners/operations/partnerUnarchiveOperationContainer";
-import PartnerArchiveOperationContainer from "./partners/operations/partnerArchiveOperationContainer";
-
 // Ongoing Work Order
 import AdminOngoingOrderListComponent from "./ongoingOrders/admin/list/ongoingOrderListContainer";
 import OngoingOrderLiteRetrieveContainer from "./ongoingOrders/retrieve/ongoingOrderLiteRetrieveContainer";
@@ -648,31 +624,6 @@ class AppContainer extends React.Component {
                                 <Route path="/settings/vehicle-type/add" exact component={requiresAuth(VehicleTypeCreateContainer)} />
                                 <Route path="/settings/vehicle-type/:id/delete" exact component={requiresAuth(VehicleTypeDeleteContainer)} />
                                 <Route path="/settings/vehicle-type/:id/update" exact component={requiresAuth(VehicleTypeUpdateContainer)} />
-
-                                { /* PARTNERS */ }
-                                <Route path="/partners/add/step-1" exact component={requiresAuth(PartnerCreateStep1Container)} />
-                                <Route path="/partners/add/step-2" exact component={requiresAuth(PartnerCreateStep2Container)} />
-                                <Route path="/partners/add/step-3" exact component={requiresAuth(PartnerCreateStep3Container)} />
-                                <Route path="/partners/add/step-4" exact component={requiresAuth(PartnerCreateStep4Container)} />
-                                <Route path="/partners/add/step-5" exact component={requiresAuth(PartnerCreateStep5Container)} />
-                                <Route path="/partners/add/step-6" exact component={requiresAuth(PartnerCreateStep6Container)} />
-                                <Route path="/partners" exact component={requiresAuth(PartnerListContainer)} />
-                                <Route path="/partners/search" exact component={requiresAuth(PartnerSearchContainer)} />
-                                <Route path="/partners/search-results" exact component={requiresAuth(PartnerSearchResultContainer)} />
-                                <Route path="/partner/:id" exact component={requiresAuth(PartnerLiteRetrieveContainer)} />
-                                <Route path="/partner/:id/full" exact component={requiresAuth(PartnerFullRetrieveContainer)} />
-                                <Route path="/partner/:id/comments" exact component={requiresAuth(PartnerCommentContainer)} />
-                                <Route path="/partner/:id/file/add" exact component={requiresAuth(PartnerFileUploadAddContainer)} />
-                                <Route path="/partner/:id/file/archive/:fileId" exact component={requiresAuth(PartnerFileUploadArchiveContainer)} />
-                                <Route path="/partner/:id/files" exact component={requiresAuth(PartnerFileUploadListContainer)} />
-                                <Route path="/partner/:id/avatar" exact component={requiresAuth(PartnerAvatarUpdateOperationContainer)} />
-                                <Route path="/partner/:id/update/contact" exact component={requiresAuth(PartnerContactUpdateContainer)} />
-                                <Route path="/partner/:id/update/address" exact component={requiresAuth(PartnerAddressUpdateContainer)} />
-                                <Route path="/partner/:id/update/metrics" exact component={requiresAuth(PartnerMetricsUpdateContainer)} />
-                                <Route path="/partner/:id/operations" exact component={requiresAuth(PartnerOperationsContainer)} />
-                                <Route path="/partner/:id/delete" exact component={requiresAuth(PartnerPermanentDeleteOperationContainer)} />
-                                <Route path="/partner/:id/unarchive" exact component={requiresAuth(PartnerUnarchiveOperationContainer)} />
-                                <Route path="/partner/:id/archive" exact component={requiresAuth(PartnerArchiveOperationContainer)} />
 
                                 { /* WORK ORDER */}
                                 <Route path="/ongoing-orders" exact component={requiresAuth(AdminOngoingOrderListComponent)} />

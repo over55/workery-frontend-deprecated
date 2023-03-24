@@ -29,7 +29,7 @@ class HowHearCreateComponent extends Component {
     render() {
         const {
             text, sortNumber, onTextChange,
-            isForAssociate, isForCustomer, isForPartner, isForStaff, onRadioChange,
+            isForAssociate, isForCustomer, isForStaff, onRadioChange,
             errors, isLoading, onClick
         } = this.props;
         return (
@@ -102,17 +102,6 @@ class HowHearCreateComponent extends Component {
                                 onChange={onRadioChange}
                                 selectedValue={isForCustomer}
                                 options={getBooleanOptions("isForCustomer")}
-                            />
-
-                            <BootstrapRadio
-                                inputClassName="form-check-input form-check-input-lg"
-                                borderColour="border-success"
-                                error={errors.isForPartner}
-                                label="Is for partner?"
-                                name="isForPartner"
-                                onChange={onRadioChange}
-                                selectedValue={isForPartner}
-                                options={getBooleanOptions("isForPartner")}
                             />
 
                             <BootstrapRadio
