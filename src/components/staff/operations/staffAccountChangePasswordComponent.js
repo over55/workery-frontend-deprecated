@@ -56,7 +56,7 @@ class StaffAccountChangePasswordComponent extends Component {
                             <BootstrapErrorsProcessingAlert errors={errors} />
 
                             <p className="border-bottom mb-3 pb-1 text-secondary">
-                                <i className="fas fa-user-friends"></i>&nbsp;Emergency Contact
+                                <i className="fas fa-user-friends"></i>&nbsp;Update user password
                             </p>
 
                             <BootstrapInput
