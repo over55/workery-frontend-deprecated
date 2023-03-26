@@ -20,6 +20,11 @@ export default class StaffFileUploadArchiveComponent extends Component {
         const {
             isLoading, id, staff, errors, onClick
         } = this.props;
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const fileState = urlParams.get('s')
+
         return (
             <div>
                 <BootstrapPageLoadingAnimation isLoading={isLoading} />
@@ -84,7 +89,11 @@ export default class StaffFileUploadArchiveComponent extends Component {
 
                             <div className="jumbotron">
                                 <h1 className="display-4"><i className="fas fa-question-circle"></i>&nbsp;Are you sure?</h1>
-                                <p className="lead">You are about to archive the file, this file will no longer be available to the staff and the staff.</p>
+                                <p className="lead">You are about to {fileState == 1 ? <span>archived</span> : <span>unarchive</span>} the file,
+                                {fileState == 1
+                                    ? <span>this file will no longer be available to the staff and the staff.</span>
+                                    : <span>this file will become available to the staff and the staff.</span>}
+                                </p>
                             </div>
 
                             <div className="form-group">

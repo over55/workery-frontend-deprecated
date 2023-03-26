@@ -184,19 +184,19 @@ function fileFormatter(cell, row){
             }
             &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
             {row.state === 0 &&
-                <strong>
+                <Link to={`/staff/${row.staffId}/file/archive/${row.id}?s=${row.state}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archived
-                </strong>
+                </Link>
             }
             {row.state === 1 &&
-                <Link to={`/staff/${row.staffId}/file/archive/${row.id}`}>
+                <Link to={`/staff/${row.staffId}/file/archive/${row.id}?s=${row.state}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archive
                 </Link>
             }
             {row.state === 2 &&
-                <strong>
+                <Link to={`/staff/${row.staffId}/file/archive/${row.id}?s=${row.state}`}>
                     <i className="fas fa-archive"></i>&nbsp;Archived
-                </strong>
+                </Link>
             }
         </div>
     )
