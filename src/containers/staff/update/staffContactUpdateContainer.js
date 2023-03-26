@@ -40,12 +40,10 @@ class StaffUpdateContainer extends Component {
             typeOf: this.props.staffDetail.typeOf,
 
             // STEP 4
-            organizationName: this.props.staffDetail.organizationName,
-            organizationTypeOf: this.props.staffDetail.organizationTypeOf,
+            organizationName: "-",
+            organizationTypeOf: 1,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
-            organizationName: this.props.staffDetail.organizationName,
-            organizationTypeOf: this.props.staffDetail.organizationTypeOf,
             givenName: this.props.staffDetail.givenName,
             lastName: this.props.staffDetail.lastName,
             telephone: this.props.staffDetail.telephone,

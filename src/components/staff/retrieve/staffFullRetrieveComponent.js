@@ -104,12 +104,6 @@ export default class StaffFullRetrieveComponent extends Component {
                                         }
                                     </th>
                                 </tr>
-                                {isCompany &&
-                                    <tr>
-                                        <th scope="row" className="bg-light">Company Name</th>
-                                        <td>{staff.organizationName}</td>
-                                    </tr>
-                                }
                                 <tr>
                                     <th scope="row" className="bg-light">Full Name</th>
                                     <td>{staff.name}</td>

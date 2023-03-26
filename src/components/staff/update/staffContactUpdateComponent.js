@@ -29,7 +29,7 @@ export default class StaffContactUpdateComponent extends Component {
             typeOf,
 
             // STEP 4
-            organizationName, organizationTypeOf, givenName, lastName, telephone, otherTelephone, email, isOkToText, isOkToEmail,
+            givenName, lastName, telephone, otherTelephone, email, isOkToText, isOkToEmail,
 
             // EVERYTHING ELSE
             id, errors, isLoading, onClick, onTextChange, onRadioChange, onBillingCountryChange, onBillingRegionChange,
@@ -63,31 +63,6 @@ export default class StaffContactUpdateComponent extends Component {
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
                             <BootstrapErrorsProcessingAlert errors={errors} />
-
-                            {isCommercial &&
-                                <div>
-                                    <BootstrapInput
-                                        inputClassName="form-control form-control-lg"
-                                        borderColour="border-primary"
-                                        error={errors.organizationName}
-                                        label="Organization Name (*)"
-                                        onChange={onTextChange}
-                                        value={organizationName}
-                                        name="organizationName"
-                                        type="text"
-                                    />
-                                    <BootstrapSingleSelect
-                                        borderColour="border-primary"
-                                        label="Organization Type (*)"
-                                        name="organizationTypeOf"
-                                        defaultOptionLabel="Please select the organization."
-                                        options={ORGANIZATION_TYPE_OF_CHOICES}
-                                        value={organizationTypeOf}
-                                        error={errors.organizationTypeOf}
-                                        onSelectChange={onSelectChange}
-                                    />
-                                </div>
-                            }
 
                             <BootstrapInput
                                 inputClassName="form-control form-control-lg"

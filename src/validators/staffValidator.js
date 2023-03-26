@@ -36,12 +36,7 @@ export function validateContactInput(data) {
 
     } else if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
 
-        if (data.organizationName === undefined || data.organizationName === null || validator.isEmpty(data.organizationName) || data.organizationName === "") {
-            errors.organizationName = 'This field is required';
-        }
-        if (data.organizationTypeOf === undefined || data.organizationTypeOf === null || data.organizationTypeOf === "") {
-            errors.organizationTypeOf = 'This field is required';
-        }
+        
         if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
             errors.givenName = 'This field is required';
         }
