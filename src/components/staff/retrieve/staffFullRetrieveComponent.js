@@ -89,15 +89,6 @@ export default class StaffFullRetrieveComponent extends Component {
 
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-sitemap"></i>&nbsp;Type
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Type of Staff</th>
-                                    <td>{typeOfLabel}</td>
-                                </tr>
 
 
                                 <tr className="bg-dark">
