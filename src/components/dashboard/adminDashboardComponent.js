@@ -534,7 +534,7 @@ class CommentHistoryComponent extends Component {
 
 function commentAboutFormatter(cell, row){
     return (
-        <Link to={`/en/jobs/summary/detail/${row.id}/lite/`}>
+        <Link to={`/order/${row.orderId}`}>
             {row && row.orderId.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}
         </Link>
     )
@@ -543,7 +543,7 @@ function commentAboutFormatter(cell, row){
 
 function commentLinkFormatter(cell, row){
     return (
-        <Link to={`/order/${row.about}/comments`}>
+        <Link to={`/order/${row.orderId}/comments`}>
             View&nbsp;<i className="fas fa-chevron-right"></i>
         </Link>
     )
