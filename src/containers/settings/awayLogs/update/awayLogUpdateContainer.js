@@ -23,6 +23,10 @@ class AwayLogUpdateContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const backURL = urlParams.get('back')
+
         this.state = {
             id: parseInt(id),
             associateId: "",
@@ -34,6 +38,7 @@ class AwayLogUpdateContainer extends Component {
             reasonOther: "",
             untilFurtherNotice: "",
             untilDate: "",
+            backURL: backURL,
             errors: {},
             isLoading: false
         }
@@ -44,6 +49,7 @@ class AwayLogUpdateContainer extends Component {
         this.onStartDateChange = this.onStartDateChange.bind(this);
         this.onUntilDateChange = this.onUntilDateChange.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onBack = this.onBack.bind(this);
         this.onSuccessCallback = this.onSuccessCallback.bind(this);
         this.onFailureCallback = this.onFailureCallback.bind(this);
         this.onAwayLogFetchCallback = this.onAwayLogFetchCallback.bind(this);
@@ -113,7 +119,11 @@ class AwayLogUpdateContainer extends Component {
     onSuccessCallback(response) {
         if (response !== null && response !== undefined) {
             this.props.setFlashMessage("success", "Away log has been successfully updated.");
-            this.props.history.push("/settings/away-logs");
+            if (this.state.backURL !== undefined && this.state.backURL !== null && this.state.backURL !== "") {
+                this.props.history.push(this.state.backURL);
+            } else {
+                this.props.history.push("/settings/away-logs");
+            }
         } else {
             console.log("onSuccessCallback | ERROR:",response);
         }
@@ -216,6 +226,15 @@ class AwayLogUpdateContainer extends Component {
         }
     }
 
+    onBack(e) {
+        // Prevent the default HTML form submit code to run on the browser side.
+        e.preventDefault();
+        if (this.state.backURL !== undefined && this.state.backURL !== null && this.state.backURL !== "") {
+            this.props.history.push(this.state.backURL);
+        } else {
+            this.props.history.push("/settings/away-logs");
+        }
+    }
 
     /**
      *  Main render function

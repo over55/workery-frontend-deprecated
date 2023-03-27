@@ -15,7 +15,7 @@ class AwayLogUpdateComponent extends Component {
     render() {
         const {
             associateId, associateOptions, isAssociatesLoading, startDate, reason, reasonOther, untilFurtherNotice, untilDate,
-            errors, onTextChange, onSelectChange, onStartDateChange, onUntilDateChange, onRadioChange, isLoading, onClick
+            errors, onTextChange, onSelectChange, onStartDateChange, onUntilDateChange, onRadioChange, isLoading, onClick, onBack
         } = this.props;
         const isOtherReasonSelected = reason === 1;
         const isNotUntilFurtherNotice = parseInt(untilFurtherNotice) === 0;
@@ -118,9 +118,9 @@ class AwayLogUpdateComponent extends Component {
                                 <button type="button" className="btn btn-success btn-lg mt-4 float-right pl-4 pr-4" disabled={isLoading} onClick={onClick}>
                                     <i className="fas fa-check-circle"></i>&nbsp;Save
                                 </button>
-                                <Link to="/settings/away-logs" className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4">
+                                <button className="btn btn-orange btn-lg mt-4 float-left pl-4 pr-4" disabled={isLoading} onClick={onBack}>
                                     <i className="fas fa-arrow-circle-left"></i> Back
-                                </Link>
+                                </button>
                             </div>
 
                         </form>

@@ -23,6 +23,10 @@ class AwayLogDeleteContainer extends Component {
         // fetch the URL argument as follows.
         const { id } = this.props.match.params;
 
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const backURL = urlParams.get('back')
+
         this.state = {
             id: parseInt(id),
             associateId: parseInt(id),
@@ -33,6 +37,7 @@ class AwayLogDeleteContainer extends Component {
             reasonOther: "",
             untilFurtherNotice: "",
             untilDate: "",
+            backURL: backURL,
             errors: {},
             isLoading: false
         }
@@ -101,7 +106,11 @@ class AwayLogDeleteContainer extends Component {
 
     onSuccessCallback(response) {
         this.props.setFlashMessage("success", "Away log has been successfully deleted.");
-        this.props.history.push("/settings/away-logs");
+        if (this.state.backURL !== undefined && this.state.backURL !== null && this.state.backURL !== "") {
+            this.props.history.push(this.state.backURL);
+        } else {
+            this.props.history.push("/settings/away-logs");
+        }
     }
 
     onFailureCallback(errors) {
@@ -175,7 +184,11 @@ class AwayLogDeleteContainer extends Component {
     onBack(e) {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
-        this.props.history.push("/settings/away-logs");
+        if (this.state.backURL !== undefined && this.state.backURL !== null && this.state.backURL !== "") {
+            this.props.history.push(this.state.backURL);
+        } else {
+            this.props.history.push("/settings/away-logs");
+        }
     }
 
     onClick(e) {

@@ -316,7 +316,7 @@ class AwayLogComponent extends Component {
 
 function associateEditLinkFormatter(cell, row){
     return (
-        <Link to={`/settings/away-log/${row.id}/update`}>
+        <Link to={`/settings/away-log/${row.id}/update?back=/dashboard`}>
             <i class="fas fa-pencil-alt"></i>
         </Link>
     )
@@ -324,7 +324,7 @@ function associateEditLinkFormatter(cell, row){
 
 function associateDeleteLinkFormatter(cell, row){
     return (
-        <Link className="text-danger" to={`/settings/away-log/${row.id}/delete`}>
+        <Link className="text-danger" to={`/settings/away-log/${row.id}/delete?back=/dashboard`}>
             <i class="fas fa-times"></i>
         </Link>
     )
