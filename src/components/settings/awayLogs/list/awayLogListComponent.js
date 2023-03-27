@@ -42,7 +42,8 @@ class RemoteListComponent extends Component {
         const columns = [{
             dataField: 'associateName',
             text: 'Associate Name',
-            sort: true
+            sort: true,
+            formatter: associateLinkFormatter
         },{
             dataField: 'startDate',
             text: 'Start Date',
@@ -119,6 +120,14 @@ class RemoteListComponent extends Component {
             />
         );
     }
+}
+
+function associateLinkFormatter(cell, row){
+    return (
+        <Link to={`/associate/${row.associateId}`} id={row.associateId}>
+            {row.associateName}
+        </Link>
+    )
 }
 
 function statusFormatter(cell, row){
