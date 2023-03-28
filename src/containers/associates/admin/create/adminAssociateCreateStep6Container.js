@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
+import * as moment from 'moment';
 
 import AdminAssociateCreateStep6Component from "../../../../components/associates/admin/create/adminAssociateCreateStep6Component";
 import {
@@ -30,6 +31,15 @@ class AdminAssociateCreateStep6Container extends Component {
     constructor(props) {
         super(props);
 
+        var duesDate = localStorageGetDateItem("workery-create-associate-duesDate");
+        if (duesDate === undefined || duesDate === null || duesDate === "") {
+            var year = new Date().getFullYear() + 1
+            var ts = "01/02/" + year
+            var timestamp = Date.parse(ts);
+            var nextYear = new Date(timestamp);
+            duesDate = nextYear
+        }
+
         this.state = {
             isSkillsetLoading: true,
             skillSets: localStorageGetArrayItem("workery-create-associate-skillSets"),
@@ -38,7 +48,7 @@ class AdminAssociateCreateStep6Container extends Component {
             description: localStorage.getItem("workery-create-associate-description"),
             hourlySalaryDesired: localStorageGetIntegerItem("workery-create-associate-hourlySalaryDesired"),
             limitSpecial: localStorage.getItem("workery-create-associate-limitSpecial"),
-            duesDate: localStorageGetDateItem("workery-create-associate-duesDate"),
+            duesDate: duesDate,
             commercialInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-commercialInsuranceExpiryDate"),
             autoInsuranceExpiryDate: localStorageGetDateItem("workery-create-associate-autoInsuranceExpiryDate"),
             wsibNumber: localStorage.getItem("workery-create-associate-wsibNumber"),
