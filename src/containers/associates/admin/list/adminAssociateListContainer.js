@@ -19,7 +19,7 @@ class AssociateListContainer extends Component {
 
         // Force active users as per issue via https://github.com/over55/workery-frontend/issues/296
         var parametersMap = new Map();
-        parametersMap.set("state", "active");
+        parametersMap.set("state", 1);
         parametersMap.set("sort_order", "ASC"); // Don't forget these same values must be set in the `defaultSorted` var inside `AssociateListComponent`.
         parametersMap.set("sort_field", "last_name");
 

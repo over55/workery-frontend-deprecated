@@ -38,12 +38,12 @@ export default class AdminAssociateSearchResultComponent extends Component {
                            <Link to={`/associates/search`}><i className="fas fa-search"></i>&nbsp;Search</Link>
                         </li>
                         <li className="breadcrumb-item active" aria-current="page">
-                            <i className="fas fa-list"></i>&nbsp;Search Results
+                            <i className="fas fa-list"></i>&nbsp;Search All Results
                         </li>
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-search"></i>&nbsp;Associates Search</h1>
+                <h1><i className="fas fa-search"></i>&nbsp;Associates All Search</h1>
 
                 <div className="row">
                     <div className="col-md-12">

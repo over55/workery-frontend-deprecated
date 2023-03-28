@@ -6,10 +6,10 @@ import { BootstrapInput } from "../../../bootstrap/bootstrapInput";
 import { BootstrapTelephoneInput } from "../../../bootstrap/bootstrapTelephoneInput";
 
 class AdminAssociateSearchComponent extends Component {
-	
+
     render() {
         const { onSearchClick, handleKeyDown, onAdvancedSearchClick, advancedSearchActive, onAdvancedSearchPanelToggle, onTextChange } = this.props;
-        const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;	
+        const { keyword, givenName, lastName, telephone, email, errors, isLoading } = this.props;
         return (
             <div>
                 <nav aria-label="breadcrumb">
@@ -26,7 +26,7 @@ class AdminAssociateSearchComponent extends Component {
                     </ol>
                 </nav>
 
-                <h1><i className="fas fa-search"></i>&nbsp;Associates Search</h1>
+                <h1><i className="fas fa-search"></i>&nbsp;Associates All Search</h1>
 
                 <div id="m-search" className="col-sm-5 mx-auto mt-4 pt-4">
 

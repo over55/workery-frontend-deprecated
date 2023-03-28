@@ -254,7 +254,7 @@ class AssociateListComponent extends Component {
                                     </Link>
                                 </div>
                                 <h4>Search</h4>
-                                <span className="text-muted">Search Associates</span>
+                                <span className="text-muted">Search All Associates</span>
                             </div>
                         </section>
                     </div>
