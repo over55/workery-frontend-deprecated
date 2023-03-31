@@ -7,7 +7,8 @@ import AdminAssociateCommentComponent from "../../../../components/associates/ad
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateCommentList, postAssociateComment } from "../../../../actions/associateCommentActions";
 import { validateInput } from "../../../../validators/commentValidator"
-import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
+
+const CUSTOM_STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION = 500;
 
 
 class AdminAssociateCommentContainer extends Component {
@@ -28,7 +29,7 @@ class AdminAssociateCommentContainer extends Component {
         this.state = {
             // Pagination
             offset: 0,
-            limit: STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
+            limit: CUSTOM_STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION,
             totalSize: 0,
             sortOrder: "ASC",
             sortField: "created_time",
@@ -208,7 +209,7 @@ class AdminAssociateCommentContainer extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        let offset = this.state.offset + STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+        let offset = this.state.offset + CUSTOM_STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
 
         // Copy the `parametersMap` that we already have.
         var parametersMap = this.state.parametersMap;
@@ -220,7 +221,7 @@ class AdminAssociateCommentContainer extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        let offset = this.state.offset - STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
+        let offset = this.state.offset - CUSTOM_STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION;
 
         // Defensive code: Skip this function if it our offset is weird.
         if (offset < 0) {
