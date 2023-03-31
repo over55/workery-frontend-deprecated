@@ -58,7 +58,7 @@ class AdminAssociateAddressUpdateComponent extends Component {
                     <div className="col-md-5 mx-auto mt-2">
                         <form>
                             <h1>
-                                <i className="fas fa-edit"></i>&nbsp;AddressUpdate Associate
+                                <i className="fas fa-edit"></i>&nbsp;Address Update Associate
                             </h1>
                             <p>All fields which have the (*) symbol are required to be filled out.</p>
 
