@@ -406,7 +406,15 @@ export function validateStep6CreateInput(data) {
     if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
         errors.isActive = 'This field is required';
     }
-
+    if (data.emergencyContactName === undefined || data.emergencyContactName === null || data.emergencyContactName === "") {
+        errors.emergencyContactName = 'This field is required';
+    }
+    if (data.emergencyContactRelationship === undefined || data.emergencyContactRelationship === null || data.emergencyContactRelationship === "") {
+        errors.emergencyContactRelationship = 'This field is required';
+    }
+    if (data.emergencyContactTelephone === undefined || data.emergencyContactTelephone === null || data.emergencyContactTelephone === "") {
+        errors.emergencyContactTelephone = 'This field is required';
+    }
     return {
         errors,
         isValid: isEmpty(errors)
