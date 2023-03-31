@@ -352,8 +352,24 @@ export function putStaffContactDetail(data, onSuccessCallback, onFailureCallback
             }
 
         }).catch( (exception) => {
-            if (exception.response) {
-                const responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+            console.log("putStaffContactDetail | exception:",exception);
+            try {
+                var responseData;
+                if (exception.response) {
+                    ////
+                    //// CASE 1
+                    ////
+
+                    responseData = exception.response.data; // <=--- NOTE: https://github.com/axios/axios/issues/960
+
+
+                } else {
+                    ////
+                    //// CASE 2 OF 2
+                    ////
+
+                    responseData = exception; // <=--- NOTE: https://github.com/axios/axios/issues/960
+                }
 
                 let errors = camelizeKeys(responseData);
 
@@ -370,6 +386,11 @@ export function putStaffContactDetail(data, onSuccessCallback, onFailureCallback
                 if (onFailureCallback) {
                     onFailureCallback(errors);
                 }
+
+            } catch (e) {
+                console.log("putStaffContactDetail: Programming Error Detected");
+                console.log("putStaffContactDetail:", e);
+                onFailureCallback(e);
             }
 
         }).then( () => {

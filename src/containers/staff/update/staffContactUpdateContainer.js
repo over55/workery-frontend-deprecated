@@ -126,12 +126,14 @@ class StaffUpdateContainer extends Component {
      */
 
     onSuccessCallback(staff) {
+        console.log("onSuccessCallback",staff);
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Staff has been successfully updated.");
         this.props.history.push("/staff/"+this.state.id+"/full");
     }
 
     onFailedCallback(errors) {
+        console.log("onFailedCallback",errors);
         this.setState({ errors: errors, isLoading: false, });
 
         // The following code will cause the screen to scroll to the top of

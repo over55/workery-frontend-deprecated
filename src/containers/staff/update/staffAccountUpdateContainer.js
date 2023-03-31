@@ -109,6 +109,7 @@ class StaffAccountUpdateContainer extends Component {
     }
 
     onFailedSubmissionCallback(errors) {
+        console.log("onFailedSubmissionCallback", errors);
         this.setState({
             errors: errors
         })
