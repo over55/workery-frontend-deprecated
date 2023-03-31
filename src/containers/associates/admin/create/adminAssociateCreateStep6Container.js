@@ -38,6 +38,7 @@ class AdminAssociateCreateStep6Container extends Component {
             var timestamp = Date.parse(ts);
             var nextYear = new Date(timestamp);
             duesDate = nextYear
+            localStorageSetObjectOrArrayItem('workery-create-associate-duesDate', duesDate);
         }
 
         this.state = {
