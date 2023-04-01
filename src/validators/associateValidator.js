@@ -138,6 +138,15 @@ export function validateAccountInput(data) {
     if (data.serviceFeeId === undefined || data.serviceFeeId === null ||data.serviceFeeId === "" || isNaN(data.serviceFeeId) ) {
         errors.serviceFeeId = 'This field is required';
     }
+    if (data.emergencyContactName === undefined || data.emergencyContactName === null || data.emergencyContactName === "") {
+        errors.emergencyContactName = 'This field is required';
+    }
+    if (data.emergencyContactRelationship === undefined || data.emergencyContactRelationship === null || data.emergencyContactRelationship === "") {
+        errors.emergencyContactRelationship = 'This field is required';
+    }
+    if (data.emergencyContactTelephone === undefined || data.emergencyContactTelephone === null || data.emergencyContactTelephone === "") {
+        errors.emergencyContactTelephone = 'This field is required';
+    }
 
     return {
         errors,

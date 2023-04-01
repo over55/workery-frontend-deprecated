@@ -242,7 +242,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
 
                             <BootstrapInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.emergencyContactName}
                                 label="Full name"
                                 onChange={onTextChange}
@@ -253,7 +253,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
 
                             <BootstrapInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.emergencyContactRelationship}
                                 label="Relationship"
                                 onChange={onTextChange}
@@ -264,7 +264,7 @@ class AdminAssociateAccountUpdateComponent extends Component {
 
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.emergencyContactTelephone}
                                 label="Primary Phone"
                                 onChange={onTextChange}
