@@ -371,27 +371,27 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                     <td>
                                         <ul>
                                             <li>
-                                                <Link className="btn btn-primary btn-lg" to={`/associate/${id}/operations`}>
+                                                <Link className="btn btn-primary btn-lg" to={`/associate/${id}/operations/balance`}>
                                                     View Account Balance&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link className="btn btn-orange btn-lg" to={`/associate/${id}/operations`}>
+                                                <Link className="btn btn-orange btn-lg" to={`/associate/${id}/operations/password`}>
                                                     Change Password&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link className="btn btn-success btn-lg" to={`/associate/${id}/operations`}>
+                                                <Link className="btn btn-success btn-lg" to={`/associate/${id}/operations/upgrade`}>
                                                     Upgrade&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link className="btn btn-warning btn-lg" to={`/associate/${id}/operations`}>
+                                                <Link className="btn btn-warning btn-lg" to={`/associate/${id}/operations/archive`}>
                                                     Archive&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link className="btn btn-danger btn-lg" to={`/associate/${id}/operations`}>
+                                                <Link className="btn btn-danger btn-lg" to={`/associate/${id}/operations/unarchive`}>
                                                     Unarchive&nbsp;<i className="fas fa-chevron-right"></i>
                                                 </Link>
                                             </li>
