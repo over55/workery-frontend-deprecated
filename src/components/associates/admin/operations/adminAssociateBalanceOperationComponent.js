@@ -10,6 +10,7 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 // import overlayFactory from 'react-bootstrap-table2-overlay';
+import NumberFormat from 'react-number-format';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
@@ -34,59 +35,45 @@ class RemoteListComponent extends Component {
             onTableChange, isLoading
         } = this.props;
 
-        const columns = [{
-            dataField: 'typeOf',
+        const columns = [
+            {
+            dataField: 'paidToLabel',
+            text: 'Paid to',
+            sort: false,
+            formatter: paidToFormatter,
+        },
+        {
+            dataField: 'paidForLabel',
+            text: 'Paid for',
+            sort: false,
+            formatter: paidForFormatter,
+        },{
+            dataField: 'paidAt',
+            text: 'Paid at',
+            sort: false,
+            formatter: paidAtFormatter,
+        },{
+            dataField: 'depositMethodLabel',
+            text: 'Deposit method',
+            sort: false,
+            formatter: depositFormatter,
+        },{
+            dataField: 'amount',
+            text: 'Amount',
+            sort: false,
+            formatter: amountFormatter,
+        },
+        {
+            dataField: 'id',
             text: '',
             sort: false,
-            formatter: iconFormatter
-        },{
-            dataField: 'id',
-            text: 'Job #',
-            // sort: true,
-            formatter: idFormatter,
-        },{
-            dataField: 'invoiceServiceFeePaymentDate',
-            text: 'Service Fee Payment Date',
-            // sort: true,
-            formatter: completionDateFormatter,
-        },{
-            dataField: 'invoiceLabourAmount',
-            text: 'Actual Labour',
-            // sort: true,
-            // formatter: idFormatter,
-        },{
-            dataField: 'invoiceServiceFee',
-            text: 'Service Fee Type',
-            // sort: true,
-            // formatter: idFormatter,
-        },{
-            dataField: 'invoiceServiceFeeAmount',
-            text: 'Service Fee Owing',
-            // sort: true,
-            // formatter: idFormatter,
-        },{
-            dataField: 'invoiceActualServiceFeeAmountPaid',
-            text: 'Service Fee Paid',
-            // sort: true,
-            // formatter: idFormatter,
-        },{
-            dataField: 'invoiceBalanceOwingAmount',
-            text: 'Balance',
-            // sort: true,
-            // formatter: idFormatter,
-        },{
-            dataField: 'slug',
-            text: 'Details',
-            sort: false,
-            formatter: detailLinkFormatter
+            formatter: functionsFormatter,
         }];
 
         const defaultSorted = [{
-            dataField: 'id',
+            dataField: 'created_time',
             order: 'desc'
         }];
-
-
 
         return (
             <BootstrapTable
@@ -109,69 +96,105 @@ class RemoteListComponent extends Component {
 }
 
 
+function jobFormatter(cell, row){
+    if (row.job === null || row.job === undefined || row.job === "None") { return "-"; }
+    return (
+        <Link to={`/order/${row.job}`} target="_blank">
+            {row.job.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}&nbsp;<i className="fas fa-external-link-alt"></i>
+        </Link>
+    )
+}
+
+function paidToFormatter(cell, row){
+    switch(row.paidTo) {
+        case 1:
+            return "Organization";
+            break;
+        case 2:
+            return "Associate";
+            break;
+        default:
+            return "-";
+            break;
+    }
+}
+
+function paidForFormatter(cell, row){
+    switch(row.paidFor) {
+        case 1:
+            return "Labour";
+            break;
+        case 2:
+            return "Materials";
+            break;
+        case 3:
+            return "Other Costs";
+            break;
+        default:
+            return "-";
+            break;
+    }
+}
+
+function depositFormatter(cell, row){
+    switch(row.depositMethod) {
+        case 1:
+            return "Debit";
+            break;
+        case 2:
+            return "Credit";
+            break;
+        case 3:
+            return "Cheque";
+            break;
+        case 4:
+            return "Cash";
+            break;
+        default:
+            return "-";
+            break;
+
+    }
+}
+
 function iconFormatter(cell, row){
-    const icons = [];
-    if (row.typeOf === 2) {
-        icons.push(<i className="fas fa-building"></i>)
+    switch(row.typeOf) {
+        case 2:
+            return <i className="fas fa-building"></i>;
+            break;
+        case 1:
+            return <i className="fas fa-home"></i>;
+            break;
+        default:
+            return <i className="fas fa-question"></i>;
+            break;
     }
-    else if (row.typeOf === 1) {
-        icons.push(<i className="fas fa-home"></i>)
-    }
-    else {
-        icons.push(<i className="fas fa-question"></i>)
-    }
-    if (row.isOngoing) {
-        icons.push(" ");
-        icons.push(<i className="fas fa-redo-alt"></i>)
-    }
-    return <div>{icons}</div>;
 }
 
 
-function idFormatter(cell, row){
+function orderNameFormatter(cell, row){
+    if (row.orderName === null || row.orderName === undefined || row.orderName === "None") { return "-"; }
     return (
-        row.id && row.id.toLocaleString(navigator.language, { minimumFractionDigits: 0 })
-    );
-}
-
-
-function associateNameFormatter(cell, row){
-    if (row.associateName === null || row.associateName === undefined || row.associateName === "None") { return "-"; }
-    return (
-        <Link to={`/associate/${row.associate}`} target="_blank">
-            {row.associateName}&nbsp;<i className="fas fa-external-link-alt"></i>
+        <Link to={`/order/${row.order}`} target="_blank">
+            {row.orderName}&nbsp;<i className="fas fa-external-link-alt"></i>
         </Link>
     )
 }
 
-
-function startDateFormatter(cell, row){
-    return row.startDate ? <Moment format="MM/DD/YYYY">{row.startDate}</Moment> : "-";
+function amountFormatter(cell, row){
+    return <NumberFormat value={row.amount} displayType={'text'} thousandSeparator={true} prefix={'$'} />;
 }
 
-
-function assignmentDateFormatter(cell, row){
-    return row.assignmentDate ? <Moment format="MM/DD/YYYY">{row.assignmentDate}</Moment> : "-";
+function paidAtFormatter(cell, row){
+    return <Moment format="MM/DD/YYYY">{row.paidAt}</Moment>;
 }
 
-
-function completionDateFormatter(cell, row){
-    return row.completionDate ? <Moment format="MM/DD/YYYY">{row.completionDate}</Moment> : "-";
+function functionsFormatter(cell, row){
+    return <Link className="btn btn-danger btn-xs" to={`/payment/${row.id}/delete`}>
+        <i className="fas fa-trash"></i>&nbsp;Delete
+    </Link>
 }
 
-
-function statusFormatter(cell, row){
-    return row.prettyState;
-}
-
-
-function detailLinkFormatter(cell, row){
-    return (
-        <Link to={`/order/${row.id}`} target="_blank">
-            View&nbsp;<i className="fas fa-external-link-alt"></i>
-        </Link>
-    )
-}
 
 
 export default class AdminAssociateBalanceOperationComponent extends Component {
