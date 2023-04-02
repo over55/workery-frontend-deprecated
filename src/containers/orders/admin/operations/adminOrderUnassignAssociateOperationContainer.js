@@ -76,9 +76,10 @@ class AdminOrderUnassignAssociateOperationContainer extends Component {
      */
 
     onSuccessfulSubmissionCallback(order) {
+        console.log("onSuccessfulSubmissionCallback | order:", order);
         this.setState({ errors: {}, isLoading: true, })
         this.props.setFlashMessage("success", "Order has been successfully unassigned the associate.");
-        this.props.history.push("/order/"+this.state.id+"");
+        this.props.history.push("/task/1/"+order.latestPendingTaskId+"/step-1");
     }
 
     onFailedSubmissionCallback(errors) {
