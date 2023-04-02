@@ -111,9 +111,9 @@ class StaffCreateStep6Component extends Component {
 
                             <BootstrapInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.emergencyContactName}
-                                label="Full name"
+                                label="Full name (*)"
                                 onChange={onTextChange}
                                 value={emergencyContactName}
                                 name="emergencyContactName"
@@ -122,9 +122,9 @@ class StaffCreateStep6Component extends Component {
 
                             <BootstrapInput
                                 inputClassName="form-control"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.emergencyContactRelationship}
-                                label="Relationship"
+                                label="Relationship (*)"
                                 onChange={onTextChange}
                                 value={emergencyContactRelationship}
                                 name="emergencyContactRelationship"
@@ -133,9 +133,9 @@ class StaffCreateStep6Component extends Component {
 
                             <BootstrapTelephoneInput
                                 inputClassName="form-control form-control-lg"
-                                borderColour="border-success"
+                                borderColour="border-primary"
                                 error={errors.emergencyContactTelephone}
-                                label="Primary Phone"
+                                label="Primary Phone (*)"
                                 onChange={onTextChange}
                                 value={emergencyContactTelephone}
                                 name="emergencyContactTelephone"

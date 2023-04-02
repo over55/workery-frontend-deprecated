@@ -36,7 +36,7 @@ export function validateContactInput(data) {
 
     } else if (data.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
 
-        
+
         if (data.givenName === undefined || data.givenName === null || validator.isEmpty(data.givenName) || data.givenName === "") {
             errors.givenName = 'This field is required';
         }
@@ -167,6 +167,15 @@ export function validateInput(data) {
     if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
         errors.isActive = 'This field is required';
     }
+    if (data.emergencyContactName === undefined || data.emergencyContactName === null || data.emergencyContactName === "" ) {
+        errors.emergencyContactName = 'This field is required';
+    }
+    if (data.emergencyContactRelationship === undefined || data.emergencyContactRelationship === null || data.emergencyContactRelationship === "" ) {
+        errors.emergencyContactRelationship = 'This field is required';
+    }
+    if (data.emergencyContactTelephone === undefined || data.emergencyContactTelephone === null || data.emergencyContactTelephone === "" ) {
+        errors.emergencyContactTelephone = 'This field is required';
+    }
 
     // --- METRICS --- //
 
@@ -288,6 +297,15 @@ export function validateStep6CreateInput(data) {
     if (data.password !== data.passwordRepeat) {
         errors.password = 'Password does not match!';
         errors.passwordRepeat = 'Password does not match!';
+    }
+    if (data.emergencyContactName === undefined || data.emergencyContactName === null || data.emergencyContactName === "" ) {
+        errors.emergencyContactName = 'This field is required';
+    }
+    if (data.emergencyContactRelationship === undefined || data.emergencyContactRelationship === null || data.emergencyContactRelationship === "" ) {
+        errors.emergencyContactRelationship = 'This field is required';
+    }
+    if (data.emergencyContactTelephone === undefined || data.emergencyContactTelephone === null || data.emergencyContactTelephone === "" ) {
+        errors.emergencyContactTelephone = 'This field is required';
     }
 
     return {
@@ -468,6 +486,15 @@ export function validateAccountUpdateInput(data) {
     }
     if (data.isActive === undefined || data.isActive === null || data.isActive === "" || isNaN(data.isActive) ) {
         errors.isActive = 'This field is required';
+    }
+    if (data.emergencyContactName === undefined || data.emergencyContactName === null || data.emergencyContactName === "" ) {
+        errors.emergencyContactName = 'This field is required';
+    }
+    if (data.emergencyContactRelationship === undefined || data.emergencyContactRelationship === null || data.emergencyContactRelationship === "" ) {
+        errors.emergencyContactRelationship = 'This field is required';
+    }
+    if (data.emergencyContactTelephone === undefined || data.emergencyContactTelephone === null || data.emergencyContactTelephone === "" ) {
+        errors.emergencyContactTelephone = 'This field is required';
     }
     return {
         errors,
