@@ -15,7 +15,7 @@ import NumberFormat from 'react-number-format';
 
 import { BootstrapPageLoadingAnimation } from "../../../bootstrap/bootstrapPageLoadingAnimation";
 import { FlashMessageComponent } from "../../../flashMessageComponent";
-
+import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 
 const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">&nbsp;Showing { from } to { to } of { size } Results</span>
@@ -294,11 +294,11 @@ export default class AdminOrderActivitySheetListComponent extends Component {
 
                         <span className="react-bootstrap-table-pagination-total">&nbsp;Total { totalSize } Results</span>
 
-                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick}>
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onNextClick} disabled={offset === 0 || deposits.length === 0 || deposits.length < STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION}>
                             <i className="fas fa-check-circle"></i>&nbsp;Next
                         </button>
 
-                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0}>
+                        <button type="button" className="btn btn-lg float-right pl-4 pr-4 btn-success" onClick={onPreviousClick} disabled={offset === 0 || deposits.length === 0 || deposits.length < STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION}>
                             <i className="fas fa-check-circle"></i>&nbsp;Previous
                         </button>
 
