@@ -191,7 +191,7 @@ export default class AdminAssociateOperationsComponent extends Component {
                                     </div>
                                 </div>
                             }
-                            {canDeleteAssociate &&
+                            {/*
                                 <div className="col-sm-3 mb-4">
                                     <div className="card box-shadow text-center mx-auto h-100">
                                         <div className="card-custom-top-2">
@@ -208,7 +208,7 @@ export default class AdminAssociateOperationsComponent extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            }                            
+                            */}                            
                         </div>
 
                     </div>
