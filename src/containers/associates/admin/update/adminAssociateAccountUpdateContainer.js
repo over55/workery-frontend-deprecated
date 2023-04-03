@@ -41,8 +41,11 @@ class AdminAssociateAccountUpdateContainer extends Component {
         duesDateObj.setMinutes( duesDateObj.getMinutes() + duesDateObj.getTimezoneOffset() );
         const commercialInsuranceExpiryDateObj = new Date(associate.commercialInsuranceExpiryDate);
         commercialInsuranceExpiryDateObj.setMinutes( commercialInsuranceExpiryDateObj.getMinutes() + commercialInsuranceExpiryDateObj.getTimezoneOffset() );
-        const autoInsuranceExpiryDateObj = new Date(associate.autoInsuranceExpiryDate);
-        autoInsuranceExpiryDateObj.setMinutes( autoInsuranceExpiryDateObj.getMinutes() + autoInsuranceExpiryDateObj.getTimezoneOffset() );
+        var autoInsuranceExpiryDateObj = null;
+        if (this.props.user.autoInsuranceExpiryDate !== undefined && this.props.user.autoInsuranceExpiryDate !== null && this.props.user.autoInsuranceExpiryDate !== "") {
+            autoInsuranceExpiryDateObj = new Date(this.props.user.autoInsuranceExpiryDate);
+            autoInsuranceExpiryDateObj.setMinutes( autoInsuranceExpiryDateObj.getMinutes() + autoInsuranceExpiryDateObj.getTimezoneOffset() );
+        }
         const wsibInsuranceDateObj = new Date(associate.wsibInsuranceDate);
         wsibInsuranceDateObj.setMinutes( wsibInsuranceDateObj.getMinutes() + wsibInsuranceDateObj.getTimezoneOffset() );
         const policeCheckObj = new Date(associate.policeCheck);
@@ -126,9 +129,14 @@ class AdminAssociateAccountUpdateContainer extends Component {
         const commercialInsuranceExpiryDateMoment = moment(this.state.commercialInsuranceExpiryDate);
         postData.commercialInsuranceExpiryDate = commercialInsuranceExpiryDateMoment.format("YYYY-MM-DD");
 
-        const autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
-        postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD");
-
+        var autoInsuranceExpiryDateMoment = null;
+        postData.autoInsuranceExpiryDate = null;
+        if (this.props.user.autoInsuranceExpiryDate !== undefined && this.props.user.autoInsuranceExpiryDate !== null && this.props.user.autoInsuranceExpiryDate !== "") {
+            autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
+            postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD");
+            console.log("getPostData | autoInsuranceExpiryDate:",postData.autoInsuranceExpiryDate );
+        }
+        
         const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDatej);
         postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD");
 
