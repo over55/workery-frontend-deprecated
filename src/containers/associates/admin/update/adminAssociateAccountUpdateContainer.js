@@ -42,12 +42,15 @@ class AdminAssociateAccountUpdateContainer extends Component {
         const commercialInsuranceExpiryDateObj = new Date(associate.commercialInsuranceExpiryDate);
         commercialInsuranceExpiryDateObj.setMinutes( commercialInsuranceExpiryDateObj.getMinutes() + commercialInsuranceExpiryDateObj.getTimezoneOffset() );
         var autoInsuranceExpiryDateObj = null;
-        if (this.props.user.autoInsuranceExpiryDate !== undefined && this.props.user.autoInsuranceExpiryDate !== null && this.props.user.autoInsuranceExpiryDate !== "") {
-            autoInsuranceExpiryDateObj = new Date(this.props.user.autoInsuranceExpiryDate);
+        if (associate.autoInsuranceExpiryDate !== undefined && associate.autoInsuranceExpiryDate !== null && associate.autoInsuranceExpiryDate !== "" && associate.autoInsuranceExpiryDate !== "0001-01-01T00:00:00Z") {
+            autoInsuranceExpiryDateObj = new Date(associate.autoInsuranceExpiryDate);
             autoInsuranceExpiryDateObj.setMinutes( autoInsuranceExpiryDateObj.getMinutes() + autoInsuranceExpiryDateObj.getTimezoneOffset() );
         }
-        const wsibInsuranceDateObj = new Date(associate.wsibInsuranceDate);
-        wsibInsuranceDateObj.setMinutes( wsibInsuranceDateObj.getMinutes() + wsibInsuranceDateObj.getTimezoneOffset() );
+        var wsibInsuranceDateObj = null;
+        if (associate.wsibInsuranceDate !== undefined && associate.wsibInsuranceDate !== null && associate.wsibInsuranceDate !== "" && associate.wsibInsuranceDate !== "0001-01-01T00:00:00Z") {
+            wsibInsuranceDateObj = new Date(associate.wsibInsuranceDate);
+            wsibInsuranceDateObj.setMinutes( wsibInsuranceDateObj.getMinutes() + wsibInsuranceDateObj.getTimezoneOffset() );
+        }
         const policeCheckObj = new Date(associate.policeCheck);
         policeCheckObj.setMinutes( policeCheckObj.getMinutes() + policeCheckObj.getTimezoneOffset() );
 
@@ -131,14 +134,18 @@ class AdminAssociateAccountUpdateContainer extends Component {
 
         var autoInsuranceExpiryDateMoment = null;
         postData.autoInsuranceExpiryDate = null;
-        if (this.props.user.autoInsuranceExpiryDate !== undefined && this.props.user.autoInsuranceExpiryDate !== null && this.props.user.autoInsuranceExpiryDate !== "") {
+        if (this.state.autoInsuranceExpiryDate !== undefined && this.state.autoInsuranceExpiryDate !== null && this.state.autoInsuranceExpiryDate !== "") {
             autoInsuranceExpiryDateMoment = moment(this.state.autoInsuranceExpiryDate);
             postData.autoInsuranceExpiryDate = autoInsuranceExpiryDateMoment.format("YYYY-MM-DD");
             console.log("getPostData | autoInsuranceExpiryDate:",postData.autoInsuranceExpiryDate );
         }
-        
-        const wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDatej);
-        postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD");
+
+        var wsibInsuranceDateMoment = null;
+        postData.wsibInsuranceDate = null;
+        if (this.state.wsibInsuranceDate !== undefined && this.state.wsibInsuranceDate !== null && this.state.wsibInsuranceDate !== "") {
+            wsibInsuranceDateMoment = moment(this.state.wsibInsuranceDate);
+            postData.wsibInsuranceDate = wsibInsuranceDateMoment.format("YYYY-MM-DD");
+        }
 
         const policeCheckMoment = moment(this.state.policeCheck);
         postData.policeCheck = policeCheckMoment.format("YYYY-MM-DD");

@@ -231,7 +231,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">Auto Insurance Expiry Date</th>
                                     <td>
-                                        {associate && associate.autoInsuranceExpiryDate !== "0001-01-01T00:00:00Z" && <Moment format="MM/DD/YYYY">{associate.autoInsuranceExpiryDate}</Moment>}
+                                        {associate && associate.autoInsuranceExpiryDate && associate.autoInsuranceExpiryDate !== "0001-01-01T00:00:00Z" && <Moment format="MM/DD/YYYY">{associate.autoInsuranceExpiryDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -243,7 +243,7 @@ export default class AdminAssociateFullRetrieveComponent extends Component {
                                 <tr>
                                     <th scope="row" className="bg-light">WSIB Insurance Date</th>
                                     <td>
-                                        {associate && associate && <Moment format="MM/DD/YYYY">{associate.wsibInsuranceDate}</Moment>}
+                                        {associate && associate.autoInsuranceExpiryDate && associate.autoInsuranceExpiryDate !== "0001-01-01T00:00:00Z" && <Moment format="MM/DD/YYYY">{associate.wsibInsuranceDate}</Moment>}
                                     </td>
                                 </tr>
                                 <tr>
