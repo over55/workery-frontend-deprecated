@@ -16,13 +16,12 @@ import {
     HOW_HEAR_LIST_SUCCESS, HOW_HEAR_DETAIL_SUCCESS,
     AWAY_LOG_LIST_SUCCESS,
     SKILL_SET_LIST_SUCCESS, INSURANCE_REQUIREMENT_LIST_SUCCESS, SERVICE_FEE_LIST_SUCCESS,
-    PARTNER_LIST_SUCCESS, PARTNER_COMMENT_LIST_SUCCESS, PARTNER_DETAIL_SUCCESS,
     ASSOCIATE_COMMENT_LIST_REQUEST, ACTIVITY_SHEET_LIST_SUCCESS, ACTIVITY_SHEET_DETAIL_SUCCESS,
     DEPOSIT_LIST_SUCCESS, DEPOSIT_DETAIL_SUCCESS,
     STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
     ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
     COMMENT_LIST_SUCCESS, COMMENT_DETAIL_SUCCESS, ASSOCIATE_FILE_LIST_SUCCESS, ORDER_FILE_LIST_SUCCESS,
-    STAFF_FILE_LIST_SUCCESS, PARTNER_FILE_LIST_SUCCESS, TAG_ITEM_SEARCH_LIST_REQUEST
+    STAFF_FILE_LIST_SUCCESS, TAG_ITEM_SEARCH_LIST_REQUEST
 } from "./constants/actionTypes";
 import { activitySheetItemListReducer, activitySheetItemDetailReducer } from "./reducers/activitySheetItemReducers";
 import { associateCommentListReducer } from "./reducers/associateCommentReducers";
@@ -46,9 +45,6 @@ import { ongoingOrderCommentListReducer } from "./reducers/ongoingOrderCommentRe
 import { orderListReducer, orderDetailReducer } from "./reducers/orderReducers";
 import { orderCommentListReducer } from "./reducers/orderCommentReducers";
 import { orderFileListReducer } from "./reducers/orderFileUploadReducers";
-import { partnerListReducer, partnerDetailReducer } from "./reducers/partnerReducers";
-import { partnerCommentListReducer } from "./reducers/partnerCommentReducers";
-import { partnerFileListReducer } from "./reducers/partnerFileUploadReducers";
 import { serviceFeeListReducer, serviceFeeDetailReducer } from "./reducers/serviceFeeReducers";
 import { skillSetListReducer, skillSetDetailReducer } from "./reducers/skillSetReducers";
 import { staffListReducer, staffDetailReducer } from "./reducers/staffReducers";
@@ -88,9 +84,6 @@ const appReducer = combineReducers({
     orderListState: orderListReducer, orderDetailState: orderDetailReducer,
     orderCommentListState: orderCommentListReducer,
     orderFileListState: orderFileListReducer,
-    partnerListState: partnerListReducer, partnerDetailState: partnerDetailReducer,
-    partnerCommentListState: partnerCommentListReducer,
-    partnerFileListState: partnerFileListReducer,
     serviceFeeListState: serviceFeeListReducer, serviceFeeDetailState: serviceFeeDetailReducer,
     skillSetListState: skillSetListReducer, skillSetDetailState: skillSetDetailReducer,
     staffListState: staffListReducer, staffDetailState: staffDetailReducer,
@@ -146,10 +139,9 @@ const localStorageMiddleware = ({ getState }) => {
             ACTIVITY_SHEET_LIST_SUCCESS,  ACTIVITY_SHEET_DETAIL_SUCCESS,
             DEPOSIT_LIST_SUCCESS,  DEPOSIT_DETAIL_SUCCESS,
             STAFF_COMMENT_LIST_SUCCESS, STAFF_LIST_SUCCESS, STAFF_DETAIL_SUCCESS,
-            PARTNER_LIST_SUCCESS, PARTNER_COMMENT_LIST_SUCCESS, PARTNER_DETAIL_SUCCESS,
             ONGOING_ORDER_LIST_SUCCESS, ONGOING_ORDER_DETAIL_SUCCESS, ONGOING_ORDER_COMMENT_LIST_SUCCESS,
             CLIENT_FILE_LIST_SUCCESS, ASSOCIATE_FILE_LIST_SUCCESS, ORDER_FILE_LIST_SUCCESS,
-            STAFF_FILE_LIST_SUCCESS, PARTNER_FILE_LIST_SUCCESS, TAG_ITEM_SEARCH_LIST_REQUEST
+            STAFF_FILE_LIST_SUCCESS, TAG_ITEM_SEARCH_LIST_REQUEST
         ].includes(result.type)) {
             // console.log("De-hydrating store...");
             localStorage.setItem(APP_STATE, JSON.stringify(getState()))
