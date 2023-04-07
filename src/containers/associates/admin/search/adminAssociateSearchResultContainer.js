@@ -6,7 +6,6 @@ import Scroll from 'react-scroll';
 import AdminAssociateSearchResultComponent from "../../../../components/associates/admin/search/adminAssociateSearchResultComponent";
 import { clearFlashMessage } from "../../../../actions/flashMessageActions";
 import { pullAssociateList } from "../../../../actions/associateActions";
-import { STANDARD_RESULTS_SIZE_PER_PAGE_PAGINATION } from "../../../../constants/api";
 import { localStorageGetObjectItem } from '../../../../helpers/localStorageUtility';
 
 
@@ -23,7 +22,7 @@ class AdminAssociateSearchResultContainer extends Component {
         this.state = {
             // Pagination
             offset: 0,
-            sizePerPage: 100,
+            sizePerPage: 500,
             totalSize: 0,
 
             // Everything else
@@ -145,7 +144,7 @@ class AdminAssociateSearchResultContainer extends Component {
                 isLoading: true,
             },
             ()=>{
-                this.props.pullAssociateList(offset, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullAssociateList(offset, this.state.sizePerPage, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
@@ -158,7 +157,7 @@ class AdminAssociateSearchResultContainer extends Component {
                 isLoading: true,
             },
             ()=>{
-                this.props.pullAssociateList(offset, 100, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
+                this.props.pullAssociateList(offset, this.state.sizePerPage, this.getParametersMapFromState(), this.onSuccessCallback, this.onFailureCallback);
             }
         )
     }
