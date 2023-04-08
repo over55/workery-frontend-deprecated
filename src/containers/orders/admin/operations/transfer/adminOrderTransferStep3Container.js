@@ -123,13 +123,21 @@ class AssociateListContainer extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // Set the default associate.
-        localStorage.setItem("workery-transfer-order-associateId", this.props.orderDetail.associate);
-        localStorage.setItem("workery-transfer-order-associateGivenName", this.props.orderDetail.associateFirstName);
-        localStorage.setItem("workery-transfer-order-associateLastName", this.props.orderDetail.associateLastName);
+        console.log("onSkipClick", this.props.orderDetail.associate);
 
-        // Redirect to the review page.
-        this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-5");
+        if (this.props.orderDetail.associate !== undefined && this.props.orderDetail.associate !== null && this.props.orderDetail.associate !== "") {
+            // Set the default associate.
+            localStorage.setItem("workery-transfer-order-associateId", this.props.orderDetail.associate.id);
+            localStorage.setItem("workery-transfer-order-associateGivenName", this.props.orderDetail.associate.givenName);
+            localStorage.setItem("workery-transfer-order-associateLastName", this.props.orderDetail.associate.lastName);
+
+            // Redirect to the review page.
+            this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-5");
+        } else {
+            // alert("associate not attached to this work order, please pick an associate");
+            this.setState({ "errors": {"associate":"not found attached to this work order, please pick an associate before proceeding"} });
+        }
+
     }
 
     /**

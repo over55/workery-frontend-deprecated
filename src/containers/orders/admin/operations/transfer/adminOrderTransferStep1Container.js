@@ -123,13 +123,19 @@ class AdminOrderTransferStep1Container extends Component {
         // Prevent the default HTML form submit code to run on the browser side.
         e.preventDefault();
 
-        // Set the default customer.
-        localStorage.setItem("workery-transfer-order-clientId", this.props.orderDetail.customer);
-        localStorage.setItem("workery-transfer-order-clientGivenName", this.props.orderDetail.customerFirstName);
-        localStorage.setItem("workery-transfer-order-clientLastName", this.props.orderDetail.customerLastName);
+        console.log("onSkipClick", this.props.orderDetail);
 
-        // Redirect to the associate search page.
-        this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-3");
+        if (this.props.orderDetail.customer !== undefined && this.props.orderDetail.customer !== null && this.props.orderDetail.customer !== "") {
+            // Set the default customer.
+            localStorage.setItem("workery-transfer-order-clientId", this.props.orderDetail.customer.id);
+            localStorage.setItem("workery-transfer-order-clientGivenName", this.props.orderDetail.customer.givenName);
+            localStorage.setItem("workery-transfer-order-clientLastName", this.props.orderDetail.customer.lastName);
+
+            // Redirect to the associate search page.
+            this.props.history.push("/order/"+this.props.orderDetail.id+"/transfer-step-3");
+        } else {
+            alert("client not attached to this work order, please pick an client");
+        }
     }
 
     /**
