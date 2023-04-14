@@ -168,6 +168,13 @@ function stateFormatter(cell, row){
 
 
 function detailLinkFormatter(cell, row){
+    if (row.text === "Other") {
+        return (
+            <div style={{color:"grey"}}>
+            (Locked)
+            </div>
+        );
+    }
     return (
         <div>
             {row.state === 1
