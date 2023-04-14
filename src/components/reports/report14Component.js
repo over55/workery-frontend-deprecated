@@ -97,17 +97,22 @@ export const JOB_STATE_CHOICES = [
     {
         id: 'jobState-2-choice',
         selectName: "jobState",
-        value: 'completed_and_unpaid',
+        value: '7',
         label: "Completed but unpaid"
+    },{
+        id: 'jobState-2-choice',
+        selectName: "jobState",
+        value: '4',
+        label: "Cancelled"
     },{
         id: 'jobState-3-choice',
         selectName: "jobState",
-        value: "completed_and_paid",
+        value: "8",
         label: "Completed and paid"
     },{
         id: 'jobState-4-choice',
         selectName: "jobState",
-        value: 'in_progress',
+        value: '6',
         label: "In progress"
     },{
         id: 'jobState-1-choice',

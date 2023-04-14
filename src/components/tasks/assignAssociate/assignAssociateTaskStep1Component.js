@@ -54,6 +54,49 @@ export default class AssignAssociateTaskStep1Component extends Component {
                     <div className="col-md-10 mx-auto p-2">
                         <table className="table table-bordered custom-cell-w">
                             <tbody>
+
+
+                            <tr className="bg-dark">
+                                <th scope="row" colSpan="2" className="text-light">
+                                    <i className="fas fa-clipboard-list"></i>&nbsp;Functions
+                                </th>
+                            </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <td>
+                                        <div className="row">
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <Link className="btn btn-orange btn-lg" to={`/order/${task.orderId}/postpone`}>
+                                                    <i className="fas fa-clock"></i>&nbsp;Postpone
+                                                </Link>
+                                            </div>
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <Link className="btn btn-danger btn-lg" to={`/order/${task.orderId}/close`}>
+                                                    <i className="fas fa-window-close"></i>&nbsp;Close
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr className="bg-dark">
+                                    <th scope="row" colSpan="2" className="text-light">
+                                        <i className="fas fa-clipboard-list"></i>&nbsp;Required
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th scope="row" className="bg-light">Available Choices</th>
+                                    <td>
+                                        <div className="row">
+                                            <div className="col-md-4 mx-auto p-2">
+                                                <button className="btn btn-success btn-lg" onClick={onClick}>
+                                                    Begin&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
                                 <tr className="bg-dark">
                                     <th scope="row" colSpan="2" className="text-light">
                                         <i className="fas fa-table"></i>&nbsp;Assign Associate
@@ -141,48 +184,6 @@ export default class AssignAssociateTaskStep1Component extends Component {
                                         At {task && task.createdTime &&
                                             <Moment format="MM/DD/YYYY">{task.createdTime}</Moment>
                                         } for {task && task.createdByName}
-                                    </td>
-                                </tr>
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-clipboard-list"></i>&nbsp;Functions
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
-                                    <td>
-                                        <div className="row">
-                                            <div className="col-md-4 mx-auto p-2">
-                                                <Link className="btn btn-orange btn-lg" to={`/order/${task.orderId}/postpone`}>
-                                                    <i className="fas fa-clock"></i>&nbsp;Postpone
-                                                </Link>
-                                            </div>
-                                            <div className="col-md-4 mx-auto p-2">
-                                                <Link className="btn btn-danger btn-lg" to={`/order/${task.orderId}/close`}>
-                                                    <i className="fas fa-window-close"></i>&nbsp;Close
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr className="bg-dark">
-                                    <th scope="row" colSpan="2" className="text-light">
-                                        <i className="fas fa-clipboard-list"></i>&nbsp;Required
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th scope="row" className="bg-light">Available Choices</th>
-                                    <td>
-                                        <div className="row">
-                                            <div className="col-md-4 mx-auto p-2">
-                                                <button className="btn btn-success btn-lg" onClick={onClick}>
-                                                    Begin&nbsp;<i className="fas fa-arrow-circle-right"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
                                     </td>
                                 </tr>
 
