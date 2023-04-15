@@ -394,10 +394,27 @@ class ReportListComponent extends Component {
                                             </div>
                                             <div className="card-body">
                                                 <h3 className="card-title">Marketing Emails</h3>
-                                                <p className="card-text">List all emails of consenting user's email addresses.</p>
+                                                <p className="card-text">List all emails of consenting customer's email addresses.</p>
                                             </div>
 											<div className="card-footer bg-transparent border-0">
 												<Link to="/report/21" className="btn btn-success btn-lg">
+                                                    Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
+                                                </Link>
+											</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-sm-3 mb-4">
+                                        <div className="card box-shadow text-center mx-auto h-100">
+                                            <div className="card-custom-top-2">
+                                                <i className="fas fa-mail-bulk fa-3x"></i>
+                                            </div>
+                                            <div className="card-body">
+                                                <h3 className="card-title">Associate Emails</h3>
+                                                <p className="card-text">List all emails of consenting associate's email addresses.</p>
+                                            </div>
+											<div className="card-footer bg-transparent border-0">
+												<Link to="/report/23" className="btn btn-success btn-lg">
                                                     Go&nbsp;<i className="fas fa-arrow-circle-right"></i>
                                                 </Link>
 											</div>

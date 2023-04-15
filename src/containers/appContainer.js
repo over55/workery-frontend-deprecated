@@ -202,6 +202,7 @@ import Report19Container from "./reports/report19Container";
 import Report20Container from "./reports/report20Container";
 import Report21Container from "./reports/report21Container";
 import Report22Container from "./reports/report22Container";
+import Report23Container from "./reports/report23Container";
 
 // Skill Sets
 import SkillsetSearchContainer from "./skillsets/skillsetSearchContainer";
@@ -535,6 +536,7 @@ class AppContainer extends React.Component {
                                 <Route path="/report/20" exact component={requiresAuth(Report20Container)} />
                                 <Route path="/report/21" exact component={requiresAuth(Report21Container)} />
                                 <Route path="/report/22" exact component={requiresAuth(Report22Container)} />
+                                <Route path="/report/23" exact component={requiresAuth(Report23Container)} />
 
                                 { /* SKILLSETS */ }
                                 <Route path="/skill-sets" exact component={requiresAuth(SkillsetSearchContainer)} />
