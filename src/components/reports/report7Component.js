@@ -78,12 +78,14 @@ export const ASSOCIATE_TYPE_CHOICES = [
         selectName: "associateType",
         value: 1,
         label: "Active Associates"
-    },{
-        id: 'associateType-3-choice',
-        selectName: "associateType",
-        value: 0,
-        label: "Inactive Associates"
-    },{
+    },
+    // {
+    //     id: 'associateType-3-choice',
+    //     selectName: "associateType",
+    //     value: 0,
+    //     label: "Inactive Associates"
+    // },
+    {
         id: 'associateType-1-choice',
         selectName: "associateType",
         value: "all",
