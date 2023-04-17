@@ -52,15 +52,14 @@ export default class Report15Component extends Component {
                                 onSelectChange={onSelectChange}
                             />
 
-                            <BootstrapInput
-                                inputClassName="form-control form-control-lg"
-                                borderColour="border-primary"
-                                error={errors.daysBeforeExpiry}
+                            <BootstrapSingleSelect
                                 label="Days until expiry (*)"
-                                onChange={onTextChange}
-                                value={daysBeforeExpiry}
                                 name="daysBeforeExpiry"
-                                type="text"
+                                defaultOptionLabel="Please select."
+                                options={DAYS_STATE_CHOICES}
+                                value={daysBeforeExpiry}
+                                error={errors.daysBeforeExpiry}
+                                onSelectChange={onSelectChange}
                                 disabled={isLoading}
                                 helpText="Indicate how many days before the date will expire."
                             />
@@ -102,5 +101,29 @@ export const JOB_STATE_CHOICES = [
         selectName: "expiryDateType",
         value: 0,
         label: "All"
+    }
+];
+
+export const DAYS_STATE_CHOICES = [
+    {
+        id: 'daysBeforeExpiry-1-choice',
+        selectName: "daysBeforeExpiry",
+        value: 15,
+        label: "Within 15 days"
+    },{
+        id: 'daysBeforeExpiry-2-choice',
+        selectName: "daysBeforeExpiry",
+        value: 30,
+        label: "Within 30 Days"
+    },{
+        id: 'daysBeforeExpiry-3-choice',
+        selectName: "daysBeforeExpiry",
+        value: 90,
+        label: "Within 90 Days"
+    },{
+        id: 'daysBeforeExpiry-4-choice',
+        selectName: "daysBeforeExpiry",
+        value: 180,
+        label: "Within 180 Days"
     }
 ];
