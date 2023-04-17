@@ -47,8 +47,9 @@ class Report13Container extends Component {
         window.scrollTo(0, 0);  // Start the page at the top of the page.
 
         // DEVELOPERS NOTE: Fetch our skillset list.
-        const filtersMap = new Map();
-        this.props.pullSkillSetList(0, 1000, filtersMap, this.onSkillSetsListCallback);
+        const parametersMap = new Map();
+        parametersMap.set('state', 1);
+        this.props.pullSkillSetList(0, 1000, parametersMap, this.onSkillSetsListCallback);
     }
 
     componentWillUnmount() {
