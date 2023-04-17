@@ -327,9 +327,6 @@ export function validateCloseInput(data) {
                     }
                 }
             }
-            if (data.comment === undefined || data.comment === null || data.comment === "" ) {
-                errors.comment = 'This field is required';
-            }
         }
 
         // --- JOB WAS SUCCESSFULLY COMPLETED --- //

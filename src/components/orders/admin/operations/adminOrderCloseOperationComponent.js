@@ -200,8 +200,8 @@ class AdminOrderCloseOperationComponent extends Component {
 
                                     <BootstrapTextarea
                                         name="comment"
-                                        borderColour="border-primary"
-                                        label="Describe the comment (*)"
+                                        borderColour="border-success"
+                                        label="Describe the comment"
                                         placeholder="Describe here."
                                         rows="5"
                                         value={comment}
