@@ -7,15 +7,15 @@ import {
     setAccessTokenInLocalStorage,
     setRefreshTokenInLocalStorage
 } from './jwtUtility';
-import { WORKERY_REFRESH_TOKEN_API_URL } from "../constants/api";
+import { WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../Constants/API";
 
 /**
- *  Function returns a custom `Axios` instance tailered to the `Mikaponics`
+ *  Function returns a custom `Axios` instance tailered to the `WORKERY CMS backend`
  *  API web-service for authenticated users.
  *
  *  Features:
- *  (1) Inform API to expect request encoded with `MessagePack` format.
- *  (2) Inform API we expect responses to be in `MessagePack` format.
+ *  (1) Inform API to expect request encoded with `JSON` format.
+ *  (2) Inform API we expect responses to be in `JSON` format.
  *  (3) Attach authorization bearer token.
  *  (4) Integrate automatic refresh token when token expires.
  */
@@ -62,10 +62,6 @@ export default function getCustomAxios() {
                         setAccessTokenInLocalStorage(newAccessToken);
                         setRefreshTokenInLocalStorage(newRefreshToken);
 
-                        // For debugging purposes.
-                        console.log("getCustomAxios | refresh token | newAccessToken:", newAccessToken);
-                        console.log("getCustomAxios | refresh token | newRefreshToken:", newRefreshToken);
-
                         // Reset our axios authorization header to use our
                         // new token but keep the original configuration intact.
                         originalConfig = {
@@ -108,7 +104,7 @@ const handleRefresh = async token => {
     axiosServiceRefresh.defaults.headers.common.Authorization = `Bearer ${token}`;
     return new Promise((resolve, reject) => {
         axiosServiceRefresh
-        .post(WORKERY_REFRESH_TOKEN_API_URL, param)
+        .post(WORKERY_REFRESH_TOKEN_API_ENDPOINT, param)
         .then(response => {
             resolve(response);
         })
