@@ -1,0 +1,23 @@
+/* Code taken from https://stackoverflow.com/a/52218938 */
+.fixed-dimension {
+  height: 300px;
+  width: 100%;
+  background-color: blue;
+  color: lightgrey;
+}
+
+/* Code taken from https://stackoverflow.com/a/52218938 */
+/* shortcut to select content tags like p, h1, etc.  */
+/* this is for the multiple lines to work */
+.content > * {
+  width: 100%;
+  margin: 0 !important; /* not recommended */
+}
+
+/* Code taken from https://stackoverflow.com/a/52218938 */
+.content.is-vcentered {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center; /* commenting this out, the multiple lines will have gaps */
+  align-items: center; /* commenting this out, the one-line will not align */
+}

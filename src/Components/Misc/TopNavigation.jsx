@@ -26,35 +26,30 @@ function TopNavigation({onHamburgerClicked, setOnHamburgerClicked}) {
     // Render the following component GUI.
     return (
         <>
-            <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
-              <div class="navbar-brand">
-                <Link class="navbar-item" to="/" onClick={()=>setOnHamburgerClicked(false)}>
-                  <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="Logo Image" />
-                </Link>
-
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>setOnHamburgerClicked(!onHamburgerClicked)}>
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                </a>
-              </div>
-
-               <div id="navbarBasicExample" class={`navbar-menu is-hidden-mobile`}>
-                <div class="navbar-start">
-
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="https://bulma.io">
+                        <img src="./img/compressed-logo.png" width="112" height="28"/>
+                    </a>
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>setOnHamburgerClicked(!onHamburgerClicked)}>
+                        <span aria-hidden="true">
+                        </span>
+                        <span aria-hidden="true">
+                        </span>
+                        <span aria-hidden="true">
+                        </span>
+                    </a>
                 </div>
+                <div id="navbarBasicExample" class="navbar-menu ">
 
-                <div class="navbar-end">
-                  <div class="navbar-item">
-                    <div class="buttons">
-                      <Link class="" onClick={()=>setOnHamburgerClicked(!onHamburgerClicked)}>
-                        <FontAwesomeIcon className="fas" icon={faBars} />
-                      </Link>
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <div class="buttons" onClick={()=>setOnHamburgerClicked(!onHamburgerClicked)}>
+                                <FontAwesomeIcon className="fas" icon={faBars} />
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-
             </nav>
         </>
     );

@@ -21,61 +21,75 @@ function SideNavigation({onHamburgerClicked, setOnHamburgerClicked}) {
     }
 
     console.log("onHamburgerClicked:", onHamburgerClicked);
-
+    if (onHamburgerClicked === false) {
+        return null;
+    }
 
     // Render the following component GUI.
     return (
         <>
-             {onHamburgerClicked === true && <aside class={`column is-2 is-narrow-mobile is-fullheight section`}>
-                <p class="menu-label is-hidden-touch">Navigation</p>
-                <ul class="menu-list">
-                    <li>
-                        <Link to="/dashboard" class={`${location.pathname.includes("dashboard") && "is-active"}`}>
-                            <FontAwesomeIcon className="fas" icon={faHome} /> Dashboard
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/clients" class={`${location.pathname.includes("client") && "is-active"}`}>
-                            <FontAwesomeIcon className="fas" icon={faBoxes} /> Clients
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/associates" class={`${location.pathname.includes("associate") && "is-active"}`}>
-                            <FontAwesomeIcon className="fas" icon={faBoxes} /> Associates
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/orders" class={`${location.pathname.includes("order") && "is-active"}`}>
-                            <FontAwesomeIcon className="fas" icon={faBoxes} /> Work Orders
-                        </Link>
-                    </li>
-                  {/*
-                  <li>
-                    <a href="#" class="">
-                       <FontAwesomeIcon className="fas" icon={faHome} /> Links
-                    </a>
-
-                    <ul>
-                      <li>
-                        <a href="#">
-                            <FontAwesomeIcon className="fas is-small" icon={faHome} />  Link1
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                            <FontAwesomeIcon className="fas is-small" icon={faHome} /> Link2
-                        </a>
-                      </li>
+            <div class="has-background-black is-narrow-mobile is-fullheight" style={{height: "100vh", padding:"30px"}}>
+                <aside class="menu">
+                    <p class="menu-label has-text-grey-light">
+                        Staff
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <Link to="/dashboard" class={`has-text-grey-light ${location.pathname.includes("dashboard") && "is-active"}`}>
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Dashboard
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/customers" class={`has-text-grey-light ${location.pathname.includes("customer") && "is-active"}`}>
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Customers
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/associates" class={`has-text-grey-light ${location.pathname.includes("associate") && "is-active"}`}>
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Associates
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/orders" class={`has-text-grey-light ${location.pathname.includes("order") && "is-active"}`}>
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Work Orders
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/tasks" class={`has-text-grey-light ${location.pathname.includes("task") && "is-active"}`}>
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Tasks
+                            </Link>
+                        </li>
                     </ul>
-                  </li>
-                  <li>
-                    <a href="#" class="">
-                      <FontAwesomeIcon className="fas is-small" icon={faHome} /> About
-                    </a>
-                  </li>
-                  */}
-                </ul>
-            </aside>}
+                    <p class="menu-label has-text-grey-light">
+                        Administration
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <a class="has-text-grey-light">
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Financials
+                            </a>
+                            <a class="has-text-grey-light">
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Reports
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="menu-label has-text-grey-light">
+                        Account
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <Link to="/profile" class={`has-text-grey-light ${location.pathname.includes("profile") && "is-active"}`}>
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;My Profile
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/logout" class={`has-text-grey-light ${location.pathname.includes("logout") && "is-active"}`}>
+                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Sign Off
+                            </Link>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
         </>
     );
 }

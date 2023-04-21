@@ -4,7 +4,7 @@ import React from "react";
 function Dashboard() {
     return (
         <>
-            <div class="container column is-10">
+            <div class="container column is-11">
                 <div class="section">
 
                     <nav class="breadcrumb" aria-label="breadcrumbs">

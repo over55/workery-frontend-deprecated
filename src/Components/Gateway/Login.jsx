@@ -6,6 +6,7 @@ import { faArrowRight, faEnvelope, faKey } from '@fortawesome/free-solid-svg-ico
 import FormErrorBox from "../Element/FormErrorBox";
 import useLocalStorage from "../../Hooks/useLocalStorage";
 import { postLoginAPI } from "../../API/gateway";
+import { EXECUTIVE_ROLE_ID } from "../../Constants/App";
 
 function Login() {
     ////
@@ -36,7 +37,11 @@ function Login() {
         // Save the data to local storage for persistance in this browser and
         // redirect the user to their respected dahsboard.
         setProfile(profile);
-        setForceURL("/dashboard");
+        if (profile.roleId === EXECUTIVE_ROLE_ID) {
+            setForceURL("/organizations");
+        } else {
+            setForceURL("/dashboard");
+        }
     }
 
     function onLoginError(apiErr) {
