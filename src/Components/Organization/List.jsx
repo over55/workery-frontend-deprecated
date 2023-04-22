@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuilding, faChevronRight, faEye, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faChevronRight, faEye, faTrashCan, faPencil } from '@fortawesome/free-solid-svg-icons'
 import { getOrganizationListAPI } from "../../API/Organization";
 
 
@@ -118,12 +118,15 @@ function OrganizationList() {
 
                                              */}
                                               <div class="block">
-                                                   <Link to={`/organization/${organization.id}`} class="button is-primary is-fullwidth">View Details</Link>
+                                                   <Link to={`/organization/${organization.id}`} class="button is-primary is-fullwidth">
+                                                        <FontAwesomeIcon icon={faEye} />&nbsp;View Details
+                                                    </Link>
                                               </div>
 
                                               <div class="block">
-                                                  <Link to={`/dashboard-redirect-for-organization/${organization.id}`} class="button is-warning is-fullwidth">
-                                                        Edit&nbsp;<FontAwesomeIcon icon={faChevronRight} /></Link>
+                                                  <Link to={`/organization/${organization.id}/edit`} class="button is-warning is-fullwidth">
+                                                        <FontAwesomeIcon icon={faPencil} />&nbsp;Edit
+                                                    </Link>
                                               </div>
 
                                               <div class="block">

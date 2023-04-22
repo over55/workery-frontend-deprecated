@@ -5,6 +5,8 @@ import {
     Route
 } from "react-router-dom";
 
+import 'bulma/css/bulma.min.css';
+import './index.css';
 import Dashboard from "./Components/Dashboard/Dashboard";
 import LogoutRedirector from "./Components/Gateway/LogoutRedirector";
 import Login from "./Components/Gateway/Login";

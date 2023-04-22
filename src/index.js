@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import 'bulma/css/bulma.min.css';
-import './index.css';
 import AppRoute from './AppRoute';
 import reportWebVitals from './reportWebVitals';
 import { ProSidebarProvider } from "react-pro-sidebar";

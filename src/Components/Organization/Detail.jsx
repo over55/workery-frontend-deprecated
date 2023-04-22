@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom'
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuilding, faChevronRight, faEye, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faChevronRight, faEye, faIdCard, faSquarePhone, faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import Select from 'react-select'
 import { getOrganizationDetailAPI } from "../../API/Organization";
 import { getSelectedOptions } from "../../Helpers/selectHelper";
@@ -103,7 +103,7 @@ function OrganizationDetail() {
 
                         {!isFetching && <div class="columns">
                             <div class="column">
-                                <p class="subtitle is-3">Identification</p>
+                                <p class="subtitle is-3"><FontAwesomeIcon className="is-white" icon={faIdCard} />&nbsp;Identification</p>
                                 <div class="field">
                                     <label class="label">ID</label>
                                     <div class="control">
@@ -135,7 +135,7 @@ function OrganizationDetail() {
                                     </div>
                                 </div>
 
-                                <p class="subtitle is-3 pt-3">Contact</p>
+                                <p class="subtitle is-3 pt-3"><FontAwesomeIcon className="is-white" icon={faSquarePhone} />&nbsp;Contact</p>
                                 <div class="field">
                                     <label class="label">Email</label>
                                     <div class="control">
@@ -149,7 +149,7 @@ function OrganizationDetail() {
                                     </div>
                                 </div>
 
-                                <p class="subtitle is-3 pt-3">Address</p>
+                                <p class="subtitle is-3 pt-3"><FontAwesomeIcon className="is-white" icon={faAddressCard} />&nbsp;Address</p>
                                 <div class="field">
                                     <label class="label">Country</label>
                                     <div class="control">
