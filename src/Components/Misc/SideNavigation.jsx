@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faHome, faTachometer, faTasks, faUserCircle, faWrench, faCrown,
     faChartBar, faToolbox, faTags, faCreditCard, faUserTie, faCogs,
-    faQuestionCircle, faSignOut
+    faQuestionCircle, faUser, faSignOut
 } from '@fortawesome/free-solid-svg-icons'
 
 function SideNavigation({onHamburgerClicked, setOnHamburgerClicked}) {
@@ -104,12 +104,12 @@ function SideNavigation({onHamburgerClicked, setOnHamburgerClicked}) {
                         </li>
                         <li>
                             <Link to="/profile" class={`has-text-grey-light ${location.pathname.includes("profile") && "is-active"}`}>
-                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;My Profile
+                                <FontAwesomeIcon className="fas" icon={faUser} />&nbsp;My Profile
                             </Link>
                         </li>
                         <li>
                             <Link to="/logout" class={`has-text-grey-light ${location.pathname.includes("logout") && "is-active"}`}>
-                                <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;Sign Off
+                                <FontAwesomeIcon className="fas" icon={faSignOut} />&nbsp;Sign Off
                             </Link>
                         </li>
                     </ul>
