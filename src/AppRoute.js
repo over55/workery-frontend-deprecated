@@ -11,6 +11,7 @@ import Login from "./Components/Gateway/Login";
 import Index from "./Components/Gateway/Index";
 import OrganizationList from "./Components/Organization/List";
 import OrganizationDetail from "./Components/Organization/Detail";
+import OrganizationUpdate from "./Components/Organization/Update";
 import TopNavigation from "./Components/Misc/TopNavigation";
 import SideNavigation from "./Components/Misc/SideNavigation";
 import NotFoundError from "./Components/Misc/NotFoundError";
@@ -30,7 +31,13 @@ function AppRoute() {
                     />
                 </div>
                 <section class="main-content columns is-fullheight">
+
+                <SideNavigation
+                    onHamburgerClicked={onHamburgerClicked}
+                    setOnHamburgerClicked={setOnHamburgerClicked}
+                />
                     <Routes>
+                        <Route exact path="/organization/:id/edit" element={<OrganizationUpdate/>}/>
                         <Route exact path="/organization/:id" element={<OrganizationDetail/>}/>
                         <Route exact path="/organizations" element={<OrganizationList/>}/>
                         <Route exact path="/dashboard" element={<Dashboard/>}/>
@@ -39,11 +46,6 @@ function AppRoute() {
                         <Route exact path="/" element={<Index/>}/>
                         <Route path="*" element={<NotFoundError/>}/>
                     </Routes>
-
-                    <SideNavigation
-                        onHamburgerClicked={onHamburgerClicked}
-                        setOnHamburgerClicked={setOnHamburgerClicked}
-                    />
                 </section>
             </Router>
         </>

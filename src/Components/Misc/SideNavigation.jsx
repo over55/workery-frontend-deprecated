@@ -32,7 +32,7 @@ function SideNavigation({onHamburgerClicked, setOnHamburgerClicked}) {
     // Render the following component GUI.
     return (
         <>
-            <div class="has-background-black is-narrow-mobile is-fullheight" style={{height: "100vh", padding:"30px"}}>
+            <div class="has-background-black is-narrow-mobile is-fullheight" style={{minWidth:"250px", padding:"25px"}}>
                 <aside class="menu">
                     <p class="menu-label has-text-grey-light">
                         Staff

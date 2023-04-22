@@ -10,7 +10,7 @@ import { getSelectedOptions } from "../../Helpers/selectHelper";
 import useLocalStorage from "../../Hooks/useLocalStorage";
 
 
-function OrganizationDetail() {
+function OrganizationUpdate() {
     ////
     ////
     ////
@@ -87,11 +87,12 @@ function OrganizationDetail() {
                     <nav class="breadcrumb" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><FontAwesomeIcon className="is-white" icon={faBuilding} />&nbsp;<Link to="/organizations" aria-current="page">Organizations</Link></li>
-                            <li class="is-active"><Link to={`/organization`} aria-current="page">Details</Link></li>
+                            <li class=""><Link to={`/organization/${id}`} aria-current="page">Details</Link></li>
+                            <li class="is-active"><Link to={`/organization`} aria-current="page">Edit</Link></li>
                         </ul>
                     </nav>
                     <nav class="box">
-                        <h1 class="title is-1"><FontAwesomeIcon className="mdi" icon={faBuilding} />&nbsp;Organization Details</h1>
+                        <h1 class="title is-1"><FontAwesomeIcon className="mdi" icon={faBuilding} />&nbsp;Edit Organization</h1>
 
                         {isFetching && <div class="columns is-centered" style={{paddingTop: "20px"}}>
                             <div class="column has-text-centered is-2">
@@ -119,19 +120,19 @@ function OrganizationDetail() {
                                 <div class="field">
                                     <label class="label">Name</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" value={organization.name} disabled={true} style={{maxWidth:"450px"}} />
+                                        <input class="input" type="text" placeholder="Text input" value={organization.name} style={{maxWidth:"450px"}} />
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Alternate Name</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" value={organization.alternateName} disabled={true} style={{maxWidth:"350px"}}  />
+                                        <input class="input" type="text" placeholder="Text input" value={organization.alternateName} style={{maxWidth:"350px"}}  />
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Description</label>
                                     <div class="control">
-                                        <textarea class="textarea" placeholder="Text input" value={organization.description} disabled={true} />
+                                        <textarea class="textarea" placeholder="Text input" value={organization.description} />
                                     </div>
                                 </div>
 
@@ -139,13 +140,13 @@ function OrganizationDetail() {
                                 <div class="field">
                                     <label class="label">Email</label>
                                     <div class="control">
-                                        <input class="input" type="email" placeholder="Email input" value={organization.email} disabled={true} style={{maxWidth:"200px"}}  />
+                                        <input class="input" type="email" placeholder="Email input" value={organization.email} style={{maxWidth:"200px"}}  />
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Telephone</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Telephone input" value={organization.telephone} disabled={true} style={{maxWidth:"200px"}}  />
+                                        <input class="input" type="text" placeholder="Telephone input" value={organization.telephone} style={{maxWidth:"200px"}}  />
                                     </div>
                                 </div>
 
@@ -153,37 +154,37 @@ function OrganizationDetail() {
                                 <div class="field">
                                     <label class="label">Country</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" value={organization.addressCountry} disabled={true} style={{maxWidth:"150px"}} />
+                                        <input class="input" type="text" placeholder="Text input" value={organization.addressCountry} style={{maxWidth:"150px"}} />
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Region</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" value={organization.addressRegion} disabled={true} style={{maxWidth:"250px"}} />
+                                        <input class="input" type="text" placeholder="Text input" value={organization.addressRegion} style={{maxWidth:"250px"}} />
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Locality</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" value={organization.addressLocality} disabled={true} style={{maxWidth:"350px"}} />
+                                        <input class="input" type="text" placeholder="Text input" value={organization.addressLocality} style={{maxWidth:"350px"}} />
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Postal Code</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" value={organization.postalCode} disabled={true} style={{maxWidth:"100px"}} />
+                                        <input class="input" type="text" placeholder="Text input" value={organization.postalCode} style={{maxWidth:"100px"}} />
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Street Address</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" value={organization.streetAddress} disabled={true} style={{maxWidth:"500px"}} />
+                                        <input class="input" type="text" placeholder="Text input" value={organization.streetAddress} style={{maxWidth:"500px"}} />
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Street Address (Extra line)</label>
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="Text input" value={organization.streetAddressExtra} disabled={true} style={{maxWidth:"500px"}} />
+                                        <input class="input" type="text" placeholder="Text input" value={organization.streetAddressExtra} style={{maxWidth:"500px"}} />
                                     </div>
                                 </div>
                                 <div class="columns pt-3">
@@ -192,8 +193,8 @@ function OrganizationDetail() {
                                         <Link to="/organizations" class="button is-fullwidth is-hidden-desktop">Back</Link>
                                     </div>
                                     <div class="column is-half has-text-right">
-                                        <Link to={`/organization/${id}/edit`} class="button is-primary is-hidden-touch">Edit</Link>
-                                        <Link to={`/organization/${id}/edit`} class="button is-primary is-fullwidth is-hidden-desktop">Edit</Link>
+                                        <button class="button is-primary is-hidden-touch">Save</button>
+                                        <button class="button is-primary is-fullwidth is-hidden-desktop">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -206,4 +207,4 @@ function OrganizationDetail() {
     );
 }
 
-export default OrganizationDetail;
+export default OrganizationUpdate;

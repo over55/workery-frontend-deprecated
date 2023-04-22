@@ -76,7 +76,6 @@ function OrganizationList() {
                 <section class="section">
                     <nav class="breadcrumb" aria-label="breadcrumbs">
                         <ul>
-
                             <li class="is-active"><Link to="/organizations" aria-current="page">
                                 <FontAwesomeIcon className="is-white" icon={faBuilding} />&nbsp;Organizations</Link>
                             </li>
