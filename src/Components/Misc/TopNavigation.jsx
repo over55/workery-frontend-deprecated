@@ -26,12 +26,12 @@ function TopNavigation({onHamburgerClicked, setOnHamburgerClicked}) {
     // Render the following component GUI.
     return (
         <>
-            <nav class="navbar" role="navigation" aria-label="main navigation">
+            <nav class="navbar" role="navigation" aria-label="main navigation" style={{backgroundColor:"#343a40",}}>
                 <div class="navbar-brand">
                     <a class="navbar-item" href="https://bulma.io">
                         <img src="./img/compressed-logo.png" width="112" height="28"/>
                     </a>
-                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>setOnHamburgerClicked(!onHamburgerClicked)}>
+                    <a role="button" class="navbar-burger has-text-white" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>setOnHamburgerClicked(!onHamburgerClicked)}>
                         <span aria-hidden="true">
                         </span>
                         <span aria-hidden="true">
@@ -40,12 +40,12 @@ function TopNavigation({onHamburgerClicked, setOnHamburgerClicked}) {
                         </span>
                     </a>
                 </div>
-                <div id="navbarBasicExample" class="navbar-menu ">
+                <div id="navbarBasicExample" class="navbar-menu has-text-white">
 
                     <div class="navbar-end">
                         <div class="navbar-item">
                             <div class="buttons" onClick={()=>setOnHamburgerClicked(!onHamburgerClicked)}>
-                                <FontAwesomeIcon className="fas" icon={faBars} />
+                                <FontAwesomeIcon className="fas has-text-white" icon={faBars} />
                             </div>
                         </div>
                     </div>

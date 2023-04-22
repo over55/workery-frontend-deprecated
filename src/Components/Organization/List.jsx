@@ -96,9 +96,9 @@ function OrganizationList() {
                         {!isFetching && <div className="columns">
                             {!isEmpty(organizations) && organizations.results.map(function(organization, i){
                                 return <div class="column is-4">
-                                    <div class="card">
+                                    <div class="card workery-card">
                                           <div class="card-image">
-                                              <span class="content is-vcentered fixed-dimension">
+                                              <span class="workery-content is-vcentered workery-card-span">
                                                   <FontAwesomeIcon className="fa-10x has-text-white" icon={faBuilding} />
                                               </span>
                                           </div>
@@ -111,8 +111,6 @@ function OrganizationList() {
                                             </div>
 
                                             <div class="content">
-                                               Created: <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                                               <br /><br />
                                               {/*
                                               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                               Phasellus nec iaculis mauris. <a>@bulmaio</a>.
@@ -120,9 +118,17 @@ function OrganizationList() {
 
 
                                              */}
-                                              <div class="buttons">
-                                                  <Link to={`/organization/${organization.id}`} class="button is-primary">View Details</Link>
-                                                  <Link to={`/dashboard-redirect-for-organization/${organization.id}`} class="button is-link">Start&nbsp;<FontAwesomeIcon icon={faChevronRight} /></Link>
+                                              <div class="block">
+                                                   <Link to={`/organization/${organization.id}`} class="button is-primary is-fullwidth">View Details</Link>
+                                              </div>
+
+                                              <div class="block">
+                                                  <Link to={`/dashboard-redirect-for-organization/${organization.id}`} class="button is-warning is-fullwidth">
+                                                        Edit&nbsp;<FontAwesomeIcon icon={faChevronRight} /></Link>
+                                              </div>
+
+                                              <div class="block">
+                                                  <Link to={`/dashboard-redirect-for-organization/${organization.id}`} class="button is-success workery-success-btn is-fullwidth">Start&nbsp;<FontAwesomeIcon icon={faChevronRight} /></Link>
                                               </div>
 
                                             </div>
