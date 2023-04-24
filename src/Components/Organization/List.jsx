@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuilding, faChevronRight, faEye, faTrashCan, faPencil, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faChevronRight, faEye, faPencil, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { getOrganizationListAPI } from "../../API/Organization";
+import FormErrorBox from "../Element/FormErrorBox";
 
 
 function OrganizationList() {
@@ -20,12 +21,12 @@ function OrganizationList() {
     //// API.
     ////
 
-    function onOrganizationListSuccess(response){
+    const onOrganizationListSuccess = useCallback((response) => {
         console.log("onOrganizationListSuccess: Starting...");
         setOrganizations(response);
-    }
+    }, [setOrganizations]);
 
-    function onOrganizationListError(apiErr) {
+    const onOrganizationListError = useCallback((apiErr) => {
         console.log("onOrganizationListError: Starting...");
         setErrors(apiErr);
 
@@ -34,12 +35,12 @@ function OrganizationList() {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
-    }
+    }, [setErrors]);
 
-    function onOrganizationListDone() {
+    const onOrganizationListDone = useCallback(() => {
         console.log("onOrganizationListDone: Starting...");
         setFetching(false);
-    }
+    }, [setFetching]);
 
     ////
     //// Event handling.
@@ -64,7 +65,7 @@ function OrganizationList() {
         }
 
         return () => { mounted = false; }
-    }, []);
+    }, [onOrganizationListSuccess, onOrganizationListError, onOrganizationListDone]);
 
     ////
     //// Component rendering.
@@ -90,6 +91,7 @@ function OrganizationList() {
 
                     <nav class="box">
                         <h1 class="title is-1"><FontAwesomeIcon className="mdi" icon={faBuilding} />&nbsp;Organizations</h1>
+                        <FormErrorBox errors={errors} />
 
                         {isFetching && <div class="columns is-centered" style={{paddingTop: "20px"}}>
                             <div class="column has-text-centered is-2">

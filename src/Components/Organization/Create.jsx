@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,7 +15,7 @@ function OrganizationCreate() {
     //// Component states.
     ////
 
-    const [organization, setOrganization] = useLocalStorage(null);
+    const [setOrganization] = useLocalStorage(null);
     const [errors, setErrors] = useState({
         // "schemaName": "missing value",
     });
@@ -38,14 +38,14 @@ function OrganizationCreate() {
     //// API.
     ////
 
-    function onOrganizationCreateSuccess(response){
+    const onOrganizationCreateSuccess = useCallback((organization) => {
         console.log("onOrganizationCreateSuccess: Starting...");
-        setOrganization(response);
+        setOrganization(organization);
 
         setForceURL("/organization/"+organization.id+"?msg=updated");
-    }
+    }, [setOrganization, setForceURL]);
 
-    function onOrganizationCreateError(apiErr) {
+    const onOrganizationCreateError = useCallback((apiErr) => {
         console.log("onOrganizationCreateError: Starting...");
         setErrors(apiErr);
 
@@ -54,12 +54,12 @@ function OrganizationCreate() {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
-    }
+    }, [setErrors,]);
 
-    function onOrganizationCreateDone() {
+    const onOrganizationCreateDone = useCallback(() => {
         console.log("onOrganizationCreateDone: Starting...");
         setFetching(false);
-    }
+    }, [setFetching,]);
 
     ////
     //// Event handling.

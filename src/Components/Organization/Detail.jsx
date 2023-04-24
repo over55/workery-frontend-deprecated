@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom'
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuilding, faChevronRight, faEye, faIdCard, faSquarePhone, faAddressCard } from '@fortawesome/free-solid-svg-icons'
-import Select from 'react-select'
+import { faBuilding, faIdCard, faSquarePhone, faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { getOrganizationDetailAPI } from "../../API/Organization";
-import { getSelectedOptions } from "../../Helpers/selectHelper";
 import useLocalStorage from "../../Hooks/useLocalStorage";
+import FormErrorBox from "../Element/FormErrorBox";
 
 
 function OrganizationDetail() {
@@ -29,12 +28,13 @@ function OrganizationDetail() {
     //// API.
     ////
 
-    function onOrganizationDetailSuccess(response){
+
+    const onOrganizationDetailSuccess = useCallback((response) => {
         console.log("onOrganizationDetailSuccess: Starting...");
         setOrganization(response);
-    }
+    }, [setOrganization]);
 
-    function onOrganizationDetailError(apiErr) {
+    const onOrganizationDetailError = useCallback((apiErr) => {
         console.log("onOrganizationDetailError: Starting...");
         setErrors(apiErr);
 
@@ -43,12 +43,12 @@ function OrganizationDetail() {
         // https://github.com/fisshy/react-scroll
         var scroll = Scroll.animateScroll;
         scroll.scrollToTop();
-    }
+    }, [setErrors]);
 
-    function onOrganizationDetailDone() {
+    const onOrganizationDetailDone = useCallback(() => {
         console.log("onOrganizationDetailDone: Starting...");
         setFetching(false);
-    }
+    }, [setFetching]);
 
     ////
     //// Event handling.
@@ -75,7 +75,7 @@ function OrganizationDetail() {
         }
 
         return () => { mounted = false; }
-    }, [id]);
+    }, [id,],);
 
     ////
     //// Component rendering.
@@ -93,6 +93,7 @@ function OrganizationDetail() {
                     </nav>
                     <nav class="box">
                         <h1 class="title is-1"><FontAwesomeIcon className="mdi" icon={faBuilding} />&nbsp;Organization Details</h1>
+                        <FormErrorBox errors={errors} />
 
                         {isFetching && <div class="columns is-centered" style={{paddingTop: "20px"}}>
                             <div class="column has-text-centered is-2">
