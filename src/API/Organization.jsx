@@ -43,7 +43,7 @@ export function putOrganizationUpdateAPI(data, onSuccessCallback, onErrorCallbac
     // To Snake-case for API from camel-case in React.
     let decamelizedData = decamelizeKeys(data);
 
-    axios.get(WORKERY_ORGANIZATION_DETAIL_API_URL.replace("{id}", decamelizedData.id)).then((successResponse) => {
+    axios.put(WORKERY_ORGANIZATION_DETAIL_API_URL.replace("{id}", decamelizedData.id), decamelizedData).then((successResponse) => {
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.

@@ -29,7 +29,7 @@ function TopNavigation({onHamburgerClicked, setOnHamburgerClicked}) {
             <nav class="navbar" role="navigation" aria-label="main navigation" style={{backgroundColor:"#343a40",}}>
                 <div class="navbar-brand">
                     <a class="navbar-item" href="https://bulma.io">
-                        <img src="./img/compressed-logo.png" width="112" height="28"/>
+                        <img src="/img/compressed-logo.png" width="112" height="28"/>
                     </a>
                     <a role="button" class="navbar-burger has-text-white" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={()=>setOnHamburgerClicked(!onHamburgerClicked)}>
                         <span aria-hidden="true">

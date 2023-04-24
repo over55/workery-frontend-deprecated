@@ -64,6 +64,7 @@ function OrganizationDetail() {
         let mounted = true;
 
         if (mounted) {
+            window.scrollTo(0, 0);  // Start the page at the top of the page.
             setFetching(true);
             getOrganizationDetailAPI(
                 id,
