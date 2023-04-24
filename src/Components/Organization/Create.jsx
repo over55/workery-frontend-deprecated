@@ -1,59 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useParams } from 'react-router-dom'
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBuilding, faIdCard, faSquarePhone, faAddressCard } from '@fortawesome/free-solid-svg-icons'
-import { getOrganizationDetailAPI, putOrganizationUpdateAPI } from "../../API/Organization";
+import { postOrganizationCreateAPI } from "../../API/Organization";
 import useLocalStorage from "../../Hooks/useLocalStorage";
 import FormErrorBox from "../Element/FormErrorBox";
 import FormInputField from "../Element/FormInputField";
 import FormTextareaField from "../Element/FormTextareaField";
 
 
-function OrganizationUpdate() {
-    ////
-    ////
-    ////
-
-    const { id } = useParams()
-
+function OrganizationCreate() {
     ////
     //// Component states.
     ////
 
-    const [organization, setOrganization] = useLocalStorage(id, "");
+    const [organization, setOrganization] = useLocalStorage(null);
     const [errors, setErrors] = useState({
         // "schemaName": "missing value",
     });
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
-    const [schemaName, setSchemaName] = useState(organization.schemaName);
-    const [name, setName] = useState(organization.name);
-    const [alternateName, setAlternateName] = useState(organization.alternateName);
-    const [description, setDescription] = useState(organization.description);
-    const [email, setEmail] = useState(organization.email);
-    const [telephone, setTelephone] = useState(organization.telephone);
-    const [addressCountry, setAddressCountry] = useState(organization.addressCountry);
-    const [addressRegion, setAddressRegion] = useState(organization.addressRegion);
-    const [addressLocality, setAddressLocality] = useState(organization.addressLocality);
-    const [postalCode, setPostalCode] = useState(organization.postalCode);
-    const [streetAddress, setStreetAddress] = useState(organization.streetAddress);
-    const [streetAddressExtra, setStreetAddressExtra] = useState(organization.streetAddressExtra);
+    const [schemaName, setSchemaName] = useState("");
+    const [name, setName] = useState("");
+    const [alternateName, setAlternateName] = useState("");
+    const [description, setDescription] = useState("");
+    const [email, setEmail] = useState("");
+    const [telephone, setTelephone] = useState("");
+    const [addressCountry, setAddressCountry] = useState("");
+    const [addressRegion, setAddressRegion] = useState("");
+    const [addressLocality, setAddressLocality] = useState("");
+    const [postalCode, setPostalCode] = useState("");
+    const [streetAddress, setStreetAddress] = useState("");
+    const [streetAddressExtra, setStreetAddressExtra] = useState("");
 
     ////
     //// API.
     ////
 
-    function onOrganizationUpdateSuccess(response){
-        console.log("onOrganizationUpdateSuccess: Starting...");
+    function onOrganizationCreateSuccess(response){
+        console.log("onOrganizationCreateSuccess: Starting...");
         setOrganization(response);
 
         setForceURL("/organization/"+organization.id+"?msg=updated");
     }
 
-    function onOrganizationUpdateError(apiErr) {
-        console.log("onOrganizationUpdateError: Starting...");
+    function onOrganizationCreateError(apiErr) {
+        console.log("onOrganizationCreateError: Starting...");
         setErrors(apiErr);
 
         // The following code will cause the screen to scroll to the top of
@@ -63,29 +56,8 @@ function OrganizationUpdate() {
         scroll.scrollToTop();
     }
 
-    function onOrganizationUpdateDone() {
-        console.log("onOrganizationUpdateDone: Starting...");
-        setFetching(false);
-    }
-
-    function onOrganizationDetailSuccess(response){
-        console.log("onOrganizationDetailSuccess: Starting...");
-        setOrganization(response);
-    }
-
-    function onOrganizationDetailError(apiErr) {
-        console.log("onOrganizationDetailError: Starting...");
-        setErrors(apiErr);
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
-    }
-
-    function onOrganizationDetailDone() {
-        console.log("onOrganizationDetailDone: Starting...");
+    function onOrganizationCreateDone() {
+        console.log("onOrganizationCreateDone: Starting...");
         setFetching(false);
     }
 
@@ -143,7 +115,6 @@ function OrganizationUpdate() {
 
     function onSubmitClick(e) {
         const org = {
-            id: parseInt(id),
             name: name,
             state: 1,
             schemaName: schemaName,
@@ -159,11 +130,11 @@ function OrganizationUpdate() {
             streetAddressExtra: streetAddressExtra,
         };
         setFetching(true);
-        putOrganizationUpdateAPI(
+        postOrganizationCreateAPI(
             org,
-            onOrganizationUpdateSuccess,
-            onOrganizationUpdateError,
-            onOrganizationUpdateDone
+            onOrganizationCreateSuccess,
+            onOrganizationCreateError,
+            onOrganizationCreateDone
         );
     }
 
@@ -176,17 +147,10 @@ function OrganizationUpdate() {
 
         if (mounted) {
             window.scrollTo(0, 0);  // Start the page at the top of the page.
-            setFetching(true);
-            getOrganizationDetailAPI(
-                id,
-                onOrganizationDetailSuccess,
-                onOrganizationDetailError,
-                onOrganizationDetailDone
-            );
         }
 
         return () => { mounted = false; }
-    }, [id]);
+    }, []);
 
     ////
     //// Component rendering.
@@ -205,12 +169,11 @@ function OrganizationUpdate() {
                     <nav class="breadcrumb" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><FontAwesomeIcon className="is-white" icon={faBuilding} />&nbsp;<Link to="/organizations" aria-current="page">Organizations</Link></li>
-                            <li class=""><Link to={`/organization/${id}`} aria-current="page">Details</Link></li>
-                            <li class="is-active"><Link to={`/organization`} aria-current="page">Edit</Link></li>
+                            <li class="is-active"><Link aria-current="page">Create</Link></li>
                         </ul>
                     </nav>
                     <nav class="box">
-                        <h1 class="title is-1"><FontAwesomeIcon className="mdi" icon={faBuilding} />&nbsp;Edit Organization</h1>
+                        <h1 class="title is-1"><FontAwesomeIcon className="mdi" icon={faBuilding} />&nbsp;Add Organization</h1>
                         <FormErrorBox errors={errors} />
 
                         {isFetching && <div class="columns is-centered" style={{paddingTop: "20px"}}>
@@ -224,17 +187,6 @@ function OrganizationUpdate() {
                         {!isFetching && <div class="columns">
                             <div class="column">
                                 <p class="subtitle is-3"><FontAwesomeIcon className="is-white" icon={faIdCard} />&nbsp;Identification</p>
-                                <div class="field">
-                                    <label class="label">ID</label>
-                                    <div class="control">
-                                        <input class="input"
-                                                type="text"
-                                         placeholder="Text input"
-                                               value={id}
-                                            disabled={true}
-                                               style={{maxWidth:"100px"}}  />
-                                    </div>
-                                </div>
                                 <FormInputField
                                     label="Schema Name"
                                     name="schemaName"
@@ -381,8 +333,8 @@ function OrganizationUpdate() {
                                 />
                                 <div class="columns pt-3">
                                     <div class="column is-half">
-                                        <Link to={`/organization/${id}`} class="button is-hidden-touch">Back</Link>
-                                        <Link to={`/organization/${id}`} class="button is-fullwidth is-hidden-desktop">Back</Link>
+                                        <Link to={`/organizations`} class="button is-hidden-touch">Back</Link>
+                                        <Link to={`/organizations`} class="button is-fullwidth is-hidden-desktop">Back</Link>
                                     </div>
                                     <div class="column is-half has-text-right">
                                         <button onClick={onSubmitClick} class="button is-primary is-hidden-touch">Save</button>
@@ -399,4 +351,4 @@ function OrganizationUpdate() {
     );
 }
 
-export default OrganizationUpdate;
+export default OrganizationCreate;

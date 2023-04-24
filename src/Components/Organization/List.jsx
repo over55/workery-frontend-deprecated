@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuilding, faChevronRight, faEye, faTrashCan, faPencil } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faChevronRight, faEye, faTrashCan, faPencil, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { getOrganizationListAPI } from "../../API/Organization";
 
 
@@ -81,6 +81,13 @@ function OrganizationList() {
                             </li>
                         </ul>
                     </nav>
+
+                    <span class="is-pulled-right">
+                        <Link to="/organizations/create" aria-current="page">
+                            <FontAwesomeIcon className="is-white" icon={faPlus} />&nbsp;Add Organization
+                        </Link>
+                    </span>
+
                     <nav class="box">
                         <h1 class="title is-1"><FontAwesomeIcon className="mdi" icon={faBuilding} />&nbsp;Organizations</h1>
 
@@ -92,7 +99,7 @@ function OrganizationList() {
                             </div>
                         </div>}
 
-                        {!isFetching && <div className="columns">
+                        {!isFetching && <div className="columns is-multiline">
                             {!isEmpty(organizations) && organizations.results.map(function(organization, i){
                                 return <div class="column is-4">
                                     <div class="card workery-card">

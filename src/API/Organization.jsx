@@ -5,6 +5,26 @@ import {
     WORKERY_ORGANIZATION_DETAIL_API_URL
 } from "../Constants/API";
 
+export function postOrganizationCreateAPI(data, onSuccessCallback, onErrorCallback, onDoneCallback) {
+    const axios = getCustomAxios();
+
+    // To Snake-case for API from camel-case in React.
+    let decamelizedData = decamelizeKeys(data);
+
+    axios.post(WORKERY_ORGANIZATION_LIST_API_URL, decamelizedData).then((successResponse) => {
+        const responseData = successResponse.data;
+
+        // Snake-case from API to camel-case for React.
+        const data = camelizeKeys(responseData);
+
+        // Return the callback data.
+        onSuccessCallback(data);
+    }).catch( (exception) => {
+        let errors = camelizeKeys(exception);
+        onErrorCallback(errors);
+    }).then(onDoneCallback);
+}
+
 export function getOrganizationListAPI(onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
     axios.get(WORKERY_ORGANIZATION_LIST_API_URL).then((successResponse) => {

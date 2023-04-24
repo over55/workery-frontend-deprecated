@@ -12,6 +12,7 @@ import LogoutRedirector from "./Components/Gateway/LogoutRedirector";
 import Login from "./Components/Gateway/Login";
 import Index from "./Components/Gateway/Index";
 import OrganizationList from "./Components/Organization/List";
+import OrganizationCreate from "./Components/Organization/Create";
 import OrganizationDetail from "./Components/Organization/Detail";
 import OrganizationUpdate from "./Components/Organization/Update";
 import TopNavigation from "./Components/Misc/TopNavigation";
@@ -39,8 +40,9 @@ function AppRoute() {
                     setOnHamburgerClicked={setOnHamburgerClicked}
                 />
                     <Routes>
-                        <Route exact path="/organization/:id/edit" element={<OrganizationUpdate/>}/>
+                        <Route exact path="/organization/:id/edit"        element={<OrganizationUpdate/>}/>
                         <Route exact path="/organization/:id" element={<OrganizationDetail/>}/>
+                        <Route exact path="/organizations/create" element={<OrganizationCreate/>}/>
                         <Route exact path="/organizations" element={<OrganizationList/>}/>
                         <Route exact path="/dashboard" element={<Dashboard/>}/>
                         <Route exact path="/login" element={<Login/>}/>
