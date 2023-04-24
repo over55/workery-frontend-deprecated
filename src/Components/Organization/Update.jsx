@@ -4,15 +4,12 @@ import { useParams } from 'react-router-dom'
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBuilding, faIdCard, faSquarePhone, faAddressCard } from '@fortawesome/free-solid-svg-icons'
-import Select from 'react-select'
 import { putOrganizationUpdateAPI } from "../../API/Organization";
-import { getSelectedOptions } from "../../Helpers/selectHelper";
 import useLocalStorage from "../../Hooks/useLocalStorage";
+import FormErrorBox from "../Element/FormErrorBox";
+import FormInputField from "../Element/FormInputField";
+import FormTextareaField from "../Element/FormTextareaField";
 
-const IS_VALID = 1
-const IS_ERROR = 2
-const IS_REQUIRED = 3
-const IS_OPTIONAL = 4
 
 function OrganizationUpdate() {
     ////
@@ -28,20 +25,6 @@ function OrganizationUpdate() {
     const [organization, setOrganization] = useLocalStorage(id, "");
     const [errors, setErrors] = useState({
         // "schemaName": "missing value",
-    });
-    const [validation, setValidation] = useState({
-        "schemaName": false,
-        "name": false,
-        "alternateName": false,
-        "description": false,
-        "email": false,
-        "telephone": false,
-        "addressCountry": false,
-        "addressRegion": false,
-        "addressLocality": false,
-        "postalCode": false,
-        "streetAddress": false,
-        "streetAddressExtra": false,
     });
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
@@ -91,74 +74,50 @@ function OrganizationUpdate() {
 
     function onSchemaNameChange(e) {
         setSchemaName(e.target.value);
-        validation["schemaName"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onNameChange(e) {
-        setName(e.target.value);
-        validation["name"] = e.target.value !== "";
-        setValidation(validation);
+        setName(e.target.value)
     }
 
     function onAlternateNameChange(e) {
         setAlternateName(e.target.value);
-        validation["alternateName"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onDescriptionChange(e) {
         setDescription(e.target.value);
-        validation["description"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onEmailChange(e) {
         setEmail(e.target.value);
-        validation["email"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onTelephoneChange(e) {
         setTelephone(e.target.value);
-        validation["telephone"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onAddressCountryChange(e) {
         setAddressCountry(e.target.value);
-        validation["addressCountry"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onAddressRegionChange(e) {
         setAddressRegion(e.target.value);
-        validation["addressRegion"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onAddressLocalityChange(e) {
         setAddressLocality(e.target.value);
-        validation["addressLocality"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onPostalCodeChange(e) {
         setPostalCode(e.target.value);
-        validation["postalCode"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onStreetAddressChange(e) {
         setStreetAddress(e.target.value);
-        validation["streetAddress"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onStreetAddressExtraChange(e) {
         setStreetAddressExtra(e.target.value);
-        validation["streetAddressExtra"] = e.target.value !== "";
-        setValidation(validation);
     }
 
     function onSubmitClick(e) {
@@ -206,7 +165,6 @@ function OrganizationUpdate() {
     ////
 
     console.log("err", errors);
-    console.log("validation", validation);
 
     if (forceURL !== "") {
         return <Navigate to={forceURL}  />
@@ -225,6 +183,7 @@ function OrganizationUpdate() {
                     </nav>
                     <nav class="box">
                         <h1 class="title is-1"><FontAwesomeIcon className="mdi" icon={faBuilding} />&nbsp;Edit Organization</h1>
+                        <FormErrorBox errors={errors} />
 
                         {isFetching && <div class="columns is-centered" style={{paddingTop: "20px"}}>
                             <div class="column has-text-centered is-2">
@@ -248,167 +207,150 @@ function OrganizationUpdate() {
                                                style={{maxWidth:"100px"}}  />
                                     </div>
                                 </div>
-                                <div class="field">
-                                    <label class="label">Schema</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.schemaName && 'is-danger'} ${validation && validation.schemaName ? 'is-success' : "is-primary"}`}
-                                                type="text"
-                                         placeholder="Text input"
-                                               style={{maxWidth:"100px"}}
-                                               value={schemaName}
-                                            onChange={onSchemaNameChange}
-                                        />
-                                        {errors && errors.schemaName &&
-                                            <p class="help is-danger">{errors.schemaName}</p>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Name</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.name && 'is-danger'} ${validation && validation.name && 'is-success'}`}
-                                                type="text" placeholder="Text input"
-                                               value={name}
-                                            onChange={onNameChange}
-                                               style={{maxWidth:"450px"}} />
-                                        {errors && errors.name &&
-                                            <p class="help is-danger">{errors.name}</p>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Alternate Name</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.alternateName && 'is-danger'} ${validation && validation.alternateName && 'is-success'}`}
-                                                type="text" placeholder="Text input"
-                                               value={alternateName}
-                                            onChange={onAlternateNameChange}
-                                               style={{maxWidth:"350px"}}  />
-                                        {errors && errors.alternateName &&
-                                            <p class="help is-danger">{errors.alternateName}</p>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Description</label>
-                                    <div class="control">
-                                        <textarea class={`textarea ${errors && errors.description && 'is-danger'} ${validation && validation.description && 'is-success'}`}
-                                            placeholder="Text input"
-                                                  value={description}
-                                               onChange={onDescriptionChange} />
-                                        {errors && errors.description &&
-                                            <p class="help is-danger">{errors.description}</p>
-                                        }
-                                    </div>
-                                </div>
+                                <FormInputField
+                                    label="Schema Name"
+                                    name="schemaName"
+                                    placeholder="Schema Name"
+                                    value={schemaName}
+                                    errorText={errors && errors.schemaName}
+                                    helpText=""
+                                    onChange={onSchemaNameChange}
+                                    isRequired={true}
+                                    maxWidth="150px"
+                                />
+                                <FormInputField
+                                    label="Name"
+                                    name="name"
+                                    placeholder="Schema Name"
+                                    value={name}
+                                    errorText={errors && errors.name}
+                                    helpText=""
+                                    onChange={onNameChange}
+                                    isRequired={true}
+                                    maxWidth="450px"
+                                />
+                                <FormInputField
+                                    label="Alternate Name"
+                                    name="alternateName"
+                                    placeholder="Alternate Name"
+                                    value={alternateName}
+                                    errorText={errors && errors.name}
+                                    helpText=""
+                                    onChange={onAlternateNameChange}
+                                    isRequired={true}
+                                    maxWidth="350px"
+                                />
+                                <FormTextareaField
+                                    label="Description"
+                                    name="description"
+                                    placeholder="Description"
+                                    value={description}
+                                    errorText={errors && errors.description}
+                                    helpText=""
+                                    onChange={onDescriptionChange}
+                                    isRequired={true}
+                                    maxWidth="100%"
+                                />
 
                                 <p class="subtitle is-3 pt-3"><FontAwesomeIcon className="is-white" icon={faSquarePhone} />&nbsp;Contact</p>
-                                <div class="field">
-                                    <label class="label">Email</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.email && 'is-danger'} ${validation && validation.email && 'is-success'}`}
-                                                type="email" placeholder="Email input"
-                                               value={email}
-                                            onChange={onEmailChange}
-                                               style={{maxWidth:"200px"}}  />
-                                       {errors && errors.email &&
-                                           <p class="help is-danger">{errors.email}</p>
-                                       }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Telephone</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.telephone && 'is-danger'} ${validation && validation.telephone && 'is-success'}`}
-                                                type="text" placeholder="Telephone input"
-                                        value={telephone}
-                                     onChange={onTelephoneChange}
-                                        style={{maxWidth:"200px"}}  />
-                                        {errors && errors.telephone &&
-                                            <p class="help is-danger">{errors.telephone}</p>
-                                        }
-                                    </div>
-                                </div>
+                                <FormInputField
+                                    label="Email"
+                                    name="email"
+                                    type="email"
+                                    placeholder="Email"
+                                    value={email}
+                                    errorText={errors && errors.email}
+                                    helpText=""
+                                    onChange={onEmailChange}
+                                    isRequired={true}
+                                    maxWidth="200px"
+                                />
+                                <FormInputField
+                                    label="Telephone"
+                                    name="telephone"
+                                    type="text"
+                                    placeholder="Telephone"
+                                    value={telephone}
+                                    errorText={errors && errors.telephone}
+                                    helpText=""
+                                    onChange={onTelephoneChange}
+                                    isRequired={true}
+                                    maxWidth="200px"
+                                />
 
                                 <p class="subtitle is-3 pt-3"><FontAwesomeIcon className="is-white" icon={faAddressCard} />&nbsp;Address</p>
-                                <div class="field">
-                                    <label class="label">Country</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.addressCountry && 'is-danger'} ${validation && validation.addressCountry && 'is-success'}`}
-                                                type="text" placeholder="Text input"
-                                        value={addressCountry}
-                                     onChange={onAddressCountryChange}
-                                        style={{maxWidth:"150px"}} />
-                                        {errors && errors.addressCountry &&
-                                            <p class="help is-danger">{errors.addressCountry}</p>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Region</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.addressRegion && 'is-danger'} ${validation && validation.addressRegion && 'is-success'}`}
-                                                type="text" placeholder="Text input"
-                                        value={addressRegion}
-                                     onChange={onAddressRegionChange}
-                                        style={{maxWidth:"250px"}} />
-                                        {errors && errors.addressRegion &&
-                                            <p class="help is-danger">{errors.addressRegion}</p>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Locality</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.addressLocality && 'is-danger'} ${validation && validation.addressLocality && 'is-success'}`}
-                                                type="text" placeholder="Text input"
-                                        value={addressLocality}
-                                     onChange={onAddressLocalityChange}
-                                        style={{maxWidth:"350px"}} />
-                                        {errors && errors.addressLocality &&
-                                            <p class="help is-danger">{errors.addressLocality}</p>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Postal Code</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.postalCode && 'is-danger'} ${validation && validation.postalCode && 'is-success'}`}
-                                        type="text" placeholder="Text input"
-                                        value={postalCode}
-                                     onChange={onPostalCodeChange}
-                                        style={{maxWidth:"100px"}} />
-                                        {errors && errors.postalCode &&
-                                            <p class="help is-danger">{errors.postalCode}</p>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Street Address</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.streetAddress && 'is-danger'} ${validation && validation.streetAddress && 'is-success'}`}
-                                        type="text" placeholder="Text input"
-                                        value={streetAddress}
-                                     onChange={onStreetAddressChange}
-                                        style={{maxWidth:"500px"}} />
-                                        {errors && errors.streetAddress &&
-                                            <p class="help is-danger">{errors.streetAddress}</p>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">Street Address (Extra line)</label>
-                                    <div class="control">
-                                        <input class={`input ${errors && errors.streetAddressExtra && 'is-danger'} ${validation && validation.streetAddressExtra && 'is-success'}`}
-                                        type="text" placeholder="Text input"
-                                        value={streetAddressExtra}
-                                     onChange={onStreetAddressExtraChange}
-                                        style={{maxWidth:"500px"}} />
-                                        {errors && errors.streetAddressExtra &&
-                                            <p class="help is-danger">{errors.streetAddressExtra}</p>
-                                        }
-                                    </div>
-                                </div>
+                                <FormInputField
+                                    label="Country"
+                                    name="addressCountry"
+                                    type="text"
+                                    placeholder="Country"
+                                    value={addressCountry}
+                                    errorText={errors && errors.addressCountry}
+                                    helpText=""
+                                    onChange={onAddressCountryChange}
+                                    isRequired={true}
+                                    maxWidth="150px"
+                                />
+                                <FormInputField
+                                    label="Region"
+                                    name="addressRegion"
+                                    type="text"
+                                    placeholder="Region"
+                                    value={addressRegion}
+                                    errorText={errors && errors.addressRegion}
+                                    helpText=""
+                                    onChange={onAddressRegionChange}
+                                    isRequired={true}
+                                    maxWidth="150px"
+                                />
+                                <FormInputField
+                                    label="Locality"
+                                    name="addressLocality"
+                                    type="text"
+                                    placeholder="Locality"
+                                    value={addressLocality}
+                                    errorText={errors && errors.addressLocality}
+                                    helpText=""
+                                    onChange={onAddressLocalityChange}
+                                    isRequired={true}
+                                    maxWidth="150px"
+                                />
+                                <FormInputField
+                                    label="Postal Code"
+                                    name="postalCode"
+                                    type="text"
+                                    placeholder="Postal Code"
+                                    value={postalCode}
+                                    errorText={errors && errors.postalCode}
+                                    helpText=""
+                                    onChange={onPostalCodeChange}
+                                    isRequired={true}
+                                    maxWidth="100px"
+                                />
+                                <FormInputField
+                                    label="Street Address"
+                                    name="streetAddress"
+                                    type="text"
+                                    placeholder="Street Address"
+                                    value={streetAddress}
+                                    errorText={errors && errors.streetAddress}
+                                    helpText=""
+                                    onChange={onStreetAddressChange}
+                                    isRequired={true}
+                                    maxWidth="500px"
+                                />
+                                <FormInputField
+                                    label="Street Address Extra line (Optional)"
+                                    name="streetAddressExtra"
+                                    type="text"
+                                    placeholder="Street Address Extra line (Optional)"
+                                    value={streetAddressExtra}
+                                    errorText={errors && errors.streetAddressExtra}
+                                    helpText=""
+                                    onChange={onStreetAddressExtraChange}
+                                    isRequired={false}
+                                    maxWidth="500px"
+                                />
                                 <div class="columns pt-3">
                                     <div class="column is-half">
                                         <Link to={`/organization/${id}`} class="button is-hidden-touch">Back</Link>

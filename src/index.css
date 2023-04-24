@@ -62,3 +62,19 @@ BULMA CSS TO WORKERY OVERRIDES
     background-color: #007bff;
     border-color: #007bff;
 }
+
+.input.is-primary {
+    border-color: #007bff;
+}
+
+.input.is-success {
+    border-color: #28a745;
+}
+
+.textarea.is-primary {
+    border-color: #007bff;
+}
+
+.textarea.is-success {
+    border-color: #28a745;
+}
