@@ -5,18 +5,11 @@ const HTTP_API_SERVER =  process.env.REACT_APP_API_PROTOCOL + "://" + process.en
 export const WORKERY_API_BASE_PATH = "/api/v1";
 export const WORKERY_VERSION_ENDPOINT = "version";
 export const WORKERY_LOGIN_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/login";
-export const WORKERY_LOGOUT_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/logout";
-
-export const WORKERY_ORGANIZATIONS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/franchises';
-export const WORKERY_ORGANIZATION_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/franchise/{id}';
-export const WORKERY_CLIENTS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers';
-export const WORKERY_CLIENT_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customer/{id}';
-
-export const WORKERY_FORGOT_PASSWORD_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/forgot-password";
-export const WORKERY_PASSWORD_RESET_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/password-reset";
 export const WORKERY_REFRESH_TOKEN_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/refresh-token";
 export const WORKERY_REFRESH_TOKEN_API_URL = HTTP_API_SERVER + '/api/v1/refresh-token';
 export const WORKERY_PROFILE_API_URL = HTTP_API_SERVER + '/api/v1/profile';
+export const WORKERY_ORGANIZATION_LIST_API_URL = HTTP_API_SERVER + '/api/v1/franchises';
+export const WORKERY_ORGANIZATION_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/franchise/{id}';
 export const WORKERY_DASHBOARD_API_URL = HTTP_API_SERVER + '/api/v1/dashboard';
 export const WORKERY_NAVIGATION_API_URL = HTTP_API_SERVER + '/api/v1/navigation';
 export const WORKERY_CLIENT_LIST_API_URL = HTTP_API_SERVER + '/api/v1/customers';

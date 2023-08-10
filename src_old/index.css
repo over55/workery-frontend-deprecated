@@ -1,0 +1,80 @@
+/*
+------------------------------
+WORKERY SPECIAL CARD
+------------------------------
+*/
+
+.workery-card {
+    border-style: solid;
+    border-color: #222222;
+    border-width: 1px;
+    border-radius: 20px;
+}
+
+/* Code taken from https://stackoverflow.com/a/52218938 */
+/* shortcut to select content tags like p, h1, etc.  */
+/* this is for the multiple lines to work */
+.workery-content > * {
+  width: 100%;
+  margin: 0 !important; /* not recommended */
+}
+
+/* Code taken from https://stackoverflow.com/a/52218938 */
+.workery-content.is-vcentered {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center; /* commenting this out, the multiple lines will have gaps */
+  align-items: center; /* commenting this out, the one-line will not align */
+}
+
+/* Code taken from https://stackoverflow.com/a/52218938 */
+.workery-card-span {
+  height: 300px;
+  width: 100%;
+  background-color: #0275D8;
+  color: lightgrey;
+
+  /* The following two lines will make the two top corners. */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+/*
+------------------------------
+BULMA CSS TO WORKERY OVERRIDES
+------------------------------
+*/
+
+.button.is-success {
+    color: white;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.button.is-warning {
+    color: black;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.button.is-primary {
+    color: white;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.input.is-primary {
+    border-color: #007bff;
+}
+
+.input.is-success {
+    border-color: #28a745;
+}
+
+.textarea.is-primary {
+    border-color: #007bff;
+}
+
+.textarea.is-success {
+    border-color: #28a745;
+}

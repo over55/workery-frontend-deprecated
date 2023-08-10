@@ -10,7 +10,7 @@ import {
 import { WORKERY_REFRESH_TOKEN_API_ENDPOINT } from "../Constants/API";
 
 /**
- *  Function returns a custom `Axios` instance tailered to the `cps backend`
+ *  Function returns a custom `Axios` instance tailered to the `WORKERY CMS backend`
  *  API web-service for authenticated users.
  *
  *  Features:

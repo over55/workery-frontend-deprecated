@@ -3,7 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useParams } from 'react-router-dom'
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuilding, faIdCard, faSquarePhone, faAddressCard } from '@fortawesome/free-solid-svg-icons'
+import {  faAddressCard, faSquarePhone, faBuilding, faIdCard, faSquarePhone, faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { getOrganizationDetailAPI, putOrganizationUpdateAPI } from "../../API/Organization";
 import useLocalStorage from "../../Hooks/useLocalStorage";
 import FormErrorBox from "../Element/FormErrorBox";

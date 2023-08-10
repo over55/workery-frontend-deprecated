@@ -1,7 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { postLogoutAPI } from "../../API/Gateway";
+import Scroll from 'react-scroll';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
 
 function LogoutRedirector() {
-    useEffect(() => {
+
+    ////
+    //// Component states.
+    ////
+
+    const [errors, setErrors] = useState({});
+
+    ////
+    //// API.
+    ////
+
+    function onLogoutnSuccess(response){
+        console.log("onLogoutnSuccess: Starting...");
+    }
+
+    function onLogoutnError(apiErr) {
+        console.log("onLogoutnError: Starting...");
+        setErrors(apiErr);
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
+
+    function onLogoutnDone() {
+        console.log("onLogoutnDone: Starting...");
         function onRedirect(e) {
             // Clear the entire local storage.
             localStorage.clear();
@@ -14,26 +46,50 @@ function LogoutRedirector() {
         }
 
         setTimeout(onRedirect, 250);
-    });
+    }
+
+    ////
+    //// Event handling.
+    ////
+
+    // (Do nothing)
+
+    ////
+    //// Misc.
+    ////
+
+    useEffect(() => {
+        let mounted = true;
+
+        if (mounted) {
+            postLogoutAPI(
+                onLogoutnSuccess,
+                onLogoutnError,
+                onLogoutnDone
+            );
+        }
+
+        return () => mounted = false;
+    }, []);
 
     return (
-        <>
-            <div className="w3-modal" style={{display:"block"}}>
-            <div className="w3-modal-content">
+        <div class="container column is-12">
+            <div class="section">
+                <section class="hero is-fullheight">
+                    <div class="hero-body">
 
-            <div className="w3-center">
-                <br />
-                <br />
-                <br />
-                <i className="fa fa-spinner w3-spin w3-jumbo"></i>
-                <h1>Logging out ...</h1>
-                <br />
-                <br />
-            </div>
+                        <div class="container">
+                            <div class="columns is-centered">
+                                <div class="column is-one-third-tablet">
+                                    <h1 className="is-size-1">LOGGING OFF...</h1>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
+                </section>
             </div>
-            </div>
-        </>
+        </div>
     );
 }
 

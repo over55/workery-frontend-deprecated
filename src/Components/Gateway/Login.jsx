@@ -1,14 +1,32 @@
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons'
-import FormErrorBox from "../Element/FormErrorBox";
+import { faArrowRight, faEnvelope, faKey, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { useRecoilState } from 'recoil';
+
+import FormErrorBox from "../Reusable/FormErrorBox";
 import useLocalStorage from "../../Hooks/useLocalStorage";
-import { postLoginAPI } from "../../API/gateway";
-import { EXECUTIVE_ROLE_ID } from "../../Constants/App";
+import { postLoginAPI } from "../../API/Gateway";
+import { onHamburgerClickedState, currentUserState } from "../../AppState";
+import { EXECUTIVE_ROLE_ID, MANAGEMENT_ROLE_ID, FRONTLINE_ROLE_ID, ASSOCIATE_ROLE_ID, CUSTOMER_ROLE_ID } from "../../Constants/App";
+
 
 function Login() {
+    ////
+    //// URL Parameters.
+    ////
+
+    const [searchParams] = useSearchParams(); // Special thanks via https://stackoverflow.com/a/65451140
+    const isUnauthorized = searchParams.get("unauthorized");
+
+    ////
+    //// Global state.
+    ////
+
+    const [onHamburgerClicked, setOnHamburgerClicked] = useRecoilState(onHamburgerClickedState);
+    const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+
     ////
     //// Component states.
     ////
@@ -31,16 +49,44 @@ function Login() {
     //// API.
     ////
 
-    function onLoginSuccess(profile){
+    function onLoginSuccess(response){
         console.log("onLoginSuccess: Starting...");
 
         // Save the data to local storage for persistance in this browser and
         // redirect the user to their respected dahsboard.
-        setProfile(profile);
-        if (profile.roleId === EXECUTIVE_ROLE_ID) {
-            setForceURL("/organizations");
-        } else {
-            setForceURL("/dashboard");
+        setOnHamburgerClicked(true); // Set to `true` so the side menu loads on startup of app.
+        if (response !== undefined && response !== null && response !== "") {
+            // For debugging purposes only.
+            console.log("onLoginSuccess | user prefix:", response.user);
+
+            // BUGFIX:
+            try {
+                response.tenantID = response.tenantId;
+                response.roleID = response.roleId;
+            } catch(err) {
+                console.log("onLoginSuccess | catch err:", err);
+            }
+
+            // For debugging purposes only.
+            console.log("onLoginSuccess | user postfix:", response.user);
+
+            // Store in persistance storage in the browser.
+            setCurrentUser(response);
+
+            switch (response.roleId) {
+                case EXECUTIVE_ROLE_ID:
+                    setForceURL("/root/organizations");
+                    break;
+                case MANAGEMENT_ROLE_ID:
+                    setForceURL("/admin/dashboard");
+                    break;
+                case FRONTLINE_ROLE_ID:
+                    setForceURL("/admin/dashboard");
+                    break;
+                default:
+                    setForceURL("/501");
+                    break;
+            }
         }
     }
 
@@ -133,13 +179,23 @@ function Login() {
     //// Misc.
     ////
 
-    if (forceURL !== "") {
-        return <Navigate to={forceURL}  />
-    }
+    useEffect(() => {
+        let mounted = true;
+
+        if (mounted) {
+            window.scrollTo(0, 0);  // Start the page at the top of the page.
+        }
+
+        return () => mounted = false;
+    }, []);
 
     ////
     //// Component rendering.
     ////
+
+    if (forceURL !== "") {
+        return <Navigate to={forceURL}  />
+    }
 
     return (
         <>
@@ -150,58 +206,87 @@ function Login() {
                         <div class="hero-body">
                             <div class="container">
                                 <div class="columns is-centered">
-                                    <div class="box is-rounded column is-one-third-tablet">
-                                        <form>
-                                            <h1 className="title is-3 has-text-centered">Sign In</h1>
-                                            <FormErrorBox errors={errors} />
-
-                                            <div class="field">
-                                                <label class="label is-small has-text-grey-light">USERNAME</label>
-                                                <div class="control has-icons-left has-icons-right">
-                                                    <input class={`input ${errors && errors.email && 'is-danger'} ${validation && validation.email && 'is-success'}`} type="text" placeholder="Email" value={email} onChange={onEmailChange}/>
-                                                    <span class="icon is-small is-left">
-                                                        <FontAwesomeIcon className="fas" icon={faEnvelope} />
-                                                    </span>
+                                    <div class="column is-one-third-tablet">
+                                        <div class="box is-rounded">
+                                            {/* Start Logo */}
+                                            <nav class="level">
+                                                <div class="level-item has-text-centered">
+                                                    <figure class='image'>
+                                                        <Link to="/">
+                                                            <img src='/img/workery-logo.jpeg' style={{width:"256px"}} />
+                                                        </Link>
+                                                    </figure>
                                                 </div>
-                                                {errors && errors.email &&
-                                                    <p class="help is-danger">{errors.email}</p>
+                                            </nav>
+                                            {/* End Logo */}
+                                            <form>
+                                                <h1 className="title is-4 has-text-centered">Sign In</h1>
+                                                {isUnauthorized === "true" &&
+                                                    <article class="message is-danger">
+                                                      <div class="message-body"><FontAwesomeIcon className="fas" icon={faTriangleExclamation} />&nbsp;Your session has ended.<br/>Please login again</div>
+                                                    </article>
                                                 }
-                                            </div>
+                                                <FormErrorBox errors={errors} />
 
-                                            <div class="field">
-                                                <label class="label is-small has-text-grey-light">PASSWORD</label>
-                                                <div class="control has-icons-left has-icons-right">
-                                                    <input class={`input ${errors && errors.password && 'is-danger'} ${validation && validation.password && 'is-success'}`}  type="password" placeholder="Password" value={password} onChange={onPasswordChange} />
-                                                    <span class="icon is-small is-left">
-                                                        <FontAwesomeIcon className="fas" icon={faKey} />
-                                                    </span>
+                                                <div class="field">
+                                                    <label class="label is-small has-text-grey-light">Email</label>
+                                                    <div class="control has-icons-left has-icons-right">
+                                                        <input class={`input ${errors && errors.email && 'is-danger'} ${validation && validation.email && 'is-success'}`}
+                                                                type="email"
+                                                         placeholder="Email"
+                                                               value={email}
+                                                            onChange={onEmailChange}/>
+                                                        <span class="icon is-small is-left">
+                                                            <FontAwesomeIcon className="fas" icon={faEnvelope} />
+                                                        </span>
+                                                    </div>
+                                                    {errors && errors.email &&
+                                                        <p class="help is-danger">{errors.email}</p>
+                                                    }
                                                 </div>
-                                                {errors && errors.password &&
-                                                    <p class="help is-danger">{errors.password}</p>
-                                                }
-                                            </div>
+
+                                                <div class="field">
+                                                    <label class="label is-small has-text-grey-light">PASSWORD</label>
+                                                    <div class="control has-icons-left has-icons-right">
+                                                        <input class={`input ${errors && errors.password && 'is-danger'} ${validation && validation.password && 'is-success'}`}  type="password" placeholder="Password" value={password} onChange={onPasswordChange} />
+                                                        <span class="icon is-small is-left">
+                                                            <FontAwesomeIcon className="fas" icon={faKey} />
+                                                        </span>
+                                                    </div>
+                                                    {errors && errors.password &&
+                                                        <p class="help is-danger">{errors.password}</p>
+                                                    }
+                                                </div>
+                                                <br />
+                                                <button class="button is-medium is-block is-fullwidth is-primary" type="button" onClick={onButtonClick}>
+                                                    Login <FontAwesomeIcon icon={faArrowRight} />
+                                                </button>
+                                            </form>
                                             <br />
-                                            <button class="button is-block is-fullwidth is-primary" type="button" onClick={onButtonClick}>
-                                                Login <FontAwesomeIcon icon={faArrowRight} />
-                                            </button>
-                                        </form>
-                                        <br />
-                                        <nav class="level">
-                                            <div class="level-item has-text-centered">
-                                                <div>
-                                                    <Link to="/forgot-password" className="is-size-7-tablet">Forgot Password?</Link>
+                                            <nav class="level">
+                                                <div class="level-item has-text-centered">
+                                                    <div>
+                                                        <Link to="/forgot-password" className="is-size-7-tablet">Forgot Password?</Link>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            {/*
-                                            <div class="level-item has-text-centered">
-                                                <div>
-                                                    <Link to="/register-step-1" className="is-size-7-tablet">Create an Account</Link>
+                                                <div class="level-item has-text-centered">
+                                                    {/*
+                                                    <div>
+                                                        <Link to="/register" className="is-size-7-tablet">Create an Account</Link>
+                                                    </div>
+                                                    */}
                                                 </div>
-                                            </div>
-                                            */}
-                                        </nav>
+                                            </nav>
+                                        </div>
+                                        {/* End box */}
+
+                                        <div className="has-text-centered">
+                                            <p>© 2023 Over 55 (London) Inc.</p>
+                                        </div>
+                                        {/* End suppoert text. */}
+
                                     </div>
-                                    {/* End box */}
+                                    {/* End Column */}
                                 </div>
                             </div>
                             {/* End container */}
