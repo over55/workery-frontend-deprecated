@@ -9,7 +9,7 @@ export const WORKERY_LOGOUT_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/logout";
 
 export const WORKERY_ORGANIZATIONS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/franchises';
 export const WORKERY_ORGANIZATION_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/franchise/{id}';
-export const WORKERY_CLIENTS_API_ENDPOINT = HTTP_API_SERVER + '/api/v2/customers';
+export const WORKERY_CLIENTS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers';
 export const WORKERY_CLIENT_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customer/{id}';
 
 export const WORKERY_FORGOT_PASSWORD_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/forgot-password";

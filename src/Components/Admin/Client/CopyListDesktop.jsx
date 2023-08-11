@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestion, faHome, faBuilding, faChevronRight, faCalendarMinus, faCalendarPlus, faDumbbell, faCalendar, faGauge, faSearch, faEye, faPencil, faTrashCan, faPlus, faArrowRight, faTable, faArrowUpRightFromSquare, faFilter, faRefresh, faCalendarCheck, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faCalendarMinus, faCalendarPlus, faDumbbell, faCalendar, faGauge, faSearch, faEye, faPencil, faTrashCan, faPlus, faArrowRight, faTable, faArrowUpRightFromSquare, faFilter, faRefresh, faCalendarCheck, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from 'recoil';
 import { DateTime } from "luxon";
 
 import FormErrorBox from "../../Reusable/FormErrorBox";
-import { OFFSET_STEP_OPTIONS, USER_ROLES } from "../../../Constants/FieldOptions";
-import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID, } from "../../../Constants/App";
+import { PAGE_SIZE_OPTIONS, USER_ROLES } from "../../../Constants/FieldOptions";
 
 
 function AdminClientListDesktop(props) {
-    const { listData, setOffsetStep, offsetStep, previousOffsets, onPreviousClicked, onNextClicked, onSelectClientForDeletion } = props;
+    const { listData, setPageSize, pageSize, previousCursors, onPreviousClicked, onNextClicked, onSelectClientForDeletion } = props;
     return (
         <div class="b-table">
             <div class="table-wrapper has-mobile-cards">
@@ -33,9 +32,7 @@ function AdminClientListDesktop(props) {
 
                         {listData && listData.results && listData.results.map(function(user, i){
                             return <tr>
-                                <td>
-                                    {iconFormatter(user.typeOf)}
-                                </td>
+                                <td></td>
                                 <td data-label="First Name">{user.givenName}</td>
                                 <td data-label="Last Name">{user.lastName}</td>
                                 <td data-label="Telephone"><Link to={`tel:${user.telephone}`}>{user.telephone}</Link></td>
@@ -58,20 +55,20 @@ function AdminClientListDesktop(props) {
                     <div class="column is-half">
                         <span class="select">
                             <select class={`input has-text-grey-light`}
-                                     name="offsetStep"
-                                 onChange={(e)=>setOffsetStep(parseInt(e.target.value))}>
-                                {OFFSET_STEP_OPTIONS.map(function(option, i){
-                                    return <option selected={offsetStep === option.value} value={option.value}>{option.label}</option>;
+                                     name="pageSize"
+                                 onChange={(e)=>setPageSize(parseInt(e.target.value))}>
+                                {PAGE_SIZE_OPTIONS.map(function(option, i){
+                                    return <option selected={pageSize === option.value} value={option.value}>{option.label}</option>;
                                 })}
                             </select>
                         </span>
 
                     </div>
                     <div class="column is-half has-text-right">
-                        {previousOffsets.length > 0 &&
+                        {previousCursors.length > 0 &&
                             <button class="button" onClick={onPreviousClicked}>Previous</button>
                         }
-                        {listData.nextId && <>
+                        {listData.hasNextPage && <>
                             <button class="button" onClick={onNextClicked}>Next</button>
                         </>}
                     </div>
@@ -80,21 +77,6 @@ function AdminClientListDesktop(props) {
             </div>
         </div>
     );
-}
-
-function iconFormatter(typeOf){
-    console.log("typeOf", typeOf);
-    switch(typeOf) {
-        case COMMERCIAL_CUSTOMER_TYPE_OF_ID:
-            return <FontAwesomeIcon className="mdi" icon={faBuilding} />;
-            break;
-        case RESIDENTIAL_CUSTOMER_TYPE_OF_ID:
-            return <FontAwesomeIcon className="mdi" icon={faHome} />;
-            break;
-        default:
-            return <FontAwesomeIcon className="mdi" icon={faQuestion} />;
-            break;
-    }
 }
 
 export default AdminClientListDesktop;

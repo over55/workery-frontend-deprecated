@@ -29,3 +29,20 @@ export function getFieldClass(code) {
             return null;
     }
 }
+
+//----------------------------------------------------------------------------//
+//                                Clients                                     //
+//----------------------------------------------------------------------------//
+
+
+export const UNASSIGNED_CUSTOMER_TYPE_OF_ID = 1
+export const RESIDENTIAL_CUSTOMER_TYPE_OF_ID = 2
+export const COMMERCIAL_CUSTOMER_TYPE_OF_ID = 3
+
+export const UNASSIGNED_ASSOCIATE_TYPE_OF_ID = 1
+export const RESIDENTIAL_ASSOCIATE_TYPE_OF_ID = 2
+export const COMMERCIAL_ASSOCIATE_TYPE_OF_ID = 3
+
+// The following are the default sort by values to use.
+export const DEFAULT_CLIENT_LIST_SORT_BY_VALUE = "last_name,ASC";
+export const DEFAULT_CLIENT_STATUS_FILTER_OPTION = 1; // 1=Active

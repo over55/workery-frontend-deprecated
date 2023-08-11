@@ -33,16 +33,16 @@ export function getClientListAPI(filtersMap=new Map(), onSuccessCallback, onErro
         const data = camelizeKeys(responseData);
 
         // Bugfixes.
-        console.log("getClientListAPI | pre-fix | results:", data);
+        // console.log("getClientListAPI | pre-fix | results:", data);
         if (data.results !== undefined && data.results !== null && data.results.length > 0) {
             data.results.forEach(
                 (item, index) => {
                     item.createdAt = DateTime.fromISO(item.createdAt).toLocaleString(DateTime.DATETIME_MED);
-                    console.log(item, index);
+                    // console.log(item, index);
                 }
             )
         }
-        console.log("getClientListAPI | post-fix | results:", data);
+        // console.log("getClientListAPI | post-fix | results:", data);
 
         // Return the callback data.
         onSuccessCallback(data);

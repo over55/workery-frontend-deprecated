@@ -12,8 +12,7 @@ import PageLoadingContent from "../../Reusable/PageLoadingContent";
 import FormInputFieldWithButton from "../../Reusable/FormInputFieldWithButton";
 import FormSelectField from "../../Reusable/FormSelectField";
 import FormDateField from "../../Reusable/FormDateField";
-import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST_OPTIONS, CLIENT_SORT_OPTIONS, CLIENT_STATUS_FILTER_OPTIONS } from "../../../Constants/FieldOptions";
-import { DEFAULT_CLIENT_LIST_SORT_BY_VALUE, DEFAULT_CLIENT_STATUS_FILTER_OPTION } from "../../../Constants/App";
+import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST_OPTIONS } from "../../../Constants/FieldOptions";
 import AdminClientListDesktop from "./ListDesktop";
 import AdminClientListMobile from "./ListMobile";
 
@@ -33,29 +32,31 @@ function AdminClientList() {
     ////
 
     const [errors, setErrors] = useState({});
-    const [listData, setListData] = useState("");
+    const [users, setClients] = useState("");
+    const [selectedClientForDeletion, setSelectedClientForDeletion] = useState("");
     const [isFetching, setFetching] = useState(false);
-    const [offsetStep, setOffsetStep] = useState(10);                              // Pagination
-    const [previousOffsets, setPreviousOffsets] = useState([]);                    // Pagination
-    const [sortByValue, setSortByValue] = useState(DEFAULT_CLIENT_LIST_SORT_BY_VALUE); // Sorting
-    const [nextOffset, setNextOffset] = useState("");                              // Pagination
-    const [currentOffset, setCurrentOffset] = useState(0);                         // Pagination
-    const [temporarySearchText, setTemporarySearchText] = useState("");            // Searching - The search field value as your writes their query.
-    const [actualSearchText, setActualSearchText] = useState("");                  // Searching - The actual search query value to submit to the API.
-    const [status, setStatus] = useState(DEFAULT_CLIENT_STATUS_FILTER_OPTION);     // Filtering
-    const [role, setRole] = useState("");                                          // Filtering
-    const [createdAtGTE, setCreatedAtGTE] = useState(null);                        // Filtering
+    const [pageSize, setPageSize] = useState(10);                           // Pagination
+    const [previousCursors, setPreviousCursors] = useState([]);             // Pagination
+    const [nextCursor, setNextCursor] = useState("");                       // Pagination
+    const [currentCursor, setCurrentCursor] = useState("");                 // Pagination
+    const [showFilter, setShowFilter] = useState(false);                    // Filtering + Searching
+    const [sortField, setSortField] = useState("last_name");                  // Sorting
+    const [temporarySearchText, setTemporarySearchText] = useState("");     // Searching - The search field value as your writes their query.
+    const [actualSearchText, setActualSearchText] = useState("");           // Searching - The actual search query value to submit to the API.
+    const [status, setStatus] = useState("");                               // Filtering
+    const [role, setRole] = useState("");                                   // Filtering
+    const [createdAtGTE, setCreatedAtGTE] = useState(null);                 // Filtering
 
     ////
     //// API.
     ////
 
     function onClientListSuccess(response){
-        // console.log("onClientListSuccess: Starting...");
+        console.log("onClientListSuccess: Starting...");
         if (response.results !== null) {
-            setListData(response);
-            if (response.results.length > 0) {
-                setNextOffset(currentOffset + offsetStep); // For pagination purposes.
+            setClients(response);
+            if (response.hasNextPage) {
+                setNextCursor(response.nextCursor); // For pagination purposes.
             }
         }
     }
@@ -72,7 +73,46 @@ function AdminClientList() {
     }
 
     function onClientListDone() {
-        // console.log("onClientListDone: Starting...");
+        console.log("onClientListDone: Starting...");
+        setFetching(false);
+    }
+
+    function onClientDeleteSuccess(response){
+        console.log("onClientDeleteSuccess: Starting..."); // For debugging purposes only.
+
+        // Update notification.
+        setTopAlertStatus("success");
+        setTopAlertMessage("Client deleted");
+        setTimeout(() => {
+            console.log("onDeleteConfirmButtonClick: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
+            setTopAlertMessage("");
+        }, 2000);
+
+        // Fetch again an updated list.
+        fetchList(currentCursor, pageSize, actualSearchText, status, role, createdAtGTE);
+    }
+
+    function onClientDeleteError(apiErr) {
+        console.log("onClientDeleteError: Starting..."); // For debugging purposes only.
+        setErrors(apiErr);
+
+        // Update notification.
+        setTopAlertStatus("danger");
+        setTopAlertMessage("Failed deleting");
+        setTimeout(() => {
+            console.log("onClientDeleteError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
+            setTopAlertMessage("");
+        }, 2000);
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
+
+    function onClientDeleteDone() {
+        console.log("onClientDeleteDone: Starting...");
         setFetching(false);
     }
 
@@ -80,43 +120,33 @@ function AdminClientList() {
     //// Event handling.
     ////
 
-    const fetchListV2 = (offs=0, lim=10, so=DEFAULT_CLIENT_LIST_SORT_BY_VALUE, s=1) => {
+    const fetchList = (cur, limit, keywords, s, r, j) => {
         setFetching(true);
         setErrors({});
 
         let params = new Map();
+        params.set("page_size", limit);     // Pagination
+        params.set("sort_field", "last_name") // Sorting
 
-        // Apply our pagination.
-        params.set("offset", offs);
-        params.set("limit", lim);
-
-        // DEVELOPERS NOTE: Our `sortByValue` is string with the sort field
-        // and sort order combined with a comma seperation. Therefore we
-        // need to split as follows.
-        const sortArray = so.split(",");
-        params.set("sort_field", sortArray[0]);
-        params.set("sort_order", sortArray[1]);
-
-        // Apply our filters.
-        if (s !== undefined && s !== null && s !== "") { // Searhcing
-            params.set("state", s);
+        if (cur !== "") { // Pagination
+            params.set("cursor", cur);
         }
 
-        // if (keywords !== undefined && keywords !== null && keywords !== "") { // Searhcing
-        //     params.set("search", keywords);
-        // }
-        // if (s !== undefined && s !== null && s !== "") {
-        //     params.set("status", s);
-        // }
-        // if (r !== undefined && r !== null && r !== "") {
-        //     params.set("role", r);
-        // }
-        // if (j !== undefined && j !== null && j !== "") {
-        //     const jStr = j.getTime();
-        //     params.set("created_at_gte", jStr);
-        // }
+        // Filtering
+        if (keywords !== undefined && keywords !== null && keywords !== "") { // Searhcing
+            params.set("search", keywords);
+        }
+        if (s !== undefined && s !== null && s !== "") {
+            params.set("status", s);
+        }
+        if (r !== undefined && r !== null && r !== "") {
+            params.set("role", r);
+        }
+        if (j !== undefined && j !== null && j !== "") {
+            const jStr = j.getTime();
+            params.set("created_at_gte", jStr);
+        }
 
-        // Make the API call.
         getClientListAPI(
             params,
             onClientListSuccess,
@@ -126,24 +156,45 @@ function AdminClientList() {
     }
 
     const onNextClicked = (e) => {
-        console.log("onNextClick");
-        let arr = [...previousOffsets];
-        arr.push(currentOffset);
-        setPreviousOffsets(arr);
-        setCurrentOffset(nextOffset);
+        let arr = [...previousCursors];
+        arr.push(currentCursor);
+        setPreviousCursors(arr);
+        setCurrentCursor(nextCursor);
     }
 
     const onPreviousClicked = (e) => {
-        console.log("onPreviousClicked");
-        let arr = [...previousOffsets];
-        const previousOffset = arr.pop();
-        setPreviousOffsets(arr);
-        setCurrentOffset(previousOffset);
+        let arr = [...previousCursors];
+        const previousCursor = arr.pop();
+        setPreviousCursors(arr);
+        setCurrentCursor(previousCursor);
     }
 
     const onSearchButtonClick = (e) => { // Searching
         console.log("Search button clicked...");
         setActualSearchText(temporarySearchText);
+    }
+
+    const onSelectClientForDeletion = (e, user) => {
+        console.log("onSelectClientForDeletion", user);
+        setSelectedClientForDeletion(user);
+    }
+
+    const onDeselectClientForDeletion = (e) => {
+        console.log("onDeselectClientForDeletion");
+        setSelectedClientForDeletion("");
+    }
+
+    const onDeleteConfirmButtonClick = (e) => {
+        console.log("onDeleteConfirmButtonClick"); // For debugging purposes only.
+
+        deleteClientAPI(
+            selectedClientForDeletion.id,
+            onClientDeleteSuccess,
+            onClientDeleteError,
+            onClientDeleteDone
+        );
+        setSelectedClientForDeletion("");
+
     }
 
     ////
@@ -155,11 +206,11 @@ function AdminClientList() {
 
         if (mounted) {
             // window.scrollTo(0, 0);  // Start the page at the top of the page.
-            fetchListV2(currentOffset, offsetStep, sortByValue, status);
+            fetchList(currentCursor, pageSize, actualSearchText, status, role, createdAtGTE);
         }
 
         return () => { mounted = false; }
-    }, [currentOffset, offsetStep, sortByValue, status]);
+    }, [currentCursor, pageSize, actualSearchText, status, role, createdAtGTE]);
 
     ////
     //// Component rendering.
@@ -181,6 +232,7 @@ function AdminClientList() {
                     {/* Page Title */}
                     <h1 class="title is-2"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</h1>
                     <hr />
+
 
                     {/* Page Menu Options */}
                     <section class="hero ">
@@ -207,7 +259,22 @@ function AdminClientList() {
                     </section>
 
                     {/* Page Modal(s) */}
-                    {/* Do nothing in this particular page ... */}
+                    <div class={`modal ${selectedClientForDeletion ? 'is-active' : ''}`}>
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">Are you sure?</p>
+                                <button class="delete" aria-label="close" onClick={onDeselectClientForDeletion}></button>
+                            </header>
+                            <section class="modal-card-body">
+                                You are about to <b>archive</b> this user; it will no longer appear on your dashboard This action can be undone but you'll need to contact the system administrator. Are you sure you would like to continue?
+                            </section>
+                            <footer class="modal-card-foot">
+                                <button class="button is-success" onClick={onDeleteConfirmButtonClick}>Confirm</button>
+                                <button class="button" onClick={onDeselectClientForDeletion}>Cancel</button>
+                            </footer>
+                        </div>
+                    </div>
 
                     {/* Page Table */}
                     <nav class="box" style={{ borderRadius: "20px"}}>
@@ -224,20 +291,20 @@ function AdminClientList() {
                             <div class="column is-12">
                                 <h1 class="subtitle is-5 is-underlined"><FontAwesomeIcon className="fas" icon={faFilter} />&nbsp;Filtering & Sorting</h1>
                             </div>
-
+                            {/*
                             <div class="column">
                                 <FormSelectField
-                                    label="Status"
+                                    label="Filter by Status"
                                     name="status"
                                     placeholder="Pick status"
                                     selectedValue={status}
                                     helpText=""
                                     onChange={(e)=>setStatus(parseInt(e.target.value))}
-                                    options={CLIENT_STATUS_FILTER_OPTIONS}
+                                    options={USER_STATUS_LIST_OPTIONS}
                                     isRequired={true}
                                 />
                             </div>
-                            {/*<div class="column">
+                            <div class="column">
                                 <FormSelectField
                                     label="Filter by Role"
                                     name="role"
@@ -265,12 +332,12 @@ function AdminClientList() {
                             <div class="column has-text-right">
                                 <FormSelectField
                                     label="Sort by"
-                                    name="sortByValue"
-                                    placeholder="Pick sorting"
-                                    selectedValue={sortByValue}
+                                    name="role"
+                                    placeholder="Pick role"
+                                    selectedValue={role}
                                     helpText=""
-                                    onChange={(e)=>setSortByValue(e.target.value)}
-                                    options={CLIENT_SORT_OPTIONS}
+                                    onChange={(e)=>setRole(parseInt(e.target.value))}
+                                    options={USER_ROLE_LIST_OPTIONS}
                                     isRequired={true}
                                 />
                             </div>
@@ -283,7 +350,7 @@ function AdminClientList() {
                             :
                             <>
                                 <FormErrorBox errors={errors} />
-                                {listData && listData.results && (listData.results.length > 0 || previousOffsets.length > 0)
+                                {users && users.results && (users.results.length > 0 || previousCursors.length > 0)
                                     ?
                                     <div class="container">
                                         {/*
@@ -293,12 +360,13 @@ function AdminClientList() {
                                         */}
                                         <div class="is-hidden-touch" >
                                             <AdminClientListDesktop
-                                                listData={listData}
-                                                setOffsetStep={setOffsetStep}
-                                                offsetStep={offsetStep}
-                                                previousOffsets={previousOffsets}
+                                                listData={users}
+                                                setPageSize={setPageSize}
+                                                pageSize={pageSize}
+                                                previousCursors={previousCursors}
                                                 onPreviousClicked={onPreviousClicked}
                                                 onNextClicked={onNextClicked}
+                                                onSelectClientForDeletion={onSelectClientForDeletion}
                                             />
                                         </div>
 
@@ -309,12 +377,13 @@ function AdminClientList() {
                                         */}
                                         <div class="is-fullwidth is-hidden-desktop">
                                             <AdminClientListMobile
-                                                listData={listData}
-                                                setOffsetStep={setOffsetStep}
-                                                offsetStep={offsetStep}
-                                                previousOffsets={previousOffsets}
+                                                listData={users}
+                                                setPageSize={setPageSize}
+                                                pageSize={pageSize}
+                                                previousCursors={previousCursors}
                                                 onPreviousClicked={onPreviousClicked}
                                                 onNextClicked={onNextClicked}
+                                                onSelectClientForDeletion={onSelectClientForDeletion}
                                             />
                                         </div>
                                     </div>
@@ -325,7 +394,7 @@ function AdminClientList() {
                                                 <FontAwesomeIcon className="fas" icon={faTable} />&nbsp;No Clients
                                             </p>
                                             <p class="subtitle">
-                                                No listData. <b><Link to="/admin/listData/add">Click here&nbsp;<FontAwesomeIcon className="mdi" icon={faArrowRight} /></Link></b> to get started creating your first user.
+                                                No users. <b><Link to="/admin/users/add">Click here&nbsp;<FontAwesomeIcon className="mdi" icon={faArrowRight} /></Link></b> to get started creating your first user.
                                             </p>
                                           </div>
                                     </section>
