@@ -1,3 +1,5 @@
+import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "./App";
+
 export const PAGE_SIZE_OPTIONS = [
     { value: 2, label: '2 Rows' },
     { value: 5, label: '5 Rows' },
@@ -39,9 +41,9 @@ export const ORGANIZATION_STATUS_LIST_OPTIONS = [
 ];
 
 export const USER_STATUS_LIST_OPTIONS = [
-        { value: 0, label: 'All' },
-        { value: 1, label: 'Active' },
-        { value: 100, label: 'Archived' },
+    { value: 0, label: 'All' },
+    { value: 1, label: 'Active' },
+    { value: 100, label: 'Archived' },
 ];
 
 export const USER_ROLES = []
@@ -56,6 +58,12 @@ export const CLIENT_SORT_OPTIONS = [
 ];
 
 export const CLIENT_STATUS_FILTER_OPTIONS = [
-        { value: 1, label: 'Active' },
-        { value: 0, label: 'Archived' },
+    { value: 1, label: 'Active' },
+    { value: 0, label: 'Archived' },
+];
+
+export const CLIENT_TYPE_OF_FILTER_OPTIONS = [
+    { value: 0, label: 'All' },
+    { value: RESIDENTIAL_CUSTOMER_TYPE_OF_ID, label: 'Residential' },
+    { value: COMMERCIAL_CUSTOMER_TYPE_OF_ID, label: 'Commercial' },
 ];

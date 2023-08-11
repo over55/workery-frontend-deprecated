@@ -41,7 +41,12 @@ function AdminClientListDesktop(props) {
                                 <td data-label="Telephone"><Link to={`tel:${user.telephone}`}>{user.telephone}</Link></td>
                                 <td data-label="Email"><Link to={`mailto:${user.email}`}>{user.email}</Link></td>
                                 <td data-label="Organization">{user.organizationName}</td>
-                                <td data-label="Joined">{DateTime.fromISO(user.joinDate).toLocaleString(DateTime.DATE_MED)}</td>
+                                <td data-label="Joined">
+                                    {user.joinDate !== undefined && user.joinDate !== null && user.joinDate !== ""
+                                        ? <>{DateTime.fromISO(user.joinDate).toLocaleString(DateTime.DATE_MED)}</>
+                                        : <>-</>
+                                    }
+                                </td>
                                 <td class="is-actions-cell">
                                     <div class="buttons is-right">
                                         <Link to={`/admin/user/${user.id}`} class="is-small">

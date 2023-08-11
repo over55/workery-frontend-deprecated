@@ -11,7 +11,11 @@ body {
     overflow: hidden;
 }
 
-/* https://github.com/jgthms/bulma/issues/695 */
+/*
+The following code will make the button element full width when the user is
+running in a small screen size (like a mobile device).
+Special thanks: https://github.com/jgthms/bulma/issues/695
+*/
 @media screen and (max-width: 768px), print {
     .button.is-fullwidth-mobile {
         display: flex;

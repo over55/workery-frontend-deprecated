@@ -12,7 +12,7 @@ import PageLoadingContent from "../../Reusable/PageLoadingContent";
 import FormInputFieldWithButton from "../../Reusable/FormInputFieldWithButton";
 import FormSelectField from "../../Reusable/FormSelectField";
 import FormDateField from "../../Reusable/FormDateField";
-import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST_OPTIONS, CLIENT_SORT_OPTIONS, CLIENT_STATUS_FILTER_OPTIONS } from "../../../Constants/FieldOptions";
+import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST_OPTIONS, CLIENT_SORT_OPTIONS, CLIENT_STATUS_FILTER_OPTIONS, CLIENT_TYPE_OF_FILTER_OPTIONS } from "../../../Constants/FieldOptions";
 import { DEFAULT_CLIENT_LIST_SORT_BY_VALUE, DEFAULT_CLIENT_STATUS_FILTER_OPTION } from "../../../Constants/App";
 import AdminClientListDesktop from "./ListDesktop";
 import AdminClientListMobile from "./ListMobile";
@@ -45,6 +45,7 @@ function AdminClientList() {
     const [status, setStatus] = useState(DEFAULT_CLIENT_STATUS_FILTER_OPTION);     // Filtering
     const [role, setRole] = useState("");                                          // Filtering
     const [createdAtGTE, setCreatedAtGTE] = useState(null);                        // Filtering
+    const [typeOf, setTypeOf] = useState(0);                                       // Filtering
 
     ////
     //// API.
@@ -80,7 +81,7 @@ function AdminClientList() {
     //// Event handling.
     ////
 
-    const fetchListV2 = (offs=0, lim=10, so=DEFAULT_CLIENT_LIST_SORT_BY_VALUE, s=1) => {
+    const fetchListV2 = (offs=0, lim=10, so=DEFAULT_CLIENT_LIST_SORT_BY_VALUE, s=1, to=0) => {
         setFetching(true);
         setErrors({});
 
@@ -101,7 +102,9 @@ function AdminClientList() {
         if (s !== undefined && s !== null && s !== "") { // Searhcing
             params.set("state", s);
         }
-
+        if (to !== undefined && to !== null && to !== "") { // Searhcing
+            params.set("type_of", to);
+        }
         // if (keywords !== undefined && keywords !== null && keywords !== "") { // Searhcing
         //     params.set("search", keywords);
         // }
@@ -155,11 +158,11 @@ function AdminClientList() {
 
         if (mounted) {
             // window.scrollTo(0, 0);  // Start the page at the top of the page.
-            fetchListV2(currentOffset, offsetStep, sortByValue, status);
+            fetchListV2(currentOffset, offsetStep, sortByValue, status, typeOf);
         }
 
         return () => { mounted = false; }
-    }, [currentOffset, offsetStep, sortByValue, status]);
+    }, [currentOffset, offsetStep, sortByValue, status, typeOf]);
 
     ////
     //// Component rendering.
@@ -220,7 +223,7 @@ function AdminClientList() {
                         </div>
 
                         {/* Filter Panel */}
-                        <div class="columns has-background-light is-multiline" style={{ borderRadius: "20px"}}>
+                        <div class="columns has-background-light is-multiline p-2" style={{ borderRadius: "20px"}}>
                             <div class="column is-12">
                                 <h1 class="subtitle is-5 is-underlined"><FontAwesomeIcon className="fas" icon={faFilter} />&nbsp;Filtering & Sorting</h1>
                             </div>
@@ -237,18 +240,19 @@ function AdminClientList() {
                                     isRequired={true}
                                 />
                             </div>
-                            {/*<div class="column">
+                            <div class="column">
                                 <FormSelectField
-                                    label="Filter by Role"
-                                    name="role"
-                                    placeholder="Pick role"
-                                    selectedValue={role}
+                                    label="Type"
+                                    name="typeOf"
+                                    placeholder="Pick client type"
+                                    selectedValue={typeOf}
                                     helpText=""
-                                    onChange={(e)=>setRole(parseInt(e.target.value))}
-                                    options={USER_ROLE_LIST_OPTIONS}
+                                    onChange={(e)=>setTypeOf(parseInt(e.target.value))}
+                                    options={CLIENT_TYPE_OF_FILTER_OPTIONS}
                                     isRequired={true}
                                 />
                             </div>
+                            {/*
                             <div class="column">
                                 <FormDateField
                                     label="Filter by Joined After"

@@ -41,7 +41,11 @@ function AdminClientListMobile(props) {
                     <strong>Organization:</strong>&nbsp;{datum.organizationName}
                     <br />
                     <br />
-                    <strong>Joined:</strong>&nbsp;{DateTime.fromISO(datum.joinDate).toLocaleString(DateTime.DATE_MED)}
+                    <strong>Joined:</strong>&nbsp
+                    {datum.joinDate !== undefined && datum.joinDate !== null && datum.joinDate !== ""
+                        ? <>{DateTime.fromISO(datum.joinDate).toLocaleString(DateTime.DATE_MED)}</>
+                        : <>-</>
+                    }
                     <br />
                     <br />
 
