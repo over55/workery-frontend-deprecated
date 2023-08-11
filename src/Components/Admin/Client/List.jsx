@@ -205,7 +205,7 @@ function AdminClientList() {
         let mounted = true;
 
         if (mounted) {
-            window.scrollTo(0, 0);  // Start the page at the top of the page.
+            // window.scrollTo(0, 0);  // Start the page at the top of the page.
             fetchList(currentCursor, pageSize, actualSearchText, status, role, createdAtGTE);
         }
 
@@ -277,105 +277,71 @@ function AdminClientList() {
                     </div>
 
                     {/* Page Table */}
-                    <nav class="box">
+                    <nav class="box" style={{ borderRadius: "20px"}}>
 
                         {/* Title + Options */}
                         <div class="columns">
                             <div class="column">
                                 <h1 class="title is-3"><FontAwesomeIcon className="fas" icon={faTable} />&nbsp;List</h1>
                             </div>
-
-                            {/* Mobile only */}
-                            <div className="column has-text-right is-hidden-desktop is-hidden-tablet">
-                                <button onClick={()=>fetchList(currentCursor, pageSize, actualSearchText, status, createdAtGTE)} class="button is-info is-fullwidth" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faRefresh} />&nbsp;Refresh
-                                </button>
-                                &nbsp;
-                                <button onClick={(e)=>setShowFilter(!showFilter)} class="button is-success is-fullwidth" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faFilter} />&nbsp;Filter
-                                </button>
-                            </div>
-
-                            {/* Tablet and Desktop only */}
-                            <div className="column has-text-right is-hidden-mobile">
-                                <button onClick={()=>fetchList(currentCursor, pageSize, actualSearchText, status, createdAtGTE)} class="button is-info" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faRefresh} />
-                                </button>
-                                &nbsp;
-                                <button onClick={(e)=>setShowFilter(!showFilter)} class="button is-success" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faFilter} />&nbsp;Filter
-                                </button>
-                            </div>
                         </div>
 
                         {/* Filter Panel */}
-                        {showFilter &&
-                            <div class="columns has-background-white-bis" style={{borderRadius:"15px", padding:"20px"}}>
-                                <div class="column">
-                                    <FormInputFieldWithButton
-                                        label={"Search"}
-                                        name="temporarySearchText"
-                                        type="text"
-                                        placeholder="Search by name"
-                                        value={temporarySearchText}
-                                        helpText=""
-                                        onChange={(e)=>setTemporarySearchText(e.target.value)}
-                                        isRequired={true}
-                                        maxWidth="100%"
-                                        buttonLabel={<><FontAwesomeIcon className="fas" icon={faSearch} /></>}
-                                        onButtonClick={onSearchButtonClick}
-                                    />
-                                </div>
-                                <div class="column">
-                                    <FormSelectField
-                                        label="Status"
-                                        name="status"
-                                        placeholder="Pick status"
-                                        selectedValue={status}
-                                        helpText=""
-                                        onChange={(e)=>setStatus(parseInt(e.target.value))}
-                                        options={USER_STATUS_LIST_OPTIONS}
-                                        isRequired={true}
-                                    />
-                                </div>
-                                <div class="column">
-                                    <FormSelectField
-                                        label="Role"
-                                        name="role"
-                                        placeholder="Pick role"
-                                        selectedValue={role}
-                                        helpText=""
-                                        onChange={(e)=>setRole(parseInt(e.target.value))}
-                                        options={USER_ROLE_LIST_OPTIONS}
-                                        isRequired={true}
-                                    />
-                                </div>
-                                <div class="column">
-                                    <FormDateField
-                                        label="Joined After"
-                                        name="createdAtGTE"
-                                        placeholder="Text input"
-                                        value={createdAtGTE}
-                                        helpText=""
-                                        onChange={(date)=>setCreatedAtGTE(date)}
-                                        isRequired={true}
-                                        maxWidth="120px"
-                                    />
-                                </div>
-                                <div class="column">
-                                    <FormSelectField
-                                        label="Sort by"
-                                        name="role"
-                                        placeholder="Pick role"
-                                        selectedValue={role}
-                                        helpText=""
-                                        onChange={(e)=>setRole(parseInt(e.target.value))}
-                                        options={USER_ROLE_LIST_OPTIONS}
-                                        isRequired={true}
-                                    />
-                                </div>
+                        <div class="columns has-background-light is-multiline" style={{ borderRadius: "20px"}}>
+                            <div class="column is-12">
+                                <h1 class="subtitle is-5 is-underlined"><FontAwesomeIcon className="fas" icon={faFilter} />&nbsp;Filtering & Sorting</h1>
                             </div>
-                        }
+                            {/*
+                            <div class="column">
+                                <FormSelectField
+                                    label="Filter by Status"
+                                    name="status"
+                                    placeholder="Pick status"
+                                    selectedValue={status}
+                                    helpText=""
+                                    onChange={(e)=>setStatus(parseInt(e.target.value))}
+                                    options={USER_STATUS_LIST_OPTIONS}
+                                    isRequired={true}
+                                />
+                            </div>
+                            <div class="column">
+                                <FormSelectField
+                                    label="Filter by Role"
+                                    name="role"
+                                    placeholder="Pick role"
+                                    selectedValue={role}
+                                    helpText=""
+                                    onChange={(e)=>setRole(parseInt(e.target.value))}
+                                    options={USER_ROLE_LIST_OPTIONS}
+                                    isRequired={true}
+                                />
+                            </div>
+                            <div class="column">
+                                <FormDateField
+                                    label="Filter by Joined After"
+                                    name="createdAtGTE"
+                                    placeholder="Text input"
+                                    value={createdAtGTE}
+                                    helpText=""
+                                    onChange={(date)=>setCreatedAtGTE(date)}
+                                    isRequired={true}
+                                    maxWidth="120px"
+                                />
+                            </div>
+                             */}
+                            <div class="column has-text-right">
+                                <FormSelectField
+                                    label="Sort by"
+                                    name="role"
+                                    placeholder="Pick role"
+                                    selectedValue={role}
+                                    helpText=""
+                                    onChange={(e)=>setRole(parseInt(e.target.value))}
+                                    options={USER_ROLE_LIST_OPTIONS}
+                                    isRequired={true}
+                                />
+                            </div>
+                        </div>
 
                         {/* Table Contents */}
                         {isFetching
