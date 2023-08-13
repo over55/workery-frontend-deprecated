@@ -191,7 +191,7 @@ function AdminClientList() {
                         <div class="container">
                             <div class="columns is-vcentered">
                                 <div class="column">
-                                    <Link to="/admin/clients/add">
+                                    <Link to="/admin/clients/add/step-1">
                                         <FontAwesomeIcon className="mdi has-text-white has-background-danger-dark p-6 mb-3" icon={faPlus} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
                                         <h1 class="title is-3">Add</h1>
                                         <p className="has-text-grey">Add clients</p>

@@ -25,6 +25,7 @@ import RootOrganizationUpdate from "./Components/Root/Organization/Update";
 import ToTenantRedirector from "./Components/Root/ToTenantRedirector";
 import AdminDashboard from "./Components/Admin/Dashboard";
 import AdminClientList from "./Components/Admin/Client/List";
+import AdminClientAddStep1 from "./Components/Admin/Client/Add/Step1";
 
 
 function AppRoute() {
@@ -39,6 +40,7 @@ function AppRoute() {
                         <div class="column">
                             <section class="main-content columns is-fullheight">
                                 <Routes>
+                                    <Route exact path="/admin/clients/add/step-1" element={<AdminClientAddStep1/>}/>
                                     <Route exact path="/admin/clients" element={<AdminClientList/>}/>
                                     <Route exact path="/admin/dashboard" element={<AdminDashboard/>}/>
                                     <Route exact path="/root/organization/:tid/start" element={<ToTenantRedirector/>}/>
