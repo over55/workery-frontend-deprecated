@@ -95,7 +95,7 @@ export default props => {
                 STAFF
                 -----
             */}
-            {(currentUser.roleId === EXECUTIVE_ROLE_ID || currentUser.roleId === MANAGEMENT_ROLE_ID)  &&
+            {(currentUser.role === EXECUTIVE_ROLE_ID || currentUser.role === MANAGEMENT_ROLE_ID)  &&
                 <div className={`column is-one-fifth has-background-black ${onHamburgerClicked ? '' : 'is-hidden'}`}>
                     <nav class="level is-hidden-mobile">
                         <div class="level-item has-text-centered">

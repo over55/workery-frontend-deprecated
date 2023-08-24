@@ -6,6 +6,7 @@ export const WORKERY_API_BASE_PATH = "/api/v1";
 export const WORKERY_VERSION_ENDPOINT = "version";
 export const WORKERY_LOGIN_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/login";
 export const WORKERY_LOGOUT_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/logout";
+export const WORKERY_EXECUTIVE_VISITS_TENANT_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/executive-visit-tenant";
 
 export const WORKERY_TENANTS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/tenants';
 export const WORKERY_TENANT_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/tenant/{id}';

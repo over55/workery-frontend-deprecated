@@ -30,18 +30,18 @@ function AdminClientListDesktop(props) {
                     </thead>
                     <tbody>
 
-                        {listData && listData.results && listData.results.map(function(datum, i){
+                        {listData && listData.results && listData.results.map(function(user, i){
                             return <tr>
                                 <td></td>
-                                <td data-label="First Name">{datum.firstName}</td>
-                                <td data-label="Last Name">{datum.lastName}</td>
-                                <td data-label="Phone"><Link to={`tel:${datum.phone}`}>{datum.phone}</Link></td>
-                                <td data-label="Email"><Link to={`mailto:${datum.email}`}>{datum.email}</Link></td>
-                                <td data-label="Organization">{datum.organizationName}</td>
-                                <td data-label="Joined">{DateTime.fromISO(datum.joinDate).toLocaleString(DateTime.DATE_MED)}</td>
+                                <td data-label="First Name">{user.givenName}</td>
+                                <td data-label="Last Name">{user.lastName}</td>
+                                <td data-label="Telephone"><Link to={`tel:${user.telephone}`}>{user.telephone}</Link></td>
+                                <td data-label="Email"><Link to={`mailto:${user.email}`}>{user.email}</Link></td>
+                                <td data-label="Organization">{user.organizationName}</td>
+                                <td data-label="Joined">{DateTime.fromISO(user.joinDate).toLocaleString(DateTime.DATE_MED)}</td>
                                 <td class="is-actions-cell">
                                     <div class="buttons is-right">
-                                        <Link to={`/admin/customer/${datum.id}`} class="is-small">
+                                        <Link to={`/admin/user/${user.id}`} class="is-small">
                                             View&nbsp;<FontAwesomeIcon className="mdi" icon={faChevronRight} />
                                         </Link>
                                     </div>

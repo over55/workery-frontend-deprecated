@@ -1,3 +1,4 @@
+import getCustomAxios from "../Helpers/customAxios";
 import axios from 'axios';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import {
@@ -5,7 +6,8 @@ import {
     WORKERY_VERSION_ENDPOINT,
     WORKERY_LOGOUT_API_ENDPOINT,
     WORKERY_FORGOT_PASSWORD_API_ENDPOINT,
-    WORKERY_PASSWORD_RESET_API_ENDPOINT
+    WORKERY_PASSWORD_RESET_API_ENDPOINT,
+    WORKERY_EXECUTIVE_VISITS_TENANT_API_ENDPOINT
 } from "../Constants/API";
 import { getAPIBaseURL } from '../Helpers/urlUtility';
 import {
@@ -174,6 +176,26 @@ export function postPasswordResetAPI(verificationCode, password, passwordRepeat,
             };
         }
 
+        onErrorCallback(errors);
+    }).then(onDoneCallback);
+}
+
+export function postExecutiveVisitsTenant(tenantID, onSuccessCallback, onErrorCallback, onDoneCallback) {
+    const axios = getCustomAxios();
+
+    const data = {
+        tenant_id: tenantID,
+    };
+    axios.post(WORKERY_EXECUTIVE_VISITS_TENANT_API_ENDPOINT, data).then((successResponse) => {
+        const responseData = successResponse.data;
+
+        // Snake-case from API to camel-case for React.
+        const data = camelizeKeys(responseData);
+
+        // Return the callback data.
+        onSuccessCallback(data);
+    }).catch( (exception) => {
+        let errors = camelizeKeys(exception);
         onErrorCallback(errors);
     }).then(onDoneCallback);
 }

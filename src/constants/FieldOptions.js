@@ -59,7 +59,7 @@ export const CLIENT_SORT_OPTIONS = [
 
 export const CLIENT_STATUS_FILTER_OPTIONS = [
     { value: 1, label: 'Active' },
-    { value: 0, label: 'Archived' },
+    { value: 2, label: 'Archived' },
 ];
 
 export const CLIENT_TYPE_OF_FILTER_OPTIONS = [

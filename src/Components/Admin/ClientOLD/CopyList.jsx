@@ -12,8 +12,7 @@ import PageLoadingContent from "../../Reusable/PageLoadingContent";
 import FormInputFieldWithButton from "../../Reusable/FormInputFieldWithButton";
 import FormSelectField from "../../Reusable/FormSelectField";
 import FormDateField from "../../Reusable/FormDateField";
-import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST_OPTIONS, CLIENT_SORT_OPTIONS, CLIENT_STATUS_FILTER_OPTIONS, CLIENT_TYPE_OF_FILTER_OPTIONS } from "../../../Constants/FieldOptions";
-import { DEFAULT_CLIENT_LIST_SORT_BY_VALUE, DEFAULT_CLIENT_STATUS_FILTER_OPTION } from "../../../Constants/App";
+import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST_OPTIONS } from "../../../Constants/FieldOptions";
 import AdminClientListDesktop from "./ListDesktop";
 import AdminClientListMobile from "./ListMobile";
 
@@ -41,13 +40,12 @@ function AdminClientList() {
     const [nextCursor, setNextCursor] = useState("");                       // Pagination
     const [currentCursor, setCurrentCursor] = useState("");                 // Pagination
     const [showFilter, setShowFilter] = useState(false);                    // Filtering + Searching
-    const [sortField, setSortField] = useState("last_name");                // Sorting
+    const [sortField, setSortField] = useState("last_name");                  // Sorting
     const [temporarySearchText, setTemporarySearchText] = useState("");     // Searching - The search field value as your writes their query.
     const [actualSearchText, setActualSearchText] = useState("");           // Searching - The actual search query value to submit to the API.
     const [status, setStatus] = useState("");                               // Filtering
+    const [role, setRole] = useState("");                                   // Filtering
     const [createdAtGTE, setCreatedAtGTE] = useState(null);                 // Filtering
-    const [typeOf, setTypeOf] = useState(0);                                // Filtering
-    const [sortByValue, setSortByValue] = useState(DEFAULT_CLIENT_LIST_SORT_BY_VALUE); // Sorting
 
     ////
     //// API.
@@ -91,7 +89,7 @@ function AdminClientList() {
         }, 2000);
 
         // Fetch again an updated list.
-        fetchList(currentCursor, pageSize, actualSearchText, status, typeOf, createdAtGTE);
+        fetchList(currentCursor, pageSize, actualSearchText, status, role, createdAtGTE);
     }
 
     function onClientDeleteError(apiErr) {
@@ -122,7 +120,7 @@ function AdminClientList() {
     //// Event handling.
     ////
 
-    const fetchList = (cur, limit, keywords, s, t, j) => {
+    const fetchList = (cur, limit, keywords, s, r, j) => {
         setFetching(true);
         setErrors({});
 
@@ -141,8 +139,8 @@ function AdminClientList() {
         if (s !== undefined && s !== null && s !== "") {
             params.set("status", s);
         }
-        if (t !== undefined && t !== null && t !== "") {
-            params.set("type_of", t);
+        if (r !== undefined && r !== null && r !== "") {
+            params.set("role", r);
         }
         if (j !== undefined && j !== null && j !== "") {
             const jStr = j.getTime();
@@ -208,11 +206,11 @@ function AdminClientList() {
 
         if (mounted) {
             // window.scrollTo(0, 0);  // Start the page at the top of the page.
-            fetchList(currentCursor, pageSize, actualSearchText, status, typeOf, createdAtGTE);
+            fetchList(currentCursor, pageSize, actualSearchText, status, role, createdAtGTE);
         }
 
         return () => { mounted = false; }
-    }, [currentCursor, pageSize, actualSearchText, status, typeOf, createdAtGTE]);
+    }, [currentCursor, pageSize, actualSearchText, status, role, createdAtGTE]);
 
     ////
     //// Component rendering.
@@ -289,36 +287,35 @@ function AdminClientList() {
                         </div>
 
                         {/* Filter Panel */}
-                        <div class="columns has-background-light is-multiline p-2" style={{ borderRadius: "20px"}}>
+                        <div class="columns has-background-light is-multiline" style={{ borderRadius: "20px"}}>
                             <div class="column is-12">
                                 <h1 class="subtitle is-5 is-underlined"><FontAwesomeIcon className="fas" icon={faFilter} />&nbsp;Filtering & Sorting</h1>
                             </div>
-
+                            {/*
                             <div class="column">
                                 <FormSelectField
-                                    label="Status"
+                                    label="Filter by Status"
                                     name="status"
                                     placeholder="Pick status"
                                     selectedValue={status}
                                     helpText=""
                                     onChange={(e)=>setStatus(parseInt(e.target.value))}
-                                    options={CLIENT_STATUS_FILTER_OPTIONS}
+                                    options={USER_STATUS_LIST_OPTIONS}
                                     isRequired={true}
                                 />
                             </div>
                             <div class="column">
                                 <FormSelectField
-                                    label="Type"
-                                    name="typeOf"
-                                    placeholder="Pick client type"
-                                    selectedValue={typeOf}
+                                    label="Filter by Role"
+                                    name="role"
+                                    placeholder="Pick role"
+                                    selectedValue={role}
                                     helpText=""
-                                    onChange={(e)=>setTypeOf(parseInt(e.target.value))}
-                                    options={CLIENT_TYPE_OF_FILTER_OPTIONS}
+                                    onChange={(e)=>setRole(parseInt(e.target.value))}
+                                    options={USER_ROLE_LIST_OPTIONS}
                                     isRequired={true}
                                 />
                             </div>
-                            {/*
                             <div class="column">
                                 <FormDateField
                                     label="Filter by Joined After"
@@ -335,12 +332,12 @@ function AdminClientList() {
                             <div class="column has-text-right">
                                 <FormSelectField
                                     label="Sort by"
-                                    name="sortByValue"
-                                    placeholder="Pick sorting"
-                                    selectedValue={sortByValue}
+                                    name="role"
+                                    placeholder="Pick role"
+                                    selectedValue={role}
                                     helpText=""
-                                    onChange={(e)=>setSortByValue(e.target.value)}
-                                    options={CLIENT_SORT_OPTIONS}
+                                    onChange={(e)=>setRole(parseInt(e.target.value))}
+                                    options={USER_ROLE_LIST_OPTIONS}
                                     isRequired={true}
                                 />
                             </div>
@@ -392,14 +389,14 @@ function AdminClientList() {
                                     </div>
                                     :
                                     <section class="hero is-medium has-background-white-ter">
-                                        <div class="hero-body">
+                                          <div class="hero-body">
                                             <p class="title">
                                                 <FontAwesomeIcon className="fas" icon={faTable} />&nbsp;No Clients
                                             </p>
                                             <p class="subtitle">
-                                                No customers. <b><Link to="/admin/customers/add">Click here&nbsp;<FontAwesomeIcon className="mdi" icon={faArrowRight} /></Link></b> to get started creating your first customer.
+                                                No users. <b><Link to="/admin/users/add">Click here&nbsp;<FontAwesomeIcon className="mdi" icon={faArrowRight} /></Link></b> to get started creating your first user.
                                             </p>
-                                        </div>
+                                          </div>
                                     </section>
                                 }
                             </>

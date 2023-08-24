@@ -19,7 +19,7 @@ function AdminClientListMobile(props) {
             {listData && listData.results && listData.results.map(function(datum, i){
                 return <div class="mb-5">
                     <hr />
-                    <strong>First Name:</strong>&nbsp;{datum.firstName}
+                    <strong>First Name:</strong>&nbsp;{datum.givenName}
                     <br />
                     <br />
                     <strong>Last Name:</strong>&nbsp;{datum.lastName}
@@ -27,7 +27,7 @@ function AdminClientListMobile(props) {
                     <br />
                     <strong>Phone:</strong>&nbsp;
                     {datum.phone
-                        ? <Link to={`tel:${datum.phone}`}>{datum.phone}</Link>
+                        ? <Link to={`tel:${datum.telephone}`}>{datum.telephone}</Link>
                         : <>-</>
                     }
                     <br />
@@ -42,7 +42,7 @@ function AdminClientListMobile(props) {
                     <br />
                     <br />
 
-                    <Link to={`/admin/customer/${datum.id}`} class="button is-primary is-fullwidth-mobile" type="button">
+                    <Link to={`/admin/user/${datum.id}`} class="button is-primary is-fullwidth-mobile" type="button">
                         View&nbsp;<FontAwesomeIcon className="mdi" icon={faChevronRight} />
                     </Link>
 
