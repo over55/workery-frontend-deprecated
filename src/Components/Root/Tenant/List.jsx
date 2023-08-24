@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faTachometer, faEye, faPencil, faTrashCan, faPlus, faGauge, faArrowRight, faTable, faBuilding, faRefresh, faFilter, faSearch  } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faUsers, faTachometer, faEye, faPencil, faTrashCan, faPlus, faGauge, faArrowRight, faTable, faBuilding, faRefresh, faFilter, faSearch  } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from 'recoil';
 
-import { getOrganizationListAPI, deleteOrganizationAPI } from "../../../API/Organization";
+import { getTenantListAPI, deleteTenantAPI } from "../../../API/Tenant";
 import { topAlertMessageState, topAlertStatusState, currentUserState } from "../../../AppState";
 import FormErrorBox from "../../Reusable/FormErrorBox";
 import PageLoadingContent from "../../Reusable/PageLoadingContent";
@@ -13,11 +13,11 @@ import FormInputFieldWithButton from "../../Reusable/FormInputFieldWithButton";
 import FormSelectField from "../../Reusable/FormSelectField";
 import FormDateField from "../../Reusable/FormDateField";
 import { ORGANIZATION_STATUS_LIST_OPTIONS } from "../../../Constants/FieldOptions";
-import RootOrganizationListDesktop from "./ListDesktop";
-import RootOrganizationListMobile from "./ListMobile";
+import RootTenantListDesktop from "./ListDesktop";
+import RootTenantListMobile from "./ListMobile";
 
 
-function RootOrganizationList() {
+function RootTenantList() {
 
     ////
     //// Global state.
@@ -32,8 +32,8 @@ function RootOrganizationList() {
     ////
 
     const [errors, setErrors] = useState({});
-    const [organizations, setOrganizations] = useState("");
-    const [selectedOrganizationForDeletion, setSelectedOrganizationForDeletion] = useState("");
+    const [tenants, setTenants] = useState("");
+    const [selectedTenantForDeletion, setSelectedTenantForDeletion] = useState("");
     const [isFetching, setFetching] = useState(false);
     const [pageSize, setPageSize] = useState(10);                           // Pagination
     const [previousCursors, setPreviousCursors] = useState([]);             // Pagination
@@ -51,19 +51,19 @@ function RootOrganizationList() {
     //// API.
     ////
 
-    function onOrganizationListSuccess(response){
-        console.log("onOrganizationListSuccess: Starting...");
+    function onTenantListSuccess(response){
+        console.log("onTenantListSuccess: Starting...");
         console.log("onComicSubmissionListSuccess: response:", response);
         if (response.results !== null) {
-            setOrganizations(response);
+            setTenants(response);
             if (response.hasNextPage) {
                 setNextCursor(response.nextCursor); // For pagination purposes.
             }
         }
     }
 
-    function onOrganizationListError(apiErr) {
-        console.log("onOrganizationListError: Starting...");
+    function onTenantListError(apiErr) {
+        console.log("onTenantListError: Starting...");
         setErrors(apiErr);
 
         // The following code will cause the screen to scroll to the top of
@@ -73,17 +73,17 @@ function RootOrganizationList() {
         scroll.scrollToTop();
     }
 
-    function onOrganizationListDone() {
-        console.log("onOrganizationListDone: Starting...");
+    function onTenantListDone() {
+        console.log("onTenantListDone: Starting...");
         setFetching(false);
     }
 
-    function onOrganizationDeleteSuccess(response){
-        console.log("onOrganizationDeleteSuccess: Starting..."); // For debugging purposes only.
+    function onTenantDeleteSuccess(response){
+        console.log("onTenantDeleteSuccess: Starting..."); // For debugging purposes only.
 
         // Update notification.
         setTopAlertStatus("success");
-        setTopAlertMessage("Organization deleted");
+        setTopAlertMessage("Tenant deleted");
         setTimeout(() => {
             console.log("onDeleteConfirmButtonClick: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
             setTopAlertMessage("");
@@ -93,15 +93,15 @@ function RootOrganizationList() {
         fetchList(currentCursor, pageSize, actualSearchText, status, createdAtGTE);
     }
 
-    function onOrganizationDeleteError(apiErr) {
-        console.log("onOrganizationDeleteError: Starting..."); // For debugging purposes only.
+    function onTenantDeleteError(apiErr) {
+        console.log("onTenantDeleteError: Starting..."); // For debugging purposes only.
         setErrors(apiErr);
 
         // Update notification.
         setTopAlertStatus("danger");
         setTopAlertMessage("Failed deleting");
         setTimeout(() => {
-            console.log("onOrganizationDeleteError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
+            console.log("onTenantDeleteError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
             setTopAlertMessage("");
         }, 2000);
 
@@ -112,8 +112,8 @@ function RootOrganizationList() {
         scroll.scrollToTop();
     }
 
-    function onOrganizationDeleteDone() {
-        console.log("onOrganizationDeleteDone: Starting...");
+    function onTenantDeleteDone() {
+        console.log("onTenantDeleteDone: Starting...");
         setFetching(false);
     }
 
@@ -145,11 +145,11 @@ function RootOrganizationList() {
             params.set("created_at_gte", cagteStr);
         }
 
-        getOrganizationListAPI(
+        getTenantListAPI(
             params,
-            onOrganizationListSuccess,
-            onOrganizationListError,
-            onOrganizationListDone
+            onTenantListSuccess,
+            onTenantListError,
+            onTenantListDone
         );
     }
 
@@ -167,14 +167,14 @@ function RootOrganizationList() {
         setCurrentCursor(previousCursor);
     }
 
-    const onSelectOrganizationForDeletion = (e, organization) => {
-        console.log("onSelectOrganizationForDeletion", organization);
-        setSelectedOrganizationForDeletion(organization);
+    const onSelectTenantForDeletion = (e, tenant) => {
+        console.log("onSelectTenantForDeletion", tenant);
+        setSelectedTenantForDeletion(tenant);
     }
 
-    const onDeselectOrganizationForDeletion = (e) => {
-        console.log("onDeselectOrganizationForDeletion");
-        setSelectedOrganizationForDeletion("");
+    const onDeselectTenantForDeletion = (e) => {
+        console.log("onDeselectTenantForDeletion");
+        setSelectedTenantForDeletion("");
     }
 
     const onSearchButtonClick = (e) => { // Searching
@@ -185,13 +185,13 @@ function RootOrganizationList() {
     const onDeleteConfirmButtonClick = (e) => {
         console.log("onDeleteConfirmButtonClick"); // For debugging purposes only.
 
-        deleteOrganizationAPI(
-            selectedOrganizationForDeletion.id,
-            onOrganizationDeleteSuccess,
-            onOrganizationDeleteError,
-            onOrganizationDeleteDone
+        deleteTenantAPI(
+            selectedTenantForDeletion.id,
+            onTenantDeleteSuccess,
+            onTenantDeleteError,
+            onTenantDeleteDone
         );
-        setSelectedOrganizationForDeletion("");
+        setSelectedTenantForDeletion("");
 
     }
 
@@ -218,49 +218,39 @@ function RootOrganizationList() {
         <>
             <div class="container">
                 <section class="section">
-                    <nav class="breadcrumb has-background-light p-4" aria-label="breadcrumbs">
+                    {/* Desktop Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><Link to="/root/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Root Dashboard</Link></li>
-                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Organizations</Link></li>
+                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Tenants</Link></li>
                         </ul>
                     </nav>
+
+                    {/* Mobile Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
+                        <ul>
+                            <li class=""><Link to="/root/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Dashboard</Link></li>
+                        </ul>
+                    </nav>
+
+                    {/* Page */}
                     <nav class="box">
+
+                        {/* Page Title + Options */}
                         <div class="columns">
                             <div class="column">
-                                <h1 class="title is-4"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Organizations List</h1>
+                                <h1 class="title is-4"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Tenants List</h1>
                             </div>
-
-                            {/* Mobile only */}
-                            <div className="column has-text-right is-hidden-desktop is-hidden-tablet">
-                                <button onClick={()=>fetchList(currentCursor, pageSize, actualSearchText, status, createdAtGTE)} class="button is-small is-info is-fullwidth" type="button">
+                            <div className="column has-text-right">
+                                <button onClick={()=>fetchList(currentCursor, pageSize, actualSearchText, status, createdAtGTE)} class="button is-small is-info is-fullwidth-mobile" type="button">
                                     <FontAwesomeIcon className="mdi" icon={faRefresh} />&nbsp;Refresh
                                 </button>
                                 &nbsp;
-                                {/*
-                                <button onClick={(e)=>setShowFilter(!showFilter)} class="button is-small is-success is-fullwidth" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faFilter} />&nbsp;Filter
-                                </button>*/}
-                                &nbsp;
-                                <Link to={`/admin/organizations/add`} class="button is-small is-primary is-fullwidth" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;New Organization
+                                <Link to={`/root/tenants/add`} class="button is-small is-success is-fullwidth-mobile" type="button">
+                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;New Tenant
                                 </Link>
                             </div>
 
-                            {/* Tablet and Desktop only */}
-                            <div className="column has-text-right is-hidden-mobile">
-                                <button onClick={()=>fetchList(currentCursor, pageSize, actualSearchText, status, createdAtGTE)} class="button is-small is-info" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faRefresh} />
-                                </button>
-                                &nbsp;
-                                {/*
-                                <button onClick={(e)=>setShowFilter(!showFilter)} class="button is-small is-success" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faFilter} />&nbsp;Filter
-                                </button>*/}
-                                &nbsp;
-                                <Link to={`/admin/organizations/add`} class="button is-small is-primary" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;New Organization
-                                </Link>
-                            </div>
                         </div>
 
                         {showFilter &&
@@ -313,7 +303,7 @@ function RootOrganizationList() {
                             :
                             <>
                                 <FormErrorBox errors={errors} />
-                                {organizations && organizations.results && (organizations.results.length > 0 || previousCursors.length > 0)
+                                {tenants && tenants.results && (tenants.results.length > 0 || previousCursors.length > 0)
                                     ?
                                     <div class="container">
                                         {/*
@@ -322,14 +312,14 @@ function RootOrganizationList() {
                                             ##################################################################
                                         */}
                                         <div class="is-hidden-touch" >
-                                            <RootOrganizationListDesktop
-                                                listData={organizations}
+                                            <RootTenantListDesktop
+                                                listData={tenants}
                                                 setPageSize={setPageSize}
                                                 pageSize={pageSize}
                                                 previousCursors={previousCursors}
                                                 onPreviousClicked={onPreviousClicked}
                                                 onNextClicked={onNextClicked}
-                                                onSelectOrganizationForDeletion={onSelectOrganizationForDeletion}
+                                                onSelectTenantForDeletion={onSelectTenantForDeletion}
                                             />
                                         </div>
 
@@ -339,14 +329,14 @@ function RootOrganizationList() {
                                             ###########################################################################
                                         */}
                                         <div class="is-fullwidth is-hidden-desktop">
-                                            <RootOrganizationListMobile
-                                                listData={organizations}
+                                            <RootTenantListMobile
+                                                listData={tenants}
                                                 setPageSize={setPageSize}
                                                 pageSize={pageSize}
                                                 previousCursors={previousCursors}
                                                 onPreviousClicked={onPreviousClicked}
                                                 onNextClicked={onNextClicked}
-                                                onSelectOrganizationForDeletion={onSelectOrganizationForDeletion}
+                                                onSelectTenantForDeletion={onSelectTenantForDeletion}
                                             />
                                         </div>
                                     </div>
@@ -354,10 +344,10 @@ function RootOrganizationList() {
                                     <section class="hero is-medium has-background-white-ter">
                                           <div class="hero-body">
                                             <p class="title">
-                                                <FontAwesomeIcon className="fas" icon={faTable} />&nbsp;No Organizations
+                                                <FontAwesomeIcon className="fas" icon={faTable} />&nbsp;No Tenants
                                             </p>
                                             <p class="subtitle">
-                                                No organizations. <b><Link to="/admin/organizations/add">Click here&nbsp;<FontAwesomeIcon className="mdi" icon={faArrowRight} /></Link></b> to get started creating your first organization.
+                                                No tenants. <b><Link to="/root/tenants/add">Click here&nbsp;<FontAwesomeIcon className="mdi" icon={faArrowRight} /></Link></b> to get started creating your first tenant.
                                             </p>
                                           </div>
                                     </section>
@@ -371,4 +361,4 @@ function RootOrganizationList() {
     );
 }
 
-export default RootOrganizationList;
+export default RootTenantList;

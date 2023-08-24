@@ -19,9 +19,9 @@ import NotImplementedError from "./Components/Misc/NotImplementedError";
 import ForgotPassword from "./Components/Gateway/ForgotPassword";
 import PasswordReset from "./Components/Gateway/PasswordReset";
 import RootDashboard from "./Components/Root/Dashboard";
-import RootOrganizationList from "./Components/Root/Organization/List";
-import RootOrganizationDetail from "./Components/Root/Organization/Detail";
-import RootOrganizationUpdate from "./Components/Root/Organization/Update";
+import RootTenantList from "./Components/Root/Tenant/List";
+import RootTenantDetail from "./Components/Root/Tenant/Detail";
+import RootTenantUpdate from "./Components/Root/Tenant/Update";
 import ToTenantRedirector from "./Components/Root/ToTenantRedirector";
 import AdminDashboard from "./Components/Admin/Dashboard";
 import AdminClientList from "./Components/Admin/Client/List";
@@ -43,10 +43,10 @@ function AppRoute() {
                                     <Route exact path="/admin/clients/add/step-1" element={<AdminClientAddStep1/>}/>
                                     <Route exact path="/admin/clients" element={<AdminClientList/>}/>
                                     <Route exact path="/admin/dashboard" element={<AdminDashboard/>}/>
-                                    <Route exact path="/root/organization/:tid/start" element={<ToTenantRedirector/>}/>
-                                    <Route exact path="/root/organization/:tid/edit" element={<RootOrganizationUpdate/>}/>
-                                    <Route exact path="/root/organization/:tid" element={<RootOrganizationDetail/>}/>
-                                    <Route exact path="/root/organizations" element={<RootOrganizationList/>}/>
+                                    <Route exact path="/root/tenant/:tid/start" element={<ToTenantRedirector/>}/>
+                                    <Route exact path="/root/tenant/:tid/edit" element={<RootTenantUpdate/>}/>
+                                    <Route exact path="/root/tenant/:tid" element={<RootTenantDetail/>}/>
+                                    <Route exact path="/root/tenants" element={<RootTenantList/>}/>
                                     <Route exact path="/root/dashboard" element={<RootDashboard/>}/>
                                     <Route exact path="/login" element={<Login/>}/>
                                     <Route exact path="/logout" element={<LogoutRedirector/>}/>

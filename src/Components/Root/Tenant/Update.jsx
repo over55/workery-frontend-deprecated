@@ -6,7 +6,7 @@ import { faAddressCard, faSquarePhone,faTasks, faTachometer, faPlus, faArrowLeft
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 
-import { getOrganizationDetailAPI, putOrganizationUpdateAPI } from "../../../API/Organization";
+import { getTenantDetailAPI, putTenantUpdateAPI } from "../../../API/Tenant";
 import FormErrorBox from "../../Reusable/FormErrorBox";
 import FormInputField from "../../Reusable/FormInputField";
 import FormTextareaField from "../../Reusable/FormTextareaField";
@@ -21,7 +21,7 @@ import { HOW_DID_YOU_HEAR_ABOUT_US_WITH_EMPTY_OPTIONS } from "../../../Constants
 import { topAlertMessageState, topAlertStatusState } from "../../../AppState";
 
 
-function RootOrganizationUpdate() {
+function RootTenantUpdate() {
     ////
     //// URL Parameters.
     ////
@@ -69,8 +69,8 @@ function RootOrganizationUpdate() {
         console.log("onSubmitClick: Beginning...");
         setFetching(true);
         setErrors({});
-        const organization = {
-            ID: parseInt(tid),
+        const tenant = {
+            ID: tid,
             Name: name,
             AlternateName: alternateName,
             Description: description,
@@ -84,8 +84,8 @@ function RootOrganizationUpdate() {
             PostalCode: postalCode,
             State: 1,
         };
-        console.log("onSubmitClick, organization:", organization);
-        putOrganizationUpdateAPI(organization, onAdminOrganizationUpdateSuccess, onAdminOrganizationUpdateError, onAdminOrganizationUpdateDone);
+        console.log("onSubmitClick, tenant:", tenant);
+        putTenantUpdateAPI(tenant, onAdminTenantUpdateSuccess, onAdminTenantUpdateError, onAdminTenantUpdateDone);
     }
 
     function onDetailSuccess(response){
@@ -119,34 +119,34 @@ function RootOrganizationUpdate() {
         setFetching(false);
     }
 
-    function onAdminOrganizationUpdateSuccess(response){
+    function onAdminTenantUpdateSuccess(response){
         // For debugging purposes only.
-        console.log("onAdminOrganizationUpdateSuccess: Starting...");
+        console.log("onAdminTenantUpdateSuccess: Starting...");
         console.log(response);
 
         // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Organization updated");
+        setTopAlertMessage("Tenant updated");
         setTopAlertStatus("success");
         setTimeout(() => {
-            console.log("onAdminOrganizationUpdateSuccess: Delayed for 2 seconds.");
-            console.log("onAdminOrganizationUpdateSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
+            console.log("onAdminTenantUpdateSuccess: Delayed for 2 seconds.");
+            console.log("onAdminTenantUpdateSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
             setTopAlertMessage("");
         }, 2000);
 
         // Redirect the user to a new page.
-        setForceURL("/root/organization/"+response.id);
+        setForceURL("/root/tenant/"+response.id);
     }
 
-    function onAdminOrganizationUpdateError(apiErr) {
-        console.log("onAdminOrganizationUpdateError: Starting...");
+    function onAdminTenantUpdateError(apiErr) {
+        console.log("onAdminTenantUpdateError: Starting...");
         setErrors(apiErr);
 
         // Add a temporary banner message in the app and then clear itself after 2 seconds.
         setTopAlertMessage("Failed submitting");
         setTopAlertStatus("danger");
         setTimeout(() => {
-            console.log("onAdminOrganizationUpdateError: Delayed for 2 seconds.");
-            console.log("onAdminOrganizationUpdateError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
+            console.log("onAdminTenantUpdateError: Delayed for 2 seconds.");
+            console.log("onAdminTenantUpdateError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
             setTopAlertMessage("");
         }, 2000);
 
@@ -157,8 +157,8 @@ function RootOrganizationUpdate() {
         scroll.scrollToTop();
     }
 
-    function onAdminOrganizationUpdateDone() {
-        console.log("onAdminOrganizationUpdateDone: Starting...");
+    function onAdminTenantUpdateDone() {
+        console.log("onAdminTenantUpdateDone: Starting...");
         setFetching(false);
     }
 
@@ -173,7 +173,7 @@ function RootOrganizationUpdate() {
             window.scrollTo(0, 0);  // Start the page at the top of the page.
 
             setFetching(true);
-            getOrganizationDetailAPI(
+            getTenantDetailAPI(
                 tid,
                 onDetailSuccess,
                 onDetailError,
@@ -195,16 +195,26 @@ function RootOrganizationUpdate() {
         <>
             <div class="container">
                 <section class="section">
-                    <nav class="breadcrumb has-background-light p-4" aria-label="breadcrumbs">
+                    {/* Desktop Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><Link to="/root/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Admin Dashboard</Link></li>
-                            <li class=""><Link to="/root/organizations" aria-current="page"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Organizations</Link></li>
-                            <li class=""><Link to={`/root/organization/${tid}`} aria-current="page"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail</Link></li>
+                            <li class=""><Link to="/root/tenants" aria-current="page"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Tenants</Link></li>
+                            <li class=""><Link to={`/root/tenant/${tid}`} aria-current="page"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail</Link></li>
                             <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Update</Link></li>
                         </ul>
                     </nav>
+
+                    {/* Mobile Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
+                        <ul>
+                            <li class=""><Link to={`/root/tenant/${tid}`} aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Detail</Link></li>
+                        </ul>
+                    </nav>
+
+                    {/* Page */}
                     <nav class="box">
-                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Organization</p>
+                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Tenant</p>
                         <FormErrorBox errors={errors} />
 
                         {/* <p class="pb-4">Please fill out all the required fields before submitting this form.</p> */}
@@ -351,8 +361,8 @@ function RootOrganizationUpdate() {
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
-                                            <Link class="button is-hidden-touch" to={`/root/organization/${tid}`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
-                                            <Link class="button is-fullwidth is-hidden-desktop" to={`/root/organization/${tid}`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
+                                            <Link class="button is-hidden-touch" to={`/root/tenant/${tid}`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
+                                            <Link class="button is-fullwidth is-hidden-desktop" to={`/root/tenant/${tid}`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
                                             <button class="button is-primary is-hidden-touch" onClick={onSubmitClick}><FontAwesomeIcon className="fas" icon={faCheckCircle} />&nbsp;Save</button>
@@ -370,4 +380,4 @@ function RootOrganizationUpdate() {
     );
 }
 
-export default RootOrganizationUpdate;
+export default RootTenantUpdate;

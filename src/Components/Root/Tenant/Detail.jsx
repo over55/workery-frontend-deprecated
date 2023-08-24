@@ -6,7 +6,7 @@ import { faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLef
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 
-import { getOrganizationDetailAPI } from "../../../API/Organization";
+import { getTenantDetailAPI } from "../../../API/Tenant";
 import FormErrorBox from "../../Reusable/FormErrorBox";
 import PageLoadingContent from "../../Reusable/PageLoadingContent";
 import { topAlertMessageState, topAlertStatusState } from "../../../AppState";
@@ -14,7 +14,7 @@ import FormRowText from "../../Reusable/FormRowText";
 import FormTextYesNoRow from "../../Reusable/FormRowTextYesNo";
 
 
-function RootOrganizationDetail() {
+function RootTenantDetail() {
     ////
     //// URL Parameters.
     ////
@@ -35,7 +35,7 @@ function RootOrganizationDetail() {
     const [errors, setErrors] = useState({});
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
-    const [organization, setOrganization] = useState({});
+    const [tenant, setTenant] = useState({});
     const [tabIndex, setTabIndex] = useState(1);
 
     ////
@@ -48,13 +48,13 @@ function RootOrganizationDetail() {
     //// API.
     ////
 
-    function onOrganizationDetailSuccess(response){
-        console.log("onOrganizationDetailSuccess: Starting...");
-        setOrganization(response);
+    function onTenantDetailSuccess(response){
+        console.log("onTenantDetailSuccess: Starting...");
+        setTenant(response);
     }
 
-    function onOrganizationDetailError(apiErr) {
-        console.log("onOrganizationDetailError: Starting...");
+    function onTenantDetailError(apiErr) {
+        console.log("onTenantDetailError: Starting...");
         setErrors(apiErr);
 
         // The following code will cause the screen to scroll to the top of
@@ -64,8 +64,8 @@ function RootOrganizationDetail() {
         scroll.scrollToTop();
     }
 
-    function onOrganizationDetailDone() {
-        console.log("onOrganizationDetailDone: Starting...");
+    function onTenantDetailDone() {
+        console.log("onTenantDetailDone: Starting...");
         setFetching(false);
     }
 
@@ -81,11 +81,11 @@ function RootOrganizationDetail() {
 
             setFetching(true);
             console.log(tid)
-            getOrganizationDetailAPI(
+            getTenantDetailAPI(
                 tid,
-                onOrganizationDetailSuccess,
-                onOrganizationDetailError,
-                onOrganizationDetailDone
+                onTenantDetailSuccess,
+                onTenantDetailError,
+                onTenantDetailDone
             );
         }
 
@@ -103,27 +103,31 @@ function RootOrganizationDetail() {
         <>
             <div class="container">
                 <section class="section">
-                    <nav class="breadcrumb has-background-light p-4" aria-label="breadcrumbs">
+                    {/* Desktop Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><Link to="/root/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Admin Dashboard</Link></li>
-                            <li class=""><Link to="/root/organizations" aria-current="page"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Organizations</Link></li>
+                            <li class=""><Link to="/root/tenants" aria-current="page"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Tenants</Link></li>
                             <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail</Link></li>
                         </ul>
                     </nav>
+
+                    {/* Mobile Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
+                        <ul>
+                            <li class=""><Link to="/root/tenants" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Organizations</Link></li>
+                        </ul>
+                    </nav>
+
+                    {/* Page */}
                     <nav class="box">
-                        {organization && <div class="columns">
+                        {tenant && <div class="columns">
                             <div class="column">
-                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Organization</p>
+                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;Tenant</p>
                             </div>
-                            {/* HIDDEN */}
-                            <div class="is-hidden column has-text-right">
-                                {/* Mobile Specific */}
-                                <Link to={`/root/submissions/comics/add?organization_id=${tid}&organization_name=${organization.name}`} class="button is-small is-success is-fullwidth is-hidden-desktop" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;CPS
-                                </Link>
-                                {/* Desktop Specific */}
-                                <Link to={`/root/submissions/comics/add?organization_id=${tid}&organization_name=${organization.name}`} class="button is-small is-success is-hidden-touch" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;CPS
+                            <div class="column has-text-right">
+                                <Link to={`/root/tenant/${tid}/edit`} class="button is-small is-warning is-fullwidth-mobile" type="button">
+                                    <FontAwesomeIcon className="mdi" icon={faPencil} />&nbsp;Edit
                                 </Link>
                             </div>
                         </div>}
@@ -136,32 +140,32 @@ function RootOrganizationDetail() {
                             <PageLoadingContent displayMessage={"Loading..."} />
                             :
                             <>
-                                {organization && <div class="container">
+                                {tenant && <div class="container">
 
                                     <p class="subtitle is-6 pt-4"><FontAwesomeIcon className="fas" icon={faIdCard} />&nbsp;Identification</p>
                                     <hr />
 
                                     <FormRowText
                                         label="Schema Name"
-                                        value={organization.schemaName}
+                                        value={tenant.schemaName}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="Name"
-                                        value={organization.name}
+                                        value={tenant.name}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="Alternate Name"
-                                        value={organization.alternateName}
+                                        value={tenant.alternateName}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="Description"
-                                        value={organization.description}
+                                        value={tenant.description}
                                         helpText=""
                                     />
 
@@ -170,13 +174,13 @@ function RootOrganizationDetail() {
 
                                     <FormRowText
                                         label="Email"
-                                        value={organization.email}
+                                        value={tenant.email}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="Telephone"
-                                        value={organization.telephone}
+                                        value={tenant.telephone}
                                         helpText=""
                                     />
 
@@ -185,54 +189,54 @@ function RootOrganizationDetail() {
 
                                     <FormRowText
                                         label="Country"
-                                        value={organization.addressCountry}
+                                        value={tenant.addressCountry}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="Country"
-                                        value={organization.addressCountry}
+                                        value={tenant.addressCountry}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="State/Province"
-                                        value={organization.addressRegion}
+                                        value={tenant.addressRegion}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="City"
-                                        value={organization.addressLocality}
+                                        value={tenant.addressLocality}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="Postal Code"
-                                        value={organization.postalCode}
+                                        value={tenant.postalCode}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="Address"
-                                        value={organization.streetAddress}
+                                        value={tenant.streetAddress}
                                         helpText=""
                                     />
 
                                     <FormRowText
                                         label="Address (Extra line)"
-                                        value={organization.streetAddressExtra}
+                                        value={tenant.streetAddressExtra}
                                         helpText=""
                                     />
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
-                                            <Link class="button is-hidden-touch" to={`/root/organizations`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
-                                            <Link class="button is-fullwidth is-hidden-desktop" to={`/root/organizations`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
+                                            <Link class="button is-hidden-touch" to={`/root/tenants`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
+                                            <Link class="button is-fullwidth is-hidden-desktop" to={`/root/tenants`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <Link to={`/root/organization/${tid}/edit`} class="button is-primary is-hidden-touch"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link>
-                                            <Link to={`/root/organization/${tid}/edit`} class="button is-primary is-fullwidth is-hidden-desktop"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link>
+                                            <Link to={`/root/tenant/${tid}/edit`} class="button is-primary is-hidden-touch"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link>
+                                            <Link to={`/root/tenant/${tid}/edit`} class="button is-primary is-fullwidth is-hidden-desktop"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link>
                                         </div>
                                     </div>
 
@@ -246,4 +250,4 @@ function RootOrganizationDetail() {
     );
 }
 
-export default RootOrganizationDetail;
+export default RootTenantDetail;

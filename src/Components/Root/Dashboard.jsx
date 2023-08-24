@@ -75,7 +75,7 @@ function RootDashboard() {
                               Manage all the organizations in your system:
                               <br />
                               <br />
-                              <Link to={"/root/organizations"}>View&nbsp;<FontAwesomeIcon className="fas" icon={faArrowRight} /></Link>
+                              <Link to={"/root/tenants"}>View&nbsp;<FontAwesomeIcon className="fas" icon={faArrowRight} /></Link>
                             </p>
                           </div>
                         </section>

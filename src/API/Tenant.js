@@ -3,18 +3,18 @@ import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { DateTime } from "luxon";
 
 import {
-    WORKERY_ORGANIZATIONS_API_ENDPOINT,
-    WORKERY_ORGANIZATION_API_ENDPOINT,
-    // WORKERY_ORGANIZATION_CREATE_COMMENT_OPERATION_API_ENDPOINT,
-    // WORKERY_ORGANIZATIONS_SELECT_OPTIONS_API_ENDPOINT
+    WORKERY_TENANTS_API_ENDPOINT,
+    WORKERY_TENANT_API_ENDPOINT,
+    // WORKERY_TENANT_CREATE_COMMENT_OPERATION_API_ENDPOINT,
+    // WORKERY_TENANTS_SELECT_OPTIONS_API_ENDPOINT
 } from "../Constants/API";
 
 
-export function getOrganizationListAPI(filtersMap=new Map(), onSuccessCallback, onErrorCallback, onDoneCallback) {
+export function getTenantListAPI(filtersMap=new Map(), onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
 
     // The following code will generate the query parameters for the url based on the map.
-    let aURL = WORKERY_ORGANIZATIONS_API_ENDPOINT;
+    let aURL = WORKERY_TENANTS_API_ENDPOINT;
     filtersMap.forEach(
         (value, key) => {
             let decamelizedkey = decamelize(key)
@@ -33,7 +33,7 @@ export function getOrganizationListAPI(filtersMap=new Map(), onSuccessCallback, 
         const data = camelizeKeys(responseData);
 
         // Bugfixes.
-        console.log("getOrganizationListAPI | pre-fix | results:", data);
+        console.log("getTenantListAPI | pre-fix | results:", data);
         if (data.results !== undefined && data.results !== null && data.results.length > 0) {
             data.results.forEach(
                 (item, index) => {
@@ -42,7 +42,7 @@ export function getOrganizationListAPI(filtersMap=new Map(), onSuccessCallback, 
                 }
             )
         }
-        console.log("getOrganizationListAPI | post-fix | results:", data);
+        console.log("getTenantListAPI | post-fix | results:", data);
 
         // Return the callback data.
         onSuccessCallback(data);
@@ -52,11 +52,11 @@ export function getOrganizationListAPI(filtersMap=new Map(), onSuccessCallback, 
     }).then(onDoneCallback);
 }
 
-// export function getOrganizationSelectOptionListAPI(filtersMap=new Map(), onSuccessCallback, onErrorCallback, onDoneCallback) {
+// export function getTenantSelectOptionListAPI(filtersMap=new Map(), onSuccessCallback, onErrorCallback, onDoneCallback) {
 //     const axios = getCustomAxios();
 //
 //     // The following code will generate the query parameters for the url based on the map.
-//     let aURL = WORKERY_ORGANIZATIONS_SELECT_OPTIONS_API_ENDPOINT;
+//     let aURL = WORKERY_TENANTS_SELECT_OPTIONS_API_ENDPOINT;
 //     filtersMap.forEach(
 //         (value, key) => {
 //             let decamelizedkey = decamelize(key)
@@ -75,7 +75,7 @@ export function getOrganizationListAPI(filtersMap=new Map(), onSuccessCallback, 
 //         const data = camelizeKeys(responseData);
 //
 //         // Bugfixes.
-//         console.log("getOrganizationSelectOptionListAPI | pre-fix | results:", data);
+//         console.log("getTenantSelectOptionListAPI | pre-fix | results:", data);
 //         if (data.results !== undefined && data.results !== null && data.results.length > 0) {
 //             data.results.forEach(
 //                 (item, index) => {
@@ -84,7 +84,7 @@ export function getOrganizationListAPI(filtersMap=new Map(), onSuccessCallback, 
 //                 }
 //             )
 //         }
-//         console.log("getOrganizationSelectOptionListAPI | post-fix | results:", data);
+//         console.log("getTenantSelectOptionListAPI | post-fix | results:", data);
 //
 //         // Return the callback data.
 //         onSuccessCallback(data);
@@ -94,13 +94,13 @@ export function getOrganizationListAPI(filtersMap=new Map(), onSuccessCallback, 
 //     }).then(onDoneCallback);
 // }
 //
-export function postOrganizationCreateAPI(data, onSuccessCallback, onErrorCallback, onDoneCallback) {
+export function postTenantCreateAPI(data, onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
 
     // To Snake-case for API from camel-case in React.
     let decamelizedData = decamelizeKeys(data);
 
-    axios.post(WORKERY_ORGANIZATIONS_API_ENDPOINT, decamelizedData).then((successResponse) => {
+    axios.post(WORKERY_TENANTS_API_ENDPOINT, decamelizedData).then((successResponse) => {
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.
@@ -114,9 +114,9 @@ export function postOrganizationCreateAPI(data, onSuccessCallback, onErrorCallba
     }).then(onDoneCallback);
 }
 
-export function getOrganizationDetailAPI(organizationID, onSuccessCallback, onErrorCallback, onDoneCallback) {
+export function getTenantDetailAPI(tenantID, onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
-    axios.get(WORKERY_ORGANIZATION_API_ENDPOINT.replace("{id}", organizationID)).then((successResponse) => {
+    axios.get(WORKERY_TENANT_API_ENDPOINT.replace("{id}", tenantID)).then((successResponse) => {
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.
@@ -133,7 +133,7 @@ export function getOrganizationDetailAPI(organizationID, onSuccessCallback, onEr
     }).then(onDoneCallback);
 }
 
-export function putOrganizationUpdateAPI(data, onSuccessCallback, onErrorCallback, onDoneCallback) {
+export function putTenantUpdateAPI(data, onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
 
     // To Snake-case for API from camel-case in React.
@@ -143,7 +143,7 @@ export function putOrganizationUpdateAPI(data, onSuccessCallback, onErrorCallbac
     decamelizedData.id = decamelizedData.i_d;
     delete decamelizedData.i_d;
 
-    axios.put(WORKERY_ORGANIZATION_API_ENDPOINT.replace("{id}", decamelizedData.id), decamelizedData).then((successResponse) => {
+    axios.put(WORKERY_TENANT_API_ENDPOINT.replace("{id}", decamelizedData.id), decamelizedData).then((successResponse) => {
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.
@@ -157,9 +157,9 @@ export function putOrganizationUpdateAPI(data, onSuccessCallback, onErrorCallbac
     }).then(onDoneCallback);
 }
 
-export function deleteOrganizationAPI(id, onSuccessCallback, onErrorCallback, onDoneCallback) {
+export function deleteTenantAPI(id, onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
-    axios.delete(WORKERY_ORGANIZATION_API_ENDPOINT.replace("{id}", id)).then((successResponse) => {
+    axios.delete(WORKERY_TENANT_API_ENDPOINT.replace("{id}", id)).then((successResponse) => {
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.
@@ -173,13 +173,13 @@ export function deleteOrganizationAPI(id, onSuccessCallback, onErrorCallback, on
     }).then(onDoneCallback);
 }
 
-// export function postOrganizationCreateCommentOperationAPI(organizationID, content, onSuccessCallback, onErrorCallback, onDoneCallback) {
+// export function postTenantCreateCommentOperationAPI(tenantID, content, onSuccessCallback, onErrorCallback, onDoneCallback) {
 //     const axios = getCustomAxios();
 //     const data = {
-//         organization_id: organizationID,
+//         tenant_id: tenantID,
 //         content: content,
 //     };
-//     axios.post(WORKERY_ORGANIZATION_CREATE_COMMENT_OPERATION_API_ENDPOINT, data).then((successResponse) => {
+//     axios.post(WORKERY_TENANT_CREATE_COMMENT_OPERATION_API_ENDPOINT, data).then((successResponse) => {
 //         const responseData = successResponse.data;
 //
 //         // Snake-case from API to camel-case for React.

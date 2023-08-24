@@ -10,8 +10,8 @@ import FormErrorBox from "../../Reusable/FormErrorBox";
 import { PAGE_SIZE_OPTIONS } from "../../../Constants/FieldOptions";
 
 
-function RootOrganizationListDesktop(props) {
-    const { listData, setPageSize, pageSize, previousCursors, onPreviousClicked, onNextClicked, onSelectOrganizationForDeletion } = props;
+function RootTenantListDesktop(props) {
+    const { listData, setPageSize, pageSize, previousCursors, onPreviousClicked, onNextClicked, onSelectTenantForDeletion } = props;
     return (
         <div class="b-table">
             <div class="table-wrapper has-mobile-cards">
@@ -25,19 +25,19 @@ function RootOrganizationListDesktop(props) {
                     </thead>
                     <tbody>
 
-                        {listData && listData.results && listData.results.map(function(organization, i){
-                            return <tr key={`desktop_${organization.id}`}>
-                                <td data-label="Schema">{organization.schemaName}</td>
-                                <td data-label="Name">{organization.name}</td>
+                        {listData && listData.results && listData.results.map(function(tenant, i){
+                            return <tr key={`desktop_${tenant.id}`}>
+                                <td data-label="Schema">{tenant.schemaName}</td>
+                                <td data-label="Name">{tenant.name}</td>
                                 <td class="is-actions-cell">
                                     <div class="buttons is-right">
-                                        <Link to={`/root/organization/${organization.id}`} class="button is-small is-primary" type="button">
+                                        <Link to={`/root/tenant/${tenant.id}`} class="button is-small is-primary" type="button">
                                             <FontAwesomeIcon className="mdi" icon={faEye} />&nbsp;View
                                         </Link>
-                                        <Link to={`/root/organization/${organization.id}/edit`} class="button is-small is-warning" type="button">
+                                        <Link to={`/root/tenant/${tenant.id}/edit`} class="button is-small is-warning" type="button">
                                             <FontAwesomeIcon className="mdi" icon={faPencil} />&nbsp;Edit
                                         </Link>
-                                        <Link to={`/root/organization/${organization.id}/start`} class="button is-small is-success">Start&nbsp;<FontAwesomeIcon icon={faChevronRight} /></Link>
+                                        <Link to={`/root/tenant/${tenant.id}/start`} class="button is-small is-success">Start&nbsp;<FontAwesomeIcon icon={faChevronRight} /></Link>
                                     </div>
                                 </td>
                             </tr>;
@@ -45,7 +45,7 @@ function RootOrganizationListDesktop(props) {
                     </tbody>
                 </table>
 
-                {/* <div class="columns">
+                <div class="columns">
                     <div class="column is-half">
                         <span class="select">
                             <select class={`input has-text-grey-light`}
@@ -67,11 +67,10 @@ function RootOrganizationListDesktop(props) {
                         </>}
                     </div>
                 </div>
-                */}
 
             </div>
         </div>
     );
 }
 
-export default RootOrganizationListDesktop;
+export default RootTenantListDesktop;

@@ -75,7 +75,7 @@ function Login() {
 
             switch (response.user.role) {
                 case EXECUTIVE_ROLE_ID:
-                    setForceURL("/root/organizations");
+                    setForceURL("/root/tenants");
                     break;
                 case MANAGEMENT_ROLE_ID:
                     setForceURL("/admin/dashboard");
