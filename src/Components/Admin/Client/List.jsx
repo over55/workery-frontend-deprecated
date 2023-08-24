@@ -36,18 +36,17 @@ function AdminClientList() {
     const [users, setClients] = useState("");
     const [selectedClientForDeletion, setSelectedClientForDeletion] = useState("");
     const [isFetching, setFetching] = useState(false);
-    const [pageSize, setPageSize] = useState(10);                           // Pagination
-    const [previousCursors, setPreviousCursors] = useState([]);             // Pagination
-    const [nextCursor, setNextCursor] = useState("");                       // Pagination
-    const [currentCursor, setCurrentCursor] = useState("");                 // Pagination
-    const [showFilter, setShowFilter] = useState(false);                    // Filtering + Searching
-    const [sortField, setSortField] = useState("last_name");                // Sorting
-    const [temporarySearchText, setTemporarySearchText] = useState("");     // Searching - The search field value as your writes their query.
-    const [actualSearchText, setActualSearchText] = useState("");           // Searching - The actual search query value to submit to the API.
-    const [status, setStatus] = useState("");                               // Filtering
-    const [createdAtGTE, setCreatedAtGTE] = useState(null);                 // Filtering
-    const [typeOf, setTypeOf] = useState(0);                                // Filtering
+    const [pageSize, setPageSize] = useState(10);                                      // Pagination
+    const [previousCursors, setPreviousCursors] = useState([]);                        // Pagination
+    const [nextCursor, setNextCursor] = useState("");                                  // Pagination
+    const [currentCursor, setCurrentCursor] = useState("");                            // Pagination
+    const [showFilter, setShowFilter] = useState(false);                               // Filtering + Searching
     const [sortByValue, setSortByValue] = useState(DEFAULT_CLIENT_LIST_SORT_BY_VALUE); // Sorting
+    const [temporarySearchText, setTemporarySearchText] = useState("");                // Searching - The search field value as your writes their query.
+    const [actualSearchText, setActualSearchText] = useState("");                      // Searching - The actual search query value to submit to the API.
+    const [status, setStatus] = useState("");                                          // Filtering
+    const [createdAtGTE, setCreatedAtGTE] = useState(null);                            // Filtering
+    const [typeOf, setTypeOf] = useState(0);                                           // Filtering
 
     ////
     //// API.
@@ -122,7 +121,7 @@ function AdminClientList() {
     //// Event handling.
     ////
 
-    const fetchList = (cur, limit, keywords, s, t, j) => {
+    const fetchList = (cur, limit, keywords, so, s, t, j) => {
         setFetching(true);
         setErrors({});
 
@@ -133,6 +132,13 @@ function AdminClientList() {
         if (cur !== "") { // Pagination
             params.set("cursor", cur);
         }
+
+        // DEVELOPERS NOTE: Our `sortByValue` is string with the sort field
+        // and sort order combined with a comma seperation. Therefore we
+        // need to split as follows.
+        const sortArray = so.split(",");
+        params.set("sort_field", sortArray[0]);
+        params.set("sort_order", sortArray[1]);
 
         // Filtering
         if (keywords !== undefined && keywords !== null && keywords !== "") { // Searhcing
@@ -208,11 +214,11 @@ function AdminClientList() {
 
         if (mounted) {
             // window.scrollTo(0, 0);  // Start the page at the top of the page.
-            fetchList(currentCursor, pageSize, actualSearchText, status, typeOf, createdAtGTE);
+            fetchList(currentCursor, pageSize, actualSearchText, sortByValue, status, typeOf, createdAtGTE);
         }
 
         return () => { mounted = false; }
-    }, [currentCursor, pageSize, actualSearchText, status, typeOf, createdAtGTE]);
+    }, [currentCursor, pageSize, actualSearchText, sortByValue, status, typeOf, createdAtGTE]);
 
     ////
     //// Component rendering.
@@ -331,7 +337,7 @@ function AdminClientList() {
                                     maxWidth="120px"
                                 />
                             </div>
-                             */}
+                            */}
                             <div class="column has-text-right">
                                 <FormSelectField
                                     label="Sort by"
