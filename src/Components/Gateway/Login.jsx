@@ -71,9 +71,9 @@ function Login() {
             console.log("onLoginSuccess | user postfix:", response.user);
 
             // Store in persistance storage in the browser.
-            setCurrentUser(response);
+            setCurrentUser(response.user);
 
-            switch (response.roleId) {
+            switch (response.user.role) {
                 case EXECUTIVE_ROLE_ID:
                     setForceURL("/root/organizations");
                     break;

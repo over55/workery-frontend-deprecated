@@ -146,11 +146,12 @@ function Index() {
                                                 <Link class="button is-medium is-block is-fullwidth is-primary" type="button" to="/login">
                                                     Login <FontAwesomeIcon icon={faArrowRight} />
                                                 </Link>
+                                                {/*
                                                 <br />
                                                 <Link class="button is-medium is-block is-fullwidth is-info" type="button" to="/register" disabled={true}>
                                                     Register <FontAwesomeIcon icon={faArrowRight} />
                                                 </Link>
-
+                                                */}
 
                                             </form>
                                             <br />
