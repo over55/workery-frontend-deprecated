@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
 import { getClientDetailAPI, postClientCreateAPI } from "../../../../API/Client";
@@ -13,12 +13,15 @@ import FormRadioField from "../../../Reusable/FormRadioField";
 import FormMultiSelectField from "../../../Reusable/FormMultiSelectField";
 import FormSelectField from "../../../Reusable/FormSelectField";
 import FormCheckboxField from "../../../Reusable/FormCheckboxField";
+import FormMultiSelectFieldForTags from "../../../Reusable/FormMultiSelectFieldForTags";
+import FormMultiSelectFieldForSkillSets from "../../../Reusable/FormMultiSelectFieldForSkillSets";
+import FormMultiSelectFieldForHowHears from "../../../Reusable/FormMultiSelectFieldForHowHears";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { HOW_DID_YOU_HEAR_ABOUT_US_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
+import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
 import { topAlertMessageState, topAlertStatusState } from "../../../../AppState";
 
 
-function AdminClientAddStep1() {
+function AdminClientAddStep6() {
     ////
     //// Global state.
     ////
@@ -33,11 +36,13 @@ function AdminClientAddStep1() {
     const [errors, setErrors] = useState({});
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [showCancelWarning, setShowCancelWarning] = useState(false);
+    const [tags, setTags] = useState([]);
+    const [skillSets, setSkillSets] = useState([]);
+    const [howHearAboutUsItems, setHowHearAboutUsItems] = useState([]);
+
+    // typeOf,  tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHearId, howHearOptions, howHearOther, howHearIdLabel, joinDate,
+    // onRadioChange,  onMultiChange, onJoinDateChange, comment,
+    // errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
 
     ////
     //// Event handling.
@@ -50,13 +55,19 @@ function AdminClientAddStep1() {
 
     const onSubmitClick = (e) => {
         console.log("onSubmitClick: Beginning...");
-        setFetching(true);
-        setErrors({});
-        // const Client = {
-        //     Name: name,
-        // };
-        // console.log("onSubmitClick, Client:", Client);
-        // postClientCreateAPI(Client, onAdminClientAddSuccess, onAdminClientAddError, onAdminClientAddDone);
+        let newErrors = {};
+        let hasErrors = false;
+
+        // if (firstName === "") {
+        //     newErrors["firstName"] = "missing value";
+        //     hasErrors = true;
+        // }
+
+        if (hasErrors) {
+            setErrors(newErrors);
+            return;
+        }
+        setForceURL("/admin/clients/add/step-5");
     }
 
     function onAdminClientAddSuccess(response){
@@ -130,12 +141,19 @@ function AdminClientAddStep1() {
             <div class="container">
                 <section class="section">
 
-                    {/* Page Breadcrumbs */}
-                    <nav class="breadcrumb has-background-light p-4" aria-label="breadcrumbs">
+                    {/* Desktop Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
                             <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
                             <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link></li>
+                        </ul>
+                    </nav>
+
+                    {/* Mobile Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
+                        <ul>
+                            <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link></li>
                         </ul>
                     </nav>
 
@@ -144,27 +162,12 @@ function AdminClientAddStep1() {
                     <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Client</h4>
                     <hr />
 
+                    {/* Page */}
                     <nav class="box">
-                        <div class={`modal ${showCancelWarning ? 'is-active' : ''}`}>
-                            <div class="modal-background"></div>
-                            <div class="modal-card">
-                                <header class="modal-card-head">
-                                    <p class="modal-card-title">Are you sure?</p>
-                                    <button class="delete" aria-label="close" onClick={(e)=>setShowCancelWarning(false)}></button>
-                                </header>
-                                <section class="modal-card-body">
-                                    Your Client record will be cancelled and your work will be lost. This cannot be undone. Do you want to continue?
-                                </section>
-                                <footer class="modal-card-foot">
-                                    <Link class="button is-medium is-success" to={`/admin/clients`}>Yes</Link>
-                                    <button class="button is-medium" onClick={(e)=>setShowCancelWarning(false)}>No</button>
-                                </footer>
-                            </div>
-                        </div>
 
-                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faSearch} />&nbsp;Search for existing client:</p>
+                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faChartPie} />&nbsp;Metrics</p>
 
-                        {/* <p class="pb-4 has-text-grey">Please fill out all the required fields before submitting this form.</p> */}
+                        <p class="pb-4 has-text-grey">Please fill out all the required fields before submitting this form.</p>
 
                         {isFetching
                             ?
@@ -174,71 +177,67 @@ function AdminClientAddStep1() {
                                 <FormErrorBox errors={errors} />
                                 <div class="container">
 
-                                    <FormInputField
-                                        label="First Name"
-                                        name="firstName"
-                                        placeholder="Text input"
-                                        value={firstName}
-                                        errorText={errors && errors.firstName}
-                                        helpText=""
-                                        onChange={(e)=>setFirstName(e.target.value)}
+                                    <FormMultiSelectFieldForTags
+                                        label="Tags (Optional)"
+                                        name="tags"
+                                        placeholder="Pick tags"
+                                        tags={tags}
+                                        setTags={setTags}
+                                        errorText={errors && errors.tags}
+                                        helpText="Pick the tags you would like to associate with this cliient."
                                         isRequired={true}
-                                        maxWidth="380px"
+                                        maxWidth="320px"
                                     />
 
-                                    <FormInputField
-                                        label="Last Name"
-                                        name="lastName"
-                                        placeholder="Text input"
-                                        value={lastName}
-                                        errorText={errors && errors.lastName}
-                                        helpText=""
-                                        onChange={(e)=>setLastName(e.target.value)}
+                                    <FormMultiSelectFieldForSkillSets
+                                        label="Skill Sets (Optional)"
+                                        name="skillSets"
+                                        placeholder="Pick skill sets"
+                                        skillSets={skillSets}
+                                        setSkillSets={setSkillSets}
+                                        errorText={errors && errors.skillSets}
+                                        helpText="Pick the skill sets you would like to associate with this cliient."
                                         isRequired={true}
-                                        maxWidth="380px"
+                                        maxWidth="320px"
                                     />
 
-                                    <FormInputField
-                                        label="Email"
-                                        name="email"
-                                        type="email"
-                                        placeholder="Text input"
-                                        value={email}
-                                        errorText={errors && errors.email}
-                                        helpText=""
-                                        onChange={(e)=>setEmail(e.target.value)}
+                                    <FormMultiSelectFieldForHowHears
+                                        label="How Did You Hear About us? "
+                                        name="howHearAboutUsItems"
+                                        placeholder="Pick"
+                                        howHearAboutUsItems={howHearAboutUsItems}
+                                        setHowHearAboutUsItems={setHowHearAboutUsItems}
+                                        errorText={errors && errors.howHearAboutUsItems}
+                                        helpText="Pick"
                                         isRequired={true}
-                                        maxWidth="380px"
+                                        maxWidth="320px"
                                     />
 
-                                    <FormInputField
-                                        label="Phone"
-                                        name="phone"
+                                    {/*
+                                    <FormMultiSelectField
+                                        label="Tags (Optional)"
+                                        name="tags"
                                         placeholder="Text input"
-                                        value={phone}
-                                        errorText={errors && errors.phone}
-                                        helpText=""
-                                        onChange={(e)=>setPhone(e.target.value)}
+                                        options={EQUIPMENT_OPTIONS}
+                                        selectedValues={equipment}
+                                        onChange={onEquipmentChange}
+                                        errorText={errors && errors.equipment}
+                                        helpText="Pick the equipment associated with this session template."
                                         isRequired={true}
-                                        maxWidth="150px"
+                                        maxWidth="320px"
                                     />
+                                    */}
+
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
-                                            <button class="button is-medium is-fullwidth-mobile" onClick={(e)=>setShowCancelWarning(true)}><FontAwesomeIcon className="fas" icon={faTimesCircle} />&nbsp;Cancel</button>
+                                            <Link class="button is-medium is-fullwidth-mobile" to="/admin/clients/add/step-5"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <button class="button is-medium is-primary is-fullwidth-mobile" onClick={onSubmitClick}><FontAwesomeIcon className="fas" icon={faSearch} />&nbsp;Search</button>
+                                            <button class="button is-medium is-primary is-fullwidth-mobile" onClick={onSubmitClick}>Next&nbsp;<FontAwesomeIcon className="fas" icon={faArrowRight} /></button>
                                         </div>
                                     </div>
 
-                                    <p class="title is-4 has-text-centered">- OR -</p>
-
-                                    <div class="columns pt-5">
-                                        <div class="column has-text-centered">
-                                            <Link class="button is-medium is-success is-fullwidth-mobile" to="/admin/clients/add/step-2"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
-                                        </div>
-                                    </div>
                                 </div>
                             </>
                         }
@@ -249,4 +248,4 @@ function AdminClientAddStep1() {
     );
 }
 
-export default AdminClientAddStep1;
+export default AdminClientAddStep6

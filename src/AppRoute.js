@@ -26,6 +26,11 @@ import ToTenantRedirector from "./Components/Root/ToTenantRedirector";
 import AdminDashboard from "./Components/Admin/Dashboard";
 import AdminClientList from "./Components/Admin/Client/List";
 import AdminClientAddStep1 from "./Components/Admin/Client/Add/Step1";
+import AdminClientAddStep2 from "./Components/Admin/Client/Add/Step2";
+import AdminClientAddStep3 from "./Components/Admin/Client/Add/Step3";
+import AdminClientAddStep4 from "./Components/Admin/Client/Add/Step4";
+import AdminClientAddStep5 from "./Components/Admin/Client/Add/Step5";
+import AdminClientAddStep6 from "./Components/Admin/Client/Add/Step6";
 
 
 function AppRoute() {
@@ -40,6 +45,11 @@ function AppRoute() {
                         <div class="column">
                             <section class="main-content columns is-fullheight">
                                 <Routes>
+                                    <Route exact path="/admin/clients/add/step-6" element={<AdminClientAddStep6/>}/>
+                                    <Route exact path="/admin/clients/add/step-5" element={<AdminClientAddStep5/>}/>
+                                    <Route exact path="/admin/clients/add/step-4" element={<AdminClientAddStep4/>}/>
+                                    <Route exact path="/admin/clients/add/step-3" element={<AdminClientAddStep3/>}/>
+                                    <Route exact path="/admin/clients/add/step-2" element={<AdminClientAddStep2/>}/>
                                     <Route exact path="/admin/clients/add/step-1" element={<AdminClientAddStep1/>}/>
                                     <Route exact path="/admin/clients" element={<AdminClientList/>}/>
                                     <Route exact path="/admin/dashboard" element={<AdminDashboard/>}/>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
 import { getClientDetailAPI, postClientCreateAPI } from "../../../../API/Client";
@@ -14,11 +14,11 @@ import FormMultiSelectField from "../../../Reusable/FormMultiSelectField";
 import FormSelectField from "../../../Reusable/FormSelectField";
 import FormCheckboxField from "../../../Reusable/FormCheckboxField";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { HOW_DID_YOU_HEAR_ABOUT_US_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
+import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID  } from "../../../../Constants/App";
 import { topAlertMessageState, topAlertStatusState } from "../../../../AppState";
 
 
-function AdminClientAddStep1() {
+function AdminClientAddStep3() {
     ////
     //// Global state.
     ////
@@ -43,6 +43,11 @@ function AdminClientAddStep1() {
     //// Event handling.
     ////
 
+    const onSelectTypeOf = (to) => {
+        console.log("--->", to);
+        setForceURL("/admin/clients/add/step-4");
+    }
+
 
     ////
     //// API.
@@ -50,13 +55,13 @@ function AdminClientAddStep1() {
 
     const onSubmitClick = (e) => {
         console.log("onSubmitClick: Beginning...");
-        setFetching(true);
-        setErrors({});
-        // const Client = {
-        //     Name: name,
-        // };
-        // console.log("onSubmitClick, Client:", Client);
-        // postClientCreateAPI(Client, onAdminClientAddSuccess, onAdminClientAddError, onAdminClientAddDone);
+        if (firstName === "" && lastName === "" && email === "" && phone === "") {
+            setErrors({
+                message: "please enter a value"
+            });
+            return
+        }
+        setForceURL("/admin/clients/add/step-2?fn="+firstName+"&ln="+lastName+"&e="+email+"&p="+phone);
     }
 
     function onAdminClientAddSuccess(response){
@@ -111,10 +116,8 @@ function AdminClientAddStep1() {
 
         if (mounted) {
             window.scrollTo(0, 0);  // Start the page at the top of the page.
-
             setFetching(false);
         }
-
         return () => { mounted = false; }
     }, []);
     ////
@@ -130,12 +133,19 @@ function AdminClientAddStep1() {
             <div class="container">
                 <section class="section">
 
-                    {/* Page Breadcrumbs */}
-                    <nav class="breadcrumb has-background-light p-4" aria-label="breadcrumbs">
+                    {/* Desktop Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
                             <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
                             <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link></li>
+                        </ul>
+                    </nav>
+
+                    {/* Mobile Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
+                        <ul>
+                            <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link></li>
                         </ul>
                     </nav>
 
@@ -144,6 +154,7 @@ function AdminClientAddStep1() {
                     <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Client</h4>
                     <hr />
 
+                    {/* Page */}
                     <nav class="box">
                         <div class={`modal ${showCancelWarning ? 'is-active' : ''}`}>
                             <div class="modal-background"></div>
@@ -162,9 +173,9 @@ function AdminClientAddStep1() {
                             </div>
                         </div>
 
-                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faSearch} />&nbsp;Search for existing client:</p>
+                        <p class="title is-4">Select Client Type:</p>
 
-                        {/* <p class="pb-4 has-text-grey">Please fill out all the required fields before submitting this form.</p> */}
+                        <p class="pb-4 has-text-grey">Please select the type of client this is.</p>
 
                         {isFetching
                             ?
@@ -173,70 +184,74 @@ function AdminClientAddStep1() {
                             <>
                                 <FormErrorBox errors={errors} />
                                 <div class="container">
+                                    <div class="columns">
 
-                                    <FormInputField
-                                        label="First Name"
-                                        name="firstName"
-                                        placeholder="Text input"
-                                        value={firstName}
-                                        errorText={errors && errors.firstName}
-                                        helpText=""
-                                        onChange={(e)=>setFirstName(e.target.value)}
-                                        isRequired={true}
-                                        maxWidth="380px"
-                                    />
+                                        {/* Residential */}
+                                        <div class="column">
+                                            <div class="card">
+                                                <div class="card-image">
+                                                    <figure class="image is-4by3">
+                                                      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" />
+                                                    </figure>
+                                                </div>
+                                                <div class="card-content">
+                                                    <div class="media">
 
-                                    <FormInputField
-                                        label="Last Name"
-                                        name="lastName"
-                                        placeholder="Text input"
-                                        value={lastName}
-                                        errorText={errors && errors.lastName}
-                                        helpText=""
-                                        onChange={(e)=>setLastName(e.target.value)}
-                                        isRequired={true}
-                                        maxWidth="380px"
-                                    />
+                                                      <div class="media-content">
+                                                        <p class="title is-4">Residential User</p>
+                                                      </div>
+                                                    </div>
 
-                                    <FormInputField
-                                        label="Email"
-                                        name="email"
-                                        type="email"
-                                        placeholder="Text input"
-                                        value={email}
-                                        errorText={errors && errors.email}
-                                        helpText=""
-                                        onChange={(e)=>setEmail(e.target.value)}
-                                        isRequired={true}
-                                        maxWidth="380px"
-                                    />
+                                                    <div class="content">
+                                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                                                      <a href="#">#css</a> <a href="#">#responsive</a>
+                                                      <br />
+                                                    </div>
+                                                </div>
+                                                <footer class="card-footer">
+                                                    <a onClick={(e,s)=>onSelectTypeOf(RESIDENTIAL_CUSTOMER_TYPE_OF_ID)} class="card-footer-item">Pick&nbsp;<FontAwesomeIcon className="fas" icon={faArrowRight} /></a>
+                                                </footer>
+                                            </div>
+                                        </div>
 
-                                    <FormInputField
-                                        label="Phone"
-                                        name="phone"
-                                        placeholder="Text input"
-                                        value={phone}
-                                        errorText={errors && errors.phone}
-                                        helpText=""
-                                        onChange={(e)=>setPhone(e.target.value)}
-                                        isRequired={true}
-                                        maxWidth="150px"
-                                    />
+                                        {/* Business */}
+                                        <div class="column">
+                                            <div class="card">
+                                                <div class="card-image">
+                                                    <figure class="image is-4by3">
+                                                      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image" />
+                                                    </figure>
+                                                </div>
+                                                <div class="card-content">
+                                                    <div class="media">
+
+                                                      <div class="media-content">
+                                                        <p class="title is-4">Business User</p>
+                                                      </div>
+                                                    </div>
+
+                                                    <div class="content">
+                                                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                                      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                                                      <a href="#">#css</a> <a href="#">#responsive</a>
+                                                      <br />
+                                                    </div>
+                                                </div>
+                                                <footer class="card-footer">
+                                                    <a onClick={(e,s)=>onSelectTypeOf(COMMERCIAL_CUSTOMER_TYPE_OF_ID)} class="card-footer-item">Pick&nbsp;<FontAwesomeIcon className="fas" icon={faArrowRight} /></a>
+                                                </footer>
+                                            </div>
+                                        </div>
+
+                                    </div>
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
                                             <button class="button is-medium is-fullwidth-mobile" onClick={(e)=>setShowCancelWarning(true)}><FontAwesomeIcon className="fas" icon={faTimesCircle} />&nbsp;Cancel</button>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <button class="button is-medium is-primary is-fullwidth-mobile" onClick={onSubmitClick}><FontAwesomeIcon className="fas" icon={faSearch} />&nbsp;Search</button>
-                                        </div>
-                                    </div>
 
-                                    <p class="title is-4 has-text-centered">- OR -</p>
-
-                                    <div class="columns pt-5">
-                                        <div class="column has-text-centered">
-                                            <Link class="button is-medium is-success is-fullwidth-mobile" to="/admin/clients/add/step-2"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -249,4 +264,4 @@ function AdminClientAddStep1() {
     );
 }
 
-export default AdminClientAddStep1;
+export default AdminClientAddStep3;

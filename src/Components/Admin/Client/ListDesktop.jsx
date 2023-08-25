@@ -41,7 +41,7 @@ function AdminClientListDesktop(props) {
                                 <td data-label="Joined">{DateTime.fromISO(datum.joinDate).toLocaleString(DateTime.DATE_MED)}</td>
                                 <td class="is-actions-cell">
                                     <div class="buttons is-right">
-                                        <Link to={`/admin/customer/${datum.id}`} class="is-small">
+                                        <Link to={`/admin/client/${datum.id}`} class="is-small">
                                             View&nbsp;<FontAwesomeIcon className="mdi" icon={faChevronRight} />
                                         </Link>
                                     </div>

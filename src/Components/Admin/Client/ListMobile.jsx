@@ -42,7 +42,7 @@ function AdminClientListMobile(props) {
                     <br />
                     <br />
 
-                    <Link to={`/admin/customer/${datum.id}`} class="button is-primary is-fullwidth-mobile" type="button">
+                    <Link to={`/admin/client/${datum.id}`} class="button is-primary is-fullwidth-mobile" type="button">
                         View&nbsp;<FontAwesomeIcon className="mdi" icon={faChevronRight} />
                     </Link>
 

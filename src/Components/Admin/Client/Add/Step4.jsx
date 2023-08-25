@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
 import { getClientDetailAPI, postClientCreateAPI } from "../../../../API/Client";
@@ -14,11 +14,11 @@ import FormMultiSelectField from "../../../Reusable/FormMultiSelectField";
 import FormSelectField from "../../../Reusable/FormSelectField";
 import FormCheckboxField from "../../../Reusable/FormCheckboxField";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { HOW_DID_YOU_HEAR_ABOUT_US_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
+import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
 import { topAlertMessageState, topAlertStatusState } from "../../../../AppState";
 
 
-function AdminClientAddStep1() {
+function AdminClientAddStep4() {
     ////
     //// Global state.
     ////
@@ -35,9 +35,14 @@ function AdminClientAddStep1() {
     const [forceURL, setForceURL] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [phoneType, setPhoneType] = useState(0);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [showCancelWarning, setShowCancelWarning] = useState(false);
+    const [otherPhone, setOtherPhone] = useState("");
+    const [otherPhoneType, setOtherPhoneType] = useState(0);
+    const [isOkToText, setIsOkToText] = useState(false);
+    const [isOkToEmail, setIsOkToEmail] = useState(false);
 
     ////
     //// Event handling.
@@ -50,13 +55,35 @@ function AdminClientAddStep1() {
 
     const onSubmitClick = (e) => {
         console.log("onSubmitClick: Beginning...");
-        setFetching(true);
-        setErrors({});
-        // const Client = {
-        //     Name: name,
-        // };
-        // console.log("onSubmitClick, Client:", Client);
-        // postClientCreateAPI(Client, onAdminClientAddSuccess, onAdminClientAddError, onAdminClientAddDone);
+        let newErrors = {};
+        let hasErrors = false;
+
+        if (firstName === "") {
+            newErrors["firstName"] = "missing value";
+            hasErrors = true;
+        }
+        if (lastName === "") {
+            newErrors["lastName"] = "missing value";
+            hasErrors = true;
+        }
+        if (email === "") {
+            newErrors["email"] = "missing value";
+            hasErrors = true;
+        }
+        if (phone === "") {
+            newErrors["phone"] = "missing value";
+            hasErrors = true;
+        }
+        if (phoneType === 0) {
+            newErrors["phoneType"] = "missing value";
+            hasErrors = true;
+        }
+
+        if (hasErrors) {
+            setErrors(newErrors);
+            return;
+        }
+        setForceURL("/admin/clients/add/step-5");
     }
 
     function onAdminClientAddSuccess(response){
@@ -130,12 +157,19 @@ function AdminClientAddStep1() {
             <div class="container">
                 <section class="section">
 
-                    {/* Page Breadcrumbs */}
-                    <nav class="breadcrumb has-background-light p-4" aria-label="breadcrumbs">
+                    {/* Desktop Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
                             <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
                             <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link></li>
+                        </ul>
+                    </nav>
+
+                    {/* Mobile Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
+                        <ul>
+                            <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link></li>
                         </ul>
                     </nav>
 
@@ -144,27 +178,12 @@ function AdminClientAddStep1() {
                     <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Client</h4>
                     <hr />
 
+                    {/* Page */}
                     <nav class="box">
-                        <div class={`modal ${showCancelWarning ? 'is-active' : ''}`}>
-                            <div class="modal-background"></div>
-                            <div class="modal-card">
-                                <header class="modal-card-head">
-                                    <p class="modal-card-title">Are you sure?</p>
-                                    <button class="delete" aria-label="close" onClick={(e)=>setShowCancelWarning(false)}></button>
-                                </header>
-                                <section class="modal-card-body">
-                                    Your Client record will be cancelled and your work will be lost. This cannot be undone. Do you want to continue?
-                                </section>
-                                <footer class="modal-card-foot">
-                                    <Link class="button is-medium is-success" to={`/admin/clients`}>Yes</Link>
-                                    <button class="button is-medium" onClick={(e)=>setShowCancelWarning(false)}>No</button>
-                                </footer>
-                            </div>
-                        </div>
 
-                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faSearch} />&nbsp;Search for existing client:</p>
+                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faIdCard} />&nbsp;Contact</p>
 
-                        {/* <p class="pb-4 has-text-grey">Please fill out all the required fields before submitting this form.</p> */}
+                        <p class="pb-4 has-text-grey">Please fill out all the required fields before submitting this form.</p>
 
                         {isFetching
                             ?
@@ -211,6 +230,15 @@ function AdminClientAddStep1() {
                                         maxWidth="380px"
                                     />
 
+                                    <FormCheckboxField
+                                        label="I agree to receive electronic email"
+                                        name="isOkToEmail"
+                                        checked={isOkToEmail}
+                                        errorText={errors && errors.isOkToEmail}
+                                        onChange={(e,x)=>setIsOkToEmail(!isOkToEmail)}
+                                        maxWidth="180px"
+                                    />
+
                                     <FormInputField
                                         label="Phone"
                                         name="phone"
@@ -223,22 +251,59 @@ function AdminClientAddStep1() {
                                         maxWidth="150px"
                                     />
 
+                                    <FormSelectField
+                                        label="Phone Type"
+                                        name="phoneType"
+                                        placeholder="Pick"
+                                        selectedValue={phoneType}
+                                        errorText={errors && errors.phoneType}
+                                        helpText=""
+                                        onChange={(e)=>setPhoneType(parseInt(e.target.value))}
+                                        options={CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS}
+                                    />
+
+                                    <FormCheckboxField
+                                        label="I agree to receive texts to my phone"
+                                        name="isOkToText"
+                                        checked={isOkToText}
+                                        errorText={errors && errors.setIsOkToText}
+                                        onChange={(e,x)=>setIsOkToText(!isOkToText)}
+                                        maxWidth="180px"
+                                    />
+
+                                    <FormInputField
+                                        label="Other Phone (Optional)"
+                                        name="otherPhone"
+                                        placeholder="Text input"
+                                        value={otherPhone}
+                                        errorText={errors && errors.otherPhone}
+                                        helpText=""
+                                        onChange={(e)=>setOtherPhone(e.target.value)}
+                                        isRequired={true}
+                                        maxWidth="150px"
+                                    />
+
+                                    <FormSelectField
+                                        label="Other Phone Type (Optional)"
+                                        name="otherPhoneType"
+                                        placeholder="Pick"
+                                        selectedValue={otherPhoneType}
+                                        errorText={errors && errors.phootherPhoneTypeneType}
+                                        helpText=""
+                                        onChange={(e)=>setOtherPhoneType(parseInt(e.target.value))}
+                                        options={CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS}
+                                    />
+
+
                                     <div class="columns pt-5">
                                         <div class="column is-half">
-                                            <button class="button is-medium is-fullwidth-mobile" onClick={(e)=>setShowCancelWarning(true)}><FontAwesomeIcon className="fas" icon={faTimesCircle} />&nbsp;Cancel</button>
+                                            <Link class="button is-medium is-fullwidth-mobile" to="/admin/clients/add/step-3"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <button class="button is-medium is-primary is-fullwidth-mobile" onClick={onSubmitClick}><FontAwesomeIcon className="fas" icon={faSearch} />&nbsp;Search</button>
+                                            <button class="button is-medium is-primary is-fullwidth-mobile" onClick={onSubmitClick}>Next&nbsp;<FontAwesomeIcon className="fas" icon={faArrowRight} /></button>
                                         </div>
                                     </div>
 
-                                    <p class="title is-4 has-text-centered">- OR -</p>
-
-                                    <div class="columns pt-5">
-                                        <div class="column has-text-centered">
-                                            <Link class="button is-medium is-success is-fullwidth-mobile" to="/admin/clients/add/step-2"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
-                                        </div>
-                                    </div>
                                 </div>
                             </>
                         }
@@ -249,4 +314,4 @@ function AdminClientAddStep1() {
     );
 }
 
-export default AdminClientAddStep1;
+export default AdminClientAddStep4;

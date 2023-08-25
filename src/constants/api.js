@@ -2,18 +2,52 @@
  *  The API web-services endpoints.
  */
 const HTTP_API_SERVER =  process.env.REACT_APP_API_PROTOCOL + "://" + process.env.REACT_APP_API_DOMAIN;
+
+/**
+ * Gateway
+ */
 export const WORKERY_API_BASE_PATH = "/api/v1";
 export const WORKERY_VERSION_ENDPOINT = "version";
 export const WORKERY_LOGIN_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/login";
 export const WORKERY_LOGOUT_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/logout";
 export const WORKERY_EXECUTIVE_VISITS_TENANT_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/executive-visit-tenant";
 
+/**
+ * Tenants
+ */
 export const WORKERY_TENANTS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/tenants';
 export const WORKERY_TENANT_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/tenant/{id}';
+
+/**
+ * Clients
+ */
 export const WORKERY_CLIENTS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers';
 export const WORKERY_CLIENT_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customer/{id}';
 
+/**
+ * Tags
+ */
+export const WORKERY_TAGS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/tags';
+export const WORKERY_TAG_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/tag/{id}';
+export const WORKERY_TAG_SELECT_OPTIONS_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/tags/select-options";
 
+/**
+ * Skill Sets
+ */
+export const WORKERY_SKILL_SETS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/skill-sets';
+export const WORKERY_SKILL_SET_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/skill-set/{id}';
+export const WORKERY_SKILL_SET_SELECT_OPTIONS_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/skill-sets/select-options";
+
+/**
+ * How Hear About Us Item
+ */
+export const WORKERY_HOW_HEAR_ABOUT_US_ITEMS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/how-hear-about-us-items';
+export const WORKERY_HOW_HEAR_ABOUT_US_ITEM_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/how-hear-about-us-item/{id}';
+export const WORKERY_HOW_HEAR_ABOUT_US_ITEM_SELECT_OPTIONS_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/how-hear-about-us-items/select-options";
+
+//
+// Continue below ...
+//
 
 export const WORKERY_FORGOT_PASSWORD_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/forgot-password";
 export const WORKERY_PASSWORD_RESET_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/password-reset";
@@ -96,18 +130,12 @@ export const WORKERY_STAFF_ARCHIVE_API_URL = HTTP_API_SERVER + '/api/v1/staff-op
 export const WORKERY_STAFF_PERMANENTLY_DELETE_OPERATION_API_URL = HTTP_API_SERVER + '/api/v1/staff-operations/permanently-delete';
 export const WORKERY_FINANCIAL_LIST_API_URL = HTTP_API_SERVER + '/api/v1/financials';
 export const WORKERY_FINANCIAL_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/financial/';
-export const WORKERY_TAG_LIST_API_URL = HTTP_API_SERVER + '/api/v1/tags';
-export const WORKERY_TAG_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/tag/';
 export const WORKERY_PRIVATE_FILE_LIST_API_URL = HTTP_API_SERVER + '/api/v1/private-files';
 export const WORKERY_PRIVATE_FILE_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/private-file/';
-export const WORKERY_HOW_HEAR_LIST_API_URL = HTTP_API_SERVER + '/api/v1/how-hears';
-export const WORKERY_HOW_HEAR_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/how-hear/';
 export const WORKERY_AWAY_LOG_LIST_API_URL = HTTP_API_SERVER + '/api/v1/associate-away-logs';
 export const WORKERY_AWAY_LOG_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/associate-away-log/';
 export const WORKERY_BULLETIN_BOARD_ITEM_LIST_API_URL = HTTP_API_SERVER + '/api/v1/bulletin-board-items';
 export const WORKERY_BULLETIN_BOARD_ITEM_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/bulletin-board-item/';
-export const WORKERY_SKILL_SET_LIST_API_URL = HTTP_API_SERVER + '/api/v1/skill-sets';
-export const WORKERY_SKILL_SET_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/skill-set/';
 export const WORKERY_INSURANCE_REQUIREMENT_LIST_API_URL = HTTP_API_SERVER + '/api/v1/insurance-requirements';
 export const WORKERY_INSURANCE_REQUIREMENT_DETAIL_API_URL = HTTP_API_SERVER + '/api/v1/insurance-requirement/';
 export const WORKERY_SERVICE_FEE_LIST_API_URL = HTTP_API_SERVER + '/api/v1/order-service-fees';

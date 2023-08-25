@@ -46,3 +46,7 @@ export const COMMERCIAL_ASSOCIATE_TYPE_OF_ID = 3
 // The following are the default sort by values to use.
 export const DEFAULT_CLIENT_LIST_SORT_BY_VALUE = "last_name,ASC";
 export const DEFAULT_CLIENT_STATUS_FILTER_OPTION = 1; // 1=Active
+
+export const CLIENT_PHONE_TYPE_LANDLINE = 1
+export const CLIENT_PHONE_TYPE_MOBILE = 2
+export const CLIENT_PHONE_TYPE_WORK = 3

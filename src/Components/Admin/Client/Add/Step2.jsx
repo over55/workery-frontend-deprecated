@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faUserCircle, faTachometer, faEye, faPencil, faTrashCan, faPlus, faGauge, faArrowRight, faTable, faArrowUpRightFromSquare, faRefresh, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faHome, faChevronRight, faArrowLeft, faUserCircle, faTachometer, faEye, faPencil, faTrashCan, faPlus, faGauge, faArrowRight, faTable, faArrowUpRightFromSquare, faRefresh, faFilter, faSearch, faClose, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from 'recoil';
+import { DateTime } from "luxon";
 
-import { getClientListAPI, deleteClientAPI } from "../../../API/Client";
-import { topAlertMessageState, topAlertStatusState, currentUserState } from "../../../AppState";
-import FormErrorBox from "../../Reusable/FormErrorBox";
-import PageLoadingContent from "../../Reusable/PageLoadingContent";
-import FormInputFieldWithButton from "../../Reusable/FormInputFieldWithButton";
-import FormSelectField from "../../Reusable/FormSelectField";
-import FormDateField from "../../Reusable/FormDateField";
-import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST_OPTIONS, CLIENT_SORT_OPTIONS, CLIENT_STATUS_FILTER_OPTIONS, CLIENT_TYPE_OF_FILTER_OPTIONS } from "../../../Constants/FieldOptions";
-import { DEFAULT_CLIENT_LIST_SORT_BY_VALUE, DEFAULT_CLIENT_STATUS_FILTER_OPTION } from "../../../Constants/App";
-import AdminClientListDesktop from "./ListDesktop";
-import AdminClientListMobile from "./ListMobile";
+import { getClientListAPI, deleteClientAPI } from "../../../../API/Client";
+import { topAlertMessageState, topAlertStatusState, currentUserState } from "../../../../AppState";
+import FormErrorBox from "../../../Reusable/FormErrorBox";
+import PageLoadingContent from "../../../Reusable/PageLoadingContent";
+import FormInputFieldWithButton from "../../../Reusable/FormInputFieldWithButton";
+import FormSelectField from "../../../Reusable/FormSelectField";
+import FormDateField from "../../../Reusable/FormDateField";
+import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST_OPTIONS, CLIENT_SORT_OPTIONS, CLIENT_STATUS_FILTER_OPTIONS, CLIENT_TYPE_OF_FILTER_OPTIONS } from "../../../../Constants/FieldOptions";
+import { DEFAULT_CLIENT_LIST_SORT_BY_VALUE, DEFAULT_CLIENT_STATUS_FILTER_OPTION,  RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "../../../../Constants/App";
+import AdminClientListDesktop from "../ListDesktop";
+import AdminClientListMobile from "../ListMobile";
 
 
-function AdminClientList() {
+function AdminClientAddStep2() {
+    ////
+    //// URL Parameters.
+    ////
+
+    const [searchParams] = useSearchParams(); // Special thanks via https://stackoverflow.com/a/65451140
+    const firstName = searchParams.get("fn");
+    const lastName = searchParams.get("ln");
+    const email = searchParams.get("e");
+    const phone = searchParams.get("p");
 
     ////
     //// Global state.
@@ -121,7 +131,7 @@ function AdminClientList() {
     //// Event handling.
     ////
 
-    const fetchList = (cur, limit, keywords, so, s, t, j) => {
+    const fetchList = (cur, limit, keywords, so, s, t, j, fn, ln, e, p) => {
         setFetching(true);
         setErrors({});
 
@@ -153,6 +163,18 @@ function AdminClientList() {
         if (j !== undefined && j !== null && j !== "") {
             const jStr = j.getTime();
             params.set("created_at_gte", jStr);
+        }
+        if (fn !== undefined && fn !== null && fn !== "") {
+            params.set("first_name", fn);
+        }
+        if (ln !== undefined && ln !== null && ln !== "") {
+            params.set("last_name", ln);
+        }
+        if (e !== undefined && e !== null && e !== "") {
+            params.set("email", e);
+        }
+        if (p !== undefined && p !== null && p !== "") {
+            params.set("phone", p);
         }
 
         getClientListAPI(
@@ -214,11 +236,11 @@ function AdminClientList() {
 
         if (mounted) {
             // window.scrollTo(0, 0);  // Start the page at the top of the page.
-            fetchList(currentCursor, pageSize, actualSearchText, sortByValue, status, typeOf, createdAtGTE);
+            fetchList(currentCursor, pageSize, actualSearchText, sortByValue, status, typeOf, createdAtGTE, firstName, lastName, email, phone);
         }
 
         return () => { mounted = false; }
-    }, [currentCursor, pageSize, actualSearchText, sortByValue, status, typeOf, createdAtGTE]);
+    }, [currentCursor, pageSize, actualSearchText, sortByValue, status, typeOf, createdAtGTE, firstName, lastName, email, phone]);
 
     ////
     //// Component rendering.
@@ -231,47 +253,24 @@ function AdminClientList() {
 
                     {/* Desktop Breadcrumbs */}
                     <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
-                        <ul class="">
+                        <ul>
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
-                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
+                            <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
+                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link></li>
                         </ul>
                     </nav>
 
                     {/* Mobile Breadcrumbs */}
                     <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
                         <ul>
-                            <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Dashboard</Link></li>
+                            <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link></li>
                         </ul>
                     </nav>
 
                     {/* Page Title */}
                     <h1 class="title is-2"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</h1>
+                    <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Client</h4>
                     <hr />
-
-
-                    {/* Page Menu Options */}
-                    <section class="hero ">
-                      <div class="hero-body has-text-centered">
-                        <div class="container">
-                            <div class="columns is-vcentered">
-                                <div class="column">
-                                    <Link to="/admin/clients/add/step-1">
-                                        <FontAwesomeIcon className="mdi has-text-white has-background-danger-dark p-6 mb-3" icon={faPlus} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
-                                        <h1 class="title is-3">Add</h1>
-                                        <p className="has-text-grey">Add clients</p>
-                                    </Link>
-                                </div>
-                                <div class="column">
-                                    <Link to="/admin/clients/search">
-                                        <FontAwesomeIcon className="mdi has-text-white has-background-success-dark p-6 mb-3" icon={faSearch} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
-                                        <h1 class="title is-3">Search</h1>
-                                        <p className="has-text-grey">Search clients</p>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                    </section>
 
                     {/* Page Modal(s) */}
                     <div class={`modal ${selectedClientForDeletion ? 'is-active' : ''}`}>
@@ -293,13 +292,7 @@ function AdminClientList() {
 
                     {/* Page Table */}
                     <nav class="box" style={{ borderRadius: "20px"}}>
-
-                        {/* Title + Options */}
-                        <div class="columns">
-                            <div class="column">
-                                <h1 class="title is-3"><FontAwesomeIcon className="fas" icon={faTable} />&nbsp;List</h1>
-                            </div>
-                        </div>
+                        <p class="title is-4 pb-2"><FontAwesomeIcon className="fas" icon={faTable} />&nbsp;Search results:</p>
 
                         {/* Filter Panel */}
                         <div class="columns has-background-light is-multiline p-2" style={{ borderRadius: "20px"}}>
@@ -364,43 +357,85 @@ function AdminClientList() {
                             :
                             <>
                                 <FormErrorBox errors={errors} />
-                                {users && users.results && (users.results.length > 0 || previousCursors.length > 0)
+                                <div class="container mb-6">
+                                    {users && users.results && (users.results.length > 0 || previousCursors.length > 0)
                                     ?
-                                    <div class="container">
-                                        {/*
-                                            ##################################################################
-                                            EVERYTHING INSIDE HERE WILL ONLY BE DISPLAYED ON A DESKTOP SCREEN.
-                                            ##################################################################
-                                        */}
-                                        <div class="is-hidden-touch" >
-                                            <AdminClientListDesktop
-                                                listData={users}
-                                                setPageSize={setPageSize}
-                                                pageSize={pageSize}
-                                                previousCursors={previousCursors}
-                                                onPreviousClicked={onPreviousClicked}
-                                                onNextClicked={onNextClicked}
-                                                onSelectClientForDeletion={onSelectClientForDeletion}
-                                            />
+                                    <>
+                                        <div class="columns is-multiline">
+                                            {users && users.results && users.results.map(function(datum, i){
+                                                return <div class="column is-3">
+                                                    <div class="card m-4 has-background-info-light" key={`id_${datum.id}`}>
+                                                        {/* HEADER */}
+                                                        <header class="card-header">
+                                                            <p class="card-header-title">
+                                                                <Link to={`/admin/client/${datum.id}`}>
+                                                                    {datum && datum.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID &&
+                                                                        <strong>
+                                                                            <FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;{datum.firstName}&nbsp;{datum.organizationName}
+                                                                        </strong>
+                                                                    }
+                                                                    {datum && datum.typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID &&
+                                                                        <strong>
+                                                                            <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;{datum.firstName}&nbsp;{datum.lastName}
+                                                                        </strong>
+                                                                    }
+                                                                </Link>
+                                                            </p>
+                                                            <button class="card-header-icon" aria-label="more options">
+                                                                <span class="icon">
+                                                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                                                </span>
+                                                            </button>
+                                                        </header>
+                                                        {/* BODY */}
+                                                        <div class="card-content">
+                                                            <div class="content">
+                                                                {datum.addressLine1}<br />
+                                                                {datum.city}, {datum.region}<br />
+                                                                {datum.phone
+                                                                    ? <Link to={`tel:${datum.phone}`}>{datum.phone}</Link>
+                                                                    : <>-</>
+                                                                }<br />
+                                                                {datum.email
+                                                                    ? <Link to={`mailto:${datum.email}`}>{datum.email}</Link>
+                                                                    : <>-</>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        {/* BOTTOM */}
+                                                        <footer class="card-footer">
+                                                            <Link to={`/admin/client/${datum.id}`} class="card-footer-item">
+                                                                Select&nbsp;<FontAwesomeIcon className="fas" icon={faChevronRight} />
+                                                            </Link>
+                                                        </footer>
+                                                    </div>
+                                                </div>;
+                                            })}
                                         </div>
 
-                                        {/*
-                                            ###########################################################################
-                                            EVERYTHING INSIDE HERE WILL ONLY BE DISPLAYED ON A TABLET OR MOBILE SCREEN.
-                                            ###########################################################################
-                                        */}
-                                        <div class="is-fullwidth is-hidden-desktop">
-                                            <AdminClientListMobile
-                                                listData={users}
-                                                setPageSize={setPageSize}
-                                                pageSize={pageSize}
-                                                previousCursors={previousCursors}
-                                                onPreviousClicked={onPreviousClicked}
-                                                onNextClicked={onNextClicked}
-                                                onSelectClientForDeletion={onSelectClientForDeletion}
-                                            />
+                                        <div class="columns pt-4">
+                                            <div class="column is-half">
+                                                <span class="select">
+                                                    <select class={`input has-text-grey-light`}
+                                                             name="pageSize"
+                                                         onChange={(e)=>setPageSize(parseInt(e.target.value))}>
+                                                        {PAGE_SIZE_OPTIONS.map(function(option, i){
+                                                            return <option selected={pageSize === option.value} value={option.value}>{option.label}</option>;
+                                                        })}
+                                                    </select>
+                                                </span>
+
+                                            </div>
+                                            <div class="column is-half has-text-right">
+                                                {previousCursors.length > 0 &&
+                                                    <button class="button" onClick={onPreviousClicked}>Previous</button>
+                                                }
+                                                {users.hasNextPage && <>
+                                                    <button class="button" onClick={onNextClicked}>Next</button>
+                                                </>}
+                                            </div>
                                         </div>
-                                    </div>
+                                    </>
                                     :
                                     <section class="hero is-medium has-background-white-ter">
                                         <div class="hero-body">
@@ -408,11 +443,20 @@ function AdminClientList() {
                                                 <FontAwesomeIcon className="fas" icon={faTable} />&nbsp;No Clients
                                             </p>
                                             <p class="subtitle">
-                                                No clients. <b><Link to="/admin/clients/add/step-1">Click here&nbsp;<FontAwesomeIcon className="mdi" icon={faArrowRight} /></Link></b> to get started creating your first client.
+                                                No clients found. <b><Link to="/admin/clients/add/step-1">Click here&nbsp;<FontAwesomeIcon className="mdi" icon={faArrowRight} /></Link></b> to search again.
                                             </p>
                                         </div>
                                     </section>
                                 }
+                                </div>
+                                <p class="title is-4 has-text-centered">- OR -</p>
+
+                                <div class="columns pt-5">
+                                    <div class="column has-text-centered">
+                                        <Link class="button is-medium is-fullwidth-mobile" to="/admin/clients/add/step-1"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Search Again</Link>&nbsp;
+                                        <Link class="button is-medium is-success is-fullwidth-mobile" to="/admin/clients/add/step-3"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
+                                    </div>
+                                </div>
                             </>
                         }
                     </nav>
@@ -422,4 +466,4 @@ function AdminClientList() {
     );
 }
 
-export default AdminClientList;
+export default AdminClientAddStep2;

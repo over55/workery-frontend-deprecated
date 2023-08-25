@@ -1,4 +1,7 @@
-import { RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "./App";
+import {
+    RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID,
+    CLIENT_PHONE_TYPE_LANDLINE, CLIENT_PHONE_TYPE_MOBILE, CLIENT_PHONE_TYPE_WORK
+ } from "./App";
 
 export const PAGE_SIZE_OPTIONS = [
     { value: 2, label: '2 Rows' },
@@ -66,4 +69,15 @@ export const CLIENT_TYPE_OF_FILTER_OPTIONS = [
     { value: 0, label: 'All' },
     { value: RESIDENTIAL_CUSTOMER_TYPE_OF_ID, label: 'Residential' },
     { value: COMMERCIAL_CUSTOMER_TYPE_OF_ID, label: 'Commercial' },
+];
+
+export const CLIENT_PHONE_TYPE_OF_OPTIONS = [
+    { value: CLIENT_PHONE_TYPE_LANDLINE, label: 'Landline' },
+    { value: CLIENT_PHONE_TYPE_MOBILE, label: 'Mobile' },
+    { value: CLIENT_PHONE_TYPE_WORK, label: 'Work' },
+];
+
+export const CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS = [
+    { value: 0, label: "Please select" }, // EMPTY OPTION
+    ...CLIENT_PHONE_TYPE_OF_OPTIONS
 ];

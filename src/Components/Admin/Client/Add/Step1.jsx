@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
 import { getClientDetailAPI, postClientCreateAPI } from "../../../../API/Client";
@@ -50,13 +50,13 @@ function AdminClientAddStep1() {
 
     const onSubmitClick = (e) => {
         console.log("onSubmitClick: Beginning...");
-        setFetching(true);
-        setErrors({});
-        // const Client = {
-        //     Name: name,
-        // };
-        // console.log("onSubmitClick, Client:", Client);
-        // postClientCreateAPI(Client, onAdminClientAddSuccess, onAdminClientAddError, onAdminClientAddDone);
+        if (firstName === "" && lastName === "" && email === "" && phone === "") {
+            setErrors({
+                message: "please enter a value"
+            });
+            return
+        }
+        setForceURL("/admin/clients/add/step-2?fn="+firstName+"&ln="+lastName+"&e="+email+"&p="+phone);
     }
 
     function onAdminClientAddSuccess(response){
@@ -130,12 +130,19 @@ function AdminClientAddStep1() {
             <div class="container">
                 <section class="section">
 
-                    {/* Page Breadcrumbs */}
-                    <nav class="breadcrumb has-background-light p-4" aria-label="breadcrumbs">
+                    {/* Desktop Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
-                            <li class=""><Link to="/admin/Clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
+                            <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
                             <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link></li>
+                        </ul>
+                    </nav>
+
+                    {/* Mobile Breadcrumbs */}
+                    <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
+                        <ul>
+                            <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link></li>
                         </ul>
                     </nav>
 
@@ -144,6 +151,7 @@ function AdminClientAddStep1() {
                     <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Client</h4>
                     <hr />
 
+                    {/* Page */}
                     <nav class="box">
                         <div class={`modal ${showCancelWarning ? 'is-active' : ''}`}>
                             <div class="modal-background"></div>
@@ -156,7 +164,7 @@ function AdminClientAddStep1() {
                                     Your Client record will be cancelled and your work will be lost. This cannot be undone. Do you want to continue?
                                 </section>
                                 <footer class="modal-card-foot">
-                                    <Link class="button is-medium is-success" to={`/admin/Clients`}>Yes</Link>
+                                    <Link class="button is-medium is-success" to={`/admin/clients`}>Yes</Link>
                                     <button class="button is-medium" onClick={(e)=>setShowCancelWarning(false)}>No</button>
                                 </footer>
                             </div>
