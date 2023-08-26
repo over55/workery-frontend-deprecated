@@ -36,3 +36,43 @@ export const currentUserState = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const ADD_CUSTOMER_STATE_DEFAULT = {
+    type: 0,
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    phoneType: 0,
+    otherPhone: "",
+    otherPhoneType: 0,
+    isOkToText: false,
+    isOkToEmail: false,
+    postalCode: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    region: "",
+    country: "",
+    hasShippingAddress: false,
+    shippingName: "",
+    shippingPhone: "",
+    shippingCountry: "",
+    shippingRegion: "",
+    shippingCity: "",
+    shippingAddressLine1: "",
+    shippingAddressLine2: "",
+    shippingPostalCode: "",
+    tags: [],
+    comments: [],
+    gender: "",
+    joinDate: null,
+    birthDate: null,
+    howHearAboutUsItemID: ""
+}
+
+export const addCustomerState = atom({
+  key: 'addCustomer',
+  default: ADD_CUSTOMER_STATE_DEFAULT,
+  effects_UNSTABLE: [persistAtom],
+});

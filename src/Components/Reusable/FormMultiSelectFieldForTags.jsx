@@ -34,7 +34,7 @@ function FormMultiSelectFieldForTags({
     function onTagSelectOptionsSuccess(response){
         // console.log("onTagSelectOptionsSuccess: Starting...");
         let b = [
-            {"value": "", "label": "Please select"},
+            // {"value": "", "label": "Please select"},
             ...response
         ]
         setTagSelectOptions(b);

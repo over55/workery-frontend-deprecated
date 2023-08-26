@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
-import { getClientDetailAPI, postClientCreateAPI } from "../../../../API/Client";
 import FormErrorBox from "../../../Reusable/FormErrorBox";
 import FormInputField from "../../../Reusable/FormInputField";
 import FormTextareaField from "../../../Reusable/FormTextareaField";
@@ -16,8 +15,7 @@ import FormCheckboxField from "../../../Reusable/FormCheckboxField";
 import FormCountryField from "../../../Reusable/FormCountryField";
 import FormRegionField from "../../../Reusable/FormRegionField";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { HOW_DID_YOU_HEAR_ABOUT_US_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
-import { topAlertMessageState, topAlertStatusState } from "../../../../AppState";
+import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../../AppState";
 
 
 function AdminClientAddStep5() {
@@ -25,8 +23,7 @@ function AdminClientAddStep5() {
     //// Global state.
     ////
 
-    const [topAlertMessage, setTopAlertMessage] = useRecoilState(topAlertMessageState);
-    const [topAlertStatus, setTopAlertStatus] = useRecoilState(topAlertStatusState);
+    const [addCustomer, setAddCustomer] = useRecoilState(addCustomerState);
 
     ////
     //// Component states.
@@ -35,34 +32,29 @@ function AdminClientAddStep5() {
     const [errors, setErrors] = useState({});
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
-    const [postalCode, setPostalCode] = useState("");
-    const [addressLine1, setAddressLine1] = useState("");
-    const [addressLine2, setAddressLine2] = useState("");
-    const [city, setCity] = useState("");
-    const [region, setRegion] = useState("");
-    const [country, setCountry] = useState("");
-    const [hasShippingAddress, setHasShippingAddress] = useState(false);
-    const [shippingName, setShippingName] = useState("");
-    const [shippingPhone, setShippingPhone] = useState("");
-    const [shippingCountry, setShippingCountry] = useState("");
-    const [shippingRegion, setShippingRegion] = useState("");
-    const [shippingCity, setShippingCity] = useState("");
-    const [shippingAddressLine1, setShippingAddressLine1] = useState("");
-    const [shippingAddressLine2, setShippingAddressLine2] = useState("");
-    const [shippingPostalCode, setShippingPostalCode] = useState("");
+    const [postalCode, setPostalCode] = useState(addCustomer.postalCode);
+    const [addressLine1, setAddressLine1] = useState(addCustomer.addressLine1);
+    const [addressLine2, setAddressLine2] = useState(addCustomer.addressLine2);
+    const [city, setCity] = useState(addCustomer.city);
+    const [region, setRegion] = useState(addCustomer.region);
+    const [country, setCountry] = useState(addCustomer.country);
+    const [hasShippingAddress, setHasShippingAddress] = useState(addCustomer.hasShippingAddress);
+    const [shippingName, setShippingName] = useState(addCustomer.shippingName);
+    const [shippingPhone, setShippingPhone] = useState(addCustomer.shippingPhone);
+    const [shippingCountry, setShippingCountry] = useState(addCustomer.shippingCountry);
+    const [shippingRegion, setShippingRegion] = useState(addCustomer.shippingRegion);
+    const [shippingCity, setShippingCity] = useState(addCustomer.shippingCity);
+    const [shippingAddressLine1, setShippingAddressLine1] = useState(addCustomer.shippingAddressLine1);
+    const [shippingAddressLine2, setShippingAddressLine2] = useState(addCustomer.shippingAddressLine2);
+    const [shippingPostalCode, setShippingPostalCode] = useState(addCustomer.shippingPostalCode);
 
     ////
     //// Event handling.
     ////
 
-
-    ////
-    //// API.
-    ////
-
     const onSubmitClick = (e) => {
         console.log("onSubmitClick: Beginning...");
-        console.log("onSubmitClick: Beginning...");
+
         let newErrors = {};
         let hasErrors = false;
 
@@ -119,54 +111,49 @@ function AdminClientAddStep5() {
         }
 
         if (hasErrors) {
+            // Set the client based error validation.
             setErrors(newErrors);
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+
+            console.log("onSubmitClick: Ending with error.");
             return;
         }
+
+        // Save to persistent storage.
+        let modifiedAddCustomer = { ...addCustomer };
+        modifiedAddCustomer.postalCode = postalCode;
+        modifiedAddCustomer.addressLine1 = addressLine1;
+        modifiedAddCustomer.addressLine2 = addressLine2;
+        modifiedAddCustomer.city = city;
+        modifiedAddCustomer.region = region;
+        modifiedAddCustomer.country = country;
+        modifiedAddCustomer.hasShippingAddress = hasShippingAddress;
+        modifiedAddCustomer.shippingName = shippingName;
+        modifiedAddCustomer.shippingPhone = shippingPhone;
+        modifiedAddCustomer.shippingCountry = shippingCountry;
+        modifiedAddCustomer.shippingRegion = shippingRegion;
+        modifiedAddCustomer.shippingCity = shippingCity;
+        modifiedAddCustomer.shippingAddressLine1 = shippingAddressLine1;
+        modifiedAddCustomer.shippingAddressLine2 = shippingAddressLine2;
+        modifiedAddCustomer.shippingPostalCode = shippingPostalCode;
+        setAddCustomer(modifiedAddCustomer);
+
+        console.log("onSubmitClick: Ending with success.");
+
+        // Redirect to the next page.
         setForceURL("/admin/clients/add/step-6");
     }
 
-    function onAdminClientAddSuccess(response){
-        // For debugging purposes only.
-        console.log("onAdminClientAddSuccess: Starting...");
-        console.log(response);
+    ////
+    //// API.
+    ////
 
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Client created");
-        setTopAlertStatus("success");
-        setTimeout(() => {
-            console.log("onAdminClientAddSuccess: Delayed for 2 seconds.");
-            console.log("onAdminClientAddSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
-
-        // Redirect the user to a new page.
-        setForceURL("/admin/Client/"+response.id);
-    }
-
-    function onAdminClientAddError(apiErr) {
-        console.log("onAdminClientAddError: Starting...");
-        setErrors(apiErr);
-
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Failed submitting");
-        setTopAlertStatus("danger");
-        setTimeout(() => {
-            console.log("onAdminClientAddError: Delayed for 2 seconds.");
-            console.log("onAdminClientAddError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
-    }
-
-    function onAdminClientAddDone() {
-        console.log("onAdminClientAddDone: Starting...");
-        setFetching(false);
-    }
+    // Do nothing.
 
     ////
     //// Misc.
@@ -320,7 +307,7 @@ function AdminClientAddStep5() {
                                                 helpText=""
                                                 onChange={(e)=>setPostalCode(e.target.value)}
                                                 isRequired={true}
-                                                maxWidth="80px"
+                                                maxWidth="100px"
                                             />
                                         </div>
                                         {hasShippingAddress &&<div class="column">
@@ -421,7 +408,7 @@ function AdminClientAddStep5() {
                                                 helpText=""
                                                 onChange={(e)=>setShippingPostalCode(e.target.value)}
                                                 isRequired={true}
-                                                maxWidth="80px"
+                                                maxWidth="100px"
                                             />
 
                                         </div>}
@@ -432,7 +419,7 @@ function AdminClientAddStep5() {
                                             <Link class="button is-medium is-fullwidth-mobile" to="/admin/clients/add/step-4"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <button class="button is-medium is-primary is-fullwidth-mobile" onClick={onSubmitClick}>Next&nbsp;<FontAwesomeIcon className="fas" icon={faArrowRight} /></button>
+                                            <button class="button is-medium is-primary is-fullwidth-mobile" onClick={onSubmitClick} type="button">Next&nbsp;<FontAwesomeIcon className="fas" icon={faArrowRight} /></button>
                                         </div>
                                     </div>
 

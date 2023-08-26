@@ -34,7 +34,7 @@ function FormMultiSelectFieldForSkillSets({
     function onSkillSetSelectOptionsSuccess(response){
         // console.log("onSkillSetSelectOptionsSuccess: Starting...");
         let b = [
-            {"value": "", "label": "Please select"},
+            // {"value": "", "label": "Please select"},
             ...response
         ]
         setSkillSetSelectOptions(b);

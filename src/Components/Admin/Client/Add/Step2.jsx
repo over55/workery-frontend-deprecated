@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faHome, faChevronRight, faArrowLeft, faUserCircle, faTachometer, faEye, faPencil, faTrashCan, faPlus, faGauge, faArrowRight, faTable, faArrowUpRightFromSquare, faRefresh, faFilter, faSearch, faClose, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +17,7 @@ import { USER_ROLES, PAGE_SIZE_OPTIONS, USER_STATUS_LIST_OPTIONS, USER_ROLE_LIST
 import { DEFAULT_CLIENT_LIST_SORT_BY_VALUE, DEFAULT_CLIENT_STATUS_FILTER_OPTION,  RESIDENTIAL_CUSTOMER_TYPE_OF_ID, COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "../../../../Constants/App";
 import AdminClientListDesktop from "../ListDesktop";
 import AdminClientListMobile from "../ListMobile";
+import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../../AppState";
 
 
 function AdminClientAddStep2() {
@@ -37,11 +38,13 @@ function AdminClientAddStep2() {
     const [topAlertMessage, setTopAlertMessage] = useRecoilState(topAlertMessageState);
     const [topAlertStatus, setTopAlertStatus] = useRecoilState(topAlertStatusState);
     const [currentUser] = useRecoilState(currentUserState);
+    const [addCustomer, setAddCustomer] = useRecoilState(addCustomerState);
 
     ////
     //// Component states.
     ////
 
+    const [forceURL, setForceURL] = useState("");
     const [errors, setErrors] = useState({});
     const [users, setClients] = useState("");
     const [selectedClientForDeletion, setSelectedClientForDeletion] = useState("");
@@ -227,6 +230,11 @@ function AdminClientAddStep2() {
 
     }
 
+    const onAddClientClick = (e) => {
+        console.log("deleting previous addCustomer:", addCustomer);
+        setAddCustomer(ADD_CUSTOMER_STATE_DEFAULT);
+        setForceURL("/admin/clients/add/step-3");
+    }
     ////
     //// Misc.
     ////
@@ -245,6 +253,10 @@ function AdminClientAddStep2() {
     ////
     //// Component rendering.
     ////
+
+    if (forceURL !== "") {
+        return <Navigate to={forceURL}  />
+    }
 
     return (
         <>
@@ -454,7 +466,7 @@ function AdminClientAddStep2() {
                                 <div class="columns pt-5">
                                     <div class="column has-text-centered">
                                         <Link class="button is-medium is-fullwidth-mobile" to="/admin/clients/add/step-1"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Search Again</Link>&nbsp;
-                                        <Link class="button is-medium is-success is-fullwidth-mobile" to="/admin/clients/add/step-3"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
+                                        <Link class="button is-medium is-success is-fullwidth-mobile" onClick={onAddClientClick}><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
                                     </div>
                                 </div>
                             </>

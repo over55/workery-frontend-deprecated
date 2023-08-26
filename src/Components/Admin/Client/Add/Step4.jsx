@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
-import { getClientDetailAPI, postClientCreateAPI } from "../../../../API/Client";
 import FormErrorBox from "../../../Reusable/FormErrorBox";
 import FormInputField from "../../../Reusable/FormInputField";
 import FormTextareaField from "../../../Reusable/FormTextareaField";
@@ -15,7 +14,7 @@ import FormSelectField from "../../../Reusable/FormSelectField";
 import FormCheckboxField from "../../../Reusable/FormCheckboxField";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
 import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
-import { topAlertMessageState, topAlertStatusState } from "../../../../AppState";
+import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../../AppState";
 
 
 function AdminClientAddStep4() {
@@ -23,8 +22,7 @@ function AdminClientAddStep4() {
     //// Global state.
     ////
 
-    const [topAlertMessage, setTopAlertMessage] = useRecoilState(topAlertMessageState);
-    const [topAlertStatus, setTopAlertStatus] = useRecoilState(topAlertStatusState);
+    const [addCustomer, setAddCustomer] = useRecoilState(addCustomerState);
 
     ////
     //// Component states.
@@ -33,24 +31,19 @@ function AdminClientAddStep4() {
     const [errors, setErrors] = useState({});
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [phoneType, setPhoneType] = useState(0);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [showCancelWarning, setShowCancelWarning] = useState(false);
-    const [otherPhone, setOtherPhone] = useState("");
-    const [otherPhoneType, setOtherPhoneType] = useState(0);
-    const [isOkToText, setIsOkToText] = useState(false);
-    const [isOkToEmail, setIsOkToEmail] = useState(false);
+    const [email, setEmail] = useState(addCustomer.email);
+    const [phone, setPhone] = useState(addCustomer.phone);
+    const [phoneType, setPhoneType] = useState(addCustomer.phoneType);
+    const [firstName, setFirstName] = useState(addCustomer.firstName);
+    const [lastName, setLastName] = useState(addCustomer.lastName);
+    const [otherPhone, setOtherPhone] = useState(addCustomer.otherPhone);
+    const [otherPhoneType, setOtherPhoneType] = useState(addCustomer.otherPhoneType);
+    const [isOkToText, setIsOkToText] = useState(addCustomer.isOkToText);
+    const [isOkToEmail, setIsOkToEmail] = useState(addCustomer.isOkToEmail);
 
     ////
     //// Event handling.
-    ////
-
-
-    ////
-    //// API.
     ////
 
     const onSubmitClick = (e) => {
@@ -80,54 +73,40 @@ function AdminClientAddStep4() {
         }
 
         if (hasErrors) {
+            // Set the client based error validation.
             setErrors(newErrors);
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+
             return;
         }
+
+        // Save to persistent storage.
+        let modifiedAddCustomer = { ...addCustomer };
+        modifiedAddCustomer.firstName = firstName;
+        modifiedAddCustomer.lastName = lastName;
+        modifiedAddCustomer.email = email;
+        modifiedAddCustomer.phone = phone;
+        modifiedAddCustomer.phoneType = phoneType;
+        modifiedAddCustomer.otherPhone = otherPhone;
+        modifiedAddCustomer.otherPhoneType = otherPhoneType;
+        modifiedAddCustomer.isOkToText = isOkToText;
+        modifiedAddCustomer.isOkToEmail = isOkToEmail;
+        setAddCustomer(modifiedAddCustomer);
+
+        // Redirect to the next page.
         setForceURL("/admin/clients/add/step-5");
     }
 
-    function onAdminClientAddSuccess(response){
-        // For debugging purposes only.
-        console.log("onAdminClientAddSuccess: Starting...");
-        console.log(response);
+    ////
+    //// API.
+    ////
 
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Client created");
-        setTopAlertStatus("success");
-        setTimeout(() => {
-            console.log("onAdminClientAddSuccess: Delayed for 2 seconds.");
-            console.log("onAdminClientAddSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
-
-        // Redirect the user to a new page.
-        setForceURL("/admin/Client/"+response.id);
-    }
-
-    function onAdminClientAddError(apiErr) {
-        console.log("onAdminClientAddError: Starting...");
-        setErrors(apiErr);
-
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Failed submitting");
-        setTopAlertStatus("danger");
-        setTimeout(() => {
-            console.log("onAdminClientAddError: Delayed for 2 seconds.");
-            console.log("onAdminClientAddError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
-    }
-
-    function onAdminClientAddDone() {
-        console.log("onAdminClientAddDone: Starting...");
-        setFetching(false);
-    }
+    // Do nothing...
 
     ////
     //// Misc.

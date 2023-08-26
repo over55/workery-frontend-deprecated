@@ -14,8 +14,7 @@ import FormMultiSelectField from "../../../Reusable/FormMultiSelectField";
 import FormSelectField from "../../../Reusable/FormSelectField";
 import FormCheckboxField from "../../../Reusable/FormCheckboxField";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { HOW_DID_YOU_HEAR_ABOUT_US_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
-import { topAlertMessageState, topAlertStatusState } from "../../../../AppState";
+import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../../AppState";
 
 
 function AdminClientAddStep1() {
@@ -23,8 +22,7 @@ function AdminClientAddStep1() {
     //// Global state.
     ////
 
-    const [topAlertMessage, setTopAlertMessage] = useRecoilState(topAlertMessageState);
-    const [topAlertStatus, setTopAlertStatus] = useRecoilState(topAlertStatusState);
+    const [addCustomer, setAddCustomer] = useRecoilState(addCustomerState);
 
     ////
     //// Component states.
@@ -43,6 +41,11 @@ function AdminClientAddStep1() {
     //// Event handling.
     ////
 
+    const onAddClientClick = (e) => {
+        console.log("deleting previous addCustomer:", addCustomer);
+        setAddCustomer(ADD_CUSTOMER_STATE_DEFAULT);
+        setForceURL("/admin/clients/add/step-3");
+    }
 
     ////
     //// API.
@@ -57,49 +60,6 @@ function AdminClientAddStep1() {
             return
         }
         setForceURL("/admin/clients/add/step-2?fn="+firstName+"&ln="+lastName+"&e="+email+"&p="+phone);
-    }
-
-    function onAdminClientAddSuccess(response){
-        // For debugging purposes only.
-        console.log("onAdminClientAddSuccess: Starting...");
-        console.log(response);
-
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Client created");
-        setTopAlertStatus("success");
-        setTimeout(() => {
-            console.log("onAdminClientAddSuccess: Delayed for 2 seconds.");
-            console.log("onAdminClientAddSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
-
-        // Redirect the user to a new page.
-        setForceURL("/admin/Client/"+response.id);
-    }
-
-    function onAdminClientAddError(apiErr) {
-        console.log("onAdminClientAddError: Starting...");
-        setErrors(apiErr);
-
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Failed submitting");
-        setTopAlertStatus("danger");
-        setTimeout(() => {
-            console.log("onAdminClientAddError: Delayed for 2 seconds.");
-            console.log("onAdminClientAddError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
-    }
-
-    function onAdminClientAddDone() {
-        console.log("onAdminClientAddDone: Starting...");
-        setFetching(false);
     }
 
     ////
@@ -244,7 +204,7 @@ function AdminClientAddStep1() {
 
                                     <div class="columns pt-5">
                                         <div class="column has-text-centered">
-                                            <Link class="button is-medium is-success is-fullwidth-mobile" to="/admin/clients/add/step-2"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
+                                            <Link class="button is-medium is-success is-fullwidth-mobile" onClick={onAddClientClick}><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
                                         </div>
                                     </div>
                                 </div>

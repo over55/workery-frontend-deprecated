@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
-import { getClientDetailAPI, postClientCreateAPI } from "../../../../API/Client";
 import FormErrorBox from "../../../Reusable/FormErrorBox";
 import FormInputField from "../../../Reusable/FormInputField";
 import FormTextareaField from "../../../Reusable/FormTextareaField";
@@ -14,11 +13,11 @@ import FormMultiSelectField from "../../../Reusable/FormMultiSelectField";
 import FormSelectField from "../../../Reusable/FormSelectField";
 import FormCheckboxField from "../../../Reusable/FormCheckboxField";
 import FormMultiSelectFieldForTags from "../../../Reusable/FormMultiSelectFieldForTags";
-import FormMultiSelectFieldForSkillSets from "../../../Reusable/FormMultiSelectFieldForSkillSets";
-import FormMultiSelectFieldForHowHears from "../../../Reusable/FormMultiSelectFieldForHowHears";
+import FormSelectFieldForHowHearAboutUsItem from "../../../Reusable/FormSelectFieldForHowHear";
+import FormDateField from "../../../Reusable/FormDateField";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
-import { topAlertMessageState, topAlertStatusState } from "../../../../AppState";
+import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../../AppState";
+// import FormMultiSelectFieldForSkillSets from "../../../Reusable/FormMultiSelectFieldForSkillSets";
 
 
 function AdminClientAddStep6() {
@@ -26,8 +25,7 @@ function AdminClientAddStep6() {
     //// Global state.
     ////
 
-    const [topAlertMessage, setTopAlertMessage] = useRecoilState(topAlertMessageState);
-    const [topAlertStatus, setTopAlertStatus] = useRecoilState(topAlertStatusState);
+    const [addCustomer, setAddCustomer] = useRecoilState(addCustomerState);
 
     ////
     //// Component states.
@@ -36,13 +34,14 @@ function AdminClientAddStep6() {
     const [errors, setErrors] = useState({});
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
-    const [tags, setTags] = useState([]);
-    const [skillSets, setSkillSets] = useState([]);
-    const [howHearAboutUsItems, setHowHearAboutUsItems] = useState([]);
-
-    // typeOf,  tags, tagOptions, dateOfBirth, gender, isHowHearLoading, howHearId, howHearOptions, howHearOther, howHearIdLabel, joinDate,
-    // onRadioChange,  onMultiChange, onJoinDateChange, comment,
-    // errors, onTextChange, onSelectChange, onDateOfBirthChange, isLoading, onClick
+    const [tags, setTags] = useState(addCustomer.tags);
+    const [howHearAboutUsItemID, setHowHearAboutUsItemID] = useState(addCustomer.howHearAboutUsItemID);
+    const [isHowHearAboutUsItemOther, setIsHowHearAboutUsItemOther] = useState(false);
+    const [howHearAboutUsItemOther, setHowHearAboutUsItemOther] = useState(addCustomer.howHearAboutUsItemOther);
+    const [birthDate, setBirthDate] = useState(addCustomer.birthDate ? Date.parse(addCustomer.birthDate) : null);
+    const [joinDate, setJoinDate] = useState(addCustomer.joinDate ? Date.parse(addCustomer.joinDate) : null);
+    const [additionalComment, setAdditionalComment] = useState(addCustomer.additionalComment);
+    // const [skillSets, setSkillSets] = useState([]);
 
     ////
     //// Event handling.
@@ -58,59 +57,39 @@ function AdminClientAddStep6() {
         let newErrors = {};
         let hasErrors = false;
 
-        // if (firstName === "") {
-        //     newErrors["firstName"] = "missing value";
-        //     hasErrors = true;
-        // }
+        if (howHearAboutUsItemID === "") {
+            newErrors["firstName"] = "missing value";
+            hasErrors = true;
+        }
 
         if (hasErrors) {
+            // Set the client based error validation.
             setErrors(newErrors);
+
+            // The following code will cause the screen to scroll to the top of
+            // the page. Please see ``react-scroll`` for more information:
+            // https://github.com/fisshy/react-scroll
+            var scroll = Scroll.animateScroll;
+            scroll.scrollToTop();
+
+            console.log("onSubmitClick: Ending with error.");
             return;
         }
-        setForceURL("/admin/clients/add/step-5");
-    }
 
-    function onAdminClientAddSuccess(response){
-        // For debugging purposes only.
-        console.log("onAdminClientAddSuccess: Starting...");
-        console.log(response);
+        // Save to persistent storage.
+        let modifiedAddCustomer = { ...addCustomer };
+        modifiedAddCustomer.howHearAboutUsItemID = howHearAboutUsItemID;
+        modifiedAddCustomer.howHearAboutUsItemOther = howHearAboutUsItemOther;
+        modifiedAddCustomer.tags = tags;
+        modifiedAddCustomer.birthDate = birthDate;
+        modifiedAddCustomer.joinDate = joinDate;
+        modifiedAddCustomer.additionalComment = additionalComment;
+        setAddCustomer(modifiedAddCustomer);
 
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Client created");
-        setTopAlertStatus("success");
-        setTimeout(() => {
-            console.log("onAdminClientAddSuccess: Delayed for 2 seconds.");
-            console.log("onAdminClientAddSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
+        console.log("onSubmitClick: Ending with success.");
 
-        // Redirect the user to a new page.
-        setForceURL("/admin/Client/"+response.id);
-    }
-
-    function onAdminClientAddError(apiErr) {
-        console.log("onAdminClientAddError: Starting...");
-        setErrors(apiErr);
-
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Failed submitting");
-        setTopAlertStatus("danger");
-        setTimeout(() => {
-            console.log("onAdminClientAddError: Delayed for 2 seconds.");
-            console.log("onAdminClientAddError: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
-
-        // The following code will cause the screen to scroll to the top of
-        // the page. Please see ``react-scroll`` for more information:
-        // https://github.com/fisshy/react-scroll
-        var scroll = Scroll.animateScroll;
-        scroll.scrollToTop();
-    }
-
-    function onAdminClientAddDone() {
-        console.log("onAdminClientAddDone: Starting...");
-        setFetching(false);
+        // Redirect to the next page.
+        setForceURL("/admin/clients/add/step-7");
     }
 
     ////
@@ -189,6 +168,7 @@ function AdminClientAddStep6() {
                                         maxWidth="320px"
                                     />
 
+                                    {/*
                                     <FormMultiSelectFieldForSkillSets
                                         label="Skill Sets (Optional)"
                                         name="skillSets"
@@ -200,34 +180,69 @@ function AdminClientAddStep6() {
                                         isRequired={true}
                                         maxWidth="320px"
                                     />
-
-                                    <FormMultiSelectFieldForHowHears
-                                        label="How Did You Hear About us? "
-                                        name="howHearAboutUsItems"
-                                        placeholder="Pick"
-                                        howHearAboutUsItems={howHearAboutUsItems}
-                                        setHowHearAboutUsItems={setHowHearAboutUsItems}
-                                        errorText={errors && errors.howHearAboutUsItems}
-                                        helpText="Pick"
-                                        isRequired={true}
-                                        maxWidth="320px"
-                                    />
-
-                                    {/*
-                                    <FormMultiSelectField
-                                        label="Tags (Optional)"
-                                        name="tags"
-                                        placeholder="Text input"
-                                        options={EQUIPMENT_OPTIONS}
-                                        selectedValues={equipment}
-                                        onChange={onEquipmentChange}
-                                        errorText={errors && errors.equipment}
-                                        helpText="Pick the equipment associated with this session template."
-                                        isRequired={true}
-                                        maxWidth="320px"
-                                    />
                                     */}
 
+                                    <FormSelectFieldForHowHearAboutUsItem
+                                        howHearAboutUsItemID={howHearAboutUsItemID}
+                                        setHowHearAboutUsItemID={setHowHearAboutUsItemID}
+                                        isHowHearAboutUsItemOther={isHowHearAboutUsItemOther}
+                                        setIsHowHearAboutUsItemOther={setIsHowHearAboutUsItemOther}
+                                        errorText={errors && errors.howHearAboutUsItemID}
+                                        helpText=""
+                                        isRequired={true}
+                                        maxWidth="520px"
+                                    />
+                                    {isHowHearAboutUsItemOther === true &&
+                                        <>
+                                            <FormInputField
+                                                label="How did you hear about us? (Other)"
+                                                name="howHearAboutUsItemOther"
+                                                placeholder="Text input"
+                                                value={howHearAboutUsItemOther}
+                                                errorText={errors && errors.howHearAboutUsItemOther}
+                                                helpText=""
+                                                onChange={(e)=>setHowHearAboutUsItemOther(e.target.value)}
+                                                isRequired={true}
+                                                maxWidth="100%"
+                                            />
+                                        </>
+                                    }
+
+                                    <FormDateField
+                                        label="Birth Date (Optional)"
+                                        name="birthDate"
+                                        placeholder="Text input"
+                                        value={birthDate}
+                                        helpText=""
+                                        onChange={(date)=>setBirthDate(date)}
+                                        isRequired={true}
+                                        maxWidth="120px"
+                                    />
+
+                                    <FormDateField
+                                        label="Join Date (Optional)"
+                                        name="joinDate"
+                                        placeholder="Text input"
+                                        value={joinDate}
+                                        helpText="This indicates when the user joined the workery"
+                                        onChange={(date)=>setJoinDate(date)}
+                                        isRequired={true}
+                                        maxWidth="120px"
+                                    />
+
+                                    <FormTextareaField
+                                        label="Additional Comment (Optional)"
+                                        name="additionalComment"
+                                        placeholder="Text input"
+                                        value={additionalComment}
+                                        errorText={errors && errors.additionalComment}
+                                        helpText=""
+                                        onChange={(e)=>setAdditionalComment(e.target.value)}
+                                        isRequired={true}
+                                        maxWidth="280px"
+                                        helpText={"Max 638 characters"}
+                                        rows={4}
+                                    />
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
