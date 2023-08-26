@@ -44,9 +44,9 @@ function AdminClientList() {
     const [sortByValue, setSortByValue] = useState(DEFAULT_CLIENT_LIST_SORT_BY_VALUE); // Sorting
     const [temporarySearchText, setTemporarySearchText] = useState("");                // Searching - The search field value as your writes their query.
     const [actualSearchText, setActualSearchText] = useState("");                      // Searching - The actual search query value to submit to the API.
-    const [status, setStatus] = useState("");                                          // Filtering
+    const [status, setStatus] = useState(1);                                           // Filtering
     const [createdAtGTE, setCreatedAtGTE] = useState(null);                            // Filtering
-    const [typeOf, setTypeOf] = useState(0);                                           // Filtering
+    const [type, setType] = useState(0);                                               // Filtering
 
     ////
     //// API.
@@ -90,7 +90,7 @@ function AdminClientList() {
         }, 2000);
 
         // Fetch again an updated list.
-        fetchList(currentCursor, pageSize, actualSearchText, status, typeOf, createdAtGTE);
+        fetchList(currentCursor, pageSize, actualSearchText, status, type, createdAtGTE);
     }
 
     function onClientDeleteError(apiErr) {
@@ -148,7 +148,7 @@ function AdminClientList() {
             params.set("status", s);
         }
         if (t !== undefined && t !== null && t !== "") {
-            params.set("type_of", t);
+            params.set("type", t);
         }
         if (j !== undefined && j !== null && j !== "") {
             const jStr = j.getTime();
@@ -214,11 +214,11 @@ function AdminClientList() {
 
         if (mounted) {
             // window.scrollTo(0, 0);  // Start the page at the top of the page.
-            fetchList(currentCursor, pageSize, actualSearchText, sortByValue, status, typeOf, createdAtGTE);
+            fetchList(currentCursor, pageSize, actualSearchText, sortByValue, status, type, createdAtGTE);
         }
 
         return () => { mounted = false; }
-    }, [currentCursor, pageSize, actualSearchText, sortByValue, status, typeOf, createdAtGTE]);
+    }, [currentCursor, pageSize, actualSearchText, sortByValue, status, type, createdAtGTE]);
 
     ////
     //// Component rendering.
@@ -322,11 +322,11 @@ function AdminClientList() {
                             <div class="column">
                                 <FormSelectField
                                     label="Type"
-                                    name="typeOf"
+                                    name="type"
                                     placeholder="Pick client type"
-                                    selectedValue={typeOf}
+                                    selectedValue={type}
                                     helpText=""
-                                    onChange={(e)=>setTypeOf(parseInt(e.target.value))}
+                                    onChange={(e)=>setType(parseInt(e.target.value))}
                                     options={CLIENT_TYPE_OF_FILTER_OPTIONS}
                                     isRequired={true}
                                 />

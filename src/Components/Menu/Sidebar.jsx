@@ -49,7 +49,8 @@ export default props => {
         "/forgot-password",
         "/password-reset",
         "/root/dashboard",
-        "/root/organizations"
+        "/root/tenants",
+        "/root/tenant"
     ];
     const location = useLocation();
     var arrayLength = ignorePathsArr.length;

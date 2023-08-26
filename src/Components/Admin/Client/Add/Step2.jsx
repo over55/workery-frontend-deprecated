@@ -369,12 +369,12 @@ function AdminClientAddStep2() {
                                                         <header class="card-header">
                                                             <p class="card-header-title">
                                                                 <Link to={`/admin/client/${datum.id}`}>
-                                                                    {datum && datum.typeOf === COMMERCIAL_CUSTOMER_TYPE_OF_ID &&
+                                                                    {datum.type === COMMERCIAL_CUSTOMER_TYPE_OF_ID &&
                                                                         <strong>
                                                                             <FontAwesomeIcon className="fas" icon={faBuilding} />&nbsp;{datum.firstName}&nbsp;{datum.organizationName}
                                                                         </strong>
                                                                     }
-                                                                    {datum && datum.typeOf === RESIDENTIAL_CUSTOMER_TYPE_OF_ID &&
+                                                                    {datum.type === RESIDENTIAL_CUSTOMER_TYPE_OF_ID &&
                                                                         <strong>
                                                                             <FontAwesomeIcon className="fas" icon={faHome} />&nbsp;{datum.firstName}&nbsp;{datum.lastName}
                                                                         </strong>
