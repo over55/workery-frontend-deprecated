@@ -5,11 +5,6 @@ import { DateTime } from "luxon";
 
 function DataDisplayRowText(props) {
     const { label, value, helpText, type="text"} = props;
-
-    if (type === "date") {
-        const dt = DateTime.fromMillis(value).toLocaleString(DateTime.DATE_MED)
-        console.log("dt:",dt);
-    }
     return (
         <div class="field pb-4">
             <label class="label">{label}</label>
@@ -28,10 +23,10 @@ function DataDisplayRowText(props) {
                             <Link to={`tel:${value}`}>{value}</Link>
                         }
                         {type === "datetime" &&
-                            DateTime.fromMillis(value).toLocaleString(DateTime.DATETIME_MED)
+                            DateTime.fromISO(value).toLocaleString(DateTime.DATETIME_MED)
                         }
                         {type === "date" &&
-                            DateTime.fromMillis(value).toLocaleString(DateTime.DATE_MED)
+                            DateTime.fromISO(value).toLocaleString(DateTime.DATE_MED)
                         }
                         </>
                         :

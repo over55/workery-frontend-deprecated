@@ -38,8 +38,8 @@ function AdminClientAddStep6() {
     const [howDidYouHearAboutUsID, setHowHearAboutUsItemID] = useState(addCustomer.howDidYouHearAboutUsID);
     const [isHowHearAboutUsItemOther, setIsHowHearAboutUsItemOther] = useState(addCustomer.isHowHearAboutUsItemOther);
     const [howDidYouHearAboutUsOther, setHowHearAboutUsItemOther] = useState(addCustomer.howDidYouHearAboutUsOther);
-    const [birthDate, setBirthDate] = useState(addCustomer.birthDate ? Date.parse(addCustomer.birthDate) : null);
-    const [joinDate, setJoinDate] = useState(addCustomer.joinDate ? Date.parse(addCustomer.joinDate) : null);
+    const [birthDate, setBirthDate] = useState(addCustomer.birthDate);
+    const [joinDate, setJoinDate] = useState(addCustomer.joinDate);
     const [additionalComment, setAdditionalComment] = useState(addCustomer.additionalComment);
     // const [skillSets, setSkillSets] = useState([]);
 
