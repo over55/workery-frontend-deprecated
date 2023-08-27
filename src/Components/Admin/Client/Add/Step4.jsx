@@ -13,7 +13,8 @@ import FormMultiSelectField from "../../../Reusable/FormMultiSelectField";
 import FormSelectField from "../../../Reusable/FormSelectField";
 import FormCheckboxField from "../../../Reusable/FormCheckboxField";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "../../../../Constants/App";
+import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS, CLIENT_ORGANIZATION_TYPE_OPTIONS_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
 import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../../AppState";
 
 
@@ -32,6 +33,8 @@ function AdminClientAddStep4() {
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
     const [showCancelWarning, setShowCancelWarning] = useState(false);
+    const [organizationName, setOrganizationName] = useState(addCustomer.organizationName);
+    const [organizationType, setOrganizationType] = useState(addCustomer.organizationType);
     const [email, setEmail] = useState(addCustomer.email);
     const [phone, setPhone] = useState(addCustomer.phone);
     const [phoneType, setPhoneType] = useState(addCustomer.phoneType);
@@ -51,6 +54,16 @@ function AdminClientAddStep4() {
         let newErrors = {};
         let hasErrors = false;
 
+        if (addCustomer.type === COMMERCIAL_CUSTOMER_TYPE_OF_ID) {
+            if (organizationName === "") {
+                newErrors["organizationName"] = "missing value";
+                hasErrors = true;
+            }
+            if (organizationType === 0) {
+                newErrors["organizationType"] = "missing value";
+                hasErrors = true;
+            }
+        }
         if (firstName === "") {
             newErrors["firstName"] = "missing value";
             hasErrors = true;
@@ -87,6 +100,8 @@ function AdminClientAddStep4() {
 
         // Save to persistent storage.
         let modifiedAddCustomer = { ...addCustomer };
+        modifiedAddCustomer.organizationName = organizationName;
+        modifiedAddCustomer.organizationType = organizationType;
         modifiedAddCustomer.firstName = firstName;
         modifiedAddCustomer.lastName = lastName;
         modifiedAddCustomer.email = email;
@@ -171,6 +186,29 @@ function AdminClientAddStep4() {
                             <>
                                 <FormErrorBox errors={errors} />
                                 <div class="container">
+                                    {addCustomer.type === COMMERCIAL_CUSTOMER_TYPE_OF_ID && <>
+                                        <FormInputField
+                                            label="Organization Name"
+                                            name="organizationName"
+                                            placeholder="Text input"
+                                            value={organizationName}
+                                            errorText={errors && errors.organizationName}
+                                            helpText=""
+                                            onChange={(e)=>setOrganizationName(e.target.value)}
+                                            isRequired={true}
+                                            maxWidth="380px"
+                                        />
+                                        <FormSelectField
+                                            label="Organization Type"
+                                            name="organizationType"
+                                            placeholder="Pick"
+                                            selectedValue={organizationType}
+                                            errorText={errors && errors.organizationType}
+                                            helpText=""
+                                            onChange={(e)=>setOrganizationType(parseInt(e.target.value))}
+                                            options={CLIENT_ORGANIZATION_TYPE_OPTIONS_WITH_EMPTY_OPTIONS}
+                                        />
+                                    </>}
 
                                     <FormInputField
                                         label="First Name"
@@ -272,7 +310,6 @@ function AdminClientAddStep4() {
                                         onChange={(e)=>setOtherPhoneType(parseInt(e.target.value))}
                                         options={CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS}
                                     />
-
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">

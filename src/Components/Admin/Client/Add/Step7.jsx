@@ -5,19 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle, faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
+import { postClientCreateAPI} from "../../../../API/Client";
 import FormErrorBox from "../../../Reusable/FormErrorBox";
-import FormInputField from "../../../Reusable/FormInputField";
-import FormTextareaField from "../../../Reusable/FormTextareaField";
-import FormRadioField from "../../../Reusable/FormRadioField";
-import FormMultiSelectField from "../../../Reusable/FormMultiSelectField";
-import FormSelectField from "../../../Reusable/FormSelectField";
-import FormCheckboxField from "../../../Reusable/FormCheckboxField";
-import FormMultiSelectFieldForTags from "../../../Reusable/FormMultiSelectFieldForTags";
-import FormSelectFieldForHowHearAboutUsItem from "../../../Reusable/FormSelectFieldForHowHear";
-import FormDateField from "../../../Reusable/FormDateField";
+import DataDisplayRowText from "../../../Reusable/DataDisplayRowText";
+import DataDisplayRowCheckbox from "../../../Reusable/DataDisplayRowCheckbox";
+import DataDisplayRowSelect from "../../../Reusable/DataDisplayRowSelect";
+import DataDisplayRowTags from "../../../Reusable/DataDisplayRowTags";
+import DataDisplayRowHowHearAboutUsItem from "../../../Reusable/DataDisplayRowHowHear";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../../AppState";
-// import FormMultiSelectFieldForSkillSets from "../../../Reusable/FormMultiSelectFieldForSkillSets";
+import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT, topAlertMessageState, topAlertStatusState } from "../../../../AppState";
+import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
 
 
 function AdminClientAddStep7() {
@@ -26,6 +23,8 @@ function AdminClientAddStep7() {
     ////
 
     const [addCustomer, setAddCustomer] = useRecoilState(addCustomerState);
+    const [topAlertMessage, setTopAlertMessage] = useRecoilState(topAlertMessageState);
+    const [topAlertStatus, setTopAlertStatus] = useRecoilState(topAlertStatusState);
 
     ////
     //// Component states.
@@ -39,14 +38,52 @@ function AdminClientAddStep7() {
     //// Event handling.
     ////
 
+    const onSubmitClick = (e) => {
+        console.log("onSubmitClick: Beginning...");
+        setFetching(false);
+        setErrors({});
+        postClientCreateAPI(addCustomer, onSuccess, onError, onDone);
+    }
 
     ////
     //// API.
     ////
 
-    const onSubmitClick = (e) => {
-        console.log("onSubmitClick: Beginning...");
+    function onSuccess(response){
+        // For debugging purposes only.
+        console.log("onSuccess: Starting...");
+        console.log(response);
 
+        if (response === undefined || response === null || response === "") {
+        console.log("onSuccess: exiting early");
+            return;
+        }
+
+        // Add a temporary banner message in the app and then clear itself after 2 seconds.
+        setTopAlertMessage("Client created");
+        setTopAlertStatus("success");
+        setTimeout(() => {
+            console.log("onSuccess: Delayed for 2 seconds.");
+            console.log("onSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
+            setTopAlertMessage("");
+        }, 2000);
+
+        // Redirect the user to a new page.
+        setForceURL("/admin/client/"+response.id);
+    }
+
+    function onError(apiErr) {
+        setErrors(apiErr);
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
+
+    function onDone() {
+        setFetching(false);
     }
 
     ////
@@ -58,7 +95,6 @@ function AdminClientAddStep7() {
 
         if (mounted) {
             window.scrollTo(0, 0);  // Start the page at the top of the page.
-
             setFetching(false);
         }
 
@@ -111,9 +147,182 @@ function AdminClientAddStep7() {
                             :
                             <>
                                 <FormErrorBox errors={errors} />
-                                <div class="container">
+                                {addCustomer !== undefined && addCustomer !== null && addCustomer !== "" && <div class="container">
+                                    <p class="title is-4 mt-2"><FontAwesomeIcon className="fas" icon={faIdCard} />&nbsp;Contact</p>
 
+                                    <DataDisplayRowText
+                                        label="First Name"
+                                        value={addCustomer.firstName}
+                                    />
 
+                                    <DataDisplayRowText
+                                        label="Last Name"
+                                        value={addCustomer.lastName}
+                                    />
+
+                                    <DataDisplayRowText
+                                        label="Email"
+                                        value={addCustomer.email}
+                                        type="email"
+                                    />
+
+                                    <DataDisplayRowCheckbox
+                                       label="I agree to receive electronic email"
+                                       checked={addCustomer.isOkToEmail}
+                                    />
+
+                                    <DataDisplayRowText
+                                        label="Phone"
+                                        value={addCustomer.phone}
+                                        type="phone"
+                                    />
+
+                                    <DataDisplayRowSelect
+                                        label="Phone Type"
+                                        selectedValue={addCustomer.phoneType}
+                                        options={CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS}
+                                    />
+
+                                    <DataDisplayRowCheckbox
+                                       label="I agree to receive texts to my phone"
+                                       checked={addCustomer.isOkToText}
+                                    />
+
+                                    <DataDisplayRowText
+                                        label="Other Phone (Optional)"
+                                        value={addCustomer.otherPhone}
+                                        type="phone"
+                                    />
+
+                                    {addCustomer.otherPhoneType !== 0 && <DataDisplayRowSelect
+                                        label="Other Phone Type (Optional)"
+                                        selectedValue={addCustomer.otherPhoneType}
+                                        options={CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS}
+                                    />}
+
+                                    <p class="title is-4"><FontAwesomeIcon className="fas" icon={faAddressBook} />&nbsp;Address</p>
+
+                                    <DataDisplayRowCheckbox
+                                       label="Has shipping address different then billing address"
+                                       checked={addCustomer.hasShippingAddress}
+                                    />
+
+                                    <div class="columns">
+                                        <div class="column">
+                                            {addCustomer.hasShippingAddress
+                                                ? <p class="subtitle is-6">Billing Address</p>
+                                                : <></>
+                                            }
+
+                                            <DataDisplayRowText
+                                                label="Country"
+                                                value={addCustomer.country}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Province/Territory"
+                                                value={addCustomer.region}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="City"
+                                                value={addCustomer.city}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Address Line 1"
+                                                value={addCustomer.addressLine1}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Address Line 2 (Optional)"
+                                                value={addCustomer.addressLine2}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Postal Code)"
+                                                value={addCustomer.postalCode}
+                                            />
+                                        </div>
+                                        {addCustomer.hasShippingAddress &&<div class="column">
+                                            <p class="subtitle is-6">Shipping Address</p>
+
+                                            <DataDisplayRowText
+                                                label="Name"
+                                                value={addCustomer.shippingName}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Phone"
+                                                value={addCustomer.shippingPhone}
+                                                type="phone"
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Country"
+                                                value={addCustomer.shippingCountry}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Province/Territory"
+                                                value={addCustomer.shippingRegion}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="City"
+                                                value={addCustomer.shippingCity}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Address Line 1"
+                                                value={addCustomer.shippingAddressLine1}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Address Line 2 (Optional)"
+                                                value={addCustomer.shippingAddressLine2}
+                                            />
+
+                                            <DataDisplayRowText
+                                                label="Postal Code"
+                                                value={addCustomer.shippingPostalCode}
+                                            />
+                                        </div>}
+                                    </div>
+
+                                    <p class="title is-4"><FontAwesomeIcon className="fas" icon={faChartPie} />&nbsp;Metrics</p>
+
+                                    <DataDisplayRowTags
+                                        tags={addCustomer.tags}
+                                    />
+
+                                    <DataDisplayRowHowHearAboutUsItem
+                                        howDidYouHearAboutUsID={addCustomer.howDidYouHearAboutUsID}
+                                    />
+
+                                    {addCustomer.howDidYouHearAboutUsOther !== undefined && addCustomer.howDidYouHearAboutUsOther !== null && addCustomer.howDidYouHearAboutUsOther !== null &&
+                                        <DataDisplayRowText
+                                            label="How did you hear about us? (Other)"
+                                            value={addCustomer.howDidYouHearAboutUsOther}
+                                        />
+                                    }
+
+                                    <DataDisplayRowText
+                                        label="Birth Date (Optional)"
+                                        value={addCustomer.birthDate}
+                                        type="date"
+                                    />
+
+                                    <DataDisplayRowText
+                                        label="Join Date (Optional)"
+                                        value={addCustomer.joinDate}
+                                        type="date"
+                                    />
+
+                                    <DataDisplayRowText
+                                        label="Additional Comment"
+                                        value={addCustomer.additionalComment}
+                                    />
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
@@ -124,7 +333,7 @@ function AdminClientAddStep7() {
                                         </div>
                                     </div>
 
-                                </div>
+                                </div>}
                             </>
                         }
                     </nav>

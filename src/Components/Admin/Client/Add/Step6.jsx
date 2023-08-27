@@ -35,9 +35,9 @@ function AdminClientAddStep6() {
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
     const [tags, setTags] = useState(addCustomer.tags);
-    const [howHearAboutUsItemID, setHowHearAboutUsItemID] = useState(addCustomer.howHearAboutUsItemID);
-    const [isHowHearAboutUsItemOther, setIsHowHearAboutUsItemOther] = useState(false);
-    const [howHearAboutUsItemOther, setHowHearAboutUsItemOther] = useState(addCustomer.howHearAboutUsItemOther);
+    const [howDidYouHearAboutUsID, setHowHearAboutUsItemID] = useState(addCustomer.howDidYouHearAboutUsID);
+    const [isHowHearAboutUsItemOther, setIsHowHearAboutUsItemOther] = useState(addCustomer.isHowHearAboutUsItemOther);
+    const [howDidYouHearAboutUsOther, setHowHearAboutUsItemOther] = useState(addCustomer.howDidYouHearAboutUsOther);
     const [birthDate, setBirthDate] = useState(addCustomer.birthDate ? Date.parse(addCustomer.birthDate) : null);
     const [joinDate, setJoinDate] = useState(addCustomer.joinDate ? Date.parse(addCustomer.joinDate) : null);
     const [additionalComment, setAdditionalComment] = useState(addCustomer.additionalComment);
@@ -57,9 +57,14 @@ function AdminClientAddStep6() {
         let newErrors = {};
         let hasErrors = false;
 
-        if (howHearAboutUsItemID === "") {
-            newErrors["firstName"] = "missing value";
+        if (howDidYouHearAboutUsID === "") {
+            newErrors["howDidYouHearAboutUsID"] = "missing value";
             hasErrors = true;
+        } else {
+            if (isHowHearAboutUsItemOther === true && howDidYouHearAboutUsOther === "") {
+                newErrors["howDidYouHearAboutUsOther"] = "missing value";
+                hasErrors = true;
+            }
         }
 
         if (hasErrors) {
@@ -78,8 +83,8 @@ function AdminClientAddStep6() {
 
         // Save to persistent storage.
         let modifiedAddCustomer = { ...addCustomer };
-        modifiedAddCustomer.howHearAboutUsItemID = howHearAboutUsItemID;
-        modifiedAddCustomer.howHearAboutUsItemOther = howHearAboutUsItemOther;
+        modifiedAddCustomer.howDidYouHearAboutUsID = howDidYouHearAboutUsID;
+        modifiedAddCustomer.howDidYouHearAboutUsOther = howDidYouHearAboutUsOther;
         modifiedAddCustomer.tags = tags;
         modifiedAddCustomer.birthDate = birthDate;
         modifiedAddCustomer.joinDate = joinDate;
@@ -183,11 +188,11 @@ function AdminClientAddStep6() {
                                     */}
 
                                     <FormSelectFieldForHowHearAboutUsItem
-                                        howHearAboutUsItemID={howHearAboutUsItemID}
+                                        howDidYouHearAboutUsID={howDidYouHearAboutUsID}
                                         setHowHearAboutUsItemID={setHowHearAboutUsItemID}
                                         isHowHearAboutUsItemOther={isHowHearAboutUsItemOther}
                                         setIsHowHearAboutUsItemOther={setIsHowHearAboutUsItemOther}
-                                        errorText={errors && errors.howHearAboutUsItemID}
+                                        errorText={errors && errors.howDidYouHearAboutUsID}
                                         helpText=""
                                         isRequired={true}
                                         maxWidth="520px"
@@ -196,10 +201,10 @@ function AdminClientAddStep6() {
                                         <>
                                             <FormInputField
                                                 label="How did you hear about us? (Other)"
-                                                name="howHearAboutUsItemOther"
+                                                name="howDidYouHearAboutUsOther"
                                                 placeholder="Text input"
-                                                value={howHearAboutUsItemOther}
-                                                errorText={errors && errors.howHearAboutUsItemOther}
+                                                value={howDidYouHearAboutUsOther}
+                                                errorText={errors && errors.howDidYouHearAboutUsOther}
                                                 helpText=""
                                                 onChange={(e)=>setHowHearAboutUsItemOther(e.target.value)}
                                                 isRequired={true}
@@ -216,7 +221,7 @@ function AdminClientAddStep6() {
                                         helpText=""
                                         onChange={(date)=>setBirthDate(date)}
                                         isRequired={true}
-                                        maxWidth="120px"
+                                        maxWidth="180px"
                                     />
 
                                     <FormDateField
@@ -227,7 +232,7 @@ function AdminClientAddStep6() {
                                         helpText="This indicates when the user joined the workery"
                                         onChange={(date)=>setJoinDate(date)}
                                         isRequired={true}
-                                        maxWidth="120px"
+                                        maxWidth="180px"
                                     />
 
                                     <FormTextareaField

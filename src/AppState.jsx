@@ -39,6 +39,8 @@ export const currentUserState = atom({
 
 export const ADD_CUSTOMER_STATE_DEFAULT = {
     type: 0,
+    OrganizationName: "",
+    OrganizationType: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -68,7 +70,10 @@ export const ADD_CUSTOMER_STATE_DEFAULT = {
     gender: "",
     joinDate: null,
     birthDate: null,
-    howHearAboutUsItemID: ""
+    howDidYouHearAboutUsID: "",
+    ishowDidYouHearAboutUsOther: false,
+    howDidYouHearAboutUsOther: "",
+    additionalComment: "",
 }
 
 export const addCustomerState = atom({

@@ -1,9 +1,7 @@
 import React from "react";
 
-function FormTextOptionRow(props) {
+function DataDisplayRowSelect(props) {
     const { label, selectedValue, options, helpText } = props;
-    console.log("selectedValue",selectedValue);
-    console.log("options",options);
 
     const option = options.find(
         (option) => option.value === selectedValue
@@ -20,4 +18,4 @@ function FormTextOptionRow(props) {
     );
 }
 
-export default FormTextOptionRow;
+export default DataDisplayRowSelect;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose } from '@fortawesome/free-solid-svg-icons'
+import { faBuildingUser, faHomeUser, faUserGear, faArrowRight, faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 
 import FormErrorBox from "../../../Reusable/FormErrorBox";
@@ -114,7 +114,7 @@ function AdminClientAddStep3() {
                             </div>
                         </div>
 
-                        <p class="title is-4">Select Client Type:</p>
+                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faUserGear} />&nbsp;Select Client Type:</p>
 
                         <p class="pb-4 has-text-grey">Please select the type of client this is.</p>
 
@@ -135,7 +135,7 @@ function AdminClientAddStep3() {
                                                 <div class="media">
 
                                                   <div class="media-content">
-                                                    <p class="title is-4">Residential User</p>
+                                                    <p class="title is-4"><FontAwesomeIcon className="fas" icon={faHomeUser} />&nbsp;Residential User</p>
                                                   </div>
                                                 </div>
 
@@ -164,7 +164,7 @@ function AdminClientAddStep3() {
                                                 <div class="media">
 
                                                   <div class="media-content">
-                                                    <p class="title is-4">Business User</p>
+                                                    <p class="title is-4"><FontAwesomeIcon className="fas" icon={faBuildingUser} />&nbsp;Business User</p>
                                                   </div>
                                                 </div>
 
