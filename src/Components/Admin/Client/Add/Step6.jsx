@@ -40,6 +40,7 @@ function AdminClientAddStep6() {
     const [howDidYouHearAboutUsOther, setHowHearAboutUsItemOther] = useState(addCustomer.howDidYouHearAboutUsOther);
     const [birthDate, setBirthDate] = useState(addCustomer.birthDate);
     const [joinDate, setJoinDate] = useState(addCustomer.joinDate);
+    const [gender, setGender] = useState(addCustomer.gender);
     const [additionalComment, setAdditionalComment] = useState(addCustomer.additionalComment);
     // const [skillSets, setSkillSets] = useState([]);
 
@@ -83,9 +84,10 @@ function AdminClientAddStep6() {
 
         // Save to persistent storage.
         let modifiedAddCustomer = { ...addCustomer };
+        modifiedAddCustomer.tags = tags;
         modifiedAddCustomer.howDidYouHearAboutUsID = howDidYouHearAboutUsID;
         modifiedAddCustomer.howDidYouHearAboutUsOther = howDidYouHearAboutUsOther;
-        modifiedAddCustomer.tags = tags;
+        modifiedAddCustomer.gender = gender;
         modifiedAddCustomer.birthDate = birthDate;
         modifiedAddCustomer.joinDate = joinDate;
         modifiedAddCustomer.additionalComment = additionalComment;
@@ -212,6 +214,19 @@ function AdminClientAddStep6() {
                                             />
                                         </>
                                     }
+
+                                    <FormRadioField
+                                        label="Gender"
+                                        name="gender"
+                                        value={gender}
+                                        opt1Value="Male"
+                                        opt1Label="Male"
+                                        opt2Value="Female"
+                                        opt2Label="Female"
+                                        opt3Value="Other"
+                                        opt3Label="Other"
+                                        onChange={(e)=>setGender(e.target.value)}
+                                    />
 
                                     <FormDateField
                                         label="Birth Date (Optional)"

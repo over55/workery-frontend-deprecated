@@ -9,6 +9,7 @@ import { postClientCreateAPI} from "../../../../API/Client";
 import FormErrorBox from "../../../Reusable/FormErrorBox";
 import DataDisplayRowText from "../../../Reusable/DataDisplayRowText";
 import DataDisplayRowCheckbox from "../../../Reusable/DataDisplayRowCheckbox";
+import DataDisplayRowRadio from "../../../Reusable/DataDisplayRowRadio";
 import DataDisplayRowSelect from "../../../Reusable/DataDisplayRowSelect";
 import DataDisplayRowTags from "../../../Reusable/DataDisplayRowTags";
 import DataDisplayRowHowHearAboutUsItem from "../../../Reusable/DataDisplayRowHowHear";
@@ -306,6 +307,17 @@ function AdminClientAddStep7() {
                                             value={addCustomer.howDidYouHearAboutUsOther}
                                         />
                                     }
+
+                                    <DataDisplayRowRadio
+                                        label="Gender"
+                                        value={addCustomer.gender}
+                                        opt1Value="Male"
+                                        opt1Label="Male"
+                                        opt2Value="Female"
+                                        opt2Label="Female"
+                                        opt3Value="Other"
+                                        opt3Label="Other"
+                                    />
 
                                     <DataDisplayRowText
                                         label="Birth Date (Optional)"
