@@ -136,7 +136,7 @@ function AdminClientDetailLite() {
                                 <p class="title is-4"><FontAwesomeIcon className="fas" icon={faPaperclip} />&nbsp;Summary</p>
                             </div>
                             <div class="column has-text-right">
-                                <Link to={`/root/client/${cid}/edit`} class="button is-small is-warning is-fullwidth-mobile" type="button">
+                                <Link to={`/admin/client/${cid}/edit`} class="button is-small is-warning is-fullwidth-mobile" type="button">
                                     <FontAwesomeIcon className="mdi" icon={faPencil} />&nbsp;Edit
                                 </Link>
                             </div>

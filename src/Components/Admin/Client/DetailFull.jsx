@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faTable, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 
@@ -137,10 +137,10 @@ function AdminClientDetailFull() {
                         {/* Title + Options */}
                         {client && <div class="columns">
                             <div class="column">
-                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faPaperclip} />&nbsp;Summary</p>
+                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faTable} />&nbsp;Detail</p>
                             </div>
                             <div class="column has-text-right">
-                                <Link to={`/root/client/${cid}/edit`} class="button is-small is-warning is-fullwidth-mobile" type="button">
+                                <Link to={`/admin/client/${cid}/edit`} class="button is-small is-warning is-fullwidth-mobile" type="button">
                                     <FontAwesomeIcon className="mdi" icon={faPencil} />&nbsp;Edit
                                 </Link>
                             </div>

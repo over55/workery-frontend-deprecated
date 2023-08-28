@@ -36,7 +36,7 @@ function AdminClientAddStep6() {
     const [forceURL, setForceURL] = useState("");
     const [tags, setTags] = useState(addCustomer.tags);
     const [howDidYouHearAboutUsID, setHowDidYouHearAboutUsID] = useState(addCustomer.howDidYouHearAboutUsID);
-    const [ishowDidYouHearAboutUsOther, setIshowDidYouHearAboutUsOther] = useState(addCustomer.ishowDidYouHearAboutUsOther);
+    const [isHowDidYouHearAboutUsOther, setIsHowDidYouHearAboutUsOther] = useState(addCustomer.isHowDidYouHearAboutUsOther);
     const [howDidYouHearAboutUsOther, setHowHearAboutUsItemOther] = useState(addCustomer.howDidYouHearAboutUsOther);
     const [birthDate, setBirthDate] = useState(addCustomer.birthDate);
     const [joinDate, setJoinDate] = useState(addCustomer.joinDate);
@@ -62,7 +62,7 @@ function AdminClientAddStep6() {
             newErrors["howDidYouHearAboutUsID"] = "missing value";
             hasErrors = true;
         } else {
-            if (ishowDidYouHearAboutUsOther === true && howDidYouHearAboutUsOther === "") {
+            if (isHowDidYouHearAboutUsOther === true && howDidYouHearAboutUsOther === "") {
                 newErrors["howDidYouHearAboutUsOther"] = "missing value";
                 hasErrors = true;
             }
@@ -192,14 +192,14 @@ function AdminClientAddStep6() {
                                     <FormSelectFieldForHowHearAboutUsItem
                                         howDidYouHearAboutUsID={howDidYouHearAboutUsID}
                                         setHowDidYouHearAboutUsID={setHowDidYouHearAboutUsID}
-                                        ishowDidYouHearAboutUsOther={ishowDidYouHearAboutUsOther}
-                                        setIshowDidYouHearAboutUsOther={setIshowDidYouHearAboutUsOther}
+                                        isHowDidYouHearAboutUsOther={isHowDidYouHearAboutUsOther}
+                                        setIsHowDidYouHearAboutUsOther={setIsHowDidYouHearAboutUsOther}
                                         errorText={errors && errors.howDidYouHearAboutUsID}
                                         helpText=""
                                         isRequired={true}
                                         maxWidth="520px"
                                     />
-                                    {ishowDidYouHearAboutUsOther === true &&
+                                    {isHowDidYouHearAboutUsOther === true &&
                                         <>
                                             <FormInputField
                                                 label="How did you hear about us? (Other)"

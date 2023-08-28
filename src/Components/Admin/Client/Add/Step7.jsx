@@ -11,7 +11,7 @@ import DataDisplayRowText from "../../../Reusable/DataDisplayRowText";
 import DataDisplayRowCheckbox from "../../../Reusable/DataDisplayRowCheckbox";
 import DataDisplayRowRadio from "../../../Reusable/DataDisplayRowRadio";
 import DataDisplayRowSelect from "../../../Reusable/DataDisplayRowSelect";
-import DataDisplayRowTags from "../../../Reusable/DataDisplayRowTags";
+import DataDisplayRowTagIDs from "../../../Reusable/DataDisplayRowTagIDs";
 import DataDisplayRowHowHearAboutUsItem from "../../../Reusable/DataDisplayRowHowHear";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
 import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "../../../../Constants/App";
@@ -312,7 +312,7 @@ function AdminClientAddStep7() {
 
                                     <p class="title is-4"><FontAwesomeIcon className="fas" icon={faChartPie} />&nbsp;Metrics</p>
 
-                                    <DataDisplayRowTags
+                                    <DataDisplayRowTagIDs
                                         tags={addCustomer.tags}
                                     />
 
