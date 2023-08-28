@@ -39,8 +39,8 @@ export const currentUserState = atom({
 
 export const ADD_CUSTOMER_STATE_DEFAULT = {
     type: 0,
-    OrganizationName: "",
-    OrganizationType: "",
+    organizationName: "",
+    organizationType: "",
     firstName: "",
     lastName: "",
     email: "",

@@ -2,29 +2,36 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle, faArrowLeft, faSearch, faTasks, faTachometer, faPlus, faTimesCircle, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faClose, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
+import { useParams } from 'react-router-dom';
 
-import { postClientCreateAPI} from "../../../../API/Client";
-import FormErrorBox from "../../../Reusable/FormErrorBox";
-import DataDisplayRowText from "../../../Reusable/DataDisplayRowText";
-import DataDisplayRowCheckbox from "../../../Reusable/DataDisplayRowCheckbox";
-import DataDisplayRowRadio from "../../../Reusable/DataDisplayRowRadio";
-import DataDisplayRowSelect from "../../../Reusable/DataDisplayRowSelect";
-import DataDisplayRowTags from "../../../Reusable/DataDisplayRowTags";
-import DataDisplayRowHowHearAboutUsItem from "../../../Reusable/DataDisplayRowHowHear";
-import PageLoadingContent from "../../../Reusable/PageLoadingContent";
-import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "../../../../Constants/App";
-import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT, topAlertMessageState, topAlertStatusState } from "../../../../AppState";
-import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS, CLIENT_TYPE_OF_FILTER_OPTIONS, CLIENT_ORGANIZATION_TYPE_OPTIONS } from "../../../../Constants/FieldOptions";
+import { getClientDetailAPI } from "../../../API/Client";
+import FormErrorBox from "../../Reusable/FormErrorBox";
+import DataDisplayRowText from "../../Reusable/DataDisplayRowText";
+import DataDisplayRowCheckbox from "../../Reusable/DataDisplayRowCheckbox";
+import DataDisplayRowRadio from "../../Reusable/DataDisplayRowRadio";
+import DataDisplayRowSelect from "../../Reusable/DataDisplayRowSelect";
+import DataDisplayRowTags from "../../Reusable/DataDisplayRowTags";
+import DataDisplayRowHowHearAboutUsItem from "../../Reusable/DataDisplayRowHowHear";
+import PageLoadingContent from "../../Reusable/PageLoadingContent";
+import { topAlertMessageState, topAlertStatusState } from "../../../AppState";
+import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "../../../Constants/App";
+import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../AppState";
+import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS, CLIENT_TYPE_OF_FILTER_OPTIONS, CLIENT_ORGANIZATION_TYPE_OPTIONS } from "../../../Constants/FieldOptions";
 
 
-function AdminClientAddStep7() {
+function AdminClientDetailFull() {
+    ////
+    //// URL Parameters.
+    ////
+
+    const { cid } = useParams()
+
     ////
     //// Global state.
     ////
 
-    const [addCustomer, setAddCustomer] = useRecoilState(addCustomerState);
     const [topAlertMessage, setTopAlertMessage] = useRecoilState(topAlertMessageState);
     const [topAlertStatus, setTopAlertStatus] = useRecoilState(topAlertStatusState);
 
@@ -35,46 +42,26 @@ function AdminClientAddStep7() {
     const [errors, setErrors] = useState({});
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
+    const [client, setClient] = useState({});
+    const [tabIndex, setTabIndex] = useState(1);
 
     ////
     //// Event handling.
     ////
 
-    const onSubmitClick = (e) => {
-        console.log("onSubmitClick: Beginning...");
-        setFetching(false);
-        setErrors({});
-        postClientCreateAPI(addCustomer, onSuccess, onError, onDone);
-    }
+    //
 
     ////
     //// API.
     ////
 
     function onSuccess(response){
-        // For debugging purposes only.
         console.log("onSuccess: Starting...");
-        console.log(response);
-
-        if (response === undefined || response === null || response === "") {
-        console.log("onSuccess: exiting early");
-            return;
-        }
-
-        // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Client created");
-        setTopAlertStatus("success");
-        setTimeout(() => {
-            console.log("onSuccess: Delayed for 2 seconds.");
-            console.log("onSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
-            setTopAlertMessage("");
-        }, 2000);
-
-        // Redirect the user to a new page.
-        setForceURL("/admin/client/"+response.id);
+        setClient(response);
     }
 
     function onError(apiErr) {
+        console.log("onError: Starting...");
         setErrors(apiErr);
 
         // The following code will cause the screen to scroll to the top of
@@ -85,6 +72,7 @@ function AdminClientAddStep7() {
     }
 
     function onDone() {
+        console.log("onDone: Starting...");
         setFetching(false);
     }
 
@@ -97,11 +85,18 @@ function AdminClientAddStep7() {
 
         if (mounted) {
             window.scrollTo(0, 0);  // Start the page at the top of the page.
-            setFetching(false);
+
+            setFetching(true);
+            getClientDetailAPI(
+                cid,
+                onSuccess,
+                onError,
+                onDone
+            );
         }
 
         return () => { mounted = false; }
-    }, []);
+    }, [cid]);
 
     ////
     //// Component rendering.
@@ -115,13 +110,12 @@ function AdminClientAddStep7() {
         <>
             <div class="container">
                 <section class="section">
-
                     {/* Desktop Breadcrumbs */}
                     <nav class="breadcrumb has-background-light p-4 is-hidden-touch" aria-label="breadcrumbs">
                         <ul>
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
                             <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
-                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link></li>
+                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail</Link></li>
                         </ul>
                     </nav>
 
@@ -133,90 +127,115 @@ function AdminClientAddStep7() {
                     </nav>
 
                     {/* Page Title */}
-                    <h1 class="title is-2"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</h1>
-                    <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Client</h4>
+                    <h1 class="title is-2"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Client</h1>
+                    <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail</h4>
                     <hr />
 
                     {/* Page */}
                     <nav class="box">
 
-                        <p class="title is-4"><FontAwesomeIcon className="fas" icon={faQuestionCircle} />&nbsp;Are you ready to submit?</p>
+                        {/* Title + Options */}
+                        {client && <div class="columns">
+                            <div class="column">
+                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faPaperclip} />&nbsp;Summary</p>
+                            </div>
+                            <div class="column has-text-right">
+                                <Link to={`/root/client/${cid}/edit`} class="button is-small is-warning is-fullwidth-mobile" type="button">
+                                    <FontAwesomeIcon className="mdi" icon={faPencil} />&nbsp;Edit
+                                </Link>
+                            </div>
+                        </div>}
 
-                        <p class="pb-4 has-text-grey">Please carefully review the following customer details and if you are ready click the <b>Submit</b> to complete.</p>
+                        {/* <p class="pb-4">Please fill out all the required fields before submitting this form.</p> */}
 
                         {isFetching
                             ?
-                            <PageLoadingContent displayMessage={"Submitting..."} />
+                            <PageLoadingContent displayMessage={"Loading..."} />
                             :
                             <>
                                 <FormErrorBox errors={errors} />
-                                {addCustomer !== undefined && addCustomer !== null && addCustomer !== "" && <div class="container">
+
+                                {client && <div class="container">
+
+                                    {/* Tab Navigation */}
+                                    <div class="tabs is-medium">
+                                        <ul>
+                                            <li>
+                                                <Link to={`/admin/client/${client.id}`}>Summary</Link>
+                                            </li>
+                                            <li class="is-active">
+                                                <Link><strong>Detail</strong></Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                     <p class="title is-4 mt-2"><FontAwesomeIcon className="fas" icon={faIdCard} />&nbsp;Contact</p>
 
                                     <DataDisplayRowSelect
                                         label="Type"
-                                        selectedValue={addCustomer.type}
+                                        selectedValue={client.type}
                                         options={CLIENT_TYPE_OF_FILTER_OPTIONS}
                                     />
-                                    {addCustomer.type === COMMERCIAL_CUSTOMER_TYPE_OF_ID && <>
+
+                                    {client.type === COMMERCIAL_CUSTOMER_TYPE_OF_ID && <>
                                         <DataDisplayRowText
                                             label="Organization Name"
-                                            value={addCustomer.organizationName}
+                                            value={client.organizationName}
                                         />
                                         <DataDisplayRowSelect
                                             label="Organization Type"
-                                            selectedValue={addCustomer.organizationType}
+                                            selectedValue={client.organizationType}
                                             options={CLIENT_ORGANIZATION_TYPE_OPTIONS}
                                         />
                                     </>}
 
                                     <DataDisplayRowText
                                         label="First Name"
-                                        value={addCustomer.firstName}
+                                        value={client.firstName}
                                     />
 
                                     <DataDisplayRowText
                                         label="Last Name"
-                                        value={addCustomer.lastName}
+                                        value={client.lastName}
                                     />
 
                                     <DataDisplayRowText
                                         label="Email"
-                                        value={addCustomer.email}
+                                        value={client.email}
                                         type="email"
                                     />
 
                                     <DataDisplayRowCheckbox
                                        label="I agree to receive electronic email"
-                                       checked={addCustomer.isOkToEmail}
+                                       checked={client.isOkToEmail}
                                     />
 
                                     <DataDisplayRowText
                                         label="Phone"
-                                        value={addCustomer.phone}
+                                        value={client.phone}
                                         type="phone"
                                     />
 
                                     <DataDisplayRowSelect
                                         label="Phone Type"
-                                        selectedValue={addCustomer.phoneType}
+                                        selectedValue={client.phoneType}
                                         options={CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS}
                                     />
 
                                     <DataDisplayRowCheckbox
                                        label="I agree to receive texts to my phone"
-                                       checked={addCustomer.isOkToText}
+                                       checked={client.isOkToText}
                                     />
 
                                     <DataDisplayRowText
                                         label="Other Phone (Optional)"
-                                        value={addCustomer.otherPhone}
+                                        value={client.otherPhone}
                                         type="phone"
                                     />
 
-                                    {addCustomer.otherPhoneType !== 0 && <DataDisplayRowSelect
+                                    {client.otherPhoneType !== 0 && <DataDisplayRowSelect
                                         label="Other Phone Type (Optional)"
-                                        selectedValue={addCustomer.otherPhoneType}
+                                        selectedValue={client.otherPhoneType}
                                         options={CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS}
                                     />}
 
@@ -224,88 +243,88 @@ function AdminClientAddStep7() {
 
                                     <DataDisplayRowCheckbox
                                        label="Has shipping address different then billing address"
-                                       checked={addCustomer.hasShippingAddress}
+                                       checked={client.hasShippingAddress}
                                     />
 
                                     <div class="columns">
                                         <div class="column">
-                                            {addCustomer.hasShippingAddress
+                                            {client.hasShippingAddress
                                                 ? <p class="subtitle is-6">Billing Address</p>
                                                 : <></>
                                             }
 
                                             <DataDisplayRowText
                                                 label="Country"
-                                                value={addCustomer.country}
+                                                value={client.country}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Province/Territory"
-                                                value={addCustomer.region}
+                                                value={client.region}
                                             />
 
                                             <DataDisplayRowText
                                                 label="City"
-                                                value={addCustomer.city}
+                                                value={client.city}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Address Line 1"
-                                                value={addCustomer.addressLine1}
+                                                value={client.addressLine1}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Address Line 2 (Optional)"
-                                                value={addCustomer.addressLine2}
+                                                value={client.addressLine2}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Postal Code)"
-                                                value={addCustomer.postalCode}
+                                                value={client.postalCode}
                                             />
                                         </div>
-                                        {addCustomer.hasShippingAddress &&<div class="column">
+                                        {client.hasShippingAddress &&<div class="column">
                                             <p class="subtitle is-6">Shipping Address</p>
 
                                             <DataDisplayRowText
                                                 label="Name"
-                                                value={addCustomer.shippingName}
+                                                value={client.shippingName}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Phone"
-                                                value={addCustomer.shippingPhone}
+                                                value={client.shippingPhone}
                                                 type="phone"
                                             />
 
                                             <DataDisplayRowText
                                                 label="Country"
-                                                value={addCustomer.shippingCountry}
+                                                value={client.shippingCountry}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Province/Territory"
-                                                value={addCustomer.shippingRegion}
+                                                value={client.shippingRegion}
                                             />
 
                                             <DataDisplayRowText
                                                 label="City"
-                                                value={addCustomer.shippingCity}
+                                                value={client.shippingCity}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Address Line 1"
-                                                value={addCustomer.shippingAddressLine1}
+                                                value={client.shippingAddressLine1}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Address Line 2 (Optional)"
-                                                value={addCustomer.shippingAddressLine2}
+                                                value={client.shippingAddressLine2}
                                             />
 
                                             <DataDisplayRowText
                                                 label="Postal Code"
-                                                value={addCustomer.shippingPostalCode}
+                                                value={client.shippingPostalCode}
                                             />
                                         </div>}
                                     </div>
@@ -313,23 +332,23 @@ function AdminClientAddStep7() {
                                     <p class="title is-4"><FontAwesomeIcon className="fas" icon={faChartPie} />&nbsp;Metrics</p>
 
                                     <DataDisplayRowTags
-                                        tags={addCustomer.tags}
+                                        tags={client.tags}
                                     />
 
                                     <DataDisplayRowHowHearAboutUsItem
-                                        howDidYouHearAboutUsID={addCustomer.howDidYouHearAboutUsID}
+                                        howDidYouHearAboutUsID={client.howDidYouHearAboutUsID}
                                     />
 
-                                    {addCustomer.howDidYouHearAboutUsOther !== undefined && addCustomer.howDidYouHearAboutUsOther !== null && addCustomer.howDidYouHearAboutUsOther !== null &&
+                                    {client.howDidYouHearAboutUsOther !== undefined && client.howDidYouHearAboutUsOther !== null && client.howDidYouHearAboutUsOther !== null &&
                                         <DataDisplayRowText
                                             label="How did you hear about us? (Other)"
-                                            value={addCustomer.howDidYouHearAboutUsOther}
+                                            value={client.howDidYouHearAboutUsOther}
                                         />
                                     }
 
                                     <DataDisplayRowRadio
                                         label="Gender"
-                                        value={addCustomer.gender}
+                                        value={client.gender}
                                         opt1Value="Male"
                                         opt1Label="Male"
                                         opt2Value="Female"
@@ -340,27 +359,22 @@ function AdminClientAddStep7() {
 
                                     <DataDisplayRowText
                                         label="Birth Date (Optional)"
-                                        value={addCustomer.birthDate}
+                                        value={client.birthDate}
                                         type="date"
                                     />
 
                                     <DataDisplayRowText
                                         label="Join Date (Optional)"
-                                        value={addCustomer.joinDate}
+                                        value={client.joinDate}
                                         type="date"
-                                    />
-
-                                    <DataDisplayRowText
-                                        label="Additional Comment"
-                                        value={addCustomer.additionalComment}
                                     />
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
-                                            <Link class="button is-medium is-fullwidth-mobile" to="/admin/clients/add/step-6"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
+                                            <Link class="button is-fullwidth-mobile" to={`/admin/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <button class="button is-medium is-success is-fullwidth-mobile" onClick={onSubmitClick}><FontAwesomeIcon className="fas" icon={faCheckCircle} />&nbsp;Submit</button>
+                                            <Link to={`/admin/client/${cid}/edit`} class="button is-warning is-fullwidth-mobile"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link>
                                         </div>
                                     </div>
 
@@ -374,4 +388,4 @@ function AdminClientAddStep7() {
     );
 }
 
-export default AdminClientAddStep7
+export default AdminClientDetailFull;

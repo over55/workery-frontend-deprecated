@@ -83,7 +83,10 @@ export function getClientDetailAPI(organizationID, onSuccessCallback, onErrorCal
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.
-        const data = camelizeKeys(responseData);
+        let data = camelizeKeys(responseData);
+
+        // BUGFIX
+        data.howDidYouHearAboutUsID = data.howDidYouHearAboutUsId;
 
         // For debugging purposeso pnly.
         console.log(data);

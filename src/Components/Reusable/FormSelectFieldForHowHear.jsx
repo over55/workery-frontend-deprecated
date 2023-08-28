@@ -5,21 +5,21 @@ import { getHowHearAboutUsItemSelectOptionListAPI } from "../../API/HowHearAbout
 EXAMPLE USAGE:
 
     <FormHowHearField
-      howHearAboutUsItemID={howHearAboutUsItemID}
-      setHowHearAboutUsItemID={setHowHearAboutUsItemID}
+      howDidYouHearAboutUsID={howDidYouHearAboutUsID}
+      setHowDidYouHearAboutUsID={setHowDidYouHearAboutUsID}
       howHearAboutUsItemOther={howHearAboutUsItemOther}
       setHowHearAboutUsItemOther={setHowHearAboutUsItemOther}
-      errorText={errors && errors.howHearAboutUsItemID}
+      errorText={errors && errors.howDidYouHearAboutUsID}
       helpText="Please select the primary gym location this member will be using"
       maxWidth="310px"
       isHidden={true}
     />
 */
 function FormSelectFieldForHowHearAboutUsItem({
-    howHearAboutUsItemID,
-    setHowHearAboutUsItemID,
-    isHowHearAboutUsItemOther, // This variable controls whether this component detected the `Other` option or not.
-    setIsHowHearAboutUsItemOther,
+    howDidYouHearAboutUsID,
+    setHowDidYouHearAboutUsID,
+    ishowDidYouHearAboutUsOther, // This variable controls whether this component detected the `Other` option or not.
+    setIshowDidYouHearAboutUsOther,
     errorText,
     validationText,
     helpText,
@@ -38,22 +38,22 @@ function FormSelectFieldForHowHearAboutUsItem({
     //// Event handling.
     ////
 
-    const setHowHearAboutUsItemIDOverride = (howHearID) => {
+    const setHowDidYouHearAboutUsIDOverride = (howHearID) => {
         // CASE 1: "Other" option selected.
         for (let index in howHearOptions) {
             let howHearOption = howHearOptions[index];
             if (howHearOption.label === "Other" && howHearOption.value === howHearID) {
-                // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| isHowHearAboutUsItemOther: true");
-                setIsHowHearAboutUsItemOther(true);
-                setHowHearAboutUsItemID(howHearID);
+                // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| ishowDidYouHearAboutUsOther: true");
+                setIshowDidYouHearAboutUsOther(true);
+                setHowDidYouHearAboutUsID(howHearID);
                 return;
             }
         }
 
         // CASE 2: Non-"Other" option selected.
-        // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| isHowHearAboutUsItemOther: false");
-        setIsHowHearAboutUsItemOther(false);
-        setHowHearAboutUsItemID(howHearID);
+        // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| ishowDidYouHearAboutUsOther: false");
+        setIshowDidYouHearAboutUsOther(false);
+        setHowDidYouHearAboutUsID(howHearID);
     }
 
     ////
@@ -68,12 +68,12 @@ function FormSelectFieldForHowHearAboutUsItem({
         ]
         setHowHearOptions(b);
 
-        // Set `isHowHearAboutUsItemOther` if the user selected the `other` label.
+        // Set `ishowDidYouHearAboutUsOther` if the user selected the `other` label.
         for (let index in response) {
             let howHearOption = response[index];
-            if (howHearOption.label === "Other" && howHearOption.value === howHearAboutUsItemID) {
-                setIsHowHearAboutUsItemOther(true);
-                // console.log("FormSelectFieldForHowHearAboutUsItem | picked other | howHearID:", howHearAboutUsItemID);
+            if (howHearOption.label === "Other" && howHearOption.value === howDidYouHearAboutUsID) {
+                setIshowDidYouHearAboutUsOther(true);
+                // console.log("FormSelectFieldForHowHearAboutUsItem | picked other | howHearID:", howDidYouHearAboutUsID);
                 return;
             }
         }
@@ -115,18 +115,18 @@ function FormSelectFieldForHowHearAboutUsItem({
     // Render the JSX component.
     return (
         <>
-            <div class={`field pb-4 ${isHidden && "is-hidden"}`} key={howHearAboutUsItemID}>
+            <div class={`field pb-4 ${isHidden && "is-hidden"}`} key={howDidYouHearAboutUsID}>
                 <label class="label">How did you hear about us?</label>
                 <div class="control">
                     <span class="select">
                         {howHearOptions.length > 0 &&
                             <select class={`input ${errorText && 'is-danger'} ${validationText && 'is-success'} has-text-black`}
-                                     name={`howHearAboutUsItemID`}
+                                     name={`howDidYouHearAboutUsID`}
                               placeholder={`Pick howHear location`}
-                                 onChange={(e,c)=>setHowHearAboutUsItemIDOverride(e.target.value)}
+                                 onChange={(e,c)=>setHowDidYouHearAboutUsIDOverride(e.target.value)}
                                  disabled={disabled}>
                                 {howHearOptions && howHearOptions.length > 0 && howHearOptions.map(function(option, i){
-                                    return <option selected={howHearAboutUsItemID === option.value} value={option.value} name={option.label}>{option.label}</option>;
+                                    return <option selected={howDidYouHearAboutUsID === option.value} value={option.value} name={option.label}>{option.label}</option>;
                                 })}
                             </select>
                         }

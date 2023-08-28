@@ -32,6 +32,8 @@ import AdminClientAddStep4 from "./Components/Admin/Client/Add/Step4";
 import AdminClientAddStep5 from "./Components/Admin/Client/Add/Step5";
 import AdminClientAddStep6 from "./Components/Admin/Client/Add/Step6";
 import AdminClientAddStep7 from "./Components/Admin/Client/Add/Step7";
+import AdminClientDetailLite from "./Components/Admin/Client/DetailLite";
+import AdminClientDetailFull from "./Components/Admin/Client/DetailFull";
 
 
 function AppRoute() {
@@ -46,6 +48,8 @@ function AppRoute() {
                         <div class="column">
                             <section class="main-content columns is-fullheight">
                                 <Routes>
+                                    <Route exact path="/admin/client/:cid/detail" element={<AdminClientDetailFull/>}/>
+                                    <Route exact path="/admin/client/:cid" element={<AdminClientDetailLite/>}/>
                                     <Route exact path="/admin/clients/add/step-7" element={<AdminClientAddStep7/>}/>
                                     <Route exact path="/admin/clients/add/step-6" element={<AdminClientAddStep6/>}/>
                                     <Route exact path="/admin/clients/add/step-5" element={<AdminClientAddStep5/>}/>
