@@ -172,6 +172,9 @@ function AdminClientDetailFull() {
                                             <li>
                                                 <Link to={`/admin/client/${client.id}/comments`}>Comments</Link>
                                             </li>
+                                            <li>
+                                                <Link to={`/admin/client/${client.id}/attachments`}>Attachments</Link>
+                                            </li>
                                         </ul>
                                     </div>
 

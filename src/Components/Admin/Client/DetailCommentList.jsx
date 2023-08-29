@@ -209,16 +209,19 @@ function AdminClientDetailCommentList() {
                                     <div class="tabs is-medium">
                                         <ul>
                                             <li>
-                                                <Link to={`/admin/client/${client.id}`}>Summary</Link>
+                                                <Link to={`/admin/client/${cid}`}>Summary</Link>
                                             </li>
                                             <li>
-                                                <Link to={`/admin/client/${client.id}/detail`}>Detail</Link>
+                                                <Link to={`/admin/client/${cid}/detail`}>Detail</Link>
                                             </li>
                                             <li>
-                                                <Link to={`/admin/client/${client.id}/orders`}>Orders</Link>
+                                                <Link to={`/admin/client/${cid}/orders`}>Orders</Link>
                                             </li>
                                             <li class="is-active">
                                                 <Link><strong>Comments</strong></Link>
+                                            </li>
+                                            <li>
+                                                <Link to={`/admin/client/${cid}/attachments`}>Attachments</Link>
                                             </li>
                                         </ul>
                                     </div>

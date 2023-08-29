@@ -46,6 +46,15 @@ export const WORKERY_HOW_HEAR_ABOUT_US_ITEMS_API_ENDPOINT = HTTP_API_SERVER + '/
 export const WORKERY_HOW_HEAR_ABOUT_US_ITEM_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/how-hear-about-us-item/{id}';
 export const WORKERY_HOW_HEAR_ABOUT_US_ITEM_SELECT_OPTIONS_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/how-hear-about-us-items/select-options";
 
+/**
+ * Attachments
+ */
+export const WORKERY_ATTACHMENTS_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/attachments";
+export const WORKERY_ATTACHMENT_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/attachment/{id}";
+
+
+
+
 //
 // Continue below ...
 //

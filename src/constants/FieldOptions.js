@@ -93,3 +93,13 @@ export const CLIENT_ORGANIZATION_TYPE_OPTIONS_WITH_EMPTY_OPTIONS = [
     { value: 0, label: "Please select" }, // EMPTY OPTION
     ...CLIENT_ORGANIZATION_TYPE_OPTIONS
 ];
+
+
+//----------------------------------------------------------------------------//
+//                               Attachments                                  //
+//----------------------------------------------------------------------------//
+
+export const ATTACHMENT_STATES = {
+    1: "Active",
+    2: "Archived"
+}
