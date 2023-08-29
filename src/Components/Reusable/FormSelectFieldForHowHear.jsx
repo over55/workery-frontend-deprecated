@@ -18,7 +18,7 @@ EXAMPLE USAGE:
 function FormSelectFieldForHowHearAboutUsItem({
     howDidYouHearAboutUsID,
     setHowDidYouHearAboutUsID,
-    ishowDidYouHearAboutUsOther, // This variable controls whether this component detected the `Other` option or not.
+    isHowDidYouHearAboutUsOther, // This variable controls whether this component detected the `Other` option or not.
     setIshowDidYouHearAboutUsOther,
     errorText,
     validationText,
@@ -43,7 +43,7 @@ function FormSelectFieldForHowHearAboutUsItem({
         for (let index in howHearOptions) {
             let howHearOption = howHearOptions[index];
             if (howHearOption.label === "Other" && howHearOption.value === howHearID) {
-                // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| ishowDidYouHearAboutUsOther: true");
+                // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| isHowDidYouHearAboutUsOther: true");
                 setIshowDidYouHearAboutUsOther(true);
                 setHowDidYouHearAboutUsID(howHearID);
                 return;
@@ -51,7 +51,7 @@ function FormSelectFieldForHowHearAboutUsItem({
         }
 
         // CASE 2: Non-"Other" option selected.
-        // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| ishowDidYouHearAboutUsOther: false");
+        // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| isHowDidYouHearAboutUsOther: false");
         setIshowDidYouHearAboutUsOther(false);
         setHowDidYouHearAboutUsID(howHearID);
     }
@@ -68,7 +68,7 @@ function FormSelectFieldForHowHearAboutUsItem({
         ]
         setHowHearOptions(b);
 
-        // Set `ishowDidYouHearAboutUsOther` if the user selected the `other` label.
+        // Set `isHowDidYouHearAboutUsOther` if the user selected the `other` label.
         for (let index in response) {
             let howHearOption = response[index];
             if (howHearOption.label === "Other" && howHearOption.value === howDidYouHearAboutUsID) {

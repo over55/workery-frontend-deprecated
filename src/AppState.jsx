@@ -71,10 +71,10 @@ export const ADD_CUSTOMER_STATE_DEFAULT = {
     joinDate: null,
     birthDate: null,
     howDidYouHearAboutUsID: "",
-    ishowDidYouHearAboutUsOther: false,
+    isHowDidYouHearAboutUsOther: false,
     howDidYouHearAboutUsOther: "",
     additionalComment: "",
-}
+};
 
 export const addCustomerState = atom({
   key: 'addCustomer',

@@ -105,8 +105,10 @@ export function putClientUpdateAPI(data, onSuccessCallback, onErrorCallback, onD
     // To Snake-case for API from camel-case in React.
     let decamelizedData = decamelizeKeys(data);
 
-    // Minor fix.
-    decamelizedData.id = decamelizedData.i_d;
+    // BUGFIX
+    decamelizedData.how_did_you_hear_about_us_id = data.howDidYouHearAboutUsID;
+    delete decamelizedData.how_did_you_hear_about_us_i_d;
+    decamelizedData.id = data.id;
     delete decamelizedData.i_d;
 
     axios.put(WORKERY_CLIENT_API_ENDPOINT.replace("{id}", decamelizedData.id), decamelizedData).then((successResponse) => {

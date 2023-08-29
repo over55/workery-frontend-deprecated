@@ -6,7 +6,7 @@ import { faCogs, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, fa
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 
-import { getClientDetailAPI } from "../../../API/Client";
+import { getClientDetailAPI, putClientUpdateAPI } from "../../../API/Client";
 import FormErrorBox from "../../Reusable/FormErrorBox";
 import FormRadioField from "../../Reusable/FormRadioField";
 import FormInputField from "../../Reusable/FormInputField";
@@ -94,11 +94,55 @@ function AdminClientUpdate() {
     //// Event handling.
     ////
 
-    //
+    const onSubmitClick = (e) => {
+        console.log("onSubmitClick: Beginning...");
+        setFetching(false);
+        setErrors({});
+        const data = {
+            id: cid,
+            type: customerType,
+            organizationName: organizationName,
+            organizationType: organizationType,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            phoneType: phoneType,
+            otherPhone: otherPhone,
+            otherPhoneType: otherPhoneType,
+            isOkToText: isOkToText,
+            isOkToEmail: isOkToEmail,
+            postalCode: postalCode,
+            addressLine1: addressLine1,
+            addressLine2: addressLine2,
+            city: city,
+            region: region,
+            country: country,
+            hasShippingAddress: hasShippingAddress,
+            shippingName: shippingName,
+            shippingPhone: shippingPhone,
+            shippingCountry: shippingCountry,
+            shippingRegion: shippingRegion,
+            shippingCity: shippingCity,
+            shippingAddressLine1: shippingAddressLine1,
+            shippingAddressLine2: shippingAddressLine2,
+            shippingPostalCode: shippingPostalCode,
+            tags: tags,
+            gender: gender,
+            joinDate: joinDate,
+            birthDate: birthDate,
+            howDidYouHearAboutUsID: howDidYouHearAboutUsID,
+            isHowDidYouHearAboutUsOther: isHowDidYouHearAboutUsOther,
+            howDidYouHearAboutUsOther: howDidYouHearAboutUsOther,
+        };
+        putClientUpdateAPI(data, onSuccess, onError, onDone);
+    }
 
     ////
     //// API.
     ////
+
+    // --- Details --- //
 
     function onDetailSuccess(response){
         console.log("onDetailSuccess: Starting...");
@@ -166,6 +210,45 @@ function AdminClientUpdate() {
 
     function onDetailDone() {
         console.log("onDetailDone: Starting...");
+        setFetching(false);
+    }
+
+    // --- Update --- //
+
+    function onSuccess(response){
+        // For debugging purposes only.
+        console.log("onSuccess: Starting...");
+        console.log(response);
+
+        if (response === undefined || response === null || response === "") {
+        console.log("onSuccess: exiting early");
+            return;
+        }
+
+        // Add a temporary banner message in the app and then clear itself after 2 seconds.
+        setTopAlertMessage("Client update");
+        setTopAlertStatus("success");
+        setTimeout(() => {
+            console.log("onSuccess: Delayed for 2 seconds.");
+            console.log("onSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
+            setTopAlertMessage("");
+        }, 2000);
+
+        // Redirect the user to a new page.
+        setForceURL("/admin/client/"+response.id);
+    }
+
+    function onError(apiErr) {
+        setErrors(apiErr);
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
+
+    function onDone() {
         setFetching(false);
     }
 
@@ -670,7 +753,7 @@ function AdminClientUpdate() {
                                             <Link class="button is-fullwidth-mobile" to={`/admin/client/${cid}`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Detail</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <Link to={`/admin/client/${cid}/edit`} class="button is-success is-fullwidth-mobile"><FontAwesomeIcon className="fas" icon={faCheckCircle} />&nbsp;Save</Link>
+                                            <button onClick={onSubmitClick} class="button is-success is-fullwidth-mobile"><FontAwesomeIcon className="fas" icon={faCheckCircle} type="button" />&nbsp;Save</button>
                                         </div>
                                     </div>
 
