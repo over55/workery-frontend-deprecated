@@ -166,6 +166,12 @@ function AdminClientDetailFull() {
                                             <li class="is-active">
                                                 <Link><strong>Detail</strong></Link>
                                             </li>
+                                            <li>
+                                                <Link to={`/admin/client/${client.id}/orders`}>Orders</Link>
+                                            </li>
+                                            <li>
+                                                <Link to={`/admin/client/${client.id}/comments`}>Comments</Link>
+                                            </li>
                                         </ul>
                                     </div>
 

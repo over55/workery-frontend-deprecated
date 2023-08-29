@@ -35,6 +35,8 @@ import AdminClientAddStep7 from "./Components/Admin/Client/Add/Step7";
 import AdminClientDetailLite from "./Components/Admin/Client/DetailLite";
 import AdminClientDetailFull from "./Components/Admin/Client/DetailFull";
 import AdminClientUpdate from "./Components/Admin/Client/Update";
+import AdminClientDetailOrderList from "./Components/Admin/Client/DetailOrderList";
+import AdminClientDetailCommentList from "./Components/Admin/Client/DetailCommentList";
 
 
 function AppRoute() {
@@ -49,6 +51,8 @@ function AppRoute() {
                         <div class="column">
                             <section class="main-content columns is-fullheight">
                                 <Routes>
+                                    <Route exact path="/admin/client/:cid/comments" element={<AdminClientDetailCommentList/>}/>
+                                    <Route exact path="/admin/client/:cid/orders" element={<AdminClientDetailOrderList/>}/>
                                     <Route exact path="/admin/client/:cid/edit" element={<AdminClientUpdate/>}/>
                                     <Route exact path="/admin/client/:cid/detail" element={<AdminClientDetailFull/>}/>
                                     <Route exact path="/admin/client/:cid" element={<AdminClientDetailLite/>}/>

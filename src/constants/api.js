@@ -23,6 +23,7 @@ export const WORKERY_TENANT_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/tenant/{id
  */
 export const WORKERY_CLIENTS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers';
 export const WORKERY_CLIENT_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customer/{id}';
+export const WORKERY_CLIENT_CREATE_COMMENT_OPERATION_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers/operation/create-comment';
 
 /**
  * Tags

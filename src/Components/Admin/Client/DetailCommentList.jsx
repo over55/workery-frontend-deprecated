@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faMessage, faWrench, faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
+import { DateTime } from "luxon";
 
-import { getClientDetailAPI } from "../../../API/Client";
+import { getClientDetailAPI, postClientCreateCommentOperationAPI } from "../../../API/Client";
 import FormErrorBox from "../../Reusable/FormErrorBox";
 import DataDisplayRowText from "../../Reusable/DataDisplayRowText";
+import FormTextareaField from "../../Reusable/FormTextareaField";
 import DataDisplayRowSelect from "../../Reusable/DataDisplayRowSelect";
 import PageLoadingContent from "../../Reusable/PageLoadingContent";
 import { topAlertMessageState, topAlertStatusState } from "../../../AppState";
@@ -17,7 +19,7 @@ import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../AppState"
 import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS, CLIENT_TYPE_OF_FILTER_OPTIONS, CLIENT_ORGANIZATION_TYPE_OPTIONS } from "../../../Constants/FieldOptions";
 
 
-function AdminClientDetailLite() {
+function AdminClientDetailCommentList() {
     ////
     //// URL Parameters.
     ////
@@ -39,17 +41,26 @@ function AdminClientDetailLite() {
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
     const [client, setClient] = useState({});
-    const [tabIndex, setTabIndex] = useState(1);
+    const [content, setContent] = useState("");
 
     ////
     //// Event handling.
     ////
 
-    //
+    const onSubmitClick = () => {
+        console.log("onSubmitClick: Beginning...");// Submit to the backend.
+        console.log("onSubmitClick, content:", content);
+        setErrors(null);
+        postClientCreateCommentOperationAPI(
+            cid, content, onUpdateSuccess, onUpdateError, onUpdateDone
+        );
+    }
 
     ////
     //// API.
     ////
+
+    // --- Details --- //
 
     function onSuccess(response){
         console.log("onSuccess: Starting...");
@@ -68,6 +79,45 @@ function AdminClientDetailLite() {
     }
 
     function onDone() {
+        console.log("onDone: Starting...");
+        setFetching(false);
+    }
+
+    // --- Update --- //
+
+    function onUpdateSuccess(response){
+        console.log("onSuccess: Starting...");
+        setClient(response);
+        setContent("");
+
+        // Add a temporary banner message in the app and then clear itself after 2 seconds.
+        setTopAlertMessage("Comment created");
+        setTopAlertStatus("success");
+        setTimeout(() => {
+            console.log("onSuccess: Delayed for 2 seconds.");
+            console.log("onSuccess: topAlertMessage, topAlertStatus:", topAlertMessage, topAlertStatus);
+            setTopAlertMessage("");
+        }, 2000);
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
+
+    function onUpdateError(apiErr) {
+        console.log("onError: Starting...");
+        setErrors(apiErr);
+
+        // The following code will cause the screen to scroll to the top of
+        // the page. Please see ``react-scroll`` for more information:
+        // https://github.com/fisshy/react-scroll
+        var scroll = Scroll.animateScroll;
+        scroll.scrollToTop();
+    }
+
+    function onUpdateDone() {
         console.log("onDone: Starting...");
         setFetching(false);
     }
@@ -133,12 +183,14 @@ function AdminClientDetailLite() {
                         {/* Title + Options */}
                         {client && <div class="columns">
                             <div class="column">
-                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faPaperclip} />&nbsp;Summary</p>
+                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faMessage} />&nbsp;Comments</p>
                             </div>
                             <div class="column has-text-right">
-                                <Link to={`/admin/client/${cid}/edit`} class="button is-small is-warning is-fullwidth-mobile" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faPencil} />&nbsp;Edit
+                                {/*
+                                <Link to={`/admin/client/${cid}/edit`} class="button is-small is-success is-fullwidth-mobile" type="button">
+                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;New Comment
                                 </Link>
+                                */}
                             </div>
                         </div>}
 
@@ -156,8 +208,8 @@ function AdminClientDetailLite() {
                                     {/* Tab Navigation */}
                                     <div class="tabs is-medium">
                                         <ul>
-                                            <li class="is-active">
-                                                <Link><strong>Summary</strong></Link>
+                                            <li>
+                                                <Link to={`/admin/client/${client.id}`}>Summary</Link>
                                             </li>
                                             <li>
                                                 <Link to={`/admin/client/${client.id}/detail`}>Detail</Link>
@@ -165,58 +217,47 @@ function AdminClientDetailLite() {
                                             <li>
                                                 <Link to={`/admin/client/${client.id}/orders`}>Orders</Link>
                                             </li>
-                                            <li>
-                                                <Link to={`/admin/client/${client.id}/comments`}>Comments</Link>
+                                            <li class="is-active">
+                                                <Link><strong>Comments</strong></Link>
                                             </li>
                                         </ul>
                                     </div>
 
-                                    <DataDisplayRowSelect
-                                        label="Type"
-                                        selectedValue={client.type}
-                                        options={CLIENT_TYPE_OF_FILTER_OPTIONS}
-                                    />
-
-                                    {client.type === COMMERCIAL_CUSTOMER_TYPE_OF_ID && <>
-                                        <DataDisplayRowText
-                                            label="Organization Name"
-                                            value={client.organizationName}
-                                        />
-                                        <DataDisplayRowSelect
-                                            label="Organization Type"
-                                            selectedValue={client.organizationType}
-                                            options={CLIENT_ORGANIZATION_TYPE_OPTIONS}
-                                        />
+                                    {client.comments && client.comments.length > 0 && <>
+                                        {client.comments.map(function(comment, i){
+                                            console.log(comment); // For debugging purposes only.
+                                            return <div className="pb-3">
+                                                <span class="is-pulled-right has-text-grey-light">{comment.createdByName} at <b>{DateTime.fromISO(comment.createdAt).toLocaleString(DateTime.DATETIME_MED)}</b></span>
+                                                <br />
+                                                <article class="message">
+                                                    <div class="message-body">{comment.content}</div>
+                                                </article>
+                                            </div>
+                                        })}
                                     </>}
 
-                                    <DataDisplayRowText
-                                        label="First Name"
-                                        value={client.firstName}
-                                    />
-
-                                    <DataDisplayRowText
-                                        label="Last Name"
-                                        value={client.lastName}
-                                    />
-
-                                    <DataDisplayRowText
-                                        label="Email"
-                                        value={client.email}
-                                        type="email"
-                                    />
-
-                                    <DataDisplayRowText
-                                        label="Phone"
-                                        value={client.phone}
-                                        type="phone"
-                                    />
+                                    <div class="mt-4 block has-background-success-light p-3">
+                                        <FormTextareaField
+                                            label="Write your comment here:"
+                                            name="content"
+                                            placeholder="Text input"
+                                            value={content}
+                                            errorText={errors && errors.content}
+                                            helpText=""
+                                            onChange={(e)=>setContent(e.target.value)}
+                                            isRequired={true}
+                                            maxWidth="180px"
+                                        />
+                                    </div>
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
                                             <Link class="button is-fullwidth-mobile" to={`/admin/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <Link to={`/admin/client/${cid}/edit`} class="button is-warning is-fullwidth-mobile"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link>
+                                            <button onClick={onSubmitClick} class="button is-success is-fullwidth-mobile">
+                                                <FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Comment
+                                            </button>
                                         </div>
                                     </div>
 
@@ -230,4 +271,4 @@ function AdminClientDetailLite() {
     );
 }
 
-export default AdminClientDetailLite;
+export default AdminClientDetailCommentList;
