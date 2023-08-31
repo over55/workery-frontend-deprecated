@@ -120,6 +120,8 @@ function AdminClientDetailAttachmentList() {
 
     // Client details.
 
+    // --- Detail --- //
+
     function onClientDetailSuccess(response){
         console.log("onClientDetailSuccess: Starting...");
         setClient(response);
@@ -141,7 +143,7 @@ function AdminClientDetailAttachmentList() {
         setFetching(false);
     }
 
-    // Attachment list.
+    // --- Attachment list --- //
 
     function onAttachmentListSuccess(response){
         console.log("onAttachmentListSuccess: Starting...");
@@ -169,7 +171,7 @@ function AdminClientDetailAttachmentList() {
         setFetching(false);
     }
 
-    // Attachment delete.
+    // --- Attachment delete --- //
 
     function onAttachmentDeleteSuccess(response){
         console.log("onAttachmentDeleteSuccess: Starting..."); // For debugging purposes only.
@@ -264,6 +266,24 @@ function AdminClientDetailAttachmentList() {
                     <h1 class="title is-2"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Client</h1>
                     <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail</h4>
                     <hr />
+
+                    {/* Modal */}
+                    <div class={`modal ${selectedAttachmentForDeletion ? 'is-active' : ''}`}>
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">Are you sure?</p>
+                                <button class="delete" aria-label="close" onClick={onDeselectAttachmentForDeletion}></button>
+                            </header>
+                            <section class="modal-card-body">
+                                You are about to <b>archive</b> this user; it will no longer appear on your dashboard This action can be undone but you'll need to contact the system administrator. Are you sure you would like to continue?
+                            </section>
+                            <footer class="modal-card-foot">
+                                <button class="button is-success" onClick={onDeleteConfirmButtonClick}>Confirm</button>
+                                <button class="button" onClick={onDeselectAttachmentForDeletion}>Cancel</button>
+                            </footer>
+                        </div>
+                    </div>
 
                     {/* Page */}
                     <nav class="box">
