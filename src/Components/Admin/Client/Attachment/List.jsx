@@ -367,7 +367,7 @@ function AdminClientDetailAttachmentList() {
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
-                                            <Link class="button is-fullwidth-mobile" to={`/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
+                                            <Link class="button is-fullwidth-mobile" to={`/admin/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
                                             <Link to={`/admin/client/${cid}/attachments/add`} class="button is-success is-fullwidth-mobile"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link>

@@ -73,9 +73,9 @@ export function postAttachmentCreateAPI(formdata, onSuccessCallback, onErrorCall
     }).then(onDoneCallback);
 }
 
-export function getAttachmentDetailAPI(submissionID, onSuccessCallback, onErrorCallback, onDoneCallback) {
+export function getAttachmentDetailAPI(attachmentID, onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
-    axios.get(WORKERY_ATTACHMENT_API_ENDPOINT.replace("{id}", submissionID)).then((successResponse) => {
+    axios.get(WORKERY_ATTACHMENT_API_ENDPOINT.replace("{id}", attachmentID)).then((successResponse) => {
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.
