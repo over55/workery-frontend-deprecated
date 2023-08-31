@@ -34,7 +34,13 @@ function AdminClientDetailAttachmentListDesktop(props) {
                                 <td data-label="Created">{attachment.createdAt}</td>
                                 <td data-label="File">
                                     <a href={attachment.objectUrl} target="_blank" rel="noreferrer" class="">
-                                        <FontAwesomeIcon className="mdi" icon={faDownload} />&nbsp;Download File
+                                        <FontAwesomeIcon className="mdi" icon={faDownload} />&nbsp;
+                                        {attachment.filename
+                                            ?
+                                            <>{attachment.filename}</>
+                                            :
+                                            <>Download File</>
+                                        }
                                     </a>
                                 </td>
                                 <td class="is-actions-cell">

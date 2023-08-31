@@ -48,6 +48,7 @@ import AdminClientUpgradeOperation from "./Components/Admin/Client/Operation/Upg
 import AdminClientDowngradeOperation from "./Components/Admin/Client/Operation/Downgrade";
 import AdminClientAttachmentAdd from "./Components/Admin/Client/Attachment/Add";
 import AdminClientAttachmentDetail from "./Components/Admin/Client/Attachment/Detail";
+import AdminClientAttachmentUpdate from "./Components/Admin/Client/Attachment/Update";
 
 function AppRoute() {
     return (
@@ -67,6 +68,7 @@ function AppRoute() {
                                     <Route exact path="/admin/client/:cid/archive" element={<AdminClientArchiveOperation/>}/>
                                     <Route exact path="/admin/client/:cid/permadelete" element={<AdminClientDeleteOperation/>}/>
                                     <Route exact path="/admin/client/:cid/more" element={<AdminClientDetailMore/>}/>
+                                    <Route exact path="/admin/client/:cid/attachment/:aid/edit" element={<AdminClientAttachmentUpdate/>}/>
                                     <Route exact path="/admin/client/:cid/attachment/:aid" element={<AdminClientAttachmentDetail/>}/>
                                     <Route exact path="/admin/client/:cid/attachments/add" element={<AdminClientAttachmentAdd/>}/>
                                     <Route exact path="/admin/client/:cid/attachments" element={<AdminClientDetailAttachmentList/>}/>
