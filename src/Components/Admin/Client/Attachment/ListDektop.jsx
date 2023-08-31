@@ -18,7 +18,7 @@ function AdminClientDetailAttachmentListDesktop(props) {
                 <table class="table is-fullwidth is-striped is-hoverable is-fullwidth">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Title</th>
                             <th>State</th>
                             <th>Created</th>
                             <th>File</th>
@@ -29,7 +29,7 @@ function AdminClientDetailAttachmentListDesktop(props) {
 
                         {listData && listData.results && listData.results.map(function(attachment, i){
                             return <tr>
-                                <td data-label="Title">{attachment.name}</td>
+                                <td data-label="Title">{attachment.title}</td>
                                 <td data-label="State">{ATTACHMENT_STATES[attachment.status]}</td>
                                 <td data-label="Created">{attachment.createdAt}</td>
                                 <td data-label="File">

@@ -274,13 +274,8 @@ function AdminClientDetailAttachmentList() {
                                 <p class="title is-4"><FontAwesomeIcon className="fas" icon={faFile} />&nbsp;Attachments</p>
                             </div>
                             {client && <div class="column has-text-right">
-                                {/* Mobile Specific */}
-                                <Link to={`/admin/client/${cid}/attachments/add`} class="button is-small is-success is-fullwidth is-hidden-desktop" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;Add Attachment
-                                </Link>
-                                {/* Desktop Specific */}
-                                <Link to={`/admin/client/${cid}/attachments/add`} class="button is-small is-success is-hidden-touch" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;Add Attachment
+                                <Link to={`/admin/client/${cid}/attachments/add`} class="button is-small is-success is-fullwidth-mobile" type="button">
+                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;New
                                 </Link>
                             </div>}
                         </div>
@@ -372,12 +367,10 @@ function AdminClientDetailAttachmentList() {
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
-                                            <Link class="button is-hidden-touch" to={`/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
-                                            <Link class="button is-fullwidth is-hidden-desktop" to={`/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
+                                            <Link class="button is-fullwidth-mobile" to={`/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <Link to={`/admin/client/${cid}/attachments/add`} class="button is-primary is-hidden-touch"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add Attachment</Link>
-                                            <Link to={`/admin/client/${cid}/attachments/add`} class="button is-primary is-fullwidth is-hidden-desktop"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add Attachment</Link>
+                                            <Link to={`/admin/client/${cid}/attachments/add`} class="button is-success is-fullwidth-mobile"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link>
                                         </div>
                                     </div>
 

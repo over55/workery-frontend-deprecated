@@ -42,7 +42,7 @@ function AdminClientAttachmentAdd() {
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
-    const [name, setName] = useState("");
+    const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
     ////
@@ -60,7 +60,7 @@ function AdminClientAttachmentAdd() {
 
         const formData = new FormData();
         formData.append('file', selectedFile);
-        formData.append('name', name);
+        formData.append('title', title);
         formData.append('description', description);
         formData.append('ownership_id', cid);
         formData.append('ownership_type', 1); // 1=Customer or User.
@@ -84,7 +84,7 @@ function AdminClientAttachmentAdd() {
         console.log(response);
 
         // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("User created");
+        setTopAlertMessage("Attachment uploaded");
         setTopAlertStatus("success");
         setTimeout(() => {
             console.log("onAdminUserAttachmentAddSuccess: Delayed for 2 seconds.");
@@ -93,7 +93,7 @@ function AdminClientAttachmentAdd() {
         }, 2000);
 
         // Redirect the user to the user attachments page.
-        setForceURL("/admin/user/"+cid+"/attachments");
+        setForceURL("/admin/client/"+cid+"/attachments");
     }
 
     function onAdminUserAttachmentAddError(apiErr) {
@@ -151,14 +151,15 @@ function AdminClientAttachmentAdd() {
                         <ul>
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
                             <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
-                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail</Link></li>
+                            <li class=""><Link to={`/admin/client/${cid}/attachments`} aria-current="page"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail (Attachments)</Link></li>
+                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link></li>
                         </ul>
                     </nav>
 
                     {/* Mobile Breadcrumbs */}
                     <nav class="breadcrumb has-background-light p-4 is-hidden-desktop" aria-label="breadcrumbs">
                         <ul>
-                            <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link></li>
+                            <li class=""><Link to={`/admin/client/${cid}/attachments`} aria-current="page"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Detail (Attachments)</Link></li>
                         </ul>
                     </nav>
 
@@ -185,13 +186,13 @@ function AdminClientAttachmentAdd() {
                                 <div class="container">
 
                                     <FormInputField
-                                        label="Name"
-                                        name="name"
+                                        label="Title"
+                                        name="title"
                                         placeholder="Text input"
-                                        value={name}
-                                        errorText={errors && errors.name}
+                                        value={title}
+                                        errorText={errors && errors.title}
                                         helpText=""
-                                        onChange={(e)=>setName(e.target.value)}
+                                        onChange={(e)=>setTitle(e.target.value)}
                                         isRequired={true}
                                         maxWidth="150px"
                                     />
@@ -209,9 +210,22 @@ function AdminClientAttachmentAdd() {
                                         maxWidth="485px"
                                     />
 
-                                    <input name="file"type="file" onChange={onHandleFileChange} />
-                                    <br />
-                                    <br />
+                                    {selectedFile !== undefined && selectedFile !== null && selectedFile !== ""
+                                        ?
+                                        <>
+                                            <article class="message is-success">
+                                                <div class="message-body">
+                                                    <FontAwesomeIcon className="fas" icon={faCheckCircle} />&nbsp;File ready to upload.
+                                                </div>
+                                            </article>
+                                        </>
+                                        :
+                                        <>
+                                            <input name="file"type="file" onChange={onHandleFileChange} />
+                                            <br />
+                                            <br />
+                                        </>
+                                    }
 
                                     <div class="columns pt-5">
                                         <div class="column is-half">
