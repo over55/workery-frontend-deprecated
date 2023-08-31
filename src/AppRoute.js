@@ -40,6 +40,7 @@ import AdminClientUpdate from "./Components/Admin/Client/Update";
 import AdminClientDetailOrderList from "./Components/Admin/Client/DetailOrderList";
 import AdminClientDetailCommentList from "./Components/Admin/Client/DetailCommentList";
 import AdminClientDetailAttachmentList from "./Components/Admin/Client/Attachment/List";
+import AdminClientDetailMore from "./Components/Admin/Client/DetailMore";
 import AdminClientAttachmentAdd from "./Components/Admin/Client/Attachment/Add";
 
 function AppRoute() {
@@ -54,6 +55,7 @@ function AppRoute() {
                         <div class="column">
                             <section class="main-content columns is-fullheight">
                                 <Routes>
+                                    <Route exact path="/admin/client/:cid/more" element={<AdminClientDetailMore/>}/>
                                     <Route exact path="/admin/client/:cid/attachments/add" element={<AdminClientAttachmentAdd/>}/>
                                     <Route exact path="/admin/client/:cid/attachments" element={<AdminClientDetailAttachmentList/>}/>
                                     <Route exact path="/admin/client/:cid/comments" element={<AdminClientDetailCommentList/>}/>

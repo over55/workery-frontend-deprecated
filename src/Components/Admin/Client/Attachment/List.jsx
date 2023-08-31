@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faArrowRight, faTrashCan, faArrowUpRightFromSquare, faFile, faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faArrowRight, faTrashCan, faArrowUpRightFromSquare, faFile, faDownload, faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { ATTACHMENT_STATES, PAGE_SIZE_OPTIONS } from "../../../../Constants/FieldOptions";
@@ -313,6 +313,9 @@ function AdminClientDetailAttachmentList() {
                                             </li>
                                             <li class="is-active">
                                                 <Link to={`/admin/client/${cid}/attachments`}><strong>Attachments</strong></Link>
+                                            </li>
+                                            <li>
+                                                <Link to={`/admin/client/${client.id}/more`}>More&nbsp;&nbsp;<FontAwesomeIcon className="mdi" icon={faEllipsis} /></Link>
                                             </li>
                                         </ul>
                                     </div>

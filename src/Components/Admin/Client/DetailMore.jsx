@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import { faBuildingUser, faImage, faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faEllipsis, faArchive, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../AppState"
 import { CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS, CLIENT_TYPE_OF_FILTER_OPTIONS, CLIENT_ORGANIZATION_TYPE_OPTIONS } from "../../../Constants/FieldOptions";
 
 
-function AdminClientDetailLite() {
+function AdminClientDetailMore() {
     ////
     //// URL Parameters.
     ////
@@ -136,9 +136,7 @@ function AdminClientDetailLite() {
                                 <p class="title is-4"><FontAwesomeIcon className="fas" icon={faPaperclip} />&nbsp;Summary</p>
                             </div>
                             <div class="column has-text-right">
-                                <Link to={`/admin/client/${cid}/edit`} class="button is-small is-warning is-fullwidth-mobile" type="button">
-                                    <FontAwesomeIcon className="mdi" icon={faPencil} />&nbsp;Edit
-                                </Link>
+
                             </div>
                         </div>}
 
@@ -156,8 +154,8 @@ function AdminClientDetailLite() {
                                     {/* Tab Navigation */}
                                     <div class="tabs is-medium">
                                         <ul>
-                                            <li class="is-active">
-                                                <Link><strong>Summary</strong></Link>
+                                            <li>
+                                                <Link to={`/admin/client/${client.id}`}>Summary</Link>
                                             </li>
                                             <li>
                                                 <Link to={`/admin/client/${client.id}/detail`}>Detail</Link>
@@ -171,58 +169,57 @@ function AdminClientDetailLite() {
                                             <li>
                                                 <Link to={`/admin/client/${client.id}/attachments`}>Attachments</Link>
                                             </li>
-                                            <li>
-                                                <Link to={`/admin/client/${client.id}/more`}>More&nbsp;&nbsp;<FontAwesomeIcon className="mdi" icon={faEllipsis} /></Link>
+                                            <li class="is-active">
+                                                <Link><strong>More&nbsp;&nbsp;<FontAwesomeIcon className="mdi" icon={faEllipsis} /></strong></Link>
                                             </li>
                                         </ul>
                                     </div>
 
-                                    <DataDisplayRowSelect
-                                        label="Type"
-                                        selectedValue={client.type}
-                                        options={CLIENT_TYPE_OF_FILTER_OPTIONS}
-                                    />
+                                    {/* Page Menu Options */}
+                                    <section class="hero ">
+                                      <div class="hero-body has-text-centered">
+                                        <div class="container">
+                                            <div class="columns is-vcentered is-multiline">
+                                                <div class="column">
+                                                    <Link to={`/admin/client/${cid}/avatar`}>
+                                                        <FontAwesomeIcon className="mdi has-text-white has-background-danger-dark p-6 mb-3" icon={faImage} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                        <h1 class="title is-3">Change Photo</h1>
+                                                        <p className="has-text-grey">Upload a photo of the client</p>
+                                                    </Link>
+                                                </div>
+                                                <div class="column">
+                                                    <Link to={`/admin/client/${cid}/archive`}>
+                                                        <FontAwesomeIcon className="mdi has-text-white has-background-success-dark p-6 mb-3" icon={faArchive} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                        <h1 class="title is-3">Archive</h1>
+                                                        <p className="has-text-grey">Make client hidden from lis and search resultst</p>
+                                                    </Link>
+                                                </div>
+                                                <div class="column">
+                                                    <Link to={`/admin/client/${cid}/upgrade`}>
+                                                        <FontAwesomeIcon className="mdi has-text-white has-background-info-dark p-6 mb-3" icon={faBuildingUser} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                        <h1 class="title is-3">Upgrade</h1>
+                                                        <p className="has-text-grey">Change client to become business client</p>
+                                                    </Link>
+                                                </div>
+                                                <div class="column">
+                                                    <Link to={`/admin/client/${cid}/permadelete`}>
+                                                        <FontAwesomeIcon className="mdi has-text-white has-background-danger p-6 mb-3" icon={faTrashCan} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                        <h1 class="title is-3">Delete</h1>
+                                                        <p className="has-text-grey">Permanently delete this client and all associated data</p>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </section>
 
-                                    {client.type === COMMERCIAL_CUSTOMER_TYPE_OF_ID && <>
-                                        <DataDisplayRowText
-                                            label="Organization Name"
-                                            value={client.organizationName}
-                                        />
-                                        <DataDisplayRowSelect
-                                            label="Organization Type"
-                                            selectedValue={client.organizationType}
-                                            options={CLIENT_ORGANIZATION_TYPE_OPTIONS}
-                                        />
-                                    </>}
-
-                                    <DataDisplayRowText
-                                        label="First Name"
-                                        value={client.firstName}
-                                    />
-
-                                    <DataDisplayRowText
-                                        label="Last Name"
-                                        value={client.lastName}
-                                    />
-
-                                    <DataDisplayRowText
-                                        label="Email"
-                                        value={client.email}
-                                        type="email"
-                                    />
-
-                                    <DataDisplayRowText
-                                        label="Phone"
-                                        value={client.phone}
-                                        type="phone"
-                                    />
-
+                                    {/* Bottom Navigation */}
                                     <div class="columns pt-5">
                                         <div class="column is-half">
                                             <Link class="button is-fullwidth-mobile" to={`/admin/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <Link to={`/admin/client/${cid}/edit`} class="button is-warning is-fullwidth-mobile"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link>
+
                                         </div>
                                     </div>
 
@@ -236,4 +233,4 @@ function AdminClientDetailLite() {
     );
 }
 
-export default AdminClientDetailLite;
+export default AdminClientDetailMore;
