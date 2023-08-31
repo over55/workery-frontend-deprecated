@@ -133,7 +133,7 @@ function AdminClientDetailMore() {
                         {/* Title + Options */}
                         {client && <div class="columns">
                             <div class="column">
-                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faPaperclip} />&nbsp;Summary</p>
+                                <p class="title is-4">More&nbsp;<FontAwesomeIcon className="fas" icon={faEllipsis} /></p>
                             </div>
                             <div class="column has-text-right">
 
@@ -180,6 +180,7 @@ function AdminClientDetailMore() {
                                       <div class="hero-body has-text-centered">
                                         <div class="container">
                                             <div class="columns is-vcentered is-multiline">
+                                                {/* Avatar */}
                                                 <div class="column">
                                                     <Link to={`/admin/client/${cid}/avatar`}>
                                                         <FontAwesomeIcon className="mdi has-text-white has-background-danger-dark p-6 mb-3" icon={faImage} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
@@ -187,6 +188,8 @@ function AdminClientDetailMore() {
                                                         <p className="has-text-grey">Upload a photo of the client</p>
                                                     </Link>
                                                 </div>
+
+                                                {/* Archive / Unarchive */}
                                                 {client.status === 2
                                                     ?
                                                     <div class="column">
@@ -206,13 +209,27 @@ function AdminClientDetailMore() {
                                                     </div>
                                                 }
 
-                                                <div class="column">
-                                                    <Link to={`/admin/client/${cid}/upgrade`}>
-                                                        <FontAwesomeIcon className="mdi has-text-white has-background-info-dark p-6 mb-3" icon={faBuildingUser} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
-                                                        <h1 class="title is-3">Upgrade</h1>
-                                                        <p className="has-text-grey">Change client to become business client</p>
-                                                    </Link>
-                                                </div>
+                                                {/* Upgrade / Downgrade */}
+                                                {client.type === COMMERCIAL_CUSTOMER_TYPE_OF_ID
+                                                    ?
+                                                    <div class="column">
+                                                        <Link to={`/admin/client/${cid}/downgrade`}>
+                                                            <FontAwesomeIcon className="mdi has-text-white has-background-info-dark p-6 mb-3" icon={faBuildingUser} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                            <h1 class="title is-3">Downgrade</h1>
+                                                            <p className="has-text-grey">Change client to become residential client</p>
+                                                        </Link>
+                                                    </div>
+                                                    :
+                                                    <div class="column">
+                                                        <Link to={`/admin/client/${cid}/upgrade`}>
+                                                            <FontAwesomeIcon className="mdi has-text-white has-background-info-dark p-6 mb-3" icon={faBuildingUser} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                            <h1 class="title is-3">Upgrade</h1>
+                                                            <p className="has-text-grey">Change client to become business client</p>
+                                                        </Link>
+                                                    </div>
+                                                }
+
+                                                {/* Perma-delete */}
                                                 <div class="column">
                                                     <Link to={`/admin/client/${cid}/permadelete`}>
                                                         <FontAwesomeIcon className="mdi has-text-white has-background-danger p-6 mb-3" icon={faTrashCan} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
