@@ -151,7 +151,7 @@ function AdminClientAddStep7() {
                             <>
                                 <FormErrorBox errors={errors} />
                                 {addCustomer !== undefined && addCustomer !== null && addCustomer !== "" && <div class="container">
-                                    <p class="title is-4 mt-2"><FontAwesomeIcon className="fas" icon={faIdCard} />&nbsp;Contact</p>
+                                    <p class="title is-4 mt-2"><FontAwesomeIcon className="fas" icon={faIdCard} />&nbsp;Contact&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<Link to="/admin/clients/add/step-4"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link></p>
 
                                     <DataDisplayRowSelect
                                         label="Type"
@@ -220,7 +220,7 @@ function AdminClientAddStep7() {
                                         options={CLIENT_PHONE_TYPE_OF_OPTIONS_WITH_EMPTY_OPTIONS}
                                     />}
 
-                                    <p class="title is-4"><FontAwesomeIcon className="fas" icon={faAddressBook} />&nbsp;Address</p>
+                                    <p class="title is-4"><FontAwesomeIcon className="fas" icon={faAddressBook} />&nbsp;Address&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<Link to="/admin/clients/add/step-5"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link></p>
 
                                     <DataDisplayRowCheckbox
                                        label="Has shipping address different then billing address"
@@ -310,7 +310,7 @@ function AdminClientAddStep7() {
                                         </div>}
                                     </div>
 
-                                    <p class="title is-4"><FontAwesomeIcon className="fas" icon={faChartPie} />&nbsp;Metrics</p>
+                                    <p class="title is-4"><FontAwesomeIcon className="fas" icon={faChartPie} />&nbsp;Metrics&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<Link to="/admin/clients/add/step-6"><FontAwesomeIcon className="fas" icon={faPencil} />&nbsp;Edit</Link></p>
 
                                     <DataDisplayRowTagIDs
                                         tags={addCustomer.tags}

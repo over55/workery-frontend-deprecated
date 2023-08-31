@@ -19,7 +19,7 @@ function FormSelectFieldForHowHearAboutUsItem({
     howDidYouHearAboutUsID,
     setHowDidYouHearAboutUsID,
     isHowDidYouHearAboutUsOther, // This variable controls whether this component detected the `Other` option or not.
-    setIshowDidYouHearAboutUsOther,
+    setIsHowDidYouHearAboutUsOther,
     errorText,
     validationText,
     helpText,
@@ -44,7 +44,7 @@ function FormSelectFieldForHowHearAboutUsItem({
             let howHearOption = howHearOptions[index];
             if (howHearOption.label === "Other" && howHearOption.value === howHearID) {
                 // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| isHowDidYouHearAboutUsOther: true");
-                setIshowDidYouHearAboutUsOther(true);
+                setIsHowDidYouHearAboutUsOther(true);
                 setHowDidYouHearAboutUsID(howHearID);
                 return;
             }
@@ -52,7 +52,7 @@ function FormSelectFieldForHowHearAboutUsItem({
 
         // CASE 2: Non-"Other" option selected.
         // console.log("FormSelectFieldForHowHearAboutUsItem | howHearID:", howHearID, "| isHowDidYouHearAboutUsOther: false");
-        setIshowDidYouHearAboutUsOther(false);
+        setIsHowDidYouHearAboutUsOther(false);
         setHowDidYouHearAboutUsID(howHearID);
     }
 
@@ -72,7 +72,7 @@ function FormSelectFieldForHowHearAboutUsItem({
         for (let index in response) {
             let howHearOption = response[index];
             if (howHearOption.label === "Other" && howHearOption.value === howDidYouHearAboutUsID) {
-                setIshowDidYouHearAboutUsOther(true);
+                setIsHowDidYouHearAboutUsOther(true);
                 // console.log("FormSelectFieldForHowHearAboutUsItem | picked other | howHearID:", howDidYouHearAboutUsID);
                 return;
             }

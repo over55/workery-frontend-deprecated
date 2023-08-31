@@ -40,7 +40,7 @@ export const currentUserState = atom({
 export const ADD_CUSTOMER_STATE_DEFAULT = {
     type: 0,
     organizationName: "",
-    organizationType: "",
+    organizationType: 0,
     firstName: "",
     lastName: "",
     email: "",

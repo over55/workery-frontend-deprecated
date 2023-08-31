@@ -90,7 +90,7 @@ function AdminClientList() {
         }, 2000);
 
         // Fetch again an updated list.
-        fetchList(currentCursor, pageSize, actualSearchText, status, type, createdAtGTE);
+        fetchList(currentCursor, pageSize, actualSearchText, sortByValue, status, type, createdAtGTE);
     }
 
     function onClientDeleteError(apiErr) {

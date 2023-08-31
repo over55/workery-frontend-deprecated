@@ -25,6 +25,8 @@ import RootTenantUpdate from "./Components/Root/Tenant/Update";
 import ToTenantRedirector from "./Components/Root/ToTenantRedirector";
 import AdminDashboard from "./Components/Admin/Dashboard";
 import AdminClientList from "./Components/Admin/Client/List";
+import AdminClientSearchResult from "./Components/Admin/Client/Search/Result";
+import AdminClientSearch from "./Components/Admin/Client/Search/Search";
 import AdminClientAddStep1 from "./Components/Admin/Client/Add/Step1";
 import AdminClientAddStep2 from "./Components/Admin/Client/Add/Step2";
 import AdminClientAddStep3 from "./Components/Admin/Client/Add/Step3";
@@ -66,6 +68,8 @@ function AppRoute() {
                                     <Route exact path="/admin/clients/add/step-3" element={<AdminClientAddStep3/>}/>
                                     <Route exact path="/admin/clients/add/step-2" element={<AdminClientAddStep2/>}/>
                                     <Route exact path="/admin/clients/add/step-1" element={<AdminClientAddStep1/>}/>
+                                    <Route exact path="/admin/clients/search-result" element={<AdminClientSearchResult/>}/>
+                                    <Route exact path="/admin/clients/search" element={<AdminClientSearch/>}/>
                                     <Route exact path="/admin/clients" element={<AdminClientList/>}/>
                                     <Route exact path="/admin/dashboard" element={<AdminDashboard/>}/>
                                     <Route exact path="/root/tenant/:tid/start" element={<ToTenantRedirector/>}/>

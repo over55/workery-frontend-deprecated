@@ -20,7 +20,7 @@ import AdminClientListMobile from "../ListMobile";
 import { addCustomerState, ADD_CUSTOMER_STATE_DEFAULT } from "../../../../AppState";
 
 
-function AdminClientAddStep2() {
+function AdminClientSearchResult() {
     ////
     //// URL Parameters.
     ////
@@ -268,7 +268,7 @@ function AdminClientAddStep2() {
                         <ul>
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
                             <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
-                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link></li>
+                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faSearch} />&nbsp;Search</Link></li>
                         </ul>
                     </nav>
 
@@ -281,7 +281,7 @@ function AdminClientAddStep2() {
 
                     {/* Page Title */}
                     <h1 class="title is-2"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</h1>
-                    <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Client</h4>
+                    <h4 class="subtitle is-4"><FontAwesomeIcon className="fas" icon={faSearch} />&nbsp;Search</h4>
                     <hr />
 
                     {/* Page Modal(s) */}
@@ -461,12 +461,12 @@ function AdminClientAddStep2() {
                                     </section>
                                 }
                                 </div>
-                                <p class="title is-4 has-text-centered">- OR -</p>
 
                                 <div class="columns pt-5">
-                                    <div class="column has-text-centered">
-                                        <Link class="button is-medium is-fullwidth-mobile" to="/admin/clients/add/step-1"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Search Again</Link>&nbsp;
-                                        <Link class="button is-medium is-success is-fullwidth-mobile" onClick={onAddClientClick}><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;Add client</Link>
+                                    <div class="column is-half">
+                                        <Link class="button is-medium is-fullwidth-mobile" to="/admin/clients/search"><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Search Again</Link>&nbsp;
+                                    </div>
+                                    <div class="column is-half has-text-right">
                                     </div>
                                 </div>
                             </>
@@ -478,4 +478,4 @@ function AdminClientAddStep2() {
     );
 }
 
-export default AdminClientAddStep2;
+export default AdminClientSearchResult;
