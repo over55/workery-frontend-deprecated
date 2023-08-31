@@ -42,6 +42,8 @@ import AdminClientDetailCommentList from "./Components/Admin/Client/DetailCommen
 import AdminClientDetailAttachmentList from "./Components/Admin/Client/Attachment/List";
 import AdminClientDetailMore from "./Components/Admin/Client/DetailMore";
 import AdminClientDeleteOperation from "./Components/Admin/Client/Operation/Delete";
+import AdminClientArchiveOperation from "./Components/Admin/Client/Operation/Archive";
+import AdminClientUnarchiveOperation from "./Components/Admin/Client/Operation/Unarchive";
 import AdminClientAttachmentAdd from "./Components/Admin/Client/Attachment/Add";
 
 function AppRoute() {
@@ -56,6 +58,8 @@ function AppRoute() {
                         <div class="column">
                             <section class="main-content columns is-fullheight">
                                 <Routes>
+                                    <Route exact path="/admin/client/:cid/unarchive" element={<AdminClientUnarchiveOperation/>}/>
+                                    <Route exact path="/admin/client/:cid/archive" element={<AdminClientArchiveOperation/>}/>
                                     <Route exact path="/admin/client/:cid/permadelete" element={<AdminClientDeleteOperation/>}/>
                                     <Route exact path="/admin/client/:cid/more" element={<AdminClientDetailMore/>}/>
                                     <Route exact path="/admin/client/:cid/attachments/add" element={<AdminClientAttachmentAdd/>}/>

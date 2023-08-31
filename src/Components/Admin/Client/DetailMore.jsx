@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuildingUser, faImage, faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faEllipsis, faArchive, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faBuildingUser, faImage, faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faEllipsis, faArchive, faBoxOpen, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 
@@ -187,13 +187,25 @@ function AdminClientDetailMore() {
                                                         <p className="has-text-grey">Upload a photo of the client</p>
                                                     </Link>
                                                 </div>
-                                                <div class="column">
-                                                    <Link to={`/admin/client/${cid}/archive`}>
-                                                        <FontAwesomeIcon className="mdi has-text-white has-background-success-dark p-6 mb-3" icon={faArchive} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
-                                                        <h1 class="title is-3">Archive</h1>
-                                                        <p className="has-text-grey">Make client hidden from lis and search resultst</p>
-                                                    </Link>
-                                                </div>
+                                                {client.status === 2
+                                                    ?
+                                                    <div class="column">
+                                                        <Link to={`/admin/client/${cid}/unarchive`}>
+                                                            <FontAwesomeIcon className="mdi has-text-white has-background-success-dark p-6 mb-3" icon={faBoxOpen} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                            <h1 class="title is-3">Unarchive</h1>
+                                                            <p className="has-text-grey">Make client visible in list and search results</p>
+                                                        </Link>
+                                                    </div>
+                                                    :
+                                                    <div class="column">
+                                                        <Link to={`/admin/client/${cid}/archive`}>
+                                                            <FontAwesomeIcon className="mdi has-text-white has-background-success-dark p-6 mb-3" icon={faArchive} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                            <h1 class="title is-3">Archive</h1>
+                                                            <p className="has-text-grey">Make client hidden from list and search results</p>
+                                                        </Link>
+                                                    </div>
+                                                }
+
                                                 <div class="column">
                                                     <Link to={`/admin/client/${cid}/upgrade`}>
                                                         <FontAwesomeIcon className="mdi has-text-white has-background-info-dark p-6 mb-3" icon={faBuildingUser} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />

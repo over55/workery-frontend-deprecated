@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 import {
     WORKERY_CLIENTS_API_ENDPOINT,
     WORKERY_CLIENT_API_ENDPOINT,
+    WORKERY_CLIENT_ARCHIVE_OPERATION_API_ENDPOINT,
     WORKERY_CLIENT_CREATE_COMMENT_OPERATION_API_ENDPOINT,
     // WORKERY_CLIENTS_SELECT_OPTIONS_API_ENDPOINT
 } from "../Constants/API";
@@ -128,6 +129,25 @@ export function putClientUpdateAPI(data, onSuccessCallback, onErrorCallback, onD
 export function deleteClientAPI(id, onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
     axios.delete(WORKERY_CLIENT_API_ENDPOINT.replace("{id}", id)).then((successResponse) => {
+        const responseData = successResponse.data;
+
+        // Snake-case from API to camel-case for React.
+        const data = camelizeKeys(responseData);
+
+        // Return the callback data.
+        onSuccessCallback(data);
+    }).catch( (exception) => {
+        let errors = camelizeKeys(exception);
+        onErrorCallback(errors);
+    }).then(onDoneCallback);
+}
+
+export function postArchiveClientAPI(id, onSuccessCallback, onErrorCallback, onDoneCallback) {
+    const axios = getCustomAxios();
+    const data = {
+        customer_id: id,
+    };
+    axios.post(WORKERY_CLIENT_ARCHIVE_OPERATION_API_ENDPOINT, data).then((successResponse) => {
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.
