@@ -236,7 +236,7 @@ function AdminClientDetailOrderList() {
                             </div>
                             <div class="column has-text-right">
                                 <Link to={`/admin/client/${cid}/edit`} class="button is-small is-success is-fullwidth-mobile" type="button" disabled={true}>
-                                    <FontAwesomeIcon className="mdi" icon={faPencil} />&nbsp;New Order
+                                    <FontAwesomeIcon className="mdi" icon={faPlus} />&nbsp;New
                                 </Link>
                             </div>
                         </div>}
@@ -329,7 +329,7 @@ function AdminClientDetailOrderList() {
                                             <Link class="button is-fullwidth-mobile" to={`/admin/clients`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Clients</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <Link class="button is-success is-fullwidth-mobile" disabled={true}><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Order</Link>
+                                            <Link class="button is-success is-fullwidth-mobile" disabled={true}><FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New</Link>
                                         </div>
                                     </div>
 

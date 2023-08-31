@@ -2,20 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuildingUser, faImage, faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faEllipsis, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faBuildingUser, faImage, faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faEllipsis, faHomeUser, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 
-import { getClientDetailAPI, postUpgradeClientAPI } from "../../../../API/Client";
+import { getClientDetailAPI, postDowngradeClientAPI } from "../../../../API/Client";
 import FormErrorBox from "../../../Reusable/FormErrorBox";
-import FormInputField from "../../../Reusable/FormInputField";
-import FormSelectField from "../../../Reusable/FormSelectField";
 import PageLoadingContent from "../../../Reusable/PageLoadingContent";
 import { topAlertMessageState, topAlertStatusState } from "../../../../AppState";
-import { CLIENT_ORGANIZATION_TYPE_OPTIONS_WITH_EMPTY_OPTIONS } from "../../../../Constants/FieldOptions";
 
 
-function AdminClientUpgradeOperation() {
+function AdminClientDowngradeOperation() {
     ////
     //// URL Parameters.
     ////
@@ -37,8 +34,6 @@ function AdminClientUpgradeOperation() {
     const [isFetching, setFetching] = useState(false);
     const [forceURL, setForceURL] = useState("");
     const [client, setClient] = useState({});
-    const [organizationName, setOrganizationName] = useState("");
-    const [organizationType, setOrganizationType] = useState(0);
 
     ////
     //// Event handling.
@@ -47,15 +42,11 @@ function AdminClientUpgradeOperation() {
     const onSubmitClick = () => {
         setErrors({});
         setFetching(true);
-        postUpgradeClientAPI(
-            {
-                customer_id: cid,
-                organization_name: organizationName,
-                organization_type: organizationType
-            },
-            onUpgradeSuccess,
-            onUpgradeError,
-            onUpgradeDone
+        postDowngradeClientAPI(
+            cid,
+            onDowngradeSuccess,
+            onDowngradeError,
+            onDowngradeDone
         );
     }
 
@@ -86,13 +77,13 @@ function AdminClientUpgradeOperation() {
         setFetching(false);
     }
 
-    // --- Upgrade --- //
+    // --- Downgrade --- //
 
-    function onUpgradeSuccess(response){
-        console.log("onUpgradeSuccess: Starting...");
+    function onDowngradeSuccess(response){
+        console.log("onDowngradeSuccess: Starting...");
 
         // Add a temporary banner message in the app and then clear itself after 2 seconds.
-        setTopAlertMessage("Client upgraded");
+        setTopAlertMessage("Client downgrade");
         setTopAlertStatus("success");
         setTimeout(() => {
             console.log("onSuccess: Delayed for 2 seconds.");
@@ -103,8 +94,8 @@ function AdminClientUpgradeOperation() {
         setForceURL("/admin/client/"+cid+"/more");
     }
 
-    function onUpgradeError(apiErr) {
-        console.log("onUpgradeError: Starting...");
+    function onDowngradeError(apiErr) {
+        console.log("onDowngradeError: Starting...");
         setErrors(apiErr);
 
         // The following code will cause the screen to scroll to the top of
@@ -114,8 +105,8 @@ function AdminClientUpgradeOperation() {
         scroll.scrollToTop();
     }
 
-    function onUpgradeDone() {
-        console.log("onUpgradeDone: Starting...");
+    function onDowngradeDone() {
+        console.log("onDowngradeDone: Starting...");
         setFetching(false);
     }
 
@@ -159,7 +150,7 @@ function AdminClientUpgradeOperation() {
                             <li class=""><Link to="/admin/dashboard" aria-current="page"><FontAwesomeIcon className="fas" icon={faGauge} />&nbsp;Dashboard</Link></li>
                             <li class=""><Link to="/admin/clients" aria-current="page"><FontAwesomeIcon className="fas" icon={faUserCircle} />&nbsp;Clients</Link></li>
                             <li class=""><Link to={`/admin/client/${cid}/more`} aria-current="page"><FontAwesomeIcon className="fas" icon={faEye} />&nbsp;Detail (More)</Link></li>
-                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faBuildingUser} />&nbsp;Upgrade</Link></li>
+                            <li class="is-active"><Link aria-current="page"><FontAwesomeIcon className="fas" icon={faHomeUser} />&nbsp;Downgrade</Link></li>
                         </ul>
                     </nav>
 
@@ -181,7 +172,7 @@ function AdminClientUpgradeOperation() {
                         {/* Title + Options */}
                         {client && <div class="columns">
                             <div class="column">
-                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faBuildingUser} />&nbsp;Upgrade Client</p>
+                                <p class="title is-4"><FontAwesomeIcon className="fas" icon={faHomeUser} />&nbsp;Downgrade Client</p>
                             </div>
                             <div class="column has-text-right">
 
@@ -198,34 +189,13 @@ function AdminClientUpgradeOperation() {
                                 <FormErrorBox errors={errors} />
 
                                 {client && <div class="container">
+
                                     <article class="message is-warning">
                                         <div class="message-body">
                                             <p class="title is-4"><FontAwesomeIcon className="fas" icon={faCircleExclamation} />&nbsp;Warning</p>
-                                            <p>You are about to <b>upgrade</b> this client from <i>Residential</i> type into <i>Business</i>. This will affect the rates, associates and terms the client will now be applied. Are you sure you want to continue?</p>
+                                            <p>You are about to <b>downgrade</b> this client from <i>Business</i> type into <i>Residential</i>. This will affect the rates, associates and terms the client will now be applied. Are you sure you want to continue?</p>
                                         </div>
                                     </article>
-
-                                    <FormInputField
-                                        label="Organization Name"
-                                        name="organizationName"
-                                        placeholder="Text input"
-                                        value={organizationName}
-                                        errorText={errors && errors.organizationName}
-                                        helpText=""
-                                        onChange={(e)=>setOrganizationName(e.target.value)}
-                                        isRequired={true}
-                                        maxWidth="380px"
-                                    />
-                                    <FormSelectField
-                                        label="Organization Type"
-                                        name="organizationType"
-                                        placeholder="Pick"
-                                        selectedValue={organizationType}
-                                        errorText={errors && errors.organizationType}
-                                        helpText=""
-                                        onChange={(e)=>setOrganizationType(parseInt(e.target.value))}
-                                        options={CLIENT_ORGANIZATION_TYPE_OPTIONS_WITH_EMPTY_OPTIONS}
-                                    />
 
                                     {/* Bottom Navigation */}
                                     <div class="columns pt-5">
@@ -233,7 +203,7 @@ function AdminClientUpgradeOperation() {
                                             <Link class="button is-fullwidth-mobile" to={`/admin/client/${cid}/more`}><FontAwesomeIcon className="fas" icon={faArrowLeft} />&nbsp;Back to Detail</Link>
                                         </div>
                                         <div class="column is-half has-text-right">
-                                            <button class="button is-danger is-fullwidth-mobile" onClick={onSubmitClick}><FontAwesomeIcon className="fas" icon={faCheckCircle} type="button" />&nbsp;Confirm and Upgrade</button>
+                                            <button class="button is-danger is-fullwidth-mobile" onClick={onSubmitClick}><FontAwesomeIcon className="fas" icon={faCheckCircle} type="button" />&nbsp;Confirm and Downgrade</button>
                                         </div>
                                     </div>
 
@@ -247,4 +217,4 @@ function AdminClientUpgradeOperation() {
     );
 }
 
-export default AdminClientUpgradeOperation;
+export default AdminClientDowngradeOperation;

@@ -262,7 +262,7 @@ function AdminClientDetailCommentList() {
                                         </div>
                                         <div class="column is-half has-text-right">
                                             <button onClick={onSubmitClick} class="button is-success is-fullwidth-mobile">
-                                                <FontAwesomeIcon className="fas" icon={faPlus} />&nbsp;New Comment
+                                                <FontAwesomeIcon className="fas" icon={faCheckCircle} />&nbsp;Save Comment
                                             </button>
                                         </div>
                                     </div>

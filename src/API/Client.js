@@ -183,12 +183,9 @@ export function postClientCreateCommentOperationAPI(customerID, content, onSucce
     }).then(onDoneCallback);
 }
 
-export function postUpgradeClientAPI(id, onSuccessCallback, onErrorCallback, onDoneCallback) {
+export function postUpgradeClientAPI(decamelizedData, onSuccessCallback, onErrorCallback, onDoneCallback) {
     const axios = getCustomAxios();
-    const data = {
-        customer_id: id,
-    };
-    axios.post(WORKERY_CLIENT_UPGRADE_OPERATION_API_ENDPOINT, data).then((successResponse) => {
+    axios.post(WORKERY_CLIENT_UPGRADE_OPERATION_API_ENDPOINT, decamelizedData).then((successResponse) => {
         const responseData = successResponse.data;
 
         // Snake-case from API to camel-case for React.

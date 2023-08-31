@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import Scroll from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBuildingUser, faImage, faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faEllipsis, faArchive, faBoxOpen, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faBuildingUser, faImage, faPaperclip, faAddressCard, faSquarePhone, faTasks, faTachometer, faPlus, faArrowLeft, faCheckCircle, faUserCircle, faGauge, faPencil, faUsers, faEye, faIdCard, faAddressBook, faContactCard, faChartPie, faBuilding, faEllipsis, faArchive, faBoxOpen, faTrashCan, faHomeUser } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 
@@ -214,7 +214,7 @@ function AdminClientDetailMore() {
                                                     ?
                                                     <div class="column">
                                                         <Link to={`/admin/client/${cid}/downgrade`}>
-                                                            <FontAwesomeIcon className="mdi has-text-white has-background-info-dark p-6 mb-3" icon={faBuildingUser} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
+                                                            <FontAwesomeIcon className="mdi has-text-white has-background-info-dark p-6 mb-3" icon={faHomeUser} style={{maxWidth:"100px",minHeight:"100px", borderRadius: "100%"}} />
                                                             <h1 class="title is-3">Downgrade</h1>
                                                             <p className="has-text-grey">Change client to become residential client</p>
                                                         </Link>

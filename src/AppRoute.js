@@ -45,6 +45,7 @@ import AdminClientDeleteOperation from "./Components/Admin/Client/Operation/Dele
 import AdminClientArchiveOperation from "./Components/Admin/Client/Operation/Archive";
 import AdminClientUnarchiveOperation from "./Components/Admin/Client/Operation/Unarchive";
 import AdminClientUpgradeOperation from "./Components/Admin/Client/Operation/Upgrade";
+import AdminClientDowngradeOperation from "./Components/Admin/Client/Operation/Downgrade";
 import AdminClientAttachmentAdd from "./Components/Admin/Client/Attachment/Add";
 
 function AppRoute() {
@@ -59,6 +60,7 @@ function AppRoute() {
                         <div class="column">
                             <section class="main-content columns is-fullheight">
                                 <Routes>
+                                    <Route exact path="/admin/client/:cid/downgrade" element={<AdminClientDowngradeOperation/>}/>
                                     <Route exact path="/admin/client/:cid/upgrade" element={<AdminClientUpgradeOperation/>}/>
                                     <Route exact path="/admin/client/:cid/unarchive" element={<AdminClientUnarchiveOperation/>}/>
                                     <Route exact path="/admin/client/:cid/archive" element={<AdminClientArchiveOperation/>}/>
