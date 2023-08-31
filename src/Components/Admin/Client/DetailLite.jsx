@@ -10,6 +10,7 @@ import { getClientDetailAPI } from "../../../API/Client";
 import FormErrorBox from "../../Reusable/FormErrorBox";
 import DataDisplayRowText from "../../Reusable/DataDisplayRowText";
 import DataDisplayRowSelect from "../../Reusable/DataDisplayRowSelect";
+import DataDisplayRowImage from "../../Reusable/DataDisplayRowImage";
 import PageLoadingContent from "../../Reusable/PageLoadingContent";
 import { topAlertMessageState, topAlertStatusState } from "../../../AppState";
 import { COMMERCIAL_CUSTOMER_TYPE_OF_ID } from "../../../Constants/App";
@@ -176,6 +177,14 @@ function AdminClientDetailLite() {
                                             </li>
                                         </ul>
                                     </div>
+
+                                    {client.avatarObjectUrl && <>
+                                        <DataDisplayRowImage
+                                            label="Profile Photo"
+                                            objectURL={client.avatarObjectUrl}
+                                            maxWidth={"640px"}
+                                        />
+                                    </>}
 
                                     <DataDisplayRowSelect
                                         label="Type"

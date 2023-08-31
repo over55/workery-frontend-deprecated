@@ -27,6 +27,7 @@ export const WORKERY_CLIENT_ARCHIVE_OPERATION_API_ENDPOINT = HTTP_API_SERVER + '
 export const WORKERY_CLIENT_CREATE_COMMENT_OPERATION_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers/operation/create-comment';
 export const WORKERY_CLIENT_UPGRADE_OPERATION_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers/operation/upgrade';
 export const WORKERY_CLIENT_DOWNGRADE_OPERATION_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers/operation/downgrade';
+export const WORKERY_CLIENT_AVATAR_OPERATION_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/customers/operation/avatar';
 
 /**
  * Tags
