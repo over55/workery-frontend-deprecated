@@ -37,7 +37,7 @@ import AdminClientAddStep7 from "./Components/Admin/Client/Add/Step7";
 import AdminClientDetailLite from "./Components/Admin/Client/DetailLite";
 import AdminClientDetailFull from "./Components/Admin/Client/DetailFull";
 import AdminClientUpdate from "./Components/Admin/Client/Update";
-import AdminClientDetailOrderList from "./Components/Admin/Client/DetailOrderList";
+import AdminClientDetailOrderList from "./Components/Admin/Client/Order/List";
 import AdminClientDetailCommentList from "./Components/Admin/Client/DetailCommentList";
 import AdminClientDetailAttachmentList from "./Components/Admin/Client/Attachment/List";
 import AdminClientDetailMore from "./Components/Admin/Client/DetailMore";

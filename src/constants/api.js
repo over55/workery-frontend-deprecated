@@ -52,6 +52,13 @@ export const WORKERY_HOW_HEAR_ABOUT_US_ITEM_SELECT_OPTIONS_API_ENDPOINT = HTTP_A
 export const WORKERY_ATTACHMENTS_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/attachments";
 export const WORKERY_ATTACHMENT_API_ENDPOINT = HTTP_API_SERVER + "/api/v1/attachment/{id}";
 
+/**
+ * Orders
+ */
+export const WORKERY_ORDERS_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/orders';
+export const WORKERY_ORDER_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/order/{id}';
+export const WORKERY_ORDER_CREATE_COMMENT_OPERATION_API_ENDPOINT = HTTP_API_SERVER + '/api/v1/orders/operation/create-comment';
+
 
 
 
